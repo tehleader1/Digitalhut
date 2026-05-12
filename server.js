@@ -89,6 +89,12 @@ app.get("/api/producthunt/listings", async (req, res) => {
 
 });
 
+app.get("/", (req, res) => {
+
+  res.send("DigitalHut Product Hunt API Live");
+
+});
+
 app.listen(3001, () => {
 
   console.log("Dojj integrations running on port 3001");
