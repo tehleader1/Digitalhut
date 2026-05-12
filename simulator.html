@@ -1,0 +1,260 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <title>DigitalHut Simulator</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+
+    body {
+
+      margin: 0;
+
+      background:
+        linear-gradient(
+          180deg,
+          #020617,
+          #0f172a
+        );
+
+      color: white;
+
+      font-family: Arial, sans-serif;
+
+      overflow-x: hidden;
+
+    }
+
+    .topbar {
+
+      padding: 20px;
+
+      background: rgba(0,0,0,0.5);
+
+      backdrop-filter: blur(10px);
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      position: sticky;
+
+      top: 0;
+
+    }
+
+    .hero {
+
+      padding: 40px 24px;
+
+    }
+
+    .hero h1 {
+
+      font-size: 48px;
+
+      margin-bottom: 10px;
+
+    }
+
+    .hero p {
+
+      color: #cbd5e1;
+
+      font-size: 18px;
+
+    }
+
+    .scene {
+
+      height: 300px;
+
+      margin: 24px;
+
+      border-radius: 20px;
+
+      background:
+        radial-gradient(circle at center,
+        rgba(56,189,248,0.15),
+        rgba(15,23,42,0.95));
+
+      border: 1px solid rgba(255,255,255,0.08);
+
+      box-shadow:
+        0 0 60px rgba(56,189,248,0.15);
+
+      display: flex;
+
+      justify-content: center;
+
+      align-items: center;
+
+      font-size: 28px;
+
+      color: rgba(255,255,255,0.8);
+
+    }
+
+    .grid {
+
+      display: grid;
+
+      gap: 18px;
+
+      padding: 24px;
+
+    }
+
+    .card {
+
+      background: rgba(30,41,59,0.85);
+
+      padding: 20px;
+
+      border-radius: 18px;
+
+      border:
+        1px solid rgba(255,255,255,0.08);
+
+      backdrop-filter: blur(10px);
+
+      transition: 0.3s ease;
+
+    }
+
+    .card:hover {
+
+      transform: translateY(-6px);
+
+      box-shadow:
+        0 0 30px rgba(56,189,248,0.18);
+
+    }
+
+    .tag {
+
+      color: #38bdf8;
+
+      font-weight: bold;
+
+      margin-bottom: 10px;
+
+    }
+
+    .button {
+
+      display: inline-block;
+
+      margin-top: 12px;
+
+      padding: 10px 16px;
+
+      background: #38bdf8;
+
+      color: black;
+
+      border-radius: 10px;
+
+      text-decoration: none;
+
+      font-weight: bold;
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+<div class="topbar">
+
+  <div>🚀 DigitalHut Simulator</div>
+
+  <div>Dojj AI Active</div>
+
+</div>
+
+<section class="hero">
+
+  <h1>Interactive Living Ecosystem</h1>
+
+  <p>
+
+    Explore homes, offices, creator spaces,
+    rooftop collaboration environments,
+    AI lifestyle simulations, and future
+    digital commerce environments.
+
+  </p>
+
+</section>
+
+<div class="scene">
+
+  3D Environment Loading...
+
+</div>
+
+<div class="grid">
+
+  <div class="card">
+
+    <div class="tag">RESIDENTIAL</div>
+
+    <h2>California Ranch House</h2>
+
+    <p>
+
+      Simulated family lifestyle environment
+      with smart-home integrations,
+      productivity tools, and AI systems.
+
+    </p>
+
+  </div>
+
+  <div class="card">
+
+    <div class="tag">CREATOR</div>
+
+    <h2>Creator Studio Office</h2>
+
+    <p>
+
+      Creator economy simulation with
+      livestreaming, editing,
+      AI content workflows, and media systems.
+
+    </p>
+
+  </div>
+
+  <div class="card">
+
+    <div class="tag">BUSINESS</div>
+
+    <h2>Executive Meeting Environment</h2>
+
+    <p>
+
+      Simulated business collaboration,
+      startup infrastructure,
+      AI dashboards, and SaaS tools.
+
+    </p>
+
+  </div>
+
+</div>
+
+</body>
+
+</html>
+
