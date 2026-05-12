@@ -259,3 +259,27 @@ body::before {
 
 </section>
 
+
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const simulatorCard =
+    document.querySelector(".card");
+
+  if (simulatorCard) {
+
+    simulatorCard.onclick = () => {
+
+      window.location.href = "simulator.html";
+
+    };
+
+    simulatorCard.style.cursor = "pointer";
+
+  }
+
+});
+
+</script>
+
