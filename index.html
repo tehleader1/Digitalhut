@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DigitalHut</title>
+
+  <style>
+    body {
+      background: #0f172a;
+      color: white;
+      font-family: Arial;
+      padding: 40px;
+    }
+
+    .card {
+      background: #1e293b;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+    }
+
+    a {
+      color: #38bdf8;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>🚀 DigitalHut</h1>
+
+<p>Live AI Product Marketplace</p>
+
+<div id="products"></div>
+
+<script>
+
+async function loadProducts() {
+
+  const response = await fetch(
+    "https://api.digitalhut.app/api/producthunt/listings"
+  );
+
+  const data = await response.json();
+
+  const posts = data.data.posts.edges;
+
+  document.getElementById("products").innerHTML =
+    posts.map(post => {
+
+      const p = post.node;
+
+      return \`
+        <div class="card">
+          <h2>\${p.name}</h2>
+          <p>\${p.tagline}</p>
+
+          <p>
+            👍 \${p.votesCount}
+          </p>
+
+          <a href="\${p.url}" target="_blank">
+            View Product
+          </a>
+        </div>
+      \`;
+
+    }).join("");
+
+}
+
+loadProducts();
+
+</script>
+
+</body>
+</html>
