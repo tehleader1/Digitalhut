@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import path from "path";
 import "dotenv/config";
 
 const app = express();
@@ -91,15 +92,12 @@ app.get("/api/producthunt/listings", async (req, res) => {
 
 app.get("/", (req, res) => {
 
-
-app.listen(3001, () => {
-
-  console.log("Dojj integrations running on port 3001");
+  res.sendFile(path.resolve("index.html"));
 
 });
 
-app.get("/", (req, res) => {
+app.listen(3001, () => {
 
-  res.sendFile(path.resolve("index.html"));
+  console.log("DigitalHut running on port 3001");
 
 });
