@@ -51,14 +51,14 @@ async function loadProducts() {
 
       return \`
         <div class="card">
-          <h2>\${p.name}</h2>
-          <p>\${p.tagline}</p>
+          <h2>${p.name}</h2>
+          <p>${p.tagline}</p>
 
           <p>
-            👍 \${p.votesCount}
+            👍 ${p.votesCount}
           </p>
 
-          <a href="\${p.url}" target="_blank">
+          <a href="${p.url}" target="_blank">
             View Product
           </a>
         </div>
