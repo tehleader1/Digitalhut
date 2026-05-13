@@ -970,3 +970,187 @@ li.onclick = ()=>showHotspot(txt);
 
 </script>
 
+
+<style>
+.motion-layer{
+position:absolute;
+inset:0;
+pointer-events:none;
+overflow:hidden;
+}
+
+.moving-car{
+position:absolute;
+bottom:36px;
+left:-90px;
+font-size:38px;
+animation:driveCar 9s linear infinite;
+}
+
+.moving-bird{
+position:absolute;
+top:35px;
+left:-80px;
+font-size:32px;
+animation:flyBird 12s linear infinite;
+}
+
+.walker{
+position:absolute;
+bottom:95px;
+left:15px;
+font-size:34px;
+animation:walkPerson 7s ease-in-out infinite alternate;
+}
+
+.ai-orb{
+position:absolute;
+right:28px;
+top:28px;
+width:18px;
+height:18px;
+background:#38bdf8;
+border-radius:50%;
+box-shadow:0 0 22px #38bdf8;
+animation:pulseOrb 1.6s ease-in-out infinite;
+}
+
+.signal-card{
+position:absolute;
+left:20px;
+top:20px;
+background:#020617cc;
+border:1px solid #38bdf8;
+border-radius:14px;
+padding:10px;
+font-size:13px;
+color:white;
+animation:floatSignal 4s ease-in-out infinite;
+}
+
+@keyframes driveCar{
+0%{left:-90px}
+100%{left:110%}
+}
+
+@keyframes flyBird{
+0%{left:-80px;top:40px}
+50%{top:70px}
+100%{left:110%;top:35px}
+}
+
+@keyframes walkPerson{
+0%{left:20px}
+100%{left:70%}
+}
+
+@keyframes pulseOrb{
+0%,100%{transform:scale(1);opacity:.6}
+50%{transform:scale(1.8);opacity:1}
+}
+
+@keyframes floatSignal{
+0%,100%{transform:translateY(0)}
+50%{transform:translateY(-10px)}
+}
+</style>
+
+<script>
+const oldLoadScene = loadScene;
+
+loadScene = function(name){
+
+oldLoadScene(name);
+
+setTimeout(()=>{
+
+const scene =
+document.getElementById("sceneBox");
+
+if(!scene) return;
+
+let motion = "";
+
+if(name === "Exterior"){
+motion = `
+<div class="motion-layer">
+  <div class="signal-card">Dojj scan: neighborhood activity detected</div>
+  <div class="moving-car">🚗</div>
+  <div class="moving-bird">🐦</div>
+  <div class="walker">🚶</div>
+  <div class="ai-orb"></div>
+</div>`;
+}
+
+if(name === "Lobby"){
+motion = `
+<div class="motion-layer">
+  <div class="signal-card">Guest flow + presentation score rising</div>
+  <div class="walker">🚶‍♂️</div>
+  <div class="ai-orb"></div>
+</div>`;
+}
+
+if(name === "Living Room"){
+motion = `
+<div class="motion-layer">
+  <div class="signal-card">Family behavior simulation active</div>
+  <div class="walker">👨‍👩‍👧</div>
+  <div class="ai-orb"></div>
+</div>`;
+}
+
+if(name === "Patio"){
+motion = `
+<div class="motion-layer">
+  <div class="signal-card">Outdoor interest + greenery route active</div>
+  <div class="moving-bird">🦋</div>
+  <div class="walker">🚶</div>
+  <div class="ai-orb"></div>
+</div>`;
+}
+
+if(name === "Pool"){
+motion = `
+<div class="motion-layer">
+  <div class="signal-card">Poolside lifestyle activity detected</div>
+  <div class="moving-bird">💦</div>
+  <div class="walker">🏊</div>
+  <div class="ai-orb"></div>
+</div>`;
+}
+
+if(name === "Business Office"){
+motion = `
+<div class="motion-layer">
+  <div class="signal-card">Meeting workflow + client routing active</div>
+  <div class="walker">💼</div>
+  <div class="ai-orb"></div>
+</div>`;
+}
+
+if(name === "Safe Room"){
+motion = `
+<div class="motion-layer">
+  <div class="signal-card">Security scan active</div>
+  <div class="ai-orb"></div>
+</div>`;
+}
+
+if(name === "Rooftop"){
+motion = `
+<div class="motion-layer">
+  <div class="signal-card">Collaboration signal + skyline activity</div>
+  <div class="moving-bird">🛸</div>
+  <div class="walker">🤝</div>
+  <div class="ai-orb"></div>
+</div>`;
+}
+
+scene.insertAdjacentHTML("beforeend", motion);
+
+},100);
+
+};
+</script>
+
