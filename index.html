@@ -224,3 +224,185 @@ loadScene("Exterior");
 
 </body>
 </html>
+
+<style>
+
+.overlay{
+position:fixed;
+inset:0;
+background:#000000dd;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+padding:20px;
+box-sizing:border-box;
+}
+
+.overlay-card{
+background:#0f172a;
+border:1px solid #38bdf8;
+border-radius:30px;
+padding:24px;
+width:100%;
+max-width:700px;
+box-shadow:0 0 40px #38bdf855;
+animation:fadeIn .3s ease;
+}
+
+.overlay-card h2{
+margin-top:0;
+}
+
+.overlay-close{
+margin-top:20px;
+background:#ef4444;
+border:0;
+padding:14px;
+border-radius:14px;
+color:white;
+font-weight:bold;
+width:100%;
+}
+
+.metric{
+margin-top:14px;
+padding:12px;
+border-radius:14px;
+background:#111827;
+border:1px solid #38bdf8;
+}
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:scale(.95);
+}
+to{
+opacity:1;
+transform:scale(1);
+}
+}
+
+</style>
+
+<script>
+
+const hotspotIntel = {
+
+"Family arriving":{
+title:"Residential Arrival Pattern",
+desc:"Family ecosystem detected entering residential environment.",
+metrics:[
+"Household engagement rising",
+"Exterior attraction score: 84%",
+"Patio interest probability: High",
+"Landscape compatibility: Active"
+]
+},
+
+"Neighbor walking":{
+title:"Neighborhood Activity Signal",
+desc:"Pedestrian movement generating passive environmental visibility.",
+metrics:[
+"Community activity increasing",
+"Curb appeal exposure active",
+"Foot-traffic simulation online",
+"Visibility radius expanding"
+]
+},
+
+"Delivery driver":{
+title:"Commerce Routing Layer",
+desc:"Operational delivery route connected to product movement systems.",
+metrics:[
+"Product routing active",
+"Marketplace synchronization enabled",
+"Delivery frequency: Medium",
+"Future commerce signal detected"
+]
+},
+
+"Reception guest":{
+title:"Commercial Entry Signal",
+desc:"Business interaction environment activated.",
+metrics:[
+"Commercial opportunity detected",
+"Presentation layer active",
+"Operational engagement increasing"
+]
+},
+
+"Manager":{
+title:"AI Workflow Oversight",
+desc:"Business management and AI routing environment active.",
+metrics:[
+"Operational systems stable",
+"Client workflow synchronized",
+"Creator economy linkage active"
+]
+}
+
+};
+
+document.addEventListener("click",e=>{
+
+if(
+e.target.classList.contains("badge")
+){
+
+const txt =
+e.target.innerText.trim();
+
+const intel =
+hotspotIntel[txt];
+
+if(!intel) return;
+
+const overlay =
+document.createElement("div");
+
+overlay.className =
+"overlay";
+
+overlay.innerHTML = `
+
+<div class="overlay-card">
+
+<h2>${intel.title}</h2>
+
+<p>${intel.desc}</p>
+
+${intel.metrics.map(m=>`
+<div class="metric">${m}</div>
+`).join("")}
+
+<button class="overlay-close">
+Close
+</button>
+
+</div>
+
+`;
+
+overlay.onclick = (ev)=>{
+
+if(
+ev.target.classList.contains("overlay") ||
+ev.target.classList.contains("overlay-close")
+){
+overlay.remove();
+}
+
+};
+
+document.body.appendChild(
+overlay
+);
+
+}
+
+});
+
+</script>
+
