@@ -686,3 +686,287 @@ loadScene("Exterior");
 
 </script>
 
+
+<style>
+.hotspot-grid{
+display:grid;
+grid-template-columns:1fr;
+gap:14px;
+margin-top:20px;
+}
+
+.hotspot-card{
+background:#111827;
+border:1px solid #38bdf8;
+border-radius:20px;
+padding:18px;
+box-shadow:0 0 24px #38bdf822;
+}
+
+.hotspot-card button{
+margin-top:10px;
+background:#22c55e;
+color:#020617;
+font-weight:800;
+border:0;
+padding:12px;
+border-radius:12px;
+width:100%;
+}
+
+.overlay-panel{
+position:fixed;
+left:0;
+top:0;
+width:100%;
+height:100%;
+background:#000000dd;
+z-index:9999;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+box-sizing:border-box;
+}
+
+.overlay-content{
+background:#0f172a;
+border:1px solid #38bdf8;
+border-radius:24px;
+padding:24px;
+max-width:700px;
+width:100%;
+max-height:90vh;
+overflow:auto;
+box-shadow:0 0 50px #38bdf844;
+}
+
+.overlay-content img{
+width:100%;
+border-radius:18px;
+margin:14px 0;
+}
+
+.overlay-content a{
+color:#38bdf8;
+}
+
+.overlay-close{
+background:#ef4444;
+color:white;
+margin-top:20px;
+}
+
+.dojj-meter{
+height:14px;
+background:#111827;
+border-radius:999px;
+overflow:hidden;
+margin-top:10px;
+}
+
+.dojj-meter-fill{
+height:100%;
+background:linear-gradient(90deg,#22c55e,#38bdf8);
+}
+</style>
+
+<script>
+
+const hotspotData = {
+
+"California Ranch House":{
+
+image:
+"https://shop.supportrd.com/cdn/shop/files/california-ranch-house.jpg",
+
+link:
+"https://shop.supportrd.com/products/california-ranch-house",
+
+type:
+"Residential Lifestyle",
+
+description:
+"Single-story modern ranch ecosystem optimized for family simulation, exterior presentation, and smart operational living.",
+
+dojj:
+87,
+
+related:[
+"Exterior simulation",
+"Patio routing",
+"Family occupancy",
+"Landscape integration"
+]
+
+},
+
+"Texas 2-Story Home":{
+
+image:
+"https://shop.supportrd.com/cdn/shop/files/texas-2-story-home.jpg",
+
+link:
+"https://shop.supportrd.com/products/texas-2-story-home",
+
+type:
+"Multi-Level Residential",
+
+description:
+"Large-scale home ecosystem with expanded operational simulation layers and multi-room interaction.",
+
+dojj:
+91,
+
+related:[
+"Rooftop networking",
+"Family scaling",
+"Commercial hybrid usage",
+"Exterior visibility"
+]
+
+},
+
+"Florida Beach Pad":{
+
+image:
+"https://shop.supportrd.com/cdn/shop/files/florida-beach-pad.jpg",
+
+link:
+"https://shop.supportrd.com/products/florida-beach-pad",
+
+type:
+"Tropical Coastal",
+
+description:
+"Beach-oriented immersive lifestyle environment designed for pool, patio, and tropical ecosystem simulation.",
+
+dojj:
+89,
+
+related:[
+"Pool interaction",
+"Outdoor activity",
+"Tropical greenery",
+"Hospitality visibility"
+]
+
+},
+
+"Creator Studio Office":{
+
+image:
+"https://shop.supportrd.com/cdn/shop/files/creator-studio-office-building.jpg",
+
+link:
+"https://shop.supportrd.com/products/creator-studio-office-building",
+
+type:
+"Creator Economy",
+
+description:
+"AI creator workspace connected to DigitalHut routing and future marketplace collaboration systems.",
+
+dojj:
+94,
+
+related:[
+"AI workflow",
+"Remote collaboration",
+"Startup routing",
+"Content production"
+]
+
+}
+
+};
+
+function showHotspot(product){
+
+const item =
+hotspotData[product];
+
+if(!item){
+
+alert("No hotspot data yet.");
+
+return;
+
+}
+
+const overlay =
+document.createElement("div");
+
+overlay.className =
+"overlay-panel";
+
+overlay.innerHTML = `
+
+<div class="overlay-content">
+
+<h2>${product}</h2>
+
+<p>
+<strong>Environment Type:</strong>
+${item.type}
+</p>
+
+<img src="${item.image}">
+
+<p>
+${item.description}
+</p>
+
+<div class="dojj-meter">
+<div class="dojj-meter-fill" style="width:${item.dojj}%"></div>
+</div>
+
+<p>
+<strong>Dojj Compatibility:</strong>
+${item.dojj}%
+</p>
+
+<h3>Operational Readings</h3>
+
+<ul>
+${item.related.map(r=>`<li>${r}</li>`).join("")}
+</ul>
+
+<a href="${item.link}" target="_blank">
+View Product
+</a>
+
+<button class="overlay-close" onclick="this.parentElement.parentElement.remove()">
+Close
+</button>
+
+</div>
+
+`;
+
+document.body.appendChild(
+overlay
+);
+
+}
+
+setTimeout(()=>{
+
+document.querySelectorAll(
+"#sceneBox li"
+).forEach(li=>{
+
+const txt =
+li.innerText.trim();
+
+li.style.cursor =
+"pointer";
+
+li.onclick = ()=>showHotspot(txt);
+
+});
+
+},1000);
+
+</script>
+
