@@ -498,3 +498,191 @@ drawScene();
 
 </script>
 
+
+<style>
+.sim-nav {
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+margin:20px 0;
+}
+
+.sim-nav button{
+padding:14px;
+border-radius:14px;
+border:0;
+background:#38bdf8;
+color:#020617;
+font-weight:800;
+}
+
+.sim-scene{
+min-height:420px;
+border-radius:28px;
+padding:24px;
+background:linear-gradient(145deg,#020617,#0f172a,#082f49);
+border:1px solid #38bdf855;
+box-shadow:0 0 40px #38bdf833;
+position:relative;
+overflow:hidden;
+margin-top:20px;
+}
+
+.hotspot{
+background:#111827dd;
+border:1px solid #38bdf8;
+border-radius:18px;
+padding:14px;
+margin:12px 0;
+}
+
+.dummy{
+display:inline-block;
+padding:8px 12px;
+background:#22c55e;
+color:#020617;
+border-radius:999px;
+margin:6px;
+font-weight:bold;
+}
+
+.scenery{
+position:absolute;
+right:20px;
+bottom:20px;
+opacity:.4;
+font-size:50px;
+}
+</style>
+
+<section id="live-simulator" style="padding:40px 24px;">
+
+<h2>Interactive Living Ecosystem Simulator</h2>
+
+<div class="sim-nav">
+
+<button onclick="loadScene('Exterior')">Exterior</button>
+<button onclick="loadScene('Lobby')">Lobby</button>
+<button onclick="loadScene('Living Room')">Living Room</button>
+<button onclick="loadScene('Patio')">Patio</button>
+<button onclick="loadScene('Pool')">Pool</button>
+<button onclick="loadScene('Business Office')">Office</button>
+<button onclick="loadScene('Safe Room')">Safe Room</button>
+<button onclick="loadScene('Rooftop')">Rooftop</button>
+
+</div>
+
+<div id="sceneBox" class="sim-scene"></div>
+
+</section>
+
+<script>
+
+const scenes = {
+
+"Exterior":{
+icon:"🏡 🛣️ 🐦",
+activity:"Neighborhood traffic, birds, highways, curb appeal, exterior lifestyle activity.",
+people:["Family arriving","Neighbor walking","Delivery driver"],
+products:["California Ranch House","Texas 2-Story Home","North Carolina Home"]
+},
+
+"Lobby":{
+icon:"🏢 🌿",
+activity:"Commercial guests enter while greenery and presentation systems improve atmosphere.",
+people:["Reception guest","Business owner","Plant installer"],
+products:["Executive Office","Lobby greenery","Commercial office routing"]
+},
+
+"Living Room":{
+icon:"🛋️ 👨‍👩‍👧",
+activity:"Family simulation, smart-home interaction, lifestyle testing environment.",
+people:["Parent relaxing","Child playing","Guest visiting"],
+products:["Fiji Villa","Thailand Bungalow","California Ranch House"]
+},
+
+"Patio":{
+icon:"🌴 ☀️",
+activity:"Outdoor seating and tropical landscaping simulation environment.",
+people:["Family cooking","Guest sitting","Landscape crew"],
+products:["Florida Beach Pad","Patio greenery","Outdoor routing"]
+},
+
+"Pool":{
+icon:"🏊 🌊",
+activity:"Poolside environment with tropical simulation and entertainment layout.",
+people:["Swimmer","Guest lounging","Service technician"],
+products:["Fiji Villa","Florida Beach Pad","Pool landscaping"]
+},
+
+"Business Office":{
+icon:"💼 🖥️",
+activity:"Meetings, AI routing, creator workflows, operational business simulation.",
+people:["Manager","Client","Remote worker"],
+products:["Creator Studio Office","Executive Office","Business routing"]
+},
+
+"Safe Room":{
+icon:"🛡️ 🔐",
+activity:"Private operational planning and emergency simulation layer.",
+people:["Security lead","Operations planner","Family member"],
+products:["SupportRD coordination","Emergency routing","Safe room planning"]
+},
+
+"Rooftop":{
+icon:"🌆 🤝",
+activity:"Creator collaboration, skyline meetings, future commerce networking.",
+people:["Creator","Investor","Designer"],
+products:["Rooftop collaboration","DigitalHut AI","Creator Studio Office"]
+}
+
+};
+
+function loadScene(name){
+
+const s = scenes[name];
+
+document.getElementById("sceneBox").innerHTML = `
+
+<div class="scenery">${s.icon}</div>
+
+<h2>${name}</h2>
+
+<p>${s.activity}</p>
+
+<h3>Simulated Occupants</h3>
+
+${s.people.map(p=>`<span class="dummy">${p}</span>`).join("")}
+
+<div class="hotspot">
+
+<strong>Product Hotspots</strong>
+
+<ul>
+${s.products.map(p=>`<li>${p}</li>`).join("")}
+</ul>
+
+</div>
+
+<div class="hotspot">
+
+<strong>Dojj Reading</strong>
+
+<p>
+Environment active for:
+product discovery,
+customer routing,
+operational testing,
+and future marketplace interaction.
+</p>
+
+</div>
+
+`;
+
+}
+
+loadScene("Exterior");
+
+</script>
+
