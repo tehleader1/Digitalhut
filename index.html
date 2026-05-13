@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DigitalHut</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      margin: 0;
+      background: #0f172a;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      padding: 24px;
+      background: #020617;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .hero {
+      padding: 40px 24px;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      color: #cbd5e1;
+      font-size: 18px;
+    }
+
+    .section {
+      padding: 24px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .card {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 16px;
+      border: 1px solid #334155;
+    }
+
+    .tag {
+      color: #38bdf8;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    a {
+      color: #38bdf8;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 10px 14px;
+      background: #38bdf8;
+      color: #020617;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">🚀 DigitalHut</div>
+  <div>Dojj AI Live</div>
+</header>
+
+<section class="hero">
+  <h1>Digital products, AI tools, and startup signals in one marketplace.</h1>
+  <p>DigitalHut connects product listings, launch activity, and Dojj intelligence into one live marketplace system.</p>
+  <a class="button" href="#products">Explore Products</a>
+</section>
+
+<section class="section">
+  <h2>DigitalHut Products</h2>
+
+  <div class="grid">
+    <div class="card">
+      <div class="tag">CORE PRODUCT</div>
+      <h3>Dojj Accountant AI</h3>
+      <p>Sales-proof tracking, marketplace intelligence, and launch health scoring for digital businesses.</p>
+    </div>
+
+    <div class="card">
+      <div class="tag">COMING BACK</div>
+      <h3>3D Product Simulator</h3>
+      <p>The interactive DigitalHut product model and Unreal-style visual experience will be restored in the next build layer.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="products">
+  <h2>Live Product Hunt Launches</h2>
+  <div id="product-feed" class="grid">Loading products...</div>
+</section>
+
+<script>
+async function loadProducts() {
+  try {
+    const response = await fetch("https://api.digitalhut.app/api/producthunt/listings");
+    const data = await response.json();
+    const posts = data.data.posts.edges;
+
+    document.getElementById("product-feed").innerHTML =
+      posts.map(post => {
+        const p = post.node;
+
+        return `
+          <div class="card">
+            <div class="tag">PRODUCT HUNT</div>
+            <h3>${p.name}</h3>
+            <p>${p.tagline}</p>
+            <p>👍 ${p.votesCount} votes · 💬 ${p.commentsCount} comments</p>
+            <a href="${p.url}" target="_blank">View Product</a>
+          </div>
+        `;
+      }).join("");
+
+  } catch (error) {
+    document.getElementById("product-feed").innerHTML =
+      `<div class="card">Product feed temporarily unavailable.</div>`;
+  }
+}
+
+loadProducts();
+</script>
+
+</body>
+</html>
+
+<style>
+
+body::before {
+
+  content: "";
+
+  position: fixed;
+
+  top: -20%;
+  left: -20%;
+
+  width: 140%;
+  height: 140%;
+
+  background:
+    radial-gradient(circle at 20% 20%, rgba(56,189,248,0.12), transparent 30%),
+    radial-gradient(circle at 80% 30%, rgba(168,85,247,0.10), transparent 30%),
+    radial-gradient(circle at 50% 80%, rgba(59,130,246,0.10), transparent 30%);
+
+  z-index: -1;
+
+  animation: drift 18s linear infinite;
+
+}
+
+@keyframes drift {
+
+  0% {
+    transform: translate(0px, 0px);
+  }
+
+  50% {
+    transform: translate(-30px, -20px);
+  }
+
+  100% {
+    transform: translate(0px, 0px);
+  }
+
+}
+
+.card {
+
+  backdrop-filter: blur(12px);
+
+  box-shadow:
+    0 0 25px rgba(56,189,248,0.08);
+
+  transition: all 0.3s ease;
+
+}
+
+.card:hover {
+
+  transform: translateY(-6px);
+
+  box-shadow:
+    0 0 35px rgba(56,189,248,0.18);
+
+}
+
+</style>
+
+
+<section class="section">
+
+  <h2>3D Simulator Access</h2>
+
+  <div class="card">
+
+    <div class="tag">SIMULATOR PREVIEW</div>
+
+    <h3>DigitalHut Living Ecosystem</h3>
+
+    <p>
+
+      Enter interactive simulated environments featuring:
+      homes, offices, rooftop collaboration spaces,
+      creator studios, patios, meeting rooms,
+      AI systems, lifestyle interactions, and
+      future commerce environments.
+
+    </p>
+
+    <div style="margin-top:20px;">
+
+      <button class="button">
+        Enter Simulator
+      </button>
+
+    </div>
+
+    <div style="margin-top:30px; opacity:0.8;">
+
+      🌴 California Ranch House<br>
+      🏝 Thailand Bungalow<br>
+      🌊 Fiji Villa<br>
+      🏢 Executive Business Office<br>
+      🏔 Canada Mountain Cabin<br>
+      🏖 Florida Beach Pad<br>
+      🏯 Japan 2-Story Home<br>
+      🇮🇳 India 2-Story Home<br>
+      🇪🇺 Europe 2-Story Home<br>
+      🏡 North Carolina Home<br>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const simulatorCard =
+    document.querySelector(".card");
+
+  if (simulatorCard) {
+
+    simulatorCard.onclick = () => {
+
+      window.location.href = "simulator.html";
+
+    };
+
+    simulatorCard.style.cursor = "pointer";
+
+  }
+
+});
+
+</script>
+
+
+<section class="section">
+
+      box-shadow:
+        0 0 50px rgba(56,189,248,0.15);
+    "
+  >
+
+    <div
+      style="
+        position:absolute;
+        inset:0;
+        background:
+          radial-gradient(circle at 20% 30%, rgba(56,189,248,0.18), transparent 30%),
+          radial-gradient(circle at 80% 20%, rgba(168,85,247,0.15), transparent 30%),
+          radial-gradient(circle at 50% 80%, rgba(59,130,246,0.12), transparent 30%);
+        animation: drift 20s linear infinite;
+      "
+    ></div>
+
+    <div
+      style="
+        position:absolute;
+        bottom:20px;
+        left:20px;
+        right:20px;
+        z-index:2;
+      "
+    >
+
+      <div class="card">
+
+
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="section">
+
+
+
+</script>
+
+
+<style>
+.sim-nav {
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+margin:20px 0;
+}
+
+.sim-nav button{
+padding:14px;
+border-radius:14px;
+border:0;
+background:#38bdf8;
+color:#020617;
+font-weight:800;
+}
+
+.sim-scene{
+min-height:420px;
+border-radius:28px;
+padding:24px;
+background:linear-gradient(145deg,#020617,#0f172a,#082f49);
+border:1px solid #38bdf855;
+box-shadow:0 0 40px #38bdf833;
+position:relative;
+overflow:hidden;
+margin-top:20px;
+}
+
+.hotspot{
+background:#111827dd;
+border:1px solid #38bdf8;
+border-radius:18px;
+padding:14px;
+margin:12px 0;
+}
+
+.dummy{
+display:inline-block;
+padding:8px 12px;
+background:#22c55e;
+color:#020617;
+border-radius:999px;
+margin:6px;
+font-weight:bold;
+}
+
+.scenery{
+position:absolute;
+right:20px;
+bottom:20px;
+opacity:.4;
+font-size:50px;
+}
+</style>
+
+<section id="live-simulator" style="padding:40px 24px;">
+
+<h2>Interactive Living Ecosystem Simulator</h2>
+
+<div class="sim-nav">
+
+<button onclick="loadScene('Exterior')">Exterior</button>
+<button onclick="loadScene('Lobby')">Lobby</button>
+<button onclick="loadScene('Living Room')">Living Room</button>
+<button onclick="loadScene('Patio')">Patio</button>
+<button onclick="loadScene('Pool')">Pool</button>
+<button onclick="loadScene('Business Office')">Office</button>
+<button onclick="loadScene('Safe Room')">Safe Room</button>
+<button onclick="loadScene('Rooftop')">Rooftop</button>
+
+</div>
+
+<div id="sceneBox" class="sim-scene"></div>
+
+</section>
+
+<script>
+
+const scenes = {
+
+"Exterior":{
+icon:"🏡 🛣️ 🐦",
+activity:"Neighborhood traffic, birds, highways, curb appeal, exterior lifestyle activity.",
+people:["Family arriving","Neighbor walking","Delivery driver"],
+products:["California Ranch House","Texas 2-Story Home","North Carolina Home"]
+},
+
+"Lobby":{
+icon:"🏢 🌿",
+activity:"Commercial guests enter while greenery and presentation systems improve atmosphere.",
+people:["Reception guest","Business owner","Plant installer"],
+products:["Executive Office","Lobby greenery","Commercial office routing"]
+},
+
+"Living Room":{
+icon:"🛋️ 👨‍👩‍👧",
+activity:"Family simulation, smart-home interaction, lifestyle testing environment.",
+people:["Parent relaxing","Child playing","Guest visiting"],
+products:["Fiji Villa","Thailand Bungalow","California Ranch House"]
+},
+
+"Patio":{
+icon:"🌴 ☀️",
+activity:"Outdoor seating and tropical landscaping simulation environment.",
+people:["Family cooking","Guest sitting","Landscape crew"],
+products:["Florida Beach Pad","Patio greenery","Outdoor routing"]
+},
+
+"Pool":{
+icon:"🏊 🌊",
+activity:"Poolside environment with tropical simulation and entertainment layout.",
+people:["Swimmer","Guest lounging","Service technician"],
+products:["Fiji Villa","Florida Beach Pad","Pool landscaping"]
+},
+
+"Business Office":{
+icon:"💼 🖥️",
+activity:"Meetings, AI routing, creator workflows, operational business simulation.",
+people:["Manager","Client","Remote worker"],
+products:["Creator Studio Office","Executive Office","Business routing"]
+},
+
+"Safe Room":{
+icon:"🛡️ 🔐",
+activity:"Private operational planning and emergency simulation layer.",
+people:["Security lead","Operations planner","Family member"],
+products:["SupportRD coordination","Emergency routing","Safe room planning"]
+},
+
+"Rooftop":{
+icon:"🌆 🤝",
+activity:"Creator collaboration, skyline meetings, future commerce networking.",
+people:["Creator","Investor","Designer"],
+products:["Rooftop collaboration","DigitalHut AI","Creator Studio Office"]
+}
+
+};
+
+function loadScene(name){
+
+const s = scenes[name];
+
+document.getElementById("sceneBox").innerHTML = `
+
+<div class="scenery">${s.icon}</div>
+
+<h2>${name}</h2>
+
+<p>${s.activity}</p>
+
+<h3>Simulated Occupants</h3>
+
+${s.people.map(p=>`<span class="dummy">${p}</span>`).join("")}
+
+<div class="hotspot">
+
+<strong>Product Hotspots</strong>
+
+<ul>
+${s.products.map(p=>`<li>${p}</li>`).join("")}
+</ul>
+
+</div>
+
+<div class="hotspot">
+
+<strong>Dojj Reading</strong>
+
+<p>
+Environment active for:
+product discovery,
+customer routing,
+operational testing,
+and future marketplace interaction.
+</p>
+
+</div>
+
+`;
+
+}
+
+loadScene("Exterior");
+
+</script>
+
+
+<style>
+.hotspot-grid{
+display:grid;
+grid-template-columns:1fr;
+gap:14px;
+margin-top:20px;
+}
+
+.hotspot-card{
+background:#111827;
+border:1px solid #38bdf8;
+border-radius:20px;
+padding:18px;
+box-shadow:0 0 24px #38bdf822;
+}
+
+.hotspot-card button{
+margin-top:10px;
+background:#22c55e;
+color:#020617;
+font-weight:800;
+border:0;
+padding:12px;
+border-radius:12px;
+width:100%;
+}
+
+.overlay-panel{
+position:fixed;
+left:0;
+top:0;
+width:100%;
+height:100%;
+background:#000000dd;
+z-index:9999;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+box-sizing:border-box;
+}
+
+.overlay-content{
+background:#0f172a;
+border:1px solid #38bdf8;
+border-radius:24px;
+padding:24px;
+max-width:700px;
+width:100%;
+max-height:90vh;
+overflow:auto;
+box-shadow:0 0 50px #38bdf844;
+}
+
+.overlay-content img{
+width:100%;
+border-radius:18px;
+margin:14px 0;
+}
+
+.overlay-content a{
+color:#38bdf8;
+}
+
+.overlay-close{
+background:#ef4444;
+color:white;
+margin-top:20px;
+}
+
+.dojj-meter{
+height:14px;
+background:#111827;
+border-radius:999px;
+overflow:hidden;
+margin-top:10px;
+}
+
+.dojj-meter-fill{
+height:100%;
+background:linear-gradient(90deg,#22c55e,#38bdf8);
+}
+</style>
+
+<script>
+
+const hotspotData = {
+
+"California Ranch House":{
+
+image:
+"https://shop.supportrd.com/cdn/shop/files/california-ranch-house.jpg",
+
+link:
+"https://shop.supportrd.com/products/california-ranch-house",
+
+type:
+"Residential Lifestyle",
+
+description:
+"Single-story modern ranch ecosystem optimized for family simulation, exterior presentation, and smart operational living.",
+
+dojj:
+87,
+
+related:[
+"Exterior simulation",
+"Patio routing",
+"Family occupancy",
+"Landscape integration"
+]
+
+},
+
+"Texas 2-Story Home":{
+
+image:
+"https://shop.supportrd.com/cdn/shop/files/texas-2-story-home.jpg",
+
+link:
+"https://shop.supportrd.com/products/texas-2-story-home",
+
+type:
+"Multi-Level Residential",
+
+description:
+"Large-scale home ecosystem with expanded operational simulation layers and multi-room interaction.",
+
+dojj:
+91,
+
+related:[
+"Rooftop networking",
+"Family scaling",
+"Commercial hybrid usage",
+"Exterior visibility"
+]
+
+},
+
+"Florida Beach Pad":{
+
+image:
+"https://shop.supportrd.com/cdn/shop/files/florida-beach-pad.jpg",
+
+link:
+"https://shop.supportrd.com/products/florida-beach-pad",
+
+type:
+"Tropical Coastal",
+
+description:
+"Beach-oriented immersive lifestyle environment designed for pool, patio, and tropical ecosystem simulation.",
+
+dojj:
+89,
+
+related:[
+"Pool interaction",
+"Outdoor activity",
+"Tropical greenery",
+"Hospitality visibility"
+]
+
+},
+
+"Creator Studio Office":{
+
+image:
+"https://shop.supportrd.com/cdn/shop/files/creator-studio-office-building.jpg",
+
+link:
+"https://shop.supportrd.com/products/creator-studio-office-building",
+
+type:
+"Creator Economy",
+
+description:
+"AI creator workspace connected to DigitalHut routing and future marketplace collaboration systems.",
+
+dojj:
+94,
+
+related:[
+"AI workflow",
+"Remote collaboration",
+"Startup routing",
+"Content production"
+]
+
+}
+
+};
+
+function showHotspot(product){
+
+const item =
+hotspotData[product];
+
+if(!item){
+
+alert("No hotspot data yet.");
+
+return;
+
+}
+
+const overlay =
+document.createElement("div");
+
+overlay.className =
+"overlay-panel";
+
+overlay.innerHTML = `
+
+<div class="overlay-content">
+
+<h2>${product}</h2>
+
+<p>
+<strong>Environment Type:</strong>
+${item.type}
+</p>
+
+<img src="${item.image}">
+
+<p>
+${item.description}
+</p>
+
+<div class="dojj-meter">
+<div class="dojj-meter-fill" style="width:${item.dojj}%"></div>
+</div>
+
+<p>
+<strong>Dojj Compatibility:</strong>
+${item.dojj}%
+</p>
+
+<h3>Operational Readings</h3>
+
+<ul>
+${item.related.map(r=>`<li>${r}</li>`).join("")}
+</ul>
+
+<a href="${item.link}" target="_blank">
+View Product
+</a>
+
+<button class="overlay-close" onclick="this.parentElement.parentElement.remove()">
+Close
+</button>
+
+</div>
+
+`;
+
+document.body.appendChild(
+overlay
+);
+
+}
+
+setTimeout(()=>{
+
+document.querySelectorAll(
+"#sceneBox li"
+).forEach(li=>{
+
+const txt =
+li.innerText.trim();
+
+li.style.cursor =
+"pointer";
+
+li.onclick = ()=>showHotspot(txt);
+
+});
+
+},1000);
+
+</script>
+
+
+<style>
+.motion-layer{
+position:absolute;
+inset:0;
+pointer-events:none;
+overflow:hidden;
+}
+
+.moving-car{
+position:absolute;
+bottom:36px;
+left:-90px;
+font-size:38px;
+animation:driveCar 9s linear infinite;
+}
+
+.moving-bird{
+position:absolute;
+top:35px;
+left:-80px;
+font-size:32px;
+animation:flyBird 12s linear infinite;
+}
+
+.walker{
+position:absolute;
+bottom:95px;
+left:15px;
+font-size:34px;
+animation:walkPerson 7s ease-in-out infinite alternate;
+}
+
+.ai-orb{
+position:absolute;
+right:28px;
+top:28px;
+width:18px;
+height:18px;
+background:#38bdf8;
+border-radius:50%;
+box-shadow:0 0 22px #38bdf8;
+animation:pulseOrb 1.6s ease-in-out infinite;
+}
+
+.signal-card{
+position:absolute;
+left:20px;
+top:20px;
+background:#020617cc;
+border:1px solid #38bdf8;
+border-radius:14px;
+padding:10px;
+font-size:13px;
+color:white;
+animation:floatSignal 4s ease-in-out infinite;
+}
+
+@keyframes driveCar{
+0%{left:-90px}
+100%{left:110%}
+}
+
+@keyframes flyBird{
+0%{left:-80px;top:40px}
+50%{top:70px}
+100%{left:110%;top:35px}
+}
+
+@keyframes walkPerson{
+0%{left:20px}
+100%{left:70%}
+}
+
+@keyframes pulseOrb{
+0%,100%{transform:scale(1);opacity:.6}
+50%{transform:scale(1.8);opacity:1}
+}
+
+@keyframes floatSignal{
+0%,100%{transform:translateY(0)}
+50%{transform:translateY(-10px)}
+}
+</style>
+
+<script>
+const oldLoadScene = loadScene;
+
+loadScene = function(name){
+
+oldLoadScene(name);
+
+setTimeout(()=>{
+
+const scene =
+document.getElementById("sceneBox");
+
+if(!scene) return;
+
+let motion = "";
+
+if(name === "Exterior"){
+motion = `
+<div class="motion-layer">
+  <div class="signal-card">Dojj scan: neighborhood activity detected</div>
+  <div class="moving-car">🚗</div>
+  <div class="moving-bird">🐦</div>
+  <div class="walker">🚶</div>
+  <div class="ai-orb"></div>
+</div>`;
+}
+
+if(name === "Lobby"){
+motion = `
+<div class="motion-layer">
+  <div class="signal-card">Guest flow + presentation score rising</div>
+  <div class="walker">🚶‍♂️</div>
+  <div class="ai-orb"></div>
+</div>`;
+}
+
+if(name === "Living Room"){
+motion = `
+<div class="motion-layer">
+  <div class="signal-card">Family behavior simulation active</div>
+  <div class="walker">👨‍👩‍👧</div>
+  <div class="ai-orb"></div>
+</div>`;
+}
+
+if(name === "Patio"){
+motion = `
+<div class="motion-layer">
+  <div class="signal-card">Outdoor interest + greenery route active</div>
+  <div class="moving-bird">🦋</div>
+  <div class="walker">🚶</div>
+  <div class="ai-orb"></div>
+</div>`;
+}
+
+if(name === "Pool"){
+motion = `
+<div class="motion-layer">
+  <div class="signal-card">Poolside lifestyle activity detected</div>
+  <div class="moving-bird">💦</div>
+  <div class="walker">🏊</div>
+  <div class="ai-orb"></div>
+</div>`;
+}
+
+if(name === "Business Office"){
+motion = `
+<div class="motion-layer">
+  <div class="signal-card">Meeting workflow + client routing active</div>
+  <div class="walker">💼</div>
+  <div class="ai-orb"></div>
+</div>`;
+}
+
+if(name === "Safe Room"){
+motion = `
+<div class="motion-layer">
+  <div class="signal-card">Security scan active</div>
+  <div class="ai-orb"></div>
+</div>`;
+}
+
+if(name === "Rooftop"){
+motion = `
+<div class="motion-layer">
+  <div class="signal-card">Collaboration signal + skyline activity</div>
+  <div class="moving-bird">🛸</div>
+  <div class="walker">🤝</div>
+  <div class="ai-orb"></div>
+</div>`;
+}
+
+scene.insertAdjacentHTML("beforeend", motion);
+
+},100);
+
+};
+</script>
+
