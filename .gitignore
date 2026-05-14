@@ -1,3 +1,6 @@
 .env
 .env
 .config
+*.blend
+*.zip
+public/assets/genesis/thailand/village.glb
