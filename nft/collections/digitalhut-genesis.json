@@ -1,0 +1,19 @@
+{
+  "collection":"DigitalHut Genesis Estates",
+  "supply":1000,
+  "chain":"Polygon",
+  "utility":[
+    "3D property access",
+    "360 architecture viewing",
+    "future VR support",
+    "rarity marketplace compatibility",
+    "custom blueprint expansion",
+    "real estate concept showcase"
+  ],
+  "tiers":[
+    "Common",
+    "Rare",
+    "Epic",
+    "Legendary"
+  ]
+}

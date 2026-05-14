@@ -1,0 +1,21 @@
+{
+  "name":"Executive Office Tower",
+  "type":"Business",
+  "rarity":"Legendary",
+  "style":"Corporate Office Architecture",
+  "views":[
+    "Exterior",
+    "Lobby",
+    "Meeting Room",
+    "Office",
+    "Parking Lot"
+  ],
+  "blueprintSupport":true,
+  "futureSupport":[
+    "VR Meetings",
+    "360 Walkthrough",
+    "NFT Ownership",
+    "Business Networking"
+  ],
+  "shopify":"https://shop.supportrd.com/products/executive-office-business-setting"
+}

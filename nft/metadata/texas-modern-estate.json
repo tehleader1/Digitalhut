@@ -1,0 +1,20 @@
+{
+  "name":"Texas Modern Estate",
+  "type":"Home",
+  "rarity":"Epic",
+  "style":"Modern Texas Luxury",
+  "views":[
+    "Exterior",
+    "Living Room",
+    "Bedroom",
+    "Patio"
+  ],
+  "blueprintSupport":true,
+  "futureSupport":[
+    "360 Mode",
+    "VR Mode",
+    "Blueprint Overlay",
+    "NFT Ownership"
+  ],
+  "shopify":"https://shop.supportrd.com/products/texas-2-story-home"
+}

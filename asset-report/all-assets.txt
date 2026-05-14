@@ -1,0 +1,47 @@
+imports/grass.fbx
+imports/building_04.fbx
+imports/building_04.obj
+imports/building_04_nopack.blend
+imports/building2/building.blend
+imports/building2/building.fbx
+imports/building2/building.obj
+imports/Old House 2/Old House Files/Old House 2 3D Models.obj
+imports/Old House 2/Old House Files/Old House 2 3D Models.blend
+imports/Old House 2/Old House Files/Old House 2 3D Models.FBX
+imports/The room/room.blend
+imports/untitled.blend 4.blend
+imports/scene.blend
+imports/__MACOSX/._scene.blend
+imports/Bauhaus.blend
+imports/couch.blend
+public/assets/living/main.glb
+public/assets/office/main.glb
+public/assets/apartment/main.glb
+public/assets/neighborhood/main.glb
+public/assets/african/main.glb
+public/assets/cabin/main.glb
+public/assets/hotel/main.glb
+public/assets/house/main.glb
+public/assets/house/main.obj
+public/assets/bedroom/main.glb
+public/assets/patio/main.glb
+public/assets/lobby/main.glb
+public/assets/meeting/main.glb
+public/assets/plumbing/main.glb
+public/assets/pool/main.glb
+public/assets/curated/texas/exterior.obj
+public/assets/curated/canada/exterior.obj
+public/assets/curated/africa/exterior.glb
+public/assets/curated/florida/exterior.obj
+public/assets/curated/japan/exterior.glb
+public/assets/curated/executive/exterior.obj
+public/assets/curated/creator/exterior.glb
+public/assets/curated/interiors/living.glb
+public/assets/curated/interiors/bedroom.glb
+public/assets/curated/interiors/patio.glb
+public/assets/curated/interiors/pool.glb
+public/assets/curated/interiors/utilities.glb
+public/assets/curated/interiors/office.glb
+public/assets/curated/interiors/lobby.glb
+public/assets/curated/interiors/meeting.glb
+public/assets/curated/interiors/parking.glb
