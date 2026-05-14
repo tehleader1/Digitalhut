@@ -355,3 +355,27 @@ Open Shopify Product
 </div>
 );
 }
+
+const nftRooms = [
+  {
+    name: "Japanese Tatami NFT Room",
+    model: "/assets/japan/japanese_tatami_room.glb",
+    price: "2.5 ETH"
+  },
+  {
+    name: "Japanese Residential Estate",
+    model: "/assets/japan/japanese_residential_home_01.glb",
+    price: "4 ETH"
+  },
+  {
+    name: "Luxury Japanese Interior",
+    model: "/assets/japan/japanese_style_interior.glb",
+    price: "3.2 ETH"
+  },
+  {
+    name: "Aomori Falls NFT Experience",
+    model: "/assets/japan/choshi-otaki_falls_oirase_valley_aomori.glb",
+    price: "6 ETH"
+  }
+]
+
