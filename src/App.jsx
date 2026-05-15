@@ -379,3 +379,33 @@ const nftRooms = [
   }
 ]
 
+
+const japanRooms = [
+  {
+    id: "japan-tatami",
+    name: "Japanese Tatami NFT Room",
+    model: "/assets/japan/japanese_tatami_room.glb",
+    category: "nft"
+  },
+  {
+    id: "japan-home",
+    name: "Japanese Residential Home",
+    model: "/assets/japan/japanese_home_room..glb",
+    category: "nft"
+  },
+  {
+    id: "japan-luxury",
+    name: "Luxury Japanese Interior",
+    model: "/assets/japan/japanese_style_interior.glb",
+    category: "nft"
+  },
+  {
+    id: "japan-estate",
+    name: "Japanese Estate",
+    model: "/assets/japan/japanese_residential_home_03.glb",
+    category: "nft"
+  }
+];
+
+console.log("Japanese NFT rooms loaded", japanRooms);
+
