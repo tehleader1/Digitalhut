@@ -90,7 +90,7 @@ type:"NFT Home",
 mint:"Mint Ready",
 compat:"360 Compatible",
 tag:"Traditional Japanese tatami NFT property.",
-shop:"https://digitalhut.app",
+shop:"https://shop.supportrd.com/products/japanese-tatami-nft-estate",
 views:{
 Exterior:"/assets/japan/japanese_tatami_room.glb"
 }
@@ -102,7 +102,7 @@ type:"NFT Home",
 mint:"Mint Ready",
 compat:"360 Compatible",
 tag:"Luxury Japanese NFT interior experience.",
-shop:"https://digitalhut.app",
+shop:"https://shop.supportrd.com/products/japanese-luxury-interior-nft",
 views:{
 Exterior:"/assets/japan/japanese_style_interior.glb"
 }
@@ -114,7 +114,7 @@ type:"NFT Home",
 mint:"Genesis Collection",
 compat:"360 Compatible",
 tag:"Modern Japanese residential NFT property.",
-shop:"https://digitalhut.app",
+shop:"https://shop.supportrd.com/products/japanese-residential-estate-nft",
 views:{
 Exterior:"/assets/japan/japanese_residential_home_03.glb"
 }
