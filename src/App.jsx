@@ -167,7 +167,7 @@ buy:"https://shop.supportrd.com/products/japan-2-story-home",
 source:"NFT digital property + decentralized communities"
 }
 ];
-\nexport default function App(){
+export default function App(){
 
 const mount=useRef(null);
 const first=Object.keys(catalog)[0];
