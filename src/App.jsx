@@ -82,6 +82,44 @@ Exterior:"/assets/genesis/india/exterior.glb"
 }
 }
 
+
+,
+"Japanese Tatami Estate":{
+rarity:"Epic",
+type:"NFT Home",
+mint:"Mint Ready",
+compat:"360 Compatible",
+tag:"Traditional Japanese tatami NFT property.",
+shop:"https://digitalhut.app",
+views:{
+Exterior:"/assets/japan/japanese_tatami_room.glb"
+}
+},
+
+"Japanese Luxury Interior":{
+rarity:"Legendary",
+type:"NFT Home",
+mint:"Mint Ready",
+compat:"360 Compatible",
+tag:"Luxury Japanese NFT interior experience.",
+shop:"https://digitalhut.app",
+views:{
+Exterior:"/assets/japan/japanese_style_interior.glb"
+}
+},
+
+"Japanese Residential Estate":{
+rarity:"Rare",
+type:"NFT Home",
+mint:"Genesis Collection",
+compat:"360 Compatible",
+tag:"Modern Japanese residential NFT property.",
+shop:"https://digitalhut.app",
+views:{
+Exterior:"/assets/japan/japanese_residential_home_03.glb"
+}
+}
+
 };
 
 export default function App(){
