@@ -380,3 +380,50 @@ grid-template-columns:1fr;
   margin-top:15px;
 }
 
+
+.accountPanel{
+  padding:60px 20px;
+  background:#050b08;
+  color:white;
+}
+
+.accountPanel h2{
+  font-size:40px;
+}
+
+.accountGrid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;
+  margin-top:25px;
+}
+
+.accountCard{
+  background:#111;
+  border:1px solid #234;
+  border-radius:20px;
+  padding:22px;
+}
+
+.accountCard input{
+  width:100%;
+  padding:14px;
+  border-radius:12px;
+  border:1px solid #333;
+  margin:12px 0;
+}
+
+.accountCard button{
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:12px;
+  background:#00ff99;
+  color:#000;
+  font-weight:bold;
+}
+
+.accountStatus{
+  color:#00ff99;
+  margin-top:20px;
+}
