@@ -90,7 +90,7 @@ type:"NFT Home",
 mint:"Mint Ready",
 compat:"360 Compatible",
 tag:"Traditional Japanese tatami NFT property.",
-shop:"https://shop.supportrd.com/products/japanese-tatami-nft-estate",
+shop:"https://shop.supportrd.com/products/japan-2-story-home",
 views:{
 Exterior:"/assets/japan/japanese_tatami_room.glb"
 }
@@ -102,7 +102,7 @@ type:"NFT Home",
 mint:"Mint Ready",
 compat:"360 Compatible",
 tag:"Luxury Japanese NFT interior experience.",
-shop:"https://shop.supportrd.com/products/japanese-luxury-interior-nft",
+shop:"https://shop.supportrd.com/products/japan-2-story-home",
 views:{
 Exterior:"/assets/japan/japanese_style_interior.glb"
 }
@@ -114,7 +114,7 @@ type:"NFT Home",
 mint:"Genesis Collection",
 compat:"360 Compatible",
 tag:"Modern Japanese residential NFT property.",
-shop:"https://shop.supportrd.com/products/japanese-residential-estate-nft",
+shop:"https://shop.supportrd.com/products/japan-2-story-home",
 views:{
 Exterior:"/assets/japan/japanese_residential_home_03.glb"
 }
@@ -122,7 +122,52 @@ Exterior:"/assets/japan/japanese_residential_home_03.glb"
 
 };
 
-export default function App(){
+
+const realLifeScenarios=[
+{
+title:"Real Estate Model",
+img:"https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=900&q=80",
+scenario:"A builder or realtor can use DigitalHut to show a 3D home before the buyer ever walks inside. This helps sell vision, upgrades, layouts, and lifestyle faster.",
+buy:"https://shop.supportrd.com/products/japan-2-story-home",
+source:"Real estate market + buyer visualization trends"
+},
+{
+title:"Workforce Blueprint",
+img:"https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=900&q=80",
+scenario:"A company can map offices, plumbing routes, safe rooms, training areas, parking, and work zones so teams understand the job before arriving.",
+buy:"https://shop.supportrd.com/products/japan-2-story-home",
+source:"Workforce training + digital twin planning"
+},
+{
+title:"School Project",
+img:"https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=900&q=80",
+scenario:"Students can turn architecture, geography, history, business, and STEM projects into interactive 3D worlds instead of flat slides.",
+buy:"https://shop.supportrd.com/products/japan-2-story-home",
+source:"Education technology + project-based learning"
+},
+{
+title:"Video Game",
+img:"https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80",
+scenario:"Game creators can use DigitalHut environments as concept maps, playable rooms, NFT worlds, or early-stage game level previews.",
+buy:"https://shop.supportrd.com/products/japan-2-story-home",
+source:"Gaming, metaverse, and interactive media"
+},
+{
+title:"Housing Market Analysis",
+img:"https://images.unsplash.com/photo-1460317442991-0ec209397118?auto=format&fit=crop&w=900&q=80",
+scenario:"Investors can compare houses, neighborhoods, renovation ideas, and buyer appeal visually before spending money on the wrong property.",
+buy:"https://shop.supportrd.com/products/japan-2-story-home",
+source:"Housing market research + investor planning"
+},
+{
+title:"NFT Decentralized Project",
+img:"https://images.unsplash.com/photo-1642104704074-907c0698cbd9?auto=format&fit=crop&w=900&q=80",
+scenario:"DigitalHut can help creators build NFT property collections with real utility: rooms, access, community, training, memberships, and digital ownership.",
+buy:"https://shop.supportrd.com/products/japan-2-story-home",
+source:"NFT digital property + decentralized communities"
+}
+];
+\nexport default function App(){
 
 const mount=useRef(null);
 const first=Object.keys(catalog)[0];
@@ -261,7 +306,29 @@ return(
 </section>
 
 
-<section className="collections">
+
+<section className="realLifeScenario" id="real-life-scenario">
+<h2>Real Life Scenario</h2>
+<p className="scenarioIntro">
+DigitalHut is built to help people make more money, improve their life, and bring communities together through real projects, real models, and digital property systems.
+</p>
+
+<div className="scenarioGrid">
+{realLifeScenarios.map((s,i)=>(
+<div className="scenarioCard" key={s.title}>
+<img src={s.img} alt={s.title}/>
+<div className="scenarioBody">
+<div className="scenarioBadge">Fresh Scenario #{i+1}</div>
+<h3>{s.title}</h3>
+<p>{s.scenario}</p>
+<small>{s.source}</small>
+<a href={s.buy} target="_blank" rel="noreferrer">Buy Example House Model</a>
+</div>
+</div>
+))}
+</div>
+</section>
+\n<section className="collections">
 
 <h2>Genesis NFT Collections</h2>
 
