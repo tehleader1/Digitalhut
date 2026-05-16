@@ -7,6 +7,10 @@ export default function DigitalHutAccount() {
   const [wallet, setWallet] = useState("");
 
   async function signUp() {
+    if (!supabase) {
+      setStatus("Supabase not configured. Please add environment variables.");
+      return;
+    }
     const { error } = await supabase.auth.signInWithOtp({ email });
     setStatus(error ? error.message : "Check your email to sign in.");
   }
