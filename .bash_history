@@ -1,500 +1,500 @@
-async function loadDefault(){
- let res=await fetch("/api/defaults"); let arr=await res.json();
- readers=arr.map(s=>({symbol:s,kind:s.includes("/")?"crypto":"stock"}));
- draw();
-}
+    idx = s.rfind("</div>")
+    s = s[:idx] + "\n<TimeCapsuleVault />\n" + s[idx:]
+p.write_text(s)
+PY
 
-async function draw(){
- let html="<h2>10 Live + Search Readers</h2>";
- for(let r of readers){
-  try{
-   let res=await fetch(`/api/read?symbol=${encodeURIComponent(r.symbol)}&kind=${r.kind}`);
-   let d=await res.json(); Object.assign(r,d);
-   let st=stage(r.pressure);
-   let key=r.symbol+"-"+st[0];
-
-   if(r.pressure>=55 && !sealFired[key]){
-    ping(r,st[0],r.pressure>=60);
-    sealFired[key]=true;
-   }
-
-   html+=`<div class="reader">
-    <div class="laser"></div>
-    <div class="big">${r.symbol} — ${r.side} ${r.pressure}%</div>
-    <p>Real move from open: ${r.raw_percent}% | Price: $${r.price}</p>
-    <div class="meter"><div class="fill ${r.side==="BEAR"?"bear":""}" style="width:${r.pressure}%"></div></div>
-    <h3 class="${st[1]}">${st[0]}</h3>
-    <p>${r.pressure>=60?"FINAL SEAL PING FIRED: power down / exit watch.":"Balancing and reading live pressure."}</p>
-   </div>`;
-  }catch(e){
-   html+=`<div class="reader">${r.symbol} loading/error</div>`;
-  }
- }
- document.getElementById("readers").innerHTML=html;
-}
-
-setInterval(draw,15000);
-loadDefault();
-</script>
-</body>
-</html>
-"""
-
-@app.route("/")
-def home():
-    return render_template_string(HTML)
-
-@app.route("/healthz")
-def healthz():
-    return "OK", 200
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10000)
-EOF
-
+npm run build
 git add .
-git commit -m "connect market api live seal reader"
-git push --force origin main
-pip install google-auth google-auth-oauthlib google-api-python-client requests
-pip install --upgrade pip setuptools wheel
-pkg install rust clang python-dev openssl-dev libffi-dev -y
-pip install requests
-pip install google-auth
-pip install google-auth-oauthlib
-pip install google-api-python-client
-pip uninstall google-api-python-client google-auth google-auth-oauthlib cryptography -y
-pip install requests flask
-cat > merchant_feed.py <<'EOF'
-import json
-from datetime import datetime
+git commit -m "Repair arcade capsule search and result flow"
+git push origin main
+curl -X POST "https://api.vercel.com/v1/integrations/deploy/prj_KhqGVl8hzC2CJLJjYUkUdmzS6Gu5/oVlWK8bUNw"
+cd ~/digitalhut-live
+mkdir -p src/game
+cat > src/game/zombieEscortConfig.js <<'EOF'
+export const GAME_CONFIG = {
+  title: "DigitalHut Zombie Escort",
+  version: "0.1 Vertical Slice",
 
-products = [
+  identityOptions: [
+    "male",
+    "female",
+    "protoss-zerg"
+  ],
+
+  abilities: [
     {
-        "id": "laser-reader-1",
-        "title": "Laser Signal Reader",
-        "description": "Live stock and crypto pressure reader",
-        "price": "49.99 USD",
-        "availability": "in stock",
-        "condition": "new",
-        "brand": "Market",
-        "return_policy": "30-day refund if product or delivery fails"
+      id: "melee_shout",
+      name: "Melee Shout",
+      description:
+        "Pushes enemies back and buffs nearby allies."
     },
+
     {
-        "id": "nft-signal-pack",
-        "title": "NFT Signal Pack",
-        "description": "Digital NFT signal access",
-        "price": "99.99 USD",
-        "availability": "in stock",
-        "condition": "new",
-        "brand": "Market",
-        "return_policy": "Refund only if delivery or wallet transfer fails"
+      id: "fireball",
+      name: "Fireball",
+      description:
+        "Rapid-fire burn projectile with splash damage."
+    },
+
+    {
+      id: "rodeo_rope",
+      name: "Rodeo Rope",
+      description:
+        "Grab a zombie and swing it into nearby enemies."
+    },
+
+    {
+      id: "poison_drip",
+      name: "Poison Drip",
+      description:
+        "Fog DOT spell that slowly kills grouped enemies."
     }
-]
+  ],
 
-feed = {
-    "generated": str(datetime.utcnow()),
-    "products": products
-}
+  waves: [
+    {
+      id: 1,
+      title: "Highway Entrance",
+      duration: 90,
+      enemies: ["walker", "runner"],
+      environment: "forest-road"
+    },
 
-with open("merchant_feed.json","w") as f:
-    json.dump(feed,f,indent=2)
+    {
+      id: 2,
+      title: "Collapsed Street",
+      duration: 120,
+      enemies: ["walker", "runner", "brute"],
+      environment: "small-town"
+    },
 
-print("merchant_feed.json generated")
+    {
+      id: 3,
+      title: "Northern Barrier Collapse",
+      duration: 180,
+      enemies: ["runner", "crawler", "brute"],
+      environment: "city-defense",
+
+      ally: {
+        name: "John",
+        abilities: [
+          "heal",
+          "rapid_fire",
+          "barrier"
+        ]
+      },
+
+      story:
+        "John survived an apartment ambush. His wife did not."
+    }
+  ],
+
+  rewards: {
+    healthPack: true,
+    rapidFire: true,
+    bazooka: {
+      unlockWave: 5
+    }
+  }
+};
 EOF
 
-python merchant_feed.py
-cd ~/digitalhut
-cd ~/Digitalhut
-cd ~
-ls
-cat >> index.html << 'EOF'
+cat > src/components/ZombieEscortGame.jsx <<'EOF'
+import { useEffect, useRef, useState } from "react";
+import { GAME_CONFIG } from "../game/zombieEscortConfig";
 
-<style>
+export default function ZombieEscortGame() {
+  const arenaRef = useRef(null);
 
-body::before {
+  const [walletConnected, setWalletConnected] = useState(false);
 
-  content: "";
+  const [identity, setIdentity] = useState("");
+  const [ability, setAbility] = useState("");
 
-  position: fixed;
+  const [wave, setWave] = useState(1);
 
-  top: -20%;
-  left: -20%;
+  const [playerX, setPlayerX] = useState(45);
 
-  width: 140%;
-  height: 140%;
+  const [hp, setHp] = useState(100);
 
+  const [time, setTime] = useState(90);
+
+  const [enemies, setEnemies] = useState([]);
+
+  const [started, setStarted] = useState(false);
+
+  useEffect(() => {
+    window.ethereum?.request?.({
+      method: "eth_accounts"
+    }).then((accounts) => {
+      if (accounts?.length) {
+        setWalletConnected(true);
+      }
+    });
+  }, []);
+
+  async function connectWallet() {
+    if (!window.ethereum) {
+      window.location.href =
+        "https://metamask.app.link/dapp/digitalhut.app";
+      return;
+    }
+
+    const accounts =
+      await window.ethereum.request({
+        method: "eth_requestAccounts"
+      });
+
+    if (accounts?.length) {
+      setWalletConnected(true);
+    }
+  }
+
+  function startGame() {
+    if (!identity || !ability) return;
+
+    setStarted(true);
+  }
+
+  useEffect(() => {
+    if (!started) return;
+
+    const spawnLoop = setInterval(() => {
+      setEnemies((old) => [
+        ...old
+          .map((e) => ({
+            ...e,
+            y: e.y + 12
+          }))
+          .filter((e) => e.y < 320),
+
+        {
+          id: crypto.randomUUID(),
+          x: Math.random() * 88,
+          y: 0
+        }
+      ]);
+    }, 500);
+
+    const timerLoop = setInterval(() => {
+      setTime((t) => {
+        if (t <= 1) {
+          clearInterval(spawnLoop);
+          clearInterval(timerLoop);
+
+          setWave((w) => w + 1);
+
+          return 0;
+        }
+
+        return t - 1;
+      });
+    }, 1000);
+
+    return () => {
+      clearInterval(spawnLoop);
+      clearInterval(timerLoop);
+    };
+  }, [started]);
+
+  function movePlayer(e) {
+    const rect =
+      arenaRef.current?.getBoundingClientRect();
+
+    if (!rect) return;
+
+    const x =
+      e.touches
+        ? e.touches[0].clientX
+        : e.clientX;
+
+    const percent =
+      ((x - rect.left) / rect.width) * 100;
+
+    setPlayerX(
+      Math.max(4, Math.min(92, percent))
+    );
+  }
+
+  function hitEnemy(id) {
+    setEnemies((old) =>
+      old.filter((e) => e.id !== id)
+    );
+  }
+
+  const avatar =
+    identity === "female"
+      ? "🧝‍♀️"
+      : identity === "male"
+      ? "🧍‍♂️"
+      : "🌀";
+
+  return (
+    <section style={wrap}>
+      <h1 style={title}>
+        DigitalHut Zombie Escort
+      </h1>
+
+      {!walletConnected && (
+        <div style={panel}>
+          <h2>Connect Wallet</h2>
+
+          <button
+            style={btn}
+            onClick={connectWallet}
+          >
+            Connect Wallet
+          </button>
+        </div>
+      )}
+
+      {walletConnected && !started && (
+        <div style={panel}>
+          <h2>Create Survivor</h2>
+
+          <select
+            style={input}
+            value={identity}
+            onChange={(e) =>
+              setIdentity(e.target.value)
+            }
+          >
+            <option value="">
+              Choose Identity
+            </option>
+
+            {GAME_CONFIG.identityOptions.map(
+              (i) => (
+                <option key={i} value={i}>
+                  {i}
+                </option>
+              )
+            )}
+          </select>
+
+          <select
+            style={input}
+            value={ability}
+            onChange={(e) =>
+              setAbility(e.target.value)
+            }
+          >
+            <option value="">
+              Choose Ability
+            </option>
+
+            {GAME_CONFIG.abilities.map(
+              (a) => (
+                <option
+                  key={a.id}
+                  value={a.id}
+                >
+                  {a.name}
+                </option>
+              )
+            )}
+          </select>
+
+          <button
+            style={btn}
+            onClick={startGame}
+          >
+            Start Escort
+          </button>
+        </div>
+      )}
+
+      {started && (
+        <div style={panel}>
+          <h2>
+            Wave {wave}: {
+              GAME_CONFIG.waves[
+                wave - 1
+              ]?.title
+            }
+          </h2>
+
+          <p>
+            HP: {hp} | Time: {time}s
+          </p>
+
+          <div
+            ref={arenaRef}
+            onMouseMove={movePlayer}
+            onTouchMove={movePlayer}
+            style={arena}
+          >
+            <div
+              style={{
+                ...player,
+                left: `${playerX}%`
+              }}
+            >
+              {avatar}
+            </div>
+
+            {enemies.map((enemy) => (
+              <button
+                key={enemy.id}
+                onClick={() =>
+                  hitEnemy(enemy.id)
+                }
+                style={{
+                  ...enemyStyle,
+                  left: `${enemy.x}%`,
+                  top: enemy.y
+                }}
+              >
+                🧟
+              </button>
+            ))}
+          </div>
+
+          <h3>
+            Ability: {ability}
+          </h3>
+
+          <p>
+            {
+              GAME_CONFIG.abilities.find(
+                (a) =>
+                  a.id === ability
+              )?.description
+            }
+          </p>
+
+          {wave === 3 && (
+            <div style={johnBox}>
+              <h3>John Joined</h3>
+
+              <p>
+                "Northern and eastern
+                barriers just broke."
+              </p>
+
+              <p>
+                "I survived. My wife
+                didn’t."
+              </p>
+            </div>
+          )}
+        </div>
+      )}
+    </section>
+  );
+}
+
+const wrap = {
+  marginTop: 30,
+  padding: 24,
+  borderRadius: 24,
   background:
-    radial-gradient(circle at 20% 20%, rgba(56,189,248,0.12), transparent 30%),
-    radial-gradient(circle at 80% 30%, rgba(168,85,247,0.10), transparent 30%),
-    radial-gradient(circle at 50% 80%, rgba(59,130,246,0.10), transparent 30%);
+    "linear-gradient(180deg,#02020c,#111133)",
+  color: "white",
+  border: "1px solid #7b2cff"
+};
 
-  z-index: -1;
+const title = {
+  color: "#00ff99",
+  fontSize: 40
+};
 
-  animation: drift 18s linear infinite;
+const panel = {
+  marginTop: 18,
+  padding: 18,
+  borderRadius: 20,
+  background:
+    "rgba(255,255,255,.04)"
+};
 
-}
+const btn = {
+  width: "100%",
+  marginTop: 14,
+  padding: 16,
+  borderRadius: 16,
+  border: 0,
+  background: "#00ff99",
+  color: "#000",
+  fontWeight: 900
+};
 
-@keyframes drift {
+const input = {
+  width: "100%",
+  marginTop: 12,
+  padding: 14,
+  borderRadius: 14,
+  background: "#050510",
+  color: "white"
+};
 
-  0% {
-    transform: translate(0px, 0px);
-  }
+const arena = {
+  position: "relative",
+  marginTop: 20,
+  height: 340,
+  borderRadius: 24,
+  overflow: "hidden",
+  background:
+    "radial-gradient(circle,#1d0045,#02020c 75%)",
+  border: "1px solid #9b5cff",
+  touchAction: "none"
+};
 
-  50% {
-    transform: translate(-30px, -20px);
-  }
+const player = {
+  position: "absolute",
+  bottom: 12,
+  fontSize: 42,
+  transform: "translateX(-50%)"
+};
 
-  100% {
-    transform: translate(0px, 0px);
-  }
+const enemyStyle = {
+  position: "absolute",
+  borderRadius: "50%",
+  border: "1px solid #e6ccff",
+  padding: 8,
+  background: "#7b2cff",
+  boxShadow:
+    "0 0 18px rgba(180,90,255,.8)"
+};
 
-}
-
-.card {
-
-  backdrop-filter: blur(12px);
-
-  box-shadow:
-    0 0 25px rgba(56,189,248,0.08);
-
-  transition: all 0.3s ease;
-
-}
-
-.card:hover {
-
-  transform: translateY(-6px);
-
-  box-shadow:
-    0 0 35px rgba(56,189,248,0.18);
-
-}
-
-</style>
-
+const johnBox = {
+  marginTop: 18,
+  padding: 16,
+  borderRadius: 16,
+  border: "1px solid #00ff99",
+  background:
+    "rgba(0,255,153,.08)"
+};
 EOF
 
-git add index.html
-git commit -m "Added animated AI marketplace visuals"
-git push origin main
-cat >> index.html << 'EOF'
+python - <<'PY'
+from pathlib import Path
+p = Path("src/App.jsx")
+s = p.read_text()
 
-<section class="section">
+if 'ZombieEscortGame' not in s:
+    s = 'import ZombieEscortGame from "./components/ZombieEscortGame";\n' + s
 
-  <h2>3D Simulator Access</h2>
+s = s.replace("<ZombieEscortGame />", "")
 
-  <div class="card">
+idx = s.rfind("</main>")
+if idx == -1:
+    idx = s.rfind("</div>")
 
-    <div class="tag">SIMULATOR PREVIEW</div>
+s = s[:idx] + "\n<ZombieEscortGame />\n" + s[idx:]
 
-    <h3>DigitalHut Living Ecosystem</h3>
+p.write_text(s)
+PY
 
-    <p>
-
-      Enter interactive simulated environments featuring:
-      homes, offices, rooftop collaboration spaces,
-      creator studios, patios, meeting rooms,
-      AI systems, lifestyle interactions, and
-      future commerce environments.
-
-    </p>
-
-    <div style="margin-top:20px;">
-
-      <button class="button">
-        Enter Simulator
-      </button>
-
-    </div>
-
-    <div style="margin-top:30px; opacity:0.8;">
-
-      🌴 California Ranch House<br>
-      🏝 Thailand Bungalow<br>
-      🌊 Fiji Villa<br>
-      🏢 Executive Business Office<br>
-      🏔 Canada Mountain Cabin<br>
-      🏖 Florida Beach Pad<br>
-      🏯 Japan 2-Story Home<br>
-      🇮🇳 India 2-Story Home<br>
-      🇪🇺 Europe 2-Story Home<br>
-      🏡 North Carolina Home<br>
-
-    </div>
-
-  </div>
-
-</section>
-
-EOF
-
-git add index.html
-git commit -m "Added simulator entry section"
-git push origin main
-cat > simulator.html << 'EOF'
-
-<!DOCTYPE html>
-<html>
-
-<head>
-
-  <title>DigitalHut Simulator</title>
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <style>
-
-    body {
-
-      margin: 0;
-
-      background:
-        linear-gradient(
-          180deg,
-          #020617,
-          #0f172a
-        );
-
-      color: white;
-
-      font-family: Arial, sans-serif;
-
-      overflow-x: hidden;
-
-    }
-
-    .topbar {
-
-      padding: 20px;
-
-      background: rgba(0,0,0,0.5);
-
-      backdrop-filter: blur(10px);
-
-      display: flex;
-
-      justify-content: space-between;
-
-      align-items: center;
-
-      position: sticky;
-
-      top: 0;
-
-    }
-
-    .hero {
-
-      padding: 40px 24px;
-
-    }
-
-    .hero h1 {
-
-      font-size: 48px;
-
-      margin-bottom: 10px;
-
-    }
-
-    .hero p {
-
-      color: #cbd5e1;
-
-      font-size: 18px;
-
-    }
-
-    .scene {
-
-      height: 300px;
-
-      margin: 24px;
-
-      border-radius: 20px;
-
-      background:
-        radial-gradient(circle at center,
-        rgba(56,189,248,0.15),
-        rgba(15,23,42,0.95));
-
-      border: 1px solid rgba(255,255,255,0.08);
-
-      box-shadow:
-        0 0 60px rgba(56,189,248,0.15);
-
-      display: flex;
-
-      justify-content: center;
-
-      align-items: center;
-
-      font-size: 28px;
-
-      color: rgba(255,255,255,0.8);
-
-    }
-
-    .grid {
-
-      display: grid;
-
-      gap: 18px;
-
-      padding: 24px;
-
-    }
-
-    .card {
-
-      background: rgba(30,41,59,0.85);
-
-      padding: 20px;
-
-      border-radius: 18px;
-
-      border:
-        1px solid rgba(255,255,255,0.08);
-
-      backdrop-filter: blur(10px);
-
-      transition: 0.3s ease;
-
-    }
-
-    .card:hover {
-
-      transform: translateY(-6px);
-
-      box-shadow:
-        0 0 30px rgba(56,189,248,0.18);
-
-    }
-
-    .tag {
-
-      color: #38bdf8;
-
-      font-weight: bold;
-
-      margin-bottom: 10px;
-
-    }
-
-    .button {
-
-      display: inline-block;
-
-      margin-top: 12px;
-
-      padding: 10px 16px;
-
-      background: #38bdf8;
-
-      color: black;
-
-      border-radius: 10px;
-
-      text-decoration: none;
-
-      font-weight: bold;
-
-    }
-
-  </style>
-
-</head>
-
-<body>
-
-<div class="topbar">
-
-  <div>🚀 DigitalHut Simulator</div>
-
-  <div>Dojj AI Active</div>
-
-</div>
-
-<section class="hero">
-
-  <h1>Interactive Living Ecosystem</h1>
-
-  <p>
-
-    Explore homes, offices, creator spaces,
-    rooftop collaboration environments,
-    AI lifestyle simulations, and future
-    digital commerce environments.
-
-  </p>
-
-</section>
-
-<div class="scene">
-
-  3D Environment Loading...
-
-</div>
-
-<div class="grid">
-
-  <div class="card">
-
-    <div class="tag">RESIDENTIAL</div>
-
-    <h2>California Ranch House</h2>
-
-    <p>
-
-      Simulated family lifestyle environment
-      with smart-home integrations,
-      productivity tools, and AI systems.
-
-    </p>
-
-  </div>
-
-  <div class="card">
-
-    <div class="tag">CREATOR</div>
-
-    <h2>Creator Studio Office</h2>
-
-    <p>
-
-      Creator economy simulation with
-      livestreaming, editing,
-      AI content workflows, and media systems.
-
-    </p>
-
-  </div>
-
-  <div class="card">
-
-    <div class="tag">BUSINESS</div>
-
-    <h2>Executive Meeting Environment</h2>
-
-    <p>
-
-      Simulated business collaboration,
-      startup infrastructure,
-      AI dashboards, and SaaS tools.
-
-    </p>
-
-  </div>
-
-</div>
-
-</body>
-
-</html>
-
-EOF
-
-sed -i 's/<button class="button">Enter Simulator<\/button>/<a class="button" href="simulator.html">Enter Simulator<\/a>/' index.html
+npm run build
 git add .
-git commit -m "Added simulator shell experience"
+git commit -m "Add zombie escort vertical slice"
 git push origin main
+curl -X POST "https://api.vercel.com/v1/integrations/deploy/prj_KhqGVl8hzC2CJLJjYUkUdmzS6Gu5/oVlWK8bUNw"
+git status
+git add public/models/*.glb
+git commit -m "Added GLB assets"
+git push origin main
+pkg update -y && pkg upgrade -y
+cd ~/Digitalhut || cd ~/digitalhut || exit
+pkg update -y && pkg upgrade -y
+cd ~/Digitalhut || cd ~/digitalhut || exit
