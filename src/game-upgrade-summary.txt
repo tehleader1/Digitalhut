@@ -1,0 +1,25 @@
+UPGRADED GAME STRUCTURE
+
+- Outside-view combat camera
+- Mobile zombie escort adventure
+- Auto-forward progression
+- Free movement combat radius
+- City/Farm/Ship/Boss maps
+- John AI companion
+- Multiplayer lobby system
+- Join/Create sessions
+- Different player colors
+- Free-time city exploration
+- Damage calculations:
+  burn
+  poison
+  crit
+  hurl
+  bazooka
+- Monster-specific buffs
+- Cutaway progression scenes
+- Ping alerts
+- Special effects
+- Health pickups
+- Weapon pickups
+- Boss warnings

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">DigitalHut</string>
+    <string name="title_activity_main">DigitalHut</string>
+    <string name="package_name">com.digitalhut.observatory</string>
+    <string name="custom_url_scheme">com.digitalhut.observatory</string>
+</resources>
