@@ -4,16 +4,11 @@ export const observatoryLibrary = {
     "/glbs/dtes_vancouver_canada.glb",
     "/glbs/surfside_florida_usa_beachfront_properties.glb",
     "/glbs/morgantown_west_virginia_usa_x2.glb",
-    "/glbs/new_york_city._manhattan.glb",
-    "/glbs/hollywood_sign_los_angeles_ca_usa.glb"
+    "/glbs/new_york_city._manhattan.glb"
   ],
 
   "south america":[
     "/glbs/rio_de_janeiro_-_brazil.glb"
-  ],
-
-  "africa":[
-    "/glbs/cape_town_-_south_africa.glb"
   ],
 
   "europe":[
@@ -21,8 +16,8 @@ export const observatoryLibrary = {
     "/glbs/european_buildings_asset_pack_3.glb"
   ],
 
-  "australia":[
-    "/glbs/split_point_victoria_australia.glb"
+  "africa":[
+    "/glbs/cape_town_-_south_africa.glb"
   ],
 
   "space":[
@@ -30,16 +25,16 @@ export const observatoryLibrary = {
     "/glbs/moon.glb"
   ],
 
-  "city":[
-    "/glbs/city_pack_7.glb"
-  ],
-
-  "business":[
-    "/glbs/building_of_the_polyclinic_in_russia.glb"
+  "hollywood":[
+    "/glbs/hollywood_sign_los_angeles_ca_usa.glb"
   ],
 
   "caribbean":[
     "/glbs/tourist_colonial_zone_dominican_republic.glb"
+  ],
+
+  "city":[
+    "/glbs/city_pack_7.glb"
   ]
 
 }
