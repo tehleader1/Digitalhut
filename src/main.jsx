@@ -4,12 +4,13 @@ import ReactDOM from "react-dom/client";
 function App() {
   return (
     <div style={{
-      background:"#000",
-      color:"#00ff00",
+      width:"100vw",
       height:"100vh",
+      background:"black",
+      color:"#00ff00",
       display:"flex",
-      alignItems:"center",
       justifyContent:"center",
+      alignItems:"center",
       fontSize:"2rem"
     }}>
       DigitalHut Observatory Online
