@@ -1,5 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 import {
   BrowserRouter,
@@ -63,6 +64,8 @@ ReactDOM.createRoot(
       </Routes>
 
     </BrowserRouter>
+
+    <SpeedInsights />
 
   </WalletProvider>
 
