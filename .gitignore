@@ -1,0 +1,7 @@
+node_modules
+dist
+.vercel
+*.zip
+*.bin
+*.mp4
+*.glb
