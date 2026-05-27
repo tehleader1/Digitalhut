@@ -1,30 +1,30 @@
 "use client"
 
-import {useEffect,useState} from "react"
+import { useEffect, useState } from "react"
 
 const TOKEN="137a2704a95d4051b5ffe795b90d92ce"
 
 const CATEGORIES=[
- "planetary terrain observatory",
- "historic architecture city",
- "forest coastline environment",
- "space station planet",
- "industrial architecture",
- "museum cultural environment"
+ "planetary terrain",
+ "historic architecture",
+ "space station",
+ "city environment",
+ "museum world",
+ "industrial terrain"
 ]
 
 export default function Home(){
 
- const[items,setItems]=useState([])
- const[active,setActive]=useState(null)
- const[loading,setLoading]=useState(false)
+ const [items,setItems]=useState([])
+ const [active,setActive]=useState(null)
+ const [loading,setLoading]=useState(false)
 
- async function scan(query){
+ async function scan(q){
 
   setLoading(true)
 
   const r=await fetch(
-   `https://api.sketchfab.com/v3/search?type=models&q=${encodeURIComponent(query)}&sort_by=-likeCount`,
+   `https://api.sketchfab.com/v3/search?type=models&q=${encodeURIComponent(q)}&sort_by=-likeCount`,
    {
     headers:{
      Authorization:`Token ${TOKEN}`
@@ -36,7 +36,7 @@ export default function Home(){
 
   const list=(d.results||[])
    .filter(x=>x.uid && x.name)
-   .slice(0,16)
+   .slice(0,12)
 
   setItems(list)
 
@@ -49,10 +49,12 @@ export default function Home(){
  }
 
  useEffect(()=>{
-  scan("planetary observatory")
+  scan("planetary terrain")
  },[])
 
- return <main>
+ return (
+
+ <main>
 
  <style>{`
 
@@ -64,263 +66,192 @@ export default function Home(){
  }
 
  main{
-  min-height:100vh;
- }
-
- nav{
-  position:sticky;
-  top:0;
-  z-index:50;
-
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-
-  padding:18px 24px;
-
-  background:rgba(2,6,23,.82);
-  backdrop-filter:blur(18px);
-
-  border-bottom:1px solid #1e293b;
- }
-
- nav b{
-  font-size:26px;
- }
-
- nav button{
-  background:linear-gradient(
-   135deg,
-   #2563eb,
-   #7c3aed
-  );
-  border:0;
-  color:white;
-  padding:12px 16px;
-  border-radius:14px;
-  font-weight:900;
+  width:100%;
  }
 
  .hero{
-  padding:70px 24px 40px;
-  max-width:1200px;
-  margin:auto;
+  padding:28px 20px;
+  background:#020617;
  }
 
  h1{
-  font-size:82px;
+  font-size:58px;
   line-height:.9;
-  margin:0 0 24px;
-  letter-spacing:-4px;
+  margin:0 0 20px;
+  letter-spacing:-3px;
  }
 
- .hero p{
-  font-size:24px;
-  line-height:1.6;
+ p{
   color:#cbd5e1;
-  max-width:900px;
+  line-height:1.6;
+  font-size:19px;
  }
 
- .categories{
+ .categoryBar{
   display:flex;
   gap:12px;
   overflow:auto;
-  padding:0 24px 24px;
+  padding:0 20px 20px;
  }
 
- .categories button{
+ .categoryBar button{
   white-space:nowrap;
+ }
 
-  background:#0f172a;
-  border:1px solid #334155;
+ button{
+  background:
+   linear-gradient(
+    135deg,
+    #2563eb,
+    #7c3aed
+   );
 
   color:white;
-
+  border:0;
+  border-radius:16px;
   padding:14px 18px;
-
-  border-radius:18px;
-
-  font-weight:700;
+  font-weight:900;
+  font-size:16px;
  }
 
- .viewerSection{
-  padding:0 24px;
- }
-
- .viewerCard{
-  background:#000;
-  border-radius:34px;
-  overflow:hidden;
-  border:1px solid #334155;
+ .viewer{
+  padding:0 20px;
  }
 
  iframe{
   width:100%;
-  height:72vh;
+  height:52vh;
   border:0;
+  border-radius:28px;
+  background:#000;
  }
 
  .viewerInfo{
-  padding:24px;
-  background:#0f172a;
+  padding:18px 0 30px;
  }
 
  .viewerInfo h2{
+  font-size:36px;
   margin:0 0 12px;
-  font-size:38px;
- }
-
- .viewerInfo p{
-  color:#cbd5e1;
-  line-height:1.6;
  }
 
  .cards{
   display:grid;
-  grid-template-columns:
-   repeat(auto-fit,minmax(280px,1fr));
-
+  grid-template-columns:1fr;
   gap:20px;
-
-  padding:30px 24px 70px;
+  padding:0 20px 60px;
  }
 
  .card{
   background:#0f172a;
-
   border:1px solid #334155;
-
   border-radius:28px;
-
   overflow:hidden;
-
   color:white;
-
   padding:0;
-
   text-align:left;
- }
-
- .card:hover{
-  transform:translateY(-4px);
  }
 
  .card img{
   width:100%;
-  height:210px;
+  height:220px;
   object-fit:cover;
  }
 
  .card b{
   display:block;
-  padding:20px;
+  padding:18px;
   font-size:28px;
   line-height:1.15;
  }
 
  .loading{
-  padding:40px;
-  text-align:center;
+  padding:20px;
   color:#93c5fd;
  }
 
- @media(max-width:760px){
+ @media(min-width:900px){
 
-  h1{
-   font-size:54px;
-  }
-
-  .hero p{
-   font-size:18px;
+  .cards{
+   grid-template-columns:
+    repeat(3,1fr);
   }
 
   iframe{
-   height:52vh;
+   height:70vh;
+  }
+
+  h1{
+   font-size:86px;
   }
 
  }
 
  `}</style>
 
- <nav>
-
-  <b>DigitalHut Observatory</b>
-
-  <button>
-   SearchAtlas OTTO Active
-  </button>
-
- </nav>
-
  <section className="hero">
 
   <h1>
-   Explore Live 3D Worlds
+   DigitalHut Observatory
   </h1>
 
   <p>
-   AI-native observatory infrastructure for
-   immersive environment discovery,
-   planetary exploration,
+   AI-native cinematic observatory for
+   planetary terrain,
    architecture scanning,
-   and internet-fed 3D research systems.
+   immersive environments,
+   and live Sketchfab exploration.
   </p>
 
  </section>
 
- <section className="categories">
+ <section className="categoryBar">
 
-  {CATEGORIES.map(q=>
+  {CATEGORIES.map(x=>
 
    <button
-    key={q}
-    onClick={()=>scan(q)}
+    key={x}
+    onClick={()=>scan(x)}
    >
-    {q}
+    {x}
    </button>
 
   )}
 
  </section>
 
- <section className="viewerSection">
+ {active&&
 
-  {active&&
+ <section className="viewer">
 
-   <div className="viewerCard">
+  <iframe
+   src={`https://sketchfab.com/models/${active.uid}/embed?autostart=1&ui_infos=0`}
+   allow="
+    autoplay;
+    fullscreen;
+    xr-spatial-tracking
+   "
+   allowFullScreen
+  />
 
-    <iframe
-     src={
-      `https://sketchfab.com/models/${active.uid}/embed?autostart=1&ui_infos=0`
-     }
-     allow="
-      autoplay;
-      fullscreen;
-      xr-spatial-tracking
-     "
-     allowFullScreen
-    />
+  <div className="viewerInfo">
 
-    <div className="viewerInfo">
+   <h2>{active.name}</h2>
 
-     <h2>{active.name}</h2>
+   <p>
+    {active.description || "Live observatory signal"}
+   </p>
 
-     <p>
-      {active.description || "Live observatory signal."}
-     </p>
-
-    </div>
-
-   </div>
-
-  }
+  </div>
 
  </section>
+
+ }
 
  {loading&&
 
   <div className="loading">
-   Scanning live observatory feeds...
+   Scanning observatory feeds...
   </div>
 
  }
@@ -350,4 +281,6 @@ export default function Home(){
  </section>
 
  </main>
+
+ )
 }
