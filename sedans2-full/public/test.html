@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8"/>
+
+<title>DigitalHut Babylon Test</title>
+
+<style>
+
+html,body{
+width:100%;
+height:100%;
+margin:0;
+overflow:hidden;
+background:black;
+}
+
+#renderCanvas{
+width:100%;
+height:100%;
+touch-action:none;
+display:block;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<canvas id="renderCanvas"></canvas>
+
+<script src="https://cdn.babylonjs.com/babylon.js"></script>
+<script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+
+<script>
+
+const canvas=document.getElementById("renderCanvas")
+
+const engine=new BABYLON.Engine(canvas,true)
+
+const scene=new BABYLON.Scene(engine)
+
+scene.clearColor=new BABYLON.Color4(0,0,0,1)
+
+const camera=new BABYLON.ArcRotateCamera(
+"camera",
+Math.PI/2,
+Math.PI/3,
+12,
+new BABYLON.Vector3(0,2,0),
+scene
+)
+
+camera.attachControl(canvas,true)
+
+new BABYLON.HemisphericLight(
+"light",
+new BABYLON.Vector3(0,1,0),
+scene
+)
+
+BABYLON.SceneLoader.Append(
+"/models/",
+"city_pack_7.glb",
+scene,
+
+function(){
+
+alert("ISLAMIC OBSERVATORY GLB LOADED")
+
+},
+
+null,
+
+function(scene,message){
+
+alert("GLB FAILED: " + message)
+
+const box=BABYLON.MeshBuilder.CreateBox(
+"fallback",
+{size:2},
+scene
+)
+
+}
+
+)
+
+engine.runRenderLoop(function(){
+
+scene.render()
+
+})
+
+window.addEventListener("resize",function(){
+
+engine.resize()
+
+})
+
+</script>
+
+</body>
+
+</html>
