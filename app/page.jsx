@@ -24,29 +24,61 @@ export default function Home() {
     const scene = sceneRef.current
 
     scene.meshes.slice().forEach(m=>{
-      if(m.name !== "cameraCollider"){
+      if(
+        m.name !== "cameraCollider" &&
+        m.name !== "ground"
+      ){
         m.dispose()
       }
     })
 
-    const light =
-      new BABYLON.HemisphericLight(
-        "light",
-        new BABYLON.Vector3(0,1,0),
-        scene
-      )
-
-    light.intensity = 1.6
-
     try{
+
+      if(model.isDownloadable){
+
+        await BABYLON.SceneLoader.ImportMeshAsync(
+          "",
+          `https://api.sketchfab.com/v3/models/${model.uid}/download`,
+          "",
+          scene
+        )
+
+      }else{
+
+        const box =
+          BABYLON.MeshBuilder.CreateBox(
+            "fallback",
+            {size:4},
+            scene
+          )
+
+        const mat =
+          new BABYLON.StandardMaterial(
+            "mat",
+            scene
+          )
+
+        mat.diffuseTexture =
+          new BABYLON.Texture(
+            model.thumbnails?.images?.[0]?.url,
+            scene
+          )
+
+        mat.emissiveColor =
+          new BABYLON.Color3(0,0.7,1)
+
+        box.material = mat
+
+      }
+
+    }catch(e){
+
+      console.log(e)
 
       const sphere =
         BABYLON.MeshBuilder.CreateSphere(
-          "planet",
-          {
-            diameter:5,
-            segments:32
-          },
+          "sphere",
+          {diameter:4},
           scene
         )
 
@@ -56,20 +88,10 @@ export default function Home() {
           scene
         )
 
-      mat.diffuseTexture =
-        new BABYLON.Texture(
-          model.thumbnails?.images?.[0]?.url,
-          scene
-        )
-
       mat.emissiveColor =
-        new BABYLON.Color3(0.2,0.7,1)
+        new BABYLON.Color3(0,0.7,1)
 
       sphere.material = mat
-
-    }catch(e){
-
-      console.log(e)
 
     }
   }
@@ -96,7 +118,7 @@ export default function Home() {
         "camera",
         Math.PI/2,
         Math.PI/3,
-        8,
+        10,
         BABYLON.Vector3.Zero(),
         scene
       )
@@ -105,16 +127,24 @@ export default function Home() {
 
     camera.wheelDeltaPercentage = 0.01
 
+    const light =
+      new BABYLON.HemisphericLight(
+        "light",
+        new BABYLON.Vector3(0,1,0),
+        scene
+      )
+
+    light.intensity = 1.5
+
+    const ground =
+      BABYLON.MeshBuilder.CreateGround(
+        "ground",
+        {width:100,height:100},
+        scene
+      )
+
     engine.runRenderLoop(()=>{
-
-      scene.meshes.forEach(m=>{
-        if(m.name==="planet"){
-          m.rotation.y += 0.002
-        }
-      })
-
       scene.render()
-
     })
 
     window.addEventListener("resize",()=>{
@@ -136,7 +166,7 @@ export default function Home() {
       const list =
         (d.results||[])
         .filter(x=>x.name)
-        .slice(0,12)
+        .slice(0,10)
 
       setModels(list)
 
@@ -185,17 +215,17 @@ export default function Home() {
           left:20,
           right:20,
           zIndex:20,
-          backdropFilter:"blur(18px)",
+          backdropFilter:"blur(20px)",
           background:"rgba(2,6,23,.72)",
           border:"1px solid #334155",
-          borderRadius:"30px",
+          borderRadius:"28px",
           padding:"28px"
         }}
       >
 
         <h1
           style={{
-            fontSize:"64px",
+            fontSize:"58px",
             lineHeight:"0.92",
             marginBottom:"20px",
             fontWeight:"900"
@@ -211,9 +241,10 @@ export default function Home() {
             fontSize:"20px"
           }}
         >
-          AI-native BabylonJS observatory runtime with
-          SearchAtlas intelligence, Sketchfab discovery,
-          environment-fed exploration, and live 3D systems.
+          Live BabylonJS observatory runtime with real
+          environment loading, Sketchfab discovery,
+          SearchAtlas intelligence, and AI-native
+          exploration systems.
         </p>
 
       </div>
@@ -227,7 +258,7 @@ export default function Home() {
           display:"flex",
           overflowX:"auto",
           gap:"18px",
-          padding:"22px",
+          padding:"20px",
           zIndex:30,
           background:
             "linear-gradient(to top,#020617,transparent)"
@@ -244,12 +275,12 @@ export default function Home() {
             }}
             style={{
               minWidth:"240px",
-              border:
+              background:
                 active?.uid===m.uid
-                ? "3px solid #2563eb"
-                : "1px solid #334155",
-              background:"#0f172a",
-              borderRadius:"24px",
+                ? "#2563eb"
+                : "#0f172a",
+              border:"1px solid #334155",
+              borderRadius:"22px",
               overflow:"hidden",
               padding:0,
               color:"white"
