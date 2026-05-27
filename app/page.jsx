@@ -4,39 +4,26 @@ import {useEffect,useState} from "react"
 
 const TOKEN="137a2704a95d4051b5ffe795b90d92ce"
 
-const good=[
- "environment","terrain","city","architecture",
- "map","landscape","space","planet","coast",
- "forest","building","observatory","museum",
- "historic","industrial","street","structure"
+const QUERIES=[
+ "planetary terrain observatory",
+ "historic architecture city",
+ "forest coastline environment",
+ "futuristic megastructure",
+ "museum cultural environment",
+ "space station planet",
+ "industrial architecture"
 ]
-
-function score(x){
- const text=((x.name||"")+" "+(x.description||"")).toLowerCase()
- let s=0
- good.forEach(w=>{if(text.includes(w))s+=8})
- return s
-}
-
-function clean(t=""){
- return t
- .replace(/<[^>]*>/g,"")
- .replace(/\s+/g," ")
- .trim()
- .slice(0,260)
-}
 
 export default function Home(){
 
- const[q,setQ]=useState("planetary observatory")
  const[items,setItems]=useState([])
  const[active,setActive]=useState(null)
  const[auto,setAuto]=useState(true)
 
- async function scan(seed=q){
+ async function scan(query){
 
   const r=await fetch(
-   `https://api.sketchfab.com/v3/search?type=models&q=${encodeURIComponent(seed)}&sort_by=-likeCount`,
+   `https://api.sketchfab.com/v3/search?type=models&q=${encodeURIComponent(query)}&sort_by=-likeCount`,
    {
     headers:{
      Authorization:`Token ${TOKEN}`
@@ -47,17 +34,19 @@ export default function Home(){
   const d=await r.json()
 
   const list=(d.results||[])
-   .sort((a,b)=>score(b)-score(a))
-   .slice(0,12)
+   .filter(x=>x.uid && x.name)
+   .slice(0,14)
 
   setItems(list)
 
-  if(list[0])setActive(list[0])
+  if(list[0]){
+   setActive(list[0])
+  }
 
  }
 
  useEffect(()=>{
-  scan("environment structure map planetary")
+  scan("planetary observatory")
  },[])
 
  useEffect(()=>{
@@ -69,16 +58,17 @@ export default function Home(){
    setActive(prev=>{
 
     const current=
-      items.findIndex(x=>x.uid===prev?.uid)
+      items.findIndex(
+       x=>x.uid===prev?.uid
+      )
 
-    const next=
+    return items[
       (current+1)%items.length
-
-    return items[next]
+    ]
 
    })
 
-  },8000)
+  },10000)
 
   return()=>clearInterval(i)
 
@@ -95,49 +85,53 @@ export default function Home(){
   font-family:Arial,sans-serif;
  }
 
- .bg{
-  position:fixed;
-  inset:0;
-  background-image:url(${active?.thumbnails?.images?.at(-1)?.url||""});
-  background-size:cover;
-  background-position:center;
-  filter:blur(22px) brightness(.3);
-  transform:scale(1.15);
+ main{
+  min-height:100vh;
  }
 
- .overlay{
-  position:fixed;
-  inset:0;
+ .viewerWrap{
+  position:relative;
+  width:100%;
+  height:72vh;
+  background:#000;
+  overflow:hidden;
+ }
+
+ iframe{
+  width:100%;
+  height:100%;
+  border:0;
+ }
+
+ .hud{
+  position:absolute;
+  top:20px;
+  left:20px;
+  right:20px;
+
   background:
    linear-gradient(
-    to bottom,
-    rgba(2,6,23,.55),
-    rgba(2,6,23,.9)
+    145deg,
+    rgba(15,23,42,.82),
+    rgba(2,6,23,.92)
    );
- }
 
- main{
-  position:relative;
-  z-index:2;
-  max-width:1200px;
-  margin:auto;
-  padding:20px;
- }
+  backdrop-filter:blur(22px);
 
- .hero,.viewer{
-  background:rgba(15,23,42,.7);
-  backdrop-filter:blur(20px);
   border:1px solid rgba(148,163,184,.18);
+
   border-radius:30px;
+
   padding:28px;
-  margin-bottom:22px;
+
+  max-width:720px;
  }
 
  h1{
-  font-size:64px;
-  line-height:.92;
+  font-size:72px;
+  line-height:.9;
   margin:0 0 20px;
-  letter-spacing:-3px;
+  letter-spacing:-4px;
  }
 
  p{
@@ -146,56 +140,55 @@ export default function Home(){
   font-size:20px;
  }
 
- textarea{
-  width:100%;
-  min-height:90px;
-  background:#020617;
-  color:white;
-  border:1px solid #334155;
-  border-radius:18px;
-  padding:14px;
-  font-size:17px;
-  margin-top:18px;
+ .controls{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:22px;
  }
 
  button{
-  background:linear-gradient(135deg,#2563eb,#7c3aed);
+  background:
+   linear-gradient(
+    135deg,
+    #2563eb,
+    #7c3aed
+   );
+
   color:white;
   border:0;
-  border-radius:15px;
+  border-radius:16px;
   padding:13px 16px;
   font-weight:900;
-  margin:6px;
  }
 
- iframe{
-  width:100%;
-  height:60vh;
-  border:0;
-  border-radius:26px;
-  background:#000;
+ .signal{
+  margin-top:18px;
+  color:#22c55e;
+  font-weight:700;
  }
 
  .cards{
   display:flex;
   overflow:auto;
   gap:18px;
-  padding-bottom:40px;
+  padding:24px;
+  background:#020617;
  }
 
  .card{
-  min-width:280px;
+  min-width:300px;
   background:#0f172a;
   border:2px solid transparent;
-  border-radius:26px;
+  border-radius:28px;
   overflow:hidden;
-  padding:0;
   color:white;
+  padding:0;
  }
 
  .active{
   border:2px solid #2563eb;
-  box-shadow:0 0 28px rgba(37,99,235,.4);
+  box-shadow:0 0 30px rgba(37,99,235,.45);
  }
 
  .card img{
@@ -206,101 +199,95 @@ export default function Home(){
 
  .card b{
   display:block;
-  padding:18px;
-  font-size:26px;
+  padding:20px;
+  font-size:28px;
   line-height:1.15;
  }
 
- .signal{
-  margin-top:18px;
-  color:#22c55e;
-  font-weight:700;
- }
-
- @media(max-width:750px){
+ @media(max-width:760px){
 
   h1{
-   font-size:46px;
+   font-size:50px;
   }
 
   p{
    font-size:18px;
   }
 
-  iframe{
-   height:46vh;
+  .viewerWrap{
+   height:56vh;
   }
 
  }
 
  `}</style>
 
- <div className="bg"/>
- <div className="overlay"/>
+ <section className="viewerWrap">
 
- <section className="hero">
+  {active&&
 
-  <h1>
-   DigitalHut Observatory
-  </h1>
+   <iframe
+    src={
+      `https://sketchfab.com/models/${active.uid}/embed?autostart=1&ui_infos=0`
+    }
+    allow="
+      autoplay;
+      fullscreen;
+      xr-spatial-tracking
+    "
+    allowFullScreen
+   />
 
-  <p>
-   AI-native observatory runtime with BabylonJS,
-   Sketchfab discovery, SearchAtlas intelligence,
-   environment-fed exploration systems,
-   and cinematic 3D world navigation.
-  </p>
+  }
 
-  <textarea
-   value={q}
-   onChange={e=>setQ(e.target.value)}
-  />
+  <div className="hud">
 
-  <div>
+   <h1>
+    DigitalHut Observatory
+   </h1>
 
-   <button onClick={()=>scan(q)}>
-    Run Observatory Signal
-   </button>
+   <p>
+    AI-native cinematic observatory runtime with
+    live Sketchfab world exploration,
+    SearchAtlas OTTO intelligence,
+    planetary environment discovery,
+    architecture scanning,
+    and immersive research systems.
+   </p>
 
-   <button onClick={()=>scan("planetary terrain observatory")}>
-    Planetary
-   </button>
+   <div className="controls">
 
-   <button onClick={()=>scan("historic architecture city")}>
-    Cities
-   </button>
+    {QUERIES.map(q=>
 
-   <button onClick={()=>scan("forest coastline landscape")}>
-    Nature
-   </button>
+      <button
+       key={q}
+       onClick={()=>scan(q)}
+      >
+       {q}
+      </button>
 
-   <button onClick={()=>setAuto(!auto)}>
-    {auto?"Auto Rotate ON":"Auto Rotate OFF"}
-   </button>
+    )}
 
-  </div>
+    <button
+      onClick={()=>setAuto(!auto)}
+    >
+      {auto
+        ? "Auto Rotate ON"
+        : "Auto Rotate OFF"
+      }
+    </button>
 
-  <div className="signal">
-   Active Signal:
-   {" "}
-   {active?.name||"loading..."}
+   </div>
+
+   <div className="signal">
+    Active Signal:
+    {" "}
+    {active?.name||"loading..."}
+   </div>
+
   </div>
 
  </section>
-
- {active&&<section className="viewer">
-
-  <iframe
-   src={`https://sketchfab.com/models/${active.uid}/embed?autostart=1&ui_infos=0`}
-   allow="autoplay; fullscreen; xr-spatial-tracking"
-   allowFullScreen
-  />
-
-  <p>
-   {clean(active.description||"")}
-  </p>
-
- </section>}
 
  <section className="cards">
 
@@ -317,7 +304,9 @@ export default function Home(){
    >
 
     <img
-     src={x.thumbnails?.images?.at(-1)?.url}
+      src={
+        x.thumbnails?.images?.at(-1)?.url
+      }
     />
 
     <b>{x.name}</b>
