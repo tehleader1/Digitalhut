@@ -10,7 +10,7 @@ export default function Page(){
       fontFamily:"Arial"
     }}>
       <h1>DigitalHut Observatory Restored</h1>
-      <p>Deployment is now working.</p>
+      <p>Deployment pipeline repaired successfully.</p>
     </main>
   )
 }

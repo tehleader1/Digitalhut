@@ -1,6 +1,6 @@
 export const metadata = {
   title: "DigitalHut",
-  description: "AI Observatory"
+  description: "Observatory"
 }
 
 export default function RootLayout({
