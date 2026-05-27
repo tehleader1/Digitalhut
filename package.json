@@ -1,23 +1,14 @@
 {
-  "name": "digitalhut-clean",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+  "name":"digitalhut-clean",
+  "private":true,
+  "scripts":{
+    "dev":"next dev",
+    "build":"next build",
+    "start":"next start"
   },
-  "dependencies": {
-    "@babylonjs/core": "^9.9.2",
-    "@babylonjs/loaders": "^9.9.2",
-    "next": "^15.0.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
-  },
-  "devDependencies": {
-    "@types/node": "^25.9.1",
-    "@types/react": "^19.2.15",
-    "eslint": "^9.39.4",
-    "eslint-config-next": "^16.2.6",
-    "typescript": "^6.0.3"
+  "dependencies":{
+    "next":"15.5.18",
+    "react":"19.1.0",
+    "react-dom":"19.1.0"
   }
 }
