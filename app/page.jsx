@@ -1,4 +1,132 @@
-"use client"
+"use clie
+
+<section className="glass">
+
+  <h2>
+   Observatory Subscription Access
+  </h2>
+
+  <div className="tierGrid">
+
+   {TIERS.map(t=>
+
+    <div
+     key={t.name}
+     className={
+      tier.name===t.name
+      ?"tier active"
+      :"tier"
+     }
+    >
+
+     <h2>{t.name}</h2>
+
+     <h3>{t.price}</h3>
+
+     <p>{t.history}</p>
+
+     <ul>
+
+      {t.features.map(f=>
+
+       <li key={f}>
+        {f}
+       </li>
+
+      )}
+
+     </ul>
+
+     {
+      t.name==="FREE"
+      ?
+      <div className="green">
+       FREE ACTIVE
+      </div>
+      :
+      <button
+       onClick={()=>unlockTier(t)}
+      >
+       Unlock {t.name}
+      </button>
+     }
+
+    </div>
+
+   )}
+
+  </div>
+
+ </section>
+
+
+<section className="glass">
+
+<h2>
+ Observatory Library
+</h2>
+
+<div className="libs">
+
+ {LIBRARIES.map(([name,q])=>
+
+  <button
+   key={name}
+   onClick={()=>{
+
+    if(name==="Observatory Market Intelligence"){
+     window.location.href="/market-intelligence"
+     return
+    }
+
+    scan(q)
+
+   }}
+  >
+   {name}
+  </button>
+
+ )}
+
+</div>
+
+</section>
+
+
+
+
+<section className="glass">
+
+  <h2>
+   Saved Observatory History
+  </h2>
+
+  <div className="history">
+
+   {saved
+    .slice(
+      0,
+      tier.level===0
+      ?3
+      :tier.level===1
+      ?12
+      :tier.level===2
+      ?40
+      :9999
+    )
+    .map(x=>
+
+     <p key={x}>
+      • {x}
+     </p>
+
+   )}
+
+  </div>
+
+ </section>
+
+nt"
 
 import {useEffect,useState} from "react"
 
@@ -278,96 +406,10 @@ export default function Home(){
  </section>
 
  
-<section className="glass">
-
-  <h2>
-   Observatory Subscription Access
-  </h2>
-
-  <div className="tierGrid">
-
-   {TIERS.map(t=>
-
-    <div
-     key={t.name}
-     className={
-      tier.name===t.name
-      ?"tier active"
-      :"tier"
-     }
-    >
-
-     <h2>{t.name}</h2>
-
-     <h3>{t.price}</h3>
-
-     <p>{t.history}</p>
-
-     <ul>
-
-      {t.features.map(f=>
-
-       <li key={f}>
-        {f}
-       </li>
-
-      )}
-
-     </ul>
-
-     {
-      t.name==="FREE"
-      ?
-      <div className="green">
-       FREE ACTIVE
-      </div>
-      :
-      <button
-       onClick={()=>unlockTier(t)}
-      >
-       Unlock {t.name}
-      </button>
-     }
-
-    </div>
-
-   )}
-
-  </div>
-
- </section>
 
 
- <section className="glass">
 
-  <h2>
-   Saved Observatory History
-  </h2>
-
-  <div className="history">
-
-   {saved
-    .slice(
-      0,
-      tier.level===0
-      ?3
-      :tier.level===1
-      ?12
-      :tier.level===2
-      ?40
-      :9999
-    )
-    .map(x=>
-
-     <p key={x}>
-      • {x}
-     </p>
-
-   )}
-
-  </div>
-
- </section>
+ 
 
  </main>
 
