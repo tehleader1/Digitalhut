@@ -9,115 +9,148 @@ export default function Market(){
  const [symbol,setSymbol]=useState("AAPL")
 
  const [info,setInfo]=useState({
-  region:"",
+  company:"",
+  exchange:"",
+  industry:"",
+  country:"",
+  ipo:"",
+  marketCap:"",
+  weburl:"",
+  technicals:"",
+  bias:"",
+  price:"",
   industrial:"",
   housing:"",
-  technicals:"",
-  bias:""
+  mapped:""
  })
 
- useEffect(()=>{
+ async function loadSymbol(sym){
 
-  async function build(){
+  try{
 
-   const q=symbol.toUpperCase()
+   const key=
+    process.env
+    .NEXT_PUBLIC_FINNHUB_KEY
 
-   let region="Global market mapping active"
-   let industrial="Industrial observatory scanning"
-   let housing="Housing observatory scanning"
-   let technicals=""
-   let bias=""
+   const upper=sym.toUpperCase()
 
-   if(q.includes("BTC")||q.includes("ETH")||q.includes("SOL")||q.includes("XRP")){
+   const profile=await fetch(
+    `https://finnhub.io/api/v1/stock/profile2?symbol=${upper}&token=${key}`
+   ).then(r=>r.json())
 
-    region="Global • United States • UAE • Europe • Asia"
+   const quote=await fetch(
+    `https://finnhub.io/api/v1/quote?symbol=${upper}&token=${key}`
+   ).then(r=>r.json())
 
-    industrial="Crypto mining • blockchain infrastructure • datacenters • energy systems"
+   let bias="Neutral"
 
-    housing="Digital asset wealth affecting global housing liquidity"
-
-    technicals="High volatility. Liquidity zones active. Volume expansion detected."
-
-    bias=Math.random()>.5?"Bullish":"Bearish"
-
-   }
-
-   else if(q.includes("AAPL")){
-
-    region="United States • California • New York • China"
-
-    industrial="Consumer electronics • semiconductors • manufacturing"
-
-    housing="Retail and logistics pressure affecting Home Depot, Lowe's, Walmart"
-
-    technicals="MACD bullish. MA20 above MA50. Volume holding above average."
-
+   if(quote.c>quote.pc){
     bias="Bullish"
-
    }
 
-   else if(q.includes("NVDA")||q.includes("AMD")){
-
-    region="United States • Taiwan • China"
-
-    industrial="AI chips • semiconductor infrastructure • datacenters"
-
-    housing="AI infrastructure expansion impacting commercial real estate"
-
-    technicals="Gap continuation active. Institutional volume elevated."
-
-    bias="Bullish"
-
+   if(quote.c<quote.pc){
+    bias="Bearish"
    }
 
-   else if(q.includes("TSLA")||q.includes("F")){
+   const industry=
+    profile.finnhubIndustry ||
+    "Unknown Industry"
 
-    region="United States • Texas • Michigan • China"
+   const country=
+    profile.country ||
+    "Global"
 
-    industrial="Automotive manufacturing • lithium • steel • battery systems"
+   const exchange=
+    profile.exchange ||
+    "Unknown Exchange"
 
-    housing="Consumer financing and rates pressure affecting regional housing"
+   const mapped=
+    `
+    ${country}
+    •
+    ${exchange}
+    •
+    ${industry}
+    `
 
-    technicals="Watching MA100 resistance. Liquidity pool forming."
+   const industrial=
+    `
+    ${industry}
+    infrastructure,
+    supply chains,
+    industrial systems,
+    sector expansion
+    `
 
-    bias=Math.random()>.5?"Bullish":"Bearish"
+   const housing=
+    `
+    ${country}
+    economic pressure,
+    regional housing influence,
+    infrastructure demand,
+    commercial development
+    `
 
-   }
+   const technicals=
+    `
+    Current:
+    ${quote.c || "?"}
 
-   else if(q.includes("SPY")||q.includes("QQQ")){
+    High:
+    ${quote.h || "?"}
 
-    region="United States • New York • Global"
+    Low:
+    ${quote.l || "?"}
 
-    industrial="Broad market exposure • institutional capital flows"
-
-    housing="Housing pressure tied directly to macroeconomic conditions"
-
-    technicals="Volume and liquidity highly active. Macro trend in control."
-
-    bias=Math.random()>.5?"Bullish":"Bearish"
-
-   }
-
-   else{
-
-    technicals="Realtime observatory calculations active."
-
-    bias=Math.random()>.5?"Bullish":"Bearish"
-
-   }
+    Previous Close:
+    ${quote.pc || "?"}
+    `
 
    setInfo({
-    region,
-    industrial,
-    housing,
+
+    company:
+     profile.name || upper,
+
+    exchange,
+
+    industry,
+
+    country,
+
+    ipo:
+     profile.ipo || "Unknown",
+
+    marketCap:
+     profile.marketCapitalization || "Unknown",
+
+    weburl:
+     profile.weburl || "",
+
     technicals,
-    bias
+
+    bias,
+
+    price:
+     quote.c || "?",
+
+    industrial,
+
+    housing,
+
+    mapped
+
    })
+
+  }catch(e){
+
+   console.log(e)
 
   }
 
-  build()
+ }
 
+ useEffect(()=>{
+  loadSymbol(symbol)
  },[symbol])
 
  function speak(){
@@ -125,23 +158,28 @@ export default function Market(){
   speechSynthesis.cancel()
 
   const text=`
-   ${symbol}.
-   Region mapping:
-   ${info.region}.
+   ${info.company}.
+
+   Observatory mapping:
+   ${info.mapped}.
+
    Industrial layer:
    ${info.industrial}.
+
    Housing intelligence:
    ${info.housing}.
+
    Technical observatory:
    ${info.technicals}.
-   Final market observatory bias:
+
+   Final observatory bias:
    ${info.bias}.
   `
 
   const u=
    new SpeechSynthesisUtterance(text)
 
-  u.rate=.93
+  u.rate=.92
 
   speechSynthesis.speak(u)
 
@@ -276,14 +314,15 @@ export default function Market(){
   </h1>
 
   <p>
-   Real-time observatory trading runtime with searchable equities,
-   crypto intelligence,
-   mapped regions,
-   industrial overlays,
-   housing pressure,
-   technical analysis,
-   AI voice interaction,
-   and live observatory bias detection.
+   Live observatory runtime for
+   NASDAQ,
+   NYSE,
+   S&P500,
+   crypto,
+   industrial mapping,
+   housing intelligence,
+   technical observatory analysis,
+   and AI voice interaction.
   </p>
 
   <div className="search">
@@ -293,14 +332,13 @@ export default function Market(){
     onChange={e=>setQuery(e.target.value)}
     placeholder="
      Search:
+     MMAT,
+     TSLA,
+     NVDA,
+     AMD,
      BTC,
      ETH,
-     NVDA,
-     TSLA,
-     AMD,
-     SPY,
-     QQQ,
-     META
+     SPY
     "
    />
 
@@ -331,13 +369,13 @@ export default function Market(){
   <div className="info">
 
    <div className="metric">
-    <b>{symbol.toUpperCase()}</b>
-    <span>Primary Signal</span>
+    <b>{info.company}</b>
+    <span>{symbol.toUpperCase()}</span>
    </div>
 
    <div className="metric">
     <b>Mapped Locations</b>
-    <span>{info.region}</span>
+    <span>{info.mapped}</span>
    </div>
 
    <div className="metric">
@@ -351,15 +389,26 @@ export default function Market(){
    </div>
 
    <div className="metric">
+    <b>Market Cap</b>
+    <span>{info.marketCap}</span>
+   </div>
+
+   <div className="metric">
     <b>Technical Observatory</b>
     <span>{info.technicals}</span>
    </div>
 
    <div className="metric">
-    <b className={info.bias==="Bullish"?"bull":"bear"}>
+    <b className={
+      info.bias==="Bullish"
+      ?"bull"
+      :"bear"
+    }>
       {info.bias}
     </b>
+
     <span>Final Observatory Bias</span>
+
    </div>
 
   </div>
