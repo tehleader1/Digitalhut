@@ -4,255 +4,171 @@ import {useEffect,useState} from "react"
 
 const TOKEN="137a2704a95d4051b5ffe795b90d92ce"
 
-const LIBRARIES=[
- ["Terrain","terrain landscape environment"],
- ["Planetary","planet observatory terrain"],
- ["Geographical","geography earth terrain"],
- ["Structures","architecture building city"],
- ["Infrastructure","industrial infrastructure"],
- ["Maps","map terrain city"],
- ["Observatory Market Intelligence","market intelligence trading observatory"]
+const PAY_WALLET=
+"0x3337984Ca74fF56327B43759F56446058F8266EC"
+
+const TIERS=[
+
+ {
+  name:"FREE",
+  price:"$0",
+  level:0,
+  history:"3 saved observatory signals",
+  features:[
+   "Basic GLB history",
+   "Basic description",
+   "Basic mapping",
+   "Viewer access"
+  ]
+ },
+
+ {
+  name:"STANDARD",
+  price:"$35",
+  level:1,
+  history:"12 saved observatory signals",
+  features:[
+   "Saved GLB history",
+   "Basic observatory routing",
+   "Basic environment mapping",
+   "Basic structure intelligence"
+  ]
+ },
+
+ {
+  name:"PREMIUM",
+  price:"$50",
+  level:2,
+  history:"40 saved observatory signals",
+  features:[
+   "Extended observatory history",
+   "Highlighted GLB signals",
+   "Grid-point mapping",
+   "Enhanced environment detail",
+   "Advanced observatory overlays"
+  ]
+ },
+
+ {
+  name:"PRO",
+  price:"$100",
+  level:3,
+  history:"Unlimited observatory signals",
+  features:[
+   "Unlimited history",
+   "Perfect detailed mapping",
+   "Texture detail layers",
+   "Download history",
+   "Advanced grid mapping",
+   "Business meeting usage",
+   "School project usage",
+   "Real estate project usage",
+   "DigitalHut personal AI project use"
+  ]
+ }
+
 ]
-
-const GOOD=[
- "environment",
- "terrain",
- "architecture",
- "planet",
- "map",
- "city",
- "building",
- "industrial",
- "landscape",
- "observatory",
- "museum",
- "infrastructure",
- "coast",
- "forest",
- "mountain",
- "space",
- "geography"
-]
-
-const BAD=[
- "character",
- "avatar",
- "human",
- "anime",
- "weapon",
- "soldier",
- "monster",
- "creature",
- "cartoon",
- "girl",
- "boy"
-]
-
-function score(x){
-
- const t=(
-  (x.name||"")+" "+
-  (x.description||"")+" "+
-  (x.categories||[])
-   .map(c=>c.name)
-   .join(" ")
- ).toLowerCase()
-
- let s=0
-
- GOOD.forEach(w=>{
-  if(t.includes(w)) s+=8
- })
-
- BAD.forEach(w=>{
-  if(t.includes(w)) s-=100
- })
-
- return s
-}
 
 export default function Home(){
 
- const [items,setItems]=useState([])
+ const [wallet,setWallet]=useState("")
 
- const [active,setActive]=useState(null)
-
- const [query,setQuery]=useState(
-  "terrain environment architecture"
+ const [tier,setTier]=useState(
+  TIERS[0]
  )
 
- async function scan(q){
+ const [saved,setSaved]=useState([])
 
-  setQuery(q)
+ async function connectWallet(){
 
-  const r=await fetch(
-   `https://api.sketchfab.com/v3/search?type=models&q=${encodeURIComponent(q)}&sort_by=-likeCount`,
-   {
-    headers:{
-     Authorization:`Token ${TOKEN}`
-    }
-   }
-  )
+  if(!window.ethereum){
 
-  const d=await r.json()
+   alert(
+    "Open with MetaMask browser"
+   )
 
-  const list=(d.results||[])
-   .filter(x=>score(x)>0)
-   .slice(0,12)
-
-  setItems(list)
-
-  if(list[0]){
-   setActive(list[0])
+   return
   }
+
+  const acc=
+   await window.ethereum.request({
+    method:"eth_requestAccounts"
+   })
+
+  setWallet(acc[0])
+
+ }
+
+ async function unlockTier(t){
+
+  if(!wallet){
+
+   alert(
+    "Connect wallet first"
+   )
+
+   return
+  }
+
+  setTier(t)
+
+  alert(
+   `${t.name} observatory access enabled`
+  )
 
  }
 
  useEffect(()=>{
-  scan(query)
+
+  const fakeHistory=[
+   "Terrain Observatory",
+   "Planetary Scan",
+   "Industrial Mapping"
+  ]
+
+  setSaved(fakeHistory)
+
  },[])
-
- function speak(){
-
-  if(!active)return
-
-  speechSynthesis.cancel()
-
-  const text=`
-
-   Observatory signal detected.
-
-   ${active.name}.
-
-   Environment layer:
-   ${
-    active.categories
-    ?.map(c=>c.name)
-    ?.join(", ")
-    || "environment"
-   }.
-
-   Featured architect or uploader:
-   ${
-    active.user?.displayName
-    || active.user?.username
-    || "Unknown"
-   }.
-
-   Observatory routing:
-   terrain,
-   geographical,
-   structural,
-   environmental mapping active.
-
-   Description:
-   ${
-    active.description
-    ?.replace(/<[^>]*>/g,"")
-    ?.slice(0,400)
-    || "No description available."
-   }
-
-  `
-
-  const u=
-   new SpeechSynthesisUtterance(text)
-
-  u.rate=.92
-
-  speechSynthesis.speak(u)
-
- }
 
  return (
 
- <main>
+ <main style={{
+  minHeight:"100vh",
+  background:"#020617",
+  color:"white",
+  padding:"24px",
+  fontFamily:"Arial"
+ }}>
 
  <style>{`
 
- body{
-  margin:0;
-  background:#020617;
-  color:white;
-  font-family:Arial,sans-serif;
- }
-
- .wrap{
-  max-width:1400px;
-  margin:auto;
-  padding:24px;
- }
-
  h1{
-  font-size:clamp(60px,11vw,140px);
+  font-size:clamp(
+   60px,
+   11vw,
+   140px
+  );
+
   line-height:.88;
+
   letter-spacing:-5px;
+
   margin:0 0 24px;
  }
 
  p{
   color:#cbd5e1;
-  line-height:1.6;
   font-size:22px;
+  line-height:1.6;
  }
 
- .hero{
-  background:
-   linear-gradient(
-    145deg,
-    rgba(15,23,42,.96),
-    rgba(2,6,23,.99)
-   );
-
+ .hero,
+ .glass{
+  background:#0f172a;
   border:1px solid #334155;
-
-  border-radius:36px;
-
-  padding:34px;
-
+  border-radius:34px;
+  padding:30px;
   margin-bottom:24px;
- }
-
- .viewer{
-  border-radius:36px;
-  overflow:hidden;
-  border:1px solid #334155;
-  margin-bottom:28px;
- }
-
- iframe{
-  width:100%;
-  height:68vh;
-  border:0;
-  background:black;
- }
-
- .libs{
-  display:grid;
-  grid-template-columns:
-   repeat(auto-fit,minmax(240px,1fr));
-
-  gap:18px;
-
-  margin-bottom:28px;
- }
-
- .search{
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-  margin-top:24px;
- }
-
- input{
-  flex:1;
-  min-width:220px;
-  background:#020617;
-  color:white;
-  border:1px solid #334155;
-  border-radius:18px;
-  padding:16px;
-  font-size:18px;
  }
 
  button{
@@ -267,16 +183,16 @@ export default function Home(){
 
   border:0;
 
-  border-radius:22px;
+  border-radius:20px;
 
-  padding:18px;
+  padding:16px 22px;
 
   font-weight:900;
 
-  font-size:17px;
+  margin-top:12px;
  }
 
- .cards{
+ .tierGrid{
   display:grid;
 
   grid-template-columns:
@@ -285,219 +201,171 @@ export default function Home(){
   gap:20px;
  }
 
- .card{
-  background:#0f172a;
-
-  border:1px solid #334155;
-
-  border-radius:30px;
-
-  overflow:hidden;
-
-  padding:0;
-
-  text-align:left;
- }
-
- .card img{
-  width:100%;
-  height:230px;
-  object-fit:cover;
- }
-
- .card b{
-  display:block;
-  padding:18px;
-  font-size:28px;
- }
-
- .info{
-  background:#0f172a;
+ .tier{
+  background:#020617;
   border:1px solid #334155;
   border-radius:28px;
   padding:24px;
-  margin-bottom:28px;
  }
 
- .info h2{
-  margin-top:0;
+ .tier h2{
+  font-size:42px;
+  margin:0;
+ }
+
+ .tier h3{
+  font-size:34px;
+  color:#22c55e;
+ }
+
+ .tier li{
+  color:#cbd5e1;
+  margin-bottom:10px;
+ }
+
+ .active{
+  border:2px solid #22c55e;
+  box-shadow:0 0 30px rgba(34,197,94,.3);
+ }
+
+ .history{
+  background:#020617;
+  border:1px solid #334155;
+  border-radius:24px;
+  padding:20px;
+  margin-top:18px;
+ }
+
+ .green{
+  color:#22c55e;
+  font-weight:900;
  }
 
  `}</style>
 
- <div className="wrap">
+ <section className="hero">
 
-  <section className="hero">
+  <h1>
+   DigitalHut
+   <br/>
+   Observatory
+  </h1>
 
-   <h1>
-    DigitalHut
-    <br/>
-    Observatory
-   </h1>
+  <p>
+   Terrain,
+   planetary,
+   geographical,
+   structural,
+   industrial,
+   and infrastructure observatory runtime
+   with wallet access,
+   observatory history,
+   GLB intelligence,
+   SearchAtlas integration,
+   and AI observatory systems.
+  </p>
 
-   <p>
-    Terrain,
-    planetary,
-    geographical,
-    structure,
-    environmental,
-    architectural,
-    and infrastructure observatory runtime
-    powered by live Sketchfab discovery,
-    observatory voice intelligence,
-    SearchAtlas systems,
-    wallet access,
-    and immersive 360 exploration.
-   </p>
+  <button onClick={connectWallet}>
 
-   <div className="search">
+   {
+    wallet
+    ?wallet.slice(0,6)+"..."+wallet.slice(-4)
+    :"Connect MetaMask"
+   }
 
-    <input
-     value={query}
-     onChange={e=>setQuery(e.target.value)}
-     placeholder="
-      Search:
-      terrain,
-      architecture,
-      planet,
-      geography,
-      city,
-      observatory
-     "
-    />
+  </button>
 
-    <button onClick={()=>{
-      scan(query)
-    }}>
-      Run Observatory Signal
-    </button>
+  <p className="green">
 
-    <button onClick={speak}>
-      Voice Observatory
-    </button>
+   Current Tier:
+   {" "}
+   {tier.name}
 
-   </div>
+  </p>
 
-  </section>
+ </section>
 
-  <section className="libs">
+ <section className="glass">
 
-   {LIBRARIES.map(([name,q])=>
+  <h2>
+   Observatory Subscription Access
+  </h2>
 
-    <button
-     key={name}
-     onClick={()=>{
+  <div className="tierGrid">
 
-      if(name==="Observatory Market Intelligence"){
-       window.location.href="/market-intelligence"
-       return
-      }
+   {TIERS.map(t=>
 
-      scan(q)
-
-     }}
+    <div
+     key={t.name}
+     className={
+      tier.name===t.name
+      ?"tier active"
+      :"tier"
+     }
     >
-     {name}
-    </button>
+
+     <h2>{t.name}</h2>
+
+     <h3>{t.price}</h3>
+
+     <p>{t.history}</p>
+
+     <ul>
+
+      {t.features.map(f=>
+
+       <li key={f}>
+        {f}
+       </li>
+
+      )}
+
+     </ul>
+
+     <button
+      onClick={()=>unlockTier(t)}
+     >
+      Unlock {t.name}
+     </button>
+
+    </div>
 
    )}
 
-  </section>
+  </div>
 
-  {active&&
+ </section>
 
-   <section className="info">
+ <section className="glass">
 
-    <h2>{active.name}</h2>
+  <h2>
+   Saved Observatory History
+  </h2>
 
-    <p>
-     <b>Environment:</b>
-     {" "}
-     {
-      active.categories
-      ?.map(c=>c.name)
-      ?.join(", ")
-     }
-    </p>
+  <div className="history">
 
-    <p>
-     <b>Architect / Uploader:</b>
-     {" "}
-     {
-      active.user?.displayName
-      || active.user?.username
-      || "Unknown"
-     }
-    </p>
+   {saved
+    .slice(
+      0,
+      tier.level===0
+      ?3
+      :tier.level===1
+      ?12
+      :tier.level===2
+      ?40
+      :9999
+    )
+    .map(x=>
 
-    <p>
-     <b>Observatory Routing:</b>
-     {" "}
-     terrain,
-     geography,
-     environment,
-     infrastructure,
-     structural intelligence
-    </p>
-
-    <p>
-     <b>Description:</b>
-     {" "}
-     {
-      active.description
-      ?.replace(/<[^>]*>/g,"")
-      ?.slice(0,500)
-      || "No description available."
-     }
-    </p>
-
-   </section>
-
-  }
-
-  {active&&
-
-   <section className="viewer">
-
-    <iframe
-     src={`https://sketchfab.com/models/${active.uid}/embed?autostart=1&ui_infos=0`}
-     allow="
-      autoplay;
-      fullscreen;
-      xr-spatial-tracking
-     "
-     allowFullScreen
-    />
-
-   </section>
-
-  }
-
-  <section className="cards">
-
-   {items.map(x=>
-
-    <button
-     key={x.uid}
-     className="card"
-     onClick={()=>setActive(x)}
-    >
-
-     <img
-      src={
-       x.thumbnails?.images?.at(-1)?.url
-      }
-     />
-
-     <b>{x.name}</b>
-
-    </button>
+     <p key={x}>
+      • {x}
+     </p>
 
    )}
 
-  </section>
+  </div>
 
- </div>
+ </section>
 
  </main>
 
