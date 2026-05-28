@@ -101,7 +101,7 @@ export default function Home(){
 
  async function unlockTier(t){
 
-  if(!wallet){
+  if(t.name !== "FREE" && !wallet){
 
    alert(
     "Connect wallet first"
