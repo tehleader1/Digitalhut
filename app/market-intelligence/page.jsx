@@ -1,70 +1,109 @@
 "use client"
 
-import {useState} from "react"
+import {useEffect,useState} from "react"
 
-const DATA={
-
- AAPL:{
-  symbol:"AAPL",
-  company:"Apple",
-  region:"United States • California • New York • China",
-  industrial:"Consumer electronics, semiconductors, manufacturing",
-  housing:"Retail pressure impacts Walmart, Home Depot, Lowe's, IKEA logistics demand",
-  technicals:"MACD bullish. MA20 above MA50. Volume holding above average.",
-  chart:"AAPL"
- },
-
- BTC:{
-  symbol:"BTCUSD",
-  company:"Bitcoin",
-  region:"Global • United States • UAE • Asia",
-  industrial:"Mining infrastructure, energy systems, datacenter growth",
-  housing:"Crypto wealth affecting luxury housing flows",
-  technicals:"Liquidity sweep complete. MA200 support holding.",
-  chart:"BTCUSD"
- },
-
- NVDA:{
-  symbol:"NVDA",
-  company:"NVIDIA",
-  region:"United States • Taiwan • China",
-  industrial:"AI chips, datacenter infrastructure",
-  housing:"AI expansion impacting commercial construction demand",
-  technicals:"Gap up continuation. High institutional volume.",
-  chart:"NVDA"
- }
-
-}
+const DEFAULT="AAPL"
 
 export default function Market(){
 
- const [query,setQuery]=useState("AAPL")
+ const [query,setQuery]=useState(DEFAULT)
 
- const current=
-  DATA[
-   query.toUpperCase()
-  ] || DATA.AAPL
+ const [symbol,setSymbol]=useState(DEFAULT)
+
+ const [voice,setVoice]=useState("")
+
+ const [info,setInfo]=useState({
+  region:"Loading...",
+  industrial:"Loading...",
+  housing:"Loading...",
+  technicals:"Loading..."
+ })
+
+ useEffect(()=>{
+
+  async function load(){
+
+   try{
+
+    const q=symbol.toUpperCase()
+
+    let region=""
+    let industrial=""
+    let housing=""
+    let technicals=""
+
+    if(q.includes("AAPL")){
+     region="United States • California • New York • China"
+     industrial="Consumer electronics • semiconductors • manufacturing"
+     housing="Retail and logistics pressure affecting Walmart, Home Depot, Lowe's, IKEA"
+     technicals="MACD bullish • MA20 above MA50 • volume holding"
+    }
+
+    else if(q.includes("NVDA")){
+     region="United States • Taiwan • China"
+     industrial="AI chips • datacenters • semiconductor infrastructure"
+     housing="AI infrastructure expansion influencing commercial construction"
+     technicals="Gap continuation • strong volume • MA50 support"
+    }
+
+    else if(q.includes("BTC")){
+     region="Global • United States • UAE • Asia"
+     industrial="Mining infrastructure • energy systems • datacenters"
+     housing="Crypto wealth flows influencing luxury real estate"
+     technicals="Liquidity sweep complete • MA200 support • volatility elevated"
+    }
+
+    else if(q.includes("ETH")){
+     region="Global • Europe • United States"
+     industrial="Layer 2 infrastructure • smart contracts"
+     housing="Tech-city growth and developer expansion"
+     technicals="Volume spike detected • support holding"
+    }
+
+    else{
+     region="Global market mapping active"
+     industrial="Industrial observatory scanning"
+     housing="Housing observatory scanning"
+     technicals="Technical observatory calculating"
+    }
+
+    setInfo({
+     region,
+     industrial,
+     housing,
+     technicals
+    })
+
+    setVoice(`
+      ${q}.
+      Region mapping:
+      ${region}.
+      Industrial layer:
+      ${industrial}.
+      Housing intelligence:
+      ${housing}.
+      Technical observatory:
+      ${technicals}.
+    `)
+
+   }catch(e){
+    console.log(e)
+   }
+
+  }
+
+  load()
+
+ },[symbol])
 
  function speak(){
 
   speechSynthesis.cancel()
 
-  const text=`
-   ${current.company}.
-   Region mapping:
-   ${current.region}.
-   Industrial layer:
-   ${current.industrial}.
-   Housing intelligence:
-   ${current.housing}.
-   Technical observatory:
-   ${current.technicals}
-  `
-
   const u=
-   new SpeechSynthesisUtterance(text)
+   new SpeechSynthesisUtterance(voice)
 
-  u.rate=.94
+  u.rate=.93
 
   speechSynthesis.speak(u)
 
@@ -83,15 +122,15 @@ export default function Market(){
  <style>{`
 
  h1{
-  font-size:clamp(54px,10vw,120px);
+  font-size:clamp(58px,10vw,130px);
   line-height:.9;
   margin:0 0 24px;
  }
 
  p{
   color:#cbd5e1;
-  font-size:20px;
   line-height:1.6;
+  font-size:20px;
  }
 
  .hero{
@@ -191,16 +230,14 @@ export default function Market(){
   </h1>
 
   <p>
-   Smart-screen observatory trading runtime with searchable stocks,
+   Real-time observatory trading runtime
+   with searchable stock options,
    crypto intelligence,
-   technical overlays,
-   mapped regions,
-   industrial analysis,
+   mapped locations,
+   industrial overlays,
    housing pressure,
-   liquidity pools,
-   MACD,
-   moving averages,
-   and AI voice observatory interaction.
+   technical observatory systems,
+   and AI voice interaction.
   </p>
 
   <div className="search">
@@ -208,8 +245,23 @@ export default function Market(){
    <input
     value={query}
     onChange={e=>setQuery(e.target.value)}
-    placeholder="Search AAPL, BTC, NVDA..."
+    placeholder="
+     Search:
+     AAPL,
+     BTC,
+     NVDA,
+     ETH,
+     TSLA,
+     SPY,
+     AMD
+    "
    />
+
+   <button onClick={()=>{
+    setSymbol(query)
+   }}>
+    Run Observatory Signal
+   </button>
 
    <button onClick={speak}>
     Voice Observatory
@@ -224,7 +276,7 @@ export default function Market(){
   <div className="panel">
 
    <iframe
-    src={`https://s.tradingview.com/widgetembed/?symbol=${current.chart}&interval=60&theme=dark`}
+    src={`https://s.tradingview.com/widgetembed/?symbol=${symbol.toUpperCase()}&interval=60&theme=dark`}
    />
 
   </div>
@@ -232,28 +284,28 @@ export default function Market(){
   <div className="info">
 
    <div className="metric">
-    <b>{current.company}</b>
-    <span>{current.symbol}</span>
+    <b>{symbol.toUpperCase()}</b>
+    <span>Primary Signal</span>
    </div>
 
    <div className="metric">
     <b>Mapped Locations</b>
-    <span>{current.region}</span>
+    <span>{info.region}</span>
    </div>
 
    <div className="metric">
     <b>Industrial Layer</b>
-    <span>{current.industrial}</span>
+    <span>{info.industrial}</span>
    </div>
 
    <div className="metric">
     <b>Housing Intelligence</b>
-    <span>{current.housing}</span>
+    <span>{info.housing}</span>
    </div>
 
    <div className="metric">
     <b>Technical Observatory</b>
-    <span>{current.technicals}</span>
+    <span>{info.technicals}</span>
    </div>
 
   </div>
