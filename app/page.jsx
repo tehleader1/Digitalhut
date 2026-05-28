@@ -11,7 +11,6 @@ const LIBRARIES=[
  ["Structures","architecture building city"],
  ["Infrastructure","industrial infrastructure"],
  ["Maps","map terrain city"],
- ["Observatory Market Intelligence","market intelligence trading observatory"],
  ["Observatory Market Intelligence","market intelligence trading observatory"]
 ]
 
