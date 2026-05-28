@@ -97,7 +97,7 @@ export default function Home(){
     }}>
 
      <iframe
-      src="https://sketchfab.com/models/7w7pAfrCfjovVyvx0eR3/embed?autostart=1&ui_infos=0"
+      src="https://sketchfab.com/models/eR3d7o9L8wWfH0K2qP5m/embed?autostart=1&ui_infos=0"
       style={{
 
        width:"100%",
