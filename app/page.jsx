@@ -74,9 +74,16 @@ function score(x){
 export default function Home(){
 
  const [items,setItems]=useState([])
+
  const [active,setActive]=useState(null)
 
+ const [query,setQuery]=useState(
+  "terrain environment architecture"
+ )
+
  async function scan(q){
+
+  setQuery(q)
 
   const r=await fetch(
    `https://api.sketchfab.com/v3/search?type=models&q=${encodeURIComponent(q)}&sort_by=-likeCount`,
@@ -102,8 +109,60 @@ export default function Home(){
  }
 
  useEffect(()=>{
-  scan("terrain environment architecture")
+  scan(query)
  },[])
+
+ function speak(){
+
+  if(!active)return
+
+  speechSynthesis.cancel()
+
+  const text=`
+
+   Observatory signal detected.
+
+   ${active.name}.
+
+   Environment layer:
+   ${
+    active.categories
+    ?.map(c=>c.name)
+    ?.join(", ")
+    || "environment"
+   }.
+
+   Featured architect or uploader:
+   ${
+    active.user?.displayName
+    || active.user?.username
+    || "Unknown"
+   }.
+
+   Observatory routing:
+   terrain,
+   geographical,
+   structural,
+   environmental mapping active.
+
+   Description:
+   ${
+    active.description
+    ?.replace(/<[^>]*>/g,"")
+    ?.slice(0,400)
+    || "No description available."
+   }
+
+  `
+
+  const u=
+   new SpeechSynthesisUtterance(text)
+
+  u.rate=.92
+
+  speechSynthesis.speak(u)
+
+ }
 
  return (
 
@@ -178,6 +237,24 @@ export default function Home(){
   margin-bottom:28px;
  }
 
+ .search{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:24px;
+ }
+
+ input{
+  flex:1;
+  min-width:220px;
+  background:#020617;
+  color:white;
+  border:1px solid #334155;
+  border-radius:18px;
+  padding:16px;
+  font-size:18px;
+ }
+
  button{
   background:
    linear-gradient(
@@ -234,36 +311,16 @@ export default function Home(){
   font-size:28px;
  }
 
- .marketBox{
-  background:#111827;
+ .info{
+  background:#0f172a;
   border:1px solid #334155;
-  border-radius:30px;
-  padding:30px;
+  border-radius:28px;
+  padding:24px;
+  margin-bottom:28px;
  }
 
- .marketBox h2{
-  font-size:44px;
+ .info h2{
   margin-top:0;
- }
-
- .marketGrid{
-  display:grid;
-  grid-template-columns:
-   repeat(auto-fit,minmax(220px,1fr));
-  gap:16px;
- }
-
- .metric{
-  background:#020617;
-  border:1px solid #334155;
-  border-radius:22px;
-  padding:18px;
- }
-
- .metric b{
-  display:block;
-  font-size:34px;
-  margin-bottom:10px;
  }
 
  `}</style>
@@ -279,15 +336,47 @@ export default function Home(){
    </h1>
 
    <p>
-    AI-native observatory runtime for
-    terrain exploration,
-    planetary systems,
-    geographical intelligence,
-    structures,
-    infrastructure overlays,
-    industrial environments,
-    and immersive 360 discovery.
+    Terrain,
+    planetary,
+    geographical,
+    structure,
+    environmental,
+    architectural,
+    and infrastructure observatory runtime
+    powered by live Sketchfab discovery,
+    observatory voice intelligence,
+    SearchAtlas systems,
+    wallet access,
+    and immersive 360 exploration.
    </p>
+
+   <div className="search">
+
+    <input
+     value={query}
+     onChange={e=>setQuery(e.target.value)}
+     placeholder="
+      Search:
+      terrain,
+      architecture,
+      planet,
+      geography,
+      city,
+      observatory
+     "
+    />
+
+    <button onClick={()=>{
+      scan(query)
+    }}>
+      Run Observatory Signal
+    </button>
+
+    <button onClick={speak}>
+      Voice Observatory
+    </button>
+
+   </div>
 
   </section>
 
@@ -314,6 +403,57 @@ export default function Home(){
    )}
 
   </section>
+
+  {active&&
+
+   <section className="info">
+
+    <h2>{active.name}</h2>
+
+    <p>
+     <b>Environment:</b>
+     {" "}
+     {
+      active.categories
+      ?.map(c=>c.name)
+      ?.join(", ")
+     }
+    </p>
+
+    <p>
+     <b>Architect / Uploader:</b>
+     {" "}
+     {
+      active.user?.displayName
+      || active.user?.username
+      || "Unknown"
+     }
+    </p>
+
+    <p>
+     <b>Observatory Routing:</b>
+     {" "}
+     terrain,
+     geography,
+     environment,
+     infrastructure,
+     structural intelligence
+    </p>
+
+    <p>
+     <b>Description:</b>
+     {" "}
+     {
+      active.description
+      ?.replace(/<[^>]*>/g,"")
+      ?.slice(0,500)
+      || "No description available."
+     }
+    </p>
+
+   </section>
+
+  }
 
   {active&&
 
