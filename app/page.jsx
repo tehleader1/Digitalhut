@@ -265,15 +265,7 @@ export default function Home(){
    and AI observatory systems.
   </p>
 
-  <button onClick={connectWallet}>
-
-   {
-    wallet
-    ?wallet.slice(0,6)+"..."+wallet.slice(-4)
-    :"Connect MetaMask"
-   }
-
-  </button>
+  
 
   <p className="green">
 
