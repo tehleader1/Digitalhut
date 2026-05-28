@@ -2,97 +2,121 @@
 
 import {useEffect,useState} from "react"
 
-const DEFAULT="AAPL"
-
 export default function Market(){
 
- const [query,setQuery]=useState(DEFAULT)
+ const [query,setQuery]=useState("AAPL")
 
- const [symbol,setSymbol]=useState(DEFAULT)
-
- const [voice,setVoice]=useState("")
+ const [symbol,setSymbol]=useState("AAPL")
 
  const [info,setInfo]=useState({
-  region:"Loading...",
-  industrial:"Loading...",
-  housing:"Loading...",
-  technicals:"Loading..."
+  region:"",
+  industrial:"",
+  housing:"",
+  technicals:"",
+  bias:""
  })
 
  useEffect(()=>{
 
-  async function load(){
+  async function build(){
 
-   try{
+   const q=symbol.toUpperCase()
 
-    const q=symbol.toUpperCase()
+   let region="Global market mapping active"
+   let industrial="Industrial observatory scanning"
+   let housing="Housing observatory scanning"
+   let technicals=""
+   let bias=""
 
-    let region=""
-    let industrial=""
-    let housing=""
-    let technicals=""
+   if(q.includes("BTC")||q.includes("ETH")||q.includes("SOL")||q.includes("XRP")){
 
-    if(q.includes("AAPL")){
-     region="United States • California • New York • China"
-     industrial="Consumer electronics • semiconductors • manufacturing"
-     housing="Retail and logistics pressure affecting Walmart, Home Depot, Lowe's, IKEA"
-     technicals="MACD bullish • MA20 above MA50 • volume holding"
-    }
+    region="Global • United States • UAE • Europe • Asia"
 
-    else if(q.includes("NVDA")){
-     region="United States • Taiwan • China"
-     industrial="AI chips • datacenters • semiconductor infrastructure"
-     housing="AI infrastructure expansion influencing commercial construction"
-     technicals="Gap continuation • strong volume • MA50 support"
-    }
+    industrial="Crypto mining • blockchain infrastructure • datacenters • energy systems"
 
-    else if(q.includes("BTC")){
-     region="Global • United States • UAE • Asia"
-     industrial="Mining infrastructure • energy systems • datacenters"
-     housing="Crypto wealth flows influencing luxury real estate"
-     technicals="Liquidity sweep complete • MA200 support • volatility elevated"
-    }
+    housing="Digital asset wealth affecting global housing liquidity"
 
-    else if(q.includes("ETH")){
-     region="Global • Europe • United States"
-     industrial="Layer 2 infrastructure • smart contracts"
-     housing="Tech-city growth and developer expansion"
-     technicals="Volume spike detected • support holding"
-    }
+    technicals="High volatility. Liquidity zones active. Volume expansion detected."
 
-    else{
-     region="Global market mapping active"
-     industrial="Industrial observatory scanning"
-     housing="Housing observatory scanning"
-     technicals="Technical observatory calculating"
-    }
+    bias=Math.random()>.5?"Bullish":"Bearish"
 
-    setInfo({
-     region,
-     industrial,
-     housing,
-     technicals
-    })
-
-    setVoice(`
-      ${q}.
-      Region mapping:
-      ${region}.
-      Industrial layer:
-      ${industrial}.
-      Housing intelligence:
-      ${housing}.
-      Technical observatory:
-      ${technicals}.
-    `)
-
-   }catch(e){
-    console.log(e)
    }
+
+   else if(q.includes("AAPL")){
+
+    region="United States • California • New York • China"
+
+    industrial="Consumer electronics • semiconductors • manufacturing"
+
+    housing="Retail and logistics pressure affecting Home Depot, Lowe's, Walmart"
+
+    technicals="MACD bullish. MA20 above MA50. Volume holding above average."
+
+    bias="Bullish"
+
+   }
+
+   else if(q.includes("NVDA")||q.includes("AMD")){
+
+    region="United States • Taiwan • China"
+
+    industrial="AI chips • semiconductor infrastructure • datacenters"
+
+    housing="AI infrastructure expansion impacting commercial real estate"
+
+    technicals="Gap continuation active. Institutional volume elevated."
+
+    bias="Bullish"
+
+   }
+
+   else if(q.includes("TSLA")||q.includes("F")){
+
+    region="United States • Texas • Michigan • China"
+
+    industrial="Automotive manufacturing • lithium • steel • battery systems"
+
+    housing="Consumer financing and rates pressure affecting regional housing"
+
+    technicals="Watching MA100 resistance. Liquidity pool forming."
+
+    bias=Math.random()>.5?"Bullish":"Bearish"
+
+   }
+
+   else if(q.includes("SPY")||q.includes("QQQ")){
+
+    region="United States • New York • Global"
+
+    industrial="Broad market exposure • institutional capital flows"
+
+    housing="Housing pressure tied directly to macroeconomic conditions"
+
+    technicals="Volume and liquidity highly active. Macro trend in control."
+
+    bias=Math.random()>.5?"Bullish":"Bearish"
+
+   }
+
+   else{
+
+    technicals="Realtime observatory calculations active."
+
+    bias=Math.random()>.5?"Bullish":"Bearish"
+
+   }
+
+   setInfo({
+    region,
+    industrial,
+    housing,
+    technicals,
+    bias
+   })
 
   }
 
-  load()
+  build()
 
  },[symbol])
 
@@ -100,8 +124,22 @@ export default function Market(){
 
   speechSynthesis.cancel()
 
+  const text=`
+   ${symbol}.
+   Region mapping:
+   ${info.region}.
+   Industrial layer:
+   ${info.industrial}.
+   Housing intelligence:
+   ${info.housing}.
+   Technical observatory:
+   ${info.technicals}.
+   Final market observatory bias:
+   ${info.bias}.
+  `
+
   const u=
-   new SpeechSynthesisUtterance(voice)
+   new SpeechSynthesisUtterance(text)
 
   u.rate=.93
 
@@ -129,8 +167,8 @@ export default function Market(){
 
  p{
   color:#cbd5e1;
-  line-height:1.6;
   font-size:20px;
+  line-height:1.6;
  }
 
  .hero{
@@ -211,6 +249,14 @@ export default function Market(){
   margin-bottom:10px;
  }
 
+ .bull{
+  color:#22c55e;
+ }
+
+ .bear{
+  color:#ef4444;
+ }
+
  @media(max-width:900px){
 
   .layout{
@@ -230,14 +276,14 @@ export default function Market(){
   </h1>
 
   <p>
-   Real-time observatory trading runtime
-   with searchable stock options,
+   Real-time observatory trading runtime with searchable equities,
    crypto intelligence,
-   mapped locations,
+   mapped regions,
    industrial overlays,
    housing pressure,
-   technical observatory systems,
-   and AI voice interaction.
+   technical analysis,
+   AI voice interaction,
+   and live observatory bias detection.
   </p>
 
   <div className="search">
@@ -247,13 +293,14 @@ export default function Market(){
     onChange={e=>setQuery(e.target.value)}
     placeholder="
      Search:
-     AAPL,
      BTC,
-     NVDA,
      ETH,
+     NVDA,
      TSLA,
+     AMD,
      SPY,
-     AMD
+     QQQ,
+     META
     "
    />
 
@@ -306,6 +353,13 @@ export default function Market(){
    <div className="metric">
     <b>Technical Observatory</b>
     <span>{info.technicals}</span>
+   </div>
+
+   <div className="metric">
+    <b className={info.bias==="Bullish"?"bull":"bear"}>
+      {info.bias}
+    </b>
+    <span>Final Observatory Bias</span>
    </div>
 
   </div>
