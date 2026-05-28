@@ -285,7 +285,8 @@ export default function Home(){
 
  </section>
 
- <section className="glass">
+ 
+<section className="glass">
 
   <h2>
    Observatory Subscription Access
@@ -322,11 +323,19 @@ export default function Home(){
 
      </ul>
 
-     <button
-      onClick={()=>unlockTier(t)}
-     >
-      Unlock {t.name}
-     </button>
+     {
+      t.name==="FREE"
+      ?
+      <div className="green">
+       FREE ACTIVE
+      </div>
+      :
+      <button
+       onClick={()=>unlockTier(t)}
+      >
+       Unlock {t.name}
+      </button>
+     }
 
     </div>
 
@@ -335,6 +344,7 @@ export default function Home(){
   </div>
 
  </section>
+
 
  <section className="glass">
 
