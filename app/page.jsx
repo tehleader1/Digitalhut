@@ -2,6 +2,42 @@
 
 <section className="glass">
 
+<section className="hero">
+
+  <h1>
+   DigitalHut
+   <br/>
+   Observatory
+  </h1>
+
+  <p>
+   Terrain,
+   planetary,
+   geographical,
+   structural,
+   industrial,
+   and infrastructure observatory runtime
+   with wallet access,
+   observatory history,
+   GLB intelligence,
+   SearchAtlas integration,
+   and AI observatory systems.
+  </p>
+
+  
+
+  <p className="green">
+
+   Current Tier:
+   {" "}
+   {tier.name}
+
+  </p>
+
+ </section>
+
+
+
   <h2>
    Observatory Subscription Access
   </h2>
@@ -268,6 +304,10 @@ export default function Home(){
   fontFamily:"Arial"
  }}>
 
+
+
+
+
  <style>{`
 
  h1{
@@ -371,39 +411,7 @@ export default function Home(){
 
  `}</style>
 
- <section className="hero">
-
-  <h1>
-   DigitalHut
-   <br/>
-   Observatory
-  </h1>
-
-  <p>
-   Terrain,
-   planetary,
-   geographical,
-   structural,
-   industrial,
-   and infrastructure observatory runtime
-   with wallet access,
-   observatory history,
-   GLB intelligence,
-   SearchAtlas integration,
-   and AI observatory systems.
-  </p>
-
-  
-
-  <p className="green">
-
-   Current Tier:
-   {" "}
-   {tier.name}
-
-  </p>
-
- </section>
+ 
 
  
 
