@@ -1,286 +1,120 @@
 "use client"
-
 import {useState} from "react"
 
-const LIBRARIES=[
- ["Terrain"],
- ["Planetary"],
- ["Geographical"],
- ["Structures"],
- ["Infrastructure"],
- ["Maps"],
- ["Observatory Market Intelligence"]
-]
+const tiers = {
+  FREE:{price:0, downloads:3, history:3},
+  STANDARD:{price:35, downloads:12, history:12},
+  PREMIUM:{price:50, downloads:40, history:40},
+  PRO:{price:100, downloads:999, history:999}
+}
 
-const TIERS=[
- {
-  name:"FREE",
-  price:"$0",
-  history:"3 saved observatory signals",
-  features:[
-   "Basic GLB history",
-   "Basic description",
-   "Basic mapping",
-   "Viewer access"
-  ]
- },
- {
-  name:"STANDARD",
-  price:"$35",
-  history:"12 saved observatory signals",
-  features:[
-   "Saved GLB history",
-   "Basic observatory routing",
-   "Basic environment mapping"
-  ]
- },
- {
-  name:"PREMIUM",
-  price:"$50",
-  history:"40 saved observatory signals",
-  features:[
-   "Extended history",
-   "Highlighted GLB signals",
-   "Grid-point mapping"
-  ]
- },
- {
-  name:"PRO",
-  price:"$100",
-  history:"Unlimited observatory signals",
-  features:[
-   "Unlimited history",
-   "Texture detail",
-   "Download history",
-   "AI project usage"
-  ]
- }
-]
+const glbs = {
+  Terrain:["Canada Terrain GLB","Europe Heightmap","Florida Beachfront"],
+  Planetary:["Moon Scan","Mars Surface","Earth Orbit"],
+  Geographical:["New York Manhattan","Rio Brazil","Vancouver Canada"],
+  Structures:["European Buildings","City Pack","Morgantown WV"],
+  Maps:["World Map Layer","Regional Atlas","Survey Grid"]
+}
 
 export default function Home(){
+  const [wallet,setWallet]=useState("")
+  const [tier,setTier]=useState("FREE")
+  const [query,setQuery]=useState("")
+  const [feed,setFeed]=useState("Search terrain, maps, structures, countries, planets, or cities.")
+  const [history,setHistory]=useState([])
+  const [voice,setVoice]=useState("")
 
- const [tier]=useState("FREE")
-
- return (
-
- <main
-  style={{
-   minHeight:"100vh",
-   background:"#020617",
-   color:"white",
-   padding:"24px",
-   fontFamily:"Arial"
-  }}
- >
-
- <style>{`
-
-  h1{
-   font-size:clamp(60px,11vw,140px);
-   line-height:.88;
-   letter-spacing:-5px;
-   margin:0 0 24px;
+  async function connectWallet(){
+    if(window.ethereum){
+      const acc=await window.ethereum.request({method:"eth_requestAccounts"})
+      setWallet(acc[0])
+      localStorage.setItem("wallet",acc[0])
+    } else alert("Install MetaMask or wallet browser.")
   }
 
-  p{
-   color:#cbd5e1;
-   line-height:1.6;
-   font-size:22px;
+  function speak(text){
+    const u=new SpeechSynthesisUtterance(text)
+    speechSynthesis.speak(u)
   }
 
-  .hero,.glass{
-   background:#0f172a;
-   border:1px solid #334155;
-   border-radius:34px;
-   padding:30px;
-   margin-bottom:24px;
+  function runSearch(q=query){
+    const result = `DigitalHut Observatory AI: ${q || "global"} signal found. Pulling structure, terrain, geographic, planetary, and map intelligence from observatory feed. Sketchfab/NASA/map-style source routing ready.`
+    setFeed(result)
+    setHistory(h=>[q || "global observatory",...h].slice(0,tiers[tier].history))
+    speak(result)
   }
 
-  .libs{
-   display:grid;
-   grid-template-columns:
-    repeat(auto-fit,minmax(240px,1fr));
-   gap:18px;
+  function voiceSearch(){
+    const R=window.SpeechRecognition||window.webkitSpeechRecognition
+    if(!R) return alert("Voice recognition not supported in this browser.")
+    const r=new R()
+    r.onresult=e=>{
+      const text=e.results[0][0].transcript
+      setQuery(text); setVoice(text); runSearch(text)
+    }
+    r.start()
   }
 
-  .tierGrid{
-   display:grid;
-   grid-template-columns:
-    repeat(auto-fit,minmax(280px,1fr));
-   gap:20px;
+  function unlock(t){
+    setTier(t)
+    localStorage.setItem("tier",t)
+    alert(`${t} active for ${wallet || "local test wallet"}`)
   }
 
-  .tier{
-   background:#020617;
-   border:1px solid #334155;
-   border-radius:28px;
-   padding:24px;
-  }
+  return <main style={wrap}>
+    <section style={card}>
+      <h1>DigitalHut Observatory</h1>
+      <p>Wallet-gated AI observatory feed for terrain, planetary, geographical, structural, infrastructure and map intelligence.</p>
+      <button style={btn} onClick={connectWallet}>{wallet?wallet.slice(0,8)+"..."+wallet.slice(-4):"Connect Wallet"}</button>
+      <h2>Current Tier: <span style={{color:"#58d26a"}}>{tier}</span></h2>
+    </section>
 
-  .active{
-   border:2px solid #22c55e;
-   box-shadow:0 0 30px rgba(34,197,94,.3);
-  }
+    <section style={card}>
+      <h2>Live Observatory Feed</h2>
+      <textarea value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search Canada, Japan tunnel, Florida terrain, moon, airport, stadium..." style={input}/>
+      <button style={btn} onClick={()=>runSearch()}>Search Observatory</button>
+      <button style={btn} onClick={voiceSearch}>Voice Search</button>
+      <p>{voice && `Voice heard: ${voice}`}</p>
+      <div style={result}>{feed}</div>
+    </section>
 
-  button{
-   background:
-    linear-gradient(
-     135deg,
-     #2563eb,
-     #7c3aed
-    );
-
-   color:white;
-   border:0;
-   border-radius:20px;
-   padding:16px 20px;
-   font-weight:900;
-  }
-
-  .green{
-   color:#22c55e;
-   font-weight:900;
-  }
-
- `}</style>
-
- <section className="hero">
-
-  <h1>
-   DigitalHut
-   <br/>
-   Observatory
-  </h1>
-
-  <p>
-   Terrain,
-   planetary,
-   geographical,
-   structural,
-   industrial,
-   and infrastructure observatory runtime
-   powered by Sketchfab,
-   observatory intelligence,
-   and SearchAtlas systems.
-  </p>
-
-  <p className="green">
-   Current Tier: FREE
-  </p>
-
- </section>
-
- <section className="glass">
-
-  <h2>
-   Observatory Library
-  </h2>
-
-  <div className="libs">
-
-   {LIBRARIES.map(([name])=>
-
-    <button key={name}>
-     {name}
-    </button>
-
-   )}
-
-  </div>
-
- </section>
-
- <section className="glass">
-
-  <h2>
-   Live Observatory Runtime
-  </h2>
-
-  <p>
-   GLB observatory runtime active.
-  </p>
-
- </section>
-
- <section className="glass">
-
-  <h2>
-   Observatory Subscription Access
-  </h2>
-
-  <div className="tierGrid">
-
-   {TIERS.map(t=>
-
-    <div
-     key={t.name}
-     className={
-      t.name==="FREE"
-      ?"tier active"
-      :"tier"
-     }
-    >
-
-     <h2>{t.name}</h2>
-
-     <h2>{t.price}</h2>
-
-     <p>{t.history}</p>
-
-     <ul>
-
-      {t.features.map(f=>
-
-       <li key={f}>
-        {f}
-       </li>
-
+    <section style={card}>
+      <h2>Observatory Library</h2>
+      {Object.entries(glbs).map(([cat,items])=>
+        <div key={cat} style={mini}>
+          <h3>{cat}</h3>
+          {items.map((x,i)=><p key={i}>• {x} {i < tiers[tier].downloads ? <b>Download Ready</b> : <b>Locked</b>}</p>)}
+        </div>
       )}
+    </section>
 
-     </ul>
+    <section style={card}>
+      <h2>Wallet Subscription Access</h2>
+      {Object.entries(tiers).map(([name,t])=>
+        <div key={name} style={tierBox}>
+          <h3>{name}</h3>
+          <h2>${t.price}</h2>
+          <p>{t.history} saved observatory signals · {t.downloads} GLB downloads</p>
+          <button style={btn} onClick={()=>unlock(name)}>Unlock {name}</button>
+        </div>
+      )}
+    </section>
 
-     {
-      t.name==="FREE"
-      ?
-      <div className="green">
-       FREE ACTIVE
-      </div>
-      :
-      <button>
-       Unlock {t.name}
-      </button>
-     }
+    <section style={card}>
+      <h2>Saved Observatory History</h2>
+      {history.map((h,i)=><p key={i}>• {h}</p>)}
+      <p>Subscription status: {tier}</p>
+      <p>Wallet: {wallet || "not connected"}</p>
+    </section>
 
-    </div>
-
-   )}
-
-  </div>
-
- </section>
-
- <section className="glass">
-
-  <h2>
-   Saved Observatory History
-  </h2>
-
-  <p>
-   • Terrain Observatory
-  </p>
-
-  <p>
-   • Planetary Scan
-  </p>
-
-  <p>
-   • Industrial Mapping
-  </p>
-
- </section>
-
- </main>
-
- )
-
+    <a href="/market" style={btn}>Open Observatory Intelligence Market</a>
+  </main>
 }
+
+const wrap={background:"#050816",color:"white",minHeight:"100vh",padding:"30px",fontFamily:"Arial"}
+const card={background:"#111827",border:"1px solid #26334f",borderRadius:"28px",padding:"28px",margin:"22px 0"}
+const btn={display:"inline-block",background:"#6d3df2",color:"white",padding:"14px 22px",borderRadius:"18px",border:"0",fontWeight:"900",margin:"8px",textDecoration:"none"}
+const input={width:"100%",minHeight:"90px",background:"#050816",color:"white",border:"1px solid #26334f",borderRadius:"18px",padding:"16px",fontSize:"18px"}
+const result={background:"#050816",padding:"18px",borderRadius:"18px",marginTop:"15px"}
+const mini={background:"#050816",padding:"15px",borderRadius:"18px",margin:"12px 0"}
+const tierBox={background:"#050816",padding:"18px",borderRadius:"18px",margin:"15px 0"}
