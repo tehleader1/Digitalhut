@@ -7,8 +7,15 @@ const fallback = [
 ]
 
 function fallbackResult(query) {
-  const q = query.toLowerCase()
+  const q = String(query || "").toLowerCase()
   return fallback.find(x => x.title.toLowerCase().includes(q) || x.category.includes(q)) || fallback[Math.floor(Math.random() * fallback.length)]
+}
+
+function sketchfabToken() {
+  return process.env.SKETCHFAB_ACCESS_TOKEN ||
+    process.env.SKETCHFAB_API_TOKEN ||
+    process.env.SKETCHFAB_TOKEN ||
+    process.env.SKETCHFAB_API_KEY
 }
 
 function normalizeSketchfabModel(model) {
@@ -23,36 +30,45 @@ function normalizeSketchfabModel(model) {
   }
 }
 
+async function fetchSketchfabModel(query) {
+  const token = sketchfabToken()
+  const url = new URL("https://api.sketchfab.com/v3/search")
+  url.searchParams.set("type", "models")
+  url.searchParams.set("downloadable", "true")
+  url.searchParams.set("sort_by", "-likeCount")
+  url.searchParams.set("q", query || "terrain")
+
+  const headers = token ? { Authorization: `Token ${token}` } : {}
+  const response = await fetch(url, { headers })
+  if (!response.ok) {
+    return { model: null, tokenPresent: Boolean(token), status: response.status }
+  }
+
+  const data = await response.json()
+  return { model: data.results?.[0] || null, tokenPresent: Boolean(token), status: response.status }
+}
+
 export async function POST(req) {
   const { query = "terrain" } = await req.json()
-  const token = process.env.SKETCHFAB_ACCESS_TOKEN || process.env.SKETCHFAB_API_TOKEN
+  const live = await fetchSketchfabModel(query)
 
-  if (token) {
-    const url = new URL("https://api.sketchfab.com/v3/search")
-    url.searchParams.set("type", "models")
-    url.searchParams.set("downloadable", "true")
-    url.searchParams.set("sort_by", "-likeCount")
-    url.searchParams.set("q", query || "terrain")
-
-    const response = await fetch(url, { headers: { Authorization: `Token ${token}` } })
-    if (response.ok) {
-      const data = await response.json()
-      const model = data.results?.[0]
-      if (model) {
-        const result = normalizeSketchfabModel(model)
-        return Response.json({
-          result,
-          provider: "sketchfab-live",
-          ai: `DigitalHut found a live Sketchfab observatory model for ${query || result.title}. Review author, category, and download permissions before adding it to a paid tier.`
-        })
-      }
-    }
+  if (live.model) {
+    const result = normalizeSketchfabModel(live.model)
+    return Response.json({
+      result,
+      provider: live.tokenPresent ? "sketchfab-live" : "sketchfab-public",
+      ai: `DigitalHut found a live Sketchfab observatory model for ${query || result.title}. Review author, category, and download permissions before adding it to a paid tier.`
+    })
   }
 
   const item = fallbackResult(query)
+  const setupHint = live.tokenPresent
+    ? `Sketchfab token is present, but the live request returned status ${live.status}. Check token permissions or try SKETCHFAB_ACCESS_TOKEN.`
+    : "Add SKETCHFAB_ACCESS_TOKEN to Render, then redeploy, to enable authenticated live Sketchfab search."
+
   return Response.json({
     result: item,
     provider: "fallback",
-    ai: `DigitalHut found a ${item.category} observatory signal for ${query || item.title}. Add SKETCHFAB_ACCESS_TOKEN to enable the live Sketchfab feed.`
+    ai: `DigitalHut found a ${item.category} observatory signal for ${query || item.title}. ${setupHint}`
   })
 }
