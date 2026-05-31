@@ -1,7 +1,12 @@
-let db = globalThis.digitalhutDb ||= { users:{}, history:[] }
-export async function POST(req){
+import { addHistory, getHistory } from "../../lib/digitalhutStore"
+
+export async function POST(req) {
   const item = await req.json()
-  db.history.unshift({...item,time:Date.now()})
-  return Response.json({ok:true,history:db.history.slice(0,20)})
+  const history = await addHistory(item)
+  return Response.json({ ok: true, history })
 }
-export async function GET(){ return Response.json({history:db.history||[]}) }
+
+export async function GET() {
+  const history = await getHistory()
+  return Response.json({ history })
+}
