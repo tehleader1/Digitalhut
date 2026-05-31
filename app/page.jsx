@@ -1,5 +1,6 @@
 "use client"
 import {useEffect, useMemo, useState} from "react"
+import BabylonObservatory from "./components/BabylonObservatory"
 
 const tiers = {free: 0, standard: 35, premium: 50, pro: 100}
 const fieldSignals = [
@@ -127,7 +128,8 @@ export default function Home(){
    </div>
   </section>
 
-  {result&&<section style={resultPanel}>
+  {result&&<BabylonObservatory modelUrl={result.result?.glbUrl || result.result?.downloadUrl || result.result?.url} title={result.result?.title}/>} 
+{result&&<section style={resultPanel}>
    {result.result.image&&<img src={result.result.image} alt="Sketchfab model preview" style={preview}/>} 
    <div>
     <div style={eyebrow}>{result.provider}</div>

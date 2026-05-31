@@ -18,15 +18,66 @@ function sketchfabToken() {
     process.env.SKETCHFAB_API_KEY
 }
 
-function normalizeSketchfabModel(model) {
+async function fetchSketchfabDownload(uid, token) {
+  if (!uid) {
+    return {
+      url: null,
+      status: "missing-uid",
+      error: "Sketchfab model UID was not returned."
+    }
+  }
+
+  if (!token) {
+    return {
+      url: null,
+      status: "missing-token",
+      error: "Set SKETCHFAB_ACCESS_TOKEN to request downloadable GLB URLs."
+    }
+  }
+
+  try {
+    const r = await fetch(`https://api.sketchfab.com/v3/models/${uid}/download`, {
+      headers: { Authorization: `Token ${token}` }
+    })
+    if (!r.ok) {
+      const detail = await r.text()
+      return {
+        url: null,
+        status: r.status,
+        error: detail || `Sketchfab download request failed with status ${r.status}.`
+      }
+    }
+
+    const d = await r.json()
+    const url = d.glb?.url || d.gltf?.url || null
+    return {
+      url,
+      status: url ? "ok" : "missing-download-url",
+      error: url ? null : "Sketchfab did not include a GLB or glTF download URL."
+    }
+  } catch (e) {
+    return {
+      url: null,
+      status: "request-error",
+      error: e?.message || "Sketchfab download request failed."
+    }
+  }
+}
+
+async function normalizeSketchfabModel(model, token) {
   const image = model.thumbnails?.images?.[0]?.url
+  const download = await fetchSketchfabDownload(model.uid, token)
   return {
     title: model.name,
     category: model.categories?.[0]?.name || "sketchfab",
     url: model.viewerUrl || model.url,
     uid: model.uid,
     author: model.user?.displayName || model.user?.username,
-    image
+    image,
+    downloadUrl: download.url,
+    glbUrl: download.url,
+    downloadStatus: download.status,
+    downloadError: download.error
   }
 }
 
@@ -53,10 +104,10 @@ export async function POST(req) {
   const live = await fetchSketchfabModel(query)
 
   if (live.model) {
-    const result = normalizeSketchfabModel(live.model)
+    const result = await normalizeSketchfabModel(live.model, sketchfabToken())
     return Response.json({
       result,
-      provider: live.tokenPresent ? "sketchfab-live" : "sketchfab-public",
+      provider: result.glbUrl ? "sketchfab-live" : "sketchfab-metadata",
       ai: `DigitalHut found a live Sketchfab observatory model for ${query || result.title}. Review author, category, and download permissions before adding it to a paid tier.`
     })
   }
@@ -67,7 +118,13 @@ export async function POST(req) {
     : "Add SKETCHFAB_ACCESS_TOKEN to Render, then redeploy, to enable authenticated live Sketchfab search."
 
   return Response.json({
-    result: item,
+    result: {
+      ...item,
+      glbUrl: null,
+      downloadUrl: null,
+      downloadStatus: "fallback",
+      downloadError: setupHint
+    },
     provider: "fallback",
     ai: `DigitalHut found a ${item.category} observatory signal for ${query || item.title}. ${setupHint}`
   })
