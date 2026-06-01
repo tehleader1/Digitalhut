@@ -5,7 +5,20 @@ Session: Hour close update
 
 ## Mission
 
-Continue from the deployed `main` branch after the observatory-news, FireCuda GLB, stock profile, wallet social, and SEO agent update. Keep Alpaca and Sketchfab as blended observatory feeds, not separate disconnected features.
+Continue from the updated `main` branch after the observatory-news, FireCuda GLB, stock profile, wallet social, and SEO agent update. Keep Alpaca and Sketchfab as blended observatory feeds, not separate disconnected features.
+
+## Deployment State
+
+PR merged into `main`:
+
+```text
+https://github.com/tehleader1/Digitalhut/pull/5
+main commit: 00efc931c1496fc3f113138d01dee5f9e8321138
+```
+
+Vercel deployment checks reported failure because the account/project hit a build-rate-limit page. This is a deploy quota/blocker state, not confirmed as an application code failure from the status message.
+
+Next mobile verification should first confirm whether the active production host redeployed from `main`. If the new endpoints are not live yet, wait for the deploy quota window or manually redeploy from the hosting dashboard.
 
 ## What Changed This Hour
 
@@ -18,6 +31,7 @@ Continue from the deployed `main` branch after the observatory-news, FireCuda GL
 - Added `/api/market-universe` for S&P 500, NASDAQ, and NYSE stock profile collection.
 - Added 2026 stock profile scenario engine with bull score, bear score, support, resistance, bullish run, bearish run, take-profit zones, and invalidation.
 - Expanded FireCuda runner to collect/test GLB files and export full stock universe profiles.
+- Scrubbed `.env.example` so real credentials are not stored in the public repo.
 
 ## New Production Endpoints To Verify
 
@@ -95,8 +109,8 @@ Do not spend the next mobile pass chasing Alpaca unless the production secret ha
 
 ## Next Mobile Codex Priority
 
-1. Confirm deployment finished.
-2. Verify new endpoints.
+1. Confirm deployment status; Vercel reported build-rate-limit on merge.
+2. Verify new endpoints once deployment is live.
 3. Run FireCuda market universe export.
 4. Add real GLB URLs to the manifest and run GLB collection.
 5. Check homepage visual feel on mobile: featured post first, adaptive observatory next, no broken layout.
