@@ -42,7 +42,7 @@ export default function FeaturedDailyPost({ intent = "public-observatory" }) {
         <div>
           <h2 style={headline}>{post.headline}</h2>
           <p style={deck}>{post.deck}</p>
-          <div style={tagRow}>{(post.tags || []).map(tag => <span key={tag} style={tag}>{tag}</span>)}</div>
+          <div style={tagRow}>{(post.tags || []).map(tagName => <span key={tagName} style={tagPill}>{tagName}</span>)}</div>
         </div>
         <div style={sideBox}>
           <span style={sideLabel}>3D preload</span>
@@ -65,7 +65,7 @@ const body = { display: "grid", gridTemplateColumns: "minmax(0,1fr) 300px", gap:
 const headline = { margin: "0 0 10px", fontSize: 30, lineHeight: 1.05, letterSpacing: 0 }
 const deck = { margin: 0, color: "#dbeafe", lineHeight: 1.5, fontSize: 16 }
 const tagRow = { display: "flex", flexWrap: "wrap", gap: 8, marginTop: 14 }
-const tag = { padding: "7px 9px", borderRadius: 999, background: "rgba(255,255,255,.09)", color: "#e0f2fe", fontSize: 12, fontWeight: 800 }
+const tagPill = { padding: "7px 9px", borderRadius: 999, background: "rgba(255,255,255,.09)", color: "#e0f2fe", fontSize: 12, fontWeight: 800 }
 const sideBox = { border: "1px solid rgba(148,163,184,.24)", borderRadius: 8, background: "rgba(2,6,23,.42)", padding: 14, display: "grid", gap: 8 }
 const sideLabel = { fontSize: 11, textTransform: "uppercase", letterSpacing: 0, color: "#93c5fd", fontWeight: 900 }
 const query = { color: "#fef3c7", overflowWrap: "anywhere" }
