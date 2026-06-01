@@ -131,7 +131,7 @@ export async function saveCustomerProfile(profile) {
   const row = cleanProfile(profile)
   if (!hasSupabase()) {
     memory.customers[row.wallet] = { ...(memory.customers[row.wallet] || {}), ...row }
-    return memory.customers[row.wallet
+    return memory.customers[row.wallet]
   }
   const saved = await supabaseFetch("digitalhut_customers?on_conflict=wallet", {
     method: "POST",
