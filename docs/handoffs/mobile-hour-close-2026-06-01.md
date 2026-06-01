@@ -16,9 +16,32 @@ https://github.com/tehleader1/Digitalhut/pull/5
 main commit: 00efc931c1496fc3f113138d01dee5f9e8321138
 ```
 
-Vercel deployment checks reported failure because the account/project hit a build-rate-limit page. This is a deploy quota/blocker state, not confirmed as an application code failure from the status message.
+Build blocker found after merge:
 
-Next mobile verification should first confirm whether the active production host redeployed from `main`. If the new endpoints are not live yet, wait for the deploy quota window or manually redeploy from the hosting dashboard.
+```text
+Error occurred prerendering page "/".
+The style prop expects a mapping from style properties to values, not a string.
+```
+
+Fix pushed to `main`:
+
+```text
+58053107ada28d325cc2a8ed39e18e19114b22e0
+```
+
+Cause:
+
+```text
+FeaturedDailyPost mapped tag strings with style={tag}, which shadowed the tag style object.
+```
+
+Fix:
+
+```text
+Renamed the mapped value to tagName and renamed the style object to tagPill.
+```
+
+Current deploy status after the fix: Vercel checks still report the account/project build-rate-limit page. If the next manual redeploy runs, the known homepage style prerender issue should be cleared.
 
 ## What Changed This Hour
 
@@ -109,11 +132,12 @@ Do not spend the next mobile pass chasing Alpaca unless the production secret ha
 
 ## Next Mobile Codex Priority
 
-1. Confirm deployment status; Vercel reported build-rate-limit on merge.
-2. Verify new endpoints once deployment is live.
-3. Run FireCuda market universe export.
-4. Add real GLB URLs to the manifest and run GLB collection.
-5. Check homepage visual feel on mobile: featured post first, adaptive observatory next, no broken layout.
+1. Confirm deployment status; Vercel still reports build-rate-limit after the style fix.
+2. Manually redeploy or wait for the quota window if needed.
+3. Verify new endpoints once deployment is live.
+4. Run FireCuda market universe export.
+5. Add real GLB URLs to the manifest and run GLB collection.
+6. Check homepage visual feel on mobile: featured post first, adaptive observatory next, no broken layout.
 
 ## Conclusion
 
