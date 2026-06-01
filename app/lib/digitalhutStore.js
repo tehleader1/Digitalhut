@@ -12,6 +12,10 @@ function pickEnv(names) {
   return names.find(name => Boolean(process.env[name])) || null
 }
 
+function envValue(name) {
+  return name ? process.env[name] : null
+}
+
 function supabaseConfig() {
   const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY
@@ -67,12 +71,16 @@ export function providerStatus() {
   const sketchfabEnv = pickEnv(["SKETCHFAB_ACCESS_TOKEN", "SKETCHFAB_API_TOKEN", "SKETCHFAB_TOKEN", "SKETCHFAB_API_KEY"])
   const alpacaKeyEnv = pickEnv(["ALPACA_API_KEY", "ALPACA_KEY_ID", "APCA_API_KEY_ID", "NEXT_SERVER_ALPACA_API_KEY"])
   const alpacaSecretEnv = pickEnv(["ALPACA_SECRET_KEY", "ALPACA_API_SECRET", "ALPACA_SECRET", "APCA_API_SECRET_KEY", "NEXT_SERVER_ALPACA_SECRET_KEY"])
+  const alpacaTradingBaseEnv = pickEnv(["ALPACA_TRADING_BASE_URL", "APCA_API_BASE_URL", "ALPACA_BASE_URL"])
   const paymentEnv = pickEnv(["DIGITALHUT_PAYMENT_WALLET", "STRIPE_SECRET_KEY", "COINBASE_COMMERCE_API_KEY"])
+  const alpacaTradingBaseUrl = envValue(alpacaTradingBaseEnv) || "https://paper-api.alpaca.markets/v2"
 
   return {
     supabase: hasSupabase(),
     sketchfab: Boolean(sketchfabEnv),
     alpaca: Boolean(alpacaKeyEnv && alpacaSecretEnv),
+    alpacaTradingBaseUrl,
+    alpacaTradingBaseEnv: alpacaTradingBaseEnv || "default-paper",
     payment: Boolean(paymentEnv),
     paymentWalletConfigured: Boolean(process.env.DIGITALHUT_PAYMENT_WALLET),
     paymentWallet: process.env.DIGITALHUT_PAYMENT_WALLET || null,
@@ -80,6 +88,7 @@ export function providerStatus() {
       sketchfab: sketchfabEnv,
       alpacaKey: alpacaKeyEnv,
       alpacaSecret: alpacaSecretEnv,
+      alpacaTradingBase: alpacaTradingBaseEnv,
       payment: paymentEnv,
       supabaseUrl: pickEnv(["SUPABASE_URL", "NEXT_PUBLIC_SUPABASE_URL"]),
       supabaseKey: pickEnv(["SUPABASE_SERVICE_ROLE_KEY", "SUPABASE_ANON_KEY"])
@@ -122,7 +131,7 @@ export async function saveCustomerProfile(profile) {
   const row = cleanProfile(profile)
   if (!hasSupabase()) {
     memory.customers[row.wallet] = { ...(memory.customers[row.wallet] || {}), ...row }
-    return memory.customers[row.wallet]
+    return memory.customers[row.wallet
   }
   const saved = await supabaseFetch("digitalhut_customers?on_conflict=wallet", {
     method: "POST",
