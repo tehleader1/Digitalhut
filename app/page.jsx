@@ -13,11 +13,33 @@ const measurements = [
 ]
 const fieldSignals = [
   {label:"Lunar terrain drift", query:"moon terrain lava tube", tone:"Planetary scan", priority:"High"},
+  {label:"Wall Street market mirror", query:"wall street new york financial district 3d", tone:"Market intent", priority:"Adaptive"},
   {label:"Urban twin packet", query:"tokyo building city scan", tone:"Structure scan", priority:"Live"},
   {label:"Northern relief layer", query:"canada terrain elevation", tone:"Terrain sweep", priority:"Fresh"},
   {label:"Historic map echo", query:"new york map 3d", tone:"Map signal", priority:"New"},
   {label:"Infrastructure corridor", query:"bridge infrastructure 3d scan", tone:"Asset route", priority:"Watch"}
 ]
+
+function defaultAdaptiveState(){
+ return {
+  intent:"anonymous-new-user",
+  confidence:.45,
+  reason:"Waiting for visitor signal",
+  hero:{eyebrow:"DigitalHut Observatory",title:"Adaptive observatory, market, wallet, and agent console.",primaryAction:"Run Observatory Scan"},
+  observatory:{preloadQuery:"moon terrain lava tube",category:"planetary"},
+  market:{defaultSymbol:"BTC",symbols:["BTC","ETH","AAPL","TSLA"]},
+  premium:{trigger:"first-scan",message:"Explore market intelligence and observatory feeds, then unlock premium depth.",active:false}
+ }
+}
+
+function signalFromAdaptive(state){
+ return {
+  label: state.intent === "crypto-trader" ? "Wall Street market mirror" : `${state.intent.replaceAll("-"," ")} feed`,
+  query: state.observatory?.preloadQuery || "moon terrain lava tube",
+  tone: state.reason || "Adaptive feed",
+  priority: "Adaptive"
+ }
+}
 
 export default function Home(){
  const [wallet,setWallet]=useState("")
@@ -29,22 +51,44 @@ export default function Home(){
  const [signal,setSignal]=useState(fieldSignals[0])
  const [health,setHealth]=useState(null)
  const [subscription,setSubscription]=useState(null)
+ const [adaptive,setAdaptive]=useState(defaultAdaptiveState())
  const [toast,setToast]=useState("Operational maturity console ready")
  const tierEntries = useMemo(()=>Object.entries(tiers),[])
+ const marketSymbols = adaptive?.market?.symbols || ["BTC","ETH","AAPL","TSLA"]
+ const defaultMarketSymbol = adaptive?.market?.defaultSymbol || marketSymbols[0] || "BTC"
 
- useEffect(()=>{ refreshHealth() },[])
+ useEffect(()=>{ refreshHealth(); refreshAdaptive() },[])
  useEffect(()=>{
   const timer=setInterval(()=>{
-   const next=fieldSignals[Math.floor(Math.random()*fieldSignals.length)]
+   const adaptiveSignal = signalFromAdaptive(adaptive)
+   const next = adaptive.intent === "anonymous-new-user" ? fieldSignals[Math.floor(Math.random()*fieldSignals.length)] : adaptiveSignal
    setSignal(next)
    setQuery(next.query)
   },30000)
   return ()=>clearInterval(timer)
- },[])
+ },[adaptive])
 
  async function refreshHealth(){
   const res=await fetch("/health",{cache:"no-store"})
   setHealth(await res.json())
+ }
+
+ async function refreshAdaptive(overrides={}){
+  if(typeof window === "undefined") return
+  const params = new URLSearchParams(window.location.search)
+  const savedMarket = window.localStorage.getItem("digitalhut:lastMarketSymbol") || ""
+  const savedObservatory = window.localStorage.getItem("digitalhut:lastObservatoryQuery") || ""
+  if(savedMarket && !params.get("query") && !params.get("symbol")) params.set("lastMarketSymbol", savedMarket)
+  if(savedObservatory && !params.get("lastObservatoryQuery")) params.set("lastObservatoryQuery", savedObservatory)
+  if(wallet || overrides.wallet) params.set("wallet", overrides.wallet || wallet)
+  if(tier || overrides.tier) params.set("tier", overrides.tier || tier)
+  const res=await fetch(`/api/adaptive-home?${params.toString()}`,{cache:"no-store"})
+  const state=await res.json()
+  const nextSignal=signalFromAdaptive(state)
+  setAdaptive(state)
+  setSignal(nextSignal)
+  setQuery(nextSignal.query)
+  setToast(`Adaptive entry loaded: ${state.intent}. ${state.premium?.message || ""}`)
  }
 
  async function connect(){
@@ -52,12 +96,14 @@ export default function Home(){
   setWallet(w)
   setToast("Wallet access synced")
   await fetch("/api/account",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({wallet:w})})
+  await refreshAdaptive({wallet:w})
  }
 
  async function activate(t){
   setTier(t)
   setToast(`${t.toUpperCase()} tier staged`)
   await fetch("/api/set-tier",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({wallet,tier:t})})
+  await refreshAdaptive({tier:t})
  }
 
  async function subscribe(t=tier){
@@ -73,6 +119,7 @@ export default function Home(){
   setBusy(true)
   setToast("Observatory scan running")
   try{
+   if(typeof window!=="undefined") window.localStorage.setItem("digitalhut:lastObservatoryQuery", activeQuery)
    const res=await fetch("/api/sketchfab",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:activeQuery})})
    const json=await res.json()
    setResult(json)
@@ -83,6 +130,7 @@ export default function Home(){
     window.speechSynthesis.speak(new SpeechSynthesisUtterance(`${json.ai} Current tier is ${tier}.`))
    }
    await fetch("/api/history",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:activeQuery,result:json.result,tier,provider:json.provider})})
+   await refreshAdaptive({tier})
   } finally { setBusy(false) }
  }
 
@@ -102,32 +150,34 @@ export default function Home(){
  const providers=health?.providers || {}
  const paymentWallet=providers.paymentWallet || subscription?.payment_wallet || "0x3121FbFB683B9147913f336b05eF419b875a7590"
  const glbStatus=result?.result?.glbUrl?"live GLB":"feed route only"
+ const marketHref=`/market-intelligence?symbol=${encodeURIComponent(defaultMarketSymbol)}&entry=${encodeURIComponent(adaptive.intent)}`
 
  return <main style={shell}>
   <section style={hero}>
    <div>
-    <div style={eyebrow}>DigitalHut Production Console</div>
-    <h1 style={title}>Operational observatory, market, wallet, and render readiness.</h1>
-    <p style={lede}>FireCuda measurements are now reflected in the customer frontend: provider health, launch scores, feed routes, wallet tiering, crypto subscription destination, and renderer diagnostics.</p>
+    <div style={eyebrow}>{adaptive.hero?.eyebrow || "DigitalHut Production Console"}</div>
+    <h1 style={title}>{adaptive.hero?.title || "Operational observatory, market, wallet, and render readiness."}</h1>
+    <p style={lede}>DigitalHut is now reading visitor intent, provider health, wallet tier, and recent searches to choose the first market symbols, observatory feed, and premium trigger before the user has to dig.</p>
     <div style={actions}>
-     <button onClick={()=>scan()} style={primary}>{busy?"Scanning":"Run Observatory Scan"}</button>
+     <button onClick={()=>scan()} style={primary}>{busy?"Scanning":adaptive.hero?.primaryAction || "Run Observatory Scan"}</button>
      <button onClick={voice} style={secondary}>Voice</button>
-     <a href="/market-intelligence" style={linkBtn}>Market Intelligence</a>
+     <a href={marketHref} style={linkBtn}>Market Intelligence</a>
     </div>
    </div>
    <div style={opsPanel}>
-    <div style={panelHeader}><h2 style={h2}>Render Provider Health</h2><span style={pill}>{health?.status || "checking"}</span></div>
-    <Status label="Supabase" on={providers.supabase}/>
-    <Status label="Sketchfab" on={providers.sketchfab}/>
+    <div style={panelHeader}><h2 style={h2}>Adaptive Entry</h2><span style={pill}>{adaptive.intent}</span></div>
+    <Status label="Confidence" on={adaptive.confidence >= .7}/>
     <Status label="Alpaca" on={providers.alpaca}/>
+    <Status label="Sketchfab" on={providers.sketchfab}/>
     <Status label="Payment Wallet" on={providers.paymentWalletConfigured}/>
-    <button onClick={refreshHealth} style={smallBtn}>Refresh health</button>
+    <p style={muted}>{adaptive.reason}</p>
+    <button onClick={()=>refreshAdaptive()} style={smallBtn}>Refresh adaptive state</button>
    </div>
   </section>
 
   <section style={scoreGrid}>
    {measurements.map(([label,value])=><div key={label} style={scoreCard}><span>{label} Score</span><b>{value}</b></div>)}
-   <div style={scoreCard}><span>Trend</span><b style={{fontSize:28}}>Improving</b></div>
+   <div style={scoreCard}><span>Intent</span><b style={{fontSize:22,textTransform:"capitalize"}}>{adaptive.intent.replaceAll("-"," ")}</b></div>
   </section>
 
   <section style={mainGrid}>
@@ -143,10 +193,24 @@ export default function Home(){
    </div>
 
    <div style={panel}>
-    <div style={panelHeader}><h2 style={h2}>Observatory Search</h2><span style={pill}>{glbStatus}</span></div>
-    <input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search terrain, planetary, structures, maps..." style={input}/>
-    <div style={actions}><button onClick={()=>scan()} style={primary}>{busy?"Scanning":"Search"}</button><button onClick={()=>setQuery(signal.query)} style={secondary}>Use Signal</button></div>
+    <div style={panelHeader}><h2 style={h2}>Adaptive Observatory Search</h2><span style={pill}>{signal.priority}</span></div>
+    <p style={muted}>{signal.tone}</p>
+    <input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search terrain, markets, structures, maps..." style={input}/>
+    <div style={actions}><button onClick={()=>scan()} style={primary}>{busy?"Scanning":"Search"}</button><button onClick={()=>setQuery(adaptive.observatory?.preloadQuery || signal.query)} style={secondary}>Use Adaptive Feed</button></div>
     <p style={muted}>{toast}</p>
+   </div>
+  </section>
+
+  <section style={mainGrid}>
+   <div style={panel}>
+    <div style={panelHeader}><h2 style={h2}>Market Preload</h2><span style={pill}>{defaultMarketSymbol}</span></div>
+    <div style={symbolGrid}>{marketSymbols.map(symbol=><a key={symbol} href={`/market-intelligence?symbol=${symbol}&entry=${adaptive.intent}`} style={symbolTile}>{symbol}</a>)}</div>
+    <p style={muted}>{adaptive.premium?.message}</p>
+   </div>
+   <div style={panel}>
+    <div style={panelHeader}><h2 style={h2}>Observatory Preload</h2><span style={pill}>{adaptive.observatory?.category}</span></div>
+    <b style={resultTitle}>{adaptive.observatory?.preloadQuery}</b>
+    <p style={muted}>This feed is selected from the adaptive homepage state. Market users get Wall Street first; terrain users get maps and structures; asset users get GLB discovery.</p>
    </div>
   </section>
 
@@ -164,7 +228,7 @@ export default function Home(){
 
   <section style={libraryBand}>
    <a href="/library" style={navTile}><span>Library</span><b>GLB discovery routes</b></a>
-   <a href="/market-intelligence" style={navTile}><span>Market</span><b>Live chart diagnostics</b></a>
+   <a href={marketHref} style={navTile}><span>Market</span><b>{marketSymbols.join(" / ")}</b></a>
   </section>
  </main>
 }
@@ -202,7 +266,9 @@ const mono={fontFamily:"monospace",fontSize:13,color:"#cbd5e1",overflowWrap:"any
 const input={width:"100%",boxSizing:"border-box",padding:16,borderRadius:8,margin:"2px 0 14px",fontSize:18,border:"1px solid rgba(226,232,240,.22)",background:"#020617",color:"white"}
 const muted={color:"#cbd5e1",lineHeight:1.5}
 const renderGrid={maxWidth:1180,margin:"22px auto",display:"grid",gridTemplateColumns:"1.1fr .9fr",gap:18}
-const resultTitle={fontSize:30,margin:"8px 0 12px"}
+const resultTitle={fontSize:26,margin:"8px 0 12px"}
 const preview={width:"100%",aspectRatio:"16 / 9",objectFit:"cover",borderRadius:8,background:"#0f172a",marginBottom:12}
 const libraryBand={maxWidth:1180,margin:"22px auto 0",display:"grid",gridTemplateColumns:"repeat(2,minmax(0,1fr))",gap:18}
 const navTile={padding:22,borderRadius:8,border:"1px solid rgba(148,163,184,.25)",background:"rgba(226,232,240,.08)",color:"white",textDecoration:"none",display:"grid",gap:8}
+const symbolGrid={display:"grid",gridTemplateColumns:"repeat(4,minmax(0,1fr))",gap:10}
+const symbolTile={padding:16,borderRadius:8,background:"rgba(20,184,166,.14)",border:"1px solid rgba(45,212,191,.32)",color:"#a7f3d0",fontWeight:900,textAlign:"center",textDecoration:"none"}
