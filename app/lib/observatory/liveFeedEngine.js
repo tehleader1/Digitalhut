@@ -77,9 +77,34 @@ const intentAliases = {
   researcher: ["researcher", "student"]
 }
 
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value))
+}
+
+export function computeEngagementInterval(input = {}) {
+  const orbitSeconds = Number(input.orbitSeconds || 0)
+  const interactionCount = Number(input.interactionCount || 0)
+  const idleSeconds = Number(input.idleSeconds || 0)
+  const replayCount = Number(input.replayCount || 0)
+  const savedCount = Number(input.savedCount || 0)
+  const premium = input.tier === "premium" || input.tier === "pro"
+  const engagementScore = clamp(
+    Math.round(orbitSeconds / 12) + interactionCount * 2 + replayCount * 4 + savedCount * 5 - Math.round(idleSeconds / 18),
+    0,
+    40
+  )
+
+  if (idleSeconds >= 75) return { intervalMs: 36000, engagementScore, tempo: "idle-slow" }
+  if (engagementScore >= 24) return { intervalMs: premium ? 9000 : 11000, engagementScore, tempo: "deep-orbit-fast" }
+  if (engagementScore >= 12) return { intervalMs: premium ? 12000 : 14000, engagementScore, tempo: "active-orbit" }
+  if (engagementScore >= 5) return { intervalMs: 18000, engagementScore, tempo: "warming-up" }
+  return { intervalMs: 24000, engagementScore, tempo: "public-browse" }
+}
+
 function pulseSeed(input = {}) {
-  const tick = Math.floor(Date.now() / 16000)
-  const text = [input.intent, input.tier, input.wallet, input.referrer, input.behaviorHint].filter(Boolean).join("|")
+  const interval = computeEngagementInterval(input).intervalMs
+  const tick = Math.floor(Date.now() / interval)
+  const text = [input.intent, input.tier, input.wallet, input.referrer, input.behaviorHint, input.engagementScore].filter(Boolean).join("|")
   const hash = text.split("").reduce((total, char, index) => total + char.charCodeAt(0) * (index + 3), 19)
   return tick + hash
 }
@@ -102,15 +127,18 @@ function behaviorBoost(input = {}) {
 }
 
 export function buildLiveObservatoryPulse(input = {}) {
-  const feed = pickFeed(input)
+  const tempo = computeEngagementInterval(input)
+  const feed = pickFeed({ ...input, engagementScore: tempo.engagementScore })
   const boost = behaviorBoost(input)
   const premium = input.tier === "premium" || input.tier === "pro"
   const walletActive = Boolean(input.wallet && !String(input.wallet).startsWith("0xDEMO"))
 
   return {
     generatedAt: new Date().toISOString(),
-    intervalMs: 16000,
-    pulseId: `${feed.id}-${Math.floor(Date.now() / 16000)}`,
+    intervalMs: tempo.intervalMs,
+    tempo: tempo.tempo,
+    engagementScore: tempo.engagementScore,
+    pulseId: `${feed.id}-${Math.floor(Date.now() / tempo.intervalMs)}`,
     label: feed.headline,
     query: feed.query,
     category: feed.category,
@@ -120,8 +148,8 @@ export function buildLiveObservatoryPulse(input = {}) {
     walletMode: walletActive ? "wallet-aware" : "guest-aware",
     membershipMode: premium ? "premium" : "public",
     reason: boost
-      ? `Feed selected from ${boost} plus DigitalHut activity.`
-      : "Feed selected from public observatory rotation and current intent.",
+      ? `Feed selected from ${boost} plus DigitalHut orbit behavior.`
+      : `Feed selected from observatory orbit engagement. Tempo: ${tempo.tempo}.`,
     actions: [
       { label: "Open observatory", query: feed.query },
       { label: "Save to library", action: "favorite-feed" },
