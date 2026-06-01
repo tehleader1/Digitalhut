@@ -8,6 +8,10 @@ const memory = globalThis.digitalhutDb ||= {
   renderJobs: []
 }
 
+function pickEnv(names) {
+  return names.find(name => Boolean(process.env[name])) || null
+}
+
 function supabaseConfig() {
   const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY
@@ -60,11 +64,26 @@ function cleanProfile(profile = {}) {
 }
 
 export function providerStatus() {
+  const sketchfabEnv = pickEnv(["SKETCHFAB_ACCESS_TOKEN", "SKETCHFAB_API_TOKEN", "SKETCHFAB_TOKEN", "SKETCHFAB_API_KEY"])
+  const alpacaKeyEnv = pickEnv(["ALPACA_API_KEY", "ALPACA_KEY_ID", "APCA_API_KEY_ID", "NEXT_SERVER_ALPACA_API_KEY"])
+  const alpacaSecretEnv = pickEnv(["ALPACA_SECRET_KEY", "ALPACA_API_SECRET", "ALPACA_SECRET", "APCA_API_SECRET_KEY", "NEXT_SERVER_ALPACA_SECRET_KEY"])
+  const paymentEnv = pickEnv(["DIGITALHUT_PAYMENT_WALLET", "STRIPE_SECRET_KEY", "COINBASE_COMMERCE_API_KEY"])
+
   return {
     supabase: hasSupabase(),
-    sketchfab: Boolean(process.env.SKETCHFAB_ACCESS_TOKEN || process.env.SKETCHFAB_API_TOKEN),
-    alpaca: Boolean(process.env.ALPACA_API_KEY && process.env.ALPACA_SECRET_KEY),
-    payment: Boolean(process.env.STRIPE_SECRET_KEY || process.env.COINBASE_COMMERCE_API_KEY)
+    sketchfab: Boolean(sketchfabEnv),
+    alpaca: Boolean(alpacaKeyEnv && alpacaSecretEnv),
+    payment: Boolean(paymentEnv),
+    paymentWalletConfigured: Boolean(process.env.DIGITALHUT_PAYMENT_WALLET),
+    paymentWallet: process.env.DIGITALHUT_PAYMENT_WALLET || null,
+    env: {
+      sketchfab: sketchfabEnv,
+      alpacaKey: alpacaKeyEnv,
+      alpacaSecret: alpacaSecretEnv,
+      payment: paymentEnv,
+      supabaseUrl: pickEnv(["SUPABASE_URL", "NEXT_PUBLIC_SUPABASE_URL"]),
+      supabaseKey: pickEnv(["SUPABASE_SERVICE_ROLE_KEY", "SUPABASE_ANON_KEY"])
+    }
   }
 }
 
@@ -116,10 +135,11 @@ export async function createSubscriptionIntent(input = {}) {
   const row = {
     wallet: input.wallet || "demo-wallet",
     tier: input.tier || "free",
-    currency: input.currency || "USD",
+    currency: input.currency || "ETH",
     amount: Number(input.amount || 0),
-    status: providerStatus().payment ? "payment-provider-ready" : "payment-provider-needed",
-    provider: process.env.STRIPE_SECRET_KEY ? "stripe" : process.env.COINBASE_COMMERCE_API_KEY ? "coinbase-commerce" : "manual-intent",
+    payment_wallet: process.env.DIGITALHUT_PAYMENT_WALLET || "",
+    status: providerStatus().paymentWalletConfigured ? "crypto-wallet-ready" : "payment-wallet-needed",
+    provider: process.env.DIGITALHUT_PAYMENT_WALLET ? "direct-crypto-wallet" : "manual-intent",
     created_at: new Date().toISOString()
   }
   if (!hasSupabase()) {
