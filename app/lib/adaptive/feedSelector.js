@@ -9,6 +9,21 @@ const feedMap = {
     market: { defaultSymbol: "NVDA", symbols: ["NVDA", "AAPL", "TSLA", "SPY"] },
     premium: { trigger: "watchlist-depth", message: "Unlock premium watchlists, deeper signals, and saved scans." }
   },
+  tourist: {
+    observatory: { preloadQuery: "rome paris florida caribbean historical landmarks 3d", category: "travel-observatory" },
+    market: { defaultSymbol: "SPY", symbols: ["SPY", "AAPL", "DIS"] },
+    premium: { trigger: "travel-memory", message: "Unlock saved trips, landmark replays, and location-aware observatory routes." }
+  },
+  student: {
+    observatory: { preloadQuery: "ancient history science school project 3d", category: "education" },
+    market: { defaultSymbol: "SPY", symbols: ["SPY", "NVDA"] },
+    premium: { trigger: "study-mode", message: "Unlock guided project mode, citations, and related observatories." }
+  },
+  researcher: {
+    observatory: { preloadQuery: "geography environmental research terrain 3d data", category: "research" },
+    market: { defaultSymbol: "SPY", symbols: ["SPY", "NVDA", "AAPL"] },
+    premium: { trigger: "research-depth", message: "Unlock research stacks, source trails, and saved map/model comparisons." }
+  },
   "real-estate-scout": {
     observatory: { preloadQuery: "new york city building map 3d", category: "city-structures" },
     market: { defaultSymbol: "SPY", symbols: ["SPY", "AAPL", "NVDA"] },
