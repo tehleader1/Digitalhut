@@ -1,0 +1,20 @@
+{
+  "version": "2026-06-02.real-estate-source-targets",
+  "canonicalTarget": {
+    "title": "2026 Two Story House Real Estate Walkthrough",
+    "query": "2026 2 Story House, All Details, Use this demo in your Real Estate Website",
+    "fallbackQueries": [
+      "two story house real estate glb",
+      "modern house downloadable glb",
+      "residential house walkthrough 3d model",
+      "property map real estate 3d"
+    ],
+    "locationContext": {
+      "label": "Brooklyn / Lower Manhattan property map context",
+      "latitude": 40.706,
+      "longitude": -74.009,
+      "radiusMeters": 1800
+    },
+    "marketSymbols": ["VNQ", "SPY", "AAPL", "NVDA"]
+  }
+}
