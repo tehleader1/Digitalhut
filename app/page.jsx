@@ -1,6 +1,9 @@
 "use client"
 import {useEffect, useMemo, useState} from "react"
-import BabylonObservatory from "./components/BabylonObservatory"
+import MainBlogFeature from "../components/MainBlogFeature"
+import ObservatoryRenderPair from "../components/ObservatoryRenderPair"
+import {getPersonaFeature, getPersonaMarket, getPersonaSignal} from "../lib/personaFeature"
+import {getWalletPermissionState} from "../lib/walletPermissions"
 
 const tiers = {free: 0, standard: 35, premium: 50, pro: 100}
 const measurements = [
@@ -11,33 +14,26 @@ const measurements = [
   ["Library", 84],
   ["Launch", 84]
 ]
-const fieldSignals = [
-  {label:"Lunar terrain drift", query:"moon terrain lava tube", tone:"Planetary scan", priority:"High"},
-  {label:"Wall Street market mirror", query:"wall street new york financial district 3d", tone:"Market intent", priority:"Adaptive"},
-  {label:"Urban twin packet", query:"tokyo building city scan", tone:"Structure scan", priority:"Live"},
-  {label:"Northern relief layer", query:"canada terrain elevation", tone:"Terrain sweep", priority:"Fresh"},
-  {label:"Historic map echo", query:"new york map 3d", tone:"Map signal", priority:"New"},
-  {label:"Infrastructure corridor", query:"bridge infrastructure 3d scan", tone:"Asset route", priority:"Watch"}
-]
 
 function defaultAdaptiveState(){
+ const feature = getPersonaFeature("home-project")
  return {
-  intent:"anonymous-new-user",
+  intent:feature.intent,
   confidence:.45,
   reason:"Waiting for visitor signal",
   hero:{eyebrow:"DigitalHut Observatory",title:"Adaptive observatory, market, wallet, and agent console.",primaryAction:"Run Observatory Scan"},
-  observatory:{preloadQuery:"moon terrain lava tube",category:"planetary"},
-  market:{defaultSymbol:"BTC",symbols:["BTC","ETH","AAPL","TSLA"]},
+  observatory:{preloadQuery:feature.mainGLBSearch,category:feature.observatory?.category || feature.intent},
+  market:feature.market,
   premium:{trigger:"first-scan",message:"Explore market intelligence and observatory feeds, then unlock premium depth.",active:false}
  }
 }
 
 function signalFromAdaptive(state){
+ const personaSignal = getPersonaSignal(state.intent)
  return {
-  label: state.intent === "crypto-trader" ? "Wall Street market mirror" : `${state.intent.replaceAll("-"," ")} feed`,
-  query: state.observatory?.preloadQuery || "moon terrain lava tube",
-  tone: state.reason || "Adaptive feed",
-  priority: "Adaptive"
+  ...personaSignal,
+  tone: `${personaSignal.tone} ${state.reason || ""}`.trim(),
+  priority: personaSignal.priority || "Adaptive"
  }
 }
 
@@ -45,23 +41,25 @@ export default function Home(){
  const [wallet,setWallet]=useState("")
  const [tier,setTier]=useState("free")
  const [currency,setCurrency]=useState("ETH")
- const [query,setQuery]=useState("moon terrain lava tube")
+ const [query,setQuery]=useState("home renovation furniture room layout garden project glb")
  const [result,setResult]=useState(null)
  const [busy,setBusy]=useState(false)
- const [signal,setSignal]=useState(fieldSignals[0])
+ const [signal,setSignal]=useState(getPersonaSignal("home-project"))
  const [health,setHealth]=useState(null)
  const [subscription,setSubscription]=useState(null)
  const [adaptive,setAdaptive]=useState(defaultAdaptiveState())
  const [toast,setToast]=useState("Operational maturity console ready")
  const tierEntries = useMemo(()=>Object.entries(tiers),[])
- const marketSymbols = adaptive?.market?.symbols || ["BTC","ETH","AAPL","TSLA"]
- const defaultMarketSymbol = adaptive?.market?.defaultSymbol || marketSymbols[0] || "BTC"
+ const personaFeature = useMemo(()=>getPersonaFeature(adaptive.intent),[adaptive.intent])
+ const personaMarket = useMemo(()=>getPersonaMarket(adaptive.intent),[adaptive.intent])
+ const walletPermission = useMemo(()=>getWalletPermissionState({wallet,tier,requiredTier:personaFeature.downloadTier,action:personaFeature.walletAction}),[wallet,tier,personaFeature])
+ const marketSymbols = personaMarket?.symbols || adaptive?.market?.symbols || ["BTC","ETH","AAPL","TSLA"]
+ const defaultMarketSymbol = personaMarket?.defaultSymbol || adaptive?.market?.defaultSymbol || marketSymbols[0] || "BTC"
 
  useEffect(()=>{ refreshHealth(); refreshAdaptive() },[])
  useEffect(()=>{
   const timer=setInterval(()=>{
-   const adaptiveSignal = signalFromAdaptive(adaptive)
-   const next = adaptive.intent === "anonymous-new-user" ? fieldSignals[Math.floor(Math.random()*fieldSignals.length)] : adaptiveSignal
+   const next = signalFromAdaptive(adaptive)
    setSignal(next)
    setQuery(next.query)
   },30000)
@@ -135,7 +133,10 @@ export default function Home(){
  }
 
  async function requestDownload(){
-  if(!result)return
+  if(!result){
+   setToast(walletPermission.message)
+   return
+  }
   const res=await fetch("/api/download",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({wallet,tier,asset:result.result?.glbUrl || result.result?.downloadUrl || result.result?.url,modelUid:result.result?.uid})})
   const json=await res.json()
   setToast(json.message)
@@ -149,12 +150,11 @@ export default function Home(){
 
  const providers=health?.providers || {}
  const paymentWallet=providers.paymentWallet || subscription?.payment_wallet || "0x3121FbFB683B9147913f336b05eF419b875a7590"
- const glbStatus=result?.result?.glbUrl?"live GLB":"feed route only"
  const marketHref=`/market-intelligence?symbol=${encodeURIComponent(defaultMarketSymbol)}&entry=${encodeURIComponent(adaptive.intent)}`
 
  return <main style={shell}>
   <section style={hero}>
-   <div>
+   <div style={heroCopy}>
     <div style={eyebrow}>{adaptive.hero?.eyebrow || "DigitalHut Production Console"}</div>
     <h1 style={title}>{adaptive.hero?.title || "Operational observatory, market, wallet, and render readiness."}</h1>
     <p style={lede}>DigitalHut is now reading visitor intent, provider health, wallet tier, and recent searches to choose the first market symbols, observatory feed, and premium trigger before the user has to dig.</p>
@@ -175,6 +175,10 @@ export default function Home(){
    </div>
   </section>
 
+  <MainBlogFeature feature={personaFeature} permission={walletPermission} busy={busy} onScan={scan}/>
+
+  <ObservatoryRenderPair feature={personaFeature} result={result} busy={busy} onScan={scan} onDownload={requestDownload}/>
+
   <section style={scoreGrid}>
    {measurements.map(([label,value])=><div key={label} style={scoreCard}><span>{label} Score</span><b>{value}</b></div>)}
    <div style={scoreCard}><span>Intent</span><b style={{fontSize:22,textTransform:"capitalize"}}>{adaptive.intent.replaceAll("-"," ")}</b></div>
@@ -190,13 +194,14 @@ export default function Home(){
      <button onClick={()=>subscribe(tier)} style={primary}>Stage Crypto Payment</button>
     </div>
     <p style={mono}>Wallet: {paymentWallet}</p>
+    <p style={muted}>{walletPermission.message}</p>
    </div>
 
    <div style={panel}>
     <div style={panelHeader}><h2 style={h2}>Adaptive Observatory Search</h2><span style={pill}>{signal.priority}</span></div>
     <p style={muted}>{signal.tone}</p>
     <input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search terrain, markets, structures, maps..." style={input}/>
-    <div style={actions}><button onClick={()=>scan()} style={primary}>{busy?"Scanning":"Search"}</button><button onClick={()=>setQuery(adaptive.observatory?.preloadQuery || signal.query)} style={secondary}>Use Adaptive Feed</button></div>
+    <div style={actions}><button onClick={()=>scan()} style={primary}>{busy?"Scanning":"Search"}</button><button onClick={()=>setQuery(personaFeature.mainGLBSearch)} style={secondary}>Use Manifest Feature</button></div>
     <p style={muted}>{toast}</p>
    </div>
   </section>
@@ -205,17 +210,16 @@ export default function Home(){
    <div style={panel}>
     <div style={panelHeader}><h2 style={h2}>Market Preload</h2><span style={pill}>{defaultMarketSymbol}</span></div>
     <div style={symbolGrid}>{marketSymbols.map(symbol=><a key={symbol} href={`/market-intelligence?symbol=${symbol}&entry=${adaptive.intent}`} style={symbolTile}>{symbol}</a>)}</div>
-    <p style={muted}>{adaptive.premium?.message}</p>
+    <p style={muted}>{personaFeature.marketProfile} profile is selected from the persona manifest.</p>
    </div>
    <div style={panel}>
-    <div style={panelHeader}><h2 style={h2}>Observatory Preload</h2><span style={pill}>{adaptive.observatory?.category}</span></div>
-    <b style={resultTitle}>{adaptive.observatory?.preloadQuery}</b>
-    <p style={muted}>This feed is selected from the adaptive homepage state. Market users get Wall Street first; terrain users get maps and structures; asset users get GLB discovery.</p>
+    <div style={panelHeader}><h2 style={h2}>Observatory Preload</h2><span style={pill}>{personaFeature.observatory?.category}</span></div>
+    <b style={resultTitle}>{personaFeature.mainGLBSearch}</b>
+    <p style={muted}>{personaFeature.contextRenderRole}: {personaFeature.contextGLBSearch}</p>
    </div>
   </section>
 
-  {result&&<section style={renderGrid}>
-   <BabylonObservatory modelUrl={result.result?.glbUrl || result.result?.downloadUrl} title={result.result?.title}/>
+  {result&&<section style={mainGrid}>
    <div style={panel}>
     <div style={eyebrow}>{result.provider}</div>
     <h2 style={resultTitle}>{result.result?.title}</h2>
@@ -223,6 +227,12 @@ export default function Home(){
     <p style={muted}>{result.ai}</p>
     <p style={mono}>Download status: {result.result?.downloadStatus || "not requested"}</p>
     <div style={actions}><a href={result.result?.url} target="_blank" style={linkBtn}>Open feed</a><button onClick={requestDownload} style={secondary}>Authorize GLB Download</button></div>
+   </div>
+   <div style={panel}>
+    <div style={eyebrow}>Manifest match</div>
+    <h2 style={resultTitle}>{personaFeature.mainFeatureTitle}</h2>
+    <p style={muted}>{personaFeature.seoDescription}</p>
+    <p style={mono}>Required tier: {personaFeature.downloadTier}</p>
    </div>
   </section>}
 
@@ -235,40 +245,40 @@ export default function Home(){
 
 function Status({label,on}){return <div style={statusRow}><span>{label}</span><b style={on?good:warn}>{on?"live":"check"}</b></div>}
 
-const shell={minHeight:"100vh",padding:28,background:"radial-gradient(circle at top left,#12343b 0,#020617 35%,#07111f 100%)",color:"white",fontFamily:"Arial, sans-serif"}
-const hero={maxWidth:1180,margin:"0 auto",display:"grid",gridTemplateColumns:"1fr 360px",gap:20,alignItems:"stretch"}
+const shell={minHeight:"100vh",padding:28,background:"radial-gradient(circle at top left,#12343b 0,#020617 35%,#07111f 100%)",color:"white",fontFamily:"Arial, sans-serif",overflowX:"hidden"}
+const hero={maxWidth:1180,margin:"0 auto",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(min(100%,320px),1fr))",gap:20,alignItems:"stretch"}
+const heroCopy={minWidth:0}
 const eyebrow={fontSize:12,textTransform:"uppercase",letterSpacing:0,fontWeight:900,color:"#67e8f9"}
-const title={fontSize:"clamp(42px,7vw,78px)",lineHeight:.96,letterSpacing:0,margin:"10px 0 18px",maxWidth:840}
+const title={fontSize:"clamp(38px,7vw,78px)",lineHeight:.96,letterSpacing:0,margin:"10px 0 18px",maxWidth:840,overflowWrap:"anywhere"}
 const lede={fontSize:18,lineHeight:1.55,color:"#d8e4ee",maxWidth:760}
 const actions={display:"flex",gap:10,flexWrap:"wrap",alignItems:"center"}
 const primary={padding:"14px 18px",borderRadius:8,background:"#14b8a6",color:"#021014",border:0,fontWeight:900,cursor:"pointer"}
 const secondary={padding:"14px 18px",borderRadius:8,background:"rgba(226,232,240,.1)",color:"white",border:"1px solid rgba(226,232,240,.24)",fontWeight:800,cursor:"pointer",textDecoration:"none"}
 const linkBtn={display:"inline-block",padding:"13px 16px",borderRadius:8,background:"#38bdf8",color:"#06111a",fontWeight:900,textDecoration:"none"}
-const opsPanel={border:"1px solid rgba(148,163,184,.28)",borderRadius:8,background:"rgba(8,20,32,.82)",padding:18,display:"grid",gap:12}
-const panelHeader={display:"flex",justifyContent:"space-between",gap:12,alignItems:"center",marginBottom:10}
+const opsPanel={minWidth:0,border:"1px solid rgba(148,163,184,.28)",borderRadius:8,background:"rgba(8,20,32,.82)",padding:18,display:"grid",gap:12}
+const panelHeader={display:"flex",justifyContent:"space-between",gap:12,alignItems:"center",marginBottom:10,flexWrap:"wrap"}
 const h2={fontSize:22,margin:0}
 const pill={fontSize:12,padding:"7px 10px",borderRadius:999,background:"rgba(103,232,249,.12)",color:"#a5f3fc",fontWeight:900}
 const statusRow={display:"flex",justifyContent:"space-between",gap:14,borderBottom:"1px solid rgba(148,163,184,.16)",paddingBottom:8}
 const good={color:"#86efac"}
 const warn={color:"#facc15"}
 const smallBtn={padding:"12px 14px",borderRadius:8,border:0,background:"#0ea5e9",color:"#03121d",fontWeight:900,cursor:"pointer"}
-const scoreGrid={maxWidth:1180,margin:"22px auto",display:"grid",gridTemplateColumns:"repeat(7,minmax(120px,1fr))",gap:10}
-const scoreCard={padding:16,border:"1px solid rgba(148,163,184,.25)",borderRadius:8,background:"rgba(15,23,42,.7)",display:"grid",gap:8}
-const mainGrid={maxWidth:1180,margin:"22px auto",display:"grid",gridTemplateColumns:"repeat(2,minmax(0,1fr))",gap:18}
-const panel={padding:20,border:"1px solid rgba(148,163,184,.25)",borderRadius:8,background:"rgba(15,23,42,.74)"}
-const walletBtn={width:"100%",padding:16,borderRadius:8,border:"1px solid rgba(226,232,240,.22)",background:"#172554",color:"white",fontWeight:900,marginBottom:14,cursor:"pointer"}
-const tierGrid={display:"grid",gridTemplateColumns:"repeat(4,minmax(0,1fr))",gap:8}
+const scoreGrid={maxWidth:1180,margin:"22px auto",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(120px,1fr))",gap:10}
+const scoreCard={minWidth:0,padding:16,border:"1px solid rgba(148,163,184,.25)",borderRadius:8,background:"rgba(15,23,42,.7)",display:"grid",gap:8}
+const mainGrid={maxWidth:1180,margin:"22px auto",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(min(100%,300px),1fr))",gap:18}
+const panel={minWidth:0,padding:20,border:"1px solid rgba(148,163,184,.25)",borderRadius:8,background:"rgba(15,23,42,.74)"}
+const walletBtn={width:"100%",padding:16,borderRadius:8,border:"1px solid rgba(226,232,240,.22)",background:"#172554",color:"white",fontWeight:900,marginBottom:14,cursor:"pointer",overflowWrap:"anywhere"}
+const tierGrid={display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(92px,1fr))",gap:8}
 const tierBtn={minHeight:72,borderRadius:8,border:"1px solid rgba(226,232,240,.18)",background:"rgba(2,6,23,.55)",color:"white",display:"grid",gap:4,placeItems:"center",cursor:"pointer"}
 const activeTier={...tierBtn,border:"1px solid #facc15",background:"rgba(250,204,21,.14)"}
-const payRow={display:"grid",gridTemplateColumns:"120px 1fr",gap:10,marginTop:14}
+const payRow={display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(120px,1fr))",gap:10,marginTop:14}
 const select={padding:13,borderRadius:8,border:"1px solid rgba(226,232,240,.24)",background:"#020617",color:"white",fontWeight:900}
 const mono={fontFamily:"monospace",fontSize:13,color:"#cbd5e1",overflowWrap:"anywhere"}
 const input={width:"100%",boxSizing:"border-box",padding:16,borderRadius:8,margin:"2px 0 14px",fontSize:18,border:"1px solid rgba(226,232,240,.22)",background:"#020617",color:"white"}
-const muted={color:"#cbd5e1",lineHeight:1.5}
-const renderGrid={maxWidth:1180,margin:"22px auto",display:"grid",gridTemplateColumns:"1.1fr .9fr",gap:18}
-const resultTitle={fontSize:26,margin:"8px 0 12px"}
+const muted={color:"#cbd5e1",lineHeight:1.5,overflowWrap:"anywhere"}
+const resultTitle={fontSize:26,margin:"8px 0 12px",overflowWrap:"anywhere"}
 const preview={width:"100%",aspectRatio:"16 / 9",objectFit:"cover",borderRadius:8,background:"#0f172a",marginBottom:12}
-const libraryBand={maxWidth:1180,margin:"22px auto 0",display:"grid",gridTemplateColumns:"repeat(2,minmax(0,1fr))",gap:18}
-const navTile={padding:22,borderRadius:8,border:"1px solid rgba(148,163,184,.25)",background:"rgba(226,232,240,.08)",color:"white",textDecoration:"none",display:"grid",gap:8}
-const symbolGrid={display:"grid",gridTemplateColumns:"repeat(4,minmax(0,1fr))",gap:10}
+const libraryBand={maxWidth:1180,margin:"22px auto 0",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(min(100%,260px),1fr))",gap:18}
+const navTile={minWidth:0,padding:22,borderRadius:8,border:"1px solid rgba(148,163,184,.25)",background:"rgba(226,232,240,.08)",color:"white",textDecoration:"none",display:"grid",gap:8,overflowWrap:"anywhere"}
+const symbolGrid={display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(86px,1fr))",gap:10}
 const symbolTile={padding:16,borderRadius:8,background:"rgba(20,184,166,.14)",border:"1px solid rgba(45,212,191,.32)",color:"#a7f3d0",fontWeight:900,textAlign:"center",textDecoration:"none"}
