@@ -1,22 +1,9 @@
-async function getSmokeTest() {
-  const base = process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : ""
-  const url = base ? `${base}/api/provider-smoke-test` : "http://localhost:3000/api/provider-smoke-test"
-  try {
-    const response = await fetch(url, { cache: "no-store" })
-    return await response.json()
-  } catch (error) {
-    return {
-      generatedAt: new Date().toISOString(),
-      mode: "provider-smoke-test",
-      summary: { total: 0, live: 0, keyPresent: 0, renderable: 0 },
-      providers: [],
-      error: error?.message || "Provider smoke test failed."
-    }
-  }
-}
+import { runProviderSmokeTest } from "../../lib/contentSources/providerSmokeTest"
+
+export const dynamic = "force-dynamic"
 
 export default async function ProviderSmokeTestPage() {
-  const smoke = await getSmokeTest()
+  const smoke = await runProviderSmokeTest()
 
   return <main style={styles.shell}>
     <section style={styles.header}>
@@ -31,8 +18,6 @@ export default async function ProviderSmokeTestPage() {
       <Summary label="Keys present" value={smoke.summary?.keyPresent || 0}/>
       <Summary label="Renderable" value={smoke.summary?.renderable || 0}/>
     </section>
-
-    {smoke.error ? <p style={styles.error}>{smoke.error}</p> : null}
 
     <section style={styles.grid}>
       {(smoke.providers || []).map((provider) => <ProviderCard key={provider.provider} provider={provider}/>) }
@@ -71,7 +56,6 @@ const styles = {
   lede: { maxWidth: 760, color: "#d8e4ee", fontSize: 18, lineHeight: 1.55 },
   summary: { width: "min(100%,1180px)", margin: "0 auto 18px", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(140px,1fr))", gap: 10 },
   summaryCard: { padding: 14, border: "1px solid rgba(148,163,184,.25)", borderRadius: 8, background: "rgba(15,23,42,.74)", display: "grid", gap: 4 },
-  error: { width: "min(100%,1180px)", margin: "0 auto 18px", color: "#fecaca" },
   grid: { width: "min(100%,1180px)", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,280px),1fr))", gap: 14 },
   card: { minWidth: 0, padding: 16, border: "1px solid rgba(148,163,184,.25)", borderLeft: "4px solid #14b8a6", borderRadius: 8, background: "rgba(15,23,42,.78)", overflowWrap: "anywhere" },
   cardTop: { display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, marginBottom: 10 },
