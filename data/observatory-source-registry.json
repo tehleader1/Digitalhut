@@ -1,0 +1,27 @@
+{
+  "version": "2026-06-02.observatory-sources",
+  "defaultPersona": "real-estate-scout",
+  "queries": {
+    "real-estate-scout": [
+      "2026 2 Story House All Details Use this demo in your Real Estate Website",
+      "two story house real estate glb",
+      "modern house downloadable glb",
+      "house walkthrough real estate model"
+    ],
+    "terrain": ["new york city terrain 3d", "brooklyn terrain map 3d", "lower manhattan buildings 3d"],
+    "planetary": ["moon terrain 3d", "mars terrain 3d", "lunar surface model"],
+    "environmental": ["forest environment glb", "city environment glb", "residential neighborhood 3d"]
+  },
+  "sources": [
+    {
+      "id": "sketchfab",
+      "roles": ["primary-glb", "preview-image", "download-candidate"],
+      "envKey": "SKETCHFAB_ACCESS_TOKEN"
+    },
+    {
+      "id": "cesium-ion",
+      "roles": ["terrain-context", "3d-tiles", "planetary-context", "city-context"],
+      "envKey": "CESIUM_ION_TOKEN"
+    }
+  ]
+}
