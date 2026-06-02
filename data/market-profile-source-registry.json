@@ -1,0 +1,21 @@
+{
+  "version": "2026-06-02.market-profile-sources",
+  "defaultSymbols": ["AAPL", "NVDA", "SPY", "TSLA", "BTC"],
+  "sources": [
+    {
+      "id": "polygon",
+      "roles": ["ticker-profile", "options-profile", "market-snapshot"],
+      "envKey": "POLYGON_API_KEY"
+    },
+    {
+      "id": "alpha-vantage",
+      "roles": ["global-quote", "technical-indicators", "fallback-candles"],
+      "envKey": "ALPHA_VANTAGE_API_KEY"
+    },
+    {
+      "id": "fmp",
+      "roles": ["company-profile", "fundamentals", "ratios", "financial-statements"],
+      "envKey": "FMP_API_KEY"
+    }
+  ]
+}
