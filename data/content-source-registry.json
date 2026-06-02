@@ -1,0 +1,52 @@
+{
+  "version": "2026-06-02.real-content-intake",
+  "availableKeys": [
+    "SKETCHFAB_ACCESS_TOKEN",
+    "CESIUM_ION_TOKEN",
+    "POLYGON_API_KEY",
+    "ALPHA_VANTAGE_API_KEY",
+    "FMP_API_KEY"
+  ],
+  "sources": [
+    {
+      "id": "sketchfab",
+      "label": "Sketchfab",
+      "category": "3d-model",
+      "envKey": "SKETCHFAB_ACCESS_TOKEN",
+      "statusGoal": "Search downloadable GLB candidates and attempt download metadata.",
+      "fallbackBehavior": "Return model metadata and explain token/download permission status."
+    },
+    {
+      "id": "cesium-ion",
+      "label": "Cesium ion",
+      "category": "terrain-3d-tiles",
+      "envKey": "CESIUM_ION_TOKEN",
+      "statusGoal": "Confirm token presence and prepare terrain/building/planetary asset registry path.",
+      "fallbackBehavior": "Return token status and seeded terrain/location context until asset lookup is wired."
+    },
+    {
+      "id": "polygon",
+      "label": "Polygon.io",
+      "category": "stock-options-market",
+      "envKey": "POLYGON_API_KEY",
+      "statusGoal": "Fetch ticker profile and prepare options/profile expansion.",
+      "fallbackBehavior": "Return missing key, rate limit, or no-result reason."
+    },
+    {
+      "id": "alpha-vantage",
+      "label": "Alpha Vantage",
+      "category": "technical-market-data",
+      "envKey": "ALPHA_VANTAGE_API_KEY",
+      "statusGoal": "Fetch global quote and technical-friendly market status.",
+      "fallbackBehavior": "Return missing key, rate limit, or no-result reason."
+    },
+    {
+      "id": "fmp",
+      "label": "Financial Modeling Prep",
+      "category": "company-profile-fundamentals",
+      "envKey": "FMP_API_KEY",
+      "statusGoal": "Fetch company profile and fundamentals-ready profile status.",
+      "fallbackBehavior": "Return missing key, rate limit, or no-result reason."
+    }
+  ]
+}
