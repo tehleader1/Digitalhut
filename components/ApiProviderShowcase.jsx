@@ -5,9 +5,10 @@ import library from "../data/platform-libraries.json"
 function providerState(provider, healthProviders = {}) {
   const key = provider.name.toLowerCase()
   if (key.includes("sketchfab")) return healthProviders.sketchfab ? "live" : "fallback"
-  if (key.includes("alpaca")) return healthProviders.alpaca ? "live" : "fallback"
-  if (key.includes("supabase")) return healthProviders.supabase ? "live" : "local memory"
-  if (key.includes("payment")) return healthProviders.paymentWalletConfigured || healthProviders.payment ? "ready" : "configure"
+  if (key.includes("cesium")) return healthProviders.cesium ? "ready" : "configure"
+  if (key.includes("polygon")) return healthProviders.polygon ? "live" : "fallback"
+  if (key.includes("financial")) return healthProviders.fmp ? "ready" : "configure"
+  if (key.includes("alpha")) return healthProviders.alphaVantage ? "ready" : "configure"
   return "check"
 }
 
@@ -18,7 +19,7 @@ export default function ApiProviderShowcase({ health }) {
     <div style={styles.header}>
       <div>
         <p style={styles.eyebrow}>API websites</p>
-        <h2 id="api-provider-title" style={styles.title}>Live provider map for agents, blogs, models, and wallets.</h2>
+        <h2 id="api-provider-title" style={styles.title}>Live provider map for agents, blogs, models, markets, and global environments.</h2>
       </div>
       <span style={styles.pill}>{health?.status || "checking"}</span>
     </div>
@@ -33,7 +34,7 @@ export default function ApiProviderShowcase({ health }) {
           </div>
           <p style={styles.text}>{provider.role}</p>
           <a href={provider.url} target="_blank" style={styles.link}>{provider.url.replace("https://", "")}</a>
-          <div style={styles.tags}>{provider.envKeys.slice(0, 3).map((key) => <span key={key} style={styles.tag}>{key}</span>)}</div>
+          <div style={styles.tags}>{provider.envKeys.map((key) => <span key={key} style={styles.tag}>{key}</span>)}</div>
         </article>
       })}
     </div>
