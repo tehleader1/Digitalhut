@@ -9,9 +9,11 @@ export default function AgentFaqHelper({ intent, health }) {
     const match = library.agentFaqs.find((faq) => faq.question === question) || library.agentFaqs[0]
     const providers = health?.providers || {}
     const live = [
-      providers.sketchfab ? "Sketchfab models" : "Sketchfab fallback models",
-      providers.alpaca ? "Alpaca candles" : "market fallback profiles",
-      providers.supabase ? "Supabase memory" : "local session memory"
+      providers.sketchfab ? "Sketchfab models live" : "Sketchfab model fallback",
+      providers.cesium ? "Cesium Ion ready" : "Cesium terrain pending",
+      providers.polygon ? "Polygon live" : "Polygon fallback",
+      providers.fmp ? "FMP ready" : "FMP pending",
+      providers.alphaVantage ? "Alpha Vantage ready" : "Alpha Vantage pending"
     ].join(", ")
     return `${match?.answer || "Agents are ready."} Current agent context: ${intent || "adaptive visitor"}. Provider mix: ${live}.`
   }, [question, intent, health])
