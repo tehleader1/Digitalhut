@@ -2,6 +2,7 @@
 import {useEffect, useMemo, useState} from "react"
 import AgentBlogHome from "../components/AgentBlogHome"
 import AgentFaqHelper from "../components/AgentFaqHelper"
+import ApiVisualShowcase from "../components/ApiVisualShowcase"
 import MainBlogFeature from "../components/MainBlogFeature"
 import ModelRotationChooser from "../components/ModelRotationChooser"
 import {getPersonaFeature, getPersonaMarket, getPersonaSignal} from "../lib/personaFeature"
@@ -12,23 +13,19 @@ const tiers = {free: 0, standard: 35, premium: 50, pro: 100}
 function defaultAdaptiveState(){
  const feature = getPersonaFeature("home-project")
  return {
-  intent:feature.intent,
-  confidence:.45,
-  reason:"Waiting for visitor signal",
-  hero:{eyebrow:"DigitalHut Observatory",title:"Adaptive market, model, blog, and agent console.",primaryAction:"Run Observatory Scan"},
-  observatory:{preloadQuery:feature.mainGLBSearch,category:feature.observatory?.category || feature.intent},
-  market:feature.market,
-  premium:{trigger:"first-scan",message:"Explore model libraries and agent research before unlocking premium depth.",active:false}
+  intent: feature.intent,
+  confidence: .45,
+  reason: "Waiting for visitor signal",
+  hero: {eyebrow:"DigitalHut Observatory", title:"Adaptive market, model, blog, and agent console.", primaryAction:"Run Observatory Scan"},
+  observatory: {preloadQuery:feature.mainGLBSearch, category:feature.observatory?.category || feature.intent},
+  market: feature.market,
+  premium: {trigger:"first-scan", message:"Explore model libraries and agent research before unlocking premium depth.", active:false}
  }
 }
 
 function signalFromAdaptive(state){
  const personaSignal = getPersonaSignal(state.intent)
- return {
-  ...personaSignal,
-  tone: `${personaSignal.tone} ${state.reason || ""}`.trim(),
-  priority: personaSignal.priority || "Adaptive"
- }
+ return {...personaSignal, tone: `${personaSignal.tone} ${state.reason || ""}`.trim(), priority: personaSignal.priority || "Adaptive"}
 }
 
 export default function Home(){
@@ -49,6 +46,9 @@ export default function Home(){
  const walletPermission = useMemo(()=>getWalletPermissionState({wallet,tier,requiredTier:personaFeature.downloadTier,action:personaFeature.walletAction}),[wallet,tier,personaFeature])
  const marketSymbols = personaMarket?.symbols || adaptive?.market?.symbols || ["BTC","ETH","AAPL","TSLA"]
  const defaultMarketSymbol = personaMarket?.defaultSymbol || adaptive?.market?.defaultSymbol || marketSymbols[0] || "BTC"
+ const providers = health?.providers || {}
+ const paymentWallet = providers.paymentWallet || subscription?.payment_wallet || "0x3121FbFB683B9147913f336b05eF419b875a7590"
+ const marketHref = `/market-intelligence?symbol=${encodeURIComponent(defaultMarketSymbol)}&entry=${encodeURIComponent(adaptive.intent)}`
 
  useEffect(()=>{ refreshHealth(); refreshAdaptive() },[])
  useEffect(()=>{
@@ -115,8 +115,7 @@ export default function Home(){
    const res=await fetch("/api/sketchfab",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:activeQuery})})
    const json=await res.json()
    setResult(json)
-   const live=json.provider==="sketchfab-live"
-   setToast(live?"Live model route acquired":"Model feed found; renderer using metadata or fallback mode")
+   setToast(json.provider==="sketchfab-live"?"Live model route acquired":"Model feed found; renderer using metadata or fallback mode")
    if(typeof window!=="undefined" && "speechSynthesis" in window){
     window.speechSynthesis.cancel()
     window.speechSynthesis.speak(new SpeechSynthesisUtterance(`${json.ai} Current tier is ${tier}.`))
@@ -139,10 +138,6 @@ export default function Home(){
   const rec=new R(); rec.onresult=e=>setQuery(e.results[0][0].transcript); rec.start()
  }
 
- const providers=health?.providers || {}
- const paymentWallet=providers.paymentWallet || subscription?.payment_wallet || "0x3121FbFB683B9147913f336b05eF419b875a7590"
- const marketHref=`/market-intelligence?symbol=${encodeURIComponent(defaultMarketSymbol)}&entry=${encodeURIComponent(adaptive.intent)}`
-
  return <main style={shell}>
   <section style={hero}>
    <div style={heroCopy}>
@@ -159,6 +154,7 @@ export default function Home(){
   </section>
 
   <MainBlogFeature feature={personaFeature} permission={walletPermission} busy={busy} onScan={scan}/>
+  <ApiVisualShowcase/>
   <AgentBlogHome activeIntent={adaptive.intent} onScan={scan}/>
   <ModelRotationChooser result={result} busy={busy} onScan={scan}/>
 
