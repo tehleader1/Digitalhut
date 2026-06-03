@@ -1,52 +1,125 @@
 "use client"
-import {useEffect, useState} from "react"
+import {useEffect, useMemo, useState} from "react"
+import {getPersonaFeature, getPersonaMarket, normalizeIntent} from "../../lib/personaFeature"
+
+function buildMarketProfile({entry, adaptive, symbol}){
+ const intent = normalizeIntent(entry || adaptive?.intent || "anonymous-new-user")
+ const feature = getPersonaFeature(intent)
+ const personaMarket = getPersonaMarket(intent) || {}
+ const adaptiveMarket = adaptive?.market || {}
+ const symbols = adaptiveMarket.symbols?.length ? adaptiveMarket.symbols : personaMarket.symbols || ["BTC","ETH","AAPL","TSLA"]
+ const defaultSymbol = symbol || adaptiveMarket.defaultSymbol || personaMarket.defaultSymbol || symbols[0] || "BTC"
+ return {
+  intent,
+  title: personaMarket.title || feature.marketProfile || `${feature.mainFeatureTitle} market desk`,
+  symbols,
+  defaultSymbol,
+  observation: adaptive?.reason || feature.blogAngle,
+  clientType: feature.clientType || intent,
+  category: adaptive?.observatory?.category || feature.observatory?.category || "market-intelligence",
+  observatoryQuery: adaptive?.observatory?.preloadQuery || feature.mainGLBSearch,
+  narration: `${feature.mainFeatureTitle}. ${feature.blogAngle}`,
+  tierPrompt: adaptive?.premium?.message || "Unlock deeper market history, saved feeds, and project guidance."
+ }
+}
 
 export default function Market(){
  const [q,setQ]=useState("BTC")
  const [r,setR]=useState(null)
  const [health,setHealth]=useState(null)
+ const [adaptive,setAdaptive]=useState(null)
+ const [entry,setEntry]=useState("anonymous-new-user")
  const [busy,setBusy]=useState(false)
+ const [toast,setToast]=useState("Loading active market feed")
 
- useEffect(()=>{ refreshHealth() },[])
+ const activeProfile = useMemo(()=>buildMarketProfile({entry, adaptive, symbol:q}),[entry, adaptive, q])
+ const alpacaLive = Boolean(health?.providers?.alpaca)
+ const provider = r?.provider || (alpacaLive?"market-api-ready":"awaiting-live-candles")
+ const activeFeed = {
+  id: `market:${activeProfile.intent}:${activeProfile.defaultSymbol}`,
+  title: activeProfile.title,
+  category: activeProfile.category,
+  clientType: activeProfile.clientType,
+  marketSymbols: activeProfile.symbols,
+  agentNarration: r?.ai || activeProfile.narration,
+  observation: activeProfile.observation,
+  confidence: adaptive?.confidence || .45,
+  walletTierRequired: adaptive?.premium?.active ? "premium" : "free"
+ }
+
+ useEffect(()=>{ bootActiveFeed() },[])
+ useEffect(()=>{
+  if(adaptive && q) scan(q, {silent:true})
+ },[adaptive])
+
+ async function bootActiveFeed(){
+  await refreshHealth()
+  if(typeof window === "undefined") return
+  const params = new URLSearchParams(window.location.search)
+  const symbol = (params.get("symbol") || params.get("query") || window.localStorage.getItem("digitalhut:lastMarketSymbol") || "BTC").toUpperCase()
+  const nextEntry = params.get("entry") || "anonymous-new-user"
+  setEntry(nextEntry)
+  setQ(symbol)
+  const adaptiveParams = new URLSearchParams()
+  adaptiveParams.set("symbol", symbol)
+  adaptiveParams.set("entry", nextEntry)
+  adaptiveParams.set("lastMarketSymbol", symbol)
+  const res=await fetch(`/api/adaptive-home?${adaptiveParams.toString()}`,{cache:"no-store"})
+  const state=await res.json()
+  setAdaptive(state)
+  setToast(`Active feed loaded: ${state.intent}. Market APIs are attached to ${symbol}.`)
+ }
 
  async function refreshHealth(){
   const res=await fetch("/health",{cache:"no-store"})
-  setHealth(await res.json())
+  const json=await res.json()
+  setHealth(json)
+  return json
  }
 
- async function scan(){
+ async function scan(symbol=q, options={}){
+  const nextSymbol = String(symbol || activeProfile.defaultSymbol || "BTC").trim().toUpperCase()
   setBusy(true)
-  const res=await fetch("/api/market",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:q})})
-  const json=await res.json()
-  setR(json)
-  setBusy(false)
+  try{
+   if(typeof window!=="undefined") window.localStorage.setItem("digitalhut:lastMarketSymbol", nextSymbol)
+   const res=await fetch("/api/market",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:nextSymbol, activeFeed})})
+   const json=await res.json()
+   setR(json)
+   setQ(json.symbol || nextSymbol)
+   setToast(`${json.symbol || nextSymbol} profile updated from ${json.provider}.`)
+   if(!options.silent) speak(json.ai)
+  } finally {
+   setBusy(false)
+  }
+ }
+
+ function speak(text){
   if(typeof window!=="undefined" && "speechSynthesis" in window){
    window.speechSynthesis.cancel()
-   window.speechSynthesis.speak(new SpeechSynthesisUtterance(json.ai))
+   window.speechSynthesis.speak(new SpeechSynthesisUtterance(text))
   }
  }
 
  function voice(){
   const R=window.SpeechRecognition||window.webkitSpeechRecognition
   if(!R)return alert("Voice not supported")
-  const rec=new R(); rec.onresult=e=>setQ(e.results[0][0].transcript); rec.start()
+  const rec=new R(); rec.onresult=e=>{const text=e.results[0][0].transcript; setQ(text); scan(text)}; rec.start()
  }
-
- const alpacaLive = Boolean(health?.providers?.alpaca)
- const provider = r?.provider || (alpacaLive?"alpaca-ready":"awaiting-live-candles")
 
  return <main style={shell}>
   <a href="/" style={back}>Back to DigitalHut</a>
   <section style={hero}>
    <div>
-    <div style={eyebrow}>Market Intelligence</div>
-    <h1 style={title}>Live market renderer and signal desk.</h1>
-    <p style={lede}>Alpaca data feeds, timed candles, voice analysis, and provider diagnostics are surfaced here so Render problems are visible instead of hidden.</p>
+    <div style={eyebrow}>Active Market Feed</div>
+    <h1 style={title}>{activeProfile.title}</h1>
+    <p style={lede}>{activeFeed.agentNarration}</p>
+    <div style={symbolGrid}>{activeProfile.symbols.map(symbol=><button key={symbol} onClick={()=>scan(symbol)} style={symbol===q?activeSymbol:symbolBtn}>{symbol}</button>)}</div>
    </div>
    <div style={statusPanel}>
+    <div style={statusRow}><span>Active intent</span><b>{activeFeed.clientType}</b></div>
     <div style={statusRow}><span>Render health</span><b>{health?.status || "checking"}</b></div>
-    <div style={statusRow}><span>Alpaca env</span><b style={alpacaLive?good:warn}>{alpacaLive?"connected":"missing"}</b></div>
-    <div style={statusRow}><span>Provider</span><b>{provider}</b></div>
+    <div style={statusRow}><span>Market API</span><b style={alpacaLive?good:warn}>{provider}</b></div>
+    <div style={statusRow}><span>Confidence</span><b>{Math.round(activeFeed.confidence*100)}%</b></div>
     <button onClick={refreshHealth} style={smallBtn}>Refresh status</button>
    </div>
   </section>
@@ -54,18 +127,31 @@ export default function Market(){
   <section style={desk}>
    <div style={searchRow}>
     <input value={q} onChange={e=>setQ(e.target.value)} placeholder="BTC, ETH, AAPL, TSLA..." style={input}/>
-    <button onClick={scan} style={primary}>{busy?"Scanning":"Search Market"}</button>
+    <button onClick={()=>scan()} style={primary}>{busy?"Scanning":"Search Market"}</button>
     <button onClick={voice} style={secondary}>Voice</button>
    </div>
-   <div style={chartCard}>
-    <div style={chartHeader}>
-     <div><span style={eyebrow}>{r?.provider || "standby"}</span><h2 style={symbol}>{r?.symbol || q.toUpperCase()}</h2></div>
-     <div style={price}>{r?.price || "Waiting for scan"}</div>
+
+   <div style={profileGrid}>
+    <div style={profileCard}>
+     <div style={eyebrow}>Market Profile</div>
+     <h2 style={profileTitle}>{activeFeed.title}</h2>
+     <p style={analysis}>{activeFeed.observation}</p>
+     <p style={mono}>Observatory context: {activeProfile.observatoryQuery}</p>
+     <p style={mono}>Symbols: {activeFeed.marketSymbols.join(" / ")}</p>
+     <p style={analysis}>{activeProfile.tierPrompt}</p>
     </div>
-    <div style={bars}>
-     {(r?.candles || [12,15,13,18,17,22,20,26,24,29]).map((v,i)=><div key={i} style={{...bar,height:Math.max(18,v*4)}} />)}
+
+    <div style={chartCard}>
+     <div style={chartHeader}>
+      <div><span style={eyebrow}>{r?.provider || "standby"}</span><h2 style={symbol}>{r?.symbol || q.toUpperCase()}</h2></div>
+      <div style={price}>{r?.price || "Waiting for scan"}</div>
+     </div>
+     <div style={bars}>
+      {(r?.candles || [12,15,13,18,17,22,20,26,24,29]).map((v,i)=><div key={i} style={{...bar,height:Math.max(18,v*4)}} />)}
+     </div>
+     <p style={analysis}>{r?.ai || "Run a scan to let the active feed call the market API and confirm live or fallback candles."}</p>
+     <p style={mono}>{toast}</p>
     </div>
-    <p style={analysis}>{r?.ai || "Run a scan to verify whether Render is receiving live Alpaca candles or falling back."}</p>
    </div>
   </section>
  </main>
@@ -73,24 +159,31 @@ export default function Market(){
 
 const shell={minHeight:"100vh",padding:28,background:"linear-gradient(135deg,#051923,#020617 45%,#111827)",color:"white",fontFamily:"Arial, sans-serif"}
 const back={color:"#67e8f9",fontWeight:800,textDecoration:"none"}
-const hero={maxWidth:1120,margin:"24px auto",display:"grid",gridTemplateColumns:"1fr 360px",gap:18,alignItems:"stretch"}
+const hero={maxWidth:1120,margin:"24px auto",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(min(100%,300px),1fr))",gap:18,alignItems:"stretch"}
 const eyebrow={fontSize:12,textTransform:"uppercase",letterSpacing:0,fontWeight:900,color:"#67e8f9"}
-const title={fontSize:"clamp(42px,7vw,76px)",lineHeight:.95,margin:"8px 0 16px",letterSpacing:0}
+const title={fontSize:"clamp(38px,6vw,72px)",lineHeight:.98,margin:"8px 0 16px",letterSpacing:0,overflowWrap:"anywhere"}
 const lede={fontSize:18,lineHeight:1.55,color:"#dbeafe",maxWidth:760}
 const statusPanel={border:"1px solid rgba(148,163,184,.28)",borderRadius:8,background:"rgba(15,23,42,.76)",padding:18,display:"grid",gap:12}
-const statusRow={display:"flex",justifyContent:"space-between",gap:14,borderBottom:"1px solid rgba(148,163,184,.16)",paddingBottom:10}
+const statusRow={display:"flex",justifyContent:"space-between",gap:14,borderBottom:"1px solid rgba(148,163,184,.16)",paddingBottom:10,overflowWrap:"anywhere"}
 const good={color:"#86efac"}
 const warn={color:"#facc15"}
 const smallBtn={padding:"12px 14px",borderRadius:8,border:0,background:"#0ea5e9",color:"#03121d",fontWeight:900,cursor:"pointer"}
 const desk={maxWidth:1120,margin:"0 auto",display:"grid",gap:18}
-const searchRow={display:"grid",gridTemplateColumns:"1fr auto auto",gap:10}
-const input={padding:16,borderRadius:8,border:"1px solid rgba(148,163,184,.34)",background:"#020617",color:"white",fontSize:18}
+const searchRow={display:"grid",gridTemplateColumns:"minmax(0,1fr) auto auto",gap:10}
+const input={padding:16,borderRadius:8,border:"1px solid rgba(148,163,184,.34)",background:"#020617",color:"white",fontSize:18,minWidth:0}
 const primary={padding:"14px 18px",borderRadius:8,border:0,background:"#14b8a6",fontWeight:900,cursor:"pointer"}
 const secondary={padding:"14px 18px",borderRadius:8,border:"1px solid rgba(148,163,184,.34)",background:"rgba(148,163,184,.12)",color:"white",fontWeight:900,cursor:"pointer"}
+const symbolGrid={display:"flex",gap:10,flexWrap:"wrap",marginTop:18}
+const symbolBtn={padding:"12px 15px",borderRadius:8,border:"1px solid rgba(148,163,184,.34)",background:"rgba(148,163,184,.12)",color:"white",fontWeight:900,cursor:"pointer"}
+const activeSymbol={...symbolBtn,background:"#14b8a6",color:"#021014",border:"1px solid #5eead4"}
+const profileGrid={display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(min(100%,320px),1fr))",gap:18}
+const profileCard={border:"1px solid rgba(148,163,184,.28)",borderRadius:8,background:"rgba(15,23,42,.76)",padding:22}
 const chartCard={border:"1px solid rgba(148,163,184,.28)",borderRadius:8,background:"rgba(3,7,18,.74)",padding:22}
-const chartHeader={display:"flex",justifyContent:"space-between",gap:18,alignItems:"start"}
+const chartHeader={display:"flex",justifyContent:"space-between",gap:18,alignItems:"start",flexWrap:"wrap"}
 const symbol={fontSize:44,margin:"4px 0 0"}
 const price={fontSize:24,fontWeight:900,color:"#bbf7d0"}
-const bars={height:220,display:"flex",alignItems:"end",gap:10,padding:"18px 0",borderBottom:"1px solid rgba(148,163,184,.2)"}
+const bars={height:220,display:"flex",alignItems:"end",gap:10,padding:"18px 0",borderBottom:"1px solid rgba(148,163,184,.2)",overflow:"hidden"}
 const bar={width:30,background:"linear-gradient(#86efac,#22c55e)",borderRadius:"6px 6px 0 0",boxShadow:"0 0 18px rgba(34,197,94,.25)"}
-const analysis={fontSize:17,lineHeight:1.55,color:"#dbeafe"}
+const profileTitle={fontSize:28,margin:"8px 0 12px",overflowWrap:"anywhere"}
+const analysis={fontSize:17,lineHeight:1.55,color:"#dbeafe",overflowWrap:"anywhere"}
+const mono={fontFamily:"monospace",fontSize:13,color:"#cbd5e1",overflowWrap:"anywhere"}
