@@ -1,12 +1,8 @@
 function normalizeSymbol(value) {
   const raw = String(value || "BTC").trim().toUpperCase()
-  if (["BTC", "ETH", "SOL", "DOGE"].includes(raw)) return `${raw}/USD`
-  if (["BTCUSD", "ETHUSD", "SOLUSD", "DOGEUSD"].includes(raw)) return `${raw.slice(0, -3)}/USD`
+  if (["BTC", "ETH", "SOL", "DOGE"].includes(raw)) return raw
+  if (["BTCUSD", "ETHUSD", "SOLUSD", "DOGEUSD"].includes(raw)) return raw.slice(0, -3)
   return raw.replace(/\s+/g, "")
-}
-
-function rootSymbol(symbol) {
-  return String(symbol || "BTC").split("/")[0].toUpperCase()
 }
 
 const fallbackProfiles = {
@@ -21,8 +17,7 @@ const fallbackProfiles = {
 }
 
 function profileFor(symbol) {
-  const key = rootSymbol(symbol)
-  return fallbackProfiles[key] || { base: 120, volatility: 0.9, trend: 0.6, sweep: "none", gap: 0.001 }
+  return fallbackProfiles[symbol] || { base: 120, volatility: 0.9, trend: 0.6, sweep: "none", gap: 0.001 }
 }
 
 function fallbackBars(symbol) {
@@ -68,21 +63,19 @@ function fallbackBars(symbol) {
   return bars
 }
 
+function ema(values, period) {
+  const k = 2 / (period + 1)
+  const out = []
+  values.forEach((value, index) => out.push(index === 0 ? value : value * k + out[index - 1] * (1 - k)))
+  return out
+}
+
 function sma(values, period) {
   return values.map((_, index) => {
     const start = Math.max(0, index - period + 1)
     const slice = values.slice(start, index + 1)
     return slice.reduce((sum, value) => sum + value, 0) / slice.length
   })
-}
-
-function ema(values, period) {
-  const k = 2 / (period + 1)
-  const out = []
-  values.forEach((value, index) => {
-    out.push(index === 0 ? value : value * k + out[index - 1] * (1 - k))
-  })
-  return out
 }
 
 function round(value) {
@@ -110,8 +103,6 @@ function buildTechnicals(symbol, bars, live) {
   const sweptHigh = last.h > pdh && last.c < pdh
   const sweptLow = last.l < pdl && last.c > pdl
   const liquiditySweep = sweptHigh ? "High sweep rejected" : sweptLow ? "Low sweep reclaimed" : "No sweep confirmed"
-  const rangeHigh = Math.max(...highs, pdh)
-  const rangeLow = Math.min(...lows, pdl)
 
   return {
     symbol,
@@ -127,15 +118,9 @@ function buildTechnicals(symbol, bars, live) {
     gapStatus,
     liquiditySweep,
     summary: `${trend} structure. Bullish ${bullishScore}, bearish ${bearishScore}. ${gapStatus}. ${liquiditySweep}.`,
-    rangeHigh,
-    rangeLow,
-    overlays: {
-      ema20: ema20.map(Number),
-      ema50: ema50.map(Number),
-      sma200: sma200.map(Number),
-      pdh,
-      pdl
-    }
+    rangeHigh: Math.max(...highs, pdh),
+    rangeLow: Math.min(...lows, pdl),
+    overlays: { ema20: ema20.map(Number), ema50: ema50.map(Number), sma200: sma200.map(Number), pdh, pdl }
   }
 }
 
@@ -147,85 +132,131 @@ function candleHeights(bars) {
   return closes.map(close => Math.max(8, Math.round(((close - min) / span) * 28) + 8))
 }
 
-function pickEnv(names) {
-  const name = names.find(item => Boolean(process.env[item]))
-  return { name: name || null, value: name ? process.env[name] : null }
+function dateOffset(days) {
+  const date = new Date(Date.now() - days * 86400000)
+  return date.toISOString().slice(0, 10)
 }
 
-function alpacaCredentials() {
-  const key = pickEnv(["ALPACA_API_KEY", "ALPACA_KEY_ID", "APCA_API_KEY_ID", "NEXT_SERVER_ALPACA_API_KEY"])
-  const secret = pickEnv(["ALPACA_SECRET_KEY", "ALPACA_API_SECRET", "ALPACA_SECRET", "APCA_API_SECRET_KEY", "NEXT_SERVER_ALPACA_SECRET_KEY"])
-  return { key: key.value, secret: secret.value, keyEnv: key.name, secretEnv: secret.name, present: Boolean(key.value && secret.value) }
+function cryptoPair(symbol) {
+  return ["BTC", "ETH", "SOL", "DOGE"].includes(symbol) ? `X:${symbol}USD` : symbol
 }
 
-async function fetchAlpacaBars(symbol) {
-  const credentials = alpacaCredentials()
-  const baseDiagnostics = {
-    credentialsPresent: credentials.present,
-    alpacaKeyEnv: credentials.keyEnv,
-    alpacaSecretEnv: credentials.secretEnv,
-    requestStatus: null,
-    feed: "fallback",
-    mode: "fallback",
-    reason: credentials.present ? "Alpaca credentials detected; live request has not confirmed candles yet" : "Render is not seeing Alpaca keys yet"
-  }
-
-  if (!credentials.present) return { bars: null, diagnostics: baseDiagnostics }
-
-  const headers = { "APCA-API-KEY-ID": credentials.key, "APCA-API-SECRET-KEY": credentials.secret }
+async function fetchPolygonBars(symbol) {
+  const key = process.env.POLYGON_API_KEY
+  const diagnostics = { feed: "polygon", credentialsPresent: Boolean(key), requestStatus: null, mode: "fallback", reason: key ? "Polygon key detected" : "POLYGON_API_KEY missing" }
+  if (!key) return { bars: null, diagnostics }
 
   try {
-    if (symbol.includes("/")) {
-      const url = new URL("https://data.alpaca.markets/v1beta3/crypto/us/bars")
-      url.searchParams.set("symbols", symbol)
-      url.searchParams.set("timeframe", "1Day")
-      url.searchParams.set("limit", "24")
-      const response = await fetch(url, { headers })
-      const diagnostics = { ...baseDiagnostics, requestStatus: response.status, feed: "alpaca", endpoint: "crypto-bars" }
-      if (!response.ok) return { bars: null, diagnostics: { ...diagnostics, reason: `Alpaca crypto request returned ${response.status}` } }
-      const data = await response.json()
-      const bars = data.bars?.[symbol] || []
-      return { bars, diagnostics: { ...diagnostics, mode: bars.length ? "live" : "fallback", reason: bars.length ? "Live Alpaca crypto candles confirmed" : "Alpaca returned no crypto bars" } }
-    }
-
-    const url = new URL(`https://data.alpaca.markets/v2/stocks/${symbol}/bars`)
-    url.searchParams.set("timeframe", "1Day")
+    const ticker = cryptoPair(symbol)
+    const url = new URL(`https://api.polygon.io/v2/aggs/ticker/${ticker}/range/1/day/${dateOffset(35)}/${dateOffset(1)}`)
+    url.searchParams.set("adjusted", "true")
+    url.searchParams.set("sort", "asc")
     url.searchParams.set("limit", "24")
-    url.searchParams.set("feed", "iex")
-    const response = await fetch(url, { headers })
-    const diagnostics = { ...baseDiagnostics, requestStatus: response.status, feed: "alpaca", endpoint: "stock-bars-iex" }
-    if (!response.ok) return { bars: null, diagnostics: { ...diagnostics, reason: `Alpaca stock request returned ${response.status}` } }
+    url.searchParams.set("apiKey", key)
+    const response = await fetch(url)
     const data = await response.json()
-    const bars = data.bars || []
-    return { bars, diagnostics: { ...diagnostics, mode: bars.length ? "live" : "fallback", reason: bars.length ? "Live Alpaca stock candles confirmed" : "Alpaca returned no stock bars" } }
+    const bars = Array.isArray(data.results) ? data.results.slice(-24).map((bar) => ({
+      t: new Date(bar.t).toISOString(),
+      o: Number(bar.o),
+      h: Number(bar.h),
+      l: Number(bar.l),
+      c: Number(bar.c),
+      v: Number(bar.v || 0)
+    })) : []
+    return { bars: bars.length ? bars : null, diagnostics: { ...diagnostics, requestStatus: response.status, mode: bars.length ? "live" : "fallback", reason: bars.length ? "Polygon aggregates confirmed" : data.error || data.message || "Polygon returned no bars" } }
   } catch (error) {
-    return { bars: null, diagnostics: { ...baseDiagnostics, reason: error?.message || "Alpaca request failed" } }
+    return { bars: null, diagnostics: { ...diagnostics, reason: error?.message || "Polygon request failed" } }
   }
+}
+
+async function fetchFmpBars(symbol) {
+  const key = process.env.FMP_API_KEY
+  const diagnostics = { feed: "fmp", credentialsPresent: Boolean(key), requestStatus: null, mode: "fallback", reason: key ? "FMP key detected" : "FMP_API_KEY missing" }
+  if (!key || ["BTC", "ETH", "SOL", "DOGE"].includes(symbol)) return { bars: null, diagnostics: { ...diagnostics, reason: key ? "FMP skipped for crypto symbol" : diagnostics.reason } }
+
+  try {
+    const url = new URL(`https://financialmodelingprep.com/api/v3/historical-price-full/${symbol}`)
+    url.searchParams.set("timeseries", "24")
+    url.searchParams.set("apikey", key)
+    const response = await fetch(url)
+    const data = await response.json()
+    const bars = Array.isArray(data.historical) ? data.historical.slice(0, 24).reverse().map((bar) => ({
+      t: new Date(bar.date).toISOString(),
+      o: Number(bar.open),
+      h: Number(bar.high),
+      l: Number(bar.low),
+      c: Number(bar.close),
+      v: Number(bar.volume || 0)
+    })) : []
+    return { bars: bars.length ? bars : null, diagnostics: { ...diagnostics, requestStatus: response.status, mode: bars.length ? "live" : "fallback", reason: bars.length ? "FMP historical prices confirmed" : data["Error Message"] || "FMP returned no bars" } }
+  } catch (error) {
+    return { bars: null, diagnostics: { ...diagnostics, reason: error?.message || "FMP request failed" } }
+  }
+}
+
+async function fetchAlphaVantageBars(symbol) {
+  const key = process.env.ALPHA_VANTAGE_API_KEY
+  const diagnostics = { feed: "alpha-vantage", credentialsPresent: Boolean(key), requestStatus: null, mode: "fallback", reason: key ? "Alpha Vantage key detected" : "ALPHA_VANTAGE_API_KEY missing" }
+  if (!key) return { bars: null, diagnostics }
+
+  try {
+    const url = new URL("https://www.alphavantage.co/query")
+    if (["BTC", "ETH", "SOL", "DOGE"].includes(symbol)) {
+      url.searchParams.set("function", "DIGITAL_CURRENCY_DAILY")
+      url.searchParams.set("symbol", symbol)
+      url.searchParams.set("market", "USD")
+    } else {
+      url.searchParams.set("function", "TIME_SERIES_DAILY_ADJUSTED")
+      url.searchParams.set("symbol", symbol)
+      url.searchParams.set("outputsize", "compact")
+    }
+    url.searchParams.set("apikey", key)
+    const response = await fetch(url)
+    const data = await response.json()
+    const series = data["Time Series (Digital Currency Daily)"] || data["Time Series (Daily)"] || {}
+    const bars = Object.entries(series).slice(0, 24).reverse().map(([date, bar]) => ({
+      t: new Date(date).toISOString(),
+      o: Number(bar["1. open"]),
+      h: Number(bar["2. high"]),
+      l: Number(bar["3. low"]),
+      c: Number(bar["4. close"]),
+      v: Number(bar["5. volume"] || bar["5. adjusted close"] || 0)
+    })).filter((bar) => Number.isFinite(bar.c))
+    return { bars: bars.length ? bars : null, diagnostics: { ...diagnostics, requestStatus: response.status, mode: bars.length ? "live" : "fallback", reason: bars.length ? "Alpha Vantage time series confirmed" : data.Note || data.Information || data["Error Message"] || "Alpha Vantage returned no bars" } }
+  } catch (error) {
+    return { bars: null, diagnostics: { ...diagnostics, reason: error?.message || "Alpha Vantage request failed" } }
+  }
+}
+
+async function fetchProviderBars(symbol) {
+  const attempts = []
+  for (const fetcher of [fetchPolygonBars, fetchFmpBars, fetchAlphaVantageBars]) {
+    const result = await fetcher(symbol)
+    attempts.push(result.diagnostics)
+    if (result.bars?.length) return { bars: result.bars, diagnostics: result.diagnostics, attempts }
+  }
+  return { bars: null, diagnostics: { feed: "fallback", mode: "fallback", reason: "Polygon, FMP, and Alpha Vantage did not return live bars" }, attempts }
 }
 
 async function marketResponse(query) {
   const symbol = normalizeSymbol(query)
-  const market = await fetchAlpacaBars(symbol)
+  const market = await fetchProviderBars(symbol)
   const live = Boolean(market.bars?.length)
   const bars = live ? market.bars : fallbackBars(symbol)
   const candles = candleHeights(bars)
   const last = bars.at(-1)
   const price = last?.c ? Number(last.c).toLocaleString("en-US", { maximumFractionDigits: 4 }) : "Live provider pending"
   const technicals = buildTechnicals(symbol, bars, live)
-  const diagnostics = live
-    ? { ...market.diagnostics, credentialsPresent: true, feed: "alpaca", mode: "live" }
-    : { ...market.diagnostics, feed: market.diagnostics.feed === "alpaca" ? "alpaca" : "fallback", mode: "fallback" }
-  const setupHint = live
-    ? "Live Alpaca candles confirmed."
-    : `${diagnostics.reason}. Showing premium fallback technicals until live candles confirm.`
+  const diagnostics = live ? { ...market.diagnostics, attempts: market.attempts } : { ...market.diagnostics, attempts: market.attempts }
+  const setupHint = live ? `${diagnostics.feed} live market data confirmed.` : `${diagnostics.reason}. Showing curated fallback technicals until a selected API confirms.`
 
   return {
     symbol,
     price,
-    provider: live ? "alpaca-live" : "premium-fallback",
+    provider: live ? `${diagnostics.feed}-live` : "selected-api-fallback",
     diagnostics,
     ai: live
-      ? `Live Alpaca market scan for ${symbol}: last close ${price}. ${technicals.summary}`
+      ? `Live ${diagnostics.feed} market scan for ${symbol}: last close ${price}. ${technicals.summary}`
       : `Market Intelligence scan for ${symbol}: ${setupHint} ${technicals.summary}`,
     candles,
     bars,
