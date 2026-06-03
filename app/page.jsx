@@ -1,18 +1,22 @@
 "use client"
 import {useEffect, useMemo, useState} from "react"
+import AgentBlogHome from "../components/AgentBlogHome"
+import AgentFaqHelper from "../components/AgentFaqHelper"
+import ApiProviderShowcase from "../components/ApiProviderShowcase"
 import MainBlogFeature from "../components/MainBlogFeature"
+import ModelRotationChooser from "../components/ModelRotationChooser"
 import ObservatoryRenderPair from "../components/ObservatoryRenderPair"
 import {getPersonaFeature, getPersonaMarket, getPersonaSignal} from "../lib/personaFeature"
 import {getWalletPermissionState} from "../lib/walletPermissions"
 
 const tiers = {free: 0, standard: 35, premium: 50, pro: 100}
 const measurements = [
-  ["Observatory", 82],
-  ["Market", 74],
+  ["APIs", 91],
+  ["Market", 84],
   ["Agents", 97],
-  ["Wallet", 72],
-  ["Library", 84],
-  ["Launch", 84]
+  ["Models", 88],
+  ["Library", 92],
+  ["Launch", 86]
 ]
 
 function defaultAdaptiveState(){
@@ -21,10 +25,10 @@ function defaultAdaptiveState(){
   intent:feature.intent,
   confidence:.45,
   reason:"Waiting for visitor signal",
-  hero:{eyebrow:"DigitalHut Observatory",title:"Adaptive observatory, market, wallet, and agent console.",primaryAction:"Run Observatory Scan"},
+  hero:{eyebrow:"DigitalHut Observatory",title:"Adaptive API, market, model, blog, and agent console.",primaryAction:"Run Observatory Scan"},
   observatory:{preloadQuery:feature.mainGLBSearch,category:feature.observatory?.category || feature.intent},
   market:feature.market,
-  premium:{trigger:"first-scan",message:"Explore market intelligence and observatory feeds, then unlock premium depth.",active:false}
+  premium:{trigger:"first-scan",message:"Explore live API providers, model libraries, and agent research before unlocking premium depth.",active:false}
  }
 }
 
@@ -48,7 +52,7 @@ export default function Home(){
  const [health,setHealth]=useState(null)
  const [subscription,setSubscription]=useState(null)
  const [adaptive,setAdaptive]=useState(defaultAdaptiveState())
- const [toast,setToast]=useState("Operational maturity console ready")
+ const [toast,setToast]=useState("API and agent workspace ready")
  const tierEntries = useMemo(()=>Object.entries(tiers),[])
  const personaFeature = useMemo(()=>getPersonaFeature(adaptive.intent),[adaptive.intent])
  const personaMarket = useMemo(()=>getPersonaMarket(adaptive.intent),[adaptive.intent])
@@ -122,7 +126,7 @@ export default function Home(){
    const json=await res.json()
    setResult(json)
    const live=json.provider==="sketchfab-live"
-   setToast(live?"Live Sketchfab GLB route acquired":"Feed found, GLB renderer using diagnostic/fallback mode")
+   setToast(live?"Live Sketchfab GLB route acquired":"Model feed found; renderer using metadata or fallback mode")
    if(typeof window!=="undefined" && "speechSynthesis" in window){
     window.speechSynthesis.cancel()
     window.speechSynthesis.speak(new SpeechSynthesisUtterance(`${json.ai} Current tier is ${tier}.`))
@@ -133,10 +137,7 @@ export default function Home(){
  }
 
  async function requestDownload(){
-  if(!result){
-   setToast(walletPermission.message)
-   return
-  }
+  if(!result){ setToast(walletPermission.message); return }
   const res=await fetch("/api/download",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({wallet,tier,asset:result.result?.glbUrl || result.result?.downloadUrl || result.result?.url,modelUid:result.result?.uid})})
   const json=await res.json()
   setToast(json.message)
@@ -156,8 +157,8 @@ export default function Home(){
   <section style={hero}>
    <div style={heroCopy}>
     <div style={eyebrow}>{adaptive.hero?.eyebrow || "DigitalHut Production Console"}</div>
-    <h1 style={title}>{adaptive.hero?.title || "Operational observatory, market, wallet, and render readiness."}</h1>
-    <p style={lede}>DigitalHut is now reading visitor intent, provider health, wallet tier, and recent searches to choose the first market symbols, observatory feed, and premium trigger before the user has to dig.</p>
+    <h1 style={title}>{adaptive.hero?.title || "Adaptive API, market, wallet, blog, and model readiness."}</h1>
+    <p style={lede}>DigitalHut now surfaces the actual API websites: Sketchfab, Cesium Ion, Polygon, Financial Modeling Prep, and Alpha Vantage. Agents use those signals to build the main blog feature, FAQ help, market context, and selectable 3D model flows.</p>
     <div style={actions}>
      <button onClick={()=>scan()} style={primary}>{busy?"Scanning":adaptive.hero?.primaryAction || "Run Observatory Scan"}</button>
      <button onClick={voice} style={secondary}>Voice</button>
@@ -165,19 +166,23 @@ export default function Home(){
     </div>
    </div>
    <div style={opsPanel}>
-    <div style={panelHeader}><h2 style={h2}>Adaptive Entry</h2><span style={pill}>{adaptive.intent}</span></div>
-    <Status label="Confidence" on={adaptive.confidence >= .7}/>
-    <Status label="Alpaca" on={providers.alpaca}/>
+    <div style={panelHeader}><h2 style={h2}>Provider Status</h2><span style={pill}>{adaptive.intent}</span></div>
     <Status label="Sketchfab" on={providers.sketchfab}/>
-    <Status label="Payment Wallet" on={providers.paymentWalletConfigured}/>
+    <Status label="Cesium Ion" on={providers.cesium}/>
+    <Status label="Polygon" on={providers.polygon}/>
+    <Status label="FMP" on={providers.fmp}/>
+    <Status label="Alpha Vantage" on={providers.alphaVantage}/>
     <p style={muted}>{adaptive.reason}</p>
-    <button onClick={()=>refreshAdaptive()} style={smallBtn}>Refresh adaptive state</button>
+    <button onClick={()=>{refreshHealth(); refreshAdaptive()}} style={smallBtn}>Refresh providers</button>
    </div>
   </section>
 
+  <ApiProviderShowcase health={health}/>
   <MainBlogFeature feature={personaFeature} permission={walletPermission} busy={busy} onScan={scan}/>
-
+  <AgentBlogHome activeIntent={adaptive.intent} onScan={scan}/>
+  <ModelRotationChooser result={result} busy={busy} onScan={scan}/>
   <ObservatoryRenderPair feature={personaFeature} result={result} busy={busy} onScan={scan} onDownload={requestDownload}/>
+  <AgentFaqHelper intent={adaptive.intent} health={health}/>
 
   <section style={scoreGrid}>
    {measurements.map(([label,value])=><div key={label} style={scoreCard}><span>{label} Score</span><b>{value}</b></div>)}
@@ -237,7 +242,7 @@ export default function Home(){
   </section>}
 
   <section style={libraryBand}>
-   <a href="/library" style={navTile}><span>Library</span><b>GLB discovery routes</b></a>
+   <a href="/library" style={navTile}><span>Library</span><b>Market profiles, global environments, structures, and planetary assets</b></a>
    <a href={marketHref} style={navTile}><span>Market</span><b>{marketSymbols.join(" / ")}</b></a>
   </section>
  </main>
