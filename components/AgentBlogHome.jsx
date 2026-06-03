@@ -3,7 +3,7 @@
 import { buildPersonaFeatureHref, listPersonaFeatures } from "../lib/personaFeature"
 import library from "../data/platform-libraries.json"
 
-export default function AgentBlogHome({ activeIntent, onScan }) {
+export default function AgentBlogHome({ activeIntent, activeFeed, onSelectFeed }) {
   const features = listPersonaFeatures()
   const active = features.find((feature) => feature.intent === activeIntent) || features[0]
 
@@ -13,19 +13,22 @@ export default function AgentBlogHome({ activeIntent, onScan }) {
         <p style={styles.eyebrow}>Agent blog home</p>
         <h2 id="agent-blog-home-title" style={styles.title}>Agents combine API results into the main feature feed.</h2>
       </div>
-      <span style={styles.pill}>{active?.label || "Adaptive"}</span>
+      <span style={styles.pill}>{activeFeed?.title || active?.label || "Adaptive"}</span>
     </div>
     <div style={styles.featureGrid}>
-      {features.slice(0, 6).map((feature) => <article key={feature.intent} style={feature.intent === activeIntent ? styles.activeCard : styles.card}>
-        <p style={styles.cardEyebrow}>{feature.label}</p>
-        <h3 style={styles.cardTitle}>{feature.mainFeatureTitle}</h3>
-        <p style={styles.text}>{feature.blogAngle}</p>
-        <div style={styles.meta}>{feature.market?.symbols?.slice(0, 4).map((symbol) => <span key={symbol} style={styles.tag}>{symbol}</span>)}</div>
-        <div style={styles.actions}>
-          <button type="button" onClick={() => onScan?.(feature.mainGLBSearch)} style={styles.primary}>Scan model</button>
-          <a href={buildPersonaFeatureHref(feature.intent)} style={styles.secondary}>Read brief</a>
-        </div>
-      </article>)}
+      {features.slice(0, 6).map((feature) => {
+        const selected = activeFeed?.intent === feature.intent || feature.intent === activeIntent
+        return <article key={feature.intent} style={selected ? styles.activeCard : styles.card}>
+          <p style={styles.cardEyebrow}>{feature.label}</p>
+          <h3 style={styles.cardTitle}>{feature.mainFeatureTitle}</h3>
+          <p style={styles.text}>{feature.blogAngle}</p>
+          <div style={styles.meta}>{feature.market?.symbols?.slice(0, 4).map((symbol) => <span key={symbol} style={styles.tag}>{symbol}</span>)}</div>
+          <div style={styles.actions}>
+            <button type="button" onClick={() => onSelectFeed?.(feature)} style={styles.primary}>Use feed</button>
+            <a href={buildPersonaFeatureHref(feature.intent)} style={styles.secondary}>Read brief</a>
+          </div>
+        </article>
+      })}
     </div>
     <div style={styles.marketStrip}>
       {library.marketProfiles.map((profile) => <div key={profile.title} style={styles.profile}>
@@ -42,7 +45,7 @@ const styles = {
   header: { display: "flex", justifyContent: "space-between", gap: 14, alignItems: "flex-start", flexWrap: "wrap", marginBottom: 16 },
   eyebrow: { margin: "0 0 8px", color: "#67e8f9", fontSize: 12, fontWeight: 900, textTransform: "uppercase", letterSpacing: 0 },
   title: { margin: 0, fontSize: "clamp(26px,4vw,42px)", lineHeight: 1.06, letterSpacing: 0, maxWidth: 820 },
-  pill: { fontSize: 12, padding: "7px 10px", borderRadius: 999, background: "rgba(103,232,249,.12)", color: "#a5f3fc", fontWeight: 900 },
+  pill: { fontSize: 12, padding: "7px 10px", borderRadius: 999, background: "rgba(103,232,249,.12)", color: "#a5f3fc", fontWeight: 900, maxWidth: 420, overflowWrap: "anywhere" },
   featureGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,260px),1fr))", gap: 14 },
   card: { minWidth: 0, padding: 16, border: "1px solid rgba(148,163,184,.22)", borderRadius: 8, background: "rgba(2,6,23,.42)", display: "grid", gap: 10 },
   activeCard: { minWidth: 0, padding: 16, border: "1px solid rgba(45,212,191,.45)", borderRadius: 8, background: "rgba(20,184,166,.13)", display: "grid", gap: 10 },
