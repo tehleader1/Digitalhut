@@ -2,7 +2,7 @@
 
 import { buildPersonaFeatureHref } from "../lib/personaFeature"
 
-export default function MainBlogFeature({ feature, permission, busy = false, onScan }) {
+export default function MainBlogFeature({ feature, permission, busy = false, onSelectFeed }) {
   if (!feature) return null
   const href = buildPersonaFeatureHref(feature.intent)
 
@@ -18,7 +18,7 @@ export default function MainBlogFeature({ feature, permission, busy = false, onS
         <Meta label="Runner priority" value={feature.runnerPriority}/>
       </div>
       <div style={styles.actions}>
-        <button type="button" onClick={() => onScan?.(feature.mainGLBSearch)} style={styles.primary}>{busy ? "Scanning" : "Run feature scan"}</button>
+        <button type="button" onClick={() => onSelectFeed?.(feature)} style={styles.primary}>{busy ? "Scanning" : "Use feature feed"}</button>
         <a href={href} style={styles.secondary}>Open feature brief</a>
       </div>
     </div>
@@ -41,18 +41,7 @@ function Meta({ label, value }) {
 }
 
 const styles = {
-  wrap: {
-    maxWidth: 1180,
-    margin: "22px auto",
-    display: "grid",
-    gridTemplateColumns: "minmax(0,1.15fr) minmax(280px,.85fr)",
-    gap: 18,
-    padding: 20,
-    border: "1px solid rgba(148,163,184,.25)",
-    borderRadius: 8,
-    background: "rgba(15,23,42,.78)",
-    boxSizing: "border-box"
-  },
+  wrap: { maxWidth: 1180, margin: "22px auto", display: "grid", gridTemplateColumns: "minmax(0,1.15fr) minmax(280px,.85fr)", gap: 18, padding: 20, border: "1px solid rgba(148,163,184,.25)", borderRadius: 8, background: "rgba(15,23,42,.78)", boxSizing: "border-box" },
   copy: { minWidth: 0 },
   eyebrow: { margin: "0 0 8px", color: "#67e8f9", fontSize: 12, fontWeight: 900, letterSpacing: 0, textTransform: "uppercase" },
   title: { margin: "0 0 12px", fontSize: "clamp(28px,5vw,50px)", lineHeight: 1.02, letterSpacing: 0 },
