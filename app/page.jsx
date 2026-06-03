@@ -2,22 +2,12 @@
 import {useEffect, useMemo, useState} from "react"
 import AgentBlogHome from "../components/AgentBlogHome"
 import AgentFaqHelper from "../components/AgentFaqHelper"
-import ApiProviderShowcase from "../components/ApiProviderShowcase"
 import MainBlogFeature from "../components/MainBlogFeature"
 import ModelRotationChooser from "../components/ModelRotationChooser"
-import ObservatoryRenderPair from "../components/ObservatoryRenderPair"
 import {getPersonaFeature, getPersonaMarket, getPersonaSignal} from "../lib/personaFeature"
 import {getWalletPermissionState} from "../lib/walletPermissions"
 
 const tiers = {free: 0, standard: 35, premium: 50, pro: 100}
-const measurements = [
-  ["APIs", 91],
-  ["Market", 84],
-  ["Agents", 97],
-  ["Models", 88],
-  ["Library", 92],
-  ["Launch", 86]
-]
 
 function defaultAdaptiveState(){
  const feature = getPersonaFeature("home-project")
@@ -25,10 +15,10 @@ function defaultAdaptiveState(){
   intent:feature.intent,
   confidence:.45,
   reason:"Waiting for visitor signal",
-  hero:{eyebrow:"DigitalHut Observatory",title:"Adaptive API, market, model, blog, and agent console.",primaryAction:"Run Observatory Scan"},
+  hero:{eyebrow:"DigitalHut Observatory",title:"Adaptive market, model, blog, and agent console.",primaryAction:"Run Observatory Scan"},
   observatory:{preloadQuery:feature.mainGLBSearch,category:feature.observatory?.category || feature.intent},
   market:feature.market,
-  premium:{trigger:"first-scan",message:"Explore live API providers, model libraries, and agent research before unlocking premium depth.",active:false}
+  premium:{trigger:"first-scan",message:"Explore model libraries and agent research before unlocking premium depth.",active:false}
  }
 }
 
@@ -52,7 +42,7 @@ export default function Home(){
  const [health,setHealth]=useState(null)
  const [subscription,setSubscription]=useState(null)
  const [adaptive,setAdaptive]=useState(defaultAdaptiveState())
- const [toast,setToast]=useState("API and agent workspace ready")
+ const [toast,setToast]=useState("Agent workspace ready")
  const tierEntries = useMemo(()=>Object.entries(tiers),[])
  const personaFeature = useMemo(()=>getPersonaFeature(adaptive.intent),[adaptive.intent])
  const personaMarket = useMemo(()=>getPersonaMarket(adaptive.intent),[adaptive.intent])
@@ -126,7 +116,7 @@ export default function Home(){
    const json=await res.json()
    setResult(json)
    const live=json.provider==="sketchfab-live"
-   setToast(live?"Live Sketchfab GLB route acquired":"Model feed found; renderer using metadata or fallback mode")
+   setToast(live?"Live model route acquired":"Model feed found; renderer using metadata or fallback mode")
    if(typeof window!=="undefined" && "speechSynthesis" in window){
     window.speechSynthesis.cancel()
     window.speechSynthesis.speak(new SpeechSynthesisUtterance(`${json.ai} Current tier is ${tier}.`))
@@ -156,38 +146,21 @@ export default function Home(){
  return <main style={shell}>
   <section style={hero}>
    <div style={heroCopy}>
-    <div style={eyebrow}>{adaptive.hero?.eyebrow || "DigitalHut Production Console"}</div>
-    <h1 style={title}>{adaptive.hero?.title || "Adaptive API, market, wallet, blog, and model readiness."}</h1>
-    <p style={lede}>DigitalHut now surfaces the actual API websites: Sketchfab, Cesium Ion, Polygon, Financial Modeling Prep, and Alpha Vantage. Agents use those signals to build the main blog feature, FAQ help, market context, and selectable 3D model flows.</p>
+    <div style={eyebrow}>{adaptive.hero?.eyebrow || "DigitalHut"}</div>
+    <h1 style={title}>{adaptive.hero?.title || "Adaptive market, wallet, blog, and model readiness."}</h1>
+    <p style={lede}>Agents combine market research, model discovery, global environments, saved library signals, and visitor intent into one clean workspace.</p>
     <div style={actions}>
      <button onClick={()=>scan()} style={primary}>{busy?"Scanning":adaptive.hero?.primaryAction || "Run Observatory Scan"}</button>
      <button onClick={voice} style={secondary}>Voice</button>
      <a href={marketHref} style={linkBtn}>Market Intelligence</a>
+     <a href="/library" style={secondary}>Library</a>
     </div>
-   </div>
-   <div style={opsPanel}>
-    <div style={panelHeader}><h2 style={h2}>Provider Status</h2><span style={pill}>{adaptive.intent}</span></div>
-    <Status label="Sketchfab" on={providers.sketchfab}/>
-    <Status label="Cesium Ion" on={providers.cesium}/>
-    <Status label="Polygon" on={providers.polygon}/>
-    <Status label="FMP" on={providers.fmp}/>
-    <Status label="Alpha Vantage" on={providers.alphaVantage}/>
-    <p style={muted}>{adaptive.reason}</p>
-    <button onClick={()=>{refreshHealth(); refreshAdaptive()}} style={smallBtn}>Refresh providers</button>
    </div>
   </section>
 
-  <ApiProviderShowcase health={health}/>
   <MainBlogFeature feature={personaFeature} permission={walletPermission} busy={busy} onScan={scan}/>
   <AgentBlogHome activeIntent={adaptive.intent} onScan={scan}/>
   <ModelRotationChooser result={result} busy={busy} onScan={scan}/>
-  <ObservatoryRenderPair feature={personaFeature} result={result} busy={busy} onScan={scan} onDownload={requestDownload}/>
-  <AgentFaqHelper intent={adaptive.intent} health={health}/>
-
-  <section style={scoreGrid}>
-   {measurements.map(([label,value])=><div key={label} style={scoreCard}><span>{label} Score</span><b>{value}</b></div>)}
-   <div style={scoreCard}><span>Intent</span><b style={{fontSize:22,textTransform:"capitalize"}}>{adaptive.intent.replaceAll("-"," ")}</b></div>
-  </section>
 
   <section style={mainGrid}>
    <div style={panel}>
@@ -203,24 +176,11 @@ export default function Home(){
    </div>
 
    <div style={panel}>
-    <div style={panelHeader}><h2 style={h2}>Adaptive Observatory Search</h2><span style={pill}>{signal.priority}</span></div>
+    <div style={panelHeader}><h2 style={h2}>Adaptive Search</h2><span style={pill}>{signal.priority}</span></div>
     <p style={muted}>{signal.tone}</p>
     <input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search terrain, markets, structures, maps..." style={input}/>
-    <div style={actions}><button onClick={()=>scan()} style={primary}>{busy?"Scanning":"Search"}</button><button onClick={()=>setQuery(personaFeature.mainGLBSearch)} style={secondary}>Use Manifest Feature</button></div>
+    <div style={actions}><button onClick={()=>scan()} style={primary}>{busy?"Scanning":"Search"}</button><button onClick={()=>setQuery(personaFeature.mainGLBSearch)} style={secondary}>Use Feature</button></div>
     <p style={muted}>{toast}</p>
-   </div>
-  </section>
-
-  <section style={mainGrid}>
-   <div style={panel}>
-    <div style={panelHeader}><h2 style={h2}>Market Preload</h2><span style={pill}>{defaultMarketSymbol}</span></div>
-    <div style={symbolGrid}>{marketSymbols.map(symbol=><a key={symbol} href={`/market-intelligence?symbol=${symbol}&entry=${adaptive.intent}`} style={symbolTile}>{symbol}</a>)}</div>
-    <p style={muted}>{personaFeature.marketProfile} profile is selected from the persona manifest.</p>
-   </div>
-   <div style={panel}>
-    <div style={panelHeader}><h2 style={h2}>Observatory Preload</h2><span style={pill}>{personaFeature.observatory?.category}</span></div>
-    <b style={resultTitle}>{personaFeature.mainGLBSearch}</b>
-    <p style={muted}>{personaFeature.contextRenderRole}: {personaFeature.contextGLBSearch}</p>
    </div>
   </section>
 
@@ -228,18 +188,19 @@ export default function Home(){
    <div style={panel}>
     <div style={eyebrow}>{result.provider}</div>
     <h2 style={resultTitle}>{result.result?.title}</h2>
-    {result.result?.image&&<img src={result.result.image} alt="Sketchfab model preview" style={preview}/>} 
+    {result.result?.image&&<img src={result.result.image} alt="Model preview" style={preview}/>} 
     <p style={muted}>{result.ai}</p>
-    <p style={mono}>Download status: {result.result?.downloadStatus || "not requested"}</p>
-    <div style={actions}><a href={result.result?.url} target="_blank" style={linkBtn}>Open feed</a><button onClick={requestDownload} style={secondary}>Authorize GLB Download</button></div>
+    <div style={actions}><a href={result.result?.url} target="_blank" style={linkBtn}>Open feed</a><button onClick={requestDownload} style={secondary}>Authorize Download</button></div>
    </div>
    <div style={panel}>
-    <div style={eyebrow}>Manifest match</div>
+    <div style={eyebrow}>Feature match</div>
     <h2 style={resultTitle}>{personaFeature.mainFeatureTitle}</h2>
     <p style={muted}>{personaFeature.seoDescription}</p>
     <p style={mono}>Required tier: {personaFeature.downloadTier}</p>
    </div>
   </section>}
+
+  <AgentFaqHelper intent={adaptive.intent} health={health}/>
 
   <section style={libraryBand}>
    <a href="/library" style={navTile}><span>Library</span><b>Market profiles, global environments, structures, and planetary assets</b></a>
@@ -248,28 +209,19 @@ export default function Home(){
  </main>
 }
 
-function Status({label,on}){return <div style={statusRow}><span>{label}</span><b style={on?good:warn}>{on?"live":"check"}</b></div>}
-
 const shell={minHeight:"100vh",padding:28,background:"radial-gradient(circle at top left,#12343b 0,#020617 35%,#07111f 100%)",color:"white",fontFamily:"Arial, sans-serif",overflowX:"hidden"}
-const hero={maxWidth:1180,margin:"0 auto",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(min(100%,320px),1fr))",gap:20,alignItems:"stretch"}
-const heroCopy={minWidth:0}
+const hero={maxWidth:1180,margin:"0 auto",display:"block"}
+const heroCopy={minWidth:0,maxWidth:900}
 const eyebrow={fontSize:12,textTransform:"uppercase",letterSpacing:0,fontWeight:900,color:"#67e8f9"}
-const title={fontSize:"clamp(38px,7vw,78px)",lineHeight:.96,letterSpacing:0,margin:"10px 0 18px",maxWidth:840,overflowWrap:"anywhere"}
+const title={fontSize:"clamp(40px,7vw,78px)",lineHeight:.96,letterSpacing:0,margin:"10px 0 18px",maxWidth:900,overflowWrap:"anywhere"}
 const lede={fontSize:18,lineHeight:1.55,color:"#d8e4ee",maxWidth:760}
 const actions={display:"flex",gap:10,flexWrap:"wrap",alignItems:"center"}
 const primary={padding:"14px 18px",borderRadius:8,background:"#14b8a6",color:"#021014",border:0,fontWeight:900,cursor:"pointer"}
 const secondary={padding:"14px 18px",borderRadius:8,background:"rgba(226,232,240,.1)",color:"white",border:"1px solid rgba(226,232,240,.24)",fontWeight:800,cursor:"pointer",textDecoration:"none"}
 const linkBtn={display:"inline-block",padding:"13px 16px",borderRadius:8,background:"#38bdf8",color:"#06111a",fontWeight:900,textDecoration:"none"}
-const opsPanel={minWidth:0,border:"1px solid rgba(148,163,184,.28)",borderRadius:8,background:"rgba(8,20,32,.82)",padding:18,display:"grid",gap:12}
 const panelHeader={display:"flex",justifyContent:"space-between",gap:12,alignItems:"center",marginBottom:10,flexWrap:"wrap"}
 const h2={fontSize:22,margin:0}
 const pill={fontSize:12,padding:"7px 10px",borderRadius:999,background:"rgba(103,232,249,.12)",color:"#a5f3fc",fontWeight:900}
-const statusRow={display:"flex",justifyContent:"space-between",gap:14,borderBottom:"1px solid rgba(148,163,184,.16)",paddingBottom:8}
-const good={color:"#86efac"}
-const warn={color:"#facc15"}
-const smallBtn={padding:"12px 14px",borderRadius:8,border:0,background:"#0ea5e9",color:"#03121d",fontWeight:900,cursor:"pointer"}
-const scoreGrid={maxWidth:1180,margin:"22px auto",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(120px,1fr))",gap:10}
-const scoreCard={minWidth:0,padding:16,border:"1px solid rgba(148,163,184,.25)",borderRadius:8,background:"rgba(15,23,42,.7)",display:"grid",gap:8}
 const mainGrid={maxWidth:1180,margin:"22px auto",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(min(100%,300px),1fr))",gap:18}
 const panel={minWidth:0,padding:20,border:"1px solid rgba(148,163,184,.25)",borderRadius:8,background:"rgba(15,23,42,.74)"}
 const walletBtn={width:"100%",padding:16,borderRadius:8,border:"1px solid rgba(226,232,240,.22)",background:"#172554",color:"white",fontWeight:900,marginBottom:14,cursor:"pointer",overflowWrap:"anywhere"}
@@ -285,5 +237,3 @@ const resultTitle={fontSize:26,margin:"8px 0 12px",overflowWrap:"anywhere"}
 const preview={width:"100%",aspectRatio:"16 / 9",objectFit:"cover",borderRadius:8,background:"#0f172a",marginBottom:12}
 const libraryBand={maxWidth:1180,margin:"22px auto 0",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(min(100%,260px),1fr))",gap:18}
 const navTile={minWidth:0,padding:22,borderRadius:8,border:"1px solid rgba(148,163,184,.25)",background:"rgba(226,232,240,.08)",color:"white",textDecoration:"none",display:"grid",gap:8,overflowWrap:"anywhere"}
-const symbolGrid={display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(86px,1fr))",gap:10}
-const symbolTile={padding:16,borderRadius:8,background:"rgba(20,184,166,.14)",border:"1px solid rgba(45,212,191,.32)",color:"#a7f3d0",fontWeight:900,textAlign:"center",textDecoration:"none"}
