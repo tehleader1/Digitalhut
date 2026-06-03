@@ -5,7 +5,8 @@ import AgentFaqHelper from "../components/AgentFaqHelper"
 import ApiVisualShowcase from "../components/ApiVisualShowcase"
 import MainBlogFeature from "../components/MainBlogFeature"
 import ModelRotationChooser from "../components/ModelRotationChooser"
-import {getPersonaFeature, getPersonaMarket, getPersonaSignal} from "../lib/personaFeature"
+import BabylonObservatory from "./components/BabylonObservatory"
+import {buildPersonaFeatureHref, getPersonaFeature, getPersonaMarket, getPersonaSignal} from "../lib/personaFeature"
 import {getWalletPermissionState} from "../lib/walletPermissions"
 
 const tiers = {free: 0, standard: 35, premium: 50, pro: 100}
@@ -26,6 +27,32 @@ function defaultAdaptiveState(){
 function signalFromAdaptive(state){
  const personaSignal = getPersonaSignal(state.intent)
  return {...personaSignal, tone: `${personaSignal.tone} ${state.reason || ""}`.trim(), priority: personaSignal.priority || "Adaptive"}
+}
+
+function buildActiveFeed({adaptive, personaFeature, personaMarket, marketSymbols, result, signal}) {
+ const model = result?.result || {}
+ const title = model.title || personaFeature.mainFeatureTitle || signal.label || "DigitalHut Observatory Feed"
+ const category = model.category || adaptive.observatory?.category || personaFeature.observatory?.category || signal.priority || "observatory"
+ const sourceApi = result?.provider || "adaptive-home"
+ const terrainUrl = adaptive.observatory?.preloadQuery || personaFeature.contextGLBSearch || signal.query
+ const symbols = marketSymbols?.length ? marketSymbols : personaMarket?.symbols || ["BTC", "ETH", "SPY", "NVDA"]
+ return {
+  title,
+  category,
+  sourceApi,
+  modelUrl: model.glbUrl || model.downloadUrl || "",
+  terrainUrl,
+  previewImage: model.image || "",
+  marketSymbols: symbols,
+  agentNarration: `DigitalHut active feed: ${title}. Category ${category}. Source ${sourceApi}. Market context ${symbols.join(", ")}. Current terrain query ${terrainUrl}.`,
+  engagement: {
+   tier: adaptive.premium?.active ? "premium-ready" : "public",
+   confidence: adaptive.confidence || .45,
+   priority: signal.priority || "Adaptive",
+   reason: adaptive.reason || "Visitor intent and observatory context selected this feed."
+  },
+  sourceLabel: model.url ? "Sketchfab model feed" : "Adaptive observatory feed"
+ }
 }
 
 export default function Home(){
@@ -49,6 +76,14 @@ export default function Home(){
  const providers = health?.providers || {}
  const paymentWallet = providers.paymentWallet || subscription?.payment_wallet || "0x3121FbFB683B9147913f336b05eF419b875a7590"
  const marketHref = `/market-intelligence?symbol=${encodeURIComponent(defaultMarketSymbol)}&entry=${encodeURIComponent(adaptive.intent)}`
+ const activeFeed = useMemo(()=>buildActiveFeed({adaptive, personaFeature, personaMarket, marketSymbols, result, signal}),[adaptive, personaFeature, personaMarket, marketSymbols, result, signal])
+ const activePulse = useMemo(()=>[
+  {label:"Visual", value:activeFeed.modelUrl ? "Live GLB" : "Fallback orbit"},
+  {label:"Source", value:activeFeed.sourceApi},
+  {label:"Category", value:activeFeed.category},
+  {label:"Markets", value:activeFeed.marketSymbols.join(" / ")},
+  {label:"Confidence", value:`${Math.round((activeFeed.engagement.confidence || 0) * 100)}%`}
+ ],[activeFeed])
 
  useEffect(()=>{ refreshHealth(); refreshAdaptive() },[])
  useEffect(()=>{
@@ -118,7 +153,8 @@ export default function Home(){
    setToast(json.provider==="sketchfab-live"?"Live model route acquired":"Model feed found; renderer using metadata or fallback mode")
    if(typeof window!=="undefined" && "speechSynthesis" in window){
     window.speechSynthesis.cancel()
-    window.speechSynthesis.speak(new SpeechSynthesisUtterance(`${json.ai} Current tier is ${tier}.`))
+    const narratedFeed = buildActiveFeed({adaptive, personaFeature, personaMarket, marketSymbols, result:json, signal})
+    window.speechSynthesis.speak(new SpeechSynthesisUtterance(narratedFeed.agentNarration))
    }
    await fetch("/api/history",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:activeQuery,result:json.result,tier,provider:json.provider})})
    await refreshAdaptive({tier})
@@ -132,6 +168,21 @@ export default function Home(){
   setToast(json.message)
  }
 
+ async function saveActiveFeed(){
+  if(typeof window !== "undefined"){
+   const saved = JSON.parse(window.localStorage.getItem("digitalhut:activeFeeds") || "[]")
+   window.localStorage.setItem("digitalhut:activeFeeds", JSON.stringify([{...activeFeed, savedAt:new Date().toISOString()}, ...saved].slice(0,12)))
+  }
+  await fetch("/api/history",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:activeFeed.terrainUrl,result:activeFeed,tier,provider:activeFeed.sourceApi,event_type:"active-feed-save"})})
+  setToast(`Saved active feed: ${activeFeed.title}`)
+ }
+
+ function speakActiveFeed(){
+  if(typeof window==="undefined" || !("speechSynthesis" in window)) return
+  window.speechSynthesis.cancel()
+  window.speechSynthesis.speak(new SpeechSynthesisUtterance(activeFeed.agentNarration))
+ }
+
  function voice(){
   const R=window.SpeechRecognition||window.webkitSpeechRecognition
   if(!R)return alert("Voice not supported")
@@ -139,18 +190,27 @@ export default function Home(){
  }
 
  return <main style={shell}>
-  <section style={hero}>
-   <div style={heroCopy}>
-    <div style={eyebrow}>{adaptive.hero?.eyebrow || "DigitalHut"}</div>
-    <h1 style={title}>{adaptive.hero?.title || "Adaptive market, wallet, blog, and model readiness."}</h1>
-    <p style={lede}>Agents combine market research, model discovery, global environments, saved library signals, and visitor intent into one clean workspace.</p>
-    <div style={actions}>
-     <button onClick={()=>scan()} style={primary}>{busy?"Scanning":adaptive.hero?.primaryAction || "Run Observatory Scan"}</button>
-     <button onClick={voice} style={secondary}>Voice</button>
-     <a href={marketHref} style={linkBtn}>Market Intelligence</a>
-     <a href="/library" style={secondary}>Library</a>
-    </div>
+  <section style={stage} aria-label="DigitalHut active observatory feed">
+   <div style={visualFrame}>
+    <BabylonObservatory modelUrl={activeFeed.modelUrl} title={activeFeed.title}/>
+    {activeFeed.previewImage ? <img src={activeFeed.previewImage} alt="" style={visualPreview}/> : null}
    </div>
+   <aside style={activeCard}>
+    <div style={eyebrow}>{activeFeed.sourceLabel}</div>
+    <h1 style={title}>{activeFeed.title}</h1>
+    <p style={lede}>{activeFeed.agentNarration}</p>
+    <div style={pulseRail}>
+     {activePulse.map(item=><div key={item.label} style={pulseCell}><span>{item.label}</span><b>{item.value}</b></div>)}
+    </div>
+    <div style={actions}>
+     <button onClick={()=>scan(activeFeed.terrainUrl)} style={primary}>{busy?"Scanning":"Observe"}</button>
+     <button onClick={speakActiveFeed} style={secondary}>Narrate Feed</button>
+     <button onClick={saveActiveFeed} style={secondary}>Save Feed</button>
+     <a href="/library" style={secondary}>Library</a>
+     <a href={buildPersonaFeatureHref(adaptive.intent)} style={linkBtn}>Blog Brief</a>
+    </div>
+    <button onClick={voice} style={quietBtn}>Dictate a different search</button>
+   </aside>
   </section>
 
   <MainBlogFeature feature={personaFeature} permission={walletPermission} busy={busy} onScan={scan}/>
@@ -186,7 +246,7 @@ export default function Home(){
     <h2 style={resultTitle}>{result.result?.title}</h2>
     {result.result?.image&&<img src={result.result.image} alt="Model preview" style={preview}/>} 
     <p style={muted}>{result.ai}</p>
-    <div style={actions}><a href={result.result?.url} target="_blank" style={linkBtn}>Open feed</a><button onClick={requestDownload} style={secondary}>Authorize Download</button></div>
+    <div style={actions}><a href={result.result?.url} target="_blank" style={linkBtn}>Open feed</a><button onClick={saveActiveFeed} style={secondary}>Save active feed</button><button onClick={requestDownload} style={secondary}>Authorize Download</button></div>
    </div>
    <div style={panel}>
     <div style={eyebrow}>Feature match</div>
@@ -206,6 +266,13 @@ export default function Home(){
 }
 
 const shell={minHeight:"100vh",padding:28,background:"radial-gradient(circle at top left,#12343b 0,#020617 35%,#07111f 100%)",color:"white",fontFamily:"Arial, sans-serif",overflowX:"hidden"}
+const stage={maxWidth:1180,minHeight:"calc(100vh - 56px)",margin:"0 auto 22px",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(min(100%,320px),1fr))",gap:18,alignItems:"stretch"}
+const visualFrame={minWidth:0,position:"relative",border:"1px solid rgba(103,232,249,.24)",borderRadius:8,background:"radial-gradient(circle at 25% 20%,rgba(56,189,248,.18),rgba(2,6,23,.96) 42%)",overflow:"hidden",display:"grid",alignContent:"stretch"}
+const visualPreview={position:"absolute",right:16,bottom:16,width:"min(220px,32%)",aspectRatio:"16 / 10",objectFit:"cover",borderRadius:8,border:"1px solid rgba(226,232,240,.22)",boxShadow:"0 18px 50px rgba(0,0,0,.42)"}
+const activeCard={minWidth:0,padding:22,border:"1px solid rgba(148,163,184,.25)",borderRadius:8,background:"rgba(15,23,42,.78)",display:"flex",flexDirection:"column",justifyContent:"center",gap:14}
+const pulseRail={display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(118px,1fr))",gap:9}
+const pulseCell={minWidth:0,padding:11,border:"1px solid rgba(148,163,184,.18)",borderRadius:8,background:"rgba(2,6,23,.46)",display:"grid",gap:5}
+const quietBtn={alignSelf:"flex-start",padding:"10px 0",border:0,background:"transparent",color:"#93c5fd",fontWeight:800,cursor:"pointer"}
 const hero={maxWidth:1180,margin:"0 auto",display:"block"}
 const heroCopy={minWidth:0,maxWidth:900}
 const eyebrow={fontSize:12,textTransform:"uppercase",letterSpacing:0,fontWeight:900,color:"#67e8f9"}

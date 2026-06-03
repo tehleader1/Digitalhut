@@ -1,3 +1,6 @@
 node_modules
 .next
 dist
+readiness-report.txt
+full-project-index.txt
+data/market-intelligence-library.json
