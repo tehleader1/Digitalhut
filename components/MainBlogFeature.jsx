@@ -1,12 +1,29 @@
 "use client"
 
 import { buildPersonaFeatureHref } from "../lib/personaFeature"
+import UniversalFeedVisual from "./UniversalFeedVisual"
 
-export default function MainBlogFeature({ feature, permission, busy = false, onSelectFeed }) {
+export default function MainBlogFeature({ feature, permission, busy = false, onSelectFeed, onScan }) {
   if (!feature) return null
   const href = buildPersonaFeatureHref(feature.intent)
+  const activeFeed = {
+    title: feature.mainFeatureTitle,
+    category: feature.observatory?.category || feature.marketProfile || feature.intent,
+    clientType: feature.intent,
+    visualMode: "client",
+    terrainUrl: feature.mainGLBSearch,
+    marketSymbols: feature.market?.symbols || [],
+    sourceApi: "persona-feature",
+    agentNarration: feature.blogAngle,
+    walletTierRequired: feature.downloadTier
+  }
+  const useFeature = () => onSelectFeed ? onSelectFeed(feature) : onScan?.(feature.mainGLBSearch)
 
   return <section style={styles.wrap} aria-labelledby="main-blog-feature-title">
+    <div style={styles.visual}>
+      <UniversalFeedVisual activeFeed={activeFeed} scope="blog" />
+    </div>
+
     <div style={styles.copy}>
       <p style={styles.eyebrow}>{feature.label} main feature</p>
       <h2 id="main-blog-feature-title" style={styles.title}>{feature.mainFeatureTitle}</h2>
@@ -18,7 +35,7 @@ export default function MainBlogFeature({ feature, permission, busy = false, onS
         <Meta label="Runner priority" value={feature.runnerPriority}/>
       </div>
       <div style={styles.actions}>
-        <button type="button" onClick={() => onSelectFeed?.(feature)} style={styles.primary}>{busy ? "Scanning" : "Use feature feed"}</button>
+        <button type="button" onClick={useFeature} style={styles.primary}>{busy ? "Scanning" : "Use feature feed"}</button>
         <a href={href} style={styles.secondary}>Open feature brief</a>
       </div>
     </div>
@@ -41,7 +58,8 @@ function Meta({ label, value }) {
 }
 
 const styles = {
-  wrap: { maxWidth: 1180, margin: "22px auto", display: "grid", gridTemplateColumns: "minmax(0,1.15fr) minmax(280px,.85fr)", gap: 18, padding: 20, border: "1px solid rgba(148,163,184,.25)", borderRadius: 8, background: "rgba(15,23,42,.78)", boxSizing: "border-box" },
+  wrap: { maxWidth: 1180, margin: "22px auto", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,280px),1fr))", gap: 18, padding: 20, border: "1px solid rgba(148,163,184,.25)", borderRadius: 8, background: "rgba(15,23,42,.78)", boxSizing: "border-box" },
+  visual: { minWidth: 0, minHeight: 420, borderRadius: 8, overflow: "hidden" },
   copy: { minWidth: 0 },
   eyebrow: { margin: "0 0 8px", color: "#67e8f9", fontSize: 12, fontWeight: 900, letterSpacing: 0, textTransform: "uppercase" },
   title: { margin: "0 0 12px", fontSize: "clamp(28px,5vw,50px)", lineHeight: 1.02, letterSpacing: 0 },
