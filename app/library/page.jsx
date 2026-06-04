@@ -33,7 +33,7 @@ export default function Library(){
   <section style={hero}>
    <div style={eyebrow}>Observatory Library</div>
    <h1 style={title}>Preloaded markets, environments, structures, and planetary assets.</h1>
-   <p style={lede}>The library now keeps stocked shelves for agents: every catalog card resolves to an activeFeed visual before users open the feed.</p>
+   <p style={lede}>The library now keeps stocked shelves for agents: every catalog card resolves to a governed activeFeed visual before users open the feed.</p>
    <div style={controls}>
     <select value={intent} onChange={e=>setIntent(e.target.value)} style={select}>
      <option value="anonymous-new-user">Public visitor</option>
@@ -57,7 +57,7 @@ export default function Library(){
   <Catalog title="Planetary Assets" items={platform.planetaryAssets} />
 
   <section style={grid}>
-   {(library.favorites || []).map(feed=><FeedCard key={`${feed.title}-${feed.query}`} feed={{...feed, terrainUrl: feed.query, clientType: feed.category}} />)}
+   {(library.favorites || []).map(feed=><FeedCard key={`${feed.title}-${feed.query}`} feed={{...feed, terrainUrl: feed.query, clientType: feed.category, visualMode: "auto"}} />)}
   </section>
 
   <section style={unlockBand}>
@@ -74,8 +74,8 @@ function Catalog({ title, items, type }) {
   <div style={grid}>
    {items.map((item)=>{
     const feed = type === "market"
-      ? { title: item.title, category: "market", clientType: "market", marketSymbols: item.symbols, agentNarration: item.agentUse }
-      : { title: item.title, category: item.category, clientType: item.category, terrainUrl: item.query, agentNarration: item.query }
+      ? { title: item.title, category: "market", clientType: "market", visualMode: "market", marketSymbols: item.symbols, agentNarration: item.agentUse }
+      : { title: item.title, category: item.category, clientType: item.category, visualMode: "auto", terrainUrl: item.query, agentNarration: item.query }
     return <FeedCard key={item.title} feed={feed} item={item} type={type} />
    })}
   </div>
@@ -84,7 +84,7 @@ function Catalog({ title, items, type }) {
 
 function FeedCard({ feed, item = feed, type }) {
  return <article style={card}>
-  <div style={visualSlot}><UniversalFeedVisual activeFeed={feed} /></div>
+  <div style={visualSlot}><UniversalFeedVisual activeFeed={feed} scope="library" /></div>
   <span style={pill}>{feed.category || "market profile"}</span>
   <h3 style={cardTitle}>{feed.title}</h3>
   <p style={copy}>{type === "market" ? item.agentUse : item.query || feed.terrainUrl}</p>
