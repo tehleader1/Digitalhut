@@ -13,6 +13,7 @@ export default function ModelRotationChooser({ result, busy = false, onScan }) {
     title,
     category: selected.mood || "model-choice",
     clientType: selected.mood || "3d-asset-buyer",
+    visualMode: liveUrl ? "model" : "auto",
     modelUrl: liveUrl,
     previewImage: result?.result?.image || "",
     terrainUrl: selected.query,
@@ -30,13 +31,13 @@ export default function ModelRotationChooser({ result, busy = false, onScan }) {
     <div style={styles.header}>
       <div>
         <p style={styles.eyebrow}>Rotating active feed choices</p>
-        <h2 id="model-rotation-title" style={styles.title}>Every rotation resolves to a visual before and after a live scan.</h2>
+        <h2 id="model-rotation-title" style={styles.title}>Every rotation resolves to its lane visual until a live model is intentionally opened.</h2>
       </div>
       <span style={styles.pill}>{busy ? "scanning" : selected.mood}</span>
     </div>
     <div style={styles.grid}>
       <div style={styles.viewer}>
-        <UniversalFeedVisual activeFeed={activeFeed} />
+        <UniversalFeedVisual activeFeed={activeFeed} scope="rotation" />
       </div>
       <div style={styles.choices}>
         {choices.map((choice) => <button key={choice.title} type="button" onClick={() => choose(choice)} style={choice.title === selected.title ? styles.activeChoice : styles.choice}>
