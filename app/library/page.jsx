@@ -1,12 +1,13 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import UniversalFeedVisual from "../../components/UniversalFeedVisual"
 import platform from "../../data/platform-libraries.json"
 
 const fallback = {
   mode: "guest-favorites",
   favorites: [
-    { title: "Wall Street Market Mirror", query: "wall street new york financial district 3d", category: "financial-district" },
+    { title: "Wall Street Market Mirror", query: "wall street new york financial district 3d", category: "financial-district", marketSymbols: ["BTC", "ETH", "SPY", "NVDA"] },
     { title: "Ancient Rome Public Walkthrough", query: "ancient rome colosseum 3d", category: "history" },
     { title: "Moon Terrain Research Feed", query: "moon terrain lava tube 3d", category: "planetary" }
   ],
@@ -32,7 +33,7 @@ export default function Library(){
   <section style={hero}>
    <div style={eyebrow}>Observatory Library</div>
    <h1 style={title}>Preloaded markets, environments, structures, and planetary assets.</h1>
-   <p style={lede}>The library now keeps stocked shelves for agents: market profiles from Polygon/FMP/Alpha Vantage context, global Cesium-style environments, Sketchfab model searches, structures, and planetary asset feeds.</p>
+   <p style={lede}>The library now keeps stocked shelves for agents: every catalog card resolves to an activeFeed visual before users open the feed.</p>
    <div style={controls}>
     <select value={intent} onChange={e=>setIntent(e.target.value)} style={select}>
      <option value="anonymous-new-user">Public visitor</option>
@@ -56,12 +57,7 @@ export default function Library(){
   <Catalog title="Planetary Assets" items={platform.planetaryAssets} />
 
   <section style={grid}>
-   {(library.favorites || []).map(feed=><article key={`${feed.title}-${feed.query}`} style={card}>
-    <span style={pill}>{feed.category}</span>
-    <h2 style={cardTitle}>{feed.title}</h2>
-    <p style={copy}>{feed.query}</p>
-    <a href={`/?query=${encodeURIComponent(feed.query)}`} style={open}>Open feed</a>
-   </article>)}
+   {(library.favorites || []).map(feed=><FeedCard key={`${feed.title}-${feed.query}`} feed={{...feed, terrainUrl: feed.query, clientType: feed.category}} />)}
   </section>
 
   <section style={unlockBand}>
@@ -76,14 +72,24 @@ function Catalog({ title, items, type }) {
  return <section style={catalogBand}>
   <h2 style={sectionTitle}>{title}</h2>
   <div style={grid}>
-   {items.map((item)=><article key={item.title} style={card}>
-    <span style={pill}>{item.category || "market profile"}</span>
-    <h3 style={cardTitle}>{item.title}</h3>
-    <p style={copy}>{type === "market" ? item.agentUse : item.query}</p>
-    {item.symbols ? <div style={unlockGrid}>{item.symbols.map(symbol=><a key={symbol} href={`/market-intelligence?symbol=${symbol}`} style={miniLink}>{symbol}</a>)}</div> : <a href={`/?query=${encodeURIComponent(item.query)}`} style={open}>Open feed</a>}
-   </article>)}
+   {items.map((item)=>{
+    const feed = type === "market"
+      ? { title: item.title, category: "market", clientType: "market", marketSymbols: item.symbols, agentNarration: item.agentUse }
+      : { title: item.title, category: item.category, clientType: item.category, terrainUrl: item.query, agentNarration: item.query }
+    return <FeedCard key={item.title} feed={feed} item={item} type={type} />
+   })}
   </div>
  </section>
+}
+
+function FeedCard({ feed, item = feed, type }) {
+ return <article style={card}>
+  <div style={visualSlot}><UniversalFeedVisual activeFeed={feed} /></div>
+  <span style={pill}>{feed.category || "market profile"}</span>
+  <h3 style={cardTitle}>{feed.title}</h3>
+  <p style={copy}>{type === "market" ? item.agentUse : item.query || feed.terrainUrl}</p>
+  {item.symbols ? <div style={unlockGrid}>{item.symbols.map(symbol=><a key={symbol} href={`/market-intelligence?symbol=${symbol}`} style={miniLink}>{symbol}</a>)}</div> : <a href={`/?query=${encodeURIComponent(item.query || feed.terrainUrl || feed.title)}`} style={open}>Open feed</a>}
+ </article>
 }
 
 const shell={minHeight:"100vh",padding:28,background:"linear-gradient(135deg,#06111f,#020617 45%,#12231f)",color:"white",fontFamily:"Arial, sans-serif"}
@@ -95,8 +101,9 @@ const lede={fontSize:18,lineHeight:1.55,color:"#dbeafe",maxWidth:900}
 const controls={display:"flex",gap:10,flexWrap:"wrap",marginTop:16}
 const select={padding:13,borderRadius:8,border:"1px solid rgba(226,232,240,.24)",background:"#020617",color:"white",fontWeight:900}
 const catalogBand={maxWidth:1180,margin:"20px auto"}
-const grid={maxWidth:1180,margin:"0 auto",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(min(100%,240px),1fr))",gap:16}
-const card={border:"1px solid rgba(148,163,184,.24)",borderRadius:8,background:"rgba(15,23,42,.72)",padding:18,display:"grid",gap:10,minWidth:0}
+const grid={maxWidth:1180,margin:"0 auto",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(min(100%,260px),1fr))",gap:16}
+const card={border:"1px solid rgba(148,163,184,.24)",borderRadius:8,background:"rgba(15,23,42,.72)",padding:14,display:"grid",gap:10,minWidth:0}
+const visualSlot={height:260,borderRadius:8,overflow:"hidden",border:"1px solid rgba(148,163,184,.18)",background:"#020617"}
 const pill={fontSize:12,padding:"7px 10px",borderRadius:999,background:"rgba(103,232,249,.12)",color:"#a5f3fc",fontWeight:900,width:"fit-content",textTransform:"capitalize"}
 const cardTitle={fontSize:25,lineHeight:1.08,margin:0,letterSpacing:0,overflowWrap:"anywhere"}
 const copy={color:"#cbd5e1",lineHeight:1.5,overflowWrap:"anywhere"}
