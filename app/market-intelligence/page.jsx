@@ -1,6 +1,8 @@
 "use client"
 import {useEffect, useMemo, useState} from "react"
+import UniversalFeedVisual from "../../components/UniversalFeedVisual"
 import {getPersonaFeature, getPersonaMarket, normalizeIntent} from "../../lib/personaFeature"
+import {enrichActiveFeed} from "../../lib/domain/visualTranscript"
 
 function buildMarketProfile({entry, adaptive, symbol}){
  const intent = normalizeIntent(entry || adaptive?.intent || "anonymous-new-user")
@@ -35,17 +37,19 @@ export default function Market(){
  const activeProfile = useMemo(()=>buildMarketProfile({entry, adaptive, symbol:q}),[entry, adaptive, q])
  const alpacaLive = Boolean(health?.providers?.alpaca)
  const provider = r?.provider || (alpacaLive?"market-api-ready":"awaiting-live-candles")
- const activeFeed = {
+ const activeFeed = useMemo(()=>enrichActiveFeed({
   id: `market:${activeProfile.intent}:${activeProfile.defaultSymbol}`,
   title: activeProfile.title,
   category: activeProfile.category,
   clientType: activeProfile.clientType,
+  visualMode: "market",
   marketSymbols: activeProfile.symbols,
+  sourceApi: r?.provider || "market-api",
   agentNarration: r?.ai || activeProfile.narration,
   observation: activeProfile.observation,
   confidence: adaptive?.confidence || .45,
   walletTierRequired: adaptive?.premium?.active ? "premium" : "free"
- }
+ }),[activeProfile, r, adaptive])
 
  useEffect(()=>{ bootActiveFeed() },[])
  useEffect(()=>{
@@ -109,6 +113,7 @@ export default function Market(){
  return <main style={shell}>
   <a href="/" style={back}>Back to DigitalHut</a>
   <section style={hero}>
+   <div style={visualPanel}><UniversalFeedVisual activeFeed={activeFeed} scope="market"/></div>
    <div>
     <div style={eyebrow}>Active Market Feed</div>
     <h1 style={title}>{activeProfile.title}</h1>
@@ -119,7 +124,7 @@ export default function Market(){
     <div style={statusRow}><span>Active intent</span><b>{activeFeed.clientType}</b></div>
     <div style={statusRow}><span>Render health</span><b>{health?.status || "checking"}</b></div>
     <div style={statusRow}><span>Market API</span><b style={alpacaLive?good:warn}>{provider}</b></div>
-    <div style={statusRow}><span>Confidence</span><b>{Math.round(activeFeed.confidence*100)}%</b></div>
+    <div style={statusRow}><span>Confidence</span><b>{Math.round((activeFeed.confidence || .45)*100)}%</b></div>
     <button onClick={refreshHealth} style={smallBtn}>Refresh status</button>
    </div>
   </section>
@@ -159,7 +164,8 @@ export default function Market(){
 
 const shell={minHeight:"100vh",padding:28,background:"linear-gradient(135deg,#051923,#020617 45%,#111827)",color:"white",fontFamily:"Arial, sans-serif"}
 const back={color:"#67e8f9",fontWeight:800,textDecoration:"none"}
-const hero={maxWidth:1120,margin:"24px auto",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(min(100%,300px),1fr))",gap:18,alignItems:"stretch"}
+const hero={maxWidth:1120,margin:"24px auto",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(min(100%,280px),1fr))",gap:18,alignItems:"stretch"}
+const visualPanel={minWidth:0,borderRadius:8,overflow:"hidden",border:"1px solid rgba(148,163,184,.28)",background:"#020617"}
 const eyebrow={fontSize:12,textTransform:"uppercase",letterSpacing:0,fontWeight:900,color:"#67e8f9"}
 const title={fontSize:"clamp(38px,6vw,72px)",lineHeight:.98,margin:"8px 0 16px",letterSpacing:0,overflowWrap:"anywhere"}
 const lede={fontSize:18,lineHeight:1.55,color:"#dbeafe",maxWidth:760}
