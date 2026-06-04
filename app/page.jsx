@@ -8,6 +8,7 @@ import ModelRotationChooser from "../components/ModelRotationChooser"
 import BabylonObservatory from "./components/BabylonObservatory"
 import {buildPersonaFeatureHref, getPersonaFeature, getPersonaMarket, getPersonaSignal} from "../lib/personaFeature"
 import {getWalletPermissionState} from "../lib/walletPermissions"
+import {buildVisualTranscript, enrichActiveFeed} from "../lib/domain/visualTranscript"
 
 const tiers = {free: 0, standard: 35, premium: 50, pro: 100}
 
@@ -199,6 +200,7 @@ export default function Home(){
     <div style={eyebrow}>{activeFeed.sourceLabel}</div>
     <h1 style={title}>{activeFeed.title}</h1>
     <p style={lede}>{activeFeed.agentNarration}</p>
+     <p style={mono}>Transcript: {activeFeed.visualTranscript || buildVisualTranscript(activeFeed)}</p>
     <div style={pulseRail}>
      {activePulse.map(item=><div key={item.label} style={pulseCell}><span>{item.label}</span><b>{item.value}</b></div>)}
     </div>
