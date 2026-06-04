@@ -10,6 +10,7 @@ export default function MainBlogFeature({ feature, permission, busy = false, onS
     title: feature.mainFeatureTitle,
     category: feature.observatory?.category || feature.marketProfile || feature.intent,
     clientType: feature.intent,
+    visualMode: "client",
     terrainUrl: feature.mainGLBSearch,
     marketSymbols: feature.market?.symbols || [],
     sourceApi: "persona-feature",
@@ -19,7 +20,7 @@ export default function MainBlogFeature({ feature, permission, busy = false, onS
 
   return <section style={styles.wrap} aria-labelledby="main-blog-feature-title">
     <div style={styles.visual}>
-      <UniversalFeedVisual activeFeed={activeFeed} />
+      <UniversalFeedVisual activeFeed={activeFeed} scope="blog" />
     </div>
 
     <div style={styles.copy}>
