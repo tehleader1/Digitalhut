@@ -42,6 +42,7 @@ export default function Market(){
   title: activeProfile.title,
   category: activeProfile.category,
   clientType: activeProfile.clientType,
+  visualMode: "market",
   marketSymbols: activeProfile.symbols,
   sourceApi: r?.provider || "market-api",
   agentNarration: r?.ai || activeProfile.narration,
@@ -112,7 +113,7 @@ export default function Market(){
  return <main style={shell}>
   <a href="/" style={back}>Back to DigitalHut</a>
   <section style={hero}>
-   <div style={visualPanel}><UniversalFeedVisual activeFeed={activeFeed}/></div>
+   <div style={visualPanel}><UniversalFeedVisual activeFeed={activeFeed} scope="market"/></div>
    <div>
     <div style={eyebrow}>Active Market Feed</div>
     <h1 style={title}>{activeProfile.title}</h1>
