@@ -43,7 +43,6 @@ export default function Market(){
   category: activeProfile.category,
   clientType: activeProfile.clientType,
   marketSymbols: activeProfile.symbols,
-  terrainUrl: activeProfile.observatoryQuery,
   sourceApi: r?.provider || "market-api",
   agentNarration: r?.ai || activeProfile.narration,
   observation: activeProfile.observation,
