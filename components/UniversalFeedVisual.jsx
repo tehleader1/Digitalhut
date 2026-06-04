@@ -3,8 +3,8 @@
 import BabylonObservatory from "../app/components/BabylonObservatory"
 import { resolveActiveFeedVisual } from "../lib/domain/visualResolver"
 
-export default function UniversalFeedVisual({ activeFeed }) {
-  const visual = resolveActiveFeedVisual(activeFeed)
+export default function UniversalFeedVisual({ activeFeed, scope = "card" }) {
+  const visual = resolveActiveFeedVisual(activeFeed, { scope })
 
   if (visual.kind === "model") {
     return <div style={styles.wrap}>
