@@ -6,6 +6,28 @@ import platform from "../../data/platform-libraries.json"
 import {getPersonaFeature, getPersonaMarket, normalizeIntent} from "../../lib/personaFeature"
 import {enrichActiveFeed} from "../../lib/domain/visualTranscript"
 
+const symbolNames = {
+ BTC: "Bitcoin", ETH: "Ethereum", SOL: "Solana", DOGE: "Dogecoin",
+ NVDA: "Nvidia", MSFT: "Microsoft", AAPL: "Apple", TSLA: "Tesla",
+ VNQ: "Vanguard real estate ETF", HD: "Home Depot", LOW: "Lowes", SPY: "S&P 500 ETF",
+ QQQ: "Nasdaq 100 ETF", DIA: "Dow Jones ETF", TLT: "Treasury bond ETF"
+}
+
+function cleanSearchQuery(value) {
+ return String(value || "")
+  .replace(/\b(project\s*)?glb\b/gi, "")
+  .replace(/\b3d\s*model\b/gi, "")
+  .replace(/\s+/g, " ")
+  .trim()
+}
+
+function marketVisualQuery(symbol, profile) {
+ const ticker = String(symbol || profile?.defaultSymbol || profile?.symbols?.[0] || "BTC").toUpperCase()
+ const company = symbolNames[ticker] || ticker
+ const profileContext = cleanSearchQuery(profile?.marketModelQuery || profile?.visualIdentity || "market trading desk candlestick chart")
+ return `${ticker} ${company} ${profileContext}`.replace(/\s+/g, " ").trim()
+}
+
 function buildMarketProfile({entry, adaptive, symbol, selectedProfile}){
  const intent = normalizeIntent(entry || adaptive?.intent || "anonymous-new-user")
  const feature = getPersonaFeature(intent)
@@ -20,7 +42,7 @@ function buildMarketProfile({entry, adaptive, symbol, selectedProfile}){
   symbols,
   defaultSymbol,
   previewImage: profile.previewImage || "",
-  marketModelQuery: profile.marketModelQuery || "stock market trading desk candlestick chart 3d glb",
+  marketModelQuery: marketVisualQuery(defaultSymbol, profile),
   visualIdentity: profile.visualIdentity || "market visual identity",
   observation: profile.agentUse || adaptive?.reason || feature.blogAngle,
   clientType: feature.clientType || intent,
@@ -137,6 +159,7 @@ export default function Market(){
     <h1 style={title}>{activeProfile.title}</h1>
     <p style={lede}>{activeFeed.agentNarration}</p>
     <p style={identity}>{activeProfile.visualIdentity}</p>
+    <p style={mono}>Visual search: {activeFeed.query}</p>
     <div style={symbolGrid}>{activeProfile.symbols.map(symbol=><button key={symbol} onClick={()=>scan(symbol)} style={symbol===q?activeSymbol:symbolBtn}>{symbol}</button>)}</div>
    </div>
    <div style={statusPanel}>
@@ -160,7 +183,8 @@ export default function Market(){
 
   <section style={profileDeck}>
    {platform.marketProfiles.map(profile=>{
-    const feed = { title: profile.title, category: "market", visualMode: "market", previewImage: profile.previewImage, query: profile.marketModelQuery, terrainUrl: profile.marketModelQuery, marketSymbols: profile.symbols, visualDescription: profile.visualIdentity, agentNarration: profile.agentUse }
+    const profileQuery = marketVisualQuery(profile.defaultSymbol || profile.symbols?.[0], profile)
+    const feed = { title: profile.title, category: "market", visualMode: "market", previewImage: profile.previewImage, query: profileQuery, terrainUrl: profileQuery, marketSymbols: profile.symbols, visualDescription: profile.visualIdentity, agentNarration: profile.agentUse }
     return <button key={profile.title} onClick={()=>chooseProfile(profile)} style={profile.title===selectedProfile?.title?activeProfileCard:profileChoice}>
      <DiscoverySnapshotVisual feed={feed} scope="market profile card" compact />
      <b>{profile.title}</b>
@@ -185,6 +209,7 @@ export default function Market(){
      <p style={analysis}>{activeFeed.observation}</p>
      <p style={mono}>Observatory context: {activeProfile.observatoryQuery}</p>
      <p style={mono}>Symbols: {activeFeed.marketSymbols.join(" / ")}</p>
+     <p style={mono}>Renderer search: {activeFeed.query}</p>
      <p style={analysis}>{activeProfile.tierPrompt}</p>
     </div>
 
