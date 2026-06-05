@@ -17,6 +17,28 @@ function fallbackPreviewFor(symbols = []) {
   return profile?.previewImage || ""
 }
 
+function blogDraftsFor(snapshotFeed, runner) {
+  const baseTitle = snapshotFeed?.title || "Active discovery"
+  const answer = runner?.answer || snapshotFeed?.agentNarration || "Runner turns the active discovery into a reusable platform object."
+  return [
+    {
+      title: `${baseTitle}: live discovery brief`,
+      lane: "main blog feature",
+      summary: answer
+    },
+    {
+      title: `How ${baseTitle} becomes a library snapshot`,
+      lane: "library and examples",
+      summary: "The same visual feeds the saved card, recent search preview, example story, and share preview."
+    },
+    {
+      title: `Market and renderer context for ${baseTitle}`,
+      lane: "observatory renderer",
+      summary: "The renderer keeps the image, GLB route, symbols, technicals, and recent activity tied to one activeFeed packet."
+    }
+  ]
+}
+
 export default function DiscoveryRunnerConsole({ activeFeed, result, marketSymbols = [] }) {
   const [question, setQuestion] = useState(starterQuestions[0])
   const [runner, setRunner] = useState(null)
@@ -42,6 +64,8 @@ export default function DiscoveryRunnerConsole({ activeFeed, result, marketSymbo
     marketSymbols: snapshot.symbols,
     visualDescription: activeFeed?.visualDescription || activeFeed?.context || activeFeed?.agentNarration
   }), [activeFeed, snapshot])
+
+  const blogDrafts = useMemo(() => blogDraftsFor(snapshotFeed, runner), [snapshotFeed, runner])
 
   async function ask(nextQuestion = question) {
     const cleanQuestion = String(nextQuestion || "").trim()
@@ -94,6 +118,18 @@ export default function DiscoveryRunnerConsole({ activeFeed, result, marketSymbo
       <div style={styles.tags}>{(runner?.classifications || ["real-world-speech", "activeFeed", "backend-recording"]).map((tag) => <span key={tag} style={styles.tag}>{tag}</span>)}</div>
     </div>
 
+    <div style={styles.blogBand}>
+      <p style={styles.label}>Runner blog image drafts</p>
+      <div style={styles.blogGrid}>
+        {blogDrafts.map((draft) => <article key={draft.title} style={styles.blogCard}>
+          <DiscoverySnapshotVisual feed={{...snapshotFeed, title: draft.title, visualDescription: draft.summary}} scope={draft.lane} compact />
+          <span style={styles.blogLane}>{draft.lane}</span>
+          <b>{draft.title}</b>
+          <p>{draft.summary}</p>
+        </article>)}
+      </div>
+    </div>
+
     <div style={styles.surfaceGrid}>
       {(runner?.surfaces || defaultSurfaces).map((surface) => <article key={surface.name} style={styles.surface}>
         <DiscoverySnapshotVisual feed={{...snapshotFeed, title: surface.name, visualDescription: surface.action}} scope="recent activity preview" compact />
@@ -133,6 +169,10 @@ const styles = {
   answer: { margin: 0, color: "#dbeafe", fontSize: 17, lineHeight: 1.6, overflowWrap: "anywhere" },
   tags: { display: "flex", flexWrap: "wrap", gap: 8, marginTop: 12 },
   tag: { padding: "6px 8px", borderRadius: 999, background: "rgba(56,189,248,.12)", color: "#bae6fd", fontSize: 11, fontWeight: 800 },
+  blogBand: { marginTop: 16 },
+  blogGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,240px),1fr))", gap: 10 },
+  blogCard: { minWidth: 0, padding: 13, borderRadius: 8, border: "1px solid rgba(45,212,191,.22)", background: "rgba(20,184,166,.08)", display: "grid", gap: 7, color: "#dbeafe", lineHeight: 1.4, overflowWrap: "anywhere" },
+  blogLane: { color: "#a5f3fc", fontSize: 11, fontWeight: 900, textTransform: "uppercase" },
   surfaceGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,220px),1fr))", gap: 10, marginTop: 16 },
   surface: { minWidth: 0, padding: 13, borderRadius: 8, border: "1px solid rgba(148,163,184,.2)", background: "rgba(255,255,255,.05)", display: "grid", gap: 7, color: "#dbeafe", lineHeight: 1.4, overflowWrap: "anywhere" }
 }
