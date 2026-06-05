@@ -19,6 +19,8 @@ function buildMarketProfile({entry, adaptive, symbol, selectedProfile}){
   title: profile.title || personaMarket.title || feature.marketProfile || `${feature.mainFeatureTitle} market desk`,
   symbols,
   defaultSymbol,
+  previewImage: profile.previewImage || "",
+  marketModelQuery: profile.marketModelQuery || "stock market trading desk candlestick chart 3d glb",
   visualIdentity: profile.visualIdentity || "market visual identity",
   observation: profile.agentUse || adaptive?.reason || feature.blogAngle,
   clientType: feature.clientType || intent,
@@ -48,6 +50,9 @@ export default function Market(){
   category: "market",
   clientType: "market",
   visualMode: "market",
+  previewImage: activeProfile.previewImage,
+  query: activeProfile.marketModelQuery,
+  terrainUrl: activeProfile.marketModelQuery,
   marketSymbols: activeProfile.symbols,
   sourceApi: r?.provider || "market-api",
   agentNarration: r?.ai || activeProfile.narration,
@@ -144,7 +149,7 @@ export default function Market(){
 
   <section style={profileDeck}>
    {platform.marketProfiles.map(profile=>{
-    const feed = { title: profile.title, category: "market", visualMode: "market", marketSymbols: profile.symbols, visualDescription: profile.visualIdentity, agentNarration: profile.agentUse }
+    const feed = { title: profile.title, category: "market", visualMode: "market", previewImage: profile.previewImage, query: profile.marketModelQuery, terrainUrl: profile.marketModelQuery, marketSymbols: profile.symbols, visualDescription: profile.visualIdentity, agentNarration: profile.agentUse }
     return <button key={profile.title} onClick={()=>chooseProfile(profile)} style={profile.title===selectedProfile?.title?activeProfileCard:profileChoice}>
      <DiscoverySnapshotVisual feed={feed} scope="market profile card" compact />
      <b>{profile.title}</b>
