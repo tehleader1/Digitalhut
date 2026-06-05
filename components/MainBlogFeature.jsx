@@ -1,6 +1,7 @@
 "use client"
 
 import { buildPersonaFeatureHref } from "../lib/personaFeature"
+import DiscoverySnapshotVisual from "./DiscoverySnapshotVisual"
 import UniversalFeedVisual from "./UniversalFeedVisual"
 
 export default function MainBlogFeature({ feature, permission, busy = false, onSelectFeed, onScan }) {
@@ -10,18 +11,24 @@ export default function MainBlogFeature({ feature, permission, busy = false, onS
     title: feature.mainFeatureTitle,
     category: feature.observatory?.category || feature.marketProfile || feature.intent,
     clientType: feature.intent,
+    intent: feature.intent,
     visualMode: "client",
     terrainUrl: feature.mainGLBSearch,
+    query: feature.mainGLBSearch,
     marketSymbols: feature.market?.symbols || [],
     sourceApi: "persona-feature",
     agentNarration: feature.blogAngle,
+    visualDescription: feature.contextGLBSearch || feature.seoDescription,
     walletTierRequired: feature.downloadTier
   }
   const useFeature = () => onSelectFeed ? onSelectFeed(feature) : onScan?.(feature.mainGLBSearch)
 
   return <section style={styles.wrap} aria-labelledby="main-blog-feature-title">
-    <div style={styles.visual}>
-      <UniversalFeedVisual activeFeed={activeFeed} scope="blog" />
+    <div style={styles.visualStack}>
+      <div style={styles.visual}>
+        <UniversalFeedVisual activeFeed={activeFeed} scope="blog" />
+      </div>
+      <DiscoverySnapshotVisual feed={activeFeed} scope="main blog feature" compact />
     </div>
 
     <div style={styles.copy}>
@@ -59,7 +66,8 @@ function Meta({ label, value }) {
 
 const styles = {
   wrap: { maxWidth: 1180, margin: "22px auto", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,280px),1fr))", gap: 18, padding: 20, border: "1px solid rgba(148,163,184,.25)", borderRadius: 8, background: "rgba(15,23,42,.78)", boxSizing: "border-box" },
-  visual: { minWidth: 0, minHeight: 420, borderRadius: 8, overflow: "hidden" },
+  visualStack: { minWidth: 0, display: "grid", gap: 10 },
+  visual: { minWidth: 0, minHeight: 360, borderRadius: 8, overflow: "hidden" },
   copy: { minWidth: 0 },
   eyebrow: { margin: "0 0 8px", color: "#67e8f9", fontSize: 12, fontWeight: 900, letterSpacing: 0, textTransform: "uppercase" },
   title: { margin: "0 0 12px", fontSize: "clamp(28px,5vw,50px)", lineHeight: 1.02, letterSpacing: 0 },
