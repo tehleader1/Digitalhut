@@ -2,6 +2,7 @@
 
 import { buildPersonaFeatureHref, listPersonaFeatures } from "../lib/personaFeature"
 import library from "../data/platform-libraries.json"
+import DiscoverySnapshotVisual from "./DiscoverySnapshotVisual"
 
 export default function AgentBlogHome({ activeIntent, activeFeed, onSelectFeed }) {
   const features = listPersonaFeatures()
@@ -18,7 +19,19 @@ export default function AgentBlogHome({ activeIntent, activeFeed, onSelectFeed }
     <div style={styles.featureGrid}>
       {features.slice(0, 6).map((feature) => {
         const selected = activeFeed?.intent === feature.intent || feature.intent === activeIntent
+        const featureFeed = {
+          title: feature.mainFeatureTitle,
+          category: feature.observatory?.category || feature.marketProfile || feature.intent,
+          clientType: feature.intent,
+          intent: feature.intent,
+          query: feature.mainGLBSearch,
+          terrainUrl: feature.mainGLBSearch,
+          marketSymbols: feature.market?.symbols || [],
+          agentNarration: feature.blogAngle,
+          visualDescription: feature.contextGLBSearch || feature.seoDescription
+        }
         return <article key={feature.intent} style={selected ? styles.activeCard : styles.card}>
+          <DiscoverySnapshotVisual feed={featureFeed} scope="real world example" compact />
           <p style={styles.cardEyebrow}>{feature.label}</p>
           <h3 style={styles.cardTitle}>{feature.mainFeatureTitle}</h3>
           <p style={styles.text}>{feature.blogAngle}</p>
@@ -31,11 +44,15 @@ export default function AgentBlogHome({ activeIntent, activeFeed, onSelectFeed }
       })}
     </div>
     <div style={styles.marketStrip}>
-      {library.marketProfiles.map((profile) => <div key={profile.title} style={styles.profile}>
-        <b>{profile.title}</b>
-        <span>{profile.symbols.join(" / ")}</span>
-        <p>{profile.agentUse}</p>
-      </div>)}
+      {library.marketProfiles.map((profile) => {
+        const marketFeed = { title: profile.title, category: "market", visualMode: "market", marketSymbols: profile.symbols, agentNarration: profile.agentUse, visualDescription: profile.visualIdentity }
+        return <div key={profile.title} style={styles.profile}>
+          <DiscoverySnapshotVisual feed={marketFeed} scope="market profile" compact />
+          <b>{profile.title}</b>
+          <span>{profile.symbols.join(" / ")}</span>
+          <p>{profile.agentUse}</p>
+        </div>
+      })}
     </div>
   </section>
 }
@@ -58,5 +75,5 @@ const styles = {
   primary: { padding: "11px 12px", borderRadius: 8, background: "#14b8a6", color: "#021014", border: 0, fontWeight: 900, cursor: "pointer" },
   secondary: { padding: "10px 12px", borderRadius: 8, background: "rgba(226,232,240,.1)", color: "white", border: "1px solid rgba(226,232,240,.24)", fontWeight: 800, textDecoration: "none" },
   marketStrip: { display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,220px),1fr))", gap: 10, marginTop: 14 },
-  profile: { minWidth: 0, padding: 12, border: "1px solid rgba(148,163,184,.18)", borderRadius: 8, background: "rgba(255,255,255,.05)", display: "grid", gap: 5, color: "#dbeafe", lineHeight: 1.35 }
+  profile: { minWidth: 0, padding: 12, border: "1px solid rgba(148,163,184,.18)", borderRadius: 8, background: "rgba(255,255,255,.05)", display: "grid", gap: 8, color: "#dbeafe", lineHeight: 1.35 }
 }
