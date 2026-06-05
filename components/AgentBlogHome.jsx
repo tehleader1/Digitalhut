@@ -45,7 +45,17 @@ export default function AgentBlogHome({ activeIntent, activeFeed, onSelectFeed }
     </div>
     <div style={styles.marketStrip}>
       {library.marketProfiles.map((profile) => {
-        const marketFeed = { title: profile.title, category: "market", visualMode: "market", marketSymbols: profile.symbols, agentNarration: profile.agentUse, visualDescription: profile.visualIdentity }
+        const marketFeed = {
+          title: profile.title,
+          category: "market",
+          visualMode: "market",
+          previewImage: profile.previewImage,
+          query: profile.marketModelQuery,
+          terrainUrl: profile.marketModelQuery,
+          marketSymbols: profile.symbols,
+          agentNarration: profile.agentUse,
+          visualDescription: profile.visualIdentity
+        }
         return <div key={profile.title} style={styles.profile}>
           <DiscoverySnapshotVisual feed={marketFeed} scope="market profile" compact />
           <b>{profile.title}</b>
