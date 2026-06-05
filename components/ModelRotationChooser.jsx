@@ -63,7 +63,7 @@ const styles = {
   eyebrow: { margin: "0 0 8px", color: "#67e8f9", fontSize: 12, fontWeight: 900, textTransform: "uppercase", letterSpacing: 0 },
   title: { margin: 0, fontSize: "clamp(26px,4vw,46px)", lineHeight: 1.06, letterSpacing: 0, maxWidth: 980, overflowWrap: "anywhere" },
   pill: { fontSize: 12, padding: "7px 10px", borderRadius: 999, background: "rgba(103,232,249,.12)", color: "#a5f3fc", fontWeight: 900, textTransform: "capitalize" },
-  stageGrid: { display: "grid", gridTemplateColumns: "minmax(min(100%,640px),1.55fr) minmax(min(100%,320px),.8fr)", gap: 16, alignItems: "stretch" },
+  stageGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,420px),1fr))", gap: 16, alignItems: "stretch" },
   primaryStage: { minWidth: 0, minHeight: "min(72vh,760px)", display: "grid", gridTemplateRows: "auto 1fr", gap: 8 },
   secondaryStage: { minWidth: 0, display: "grid", gap: 8 },
   sideRail: { minWidth: 0, display: "grid", gap: 14, alignContent: "start" },
