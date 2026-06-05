@@ -4,25 +4,80 @@ import { buildPersonaFeatureHref, listPersonaFeatures } from "../lib/personaFeat
 import library from "../data/platform-libraries.json"
 import DiscoverySnapshotVisual from "./DiscoverySnapshotVisual"
 
+const liveExampleQueries = {
+  "home-project": {
+    title: "Igloo in the Alaska mountains",
+    query: "Alaska igloo mountain cabin",
+    visualDescription: "snow shelter, mountain discovery, and cold-weather project planning",
+    previewImage: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80"
+  },
+  "real-estate-scout": {
+    title: "Canada mountain property scout",
+    query: "Canada mountain cabin real estate",
+    visualDescription: "Canadian mountain property, real estate route, and home preview",
+    previewImage: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=80"
+  },
+  gamer: {
+    title: "Japanese game world arena",
+    query: "Japanese neon game arena",
+    visualDescription: "game-ready creator scene with Japanese visual identity",
+    previewImage: "https://images.unsplash.com/photo-1528360983277-13d401cdc186?auto=format&fit=crop&w=1200&q=80"
+  },
+  student: {
+    title: "India market learning map",
+    query: "India market street learning map",
+    visualDescription: "real-world study example with market, streets, objects, and location context",
+    previewImage: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1200&q=80"
+  },
+  workforce: {
+    title: "Warehouse training bay",
+    query: "warehouse training bay workflow",
+    visualDescription: "training lane for equipment, workflow, safety, and operations",
+    previewImage: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80"
+  },
+  political: {
+    title: "Civic map and public district",
+    query: "Washington civic district public buildings map",
+    visualDescription: "public buildings, civic map context, and policy discovery surface",
+    previewImage: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80"
+  },
+  "market-user": {
+    title: "NVIDIA market intelligence desk",
+    query: "NVDA Nvidia stock market trading desk",
+    visualDescription: "equity profile with company ticker, chart screens, and technical context",
+    previewImage: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=80"
+  }
+}
+
 function marketProfileForFeature(feature) {
   const symbols = feature?.market?.symbols || []
   return library.marketProfiles.find((profile) => profile.symbols?.some((symbol) => symbols.includes(symbol))) || library.marketProfiles[0]
 }
 
+function cleanSearchQuery(value) {
+  return String(value || "")
+    .replace(/\b(project\s*)?glb\b/gi, "")
+    .replace(/\b3d\s*model\b/gi, "")
+    .replace(/\s+/g, " ")
+    .trim()
+}
+
 function exampleFeedFor(feature) {
   const marketProfile = marketProfileForFeature(feature)
+  const liveExample = liveExampleQueries[feature.intent] || library.environmentLibrary?.[0] || {}
+  const query = cleanSearchQuery(liveExample.query || feature.contextGLBSearch || feature.mainFeatureTitle || marketProfile.marketModelQuery)
   return {
-    title: feature.mainFeatureTitle,
+    title: liveExample.title || feature.mainFeatureTitle,
     category: feature.observatory?.category || feature.marketProfile || feature.intent,
     clientType: feature.intent,
     intent: feature.intent,
     source: "live-example-feed",
-    query: feature.mainGLBSearch || marketProfile.marketModelQuery,
-    terrainUrl: feature.mainGLBSearch || marketProfile.marketModelQuery,
-    previewImage: marketProfile.previewImage,
+    query,
+    terrainUrl: query,
+    previewImage: liveExample.previewImage || marketProfile.previewImage,
     marketSymbols: feature.market?.symbols || marketProfile.symbols || [],
-    agentNarration: feature.blogAngle,
-    visualDescription: feature.contextGLBSearch || marketProfile.visualIdentity || feature.seoDescription
+    agentNarration: `${liveExample.title || feature.mainFeatureTitle}. ${feature.blogAngle}`,
+    visualDescription: liveExample.visualDescription || feature.contextGLBSearch || marketProfile.visualIdentity || feature.seoDescription
   }
 }
 
@@ -45,8 +100,9 @@ export default function AgentBlogHome({ activeIntent, activeFeed, onSelectFeed }
         return <article key={feature.intent} style={selected ? styles.activeCard : styles.card}>
           <DiscoverySnapshotVisual feed={featureFeed} scope="real world example" compact />
           <p style={styles.cardEyebrow}>{feature.label}</p>
-          <h3 style={styles.cardTitle}>{feature.mainFeatureTitle}</h3>
+          <h3 style={styles.cardTitle}>{featureFeed.title}</h3>
           <p style={styles.text}>{feature.blogAngle}</p>
+          <p style={styles.queryLine}>Search: {featureFeed.query}</p>
           <div style={styles.meta}>{featureFeed.marketSymbols.slice(0, 4).map((symbol) => <span key={symbol} style={styles.tag}>{symbol}</span>)}</div>
           <div style={styles.actions}>
             <button type="button" onClick={() => onSelectFeed?.(featureFeed, { speak: true, scan: false })} style={styles.primary}>Preview example</button>
@@ -63,8 +119,8 @@ export default function AgentBlogHome({ activeIntent, activeFeed, onSelectFeed }
           category: "market",
           visualMode: "market",
           previewImage: profile.previewImage,
-          query: profile.marketModelQuery,
-          terrainUrl: profile.marketModelQuery,
+          query: cleanSearchQuery(profile.marketModelQuery),
+          terrainUrl: cleanSearchQuery(profile.marketModelQuery),
           marketSymbols: profile.symbols,
           agentNarration: profile.agentUse,
           visualDescription: profile.visualIdentity
@@ -92,6 +148,7 @@ const styles = {
   cardEyebrow: { margin: 0, color: "#a5f3fc", fontSize: 12, fontWeight: 900, textTransform: "uppercase" },
   cardTitle: { margin: 0, fontSize: 22, lineHeight: 1.12, overflowWrap: "anywhere" },
   text: { margin: 0, color: "#cbd5e1", lineHeight: 1.5, overflowWrap: "anywhere" },
+  queryLine: { margin: 0, color: "#bae6fd", fontSize: 12, fontWeight: 900, lineHeight: 1.35, overflowWrap: "anywhere" },
   meta: { display: "flex", flexWrap: "wrap", gap: 7 },
   tag: { padding: "6px 8px", borderRadius: 999, background: "rgba(56,189,248,.12)", color: "#bae6fd", fontSize: 11, fontWeight: 800 },
   actions: { display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" },
