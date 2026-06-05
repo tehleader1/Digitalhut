@@ -1,6 +1,7 @@
 "use client"
 
 import { useMemo, useState } from "react"
+import DiscoverySnapshotVisual from "./DiscoverySnapshotVisual"
 
 const starterQuestions = [
   "A client has 12 GLBs and needs to connect their system to digitalhut.app. What code structure should update?",
@@ -22,6 +23,16 @@ export default function DiscoveryRunnerConsole({ activeFeed, result, marketSymbo
     query: activeFeed?.query || "",
     symbols: activeFeed?.marketSymbols?.length ? activeFeed.marketSymbols : marketSymbols
   }), [activeFeed, result, marketSymbols])
+
+  const snapshotFeed = useMemo(() => ({
+    ...activeFeed,
+    title: snapshot.title,
+    previewImage: snapshot.previewImage,
+    modelUrl: snapshot.modelUrl,
+    query: snapshot.query,
+    marketSymbols: snapshot.symbols,
+    visualDescription: activeFeed?.visualDescription || activeFeed?.context || activeFeed?.agentNarration
+  }), [activeFeed, snapshot])
 
   async function ask(nextQuestion = question) {
     const cleanQuestion = String(nextQuestion || "").trim()
@@ -61,7 +72,7 @@ export default function DiscoveryRunnerConsole({ activeFeed, result, marketSymbo
 
       <article style={styles.panel}>
         <p style={styles.label}>Snapshot packet</p>
-        {snapshot.previewImage ? <img src={snapshot.previewImage} alt="Active discovery snapshot" style={styles.preview} /> : <div style={styles.emptyPreview}>Snapshot waits for active GLB preview</div>}
+        <DiscoverySnapshotVisual feed={snapshotFeed} scope="snapshot packet" />
         <h3 style={styles.cardTitle}>{snapshot.title}</h3>
         <p style={styles.copy}>Model: {snapshot.modelUrl ? "GLB route ready" : "metadata or fallback renderer"}</p>
         <p style={styles.copy}>Symbols: {(snapshot.symbols || []).join(" / ") || "none"}</p>
@@ -76,6 +87,7 @@ export default function DiscoveryRunnerConsole({ activeFeed, result, marketSymbo
 
     <div style={styles.surfaceGrid}>
       {(runner?.surfaces || defaultSurfaces).map((surface) => <article key={surface.name} style={styles.surface}>
+        <DiscoverySnapshotVisual feed={{...snapshotFeed, title: surface.name, visualDescription: surface.action}} scope="recent activity preview" compact />
         <b>{surface.name}</b>
         <span>{surface.status}</span>
         <p>{surface.action}</p>
@@ -106,14 +118,12 @@ const styles = {
   actions: { display: "flex", gap: 8, flexWrap: "wrap", marginTop: 10 },
   primary: { padding: "12px 14px", borderRadius: 8, border: 0, background: "#14b8a6", color: "#021014", fontWeight: 900, cursor: "pointer" },
   secondary: { padding: "10px 11px", borderRadius: 8, border: "1px solid rgba(148,163,184,.24)", background: "rgba(226,232,240,.08)", color: "white", fontWeight: 800, cursor: "pointer", maxWidth: 230, textAlign: "left" },
-  preview: { width: "100%", aspectRatio: "16 / 9", objectFit: "cover", borderRadius: 8, background: "#0f172a", marginBottom: 12 },
-  emptyPreview: { minHeight: 180, borderRadius: 8, background: "linear-gradient(135deg,#0f172a,#111827)", display: "grid", placeItems: "center", color: "#cbd5e1", fontWeight: 900, textAlign: "center", padding: 16, boxSizing: "border-box", marginBottom: 12 },
-  cardTitle: { margin: "0 0 8px", fontSize: 23, lineHeight: 1.15, overflowWrap: "anywhere" },
+  cardTitle: { margin: "12px 0 8px", fontSize: 23, lineHeight: 1.15, overflowWrap: "anywhere" },
   copy: { color: "#cbd5e1", lineHeight: 1.45, overflowWrap: "anywhere" },
   answerBand: { marginTop: 16, padding: 16, borderRadius: 8, border: "1px solid rgba(103,232,249,.24)", background: "rgba(8,20,32,.82)" },
   answer: { margin: 0, color: "#dbeafe", fontSize: 17, lineHeight: 1.6, overflowWrap: "anywhere" },
   tags: { display: "flex", flexWrap: "wrap", gap: 8, marginTop: 12 },
   tag: { padding: "6px 8px", borderRadius: 999, background: "rgba(56,189,248,.12)", color: "#bae6fd", fontSize: 11, fontWeight: 800 },
   surfaceGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,220px),1fr))", gap: 10, marginTop: 16 },
-  surface: { minWidth: 0, padding: 13, borderRadius: 8, border: "1px solid rgba(148,163,184,.2)", background: "rgba(255,255,255,.05)", display: "grid", gap: 5, color: "#dbeafe", lineHeight: 1.4, overflowWrap: "anywhere" }
+  surface: { minWidth: 0, padding: 13, borderRadius: 8, border: "1px solid rgba(148,163,184,.2)", background: "rgba(255,255,255,.05)", display: "grid", gap: 7, color: "#dbeafe", lineHeight: 1.4, overflowWrap: "anywhere" }
 }
