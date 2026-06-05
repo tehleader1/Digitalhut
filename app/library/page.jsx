@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import DiscoverySnapshotVisual from "../../components/DiscoverySnapshotVisual"
 import UniversalFeedVisual from "../../components/UniversalFeedVisual"
 import platform from "../../data/platform-libraries.json"
 
@@ -33,7 +34,7 @@ export default function Library(){
   <section style={hero}>
    <div style={eyebrow}>Observatory Library</div>
    <h1 style={title}>Preloaded markets, environments, structures, and planetary assets.</h1>
-   <p style={lede}>Every card now carries a lane identity so visuals appear from the activeFeed data instead of being forced onto the page.</p>
+   <p style={lede}>Every card now carries a lane identity and a reusable snapshot visual so library discovery does not wait on a live GLB preview.</p>
    <div style={controls}>
     <select value={intent} onChange={e=>setIntent(e.target.value)} style={select}>
      <option value="anonymous-new-user">Public visitor</option>
@@ -76,7 +77,7 @@ function Catalog({ title, items, type }) {
    {items.map((item)=>{
     const feed = type === "market"
       ? { title: item.title, category: "market", clientType: "market", visualMode: "market", marketSymbols: item.symbols, agentNarration: item.agentUse, visualDescription: item.visualIdentity }
-      : { title: item.title, category: item.category, clientType: item.category, visualMode: "auto", terrainUrl: item.query, agentNarration: item.query, visualDescription: item.visualIdentity }
+      : { title: item.title, category: item.category, clientType: item.category, visualMode: "auto", terrainUrl: item.query, query: item.query, agentNarration: item.query, visualDescription: item.visualIdentity }
     return <FeedCard key={item.title} feed={feed} item={item} type={type} />
    })}
   </div>
@@ -85,7 +86,10 @@ function Catalog({ title, items, type }) {
 
 function FeedCard({ feed, item = feed, type }) {
  return <article style={card}>
-  <div style={visualSlot}><UniversalFeedVisual activeFeed={feed} scope="library" /></div>
+  <div style={visualStack}>
+   <div style={snapshotSlot}><DiscoverySnapshotVisual feed={feed} scope="library card" compact /></div>
+   <div style={visualSlot}><UniversalFeedVisual activeFeed={feed} scope="library" /></div>
+  </div>
   <div style={cardTop}><span style={pill}>{feed.category || "market profile"}</span><span style={lane}>visual lane</span></div>
   <h3 style={cardTitle}>{feed.title}</h3>
   <p style={identity}>{item.visualIdentity || feed.visualDescription || "activeFeed visual identity"}</p>
@@ -106,7 +110,9 @@ const agentLink={padding:"13px 14px",borderRadius:8,border:"1px solid rgba(103,2
 const catalogBand={maxWidth:1180,margin:"20px auto"}
 const grid={maxWidth:1180,margin:"0 auto",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(min(100%,260px),1fr))",gap:16}
 const card={border:"1px solid rgba(148,163,184,.24)",borderRadius:8,background:"rgba(15,23,42,.72)",padding:14,display:"grid",gap:10,minWidth:0}
-const visualSlot={height:260,borderRadius:8,overflow:"hidden",border:"1px solid rgba(148,163,184,.18)",background:"#020617"}
+const visualStack={display:"grid",gap:8}
+const snapshotSlot={minHeight:160,borderRadius:8,overflow:"hidden"}
+const visualSlot={height:220,borderRadius:8,overflow:"hidden",border:"1px solid rgba(148,163,184,.18)",background:"#020617"}
 const cardTop={display:"flex",gap:8,alignItems:"center",justifyContent:"space-between",flexWrap:"wrap"}
 const pill={fontSize:12,padding:"7px 10px",borderRadius:999,background:"rgba(103,232,249,.12)",color:"#a5f3fc",fontWeight:900,width:"fit-content",textTransform:"capitalize"}
 const lane={fontSize:11,textTransform:"uppercase",color:"#94a3b8",fontWeight:900}
