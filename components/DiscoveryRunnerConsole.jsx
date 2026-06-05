@@ -1,6 +1,7 @@
 "use client"
 
 import { useMemo, useState } from "react"
+import library from "../data/platform-libraries.json"
 import DiscoverySnapshotVisual from "./DiscoverySnapshotVisual"
 
 const starterQuestions = [
@@ -11,18 +12,26 @@ const starterQuestions = [
   "How should the market renderer preload candlestick charts and technicals for this profile?"
 ]
 
+function fallbackPreviewFor(symbols = []) {
+  const profile = library.marketProfiles.find((item) => item.symbols?.some((symbol) => symbols.includes(symbol))) || library.marketProfiles[0]
+  return profile?.previewImage || ""
+}
+
 export default function DiscoveryRunnerConsole({ activeFeed, result, marketSymbols = [] }) {
   const [question, setQuestion] = useState(starterQuestions[0])
   const [runner, setRunner] = useState(null)
   const [busy, setBusy] = useState(false)
 
-  const snapshot = useMemo(() => ({
-    title: activeFeed?.title || result?.result?.title || "Active discovery",
-    previewImage: activeFeed?.previewImage || result?.result?.image || "",
-    modelUrl: activeFeed?.modelUrl || result?.result?.glbUrl || result?.result?.downloadUrl || "",
-    query: activeFeed?.query || "",
-    symbols: activeFeed?.marketSymbols?.length ? activeFeed.marketSymbols : marketSymbols
-  }), [activeFeed, result, marketSymbols])
+  const snapshot = useMemo(() => {
+    const symbols = activeFeed?.marketSymbols?.length ? activeFeed.marketSymbols : marketSymbols
+    return {
+      title: activeFeed?.title || result?.result?.title || "Active discovery",
+      previewImage: activeFeed?.previewImage || result?.result?.image || fallbackPreviewFor(symbols) || "",
+      modelUrl: activeFeed?.modelUrl || result?.result?.glbUrl || result?.result?.downloadUrl || "",
+      query: activeFeed?.query || "",
+      symbols
+    }
+  }, [activeFeed, result, marketSymbols])
 
   const snapshotFeed = useMemo(() => ({
     ...activeFeed,
@@ -43,7 +52,7 @@ export default function DiscoveryRunnerConsole({ activeFeed, result, marketSymbo
       const res = await fetch("/api/discovery-runner", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: cleanQuestion, activeFeed, result, snapshot })
+        body: JSON.stringify({ question: cleanQuestion, activeFeed: snapshotFeed, result, snapshot })
       })
       setRunner(await res.json())
     } finally {
