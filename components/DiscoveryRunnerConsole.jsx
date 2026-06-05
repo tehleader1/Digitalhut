@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react"
 import library from "../data/platform-libraries.json"
+import DiscoveryEvidenceTrail from "./DiscoveryEvidenceTrail"
 import DiscoverySnapshotVisual from "./DiscoverySnapshotVisual"
 
 const starterQuestions = [
@@ -118,6 +119,10 @@ export default function DiscoveryRunnerConsole({ activeFeed, result, marketSymbo
       <div style={styles.tags}>{(runner?.classifications || ["real-world-speech", "activeFeed", "backend-recording"]).map((tag) => <span key={tag} style={styles.tag}>{tag}</span>)}</div>
     </div>
 
+    <div style={styles.trailBand}>
+      <DiscoveryEvidenceTrail feed={snapshotFeed} title="Runner memory trail" />
+    </div>
+
     <div style={styles.blogBand}>
       <p style={styles.label}>Runner blog image drafts</p>
       <div style={styles.blogGrid}>
@@ -169,6 +174,7 @@ const styles = {
   answer: { margin: 0, color: "#dbeafe", fontSize: 17, lineHeight: 1.6, overflowWrap: "anywhere" },
   tags: { display: "flex", flexWrap: "wrap", gap: 8, marginTop: 12 },
   tag: { padding: "6px 8px", borderRadius: 999, background: "rgba(56,189,248,.12)", color: "#bae6fd", fontSize: 11, fontWeight: 800 },
+  trailBand: { marginTop: 16 },
   blogBand: { marginTop: 16 },
   blogGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,240px),1fr))", gap: 10 },
   blogCard: { minWidth: 0, padding: 13, borderRadius: 8, border: "1px solid rgba(45,212,191,.22)", background: "rgba(20,184,166,.08)", display: "grid", gap: 7, color: "#dbeafe", lineHeight: 1.4, overflowWrap: "anywhere" },
