@@ -4,6 +4,11 @@ import { buildPersonaFeatureHref, listPersonaFeatures } from "../lib/personaFeat
 import library from "../data/platform-libraries.json"
 import DiscoverySnapshotVisual from "./DiscoverySnapshotVisual"
 
+function marketProfileForFeature(feature) {
+  const symbols = feature?.market?.symbols || []
+  return library.marketProfiles.find((profile) => profile.symbols?.some((symbol) => symbols.includes(symbol))) || library.marketProfiles[0]
+}
+
 export default function AgentBlogHome({ activeIntent, activeFeed, onSelectFeed }) {
   const features = listPersonaFeatures()
   const active = features.find((feature) => feature.intent === activeIntent) || features[0]
@@ -19,16 +24,18 @@ export default function AgentBlogHome({ activeIntent, activeFeed, onSelectFeed }
     <div style={styles.featureGrid}>
       {features.slice(0, 6).map((feature) => {
         const selected = activeFeed?.intent === feature.intent || feature.intent === activeIntent
+        const marketProfile = marketProfileForFeature(feature)
         const featureFeed = {
           title: feature.mainFeatureTitle,
           category: feature.observatory?.category || feature.marketProfile || feature.intent,
           clientType: feature.intent,
           intent: feature.intent,
-          query: feature.mainGLBSearch,
-          terrainUrl: feature.mainGLBSearch,
-          marketSymbols: feature.market?.symbols || [],
+          query: feature.mainGLBSearch || marketProfile.marketModelQuery,
+          terrainUrl: feature.mainGLBSearch || marketProfile.marketModelQuery,
+          previewImage: marketProfile.previewImage,
+          marketSymbols: feature.market?.symbols || marketProfile.symbols || [],
           agentNarration: feature.blogAngle,
-          visualDescription: feature.contextGLBSearch || feature.seoDescription
+          visualDescription: feature.contextGLBSearch || marketProfile.visualIdentity || feature.seoDescription
         }
         return <article key={feature.intent} style={selected ? styles.activeCard : styles.card}>
           <DiscoverySnapshotVisual feed={featureFeed} scope="real world example" compact />
