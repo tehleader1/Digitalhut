@@ -5,13 +5,12 @@ import AgentFaqHelper from "../components/AgentFaqHelper"
 import ApiVisualShowcase from "../components/ApiVisualShowcase"
 import MainBlogFeature from "../components/MainBlogFeature"
 import DiscoveryRunnerConsole from "../components/DiscoveryRunnerConsole"
-import DiscoverySnapshotVisual from "../components/DiscoverySnapshotVisual"
 import ModelRotationChooser from "../components/ModelRotationChooser"
 import {getPersonaFeature, getPersonaMarket, getPersonaSignal} from "../lib/personaFeature"
 import {getWalletPermissionState} from "../lib/walletPermissions"
 
 const tiers = {free: 0, standard: 35, premium: 50, pro: 100}
-const walletVisual={title:"Wallet observatory pass",category:"market",visualMode:"market",previewImage:"https://images.unsplash.com/photo-1621761191319-c6fb62004040?auto=format&fit=crop&w=1200&q=80",marketSymbols:["ETH","USDC","MATIC","BNB"],visualDescription:"membership, wallet access, payment validation, and saved discovery permissions"}
+const walletVisual={title:"Wallet observatory pass",previewImage:"https://images.unsplash.com/photo-1621761191319-c6fb62004040?auto=format&fit=crop&w=1200&q=80",symbols:["ETH","USDC","MATIC","BNB"]}
 
 function defaultAdaptiveState(){
  const feature = getPersonaFeature("home-project")
@@ -90,6 +89,7 @@ export default function Home(){
  const providers = health?.providers || {}
  const paymentWallet = providers.paymentWallet || subscription?.payment_wallet || "0x3121FbFB683B9147913f336b05eF419b875a7590"
  const marketHref = `/market-intelligence?symbol=${encodeURIComponent(defaultMarketSymbol)}&entry=${encodeURIComponent(activeFeed.intent || adaptive.intent)}`
+ const pulseImage = activeFeed.previewImage || walletVisual.previewImage
 
  useEffect(()=>{ refreshHealth(); refreshAdaptive() },[])
  useEffect(()=>{
@@ -222,12 +222,12 @@ export default function Home(){
   </section>
 
   <section style={pulseBand}>
-   <div style={pulseVisual}><DiscoverySnapshotVisual feed={{...activeFeed,previewImage:activeFeed.previewImage || walletVisual.previewImage,marketSymbols}} scope="live observatory pulse" /></div>
+   <img src={pulseImage} alt={`${activeFeed.title} live observatory pulse`} style={pulseImg}/>
    <div style={pulseCopy}>
     <div style={eyebrow}>Main feature live observatory pulse</div>
     <h2 style={resultTitle}>{activeFeed.title}</h2>
     <p style={muted}>{toast}</p>
-    <p style={mono}>Feed -> renderer -> snapshot -> blog -> library -> runner history</p>
+    <p style={mono}>Feed to renderer to snapshot to blog to library to runner history</p>
    </div>
   </section>
 
@@ -240,7 +240,10 @@ export default function Home(){
   <section style={mainGrid}>
    <div style={panel}>
     <div style={panelHeader}><h2 style={h2}>Wallet And Subscription</h2><span style={pill}>{tier.toUpperCase()}</span></div>
-    <DiscoverySnapshotVisual feed={{...walletVisual,title: wallet ? "Wallet synced observatory pass" : "Wallet observatory pass"}} scope="wallet access" compact />
+    <figure style={walletFigure}>
+     <img src={walletVisual.previewImage} alt="Wallet observatory pass" style={walletImg}/>
+     <figcaption style={walletCaption}>{wallet ? "Wallet synced observatory pass" : "Wallet observatory pass"}<span>{walletVisual.symbols.join(" / ")}</span></figcaption>
+    </figure>
     <button onClick={connect} style={walletBtn}>{wallet || "Connect Wallet"}</button>
     <div style={tierGrid}>{tierEntries.map(([t,p])=><button key={t} onClick={()=>activate(t)} style={tier===t?activeTier:tierBtn}><b>{t.toUpperCase()}</b><span>${p}</span></button>)}</div>
     <div style={payRow}>
@@ -295,14 +298,17 @@ const actions={display:"flex",gap:10,flexWrap:"wrap",alignItems:"center"}
 const primary={padding:"14px 18px",borderRadius:8,background:"#14b8a6",color:"#021014",border:0,fontWeight:900,cursor:"pointer"}
 const secondary={padding:"14px 18px",borderRadius:8,background:"rgba(226,232,240,.1)",color:"white",border:"1px solid rgba(226,232,240,.24)",fontWeight:800,cursor:"pointer",textDecoration:"none"}
 const linkBtn={display:"inline-block",padding:"13px 16px",borderRadius:8,background:"#38bdf8",color:"#06111a",fontWeight:900,textDecoration:"none"}
-const pulseBand={maxWidth:1180,margin:"22px auto",display:"grid",gridTemplateColumns:"minmax(0,1.15fr) minmax(260px,.85fr)",gap:18,alignItems:"stretch",border:"1px solid rgba(45,212,191,.32)",borderRadius:8,background:"rgba(8,20,32,.72)",padding:18,boxSizing:"border-box"}
-const pulseVisual={minHeight:320,borderRadius:8,overflow:"hidden"}
+const pulseBand={maxWidth:1180,margin:"22px auto",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(min(100%,300px),1fr))",gap:18,alignItems:"stretch",border:"1px solid rgba(45,212,191,.32)",borderRadius:8,background:"rgba(8,20,32,.72)",padding:18,boxSizing:"border-box"}
+const pulseImg={width:"100%",minHeight:300,height:"100%",objectFit:"cover",borderRadius:8,background:"#020617"}
 const pulseCopy={minWidth:0,display:"grid",alignContent:"center"}
 const panelHeader={display:"flex",justifyContent:"space-between",gap:12,alignItems:"center",marginBottom:10,flexWrap:"wrap"}
 const h2={fontSize:22,margin:0}
 const pill={fontSize:12,padding:"7px 10px",borderRadius:999,background:"rgba(103,232,249,.12)",color:"#a5f3fc",fontWeight:900}
 const mainGrid={maxWidth:1180,margin:"22px auto",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(min(100%,300px),1fr))",gap:18}
 const panel={minWidth:0,padding:20,border:"1px solid rgba(148,163,184,.25)",borderRadius:8,background:"rgba(15,23,42,.74)"}
+const walletFigure={position:"relative",margin:0,borderRadius:8,overflow:"hidden",background:"#020617",aspectRatio:"16 / 9"}
+const walletImg={width:"100%",height:"100%",objectFit:"cover",display:"block"}
+const walletCaption={position:"absolute",left:10,right:10,bottom:10,display:"flex",gap:8,justifyContent:"space-between",flexWrap:"wrap",padding:10,borderRadius:8,background:"rgba(2,6,23,.74)",color:"white",fontSize:12,fontWeight:900,overflowWrap:"anywhere"}
 const walletBtn={width:"100%",padding:16,borderRadius:8,border:"1px solid rgba(226,232,240,.22)",background:"#172554",color:"white",fontWeight:900,margin:"14px 0",cursor:"pointer",overflowWrap:"anywhere"}
 const tierGrid={display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(92px,1fr))",gap:8}
 const tierBtn={minHeight:72,borderRadius:8,border:"1px solid rgba(226,232,240,.18)",background:"rgba(2,6,23,.55)",color:"white",display:"grid",gap:4,placeItems:"center",cursor:"pointer"}
