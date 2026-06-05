@@ -42,8 +42,9 @@ export default function Market(){
  const [selectedProfile,setSelectedProfile]=useState(platform.marketProfiles?.[0])
 
  const activeProfile = useMemo(()=>buildMarketProfile({entry, adaptive, symbol:q, selectedProfile}),[entry, adaptive, q, selectedProfile])
- const alpacaLive = Boolean(health?.providers?.alpaca)
- const provider = r?.provider || (alpacaLive?"market-api-ready":"awaiting-live-candles")
+ const apiPickup = r?.apiPickup || {}
+ const marketLive = Boolean(apiPickup.live || r?.live)
+ const provider = r?.providerLabel || apiPickup.label || r?.provider || (health?.providers?.alpaca?"Alpaca credentials detected; waiting for scan":"Awaiting selected market API")
  const activeFeed = useMemo(()=>enrichActiveFeed({
   id: `market:${activeProfile.intent}:${activeProfile.defaultSymbol}`,
   title: activeProfile.title,
@@ -54,7 +55,7 @@ export default function Market(){
   query: activeProfile.marketModelQuery,
   terrainUrl: activeProfile.marketModelQuery,
   marketSymbols: activeProfile.symbols,
-  sourceApi: r?.provider || "market-api",
+  sourceApi: r?.providerLabel || r?.provider || "market-api",
   agentNarration: r?.ai || activeProfile.narration,
   observation: activeProfile.observation,
   visualDescription: activeProfile.visualIdentity,
@@ -99,7 +100,7 @@ export default function Market(){
    const json=await res.json()
    setR(json)
    setQ(json.symbol || nextSymbol)
-   setToast(`${json.symbol || nextSymbol} profile updated from ${json.provider}.`)
+   setToast(`${json.symbol || nextSymbol} profile updated from ${json.providerLabel || json.provider}.`)
    if(!options.silent) speak(json.ai)
   } finally { setBusy(false) }
  }
@@ -141,9 +142,19 @@ export default function Market(){
    <div style={statusPanel}>
     <div style={statusRow}><span>Active intent</span><b>{activeFeed.clientType}</b></div>
     <div style={statusRow}><span>Render health</span><b>{health?.status || "checking"}</b></div>
-    <div style={statusRow}><span>Market API</span><b style={alpacaLive?good:warn}>{provider}</b></div>
+    <div style={statusRow}><span>Market API</span><b style={marketLive?good:warn}>{provider}</b></div>
+    <div style={statusRow}><span>Selected feed</span><b>{apiPickup.selected || "waiting"}</b></div>
+    <div style={statusRow}><span>API mode</span><b>{apiPickup.mode || "checking"}</b></div>
+    <div style={statusRow}><span>Technicals</span><b>{apiPickup.technicalsPreloaded?"preloaded":"waiting"}</b></div>
     <div style={statusRow}><span>Confidence</span><b>{Math.round((activeFeed.confidence || .45)*100)}%</b></div>
     <button onClick={refreshHealth} style={smallBtn}>Refresh status</button>
+    {apiPickup.credentialsDetected?.length ? <p style={miniStatus}>Keys: {apiPickup.credentialsDetected.join(" / ")}</p> : <p style={miniStatus}>Keys: none detected locally</p>}
+    {apiPickup.attempts?.length ? <div style={attemptStack}>
+     {apiPickup.attempts.map((attempt,index)=><div key={`${attempt.feed || "feed"}-${index}`} style={attemptRow}>
+      <b>{attempt.feed || "market feed"}</b>
+      <span>{attempt.label || attempt.reason || attempt.mode}</span>
+     </div>)}
+    </div> : null}
    </div>
   </section>
 
@@ -179,7 +190,7 @@ export default function Market(){
 
     <div style={chartCard}>
      <div style={chartHeader}>
-      <div><span style={eyebrow}>{r?.provider || "standby"}</span><h2 style={symbol}>{r?.symbol || q.toUpperCase()}</h2></div>
+      <div><span style={eyebrow}>{r?.providerLabel || r?.provider || "standby"}</span><h2 style={symbol}>{r?.symbol || q.toUpperCase()}</h2></div>
       <div style={price}>{r?.price || "Waiting for scan"}</div>
      </div>
      <div style={bars}>
@@ -207,6 +218,9 @@ const statusRow={display:"flex",justifyContent:"space-between",gap:14,borderBott
 const good={color:"#86efac"}
 const warn={color:"#facc15"}
 const smallBtn={padding:"12px 14px",borderRadius:8,border:0,background:"#0ea5e9",color:"#03121d",fontWeight:900,cursor:"pointer"}
+const miniStatus={margin:0,color:"#cbd5e1",fontSize:12,lineHeight:1.35,overflowWrap:"anywhere"}
+const attemptStack={display:"grid",gap:8}
+const attemptRow={display:"grid",gap:3,padding:10,borderRadius:8,border:"1px solid rgba(148,163,184,.18)",background:"rgba(2,6,23,.45)",fontSize:12,color:"#dbeafe",overflowWrap:"anywhere"}
 const profileDeck={maxWidth:1120,margin:"0 auto 18px",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(min(100%,220px),1fr))",gap:12}
 const profileChoice={textAlign:"left",padding:14,borderRadius:8,border:"1px solid rgba(148,163,184,.28)",background:"rgba(15,23,42,.72)",color:"white",display:"grid",gap:7,cursor:"pointer"}
 const activeProfileCard={...profileChoice,border:"1px solid rgba(20,184,166,.7)",background:"rgba(20,184,166,.14)"}
