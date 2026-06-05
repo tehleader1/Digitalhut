@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import DiscoveryEvidenceTrail from "../../components/DiscoveryEvidenceTrail"
 import DiscoverySnapshotVisual from "../../components/DiscoverySnapshotVisual"
 import UniversalFeedVisual from "../../components/UniversalFeedVisual"
 import platform from "../../data/platform-libraries.json"
@@ -34,7 +35,7 @@ export default function Library(){
   <section style={hero}>
    <div style={eyebrow}>Observatory Library</div>
    <h1 style={title}>Preloaded markets, environments, structures, and planetary assets.</h1>
-   <p style={lede}>Every card now carries a lane identity and a reusable snapshot visual so library discovery does not wait on a live GLB preview.</p>
+   <p style={lede}>Every card now carries a lane identity, reusable snapshot visual, and memory trail so library discoveries feel like saved evidence instead of empty records.</p>
    <div style={controls}>
     <select value={intent} onChange={e=>setIntent(e.target.value)} style={select}>
      <option value="anonymous-new-user">Public visitor</option>
@@ -65,7 +66,7 @@ export default function Library(){
   <section style={unlockBand}>
    <h2 style={sectionTitle}>{library.mode}</h2>
    <div style={unlockGrid}>{(library.unlocks || []).map(item=><span key={item} style={unlock}>{item}</span>)}</div>
-   <p style={copy}>{library.privacy}</p>
+   <p style={copy}>{library.privacy || "Saved library discoveries keep their snapshot, active feed, runner note, related symbols, and observatory lane attached."}</p>
   </section>
  </main>
 }
@@ -94,6 +95,7 @@ function FeedCard({ feed, item = feed, type }) {
   <h3 style={cardTitle}>{feed.title}</h3>
   <p style={identity}>{item.visualIdentity || feed.visualDescription || "activeFeed visual identity"}</p>
   <p style={copy}>{type === "market" ? item.agentUse : item.query || feed.terrainUrl}</p>
+  <DiscoveryEvidenceTrail feed={feed} title="Library memory" compact />
   {item.symbols ? <div style={unlockGrid}>{item.symbols.map(symbol=><a key={symbol} href={`/market-intelligence?symbol=${symbol}`} style={miniLink}>{symbol}</a>)}</div> : <a href={`/?query=${encodeURIComponent(item.query || feed.terrainUrl || feed.title)}`} style={open}>Open feed</a>}
  </article>
 }
