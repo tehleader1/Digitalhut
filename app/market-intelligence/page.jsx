@@ -1,5 +1,6 @@
 "use client"
 import {useEffect, useMemo, useState} from "react"
+import DiscoverySnapshotVisual from "../../components/DiscoverySnapshotVisual"
 import UniversalFeedVisual from "../../components/UniversalFeedVisual"
 import platform from "../../data/platform-libraries.json"
 import {getPersonaFeature, getPersonaMarket, normalizeIntent} from "../../lib/personaFeature"
@@ -121,7 +122,10 @@ export default function Market(){
  return <main style={shell}>
   <a href="/" style={back}>Back to DigitalHut</a>
   <section style={hero}>
-   <div style={visualPanel}><UniversalFeedVisual activeFeed={activeFeed} scope="market"/></div>
+   <div style={visualPanel}>
+    <DiscoverySnapshotVisual feed={activeFeed} scope="market profile" />
+    <div style={rendererInset}><UniversalFeedVisual activeFeed={activeFeed} scope="market"/></div>
+   </div>
    <div>
     <div style={eyebrow}>Active Market Feed</div>
     <h1 style={title}>{activeProfile.title}</h1>
@@ -139,11 +143,15 @@ export default function Market(){
   </section>
 
   <section style={profileDeck}>
-   {platform.marketProfiles.map(profile=><button key={profile.title} onClick={()=>chooseProfile(profile)} style={profile.title===selectedProfile?.title?activeProfileCard:profileChoice}>
-    <b>{profile.title}</b>
-    <span>{profile.visualIdentity}</span>
-    <small>{profile.symbols.join(" / ")}</small>
-   </button>)}
+   {platform.marketProfiles.map(profile=>{
+    const feed = { title: profile.title, category: "market", visualMode: "market", marketSymbols: profile.symbols, visualDescription: profile.visualIdentity, agentNarration: profile.agentUse }
+    return <button key={profile.title} onClick={()=>chooseProfile(profile)} style={profile.title===selectedProfile?.title?activeProfileCard:profileChoice}>
+     <DiscoverySnapshotVisual feed={feed} scope="market profile card" compact />
+     <b>{profile.title}</b>
+     <span>{profile.visualIdentity}</span>
+     <small>{profile.symbols.join(" / ")}</small>
+    </button>
+   })}
   </section>
 
   <section style={desk}>
@@ -156,6 +164,7 @@ export default function Market(){
    <div style={profileGrid}>
     <div style={profileCard}>
      <div style={eyebrow}>Market Profile</div>
+     <DiscoverySnapshotVisual feed={activeFeed} scope="market profile preview" compact />
      <h2 style={profileTitle}>{activeFeed.title}</h2>
      <p style={analysis}>{activeFeed.observation}</p>
      <p style={mono}>Observatory context: {activeProfile.observatoryQuery}</p>
@@ -182,7 +191,8 @@ export default function Market(){
 const shell={minHeight:"100vh",padding:28,background:"linear-gradient(135deg,#051923,#020617 45%,#111827)",color:"white",fontFamily:"Arial, sans-serif"}
 const back={color:"#67e8f9",fontWeight:800,textDecoration:"none"}
 const hero={maxWidth:1120,margin:"24px auto",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(min(100%,280px),1fr))",gap:18,alignItems:"stretch"}
-const visualPanel={minWidth:0,borderRadius:8,overflow:"hidden",border:"1px solid rgba(148,163,184,.28)",background:"#020617"}
+const visualPanel={minWidth:0,borderRadius:8,overflow:"hidden",border:"1px solid rgba(148,163,184,.28)",background:"#020617",display:"grid",gap:8,padding:8}
+const rendererInset={minHeight:240,borderRadius:8,overflow:"hidden"}
 const eyebrow={fontSize:12,textTransform:"uppercase",letterSpacing:0,fontWeight:900,color:"#67e8f9"}
 const title={fontSize:"clamp(38px,6vw,72px)",lineHeight:.98,margin:"8px 0 16px",letterSpacing:0,overflowWrap:"anywhere"}
 const lede={fontSize:18,lineHeight:1.55,color:"#dbeafe",maxWidth:760}
@@ -204,7 +214,7 @@ const symbolGrid={display:"flex",gap:10,flexWrap:"wrap",marginTop:18}
 const symbolBtn={padding:"12px 15px",borderRadius:8,border:"1px solid rgba(148,163,184,.34)",background:"rgba(148,163,184,.12)",color:"white",fontWeight:900,cursor:"pointer"}
 const activeSymbol={...symbolBtn,background:"#14b8a6",color:"#021014",border:"1px solid #5eead4"}
 const profileGrid={display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(min(100%,320px),1fr))",gap:18}
-const profileCard={border:"1px solid rgba(148,163,184,.28)",borderRadius:8,background:"rgba(15,23,42,.76)",padding:22}
+const profileCard={border:"1px solid rgba(148,163,184,.28)",borderRadius:8,background:"rgba(15,23,42,.76)",padding:22,display:"grid",gap:10}
 const chartCard={border:"1px solid rgba(148,163,184,.28)",borderRadius:8,background:"rgba(3,7,18,.74)",padding:22}
 const chartHeader={display:"flex",justifyContent:"space-between",gap:18,alignItems:"start",flexWrap:"wrap"}
 const symbol={fontSize:44,margin:"4px 0 0"}
