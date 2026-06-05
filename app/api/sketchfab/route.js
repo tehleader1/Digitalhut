@@ -6,6 +6,14 @@ const fallback = [
   { title: "Europe Geographic Layer", category: "geographical", url: "https://sketchfab.com/search?q=europe%20terrain&type=models" }
 ]
 
+const intentBoosts = {
+  car: ["car", "vehicle", "auto", "classic", "datsun", "nissan", "toyota", "ford", "chevrolet"],
+  house: ["house", "home", "interior", "real estate", "room", "architecture"],
+  market: ["market", "wall street", "finance", "stock", "city", "district"],
+  terrain: ["terrain", "map", "landscape", "surface", "satellite", "planet"],
+  history: ["ancient", "rome", "temple", "museum", "historic", "artifact"]
+}
+
 function fallbackResult(query) {
   const q = String(query || "").toLowerCase()
   return fallback.find(x => x.title.toLowerCase().includes(q) || x.category.includes(q)) || fallback[Math.floor(Math.random() * fallback.length)]
@@ -18,21 +26,58 @@ function sketchfabToken() {
     process.env.SKETCHFAB_API_KEY
 }
 
+function tokenize(value) {
+  return String(value || "").toLowerCase().replace(/[^a-z0-9\s-]/g, " ").split(/[\s-]+/).filter(Boolean)
+}
+
+function inferIntent(tokens) {
+  const joined = tokens.join(" ")
+  for (const [intent, terms] of Object.entries(intentBoosts)) {
+    if (terms.some((term) => joined.includes(term))) return intent
+  }
+  return "observatory"
+}
+
+function scoreSketchfabModel(model, query) {
+  const queryTokens = tokenize(query)
+  const title = String(model.name || "").toLowerCase()
+  const description = String(model.description || "").toLowerCase()
+  const categories = (model.categories || []).map((category) => String(category.name || "").toLowerCase()).join(" ")
+  const haystack = `${title} ${description} ${categories}`
+  const intent = inferIntent(queryTokens)
+  let score = 0
+
+  for (const token of queryTokens) {
+    if (title.includes(token)) score += 18
+    else if (haystack.includes(token)) score += 7
+  }
+
+  const years = queryTokens.filter((token) => /^\d{4}$/.test(token))
+  for (const year of years) {
+    score += title.includes(year) ? 30 : haystack.includes(year) ? 12 : -12
+  }
+
+  const intentTerms = intentBoosts[intent] || []
+  for (const term of intentTerms) {
+    if (title.includes(term)) score += 10
+    else if (haystack.includes(term)) score += 4
+  }
+
+  if (model.isDownloadable) score += 8
+  if (model.viewerUrl || model.url) score += 3
+  score += Math.min(12, Number(model.likeCount || 0) / 250)
+  score += Math.min(8, Number(model.viewCount || 0) / 10000)
+
+  return Number(score.toFixed(2))
+}
+
 async function fetchSketchfabDownload(uid, token) {
   if (!uid) {
-    return {
-      url: null,
-      status: "missing-uid",
-      error: "Sketchfab model UID was not returned."
-    }
+    return { url: null, status: "missing-uid", error: "Sketchfab model UID was not returned." }
   }
 
   if (!token) {
-    return {
-      url: null,
-      status: "missing-token",
-      error: "Set SKETCHFAB_ACCESS_TOKEN to request downloadable GLB URLs."
-    }
+    return { url: null, status: "missing-token", error: "Set SKETCHFAB_ACCESS_TOKEN to request downloadable GLB URLs." }
   }
 
   try {
@@ -41,30 +86,18 @@ async function fetchSketchfabDownload(uid, token) {
     })
     if (!r.ok) {
       const detail = await r.text()
-      return {
-        url: null,
-        status: r.status,
-        error: detail || `Sketchfab download request failed with status ${r.status}.`
-      }
+      return { url: null, status: r.status, error: detail || `Sketchfab download request failed with status ${r.status}.` }
     }
 
     const d = await r.json()
     const url = d.glb?.url || d.gltf?.url || null
-    return {
-      url,
-      status: url ? "ok" : "missing-download-url",
-      error: url ? null : "Sketchfab did not include a GLB or glTF download URL."
-    }
+    return { url, status: url ? "ok" : "missing-download-url", error: url ? null : "Sketchfab did not include a GLB or glTF download URL." }
   } catch (e) {
-    return {
-      url: null,
-      status: "request-error",
-      error: e?.message || "Sketchfab download request failed."
-    }
+    return { url: null, status: "request-error", error: e?.message || "Sketchfab download request failed." }
   }
 }
 
-async function normalizeSketchfabModel(model, token) {
+async function normalizeSketchfabModel(model, token, query, matchScore) {
   const image = model.thumbnails?.images?.[0]?.url
   const download = await fetchSketchfabDownload(model.uid, token)
   return {
@@ -77,26 +110,52 @@ async function normalizeSketchfabModel(model, token) {
     downloadUrl: download.url,
     glbUrl: download.url,
     downloadStatus: download.status,
-    downloadError: download.error
+    downloadError: download.error,
+    matchScore,
+    requestedQuery: query,
+    relevance: matchScore >= 45 ? "strong" : matchScore >= 25 ? "usable" : "weak"
   }
+}
+
+function queryVariants(query) {
+  const q = String(query || "terrain").trim()
+  const tokens = tokenize(q)
+  const intent = inferIntent(tokens)
+  const variants = [q]
+  if (intent === "car") variants.push(`${q} car`, `${q} vehicle`, `${q} classic car`)
+  if (intent === "house") variants.push(`${q} architecture`, `${q} house`, `${q} interior`)
+  if (intent === "market") variants.push(`${q} financial district`, `${q} city model`)
+  if (intent === "terrain") variants.push(`${q} terrain`, `${q} map 3d`)
+  return [...new Set(variants)].slice(0, 4)
 }
 
 async function fetchSketchfabModel(query) {
   const token = sketchfabToken()
-  const url = new URL("https://api.sketchfab.com/v3/search")
-  url.searchParams.set("type", "models")
-  url.searchParams.set("downloadable", "true")
-  url.searchParams.set("sort_by", "-likeCount")
-  url.searchParams.set("q", query || "terrain")
-
   const headers = token ? { Authorization: `Token ${token}` } : {}
-  const response = await fetch(url, { headers })
-  if (!response.ok) {
-    return { model: null, tokenPresent: Boolean(token), status: response.status }
+  const allResults = []
+  let status = 200
+
+  for (const variant of queryVariants(query)) {
+    const url = new URL("https://api.sketchfab.com/v3/search")
+    url.searchParams.set("type", "models")
+    url.searchParams.set("downloadable", "true")
+    url.searchParams.set("sort_by", "-relevance")
+    url.searchParams.set("count", "12")
+    url.searchParams.set("q", variant)
+
+    const response = await fetch(url, { headers })
+    status = response.status
+    if (!response.ok) continue
+    const data = await response.json()
+    allResults.push(...(data.results || []))
   }
 
-  const data = await response.json()
-  return { model: data.results?.[0] || null, tokenPresent: Boolean(token), status: response.status }
+  const ranked = allResults
+    .filter((model, index, list) => model?.uid && list.findIndex((item) => item.uid === model.uid) === index)
+    .map((model) => ({ model, score: scoreSketchfabModel(model, query) }))
+    .sort((a, b) => b.score - a.score)
+
+  return { model: ranked[0]?.model || null, matchScore: ranked[0]?.score || 0, candidates: ranked.slice(0, 5).map((item) => ({ title: item.model.name, uid: item.model.uid, score: item.score })), tokenPresent: Boolean(token), status }
 }
 
 export async function POST(req) {
@@ -104,11 +163,12 @@ export async function POST(req) {
   const live = await fetchSketchfabModel(query)
 
   if (live.model) {
-    const result = await normalizeSketchfabModel(live.model, sketchfabToken())
+    const result = await normalizeSketchfabModel(live.model, sketchfabToken(), query, live.matchScore)
     return Response.json({
       result,
-      provider: result.glbUrl ? "sketchfab-live" : "sketchfab-metadata",
-      ai: `DigitalHut found a live Sketchfab observatory model for ${query || result.title}. Review author, category, and download permissions before adding it to a paid tier.`
+      candidates: live.candidates,
+      provider: result.glbUrl ? "sketchfab-live-ranked" : "sketchfab-metadata-ranked",
+      ai: `DigitalHut ranked Sketchfab candidates for ${query}. Best match: ${result.title} with ${result.relevance} relevance and score ${result.matchScore}.`
     })
   }
 
@@ -123,7 +183,10 @@ export async function POST(req) {
       glbUrl: null,
       downloadUrl: null,
       downloadStatus: "fallback",
-      downloadError: setupHint
+      downloadError: setupHint,
+      matchScore: 0,
+      requestedQuery: query,
+      relevance: "fallback"
     },
     provider: "fallback",
     ai: `DigitalHut found a ${item.category} observatory signal for ${query || item.title}. ${setupHint}`
