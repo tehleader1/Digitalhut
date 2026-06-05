@@ -1,12 +1,19 @@
 "use client"
 
+import library from "../data/platform-libraries.json"
 import { buildPersonaFeatureHref } from "../lib/personaFeature"
 import DiscoverySnapshotVisual from "./DiscoverySnapshotVisual"
 import UniversalFeedVisual from "./UniversalFeedVisual"
 
+function marketProfileForFeature(feature) {
+  const symbols = feature?.market?.symbols || []
+  return library.marketProfiles.find((profile) => profile.symbols?.some((symbol) => symbols.includes(symbol))) || library.marketProfiles[0]
+}
+
 export default function MainBlogFeature({ feature, permission, busy = false, onSelectFeed, onScan }) {
   if (!feature) return null
   const href = buildPersonaFeatureHref(feature.intent)
+  const marketProfile = marketProfileForFeature(feature)
   const activeFeed = {
     title: feature.mainFeatureTitle,
     category: feature.observatory?.category || feature.marketProfile || feature.intent,
@@ -14,11 +21,12 @@ export default function MainBlogFeature({ feature, permission, busy = false, onS
     intent: feature.intent,
     visualMode: "client",
     terrainUrl: feature.mainGLBSearch,
-    query: feature.mainGLBSearch,
-    marketSymbols: feature.market?.symbols || [],
+    query: feature.mainGLBSearch || marketProfile.marketModelQuery,
+    previewImage: marketProfile.previewImage,
+    marketSymbols: feature.market?.symbols || marketProfile.symbols || [],
     sourceApi: "persona-feature",
     agentNarration: feature.blogAngle,
-    visualDescription: feature.contextGLBSearch || feature.seoDescription,
+    visualDescription: feature.contextGLBSearch || marketProfile.visualIdentity || feature.seoDescription,
     walletTierRequired: feature.downloadTier
   }
   const useFeature = () => onSelectFeed ? onSelectFeed(feature) : onScan?.(feature.mainGLBSearch)
