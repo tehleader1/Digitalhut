@@ -9,6 +9,23 @@ function marketProfileForFeature(feature) {
   return library.marketProfiles.find((profile) => profile.symbols?.some((symbol) => symbols.includes(symbol))) || library.marketProfiles[0]
 }
 
+function exampleFeedFor(feature) {
+  const marketProfile = marketProfileForFeature(feature)
+  return {
+    title: feature.mainFeatureTitle,
+    category: feature.observatory?.category || feature.marketProfile || feature.intent,
+    clientType: feature.intent,
+    intent: feature.intent,
+    source: "live-example-feed",
+    query: feature.mainGLBSearch || marketProfile.marketModelQuery,
+    terrainUrl: feature.mainGLBSearch || marketProfile.marketModelQuery,
+    previewImage: marketProfile.previewImage,
+    marketSymbols: feature.market?.symbols || marketProfile.symbols || [],
+    agentNarration: feature.blogAngle,
+    visualDescription: feature.contextGLBSearch || marketProfile.visualIdentity || feature.seoDescription
+  }
+}
+
 export default function AgentBlogHome({ activeIntent, activeFeed, onSelectFeed }) {
   const features = listPersonaFeatures()
   const active = features.find((feature) => feature.intent === activeIntent) || features[0]
@@ -16,35 +33,24 @@ export default function AgentBlogHome({ activeIntent, activeFeed, onSelectFeed }
   return <section style={styles.wrap} aria-labelledby="agent-blog-home-title">
     <div style={styles.header}>
       <div>
-        <p style={styles.eyebrow}>Agent blog home</p>
-        <h2 id="agent-blog-home-title" style={styles.title}>Agents combine API results into the main feature feed.</h2>
+        <p style={styles.eyebrow}>Live examples</p>
+        <h2 id="agent-blog-home-title" style={styles.title}>Examples render as visual feeds before they call live search.</h2>
       </div>
       <span style={styles.pill}>{activeFeed?.title || active?.label || "Adaptive"}</span>
     </div>
     <div style={styles.featureGrid}>
       {features.slice(0, 6).map((feature) => {
         const selected = activeFeed?.intent === feature.intent || feature.intent === activeIntent
-        const marketProfile = marketProfileForFeature(feature)
-        const featureFeed = {
-          title: feature.mainFeatureTitle,
-          category: feature.observatory?.category || feature.marketProfile || feature.intent,
-          clientType: feature.intent,
-          intent: feature.intent,
-          query: feature.mainGLBSearch || marketProfile.marketModelQuery,
-          terrainUrl: feature.mainGLBSearch || marketProfile.marketModelQuery,
-          previewImage: marketProfile.previewImage,
-          marketSymbols: feature.market?.symbols || marketProfile.symbols || [],
-          agentNarration: feature.blogAngle,
-          visualDescription: feature.contextGLBSearch || marketProfile.visualIdentity || feature.seoDescription
-        }
+        const featureFeed = exampleFeedFor(feature)
         return <article key={feature.intent} style={selected ? styles.activeCard : styles.card}>
           <DiscoverySnapshotVisual feed={featureFeed} scope="real world example" compact />
           <p style={styles.cardEyebrow}>{feature.label}</p>
           <h3 style={styles.cardTitle}>{feature.mainFeatureTitle}</h3>
           <p style={styles.text}>{feature.blogAngle}</p>
-          <div style={styles.meta}>{feature.market?.symbols?.slice(0, 4).map((symbol) => <span key={symbol} style={styles.tag}>{symbol}</span>)}</div>
+          <div style={styles.meta}>{featureFeed.marketSymbols.slice(0, 4).map((symbol) => <span key={symbol} style={styles.tag}>{symbol}</span>)}</div>
           <div style={styles.actions}>
-            <button type="button" onClick={() => onSelectFeed?.(feature)} style={styles.primary}>Use feed</button>
+            <button type="button" onClick={() => onSelectFeed?.(featureFeed, { speak: true, scan: false })} style={styles.primary}>Preview example</button>
+            <button type="button" onClick={() => onSelectFeed?.(featureFeed, { speak: true, scan: true })} style={styles.secondaryBtn}>Search live</button>
             <a href={buildPersonaFeatureHref(feature.intent)} style={styles.secondary}>Read brief</a>
           </div>
         </article>
@@ -90,6 +96,7 @@ const styles = {
   tag: { padding: "6px 8px", borderRadius: 999, background: "rgba(56,189,248,.12)", color: "#bae6fd", fontSize: 11, fontWeight: 800 },
   actions: { display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" },
   primary: { padding: "11px 12px", borderRadius: 8, background: "#14b8a6", color: "#021014", border: 0, fontWeight: 900, cursor: "pointer" },
+  secondaryBtn: { padding: "10px 12px", borderRadius: 8, background: "rgba(56,189,248,.12)", color: "#bae6fd", border: "1px solid rgba(56,189,248,.24)", fontWeight: 900, cursor: "pointer" },
   secondary: { padding: "10px 12px", borderRadius: 8, background: "rgba(226,232,240,.1)", color: "white", border: "1px solid rgba(226,232,240,.24)", fontWeight: 800, textDecoration: "none" },
   marketStrip: { display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,220px),1fr))", gap: 10, marginTop: 14 },
   profile: { minWidth: 0, padding: 12, border: "1px solid rgba(148,163,184,.18)", borderRadius: 8, background: "rgba(255,255,255,.05)", display: "grid", gap: 8, color: "#dbeafe", lineHeight: 1.35 }
