@@ -26,6 +26,25 @@ function sketchfabToken() {
     process.env.SKETCHFAB_API_KEY
 }
 
+function statusLabel(status, hasResults = false) {
+  if (status === 200 && hasResults) return "Sketchfab search connected"
+  if (status === 200) return "Sketchfab search connected; no ranked downloadable model matched"
+  if (status === 401 || status === 403) return "Sketchfab token needs permission"
+  if (status === 404) return "Sketchfab route not found"
+  if (status >= 500) return "Sketchfab service unavailable"
+  if (status) return `Sketchfab request needs attention (${status})`
+  return "Sketchfab search pending"
+}
+
+function downloadStatusLabel(status) {
+  if (status === "ok") return "GLB download ready"
+  if (status === "missing-token") return "Preview ready; add Sketchfab token for GLB download"
+  if (status === "missing-download-url") return "Preview ready; GLB URL not included"
+  if (status === "missing-uid") return "Preview ready; model UID missing"
+  if (typeof status === "number") return statusLabel(status)
+  return status || "download pending"
+}
+
 function tokenize(value) {
   return String(value || "").toLowerCase().replace(/[^a-z0-9\s-]/g, " ").split(/[\s-]+/).filter(Boolean)
 }
@@ -73,11 +92,11 @@ function scoreSketchfabModel(model, query) {
 
 async function fetchSketchfabDownload(uid, token) {
   if (!uid) {
-    return { url: null, status: "missing-uid", error: "Sketchfab model UID was not returned." }
+    return { url: null, status: "missing-uid", label: downloadStatusLabel("missing-uid"), error: "Sketchfab model UID was not returned." }
   }
 
   if (!token) {
-    return { url: null, status: "missing-token", error: "Set SKETCHFAB_ACCESS_TOKEN to request downloadable GLB URLs." }
+    return { url: null, status: "missing-token", label: downloadStatusLabel("missing-token"), error: "Set SKETCHFAB_ACCESS_TOKEN to request downloadable GLB URLs." }
   }
 
   try {
@@ -86,14 +105,14 @@ async function fetchSketchfabDownload(uid, token) {
     })
     if (!r.ok) {
       const detail = await r.text()
-      return { url: null, status: r.status, error: detail || `Sketchfab download request failed with status ${r.status}.` }
+      return { url: null, status: `http-${r.status}`, label: downloadStatusLabel(r.status), error: detail || `Sketchfab download request needs attention.` }
     }
 
     const d = await r.json()
     const url = d.glb?.url || d.gltf?.url || null
-    return { url, status: url ? "ok" : "missing-download-url", error: url ? null : "Sketchfab did not include a GLB or glTF download URL." }
+    return { url, status: url ? "ok" : "missing-download-url", label: downloadStatusLabel(url ? "ok" : "missing-download-url"), error: url ? null : "Sketchfab did not include a GLB or glTF download URL." }
   } catch (e) {
-    return { url: null, status: "request-error", error: e?.message || "Sketchfab download request failed." }
+    return { url: null, status: "request-error", label: "Sketchfab download request failed", error: e?.message || "Sketchfab download request failed." }
   }
 }
 
@@ -110,6 +129,7 @@ async function normalizeSketchfabModel(model, token, query, matchScore) {
     downloadUrl: download.url,
     glbUrl: download.url,
     downloadStatus: download.status,
+    downloadStatusLabel: download.label,
     downloadError: download.error,
     matchScore,
     requestedQuery: query,
@@ -133,7 +153,7 @@ async function fetchSketchfabModel(query) {
   const token = sketchfabToken()
   const headers = token ? { Authorization: `Token ${token}` } : {}
   const allResults = []
-  let status = 200
+  let status = null
 
   for (const variant of queryVariants(query)) {
     const url = new URL("https://api.sketchfab.com/v3/search")
@@ -155,7 +175,7 @@ async function fetchSketchfabModel(query) {
     .map((model) => ({ model, score: scoreSketchfabModel(model, query) }))
     .sort((a, b) => b.score - a.score)
 
-  return { model: ranked[0]?.model || null, matchScore: ranked[0]?.score || 0, candidates: ranked.slice(0, 5).map((item) => ({ title: item.model.name, uid: item.model.uid, score: item.score })), tokenPresent: Boolean(token), status }
+  return { model: ranked[0]?.model || null, matchScore: ranked[0]?.score || 0, candidates: ranked.slice(0, 5).map((item) => ({ title: item.model.name, uid: item.model.uid, score: item.score })), tokenPresent: Boolean(token), status, statusLabel: statusLabel(status, Boolean(ranked[0]?.model)) }
 }
 
 export async function POST(req) {
@@ -164,17 +184,22 @@ export async function POST(req) {
 
   if (live.model) {
     const result = await normalizeSketchfabModel(live.model, sketchfabToken(), query, live.matchScore)
+    const provider = result.glbUrl ? "sketchfab-live-ranked" : "sketchfab-metadata-ranked"
+    const providerLabel = result.glbUrl ? "Live GLB route acquired" : "Live metadata and preview acquired"
     return Response.json({
       result,
       candidates: live.candidates,
-      provider: result.glbUrl ? "sketchfab-live-ranked" : "sketchfab-metadata-ranked",
-      ai: `DigitalHut ranked Sketchfab candidates for ${query}. Best match: ${result.title} with ${result.relevance} relevance and score ${result.matchScore}.`
+      provider,
+      providerLabel,
+      searchStatus: live.status,
+      searchStatusLabel: live.statusLabel,
+      ai: `DigitalHut ranked Sketchfab candidates for ${query}. ${providerLabel}: ${result.title} with ${result.relevance} relevance and score ${result.matchScore}. ${result.downloadStatusLabel}.`
     })
   }
 
   const item = fallbackResult(query)
   const setupHint = live.tokenPresent
-    ? `Sketchfab token is present, but the live request returned status ${live.status}. Check token permissions or try SKETCHFAB_ACCESS_TOKEN.`
+    ? `${live.statusLabel}. Try a broader query or check token permissions if this should return downloadable GLBs.`
     : "Add SKETCHFAB_ACCESS_TOKEN to Render, then redeploy, to enable authenticated live Sketchfab search."
 
   return Response.json({
@@ -183,12 +208,16 @@ export async function POST(req) {
       glbUrl: null,
       downloadUrl: null,
       downloadStatus: "fallback",
+      downloadStatusLabel: "Fallback observatory visual active",
       downloadError: setupHint,
       matchScore: 0,
       requestedQuery: query,
       relevance: "fallback"
     },
     provider: "fallback",
+    providerLabel: "Fallback observatory visual active",
+    searchStatus: live.status,
+    searchStatusLabel: live.statusLabel,
     ai: `DigitalHut found a ${item.category} observatory signal for ${query || item.title}. ${setupHint}`
   })
 }
