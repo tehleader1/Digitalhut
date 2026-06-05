@@ -10,7 +10,8 @@ const starterQuestions = [
   "What should update when this active GLB becomes a blog and library snapshot?",
   "Explain this discovery in real-world speech for a client who is excited to see it live.",
   "What is 35 + 50 as a developer tier total?",
-  "How should the market renderer preload candlestick charts and technicals for this profile?"
+  "How should the market renderer preload candlestick charts and technicals for this profile?",
+  "Make sure the SEO runner catches this update and turns it into blog content for ranking."
 ]
 
 function fallbackPreviewFor(symbols = []) {
@@ -19,13 +20,14 @@ function fallbackPreviewFor(symbols = []) {
 }
 
 function blogDraftsFor(snapshotFeed, runner) {
+  const seo = runner?.seoPacket
   const baseTitle = snapshotFeed?.title || "Active discovery"
   const answer = runner?.answer || snapshotFeed?.agentNarration || "Runner turns the active discovery into a reusable platform object."
   return [
     {
-      title: `${baseTitle}: live discovery brief`,
+      title: seo?.title || `${baseTitle}: live discovery brief`,
       lane: "main blog feature",
-      summary: answer
+      summary: seo?.metaDescription || answer
     },
     {
       title: `How ${baseTitle} becomes a library snapshot`,
@@ -67,6 +69,7 @@ export default function DiscoveryRunnerConsole({ activeFeed, result, marketSymbo
   }), [activeFeed, snapshot])
 
   const blogDrafts = useMemo(() => blogDraftsFor(snapshotFeed, runner), [snapshotFeed, runner])
+  const seoPacket = runner?.seoPacket
 
   async function ask(nextQuestion = question) {
     const cleanQuestion = String(nextQuestion || "").trim()
@@ -89,7 +92,7 @@ export default function DiscoveryRunnerConsole({ activeFeed, result, marketSymbo
     <div style={styles.header}>
       <div>
         <p style={styles.eyebrow}>Active discovery runner</p>
-        <h2 id="discovery-runner-title" style={styles.title}>Ask real questions. Turn the answer into blog, library, examples, market, and backend activity.</h2>
+        <h2 id="discovery-runner-title" style={styles.title}>Ask real questions. Turn the answer into blog, library, examples, market, SEO ranking, and backend activity.</h2>
       </div>
       <span style={styles.pill}>{activeFeed?.category || "activeFeed"}</span>
     </div>
@@ -115,12 +118,29 @@ export default function DiscoveryRunnerConsole({ activeFeed, result, marketSymbo
 
     <div style={styles.answerBand}>
       <p style={styles.label}>Runner answer</p>
-      <p style={styles.answer}>{runner?.answer || "The runner will classify the question, explain the next system action, and record the event to backend history."}</p>
-      <div style={styles.tags}>{(runner?.classifications || ["real-world-speech", "activeFeed", "backend-recording"]).map((tag) => <span key={tag} style={styles.tag}>{tag}</span>)}</div>
+      <p style={styles.answer}>{runner?.answer || "The runner will classify the question, explain the next system action, record the event to backend history, and create a blog-ready SEO packet."}</p>
+      <div style={styles.tags}>{(runner?.classifications || ["real-world-speech", "activeFeed", "seo-runner", "backend-recording"]).map((tag) => <span key={tag} style={styles.tag}>{tag}</span>)}</div>
     </div>
 
     <div style={styles.trailBand}>
       <DiscoveryEvidenceTrail feed={snapshotFeed} title="Runner memory trail" />
+    </div>
+
+    <div style={styles.seoBand}>
+      <p style={styles.label}>SEO runner packet</p>
+      <div style={styles.seoGrid}>
+        <article style={styles.seoMain}>
+          <span style={styles.blogLane}>{seoPacket?.status || "ready after runner answer"}</span>
+          <h3 style={styles.cardTitle}>{seoPacket?.title || `${snapshot.title} | DigitalHut Observatory Brief`}</h3>
+          <p style={styles.copy}>{seoPacket?.metaDescription || "The SEO runner turns each discovery update into a title, slug, description, keywords, image, sections, and canonical blog path."}</p>
+          <p style={styles.mono}>{seoPacket?.canonicalPath || "/blog/pending-discovery-brief"}</p>
+        </article>
+        <article style={styles.seoMain}>
+          <span style={styles.blogLane}>ranking keywords</span>
+          <div style={styles.tags}>{(seoPacket?.keywords || ["DigitalHut", "AI observatory", "3D discovery", "activeFeed", "GLB snapshot", "discovery library"]).map((tag) => <span key={tag} style={styles.tag}>{tag}</span>)}</div>
+          <p style={styles.copy}>{seoPacket?.rankingAngle || "Rank this update as an AI observatory discovery with reusable memory."}</p>
+        </article>
+      </div>
     </div>
 
     <div style={styles.blogBand}>
@@ -152,7 +172,8 @@ const defaultSurfaces = [
   { name: "examples", status: "waiting for runner", action: "Create a client-facing integration example." },
   { name: "observatory renderer", status: "active", action: "Keep renderer output tied to activeFeed." },
   { name: "quick recent activity", status: "recording-ready", action: "Show the latest question and answer." },
-  { name: "market profile", status: "available", action: "Preload candles and technicals when symbols are active." }
+  { name: "market profile", status: "available", action: "Preload candles and technicals when symbols are active." },
+  { name: "SEO blog packet", status: "ready-for-blog-ranking", action: "Create metadata, keywords, canonical path, and blog sections from this update." }
 ]
 
 const styles = {
@@ -175,6 +196,10 @@ const styles = {
   tags: { display: "flex", flexWrap: "wrap", gap: 8, marginTop: 12 },
   tag: { padding: "6px 8px", borderRadius: 999, background: "rgba(56,189,248,.12)", color: "#bae6fd", fontSize: 11, fontWeight: 800 },
   trailBand: { marginTop: 16 },
+  seoBand: { marginTop: 16, padding: 16, borderRadius: 8, border: "1px solid rgba(250,204,21,.28)", background: "rgba(113,63,18,.16)" },
+  seoGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,260px),1fr))", gap: 10 },
+  seoMain: { minWidth: 0, padding: 13, borderRadius: 8, border: "1px solid rgba(250,204,21,.2)", background: "rgba(2,6,23,.42)", display: "grid", gap: 7, overflowWrap: "anywhere" },
+  mono: { fontFamily: "monospace", color: "#fde68a", fontSize: 13, overflowWrap: "anywhere" },
   blogBand: { marginTop: 16 },
   blogGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,240px),1fr))", gap: 10 },
   blogCard: { minWidth: 0, padding: 13, borderRadius: 8, border: "1px solid rgba(45,212,191,.22)", background: "rgba(20,184,166,.08)", display: "grid", gap: 7, color: "#dbeafe", lineHeight: 1.4, overflowWrap: "anywhere" },
