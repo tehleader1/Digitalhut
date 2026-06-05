@@ -32,29 +32,29 @@
     }
   ],
   "marketProfiles": [
-    { "title": "Crypto momentum desk", "symbols": ["BTC", "ETH", "SOL", "DOGE"], "agentUse": "Uses Polygon, Alpha Vantage, and fallback profiles to track crypto structure and liquidity." },
-    { "title": "Equity tech desk", "symbols": ["NVDA", "MSFT", "AAPL", "TSLA"], "agentUse": "Uses Polygon aggregates plus FMP profiles and quotes for company-aware blog context." },
-    { "title": "Housing and home desk", "symbols": ["VNQ", "HD", "LOW", "SPY"], "agentUse": "Connects property models, renovation demand, and real-estate market signals." },
-    { "title": "Macro risk desk", "symbols": ["SPY", "QQQ", "DIA", "TLT"], "agentUse": "Feeds broad-market context into the main blog feature and FAQ helper." }
+    { "title": "Crypto momentum desk", "symbols": ["BTC", "ETH", "SOL", "DOGE"], "defaultSymbol": "BTC", "visualIdentity": "green liquidity orbit with crypto momentum bars", "agentUse": "Uses Polygon, Alpha Vantage, and fallback profiles to track crypto structure and liquidity." },
+    { "title": "Equity tech desk", "symbols": ["NVDA", "MSFT", "AAPL", "TSLA"], "defaultSymbol": "NVDA", "visualIdentity": "blue chip technology profile with quote, chart, and technical pulse", "agentUse": "Uses Polygon aggregates plus FMP profiles and quotes for company-aware blog context." },
+    { "title": "Housing and home desk", "symbols": ["VNQ", "HD", "LOW", "SPY"], "defaultSymbol": "VNQ", "visualIdentity": "property-market lane connecting homes, renovation demand, and REIT signals", "agentUse": "Connects property models, renovation demand, and real-estate market signals." },
+    { "title": "Macro risk desk", "symbols": ["SPY", "QQQ", "DIA", "TLT"], "defaultSymbol": "SPY", "visualIdentity": "broad-market risk dashboard with index rotation and bond context", "agentUse": "Feeds broad-market context into the main blog feature and FAQ helper." }
   ],
   "environmentLibrary": [
-    { "title": "Cesium global terrain", "query": "cesium ion global terrain tileset city landscape", "category": "global environment" },
-    { "title": "Wall Street financial district", "query": "wall street financial district new york 3d map glb", "category": "market environment" },
-    { "title": "Tokyo infrastructure orbit", "query": "tokyo building city infrastructure 3d", "category": "global city" },
-    { "title": "Ancient Rome public walk", "query": "ancient rome colosseum city 3d model", "category": "historical environment" },
-    { "title": "Florida coastline map", "query": "florida coastline map 3d terrain", "category": "travel and geography" },
-    { "title": "Brooklyn property context", "query": "brooklyn lower manhattan real estate city map 3d", "category": "real estate environment" }
+    { "title": "Cesium global terrain", "query": "cesium ion global terrain tileset city landscape", "category": "global environment", "visualIdentity": "terrain horizon and satellite grid" },
+    { "title": "Wall Street financial district", "query": "wall street financial district new york 3d map glb", "category": "market environment", "visualIdentity": "market district skyline with chart signal" },
+    { "title": "Tokyo infrastructure orbit", "query": "tokyo building city infrastructure 3d", "category": "global city", "visualIdentity": "urban infrastructure orbit" },
+    { "title": "Ancient Rome public walk", "query": "ancient rome colosseum city 3d model", "category": "historical environment", "visualIdentity": "history scene and public walkthrough" },
+    { "title": "Florida coastline map", "query": "florida coastline map 3d terrain", "category": "travel and geography", "visualIdentity": "coastline terrain and route memory" },
+    { "title": "Brooklyn property context", "query": "brooklyn lower manhattan real estate city map 3d", "category": "real estate environment", "visualIdentity": "property scout and neighborhood map" }
   ],
   "structureLibrary": [
-    { "title": "Two-story house walkthrough", "query": "2026 2 Story House All Details Real Estate Website", "category": "residential" },
-    { "title": "Warehouse training bay", "query": "warehouse office equipment training workflow glb", "category": "workforce" },
-    { "title": "Civic building and district", "query": "capitol city district map civic building 3d glb", "category": "civic" },
-    { "title": "Game arena prototype", "query": "game environment low poly sci fi arena downloadable glb", "category": "game asset" }
+    { "title": "Two-story house walkthrough", "query": "2026 2 Story House All Details Real Estate Website", "category": "residential", "visualIdentity": "property walkthrough and room planning" },
+    { "title": "Warehouse training bay", "query": "warehouse office equipment training workflow glb", "category": "workforce", "visualIdentity": "training workflow and operations lane" },
+    { "title": "Civic building and district", "query": "capitol city district map civic building 3d glb", "category": "civic", "visualIdentity": "civic district and public building visual" },
+    { "title": "Game arena prototype", "query": "game environment low poly sci fi arena downloadable glb", "category": "game asset", "visualIdentity": "playable arena and creator asset lane" }
   ],
   "planetaryAssets": [
-    { "title": "Moon terrain research feed", "query": "moon terrain lava tube 3d", "category": "lunar" },
-    { "title": "Mars surface planning", "query": "mars terrain rover landing site 3d model", "category": "mars" },
-    { "title": "Earth terrain atlas", "query": "earth terrain elevation satellite map 3d", "category": "earth" }
+    { "title": "Moon terrain research feed", "query": "moon terrain lava tube 3d", "category": "lunar", "visualIdentity": "lunar surface and research terrain" },
+    { "title": "Mars surface planning", "query": "mars terrain rover landing site 3d model", "category": "mars", "visualIdentity": "mars rover planning and landing map" },
+    { "title": "Earth terrain atlas", "query": "earth terrain elevation satellite map 3d", "category": "earth", "visualIdentity": "earth elevation atlas and satellite terrain" }
   ],
   "modelChoices": [
     { "title": "Signal sphere", "query": "digital observatory signal sphere glb", "mood": "clean fallback orbit" },
@@ -80,6 +80,10 @@
     {
       "question": "What happens when an API key is missing?",
       "answer": "The page stays visible, marks the provider as fallback or pending, and uses curated preloaded assets until the live provider confirms."
+    },
+    {
+      "question": "Can an AI agent understand DigitalHut?",
+      "answer": "Yes. Agents can read /api/agent-capabilities for capability, pricing, wallet, permission, and safe-action structure while humans use the normal website."
     }
   ]
 }
