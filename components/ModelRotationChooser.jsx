@@ -14,7 +14,7 @@ export default function ModelRotationChooser({ activeFeed, result, busy = false,
     clientType: activeFeed?.intent || activeFeed?.category || "3d-asset-buyer",
     visualMode: liveUrl ? "model" : "auto",
     modelUrl: liveUrl,
-    previewImage: activeFeed?.previewImage || result?.result?.image || "",
+    previewImage: activeFeed?.previewImage || result?.result?.image || choices[0]?.previewImage || "",
     terrainUrl: activeFeed?.terrainUrl || activeFeed?.query || choices[0]?.query || "",
     query: activeFeed?.query || choices[0]?.query || "",
     marketSymbols: activeFeed?.marketSymbols || [],
@@ -43,7 +43,7 @@ export default function ModelRotationChooser({ activeFeed, result, busy = false,
       <div style={styles.choices}>
         {choices.map((choice) => {
           const selected = activeFeed?.query === choice.query || activeFeed?.title === choice.title
-          const choiceFeed = { title: choice.title, category: choice.mood, clientType: choice.mood, query: choice.query, terrainUrl: choice.query, visualDescription: choice.mood }
+          const choiceFeed = { title: choice.title, category: choice.mood, clientType: choice.mood, previewImage: choice.previewImage, query: choice.query, terrainUrl: choice.query, visualDescription: choice.mood }
           return <button key={choice.title} type="button" onClick={() => onSelectFeed?.(choice)} style={selected ? styles.activeChoice : styles.choice}>
             <DiscoverySnapshotVisual feed={choiceFeed} scope="recent search preview" compact />
             <b>{choice.title}</b>
