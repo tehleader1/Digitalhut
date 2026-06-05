@@ -77,7 +77,7 @@ function Catalog({ title, items, type }) {
    {items.map((item)=>{
     const feed = type === "market"
       ? { title: item.title, category: "market", clientType: "market", visualMode: "market", previewImage: item.previewImage, query: item.marketModelQuery, terrainUrl: item.marketModelQuery, marketSymbols: item.symbols, agentNarration: item.agentUse, visualDescription: item.visualIdentity }
-      : { title: item.title, category: item.category, clientType: item.category, visualMode: "auto", terrainUrl: item.query, query: item.query, agentNarration: item.query, visualDescription: item.visualIdentity }
+      : { title: item.title, category: item.category, clientType: item.category, visualMode: "auto", previewImage: item.previewImage, terrainUrl: item.query, query: item.query, agentNarration: item.query, visualDescription: item.visualIdentity }
     return <FeedCard key={item.title} feed={feed} item={item} type={type} />
    })}
   </div>
