@@ -1,0 +1,27 @@
+{
+  "name": "DigitalHut",
+  "version": "2026.06.05-agent-layer-1",
+  "type": "feed-driven-observatory-platform",
+  "humanReadable": true,
+  "agentReadable": true,
+  "capabilityEndpoint": "/api/agent-capabilities",
+  "humanAgentPage": "/agent",
+  "safeActions": [
+    "read public library lanes",
+    "compare market symbols",
+    "request observatory search",
+    "check wallet permission state",
+    "create subscription intent",
+    "request receipt/history write"
+  ],
+  "commerce": {
+    "pricingEndpoint": "/api/agent-capabilities",
+    "subscriptionEndpoint": "/api/subscription",
+    "walletDestinationReturnedByServer": true
+  },
+  "content": {
+    "library": "/library",
+    "market": "/market-intelligence",
+    "health": "/health"
+  }
+}
