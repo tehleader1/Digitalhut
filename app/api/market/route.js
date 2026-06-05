@@ -141,9 +141,15 @@ function cryptoPair(symbol) {
   return ["BTC", "ETH", "SOL", "DOGE"].includes(symbol) ? `X:${symbol}USD` : symbol
 }
 
+function apiLabel(diagnostics = {}) {
+  if (diagnostics.mode === "live") return `${diagnostics.feed} API picked up live candles`
+  if (diagnostics.credentialsPresent) return `${diagnostics.feed} API key detected; using fallback until bars confirm`
+  return `${diagnostics.feed} API key missing`
+}
+
 async function fetchPolygonBars(symbol) {
   const key = process.env.POLYGON_API_KEY
-  const diagnostics = { feed: "polygon", credentialsPresent: Boolean(key), requestStatus: null, mode: "fallback", reason: key ? "Polygon key detected" : "POLYGON_API_KEY missing" }
+  const diagnostics = { feed: "polygon", credentialsPresent: Boolean(key), requestStatus: null, mode: "fallback", label: key ? "Polygon API key detected" : "Polygon API key missing", reason: key ? "Polygon key detected" : "POLYGON_API_KEY missing" }
   if (!key) return { bars: null, diagnostics }
 
   try {
@@ -163,16 +169,18 @@ async function fetchPolygonBars(symbol) {
       c: Number(bar.c),
       v: Number(bar.v || 0)
     })) : []
-    return { bars: bars.length ? bars : null, diagnostics: { ...diagnostics, requestStatus: response.status, mode: bars.length ? "live" : "fallback", reason: bars.length ? "Polygon aggregates confirmed" : data.error || data.message || "Polygon returned no bars" } }
+    const nextDiagnostics = { ...diagnostics, requestStatus: response.status, mode: bars.length ? "live" : "fallback", reason: bars.length ? "Polygon aggregates confirmed" : data.error || data.message || "Polygon returned no bars" }
+    return { bars: bars.length ? bars : null, diagnostics: { ...nextDiagnostics, label: apiLabel(nextDiagnostics) } }
   } catch (error) {
-    return { bars: null, diagnostics: { ...diagnostics, reason: error?.message || "Polygon request failed" } }
+    const nextDiagnostics = { ...diagnostics, reason: error?.message || "Polygon request failed" }
+    return { bars: null, diagnostics: { ...nextDiagnostics, label: apiLabel(nextDiagnostics) } }
   }
 }
 
 async function fetchFmpBars(symbol) {
   const key = process.env.FMP_API_KEY
-  const diagnostics = { feed: "fmp", credentialsPresent: Boolean(key), requestStatus: null, mode: "fallback", reason: key ? "FMP key detected" : "FMP_API_KEY missing" }
-  if (!key || ["BTC", "ETH", "SOL", "DOGE"].includes(symbol)) return { bars: null, diagnostics: { ...diagnostics, reason: key ? "FMP skipped for crypto symbol" : diagnostics.reason } }
+  const diagnostics = { feed: "fmp", credentialsPresent: Boolean(key), requestStatus: null, mode: "fallback", label: key ? "FMP API key detected" : "FMP API key missing", reason: key ? "FMP key detected" : "FMP_API_KEY missing" }
+  if (!key || ["BTC", "ETH", "SOL", "DOGE"].includes(symbol)) return { bars: null, diagnostics: { ...diagnostics, reason: key ? "FMP skipped for crypto symbol" : diagnostics.reason, label: apiLabel(diagnostics) } }
 
   try {
     const url = new URL(`https://financialmodelingprep.com/api/v3/historical-price-full/${symbol}`)
@@ -188,15 +196,17 @@ async function fetchFmpBars(symbol) {
       c: Number(bar.close),
       v: Number(bar.volume || 0)
     })) : []
-    return { bars: bars.length ? bars : null, diagnostics: { ...diagnostics, requestStatus: response.status, mode: bars.length ? "live" : "fallback", reason: bars.length ? "FMP historical prices confirmed" : data["Error Message"] || "FMP returned no bars" } }
+    const nextDiagnostics = { ...diagnostics, requestStatus: response.status, mode: bars.length ? "live" : "fallback", reason: bars.length ? "FMP historical prices confirmed" : data["Error Message"] || "FMP returned no bars" }
+    return { bars: bars.length ? bars : null, diagnostics: { ...nextDiagnostics, label: apiLabel(nextDiagnostics) } }
   } catch (error) {
-    return { bars: null, diagnostics: { ...diagnostics, reason: error?.message || "FMP request failed" } }
+    const nextDiagnostics = { ...diagnostics, reason: error?.message || "FMP request failed" }
+    return { bars: null, diagnostics: { ...nextDiagnostics, label: apiLabel(nextDiagnostics) } }
   }
 }
 
 async function fetchAlphaVantageBars(symbol) {
   const key = process.env.ALPHA_VANTAGE_API_KEY
-  const diagnostics = { feed: "alpha-vantage", credentialsPresent: Boolean(key), requestStatus: null, mode: "fallback", reason: key ? "Alpha Vantage key detected" : "ALPHA_VANTAGE_API_KEY missing" }
+  const diagnostics = { feed: "alpha-vantage", credentialsPresent: Boolean(key), requestStatus: null, mode: "fallback", label: key ? "Alpha Vantage API key detected" : "Alpha Vantage API key missing", reason: key ? "Alpha Vantage key detected" : "ALPHA_VANTAGE_API_KEY missing" }
   if (!key) return { bars: null, diagnostics }
 
   try {
@@ -222,9 +232,11 @@ async function fetchAlphaVantageBars(symbol) {
       c: Number(bar["4. close"]),
       v: Number(bar["5. volume"] || bar["5. adjusted close"] || 0)
     })).filter((bar) => Number.isFinite(bar.c))
-    return { bars: bars.length ? bars : null, diagnostics: { ...diagnostics, requestStatus: response.status, mode: bars.length ? "live" : "fallback", reason: bars.length ? "Alpha Vantage time series confirmed" : data.Note || data.Information || data["Error Message"] || "Alpha Vantage returned no bars" } }
+    const nextDiagnostics = { ...diagnostics, requestStatus: response.status, mode: bars.length ? "live" : "fallback", reason: bars.length ? "Alpha Vantage time series confirmed" : data.Note || data.Information || data["Error Message"] || "Alpha Vantage returned no bars" }
+    return { bars: bars.length ? bars : null, diagnostics: { ...nextDiagnostics, label: apiLabel(nextDiagnostics) } }
   } catch (error) {
-    return { bars: null, diagnostics: { ...diagnostics, reason: error?.message || "Alpha Vantage request failed" } }
+    const nextDiagnostics = { ...diagnostics, reason: error?.message || "Alpha Vantage request failed" }
+    return { bars: null, diagnostics: { ...nextDiagnostics, label: apiLabel(nextDiagnostics) } }
   }
 }
 
@@ -235,7 +247,8 @@ async function fetchProviderBars(symbol) {
     attempts.push(result.diagnostics)
     if (result.bars?.length) return { bars: result.bars, diagnostics: result.diagnostics, attempts }
   }
-  return { bars: null, diagnostics: { feed: "fallback", mode: "fallback", reason: "Polygon, FMP, and Alpha Vantage did not return live bars" }, attempts }
+  const diagnostics = { feed: "fallback", mode: "fallback", credentialsPresent: false, label: "Curated fallback technicals active", reason: "Polygon, FMP, and Alpha Vantage did not return live bars" }
+  return { bars: null, diagnostics, attempts }
 }
 
 async function marketResponse(query) {
@@ -247,13 +260,25 @@ async function marketResponse(query) {
   const last = bars.at(-1)
   const price = last?.c ? Number(last.c).toLocaleString("en-US", { maximumFractionDigits: 4 }) : "Live provider pending"
   const technicals = buildTechnicals(symbol, bars, live)
-  const diagnostics = live ? { ...market.diagnostics, attempts: market.attempts } : { ...market.diagnostics, attempts: market.attempts }
-  const setupHint = live ? `${diagnostics.feed} live market data confirmed.` : `${diagnostics.reason}. Showing curated fallback technicals until a selected API confirms.`
+  const diagnostics = { ...market.diagnostics, attempts: market.attempts }
+  const apiPickup = {
+    selected: diagnostics.feed,
+    mode: diagnostics.mode,
+    label: diagnostics.label || apiLabel(diagnostics),
+    live,
+    attempts: market.attempts,
+    credentialsDetected: market.attempts.filter((attempt) => attempt.credentialsPresent).map((attempt) => attempt.feed),
+    requestedSymbol: symbol,
+    technicalsPreloaded: true
+  }
+  const setupHint = live ? `${apiPickup.label}.` : `${diagnostics.reason}. Showing curated fallback technicals until a selected API confirms.`
 
   return {
     symbol,
     price,
     provider: live ? `${diagnostics.feed}-live` : "selected-api-fallback",
+    providerLabel: apiPickup.label,
+    apiPickup,
     diagnostics,
     ai: live
       ? `Live ${diagnostics.feed} market scan for ${symbol}: last close ${price}. ${technicals.summary}`
