@@ -9,7 +9,8 @@ const questionTypes = [
   { id: "advanced-structure", label: "advanced code structure", tests: [/architecture|structure|refactor|pipeline|system|runner|backend|database|supabase/i] },
   { id: "multi-glb-client", label: "multi-GLB client integration", tests: [/glb|3d model|multi.?glb|client project|connect.*digitalhut/i] },
   { id: "market-render", label: "market rendering", tests: [/market|ticker|candlestick|technical|profile|stock|crypto|btc|eth|spy|nvda|tsla/i] },
-  { id: "snapshot-distribution", label: "snapshot distribution", tests: [/snapshot|blog|library|examples|recent activity|visual/i] }
+  { id: "snapshot-distribution", label: "snapshot distribution", tests: [/snapshot|blog|library|examples|recent activity|visual/i] },
+  { id: "seo-runner", label: "SEO runner", tests: [/seo|ranking|rank|blog content|search engine|metadata|keywords|content/i] }
 ]
 
 function classifyQuestion(question = "") {
@@ -39,6 +40,59 @@ function snapshotFromFeed(activeFeed = {}, result = {}) {
   }
 }
 
+function slugify(value = "") {
+  return String(value || "digitalhut-discovery").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "").slice(0, 80) || "digitalhut-discovery"
+}
+
+function keywordSet({ activeFeed = {}, snapshot = {}, classifications = [] }) {
+  const symbols = activeFeed.marketSymbols || activeFeed.symbols || []
+  const words = String(`${snapshot.title} ${snapshot.query} ${activeFeed.category || ""} ${activeFeed.intent || ""}`).toLowerCase().split(/[^a-z0-9]+/).filter((word) => word.length > 2)
+  return Array.from(new Set([
+    "DigitalHut",
+    "AI observatory",
+    "3D discovery",
+    "activeFeed",
+    "GLB snapshot",
+    "discovery library",
+    ...symbols,
+    ...classifications,
+    ...words.slice(0, 8)
+  ])).slice(0, 16)
+}
+
+function buildSeoPacket({ question, answer, activeFeed = {}, snapshot = {}, classifications = [], surfaces = [] }) {
+  const title = snapshot.title || activeFeed.title || "DigitalHut discovery"
+  const keywords = keywordSet({ activeFeed, snapshot, classifications })
+  const rankingAngle = classifications.includes("market-render")
+    ? "Rank this update as market intelligence connected to visual observatory memory."
+    : classifications.includes("multi-glb-client")
+      ? "Rank this update as a client GLB integration and snapshot distribution story."
+      : "Rank this update as an AI observatory discovery with reusable memory."
+  const metaDescription = `${title} in DigitalHut: discovery, snapshot, library record, blog draft, runner memory, related discoveries, and observatory pulse.`.slice(0, 158)
+  const sections = [
+    { heading: "Discovery", body: `${title} was captured from activeFeed with query: ${snapshot.query || activeFeed.query || "platform update"}.` },
+    { heading: "Snapshot", body: snapshot.ready ? "A visual snapshot or GLB route is ready for blog, library, examples, and share previews." : "The fallback renderer supplies a usable visual until the live snapshot is captured." },
+    { heading: "Runner Summary", body: answer },
+    { heading: "Related Surfaces", body: surfaces.map((surface) => `${surface.name}: ${surface.status}`).join(" | ") },
+    { heading: "Ranking Intent", body: rankingAngle }
+  ]
+  return {
+    active: true,
+    runner: "seo-content-runner",
+    title: `${title} | DigitalHut Observatory Brief`,
+    slug: slugify(`${title} digitalhut observatory brief`),
+    metaDescription,
+    keywords,
+    rankingAngle,
+    canonicalPath: `/blog/${slugify(`${title} digitalhut observatory brief`)}`,
+    image: snapshot.previewImage || activeFeed.previewImage || "",
+    sections,
+    surfaces: surfaces.map((surface) => surface.name),
+    updateEvidence: ["search", "discovery", "snapshot", "library-record", "blog-draft", "runner-memory", "related-discoveries", "observatory-pulse"],
+    status: "ready-for-blog-ranking"
+  }
+}
+
 function buildSurfaces(activeFeed = {}, snapshot = {}, classifications = []) {
   const isMarket = classifications.includes("market-render") || activeFeed.category === "market"
   return [
@@ -47,7 +101,8 @@ function buildSurfaces(activeFeed = {}, snapshot = {}, classifications = []) {
     { name: "examples", status: "ready for integration brief", action: "Generate a client-facing example that shows connect -> activeFeed -> renderer -> snapshot." },
     { name: "observatory renderer", status: activeFeed.modelUrl || snapshot.modelUrl ? "GLB route ready" : "metadata/fallback render", action: "Open the active discovery in the renderer and keep narration tied to activeFeed." },
     { name: "quick recent activity", status: "recording", action: "Show this question, answer, and snapshot as the newest discovery event." },
-    { name: "market profile", status: isMarket ? "candles and technicals requested" : "available when symbol is active", action: "Preload candlestick chart, trend, EMA, previous high/low, gap, and liquidity sweep summary." }
+    { name: "market profile", status: isMarket ? "candles and technicals requested" : "available when symbol is active", action: "Preload candlestick chart, trend, EMA, previous high/low, gap, and liquidity sweep summary." },
+    { name: "SEO blog packet", status: "ready-for-blog-ranking", action: "Turn the update into title, slug, meta description, keywords, blog sections, and canonical path." }
   ]
 }
 
@@ -56,6 +111,7 @@ function buildAnswer({ question, activeFeed = {}, result = {}, classifications, 
   const codeStructure = "activeFeed stays the source of truth. The website should route discovery through Visual Resolver, Renderer, Snapshot, Blog, Library, Examples, Recent Activity, Backend Record, then Runner Answers."
   const glbFlow = "For a client multi-GLB project: connect or upload the GLBs, normalize each asset into activeFeed entries, render the selected GLB, create a reusable snapshot, then publish the same discovery into blog, library, examples, observatory recent activity, and backend history."
   const marketFlow = "For market rendering: request the symbol through activeFeed, load the live or fallback market profile, render candlestick bars, preload technicals, save the scan to history, and let runners answer follow-up questions from that packet."
+  const seoFlow = "SEO runner answer: every website and dapp update should create a blog packet with title, slug, meta description, keywords, image, sections, related discoveries, and canonical path so the observatory can rank from its own activity."
   const excitement = `New discovery detected: ${title}. This is not just a search result; it is a reusable platform object.`
   const mathLine = mathAnswer ? `Math result: ${mathAnswer}` : ""
 
@@ -66,6 +122,7 @@ function buildAnswer({ question, activeFeed = {}, result = {}, classifications, 
   if (classifications.includes("multi-glb-client")) parts.push(glbFlow)
   if (classifications.includes("market-render")) parts.push(marketFlow)
   if (classifications.includes("snapshot-distribution")) parts.push("Snapshot answer: the active GLB snapshot should feed the main blog feature, library visual, examples preview, observatory renderer, quick recent activity, and share/SEO previews.")
+  if (classifications.includes("seo-runner")) parts.push(seoFlow)
   if (parts.length === 1) parts.push("Plain-language answer: ask naturally. DigitalHut should translate the question into the next discovery action and tell the user what code, content, or renderer surface should update.")
 
   return parts.filter(Boolean).join(" ")
@@ -81,6 +138,7 @@ export async function POST(req) {
   const snapshot = snapshotFromFeed(activeFeed, result)
   const surfaces = buildSurfaces(activeFeed, snapshot, classifications)
   const answer = buildAnswer({ question, activeFeed, result, classifications, snapshot, mathAnswer })
+  const seoPacket = buildSeoPacket({ question, answer, activeFeed, snapshot, classifications, surfaces })
   const event = {
     type: "runner-discovery-answer",
     question,
@@ -96,9 +154,10 @@ export async function POST(req) {
     },
     snapshot,
     surfaces,
+    seoPacket,
     runner: "activeFeed-discovery-runner"
   }
 
   const history = await addHistory(event)
-  return Response.json({ ok: true, answer, classifications, mathAnswer, snapshot, surfaces, history: history?.slice?.(0, 6) || [] })
+  return Response.json({ ok: true, answer, classifications, mathAnswer, snapshot, surfaces, seoPacket, history: history?.slice?.(0, 6) || [] })
 }
