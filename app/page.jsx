@@ -4,6 +4,7 @@ import AgentBlogHome from "../components/AgentBlogHome"
 import AgentFaqHelper from "../components/AgentFaqHelper"
 import ApiVisualShowcase from "../components/ApiVisualShowcase"
 import MainBlogFeature from "../components/MainBlogFeature"
+import DiscoveryRunnerConsole from "../components/DiscoveryRunnerConsole"
 import ModelRotationChooser from "../components/ModelRotationChooser"
 import {getPersonaFeature, getPersonaMarket, getPersonaSignal} from "../lib/personaFeature"
 import {getWalletPermissionState} from "../lib/walletPermissions"
@@ -185,7 +186,7 @@ export default function Home(){
    setActiveFeed(nextFeed)
    setQuery(nextFeed.query)
    setToast(json.provider==="sketchfab-live"?"Live model route acquired":"Model feed found; renderer using metadata or fallback mode")
-   await fetch("/api/history",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:nextFeed.query,result:model,tier,provider:json.provider})})
+   await fetch("/api/history",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:nextFeed.query,result:model,tier,provider:json.provider,type:"active-glb-snapshot",snapshot:{title:nextFeed.title,previewImage:nextFeed.previewImage,modelUrl:nextFeed.modelUrl},surfaces:["main-blog-feature","library","examples","observatory-renderer","quick-recent-activity"]})})
    await refreshAdaptive({tier})
   } finally { setBusy(false) }
  }
@@ -222,6 +223,7 @@ export default function Home(){
   <ApiVisualShowcase/>
   <AgentBlogHome activeIntent={activeFeed.intent} activeFeed={activeFeed} onSelectFeed={selectFeed}/>
   <ModelRotationChooser activeFeed={activeFeed} result={result} busy={busy} onSelectFeed={selectFeed}/>
+  <DiscoveryRunnerConsole activeFeed={activeFeed} result={result} marketSymbols={marketSymbols}/>
 
   <section style={mainGrid}>
    <div style={panel}>
@@ -256,7 +258,7 @@ export default function Home(){
    <div style={panel}>
     <div style={eyebrow}>Active feed rule</div>
     <h2 style={resultTitle}>Voice follows the selected feed</h2>
-    <p style={muted}>The visual, title, selected card, query, market link, and narration now read from one activeFeed object.</p>
+    <p style={muted}>The visual, title, selected card, query, market link, narration, snapshots, runner answers, and recent activity now read from one activeFeed object.</p>
     <p style={mono}>Voice source: activeFeed.agentNarration</p>
    </div>
   </section>
