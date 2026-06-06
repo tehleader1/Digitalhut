@@ -8,6 +8,14 @@ import {getPersonaFeature, getPersonaMarket, getPersonaSignal} from "../lib/pers
 import {getWalletPermissionState} from "../lib/walletPermissions"
 
 const tiers = {free: 0, standard: 35, premium: 50, pro: 100}
+const footerLinks = [
+  ["Daily", "/blog"],
+  ["Market Desk", "/market-intelligence"],
+  ["Library", "/library"],
+  ["About", "/about"],
+  ["Privacy", "/privacy"],
+  ["Health", "/health"]
+]
 
 function cleanSearchQuery(value) {
   return String(value || "")
@@ -25,11 +33,6 @@ function defaultAdaptiveState() {
     intent: feature.intent,
     confidence: 0.45,
     reason: "Waiting for visitor signal",
-    hero: {
-      eyebrow: "DigitalHut Observatory",
-      title: "Adaptive market, model, blog, and agent console.",
-      primaryAction: "Run Observatory Scan"
-    },
     observatory: {preloadQuery: feature.mainGLBSearch, category: feature.observatory?.category || feature.intent},
     market: feature.market,
     premium: {
@@ -87,11 +90,11 @@ function feedFromFeature(feature, options = {}) {
 function feedFromChoice(choice, index) {
   const query = cleanSearchQuery(choice.query || choice.title)
   return normalizeFeed({
-    id: `live-library:${index}:${query}`,
+    id: `quick-pulse:${index}:${query}`,
     title: choice.title,
     category: choice.mood || "library",
     intent: choice.intent || "observatory-guest",
-    source: "live-library-pulse",
+    source: "renderer-quick-option",
     previewImage: choice.previewImage,
     query,
     terrainUrl: query,
@@ -124,7 +127,7 @@ export default function Home() {
   const [subscription, setSubscription] = useState(null)
   const [adaptive, setAdaptive] = useState(defaultAdaptiveState())
   const [activeFeed, setActiveFeed] = useState(() => feedFromFeature(initialFeature))
-  const [toast, setToast] = useState("Live observatory app stage ready")
+  const [toast, setToast] = useState("Renderer-first app stage ready")
   const [drawer, setDrawer] = useState("closed")
   const [engagement, setEngagement] = useState({hoverPreview: 0, rendererFocus: 0, manualSelect: 0, settledCycles: 0})
 
@@ -158,7 +161,7 @@ export default function Home() {
       setSignal(nextSignal)
       setActiveFeed(nextFeed)
       setQuery(nextFeed.query)
-      setToast(`Adaptive pulse: ${nextFeed.title}. Cadence ${Math.round(cadenceMs / 1000)}s from renderer engagement.`)
+      setToast(`Adaptive feed shifted to ${nextFeed.title}. Cadence ${Math.round(cadenceMs / 1000)}s from renderer engagement.`)
       setEngagement((current) => ({...current, settledCycles: current.settledCycles + 1}))
     }, cadenceMs)
     return () => clearInterval(timer)
@@ -348,47 +351,17 @@ export default function Home() {
 
   return <main style={styles.page}>
     <section style={styles.appFrame}>
-      <header style={styles.commandBar}>
-        <div style={styles.identityBlock}>
-          <p style={styles.eyebrow}>DigitalHut live desk</p>
-          <h1 style={styles.title}>Unified Observatory App</h1>
-          <p style={styles.copy}>{activeFeed.agentNarration || signal.tone}</p>
-        </div>
-        <div style={styles.statusGrid}>
-          <StatusChip label="Feed" value={activeFeed.category} />
-          <StatusChip label="Cadence" value={`${Math.round(cadenceMs / 1000)}s`} />
-          <StatusChip label="Market" value={providerStatus} />
-          <StatusChip label="Tier" value={tier} />
+      <header style={styles.topRail}>
+        <a href="/" style={styles.brand} aria-label="DigitalHut home">DigitalHut</a>
+        <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search Wall Street, Tokyo towers, BTC, terrain, markets..." style={styles.input} />
+        <div style={styles.actionRail}>
+          <button onClick={() => selectFeed({...activeFeed, query, title: query}, {speak: true, scan: true})} style={styles.primary}>{busy ? "Scanning" : "Scan"}</button>
+          <button onClick={voice} style={styles.iconButton}>Voice</button>
+          <button onClick={() => setDrawer(drawer === "feeds" ? "closed" : "feeds")} style={styles.iconButton}>Feeds</button>
+          <button onClick={() => setDrawer(drawer === "market" ? "closed" : "market")} style={styles.iconButton}>Market</button>
+          <button onClick={() => setDrawer(drawer === "account" ? "closed" : "account")} style={styles.walletButton}>{wallet ? "Wallet" : "Verify"}</button>
         </div>
       </header>
-
-      <section style={styles.controlDock} aria-label="DigitalHut command dock">
-        <div style={styles.searchDock}>
-          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search Wall Street, Tokyo towers, BTC, terrain, markets..." style={styles.input} />
-          <button onClick={() => selectFeed({...activeFeed, query, title: query}, {speak: true, scan: true})} style={styles.primary}>{busy ? "Scanning" : "Scan"}</button>
-          <button onClick={voice} style={styles.secondary}>Voice</button>
-          <a href={marketHref} style={styles.linkButton}>Market</a>
-          <button onClick={() => setDrawer(drawer === "runner" ? "closed" : "runner")} style={styles.secondary}>Runner</button>
-          <button onClick={() => setDrawer(drawer === "feed" ? "closed" : "feed")} style={styles.secondary}>State</button>
-        </div>
-        <div style={styles.walletDock}>
-          <button onClick={connect} style={styles.walletButton}>{wallet || "Verify Wallet"}</button>
-          <select value={currency} onChange={(event) => setCurrency(event.target.value)} style={styles.select}>
-            <option>ETH</option>
-            <option>USDC</option>
-            <option>MATIC</option>
-            <option>BNB</option>
-          </select>
-          <button onClick={() => subscribe(tier)} style={styles.secondary}>Gas Route</button>
-        </div>
-      </section>
-
-      <nav style={styles.tierDock} aria-label="Subscription tiers">
-        {Object.entries(tiers).map(([nextTier, price]) => <button key={nextTier} onClick={() => activate(nextTier)} style={tier === nextTier ? styles.activeTier : styles.tierButton}>
-          <b>{nextTier.toUpperCase()}</b>
-          <span>${price}</span>
-        </button>)}
-      </nav>
 
       <div id="observatory-renderer" style={styles.rendererStage} onPointerMove={() => recordEngagement("rendererFocus")} onPointerDown={() => recordEngagement("manualSelect")}>
         <ModelRotationChooser
@@ -401,38 +374,95 @@ export default function Home() {
         />
       </div>
 
-      {drawer !== "closed" && <section style={styles.bottomDock} aria-label="Operational drawer">
-        <aside style={styles.signalPanel}>
-          <p style={styles.eyebrow}>Live state</p>
-          <h2 style={styles.panelTitle}>{activeFeed.title}</h2>
-          <p style={styles.copy}>{toast}</p>
-          <p style={styles.small}>{walletPermission.message}</p>
-          <div style={styles.quickActions}>
-            <button onClick={() => setDrawer(drawer === "runner" ? "feed" : "runner")} style={styles.secondary}>{drawer === "runner" ? "Feed State" : "Runner"}</button>
-            <button onClick={requestDownload} style={styles.secondary}>Authorize Asset</button>
-            <button onClick={() => setDrawer("closed")} style={styles.secondary}>Close</button>
-            <a href="/library" style={styles.secondaryLink}>Library</a>
+      <footer style={styles.footer}>
+        <nav style={styles.footerNav} aria-label="DigitalHut footer pages">
+          {footerLinks.map(([label, href]) => <a key={label} href={href} style={styles.footerLink}>{label}</a>)}
+        </nav>
+        <span style={styles.footerStatus}>{activeFeed.title} / {providerStatus} / {tier}</span>
+      </footer>
+
+      {drawer !== "closed" && <section style={styles.sideDrawer} aria-label="Side option drawer">
+        <div style={styles.drawerHead}>
+          <div>
+            <p style={styles.eyebrow}>{drawer}</p>
+            <h2 style={styles.panelTitle}>{drawer === "market" ? "Real-world market renderer" : drawer === "feeds" ? "Renderer quick options" : drawer === "account" ? "Wallet and tiers" : "Operations"}</h2>
           </div>
-        </aside>
-        <div style={styles.runnerPanel}>
-          {drawer === "runner" ? <DiscoveryRunnerConsole activeFeed={activeFeed} result={result} marketSymbols={marketSymbols} /> : <FeedState activeFeed={activeFeed} signal={signal} engagement={engagement} />}
+          <button onClick={() => setDrawer("closed")} style={styles.closeButton}>Close</button>
+        </div>
+        {drawer === "feeds" && <QuickFeedPanel feeds={adaptiveFeeds} activeFeed={activeFeed} onSelect={selectFeed} />}
+        {drawer === "market" && <MarketSidePanel marketSymbols={marketSymbols} providerStatus={providerStatus} marketHref={marketHref} activeFeed={activeFeed} health={health} />}
+        {drawer === "account" && <AccountPanel wallet={wallet} tier={tier} tiers={tiers} currency={currency} onCurrency={setCurrency} onConnect={connect} onActivate={activate} onSubscribe={subscribe} walletPermission={walletPermission} />}
+        {drawer === "runner" && <DiscoveryRunnerConsole activeFeed={activeFeed} result={result} marketSymbols={marketSymbols} />}
+        {drawer === "state" && <FeedState activeFeed={activeFeed} signal={signal} engagement={engagement} toast={toast} walletPermission={walletPermission} onDownload={requestDownload} />}
+        <div style={styles.drawerFooter}>
+          <button onClick={() => setDrawer("runner")} style={styles.iconButton}>Runner</button>
+          <button onClick={() => setDrawer("state")} style={styles.iconButton}>State</button>
+          <button onClick={requestDownload} style={styles.iconButton}>Asset</button>
         </div>
       </section>}
     </section>
   </main>
 }
 
-function StatusChip({label, value}) {
-  return <span style={styles.statusChip}><b>{label}</b>{value || "waiting"}</span>
+function QuickFeedPanel({feeds, activeFeed, onSelect}) {
+  return <div style={styles.feedGrid}>
+    {feeds.map((feed) => {
+      const selected = activeFeed?.id === feed.id || activeFeed?.query === feed.query
+      return <button key={feed.id} onPointerEnter={() => onSelect(feed, {speak: false, scan: false})} onFocus={() => onSelect(feed, {speak: false, scan: false})} onClick={() => onSelect(feed, {speak: true, scan: true})} style={selected ? styles.activeFeedButton : styles.feedButton}>
+        <span>{feed.category}</span>
+        <b>{feed.title}</b>
+        <small>{feed.query}</small>
+      </button>
+    })}
+  </div>
 }
 
-function FeedState({activeFeed, signal, engagement}) {
-  return <section style={styles.feedState}>
+function MarketSidePanel({marketSymbols, providerStatus, marketHref, activeFeed, health}) {
+  return <div style={styles.drawerBody}>
+    <p style={styles.copy}>A behind-the-scenes market surface linked to the current observatory feed. Keep the homepage visual-first, then open the full market renderer when the visitor wants price structure.</p>
+    <div style={styles.statusRow}>
+      <span style={styles.statusPill}>Provider: {providerStatus}</span>
+      <span style={styles.statusPill}>Health: {health ? "online" : "checking"}</span>
+      <span style={styles.statusPill}>Feed: {activeFeed.category}</span>
+    </div>
+    <div style={styles.symbolGrid}>
+      {marketSymbols.map((symbol) => <a key={symbol} href={`/market-intelligence?symbol=${encodeURIComponent(symbol)}&entry=${encodeURIComponent(activeFeed.intent || "observatory")}`} style={styles.symbolButton}>{symbol}</a>)}
+    </div>
+    <a href={marketHref} style={styles.primaryLink}>Open Market Renderer</a>
+  </div>
+}
+
+function AccountPanel({wallet, tier, tiers, currency, onCurrency, onConnect, onActivate, onSubscribe, walletPermission}) {
+  return <div style={styles.drawerBody}>
+    <button onClick={onConnect} style={styles.accountWallet}>{wallet || "Confirm in your digital wallet extension"}</button>
+    <div style={styles.tierGrid}>
+      {Object.entries(tiers).map(([nextTier, price]) => <button key={nextTier} onClick={() => onActivate(nextTier)} style={tier === nextTier ? styles.activeTier : styles.tierButton}>
+        <b>{nextTier.toUpperCase()}</b>
+        <span>${price}</span>
+      </button>)}
+    </div>
+    <div style={styles.paymentRow}>
+      <select value={currency} onChange={(event) => onCurrency(event.target.value)} style={styles.select}>
+        <option>ETH</option>
+        <option>USDC</option>
+        <option>MATIC</option>
+        <option>BNB</option>
+      </select>
+      <button onClick={() => onSubscribe(tier)} style={styles.primary}>Gas Route</button>
+    </div>
+    <p style={styles.small}>{walletPermission.message}</p>
+  </div>
+}
+
+function FeedState({activeFeed, signal, engagement, toast, walletPermission, onDownload}) {
+  return <section style={styles.drawerBody}>
     <p style={styles.eyebrow}>Adaptive feed memory</p>
     <h2 style={styles.panelTitle}>{activeFeed.title}</h2>
     <p style={styles.copy}>{signal.tone}</p>
-    <p style={styles.small}>Query: {activeFeed.query}</p>
+    <p style={styles.small}>{toast}</p>
+    <p style={styles.small}>{walletPermission.message}</p>
     <p style={styles.small}>Renderer focus: {engagement.rendererFocus} / Hover previews: {engagement.hoverPreview} / Manual selects: {engagement.manualSelect}</p>
+    <button onClick={onDownload} style={styles.primary}>Authorize Asset</button>
   </section>
 }
 
@@ -440,40 +470,47 @@ const styles = {
   page: {
     height: "100dvh",
     minHeight: "100vh",
-    background: "radial-gradient(circle at 20% 0%,rgba(20,184,166,.24),transparent 30%),linear-gradient(135deg,#030712,#08111f 45%,#111827)",
+    background: "radial-gradient(circle at 20% 0%,rgba(20,184,166,.18),transparent 28%),linear-gradient(135deg,#030712,#07111f 45%,#111827)",
     color: "white",
     fontFamily: "Arial, sans-serif",
-    padding: 10,
+    padding: 8,
     boxSizing: "border-box",
     overflow: "hidden"
   },
-  appFrame: {height: "100%", maxWidth: 1540, margin: "0 auto", display: "grid", gridTemplateRows: "auto auto auto minmax(0,1fr)", gap: 8, overflow: "hidden"},
-  commandBar: {display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(min(100%,520px),.72fr)", gap: 10, alignItems: "end"},
-  identityBlock: {minWidth: 0},
-  eyebrow: {margin: 0, color: "#67e8f9", fontSize: 12, fontWeight: 900, textTransform: "uppercase", letterSpacing: 0},
-  title: {margin: "2px 0 4px", fontSize: "clamp(28px,4vw,50px)", lineHeight: 1, letterSpacing: 0, overflowWrap: "anywhere"},
-  copy: {margin: 0, color: "#d8e4ee", lineHeight: 1.35, overflowWrap: "anywhere"},
-  statusGrid: {display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(110px,1fr))", gap: 7},
-  statusChip: {minHeight: 44, border: "1px solid rgba(103,232,249,.26)", borderRadius: 8, background: "rgba(2,6,23,.55)", color: "#dff8ff", padding: "7px 9px", display: "grid", gap: 2, alignContent: "center", fontSize: 12, fontWeight: 800, textTransform: "capitalize", overflowWrap: "anywhere"},
-  controlDock: {display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,360px),1fr))", gap: 8, alignItems: "stretch"},
-  searchDock: {display: "flex", gap: 7, minWidth: 0, flexWrap: "wrap"},
-  walletDock: {display: "flex", gap: 7, minWidth: 0, flexWrap: "wrap", justifyContent: "flex-end"},
-  input: {flex: "1 1 300px", minWidth: 0, boxSizing: "border-box", padding: "12px 13px", borderRadius: 8, fontSize: 15, border: "1px solid rgba(226,232,240,.2)", background: "rgba(2,6,23,.86)", color: "white"},
-  primary: {padding: "11px 14px", borderRadius: 8, background: "#14b8a6", color: "#021014", border: 0, fontWeight: 900, cursor: "pointer"},
-  secondary: {padding: "11px 12px", borderRadius: 8, background: "rgba(226,232,240,.1)", color: "white", border: "1px solid rgba(226,232,240,.24)", fontWeight: 800, cursor: "pointer", textDecoration: "none"},
-  linkButton: {display: "inline-grid", placeItems: "center", padding: "11px 12px", borderRadius: 8, background: "#38bdf8", color: "#06111a", fontWeight: 900, textDecoration: "none"},
-  walletButton: {minWidth: 0, padding: "11px 12px", borderRadius: 8, border: "1px solid rgba(251,191,36,.42)", background: "rgba(113,63,18,.7)", color: "#fef3c7", fontWeight: 900, cursor: "pointer", overflowWrap: "anywhere"},
-  select: {padding: "11px 10px", borderRadius: 8, border: "1px solid rgba(226,232,240,.24)", background: "#020617", color: "white", fontWeight: 900},
-  tierDock: {display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(108px,1fr))", gap: 7},
-  tierButton: {minHeight: 42, borderRadius: 8, border: "1px solid rgba(226,232,240,.16)", background: "rgba(2,6,23,.42)", color: "white", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, padding: "7px 10px", cursor: "pointer"},
-  activeTier: {minHeight: 42, borderRadius: 8, border: "1px solid #facc15", background: "rgba(250,204,21,.16)", color: "white", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, padding: "7px 10px", cursor: "pointer"},
+  appFrame: {height: "100%", maxWidth: 1640, margin: "0 auto", display: "grid", gridTemplateRows: "auto minmax(0,1fr) auto", gap: 7, overflow: "hidden"},
+  topRail: {minHeight: 48, display: "grid", gridTemplateColumns: "auto minmax(180px,1fr) auto", gap: 8, alignItems: "center", padding: 7, border: "1px solid rgba(103,232,249,.2)", borderRadius: 8, background: "rgba(2,6,23,.62)", boxSizing: "border-box"},
+  brand: {color: "white", fontSize: 20, fontWeight: 900, textDecoration: "none", letterSpacing: 0, whiteSpace: "nowrap"},
+  input: {width: "100%", minWidth: 0, boxSizing: "border-box", padding: "10px 12px", borderRadius: 8, fontSize: 15, border: "1px solid rgba(226,232,240,.2)", background: "rgba(2,6,23,.86)", color: "white"},
+  actionRail: {display: "flex", gap: 6, alignItems: "center", justifyContent: "flex-end", flexWrap: "wrap"},
+  primary: {padding: "10px 13px", borderRadius: 8, background: "#14b8a6", color: "#021014", border: 0, fontWeight: 900, cursor: "pointer"},
+  iconButton: {padding: "10px 11px", borderRadius: 8, background: "rgba(226,232,240,.1)", color: "white", border: "1px solid rgba(226,232,240,.22)", fontWeight: 800, cursor: "pointer", textDecoration: "none"},
+  walletButton: {padding: "10px 11px", borderRadius: 8, border: "1px solid rgba(251,191,36,.42)", background: "rgba(113,63,18,.7)", color: "#fef3c7", fontWeight: 900, cursor: "pointer", overflowWrap: "anywhere"},
   rendererStage: {minWidth: 0, minHeight: 0, overflow: "hidden"},
-  bottomDock: {position: "fixed", right: 14, bottom: 14, width: "min(920px,calc(100vw - 28px))", maxHeight: "48vh", display: "grid", gridTemplateColumns: "minmax(min(100%,280px),.4fr) minmax(0,1fr)", gap: 10, alignItems: "start", overflow: "auto", zIndex: 50, padding: 10, border: "1px solid rgba(103,232,249,.28)", borderRadius: 8, background: "rgba(2,6,23,.94)", boxShadow: "0 24px 70px rgba(0,0,0,.45)"},
-  signalPanel: {minWidth: 0, border: "1px solid rgba(148,163,184,.25)", borderRadius: 8, background: "rgba(15,23,42,.72)", padding: 12, display: "grid", gap: 8},
-  runnerPanel: {minWidth: 0, border: "1px solid rgba(148,163,184,.2)", borderRadius: 8, background: "rgba(2,6,23,.32)", overflow: "auto", maxHeight: "44vh"},
-  panelTitle: {margin: 0, fontSize: 21, lineHeight: 1.15, letterSpacing: 0, overflowWrap: "anywhere"},
+  footer: {minHeight: 34, display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, padding: "5px 8px", border: "1px solid rgba(148,163,184,.18)", borderRadius: 8, background: "rgba(2,6,23,.58)", boxSizing: "border-box", overflow: "hidden"},
+  footerNav: {display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap"},
+  footerLink: {color: "#dbeafe", textDecoration: "none", fontSize: 12, fontWeight: 900, padding: "5px 7px", borderRadius: 8, background: "rgba(148,163,184,.08)", whiteSpace: "nowrap"},
+  footerStatus: {color: "#9fb3c8", fontSize: 12, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", minWidth: 0},
+  sideDrawer: {position: "fixed", top: 68, right: 12, bottom: 48, width: "min(430px,calc(100vw - 24px))", zIndex: 60, display: "grid", gridTemplateRows: "auto minmax(0,1fr) auto", gap: 10, padding: 12, border: "1px solid rgba(103,232,249,.3)", borderRadius: 8, background: "rgba(2,6,23,.96)", boxShadow: "0 28px 90px rgba(0,0,0,.5)", boxSizing: "border-box", overflow: "hidden"},
+  drawerHead: {display: "flex", justifyContent: "space-between", gap: 10, alignItems: "flex-start"},
+  closeButton: {padding: "9px 10px", borderRadius: 8, border: "1px solid rgba(226,232,240,.22)", background: "rgba(226,232,240,.08)", color: "white", fontWeight: 900, cursor: "pointer"},
+  drawerBody: {minHeight: 0, overflow: "auto", display: "grid", gap: 12, alignContent: "start"},
+  drawerFooter: {display: "flex", gap: 7, flexWrap: "wrap"},
+  eyebrow: {margin: 0, color: "#67e8f9", fontSize: 12, fontWeight: 900, textTransform: "uppercase", letterSpacing: 0},
+  panelTitle: {margin: 0, fontSize: 22, lineHeight: 1.12, letterSpacing: 0, overflowWrap: "anywhere"},
+  copy: {margin: 0, color: "#d8e4ee", lineHeight: 1.4, overflowWrap: "anywhere"},
   small: {margin: 0, color: "#a8b8c8", fontSize: 13, lineHeight: 1.4, overflowWrap: "anywhere"},
-  quickActions: {display: "flex", gap: 7, flexWrap: "wrap"},
-  secondaryLink: {padding: "11px 12px", borderRadius: 8, background: "rgba(226,232,240,.1)", color: "white", border: "1px solid rgba(226,232,240,.24)", fontWeight: 800, cursor: "pointer", textDecoration: "none"},
-  feedState: {padding: 14, display: "grid", gap: 8}
+  feedGrid: {minHeight: 0, overflow: "auto", display: "grid", gap: 8, alignContent: "start"},
+  feedButton: {minWidth: 0, textAlign: "left", padding: 11, borderRadius: 8, border: "1px solid rgba(148,163,184,.22)", background: "rgba(15,23,42,.72)", color: "white", display: "grid", gap: 5, cursor: "pointer"},
+  activeFeedButton: {minWidth: 0, textAlign: "left", padding: 11, borderRadius: 8, border: "1px solid rgba(45,212,191,.55)", background: "rgba(20,184,166,.16)", color: "white", display: "grid", gap: 5, cursor: "pointer"},
+  statusRow: {display: "flex", gap: 7, flexWrap: "wrap"},
+  statusPill: {fontSize: 12, color: "#cffafe", background: "rgba(103,232,249,.1)", border: "1px solid rgba(103,232,249,.2)", borderRadius: 8, padding: "7px 9px", fontWeight: 900},
+  symbolGrid: {display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(78px,1fr))", gap: 8},
+  symbolButton: {padding: "12px 10px", borderRadius: 8, background: "rgba(56,189,248,.14)", border: "1px solid rgba(56,189,248,.26)", color: "#dff8ff", textDecoration: "none", fontWeight: 900, textAlign: "center"},
+  primaryLink: {display: "inline-grid", placeItems: "center", padding: "12px 14px", borderRadius: 8, background: "#38bdf8", color: "#06111a", fontWeight: 900, textDecoration: "none"},
+  accountWallet: {padding: "13px 14px", borderRadius: 8, border: "1px solid rgba(251,191,36,.42)", background: "rgba(113,63,18,.72)", color: "#fef3c7", fontWeight: 900, cursor: "pointer", overflowWrap: "anywhere"},
+  tierGrid: {display: "grid", gridTemplateColumns: "repeat(2,minmax(0,1fr))", gap: 8},
+  tierButton: {minHeight: 48, borderRadius: 8, border: "1px solid rgba(226,232,240,.16)", background: "rgba(2,6,23,.42)", color: "white", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, padding: "8px 10px", cursor: "pointer"},
+  activeTier: {minHeight: 48, borderRadius: 8, border: "1px solid #facc15", background: "rgba(250,204,21,.16)", color: "white", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, padding: "8px 10px", cursor: "pointer"},
+  paymentRow: {display: "grid", gridTemplateColumns: "minmax(0,1fr) auto", gap: 8},
+  select: {padding: "10px", borderRadius: 8, border: "1px solid rgba(226,232,240,.24)", background: "#020617", color: "white", fontWeight: 900}
 }
