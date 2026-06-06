@@ -80,6 +80,7 @@ export default function Home(){
  const [activeFeed,setActiveFeed]=useState(()=>feedFromFeature(initialFeature))
  const [toast,setToast]=useState("Agent workspace ready")
  const spokenFeedRef = useRef("")
+ const rendererRef = useRef(null)
  const tierEntries = useMemo(()=>Object.entries(tiers),[])
  const personaFeature = useMemo(()=>getPersonaFeature(activeFeed.intent || adaptive.intent),[activeFeed.intent,adaptive.intent])
  const personaMarket = useMemo(()=>getPersonaMarket(activeFeed.intent || adaptive.intent),[activeFeed.intent,adaptive.intent])
@@ -92,6 +93,10 @@ export default function Home(){
  const pulseImage = activeFeed.previewImage || walletVisual.previewImage
 
  useEffect(()=>{ refreshHealth(); refreshAdaptive() },[])
+ useEffect(()=>{
+  if(typeof window === "undefined" || window.location.hash !== "#observatory-renderer") return
+  setTimeout(()=>pullToRenderer(),250)
+ },[])
  useEffect(()=>{
   const timer=setInterval(()=>{
    const next = signalFromAdaptive(adaptive)
@@ -112,11 +117,17 @@ export default function Home(){
   window.speechSynthesis.speak(new SpeechSynthesisUtterance(text))
  }
 
+ function pullToRenderer(){
+  if(typeof window==="undefined") return
+  rendererRef.current?.scrollIntoView({behavior:"smooth",block:"start"})
+ }
+
  function selectFeed(feed, options={speak:true, scan:true}){
   const nextFeed = feed.mainFeatureTitle ? feedFromFeature(feed,{speak:options.speak}) : normalizeFeed(feed,{speak:options.speak})
   setActiveFeed(nextFeed)
   setQuery(nextFeed.query)
   setToast(`Active feed: ${nextFeed.title}`)
+  pullToRenderer()
   if(options.scan) scan(nextFeed)
  }
 
@@ -188,6 +199,7 @@ export default function Home(){
    setActiveFeed(nextFeed)
    setQuery(nextFeed.query)
    setToast(json.providerLabel || json.searchStatusLabel || "Model feed found; renderer using metadata or fallback mode")
+   pullToRenderer()
    await fetch("/api/history",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:nextFeed.query,result:model,tier,provider:json.provider,type:"active-glb-snapshot",snapshot:{title:nextFeed.title,previewImage:nextFeed.previewImage,modelUrl:nextFeed.modelUrl},surfaces:["main-blog-feature","library","examples","observatory-renderer","quick-recent-activity"]})})
    await refreshAdaptive({tier})
   } finally { setBusy(false) }
@@ -234,7 +246,9 @@ export default function Home(){
   <MainBlogFeature feature={personaFeature} permission={walletPermission} busy={busy} onSelectFeed={selectFeed}/>
   <ApiVisualShowcase/>
   <AgentBlogHome activeIntent={activeFeed.intent} activeFeed={activeFeed} onSelectFeed={selectFeed}/>
-  <ModelRotationChooser activeFeed={activeFeed} result={result} busy={busy} onSelectFeed={selectFeed}/>
+  <div id="observatory-renderer" ref={rendererRef}>
+   <ModelRotationChooser activeFeed={activeFeed} result={result} busy={busy} onSelectFeed={selectFeed}/>
+  </div>
   <DiscoveryRunnerConsole activeFeed={activeFeed} result={result} marketSymbols={marketSymbols}/>
 
   <section style={mainGrid}>
