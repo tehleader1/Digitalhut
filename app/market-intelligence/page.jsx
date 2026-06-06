@@ -7,25 +7,30 @@ import {getPersonaFeature, getPersonaMarket, normalizeIntent} from "../../lib/pe
 import {enrichActiveFeed} from "../../lib/domain/visualTranscript"
 
 const symbolNames = {
- BTC: "Bitcoin", ETH: "Ethereum", SOL: "Solana", DOGE: "Dogecoin",
- NVDA: "Nvidia", MSFT: "Microsoft", AAPL: "Apple", TSLA: "Tesla",
- VNQ: "Vanguard real estate ETF", HD: "Home Depot", LOW: "Lowes", SPY: "S&P 500 ETF",
- QQQ: "Nasdaq 100 ETF", DIA: "Dow Jones ETF", TLT: "Treasury bond ETF"
+ BTC: "Bitcoin",
+ ETH: "Ethereum",
+ SOL: "Solana",
+ DOGE: "Dogecoin",
+ NVDA: "Nvidia",
+ AAPL: "Apple",
+ MSFT: "Microsoft",
+ TSLA: "Tesla",
+ SPY: "SPY",
+ QQQ: "QQQ",
+ DIA: "DIA",
+ TLT: "TLT",
+ HD: "Home Depot",
+ LOW: "Lowes",
+ VNQ: "VNQ"
 }
 
-function cleanSearchQuery(value) {
- return String(value || "")
-  .replace(/\b(project\s*)?glb\b/gi, "")
-  .replace(/\b3d\s*model\b/gi, "")
-  .replace(/\s+/g, " ")
-  .trim()
-}
-
-function marketVisualQuery(symbol, profile) {
- const ticker = String(symbol || profile?.defaultSymbol || profile?.symbols?.[0] || "BTC").toUpperCase()
- const company = symbolNames[ticker] || ticker
- const profileContext = cleanSearchQuery(profile?.marketModelQuery || profile?.visualIdentity || "market trading desk candlestick chart")
- return `${ticker} ${company} ${profileContext}`.replace(/\s+/g, " ").trim()
+function marketVisualQuery(symbol, profile = {}) {
+ const ticker = String(symbol || profile.defaultSymbol || profile.symbols?.[0] || "BTC").trim().toUpperCase()
+ const company = symbolNames[ticker] || ""
+ const profileQuery = String(profile.marketModelQuery || "").trim()
+ const parts = [ticker, company]
+ if (profileQuery && !parts.some((part) => part && profileQuery.toLowerCase().includes(part.toLowerCase()))) parts.push(profileQuery)
+ return [...new Set(parts.filter(Boolean))].join(" ")
 }
 
 function buildMarketProfile({entry, adaptive, symbol, selectedProfile}){
@@ -42,7 +47,7 @@ function buildMarketProfile({entry, adaptive, symbol, selectedProfile}){
   symbols,
   defaultSymbol,
   previewImage: profile.previewImage || "",
-  marketModelQuery: marketVisualQuery(defaultSymbol, profile),
+  marketModelQuery: profile.marketModelQuery || "nvidia",
   visualIdentity: profile.visualIdentity || "market visual identity",
   observation: profile.agentUse || adaptive?.reason || feature.blogAngle,
   clientType: feature.clientType || intent,
@@ -74,8 +79,8 @@ export default function Market(){
   clientType: "market",
   visualMode: "market",
   previewImage: activeProfile.previewImage,
-  query: activeProfile.marketModelQuery,
-  terrainUrl: activeProfile.marketModelQuery,
+  query: marketVisualQuery(activeProfile.defaultSymbol, activeProfile),
+  terrainUrl: marketVisualQuery(activeProfile.defaultSymbol, activeProfile),
   marketSymbols: activeProfile.symbols,
   sourceApi: r?.providerLabel || r?.provider || "market-api",
   agentNarration: r?.ai || activeProfile.narration,
@@ -159,7 +164,6 @@ export default function Market(){
     <h1 style={title}>{activeProfile.title}</h1>
     <p style={lede}>{activeFeed.agentNarration}</p>
     <p style={identity}>{activeProfile.visualIdentity}</p>
-    <p style={mono}>Visual search: {activeFeed.query}</p>
     <div style={symbolGrid}>{activeProfile.symbols.map(symbol=><button key={symbol} onClick={()=>scan(symbol)} style={symbol===q?activeSymbol:symbolBtn}>{symbol}</button>)}</div>
    </div>
    <div style={statusPanel}>
@@ -171,7 +175,7 @@ export default function Market(){
     <div style={statusRow}><span>Technicals</span><b>{apiPickup.technicalsPreloaded?"preloaded":"waiting"}</b></div>
     <div style={statusRow}><span>Confidence</span><b>{Math.round((activeFeed.confidence || .45)*100)}%</b></div>
     <button onClick={refreshHealth} style={smallBtn}>Refresh status</button>
-    {apiPickup.credentialsDetected?.length ? <p style={miniStatus}>Keys: {apiPickup.credentialsDetected.join(" / ")}</p> : <p style={miniStatus}>Keys: none detected locally</p>}
+    {apiPickup.credentialsDetected?.length ? <p style={miniStatus}>Keys detected: {apiPickup.credentialsDetected.join(" / ")}</p> : <p style={miniStatus}>Keys: none detected locally</p>}
     {apiPickup.attempts?.length ? <div style={attemptStack}>
      {apiPickup.attempts.map((attempt,index)=><div key={`${attempt.feed || "feed"}-${index}`} style={attemptRow}>
       <b>{attempt.feed || "market feed"}</b>
@@ -183,12 +187,13 @@ export default function Market(){
 
   <section style={profileDeck}>
    {platform.marketProfiles.map(profile=>{
-    const profileQuery = marketVisualQuery(profile.defaultSymbol || profile.symbols?.[0], profile)
-    const feed = { title: profile.title, category: "market", visualMode: "market", previewImage: profile.previewImage, query: profileQuery, terrainUrl: profileQuery, marketSymbols: profile.symbols, visualDescription: profile.visualIdentity, agentNarration: profile.agentUse }
+    const visualQuery = marketVisualQuery(profile.defaultSymbol || profile.symbols?.[0], profile)
+    const feed = { title: profile.title, category: "market", visualMode: "market", previewImage: profile.previewImage, query: visualQuery, terrainUrl: visualQuery, marketSymbols: profile.symbols, visualDescription: profile.visualIdentity, agentNarration: profile.agentUse }
     return <button key={profile.title} onClick={()=>chooseProfile(profile)} style={profile.title===selectedProfile?.title?activeProfileCard:profileChoice}>
      <DiscoverySnapshotVisual feed={feed} scope="market profile card" compact />
      <b>{profile.title}</b>
      <span>{profile.visualIdentity}</span>
+     <small>Visual search: {visualQuery}</small>
      <small>{profile.symbols.join(" / ")}</small>
     </button>
    })}
@@ -208,8 +213,8 @@ export default function Market(){
      <h2 style={profileTitle}>{activeFeed.title}</h2>
      <p style={analysis}>{activeFeed.observation}</p>
      <p style={mono}>Observatory context: {activeProfile.observatoryQuery}</p>
+     <p style={mono}>Visual search: {activeFeed.query}</p>
      <p style={mono}>Symbols: {activeFeed.marketSymbols.join(" / ")}</p>
-     <p style={mono}>Renderer search: {activeFeed.query}</p>
      <p style={analysis}>{activeProfile.tierPrompt}</p>
     </div>
 
