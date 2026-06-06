@@ -1,7 +1,7 @@
 {
   "name":"digitalhut-clean",
   "private":true,
-  "scripts":{"dev":"next dev","build":"next build","start":"next start -p ${PORT:-10000}"},
+  "scripts":{"dev":"next dev","build":"next build","start":"next start -H 0.0.0.0 -p ${PORT:-10000}"},
   "dependencies":{
     "@babylonjs/core":"^9.10.0",
     "@babylonjs/loaders":"^9.10.0",
