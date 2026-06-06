@@ -1,5 +1,5 @@
 "use client"
-import {useEffect, useMemo, useState} from "react"
+import {useEffect, useMemo, useRef, useState} from "react"
 import DiscoverySnapshotVisual from "../../components/DiscoverySnapshotVisual"
 import UniversalFeedVisual from "../../components/UniversalFeedVisual"
 import platform from "../../data/platform-libraries.json"
@@ -67,6 +67,7 @@ export default function Market(){
  const [busy,setBusy]=useState(false)
  const [toast,setToast]=useState("Loading active market feed")
  const [selectedProfile,setSelectedProfile]=useState(platform.marketProfiles?.[0])
+ const rendererRef = useRef(null)
 
  const activeProfile = useMemo(()=>buildMarketProfile({entry, adaptive, symbol:q, selectedProfile}),[entry, adaptive, q, selectedProfile])
  const apiPickup = r?.apiPickup || {}
@@ -92,6 +93,15 @@ export default function Market(){
 
  useEffect(()=>{ bootActiveFeed() },[])
  useEffect(()=>{ if(adaptive && q) scan(q, {silent:true}) },[adaptive])
+ useEffect(()=>{
+  if(typeof window === "undefined" || window.location.hash !== "#market-renderer") return
+  setTimeout(()=>pullToRenderer(),250)
+ },[])
+
+ function pullToRenderer(){
+  if(typeof window==="undefined") return
+  rendererRef.current?.scrollIntoView({behavior:"smooth",block:"start"})
+ }
 
  async function bootActiveFeed(){
   await refreshHealth()
@@ -121,6 +131,7 @@ export default function Market(){
  async function scan(symbol=q, options={}){
   const nextSymbol = String(symbol || activeProfile.defaultSymbol || "BTC").trim().toUpperCase()
   setBusy(true)
+  if(!options.silent) pullToRenderer()
   try{
    if(typeof window!=="undefined") window.localStorage.setItem("digitalhut:lastMarketSymbol", nextSymbol)
    const res=await fetch("/api/market",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:nextSymbol, activeFeed})})
@@ -128,6 +139,7 @@ export default function Market(){
    setR(json)
    setQ(json.symbol || nextSymbol)
    setToast(`${json.symbol || nextSymbol} profile updated from ${json.providerLabel || json.provider}.`)
+   if(!options.silent) pullToRenderer()
    if(!options.silent) speak(json.ai)
   } finally { setBusy(false) }
  }
@@ -136,6 +148,7 @@ export default function Market(){
   setSelectedProfile(profile)
   const nextSymbol = profile.defaultSymbol || profile.symbols?.[0] || q
   setQ(nextSymbol)
+  pullToRenderer()
   scan(nextSymbol)
  }
 
@@ -154,7 +167,7 @@ export default function Market(){
 
  return <main style={shell}>
   <a href="/" style={back}>Back to DigitalHut</a>
-  <section style={hero}>
+  <section id="market-renderer" ref={rendererRef} style={hero}>
    <div style={visualPanel}>
     <DiscoverySnapshotVisual feed={activeFeed} scope="market profile" />
     <div style={rendererInset}><UniversalFeedVisual activeFeed={activeFeed} scope="market"/></div>
