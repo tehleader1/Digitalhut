@@ -16,7 +16,13 @@ const intentBoosts = {
 
 function fallbackResult(query) {
   const q = String(query || "").toLowerCase()
-  return fallback.find(x => x.title.toLowerCase().includes(q) || x.category.includes(q)) || fallback[Math.floor(Math.random() * fallback.length)]
+  const matched = fallback.find(x => x.title.toLowerCase().includes(q) || x.category.includes(q))
+  if (matched) return matched
+  return {
+    title: titleFromQuery(q || query || "Observatory preview"),
+    category: categoryFromQuery(q),
+    url: `https://sketchfab.com/search?q=${encodeURIComponent(q || query || "observatory")}&type=models`
+  }
 }
 
 function sketchfabToken() {
@@ -60,6 +66,31 @@ function cleanSearchQuery(value) {
     .replace(/\bobservatory\b/gi, "")
     .replace(/\s+/g, " ")
     .trim()
+}
+
+function titleFromQuery(value) {
+  const q = String(value || "").trim().toLowerCase()
+  if (q.includes("hollywood") || q.includes("california")) return "California Hollywood"
+  if (q.includes("canada") && q.includes("mountain")) return "Canada Mountains"
+  if (q.includes("european alps") || q.includes("alps")) return "European Alps Mountain Village"
+  if (q.includes("alaska") || q.includes("igloo")) return "Alaska Igloo"
+  if (q.includes("fiji") || q.includes("bungalow")) return "Fiji Bungalow"
+  if (q.includes("japanese")) return "Japanese Art"
+  if (q.includes("wall street") || q.includes("financial district")) return "Wall Street"
+  if (q.includes("nvda") || q.includes("nvidia")) return "NVIDIA"
+  return q
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ") || "Observatory Preview"
+}
+
+function categoryFromQuery(value) {
+  const q = String(value || "").toLowerCase()
+  if (q.includes("market") || q.includes("stock") || q.includes("wall street") || q.includes("nvda") || q.includes("nvidia")) return "market"
+  if (q.includes("moon") || q.includes("mars") || q.includes("earth")) return "planetary"
+  if (q.includes("house") || q.includes("home") || q.includes("bungalow")) return "structures"
+  return "environment"
 }
 
 function inferIntent(tokens) {
@@ -211,7 +242,7 @@ export async function POST(req) {
     })
   }
 
-  const item = fallbackResult(query)
+  const item = fallbackResult(searchQuery)
   const setupHint = live.tokenPresent
     ? `${live.statusLabel}. Try a broader query or check token permissions if this should return downloadable GLBs.`
     : "Add SKETCHFAB_ACCESS_TOKEN to Render, then redeploy, to enable authenticated live Sketchfab search."
