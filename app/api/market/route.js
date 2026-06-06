@@ -143,7 +143,7 @@ function cryptoPair(symbol) {
 
 function apiLabel(diagnostics = {}) {
   if (diagnostics.mode === "live") return `${diagnostics.feed} API picked up live candles`
-  if (diagnostics.credentialsPresent && !diagnostics.credentialsComplete) return `${diagnostics.feed} API key detected; add secret for live candles`
+  if (diagnostics.feed === "alpaca" && diagnostics.credentialsPresent && !diagnostics.credentialsComplete) return `${diagnostics.feed} API key detected; add secret for live candles`
   if (diagnostics.credentialsPresent) return `${diagnostics.feed} API key detected; using fallback until bars confirm`
   return `${diagnostics.feed} API key missing`
 }
@@ -154,8 +154,8 @@ function alpacaSymbol(symbol) {
 }
 
 async function fetchAlpacaBars(symbol) {
-  const key = process.env.ALPACA_API_KEY || process.env.APCA_API_KEY_ID
-  const secret = process.env.ALPACA_SECRET_KEY || process.env.APCA_API_SECRET_KEY
+  const key = process.env.ALPACA_API_KEY || process.env.ALPACA_API_KEY_ID || process.env.APCA_API_KEY_ID
+  const secret = process.env.ALPACA_SECRET_KEY || process.env.ALPACA_API_SECRET_KEY || process.env.APCA_API_SECRET_KEY
   const credentialsComplete = Boolean(key && secret)
   const diagnostics = {
     feed: "alpaca",
