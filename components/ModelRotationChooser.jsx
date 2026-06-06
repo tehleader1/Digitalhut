@@ -31,7 +31,7 @@ function buildChoiceFeed(choice) {
   }
 }
 
-export default function ModelRotationChooser({ activeFeed, result, busy = false, onSelectFeed }) {
+export default function ModelRotationChooser({ activeFeed, result, busy = false, onSelectFeed, subscription, onWallet }) {
   const choices = library.modelChoices
   const liveUrl = activeFeed?.modelUrl || result?.result?.glbUrl || result?.result?.downloadUrl || ""
   const title = activeFeed?.title || result?.result?.title || choices[0]?.title || "DigitalHut model"
@@ -95,9 +95,10 @@ export default function ModelRotationChooser({ activeFeed, result, busy = false,
   return (
     <UnifiedAppShell
       activeFeed={visualFeed}
-      subscription={{ tier: activeFeed?.subscriptionTier || "free" }}
+      subscription={subscription || { tier: activeFeed?.subscriptionTier || "free" }}
       libraryFeeds={choiceFeeds}
       onSelectFeed={onSelectFeed}
+      onWallet={onWallet}
     >
       {renderer}
     </UnifiedAppShell>
