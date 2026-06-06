@@ -76,10 +76,10 @@ function fallbackBackground(accent) {
 }
 
 const styles = {
-  wrap: { position: "relative", minWidth: 0, height: "100%", minHeight: 420, display: "grid" },
-  image: { width: "100%", height: "100%", minHeight: 420, objectFit: "cover", display: "block", background: "#020617" },
+  wrap: { position: "relative", minWidth: 0, width: "100%", height: "100%", minHeight: 0, display: "grid" },
+  image: { width: "100%", height: "100%", minHeight: 0, objectFit: "cover", display: "block", background: "#020617" },
   badge: { position: "absolute", left: 14, top: 14, zIndex: 2, padding: "9px 11px", borderRadius: 8, border: "1px solid rgba(226,232,240,.22)", background: "rgba(2,6,23,.72)", color: "white", display: "grid", gap: 3, backdropFilter: "blur(8px)", maxWidth: "calc(100% - 28px)" },
-  synthetic: { position: "relative", minHeight: 420, padding: 20, borderRadius: 8, overflow: "hidden", display: "grid", alignContent: "end", gap: 12, boxSizing: "border-box" },
+  synthetic: { position: "relative", width: "100%", height: "100%", minHeight: 0, padding: 20, borderRadius: 8, overflow: "hidden", display: "grid", alignContent: "end", gap: 12, boxSizing: "border-box" },
   marketGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(96px,1fr))", gap: 12, marginTop: 58 },
   marketTile: { minHeight: 132, padding: 12, borderRadius: 8, border: "1px solid rgba(226,232,240,.16)", background: "rgba(2,6,23,.58)", display: "grid", alignContent: "space-between", gap: 16 },
   symbol: { fontSize: 24, fontWeight: 900, color: "white" },
