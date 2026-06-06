@@ -86,6 +86,7 @@ function Catalog({ title, items, type }) {
 }
 
 function FeedCard({ feed, item = feed, type }) {
+ const observatoryHref = `/?query=${encodeURIComponent(item.query || feed.terrainUrl || feed.title)}#observatory-renderer`
  return <article style={card}>
   <div style={visualStack}>
    <div style={snapshotSlot}><DiscoverySnapshotVisual feed={feed} scope="library card" compact /></div>
@@ -96,7 +97,7 @@ function FeedCard({ feed, item = feed, type }) {
   <p style={identity}>{item.visualIdentity || feed.visualDescription || "activeFeed visual identity"}</p>
   <p style={copy}>{type === "market" ? item.agentUse : item.query || feed.terrainUrl}</p>
   <DiscoveryEvidenceTrail feed={feed} title="Library memory" compact />
-  {item.symbols ? <div style={unlockGrid}>{item.symbols.map(symbol=><a key={symbol} href={`/market-intelligence?symbol=${symbol}`} style={miniLink}>{symbol}</a>)}</div> : <a href={`/?query=${encodeURIComponent(item.query || feed.terrainUrl || feed.title)}`} style={open}>Open feed</a>}
+  {item.symbols ? <div style={unlockGrid}>{item.symbols.map(symbol=><a key={symbol} href={`/market-intelligence?symbol=${symbol}#market-renderer`} style={miniLink}>{symbol}</a>)}</div> : <a href={observatoryHref} style={open}>Open feed</a>}
  </article>
 }
 
