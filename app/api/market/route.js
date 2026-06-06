@@ -143,8 +143,72 @@ function cryptoPair(symbol) {
 
 function apiLabel(diagnostics = {}) {
   if (diagnostics.mode === "live") return `${diagnostics.feed} API picked up live candles`
+  if (diagnostics.credentialsPresent && !diagnostics.credentialsComplete) return `${diagnostics.feed} API key detected; add secret for live candles`
   if (diagnostics.credentialsPresent) return `${diagnostics.feed} API key detected; using fallback until bars confirm`
   return `${diagnostics.feed} API key missing`
+}
+
+function alpacaSymbol(symbol) {
+  if (["BTC", "ETH", "SOL", "DOGE"].includes(symbol)) return `${symbol}/USD`
+  return symbol
+}
+
+async function fetchAlpacaBars(symbol) {
+  const key = process.env.ALPACA_API_KEY || process.env.APCA_API_KEY_ID
+  const secret = process.env.ALPACA_SECRET_KEY || process.env.APCA_API_SECRET_KEY
+  const credentialsComplete = Boolean(key && secret)
+  const diagnostics = {
+    feed: "alpaca",
+    credentialsPresent: Boolean(key),
+    credentialsComplete,
+    requestStatus: null,
+    mode: "fallback",
+    label: key ? "Alpaca API key detected" : "Alpaca API key missing",
+    reason: key ? (secret ? "Alpaca credentials detected" : "ALPACA_SECRET_KEY missing") : "ALPACA_API_KEY missing"
+  }
+  if (!credentialsComplete) return { bars: null, diagnostics: { ...diagnostics, label: apiLabel(diagnostics) } }
+
+  try {
+    const crypto = ["BTC", "ETH", "SOL", "DOGE"].includes(symbol)
+    const url = crypto
+      ? new URL("https://data.alpaca.markets/v1beta3/crypto/us/bars")
+      : new URL(`https://data.alpaca.markets/v2/stocks/${symbol}/bars`)
+    url.searchParams.set("timeframe", "1Day")
+    url.searchParams.set("start", `${dateOffset(35)}T00:00:00Z`)
+    url.searchParams.set("end", `${dateOffset(1)}T23:59:59Z`)
+    url.searchParams.set("limit", "24")
+    if (crypto) url.searchParams.set("symbols", alpacaSymbol(symbol))
+    else {
+      url.searchParams.set("adjustment", "raw")
+      url.searchParams.set("feed", "iex")
+    }
+    const response = await fetch(url, {
+      headers: {
+        "APCA-API-KEY-ID": key,
+        "APCA-API-SECRET-KEY": secret
+      }
+    })
+    const data = await response.json()
+    const rawBars = crypto ? data.bars?.[alpacaSymbol(symbol)] || [] : data.bars || []
+    const bars = Array.isArray(rawBars) ? rawBars.slice(-24).map((bar) => ({
+      t: new Date(bar.t).toISOString(),
+      o: Number(bar.o),
+      h: Number(bar.h),
+      l: Number(bar.l),
+      c: Number(bar.c),
+      v: Number(bar.v || 0)
+    })).filter((bar) => Number.isFinite(bar.c)) : []
+    const nextDiagnostics = {
+      ...diagnostics,
+      requestStatus: response.status,
+      mode: bars.length ? "live" : "fallback",
+      reason: bars.length ? "Alpaca bars confirmed" : data.message || data.error || "Alpaca returned no bars"
+    }
+    return { bars: bars.length ? bars : null, diagnostics: { ...nextDiagnostics, label: apiLabel(nextDiagnostics) } }
+  } catch (error) {
+    const nextDiagnostics = { ...diagnostics, reason: error?.message || "Alpaca request failed" }
+    return { bars: null, diagnostics: { ...nextDiagnostics, label: apiLabel(nextDiagnostics) } }
+  }
 }
 
 async function fetchPolygonBars(symbol) {
@@ -242,12 +306,15 @@ async function fetchAlphaVantageBars(symbol) {
 
 async function fetchProviderBars(symbol) {
   const attempts = []
-  for (const fetcher of [fetchPolygonBars, fetchFmpBars, fetchAlphaVantageBars]) {
+  for (const fetcher of [fetchAlpacaBars, fetchPolygonBars, fetchFmpBars, fetchAlphaVantageBars]) {
     const result = await fetcher(symbol)
     attempts.push(result.diagnostics)
     if (result.bars?.length) return { bars: result.bars, diagnostics: result.diagnostics, attempts }
   }
-  const diagnostics = { feed: "fallback", mode: "fallback", credentialsPresent: false, label: "Curated fallback technicals active", reason: "Polygon, FMP, and Alpha Vantage did not return live bars" }
+  const detected = attempts.find((attempt) => attempt.credentialsPresent)
+  const diagnostics = detected
+    ? { ...detected, mode: "fallback", label: apiLabel(detected), reason: `${detected.feed} credentials detected but live bars did not confirm` }
+    : { feed: "fallback", mode: "fallback", credentialsPresent: false, label: "Curated fallback technicals active", reason: "Alpaca, Polygon, FMP, and Alpha Vantage did not return live bars" }
   return { bars: null, diagnostics, attempts }
 }
 
