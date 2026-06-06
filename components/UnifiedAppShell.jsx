@@ -4,9 +4,8 @@ import { useEffect, useMemo, useState } from "react"
 import SystemIntroOverlay from "./SystemIntroOverlay"
 import GuidedTourControls from "./GuidedTourControls"
 import QuickActionRail from "./QuickActionRail"
-import AuthorityNudge from "./AuthorityNudge"
-import PersistentLibraryRail from "./PersistentLibraryRail"
 import UserModeSwitcher from "./UserModeSwitcher"
+import AuthorityNudge from "./AuthorityNudge"
 import WalletOnboardingPulse from "./WalletOnboardingPulse"
 
 import {
@@ -18,7 +17,7 @@ import {
   switchTourMode
 } from "../lib/domain/tourState"
 
-import { detectUserModeProfile, getModeNarrationStyle } from "../lib/domain/userModeProfile"
+import { detectUserModeProfile } from "../lib/domain/userModeProfile"
 import { getAuthorityNudges } from "../lib/domain/authorityNudges"
 import { buildRunnerContext } from "../lib/domain/runnerContext"
 
@@ -26,8 +25,6 @@ export default function UnifiedAppShell({
   activeFeed,
   subscription,
   events = [],
-  libraryFeeds = [],
-  onSelectFeed,
   onQuickAction,
   onWallet,
   children
@@ -36,6 +33,7 @@ export default function UnifiedAppShell({
   const [tourState, setTourState] = useState(() => createInitialTourState(activeFeed))
   const [nudge, setNudge] = useState(null)
   const [internalEvents, setInternalEvents] = useState([])
+  const [sideOpen, setSideOpen] = useState(false)
   const combinedEvents = useMemo(() => [...events, ...internalEvents].slice(-40), [events, internalEvents])
   const userProfile = useMemo(() => detectUserModeProfile(combinedEvents), [combinedEvents])
 
@@ -84,11 +82,6 @@ export default function UnifiedAppShell({
     onQuickAction?.(action, feed, runnerContext)
   }
 
-  function handleLibrarySelect(feed, options) {
-    recordEvent("library-click", { feedId: feed?.id || feed?.query })
-    onSelectFeed?.(feed, options)
-  }
-
   function handleWallet(wallet) {
     recordEvent("wallet-check", { walletPresent: Boolean(wallet) })
     onWallet?.(wallet)
@@ -99,20 +92,18 @@ export default function UnifiedAppShell({
       {!introDone && <SystemIntroOverlay activeFeed={activeFeed} onComplete={() => { recordEvent("tour-start"); setIntroDone(true) }} />}
 
       <header style={styles.topbar}>
-        <div>
+        <div style={styles.identity}>
           <b>DigitalHut Observatory</b>
-          <span style={styles.sub}> {userProfile.label} / {tourState.mode}</span>
+          <span style={styles.sub}>{activeFeed?.title || "Current Discovery"}</span>
         </div>
         <div style={styles.status}>
-          <span>Runner Active</span>
           <span>{subscription?.tier || "free"}</span>
-          <span>{runnerContext.proEditingAllowed ? "Pro GLB" : "View Mode"}</span>
+          <span>{tourState.mode}</span>
+          <button type="button" onClick={() => setSideOpen((value) => !value)} style={styles.sideToggle}>{sideOpen ? "Hide" : "System"}</button>
         </div>
       </header>
 
-      <UserModeSwitcher mode={tourState.mode} onChange={(mode) => { recordEvent(`mode-${mode}`); setTourState((state) => switchTourMode(state, mode)) }} />
-
-      <section style={styles.stage}>
+      <section style={sideOpen ? styles.stageWithSide : styles.stageSolo}>
         <div style={styles.rendererColumn}>
           <div style={styles.rendererWrap} onPointerDown={() => triggerInteraction("renderer-manual-control")}>
             {children}
@@ -130,14 +121,13 @@ export default function UnifiedAppShell({
           />
         </div>
 
-        <aside style={styles.side}>
-          <p style={styles.eyebrow}>Active Guidance</p>
+        {sideOpen && <aside style={styles.side}>
+          <p style={styles.eyebrow}>System</p>
           <h2 style={styles.title}>{activeFeed?.title || "Current Discovery"}</h2>
-          <p style={styles.copy}>{getModeNarrationStyle(userProfile, activeFeed)}</p>
-          <p style={styles.runner}>{runnerContext.runnerInstruction}</p>
+          <p style={styles.copy}>{runnerContext.runnerInstruction}</p>
+          <UserModeSwitcher mode={tourState.mode} onChange={(mode) => { recordEvent(`mode-${mode}`); setTourState((state) => switchTourMode(state, mode)) }} />
           <WalletOnboardingPulse onWallet={handleWallet} />
-          <PersistentLibraryRail activeFeed={activeFeed} feeds={libraryFeeds} onSelect={handleLibrarySelect} />
-        </aside>
+        </aside>}
       </section>
 
       <AuthorityNudge nudge={nudge} onClose={() => setNudge(null)} onAction={() => setNudge(null)} />
@@ -146,16 +136,18 @@ export default function UnifiedAppShell({
 }
 
 const styles = {
-  shell: { width: "100%", height: "100%", minHeight: 0, maxWidth: 1540, margin: "0 auto", padding: 12, color: "white", border: "1px solid rgba(103,232,249,.22)", borderRadius: 8, background: "rgba(2,6,23,.62)", display: "grid", gridTemplateRows: "auto auto minmax(0,1fr)", gap: 10, boxSizing: "border-box", overflow: "hidden" },
-  topbar: { display: "flex", justifyContent: "space-between", gap: 12, alignItems: "center", padding: "2px 0", flexWrap: "wrap" },
-  sub: { color: "#94a3b8", fontSize: 13 },
-  status: { display: "flex", gap: 8, flexWrap: "wrap", color: "#a5f3fc", fontSize: 12, fontWeight: 900 },
-  stage: { minHeight: 0, display: "grid", gridTemplateColumns: "minmax(0,1.35fr) minmax(min(100%,320px),.65fr)", gap: 12, alignItems: "stretch", overflow: "hidden" },
-  rendererColumn: { minWidth: 0, minHeight: 0, display: "grid", gridTemplateRows: "minmax(0,1fr) auto auto", gap: 8, overflow: "hidden" },
-  rendererWrap: { minHeight: 0, height: "100%", borderRadius: 8, overflow: "hidden", border: "1px solid rgba(103,232,249,.25)", background: "rgba(2,6,23,.8)" },
-  side: { minWidth: 0, maxHeight: "100%", borderRadius: 8, padding: 12, border: "1px solid rgba(148,163,184,.25)", background: "rgba(15,23,42,.72)", display: "grid", gap: 9, alignContent: "start", overflow: "auto" },
+  shell: { width: "100%", height: "100%", minHeight: 0, maxWidth: 1640, margin: "0 auto", padding: 8, color: "white", border: "1px solid rgba(103,232,249,.18)", borderRadius: 8, background: "rgba(2,6,23,.5)", display: "grid", gridTemplateRows: "auto minmax(0,1fr)", gap: 8, boxSizing: "border-box", overflow: "hidden" },
+  topbar: { display: "flex", justifyContent: "space-between", gap: 10, alignItems: "center", padding: "2px 0", flexWrap: "wrap", minHeight: 30 },
+  identity: { minWidth: 0, display: "flex", gap: 10, alignItems: "baseline", flexWrap: "wrap" },
+  sub: { color: "#94a3b8", fontSize: 12, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: 520 },
+  status: { display: "flex", gap: 7, flexWrap: "wrap", color: "#a5f3fc", fontSize: 12, fontWeight: 900, alignItems: "center" },
+  sideToggle: { padding: "7px 9px", borderRadius: 8, border: "1px solid rgba(226,232,240,.2)", background: "rgba(226,232,240,.08)", color: "white", fontWeight: 900, cursor: "pointer" },
+  stageSolo: { minHeight: 0, display: "grid", gridTemplateColumns: "minmax(0,1fr)", gap: 8, alignItems: "stretch", overflow: "hidden" },
+  stageWithSide: { minHeight: 0, display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(min(100%,280px),.28fr)", gap: 10, alignItems: "stretch", overflow: "hidden" },
+  rendererColumn: { minWidth: 0, minHeight: 0, display: "grid", gridTemplateRows: "minmax(0,1fr) auto auto", gap: 7, overflow: "hidden" },
+  rendererWrap: { minHeight: 0, height: "100%", borderRadius: 8, overflow: "hidden", border: "1px solid rgba(103,232,249,.2)", background: "rgba(2,6,23,.8)" },
+  side: { minWidth: 0, maxHeight: "100%", borderRadius: 8, padding: 11, border: "1px solid rgba(148,163,184,.2)", background: "rgba(15,23,42,.72)", display: "grid", gap: 9, alignContent: "start", overflow: "auto" },
   eyebrow: { color: "#67e8f9", fontWeight: 900, fontSize: 12, textTransform: "uppercase", letterSpacing: 0, margin: 0 },
-  title: { fontSize: 24, margin: "0 0 3px", letterSpacing: 0, overflowWrap: "anywhere" },
-  copy: { color: "#e2e8f0", lineHeight: 1.4, margin: 0 },
-  runner: { color: "#94a3b8", fontSize: 13, lineHeight: 1.4, margin: 0 }
+  title: { fontSize: 22, margin: "0 0 3px", letterSpacing: 0, overflowWrap: "anywhere" },
+  copy: { color: "#e2e8f0", lineHeight: 1.38, margin: 0 }
 }
