@@ -6,45 +6,45 @@ import DiscoverySnapshotVisual from "./DiscoverySnapshotVisual"
 
 const liveExampleQueries = {
   "home-project": {
-    title: "Igloo in the Alaska mountains",
-    query: "Alaska igloo mountain cabin",
-    visualDescription: "snow shelter, mountain discovery, and cold-weather project planning",
+    title: "Alaska igloo",
+    query: "alaska igloo",
+    visualDescription: "snow shelter and cold-weather project planning",
     previewImage: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80"
   },
   "real-estate-scout": {
-    title: "Canada mountain property scout",
-    query: "Canada mountain cabin real estate",
-    visualDescription: "Canadian mountain property, real estate route, and home preview",
+    title: "Canada mountains",
+    query: "canada mountains",
+    visualDescription: "Canadian mountain property and location preview",
     previewImage: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=80"
   },
   gamer: {
-    title: "Japanese game world arena",
-    query: "Japanese neon game arena",
+    title: "Japanese game arena",
+    query: "japanese game arena",
     visualDescription: "game-ready creator scene with Japanese visual identity",
     previewImage: "https://images.unsplash.com/photo-1528360983277-13d401cdc186?auto=format&fit=crop&w=1200&q=80"
   },
   student: {
-    title: "India market learning map",
-    query: "India market street learning map",
-    visualDescription: "real-world study example with market, streets, objects, and location context",
+    title: "India market",
+    query: "india market",
+    visualDescription: "real-world study example with market and location context",
     previewImage: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1200&q=80"
   },
   workforce: {
-    title: "Warehouse training bay",
-    query: "warehouse training bay workflow",
+    title: "Warehouse training",
+    query: "warehouse training",
     visualDescription: "training lane for equipment, workflow, safety, and operations",
     previewImage: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80"
   },
   political: {
-    title: "Civic map and public district",
-    query: "Washington civic district public buildings map",
+    title: "Washington civic district",
+    query: "washington civic district",
     visualDescription: "public buildings, civic map context, and policy discovery surface",
     previewImage: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80"
   },
   "market-user": {
-    title: "NVIDIA market intelligence desk",
-    query: "NVDA Nvidia stock market trading desk",
-    visualDescription: "equity profile with company ticker, chart screens, and technical context",
+    title: "NVIDIA",
+    query: "nvidia",
+    visualDescription: "equity profile with company ticker and technical context",
     previewImage: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=80"
   }
 }
@@ -80,7 +80,7 @@ function exampleFeedFor(feature) {
     previewImage: liveExample.previewImage || marketProfile.previewImage,
     marketSymbols: feature.market?.symbols || marketProfile.symbols || [],
     agentNarration: `${liveExample.title || feature.mainFeatureTitle}. ${feature.blogAngle}`,
-    visualDescription: liveExample.visualDescription || feature.contextGLBSearch || marketProfile.visualIdentity || feature.seoDescription
+    visualDescription: liveExample.visualDescription || query
   }
 }
 
