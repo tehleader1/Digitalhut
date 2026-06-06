@@ -22,7 +22,7 @@ function buildChoiceFeed(choice) {
     title: choice.title,
     category: choice.mood,
     clientType: choice.mood,
-    source: "recent-search-example",
+    source: "renderer-quick-option",
     previewImage: choice.previewImage,
     query,
     terrainUrl: query,
@@ -54,22 +54,21 @@ export default function ModelRotationChooser({ activeFeed, result, busy = false,
 
   const renderer = <section style={styles.wrap} aria-labelledby="model-rotation-title">
     <div style={styles.header}>
-      <div>
-        <p style={styles.eyebrow}>Fullscreen observatory renderer</p>
+      <div style={styles.titleBlock}>
+        <p style={styles.eyebrow}>Active renderer</p>
         <h2 id="model-rotation-title" style={styles.title}>{title}</h2>
       </div>
       <span style={styles.pill}>{busy ? "scanning" : activeFeed?.category || "model"}</span>
     </div>
     <div style={styles.stageGrid}>
       <div style={styles.primaryStage}>
-        <div style={styles.rendererLabel}>Observatory renderer A</div>
         <div style={styles.viewer}><UniversalFeedVisual activeFeed={visualFeed} scope="rotation" /></div>
       </div>
-      <div style={styles.sideRail}>
-        <div style={styles.secondaryStage}>
-          <div style={styles.rendererLabel}>Observatory renderer B</div>
-          <DiscoverySnapshotVisual feed={visualFeed} scope="observatory renderer" />
+      <div style={styles.quickRail} aria-label="Renderer quick options">
+        <div style={styles.quickPreview}>
+          <DiscoverySnapshotVisual feed={visualFeed} scope="active preview" compact />
         </div>
+        <div style={styles.quickHeading}>Quick options</div>
         <div style={styles.choices}>
           {choiceFeeds.map((choiceFeed) => {
             const selected = activeFeed?.query === choiceFeed.query || activeFeed?.title === choiceFeed.title
@@ -81,10 +80,8 @@ export default function ModelRotationChooser({ activeFeed, result, busy = false,
               onClick={() => onSelectFeed?.(choiceFeed, { speak: true, scan: true })}
               style={selected ? styles.activeChoice : styles.choice}
             >
-              <DiscoverySnapshotVisual feed={choiceFeed} scope="recent search preview" compact />
               <b>{choiceFeed.title}</b>
               <span>{choiceFeed.category}</span>
-              <small style={styles.queryLine}>Search: {choiceFeed.query}</small>
             </button>
           })}
         </div>
@@ -106,19 +103,19 @@ export default function ModelRotationChooser({ activeFeed, result, busy = false,
 }
 
 const styles = {
-  wrap: { width: "100%", height: "100%", minHeight: 0, margin: 0, padding: 14, border: "1px solid rgba(45,212,191,.28)", borderRadius: 8, background: "linear-gradient(135deg,rgba(2,6,23,.96),rgba(8,47,73,.72))", boxSizing: "border-box", display: "grid", gridTemplateRows: "auto minmax(0,1fr)", gap: 10, overflow: "hidden" },
-  header: { display: "flex", justifyContent: "space-between", gap: 12, alignItems: "flex-start", flexWrap: "wrap" },
-  eyebrow: { margin: "0 0 6px", color: "#67e8f9", fontSize: 12, fontWeight: 900, textTransform: "uppercase", letterSpacing: 0 },
-  title: { margin: 0, fontSize: "clamp(24px,3.5vw,42px)", lineHeight: 1.04, letterSpacing: 0, maxWidth: 980, overflowWrap: "anywhere" },
-  pill: { fontSize: 12, padding: "7px 10px", borderRadius: 999, background: "rgba(103,232,249,.12)", color: "#a5f3fc", fontWeight: 900, textTransform: "capitalize" },
-  stageGrid: { minHeight: 0, height: "100%", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,420px),1fr))", gap: 12, alignItems: "stretch", overflow: "hidden" },
-  primaryStage: { minWidth: 0, minHeight: 0, height: "100%", display: "grid", gridTemplateRows: "auto minmax(0,1fr)", gap: 7, overflow: "hidden" },
-  secondaryStage: { minWidth: 0, display: "grid", gap: 7 },
-  sideRail: { minWidth: 0, maxHeight: "100%", display: "grid", gap: 10, alignContent: "start", overflow: "auto" },
-  rendererLabel: { color: "#a5f3fc", fontSize: 12, fontWeight: 900, textTransform: "uppercase" },
+  wrap: { width: "100%", height: "100%", minHeight: 0, margin: 0, padding: 10, border: "1px solid rgba(45,212,191,.24)", borderRadius: 8, background: "linear-gradient(135deg,rgba(2,6,23,.96),rgba(8,47,73,.7))", boxSizing: "border-box", display: "grid", gridTemplateRows: "auto minmax(0,1fr)", gap: 8, overflow: "hidden" },
+  header: { display: "flex", justifyContent: "space-between", gap: 10, alignItems: "center", minHeight: 34 },
+  titleBlock: { minWidth: 0, display: "flex", gap: 10, alignItems: "baseline", flexWrap: "wrap" },
+  eyebrow: { margin: 0, color: "#67e8f9", fontSize: 11, fontWeight: 900, textTransform: "uppercase", letterSpacing: 0, whiteSpace: "nowrap" },
+  title: { margin: 0, fontSize: "clamp(20px,2.6vw,34px)", lineHeight: 1.02, letterSpacing: 0, maxWidth: 980, overflowWrap: "anywhere" },
+  pill: { fontSize: 11, padding: "6px 9px", borderRadius: 999, background: "rgba(103,232,249,.12)", color: "#a5f3fc", fontWeight: 900, textTransform: "capitalize", whiteSpace: "nowrap" },
+  stageGrid: { minHeight: 0, height: "100%", display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(176px,230px)", gap: 10, alignItems: "stretch", overflow: "hidden" },
+  primaryStage: { minWidth: 0, minHeight: 0, height: "100%", overflow: "hidden" },
   viewer: { minWidth: 0, minHeight: 0, height: "100%", borderRadius: 8, overflow: "hidden", background: "#020617" },
-  choices: { display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,170px),1fr))", gap: 8, alignContent: "start" },
-  choice: { minWidth: 0, textAlign: "left", padding: 10, borderRadius: 8, border: "1px solid rgba(148,163,184,.22)", background: "rgba(2,6,23,.42)", color: "white", display: "grid", gap: 6, cursor: "pointer" },
-  activeChoice: { minWidth: 0, textAlign: "left", padding: 10, borderRadius: 8, border: "1px solid rgba(45,212,191,.45)", background: "rgba(20,184,166,.14)", color: "white", display: "grid", gap: 6, cursor: "pointer" },
-  queryLine: { color: "#bae6fd", fontSize: 11, fontWeight: 900, overflowWrap: "anywhere" }
+  quickRail: { minWidth: 0, maxHeight: "100%", display: "grid", gridTemplateRows: "auto auto minmax(0,1fr)", gap: 8, alignContent: "start", overflow: "hidden" },
+  quickPreview: { minHeight: 92, borderRadius: 8, overflow: "hidden", border: "1px solid rgba(148,163,184,.2)", background: "rgba(2,6,23,.45)" },
+  quickHeading: { color: "#a5f3fc", fontSize: 12, fontWeight: 900, textTransform: "uppercase" },
+  choices: { minHeight: 0, overflow: "auto", display: "grid", gap: 7, alignContent: "start" },
+  choice: { minWidth: 0, textAlign: "left", padding: 9, borderRadius: 8, border: "1px solid rgba(148,163,184,.2)", background: "rgba(2,6,23,.36)", color: "white", display: "grid", gap: 4, cursor: "pointer" },
+  activeChoice: { minWidth: 0, textAlign: "left", padding: 9, borderRadius: 8, border: "1px solid rgba(45,212,191,.5)", background: "rgba(20,184,166,.16)", color: "white", display: "grid", gap: 4, cursor: "pointer" }
 }
