@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react"
 import SystemIntroOverlay from "./SystemIntroOverlay"
 import GuidedTourControls from "./GuidedTourControls"
 import QuickActionRail from "./QuickActionRail"
+import UserModeSwitcher from "./UserModeSwitcher"
 import AuthorityNudge from "./AuthorityNudge"
 import WalletOnboardingPulse from "./WalletOnboardingPulse"
 
