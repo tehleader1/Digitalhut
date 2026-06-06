@@ -66,6 +66,7 @@ export default function BabylonObservatory({ modelUrl, title }) {
       engine.runRenderLoop(() => scene.render())
       resize = () => engine.resize()
       window.addEventListener("resize", resize)
+      resize()
     }
 
     run()
@@ -78,11 +79,17 @@ export default function BabylonObservatory({ modelUrl, title }) {
   }, [modelUrl])
 
   return (
-    <div style={{ border:"1px solid rgba(148,163,184,.3)", borderRadius:18, overflow:"hidden", background:"#020617" }}>
-      <div style={{ padding:12, color:"#38bdf8", fontWeight:900 }}>
-        Babylon Orbit Observatory {title ? `— ${title}` : ""}
+    <div style={styles.wrap}>
+      <div style={styles.label}>
+        Babylon Orbit Observatory {title ? ` / ${title}` : ""}
       </div>
-      <canvas ref={canvasRef} style={{ width:"100%", height:"420px", display:"block", touchAction:"none" }} />
+      <canvas ref={canvasRef} style={styles.canvas} />
     </div>
   )
+}
+
+const styles = {
+  wrap: { width: "100%", height: "100%", minHeight: 0, display: "grid", gridTemplateRows: "auto minmax(0,1fr)", border: "1px solid rgba(148,163,184,.3)", borderRadius: 8, overflow: "hidden", background: "#020617" },
+  label: { padding: "8px 10px", color: "#38bdf8", fontWeight: 900, fontSize: 12, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" },
+  canvas: { width: "100%", height: "100%", minHeight: 0, display: "block", touchAction: "none" }
 }
