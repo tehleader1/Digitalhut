@@ -32,7 +32,7 @@ export default function UnifiedAppShell({
   onWallet,
   children
 }) {
-  const [introDone, setIntroDone] = useState(false)
+  const [introDone, setIntroDone] = useState(true)
   const [tourState, setTourState] = useState(() => createInitialTourState(activeFeed))
   const [nudge, setNudge] = useState(null)
   const [internalEvents, setInternalEvents] = useState([])
@@ -146,16 +146,16 @@ export default function UnifiedAppShell({
 }
 
 const styles = {
-  shell: { maxWidth: 1320, margin: "22px auto", padding: 16, color: "white", border: "1px solid rgba(103,232,249,.22)", borderRadius: 8, background: "rgba(2,6,23,.42)" },
-  topbar: { display: "flex", justifyContent: "space-between", gap: 12, alignItems: "center", padding: "10px 0", flexWrap: "wrap" },
+  shell: { maxWidth: 1540, minHeight: "calc(100vh - 24px)", margin: "0 auto", padding: 14, color: "white", border: "1px solid rgba(103,232,249,.22)", borderRadius: 8, background: "rgba(2,6,23,.62)", display: "grid", gap: 12, boxSizing: "border-box" },
+  topbar: { display: "flex", justifyContent: "space-between", gap: 12, alignItems: "center", padding: "4px 0", flexWrap: "wrap" },
   sub: { color: "#94a3b8", fontSize: 13 },
   status: { display: "flex", gap: 8, flexWrap: "wrap", color: "#a5f3fc", fontSize: 12, fontWeight: 900 },
-  stage: { display: "grid", gridTemplateColumns: "minmax(0,1.35fr) minmax(300px,.65fr)", gap: 16, alignItems: "stretch", marginTop: 14 },
-  rendererColumn: { minWidth: 0, display: "grid", gap: 12 },
-  rendererWrap: { minHeight: 420, borderRadius: 8, overflow: "hidden", border: "1px solid rgba(103,232,249,.25)", background: "rgba(2,6,23,.8)" },
-  side: { minWidth: 0, borderRadius: 8, padding: 16, border: "1px solid rgba(148,163,184,.25)", background: "rgba(15,23,42,.72)", display: "grid", gap: 12, alignContent: "start" },
+  stage: { display: "grid", gridTemplateColumns: "minmax(0,1.35fr) minmax(min(100%,320px),.65fr)", gap: 14, alignItems: "stretch", marginTop: 2 },
+  rendererColumn: { minWidth: 0, display: "grid", gap: 10 },
+  rendererWrap: { minHeight: "min(70vh,760px)", borderRadius: 8, overflow: "hidden", border: "1px solid rgba(103,232,249,.25)", background: "rgba(2,6,23,.8)" },
+  side: { minWidth: 0, borderRadius: 8, padding: 14, border: "1px solid rgba(148,163,184,.25)", background: "rgba(15,23,42,.72)", display: "grid", gap: 10, alignContent: "start" },
   eyebrow: { color: "#67e8f9", fontWeight: 900, fontSize: 12, textTransform: "uppercase", letterSpacing: 0, margin: 0 },
-  title: { fontSize: 28, margin: "0 0 4px", letterSpacing: 0, overflowWrap: "anywhere" },
+  title: { fontSize: 26, margin: "0 0 4px", letterSpacing: 0, overflowWrap: "anywhere" },
   copy: { color: "#e2e8f0", lineHeight: 1.45, margin: 0 },
   runner: { color: "#94a3b8", fontSize: 13, lineHeight: 1.45, margin: 0 }
 }
