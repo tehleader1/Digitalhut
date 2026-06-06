@@ -4,6 +4,16 @@ import DiscoverySnapshotVisual from "./DiscoverySnapshotVisual"
 import UniversalFeedVisual from "./UniversalFeedVisual"
 import library from "../data/platform-libraries.json"
 
+function cleanSearchQuery(value) {
+  return String(value || "")
+    .replace(/\b(project\s*)?glb\b/gi, "")
+    .replace(/\b3d\s*model\b/gi, "")
+    .replace(/\b3d\b/gi, "")
+    .replace(/\bobservatory\b/gi, "")
+    .replace(/\s+/g, " ")
+    .trim()
+}
+
 export default function ModelRotationChooser({ activeFeed, result, busy = false, onSelectFeed }) {
   const choices = library.modelChoices
   const liveUrl = activeFeed?.modelUrl || result?.result?.glbUrl || result?.result?.downloadUrl || ""
@@ -43,12 +53,25 @@ export default function ModelRotationChooser({ activeFeed, result, busy = false,
         </div>
         <div style={styles.choices}>
           {choices.map((choice) => {
-            const selected = activeFeed?.query === choice.query || activeFeed?.title === choice.title
-            const choiceFeed = { title: choice.title, category: choice.mood, clientType: choice.mood, previewImage: choice.previewImage, query: choice.query, terrainUrl: choice.query, visualDescription: choice.mood }
-            return <button key={choice.title} type="button" onClick={() => onSelectFeed?.(choice)} style={selected ? styles.activeChoice : styles.choice}>
+            const query = cleanSearchQuery(choice.query)
+            const selected = activeFeed?.query === query || activeFeed?.title === choice.title
+            const choiceFeed = {
+              id: `model-choice:${query}`,
+              title: choice.title,
+              category: choice.mood,
+              clientType: choice.mood,
+              source: "recent-search-example",
+              previewImage: choice.previewImage,
+              query,
+              terrainUrl: query,
+              visualDescription: choice.mood,
+              agentNarration: `${choice.title}. ${choice.mood}`
+            }
+            return <button key={choice.title} type="button" onClick={() => onSelectFeed?.(choiceFeed, { speak: true, scan: true })} style={selected ? styles.activeChoice : styles.choice}>
               <DiscoverySnapshotVisual feed={choiceFeed} scope="recent search preview" compact />
               <b>{choice.title}</b>
               <span>{choice.mood}</span>
+              <small style={styles.queryLine}>Search: {choiceFeed.query}</small>
             </button>
           })}
         </div>
@@ -71,5 +94,6 @@ const styles = {
   viewer: { minWidth: 0, minHeight: "min(68vh,720px)", borderRadius: 8, overflow: "hidden", background: "#020617" },
   choices: { display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,180px),1fr))", gap: 10, alignContent: "start" },
   choice: { minWidth: 0, textAlign: "left", padding: 12, borderRadius: 8, border: "1px solid rgba(148,163,184,.22)", background: "rgba(2,6,23,.42)", color: "white", display: "grid", gap: 7, cursor: "pointer" },
-  activeChoice: { minWidth: 0, textAlign: "left", padding: 12, borderRadius: 8, border: "1px solid rgba(45,212,191,.45)", background: "rgba(20,184,166,.14)", color: "white", display: "grid", gap: 7, cursor: "pointer" }
+  activeChoice: { minWidth: 0, textAlign: "left", padding: 12, borderRadius: 8, border: "1px solid rgba(45,212,191,.45)", background: "rgba(20,184,166,.14)", color: "white", display: "grid", gap: 7, cursor: "pointer" },
+  queryLine: { color: "#bae6fd", fontSize: 11, fontWeight: 900, overflowWrap: "anywhere" }
 }
