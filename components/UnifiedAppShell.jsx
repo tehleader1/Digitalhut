@@ -146,16 +146,16 @@ export default function UnifiedAppShell({
 }
 
 const styles = {
-  shell: { maxWidth: 1540, minHeight: "calc(100vh - 24px)", margin: "0 auto", padding: 14, color: "white", border: "1px solid rgba(103,232,249,.22)", borderRadius: 8, background: "rgba(2,6,23,.62)", display: "grid", gap: 12, boxSizing: "border-box" },
-  topbar: { display: "flex", justifyContent: "space-between", gap: 12, alignItems: "center", padding: "4px 0", flexWrap: "wrap" },
+  shell: { width: "100%", height: "100%", minHeight: 0, maxWidth: 1540, margin: "0 auto", padding: 12, color: "white", border: "1px solid rgba(103,232,249,.22)", borderRadius: 8, background: "rgba(2,6,23,.62)", display: "grid", gridTemplateRows: "auto auto minmax(0,1fr)", gap: 10, boxSizing: "border-box", overflow: "hidden" },
+  topbar: { display: "flex", justifyContent: "space-between", gap: 12, alignItems: "center", padding: "2px 0", flexWrap: "wrap" },
   sub: { color: "#94a3b8", fontSize: 13 },
   status: { display: "flex", gap: 8, flexWrap: "wrap", color: "#a5f3fc", fontSize: 12, fontWeight: 900 },
-  stage: { display: "grid", gridTemplateColumns: "minmax(0,1.35fr) minmax(min(100%,320px),.65fr)", gap: 14, alignItems: "stretch", marginTop: 2 },
-  rendererColumn: { minWidth: 0, display: "grid", gap: 10 },
-  rendererWrap: { minHeight: "min(70vh,760px)", borderRadius: 8, overflow: "hidden", border: "1px solid rgba(103,232,249,.25)", background: "rgba(2,6,23,.8)" },
-  side: { minWidth: 0, borderRadius: 8, padding: 14, border: "1px solid rgba(148,163,184,.25)", background: "rgba(15,23,42,.72)", display: "grid", gap: 10, alignContent: "start" },
+  stage: { minHeight: 0, display: "grid", gridTemplateColumns: "minmax(0,1.35fr) minmax(min(100%,320px),.65fr)", gap: 12, alignItems: "stretch", overflow: "hidden" },
+  rendererColumn: { minWidth: 0, minHeight: 0, display: "grid", gridTemplateRows: "minmax(0,1fr) auto auto", gap: 8, overflow: "hidden" },
+  rendererWrap: { minHeight: 0, height: "100%", borderRadius: 8, overflow: "hidden", border: "1px solid rgba(103,232,249,.25)", background: "rgba(2,6,23,.8)" },
+  side: { minWidth: 0, maxHeight: "100%", borderRadius: 8, padding: 12, border: "1px solid rgba(148,163,184,.25)", background: "rgba(15,23,42,.72)", display: "grid", gap: 9, alignContent: "start", overflow: "auto" },
   eyebrow: { color: "#67e8f9", fontWeight: 900, fontSize: 12, textTransform: "uppercase", letterSpacing: 0, margin: 0 },
-  title: { fontSize: 26, margin: "0 0 4px", letterSpacing: 0, overflowWrap: "anywhere" },
-  copy: { color: "#e2e8f0", lineHeight: 1.45, margin: 0 },
-  runner: { color: "#94a3b8", fontSize: 13, lineHeight: 1.45, margin: 0 }
+  title: { fontSize: 24, margin: "0 0 3px", letterSpacing: 0, overflowWrap: "anywhere" },
+  copy: { color: "#e2e8f0", lineHeight: 1.4, margin: 0 },
+  runner: { color: "#94a3b8", fontSize: 13, lineHeight: 1.4, margin: 0 }
 }
