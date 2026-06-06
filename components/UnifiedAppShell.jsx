@@ -35,7 +35,9 @@ export default function UnifiedAppShell({
   const [introDone, setIntroDone] = useState(false)
   const [tourState, setTourState] = useState(() => createInitialTourState(activeFeed))
   const [nudge, setNudge] = useState(null)
-  const userProfile = useMemo(() => detectUserModeProfile(events), [events])
+  const [internalEvents, setInternalEvents] = useState([])
+  const combinedEvents = useMemo(() => [...events, ...internalEvents].slice(-40), [events, internalEvents])
+  const userProfile = useMemo(() => detectUserModeProfile(combinedEvents), [combinedEvents])
 
   useEffect(() => {
     setTourState((state) => ({
@@ -62,7 +64,12 @@ export default function UnifiedAppShell({
     return getAuthorityNudges({ activeFeed, userProfile, subscription })
   }, [activeFeed, userProfile, subscription])
 
+  function recordEvent(type, detail = {}) {
+    setInternalEvents((current) => [...current, { type, ...detail, at: Date.now() }].slice(-40))
+  }
+
   function triggerInteraction(reason) {
+    recordEvent(reason)
     setTourState((state) => pauseTour(state, reason))
   }
 
@@ -71,13 +78,25 @@ export default function UnifiedAppShell({
   }
 
   function handleAction(action, feed) {
+    const eventType = action === "download" ? "download-click" : `${action}-click`
+    recordEvent(eventType)
     if (action === "edit-glb") showFirstNudge()
     onQuickAction?.(action, feed, runnerContext)
   }
 
+  function handleLibrarySelect(feed, options) {
+    recordEvent("library-click", { feedId: feed?.id || feed?.query })
+    onSelectFeed?.(feed, options)
+  }
+
+  function handleWallet(wallet) {
+    recordEvent("wallet-check", { walletPresent: Boolean(wallet) })
+    onWallet?.(wallet)
+  }
+
   return (
     <main style={styles.shell}>
-      {!introDone && <SystemIntroOverlay activeFeed={activeFeed} onComplete={() => setIntroDone(true)} />}
+      {!introDone && <SystemIntroOverlay activeFeed={activeFeed} onComplete={() => { recordEvent("tour-start"); setIntroDone(true) }} />}
 
       <header style={styles.topbar}>
         <div>
@@ -91,7 +110,7 @@ export default function UnifiedAppShell({
         </div>
       </header>
 
-      <UserModeSwitcher mode={tourState.mode} onChange={(mode) => setTourState((state) => switchTourMode(state, mode))} />
+      <UserModeSwitcher mode={tourState.mode} onChange={(mode) => { recordEvent(`mode-${mode}`); setTourState((state) => switchTourMode(state, mode)) }} />
 
       <section style={styles.stage}>
         <div style={styles.rendererColumn}>
@@ -101,13 +120,13 @@ export default function UnifiedAppShell({
           <QuickActionRail activeFeed={activeFeed} subscription={subscription} onAction={handleAction} onNudge={setNudge} />
           <GuidedTourControls
             tourState={tourState}
-            onPause={() => setTourState((state) => pauseTour(state, "user-pause"))}
-            onResume={() => setTourState((state) => resumeTour(state))}
-            onRewind={() => setTourState((state) => scrubTour(state, (state.progressSeconds || 0) - 10))}
-            onForward={() => setTourState((state) => scrubTour(state, (state.progressSeconds || 0) + 10))}
-            onScrub={(seconds) => setTourState((state) => scrubTour(state, seconds))}
-            onManual={() => setTourState((state) => switchTourMode(state, "manual"))}
-            onSwitchTour={() => setTourState((state) => switchTourMode(state, userProfile.preferredMode || "guided"))}
+            onPause={() => { recordEvent("tour-pause"); setTourState((state) => pauseTour(state, "user-pause")) }}
+            onResume={() => { recordEvent("tour-resume"); setTourState((state) => resumeTour(state)) }}
+            onRewind={() => { recordEvent("timeline-scrub"); setTourState((state) => scrubTour(state, (state.progressSeconds || 0) - 10)) }}
+            onForward={() => { recordEvent("timeline-scrub"); setTourState((state) => scrubTour(state, (state.progressSeconds || 0) + 10)) }}
+            onScrub={(seconds) => { recordEvent("timeline-scrub"); setTourState((state) => scrubTour(state, seconds)) }}
+            onManual={() => { recordEvent("renderer-manual-control"); setTourState((state) => switchTourMode(state, "manual")) }}
+            onSwitchTour={() => { recordEvent("tour-start"); setTourState((state) => switchTourMode(state, userProfile.preferredMode || "guided")) }}
           />
         </div>
 
@@ -116,8 +135,8 @@ export default function UnifiedAppShell({
           <h2 style={styles.title}>{activeFeed?.title || "Current Discovery"}</h2>
           <p style={styles.copy}>{getModeNarrationStyle(userProfile, activeFeed)}</p>
           <p style={styles.runner}>{runnerContext.runnerInstruction}</p>
-          <WalletOnboardingPulse onWallet={onWallet} />
-          <PersistentLibraryRail activeFeed={activeFeed} feeds={libraryFeeds} onSelect={onSelectFeed} />
+          <WalletOnboardingPulse onWallet={handleWallet} />
+          <PersistentLibraryRail activeFeed={activeFeed} feeds={libraryFeeds} onSelect={handleLibrarySelect} />
         </aside>
       </section>
 
