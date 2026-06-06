@@ -125,7 +125,7 @@ export default function Home() {
   const [adaptive, setAdaptive] = useState(defaultAdaptiveState())
   const [activeFeed, setActiveFeed] = useState(() => feedFromFeature(initialFeature))
   const [toast, setToast] = useState("Live observatory app stage ready")
-  const [drawer, setDrawer] = useState("runner")
+  const [drawer, setDrawer] = useState("closed")
   const [engagement, setEngagement] = useState({hoverPreview: 0, rendererFocus: 0, manualSelect: 0, settledCycles: 0})
 
   const spokenFeedRef = useRef("")
@@ -368,6 +368,8 @@ export default function Home() {
           <button onClick={() => selectFeed({...activeFeed, query, title: query}, {speak: true, scan: true})} style={styles.primary}>{busy ? "Scanning" : "Scan"}</button>
           <button onClick={voice} style={styles.secondary}>Voice</button>
           <a href={marketHref} style={styles.linkButton}>Market</a>
+          <button onClick={() => setDrawer(drawer === "runner" ? "closed" : "runner")} style={styles.secondary}>Runner</button>
+          <button onClick={() => setDrawer(drawer === "feed" ? "closed" : "feed")} style={styles.secondary}>State</button>
         </div>
         <div style={styles.walletDock}>
           <button onClick={connect} style={styles.walletButton}>{wallet || "Verify Wallet"}</button>
@@ -399,7 +401,7 @@ export default function Home() {
         />
       </div>
 
-      <section style={styles.bottomDock} aria-label="Operational console">
+      {drawer !== "closed" && <section style={styles.bottomDock} aria-label="Operational drawer">
         <aside style={styles.signalPanel}>
           <p style={styles.eyebrow}>Live state</p>
           <h2 style={styles.panelTitle}>{activeFeed.title}</h2>
@@ -408,13 +410,14 @@ export default function Home() {
           <div style={styles.quickActions}>
             <button onClick={() => setDrawer(drawer === "runner" ? "feed" : "runner")} style={styles.secondary}>{drawer === "runner" ? "Feed State" : "Runner"}</button>
             <button onClick={requestDownload} style={styles.secondary}>Authorize Asset</button>
+            <button onClick={() => setDrawer("closed")} style={styles.secondary}>Close</button>
             <a href="/library" style={styles.secondaryLink}>Library</a>
           </div>
         </aside>
         <div style={styles.runnerPanel}>
           {drawer === "runner" ? <DiscoveryRunnerConsole activeFeed={activeFeed} result={result} marketSymbols={marketSymbols} /> : <FeedState activeFeed={activeFeed} signal={signal} engagement={engagement} />}
         </div>
-      </section>
+      </section>}
     </section>
   </main>
 }
@@ -435,41 +438,42 @@ function FeedState({activeFeed, signal, engagement}) {
 
 const styles = {
   page: {
+    height: "100dvh",
     minHeight: "100vh",
     background: "radial-gradient(circle at 20% 0%,rgba(20,184,166,.24),transparent 30%),linear-gradient(135deg,#030712,#08111f 45%,#111827)",
     color: "white",
     fontFamily: "Arial, sans-serif",
-    padding: 14,
+    padding: 10,
     boxSizing: "border-box",
-    overflowX: "hidden"
+    overflow: "hidden"
   },
-  appFrame: {maxWidth: 1540, margin: "0 auto", display: "grid", gap: 12},
-  commandBar: {display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(min(100%,520px),.72fr)", gap: 12, alignItems: "end"},
+  appFrame: {height: "100%", maxWidth: 1540, margin: "0 auto", display: "grid", gridTemplateRows: "auto auto auto minmax(0,1fr)", gap: 8, overflow: "hidden"},
+  commandBar: {display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(min(100%,520px),.72fr)", gap: 10, alignItems: "end"},
   identityBlock: {minWidth: 0},
   eyebrow: {margin: 0, color: "#67e8f9", fontSize: 12, fontWeight: 900, textTransform: "uppercase", letterSpacing: 0},
-  title: {margin: "3px 0 5px", fontSize: "clamp(30px,5vw,58px)", lineHeight: 1, letterSpacing: 0, overflowWrap: "anywhere"},
-  copy: {margin: 0, color: "#d8e4ee", lineHeight: 1.45, overflowWrap: "anywhere"},
-  statusGrid: {display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(118px,1fr))", gap: 8},
-  statusChip: {minHeight: 50, border: "1px solid rgba(103,232,249,.26)", borderRadius: 8, background: "rgba(2,6,23,.55)", color: "#dff8ff", padding: "8px 10px", display: "grid", gap: 2, alignContent: "center", fontSize: 12, fontWeight: 800, textTransform: "capitalize", overflowWrap: "anywhere"},
-  controlDock: {display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(min(100%,440px),.55fr)", gap: 10, alignItems: "stretch"},
-  searchDock: {display: "grid", gridTemplateColumns: "minmax(0,1fr) auto auto auto", gap: 8, minWidth: 0},
-  walletDock: {display: "grid", gridTemplateColumns: "minmax(0,1fr) auto auto", gap: 8, minWidth: 0},
-  input: {width: "100%", minWidth: 0, boxSizing: "border-box", padding: "13px 14px", borderRadius: 8, fontSize: 16, border: "1px solid rgba(226,232,240,.2)", background: "rgba(2,6,23,.86)", color: "white"},
-  primary: {padding: "12px 16px", borderRadius: 8, background: "#14b8a6", color: "#021014", border: 0, fontWeight: 900, cursor: "pointer"},
-  secondary: {padding: "12px 14px", borderRadius: 8, background: "rgba(226,232,240,.1)", color: "white", border: "1px solid rgba(226,232,240,.24)", fontWeight: 800, cursor: "pointer", textDecoration: "none"},
-  linkButton: {display: "inline-grid", placeItems: "center", padding: "12px 14px", borderRadius: 8, background: "#38bdf8", color: "#06111a", fontWeight: 900, textDecoration: "none"},
-  walletButton: {minWidth: 0, padding: "12px 14px", borderRadius: 8, border: "1px solid rgba(251,191,36,.42)", background: "rgba(113,63,18,.7)", color: "#fef3c7", fontWeight: 900, cursor: "pointer", overflowWrap: "anywhere"},
-  select: {padding: "12px 10px", borderRadius: 8, border: "1px solid rgba(226,232,240,.24)", background: "#020617", color: "white", fontWeight: 900},
-  tierDock: {display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(120px,1fr))", gap: 8},
-  tierButton: {minHeight: 48, borderRadius: 8, border: "1px solid rgba(226,232,240,.16)", background: "rgba(2,6,23,.42)", color: "white", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, padding: "8px 12px", cursor: "pointer"},
-  activeTier: {minHeight: 48, borderRadius: 8, border: "1px solid #facc15", background: "rgba(250,204,21,.16)", color: "white", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, padding: "8px 12px", cursor: "pointer"},
-  rendererStage: {minWidth: 0},
-  bottomDock: {display: "grid", gridTemplateColumns: "minmax(min(100%,320px),.42fr) minmax(0,1fr)", gap: 12, alignItems: "start"},
-  signalPanel: {minWidth: 0, border: "1px solid rgba(148,163,184,.25)", borderRadius: 8, background: "rgba(15,23,42,.72)", padding: 14, display: "grid", gap: 10},
-  runnerPanel: {minWidth: 0, border: "1px solid rgba(148,163,184,.2)", borderRadius: 8, background: "rgba(2,6,23,.32)", overflow: "hidden"},
-  panelTitle: {margin: 0, fontSize: 22, lineHeight: 1.15, letterSpacing: 0, overflowWrap: "anywhere"},
-  small: {margin: 0, color: "#a8b8c8", fontSize: 13, lineHeight: 1.45, overflowWrap: "anywhere"},
-  quickActions: {display: "flex", gap: 8, flexWrap: "wrap"},
-  secondaryLink: {padding: "12px 14px", borderRadius: 8, background: "rgba(226,232,240,.1)", color: "white", border: "1px solid rgba(226,232,240,.24)", fontWeight: 800, cursor: "pointer", textDecoration: "none"},
-  feedState: {padding: 16, display: "grid", gap: 10}
+  title: {margin: "2px 0 4px", fontSize: "clamp(28px,4vw,50px)", lineHeight: 1, letterSpacing: 0, overflowWrap: "anywhere"},
+  copy: {margin: 0, color: "#d8e4ee", lineHeight: 1.35, overflowWrap: "anywhere"},
+  statusGrid: {display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(110px,1fr))", gap: 7},
+  statusChip: {minHeight: 44, border: "1px solid rgba(103,232,249,.26)", borderRadius: 8, background: "rgba(2,6,23,.55)", color: "#dff8ff", padding: "7px 9px", display: "grid", gap: 2, alignContent: "center", fontSize: 12, fontWeight: 800, textTransform: "capitalize", overflowWrap: "anywhere"},
+  controlDock: {display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,360px),1fr))", gap: 8, alignItems: "stretch"},
+  searchDock: {display: "flex", gap: 7, minWidth: 0, flexWrap: "wrap"},
+  walletDock: {display: "flex", gap: 7, minWidth: 0, flexWrap: "wrap", justifyContent: "flex-end"},
+  input: {flex: "1 1 300px", minWidth: 0, boxSizing: "border-box", padding: "12px 13px", borderRadius: 8, fontSize: 15, border: "1px solid rgba(226,232,240,.2)", background: "rgba(2,6,23,.86)", color: "white"},
+  primary: {padding: "11px 14px", borderRadius: 8, background: "#14b8a6", color: "#021014", border: 0, fontWeight: 900, cursor: "pointer"},
+  secondary: {padding: "11px 12px", borderRadius: 8, background: "rgba(226,232,240,.1)", color: "white", border: "1px solid rgba(226,232,240,.24)", fontWeight: 800, cursor: "pointer", textDecoration: "none"},
+  linkButton: {display: "inline-grid", placeItems: "center", padding: "11px 12px", borderRadius: 8, background: "#38bdf8", color: "#06111a", fontWeight: 900, textDecoration: "none"},
+  walletButton: {minWidth: 0, padding: "11px 12px", borderRadius: 8, border: "1px solid rgba(251,191,36,.42)", background: "rgba(113,63,18,.7)", color: "#fef3c7", fontWeight: 900, cursor: "pointer", overflowWrap: "anywhere"},
+  select: {padding: "11px 10px", borderRadius: 8, border: "1px solid rgba(226,232,240,.24)", background: "#020617", color: "white", fontWeight: 900},
+  tierDock: {display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(108px,1fr))", gap: 7},
+  tierButton: {minHeight: 42, borderRadius: 8, border: "1px solid rgba(226,232,240,.16)", background: "rgba(2,6,23,.42)", color: "white", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, padding: "7px 10px", cursor: "pointer"},
+  activeTier: {minHeight: 42, borderRadius: 8, border: "1px solid #facc15", background: "rgba(250,204,21,.16)", color: "white", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, padding: "7px 10px", cursor: "pointer"},
+  rendererStage: {minWidth: 0, minHeight: 0, overflow: "hidden"},
+  bottomDock: {position: "fixed", right: 14, bottom: 14, width: "min(920px,calc(100vw - 28px))", maxHeight: "48vh", display: "grid", gridTemplateColumns: "minmax(min(100%,280px),.4fr) minmax(0,1fr)", gap: 10, alignItems: "start", overflow: "auto", zIndex: 50, padding: 10, border: "1px solid rgba(103,232,249,.28)", borderRadius: 8, background: "rgba(2,6,23,.94)", boxShadow: "0 24px 70px rgba(0,0,0,.45)"},
+  signalPanel: {minWidth: 0, border: "1px solid rgba(148,163,184,.25)", borderRadius: 8, background: "rgba(15,23,42,.72)", padding: 12, display: "grid", gap: 8},
+  runnerPanel: {minWidth: 0, border: "1px solid rgba(148,163,184,.2)", borderRadius: 8, background: "rgba(2,6,23,.32)", overflow: "auto", maxHeight: "44vh"},
+  panelTitle: {margin: 0, fontSize: 21, lineHeight: 1.15, letterSpacing: 0, overflowWrap: "anywhere"},
+  small: {margin: 0, color: "#a8b8c8", fontSize: 13, lineHeight: 1.4, overflowWrap: "anywhere"},
+  quickActions: {display: "flex", gap: 7, flexWrap: "wrap"},
+  secondaryLink: {padding: "11px 12px", borderRadius: 8, background: "rgba(226,232,240,.1)", color: "white", border: "1px solid rgba(226,232,240,.24)", fontWeight: 800, cursor: "pointer", textDecoration: "none"},
+  feedState: {padding: 14, display: "grid", gap: 8}
 }
