@@ -9,7 +9,7 @@ import {getWalletPermissionState} from "../lib/walletPermissions"
 
 const tiers = {free: 0, standard: 35, premium: 50, pro: 100}
 const footerLinks = [
-  ["Daily", "/blog"],
+  ["Daily", "/daily"],
   ["Market Desk", "/market-intelligence"],
   ["Library", "/library"],
   ["About", "/about"],
@@ -107,6 +107,10 @@ function pulseCadenceMs(engagement) {
   const fastFromRenderer = Math.min(engagement.rendererFocus, 10) * 550
   const slowFromSettled = Math.min(engagement.settledCycles, 8) * 900
   return Math.max(7000, Math.min(42000, 16000 - fastFromHover - fastFromRenderer + slowFromSettled))
+}
+
+function accountEntryMode(tier) {
+  return ["standard", "premium", "pro"].includes(tier) ? "system" : "basic"
 }
 
 export default function Home() {
@@ -433,10 +437,23 @@ function MarketSidePanel({marketSymbols, providerStatus, marketHref, activeFeed,
 }
 
 function AccountPanel({wallet, tier, tiers, currency, onCurrency, onConnect, onActivate, onSubscribe, walletPermission}) {
+  const [entry, setEntry] = useState(null)
+
+  async function runEntry(label, nextTier, action) {
+    const mode = accountEntryMode(nextTier)
+    setEntry({mode, label, tier: nextTier})
+    try {
+      await action?.()
+    } finally {
+      if (typeof window !== "undefined") window.setTimeout(() => setEntry(null), mode === "system" ? 1650 : 900)
+    }
+  }
+
   return <div style={styles.drawerBody}>
-    <button onClick={onConnect} style={styles.accountWallet}>{wallet || "Confirm in your digital wallet extension"}</button>
+    <AccountEntryOverlay entry={entry} />
+    <button onClick={() => runEntry(wallet ? "Syncing account" : "Checking wallet", tier, onConnect)} style={styles.accountWallet}>{wallet || "Confirm in your digital wallet extension"}</button>
     <div style={styles.tierGrid}>
-      {Object.entries(tiers).map(([nextTier, price]) => <button key={nextTier} onClick={() => onActivate(nextTier)} style={tier === nextTier ? styles.activeTier : styles.tierButton}>
+      {Object.entries(tiers).map(([nextTier, price]) => <button key={nextTier} onClick={() => runEntry(`${nextTier.toUpperCase()} workspace`, nextTier, () => onActivate(nextTier))} style={tier === nextTier ? styles.activeTier : styles.tierButton}>
         <b>{nextTier.toUpperCase()}</b>
         <span>${price}</span>
       </button>)}
@@ -448,9 +465,28 @@ function AccountPanel({wallet, tier, tiers, currency, onCurrency, onConnect, onA
         <option>MATIC</option>
         <option>BNB</option>
       </select>
-      <button onClick={() => onSubscribe(tier)} style={styles.primary}>Gas Route</button>
+      <button onClick={() => runEntry("Preparing gas route", tier, () => onSubscribe(tier))} style={styles.primary}>Gas Route</button>
     </div>
     <p style={styles.small}>{walletPermission.message}</p>
+  </div>
+}
+
+function AccountEntryOverlay({entry}) {
+  if (!entry) return null
+  const system = entry.mode === "system"
+  return <div style={styles.accountOverlay} aria-live="polite" aria-label="Account entry loading">
+    <style>{`@keyframes dhSpin{to{transform:rotate(360deg)}}@keyframes dhFadeIn{from{opacity:0}to{opacity:1}}@keyframes dhLine{0%{transform:translateX(-70%);opacity:.3}55%{opacity:1}100%{transform:translateX(170%);opacity:.25}}`}</style>
+    <div style={system ? styles.systemEntryPanel : styles.basicEntryPanel}>
+      {system ? <>
+        <div style={styles.entryLogo}>DigitalHut</div>
+        <div style={styles.entryLine}><span style={styles.entryLineFill} /></div>
+        <p style={styles.entryText}>{entry.label}</p>
+        <p style={styles.entrySubtext}>Entering your observatory workspace</p>
+      </> : <>
+        <div style={styles.basicSpinner} />
+        <p style={styles.entryText}>{entry.label || "Loading account"}</p>
+      </>}
+    </div>
   </div>
 }
 
@@ -512,5 +548,14 @@ const styles = {
   tierButton: {minHeight: 48, borderRadius: 8, border: "1px solid rgba(226,232,240,.16)", background: "rgba(2,6,23,.42)", color: "white", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, padding: "8px 10px", cursor: "pointer"},
   activeTier: {minHeight: 48, borderRadius: 8, border: "1px solid #facc15", background: "rgba(250,204,21,.16)", color: "white", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, padding: "8px 10px", cursor: "pointer"},
   paymentRow: {display: "grid", gridTemplateColumns: "minmax(0,1fr) auto", gap: 8},
-  select: {padding: "10px", borderRadius: 8, border: "1px solid rgba(226,232,240,.24)", background: "#020617", color: "white", fontWeight: 900}
+  select: {padding: "10px", borderRadius: 8, border: "1px solid rgba(226,232,240,.24)", background: "#020617", color: "white", fontWeight: 900},
+  accountOverlay: {position: "fixed", inset: 0, zIndex: 9999, display: "grid", placeItems: "center", background: "rgba(0,0,0,.76)", backdropFilter: "blur(10px)", color: "white", animation: "dhFadeIn .18s ease-out"},
+  systemEntryPanel: {width: "min(460px,86vw)", display: "grid", gap: 15, justifyItems: "center", textAlign: "center", padding: 26},
+  basicEntryPanel: {width: "min(260px,82vw)", display: "grid", gap: 14, justifyItems: "center", textAlign: "center", padding: 24},
+  entryLogo: {fontSize: "clamp(34px,7vw,62px)", fontWeight: 900, letterSpacing: 0, lineHeight: 1},
+  entryLine: {width: "min(320px,70vw)", height: 3, borderRadius: 999, background: "rgba(255,255,255,.12)", overflow: "hidden"},
+  entryLineFill: {display: "block", width: "42%", height: "100%", borderRadius: 999, background: "#e50914", animation: "dhLine 1.25s ease-in-out infinite"},
+  entryText: {margin: 0, color: "#f8fafc", fontSize: 16, fontWeight: 900},
+  entrySubtext: {margin: 0, color: "#94a3b8", fontSize: 13},
+  basicSpinner: {width: 34, height: 34, borderRadius: "50%", border: "3px solid rgba(255,255,255,.25)", borderTopColor: "#ffffff", animation: "dhSpin .8s linear infinite"}
 }
