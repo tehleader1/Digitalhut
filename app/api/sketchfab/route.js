@@ -49,6 +49,19 @@ function tokenize(value) {
   return String(value || "").toLowerCase().replace(/[^a-z0-9\s-]/g, " ").split(/[\s-]+/).filter(Boolean)
 }
 
+function cleanSearchQuery(value) {
+  return String(value || "")
+    .replace(/\bproject\s+glb\b/gi, "project")
+    .replace(/\bdownloadable\s+glb\b/gi, "")
+    .replace(/\bglb\b/gi, "")
+    .replace(/\b3d\s+model\b/gi, "")
+    .replace(/\b3d\s+map\b/gi, "map")
+    .replace(/\b3d\b/gi, "")
+    .replace(/\bobservatory\b/gi, "")
+    .replace(/\s+/g, " ")
+    .trim()
+}
+
 function inferIntent(tokens) {
   const joined = tokens.join(" ")
   for (const [intent, terms] of Object.entries(intentBoosts)) {
@@ -138,14 +151,14 @@ async function normalizeSketchfabModel(model, token, query, matchScore) {
 }
 
 function queryVariants(query) {
-  const q = String(query || "terrain").trim()
+  const q = cleanSearchQuery(query || "terrain") || "terrain"
   const tokens = tokenize(q)
   const intent = inferIntent(tokens)
   const variants = [q]
   if (intent === "car") variants.push(`${q} car`, `${q} vehicle`, `${q} classic car`)
   if (intent === "house") variants.push(`${q} architecture`, `${q} house`, `${q} interior`)
-  if (intent === "market") variants.push(`${q} financial district`, `${q} city model`)
-  if (intent === "terrain") variants.push(`${q} terrain`, `${q} map 3d`)
+  if (intent === "market") variants.push(`${q} financial district`, `${q} market district`)
+  if (intent === "terrain") variants.push(`${q} terrain`, `${q} map`)
   return [...new Set(variants)].slice(0, 4)
 }
 
@@ -180,10 +193,11 @@ async function fetchSketchfabModel(query) {
 
 export async function POST(req) {
   const { query = "terrain" } = await req.json()
-  const live = await fetchSketchfabModel(query)
+  const searchQuery = cleanSearchQuery(query) || "terrain"
+  const live = await fetchSketchfabModel(searchQuery)
 
   if (live.model) {
-    const result = await normalizeSketchfabModel(live.model, sketchfabToken(), query, live.matchScore)
+    const result = await normalizeSketchfabModel(live.model, sketchfabToken(), searchQuery, live.matchScore)
     const provider = result.glbUrl ? "sketchfab-live-ranked" : "sketchfab-metadata-ranked"
     const providerLabel = result.glbUrl ? "Live GLB route acquired" : "Live metadata and preview acquired"
     return Response.json({
@@ -193,7 +207,7 @@ export async function POST(req) {
       providerLabel,
       searchStatus: live.status,
       searchStatusLabel: live.statusLabel,
-      ai: `DigitalHut ranked Sketchfab candidates for ${query}. ${providerLabel}: ${result.title} with ${result.relevance} relevance and score ${result.matchScore}. ${result.downloadStatusLabel}.`
+      ai: `DigitalHut ranked Sketchfab candidates for ${searchQuery}. ${providerLabel}: ${result.title} with ${result.relevance} relevance and score ${result.matchScore}. ${result.downloadStatusLabel}.`
     })
   }
 
@@ -211,13 +225,13 @@ export async function POST(req) {
       downloadStatusLabel: "Fallback observatory visual active",
       downloadError: setupHint,
       matchScore: 0,
-      requestedQuery: query,
+      requestedQuery: searchQuery,
       relevance: "fallback"
     },
     provider: "fallback",
     providerLabel: "Fallback observatory visual active",
     searchStatus: live.status,
     searchStatusLabel: live.statusLabel,
-    ai: `DigitalHut found a ${item.category} observatory signal for ${query || item.title}. ${setupHint}`
+    ai: `DigitalHut found a ${item.category} observatory signal for ${searchQuery || item.title}. ${setupHint}`
   })
 }
