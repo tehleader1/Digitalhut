@@ -58,6 +58,8 @@ function cleanSearchQuery(value) {
   return String(value || "")
     .replace(/\b(project\s*)?glb\b/gi, "")
     .replace(/\b3d\s*model\b/gi, "")
+    .replace(/\b3d\b/gi, "")
+    .replace(/\bobservatory\b/gi, "")
     .replace(/\s+/g, " ")
     .trim()
 }
@@ -67,6 +69,7 @@ function exampleFeedFor(feature) {
   const liveExample = liveExampleQueries[feature.intent] || library.environmentLibrary?.[0] || {}
   const query = cleanSearchQuery(liveExample.query || feature.contextGLBSearch || feature.mainFeatureTitle || marketProfile.marketModelQuery)
   return {
+    id: `live-example:${feature.intent}:${query}`,
     title: liveExample.title || feature.mainFeatureTitle,
     category: feature.observatory?.category || feature.marketProfile || feature.intent,
     clientType: feature.intent,
@@ -95,8 +98,8 @@ export default function AgentBlogHome({ activeIntent, activeFeed, onSelectFeed }
     </div>
     <div style={styles.featureGrid}>
       {features.slice(0, 6).map((feature) => {
-        const selected = activeFeed?.intent === feature.intent || feature.intent === activeIntent
         const featureFeed = exampleFeedFor(feature)
+        const selected = activeFeed?.id === featureFeed.id || activeFeed?.query === featureFeed.query || activeFeed?.intent === feature.intent || feature.intent === activeIntent
         return <article key={feature.intent} style={selected ? styles.activeCard : styles.card}>
           <DiscoverySnapshotVisual feed={featureFeed} scope="real world example" compact />
           <p style={styles.cardEyebrow}>{feature.label}</p>
@@ -105,7 +108,7 @@ export default function AgentBlogHome({ activeIntent, activeFeed, onSelectFeed }
           <p style={styles.queryLine}>Search: {featureFeed.query}</p>
           <div style={styles.meta}>{featureFeed.marketSymbols.slice(0, 4).map((symbol) => <span key={symbol} style={styles.tag}>{symbol}</span>)}</div>
           <div style={styles.actions}>
-            <button type="button" onClick={() => onSelectFeed?.(featureFeed, { speak: true, scan: false })} style={styles.primary}>Preview example</button>
+            <button type="button" onClick={() => onSelectFeed?.(featureFeed, { speak: true, scan: true })} style={styles.primary}>Register example</button>
             <button type="button" onClick={() => onSelectFeed?.(featureFeed, { speak: true, scan: true })} style={styles.secondaryBtn}>Search live</button>
             <a href={buildPersonaFeatureHref(feature.intent)} style={styles.secondary}>Read brief</a>
           </div>
@@ -114,13 +117,16 @@ export default function AgentBlogHome({ activeIntent, activeFeed, onSelectFeed }
     </div>
     <div style={styles.marketStrip}>
       {library.marketProfiles.map((profile) => {
+        const query = cleanSearchQuery(profile.marketModelQuery)
         const marketFeed = {
+          id: `market-example:${profile.defaultSymbol || profile.title}:${query}`,
           title: profile.title,
           category: "market",
           visualMode: "market",
+          source: "market-example-feed",
           previewImage: profile.previewImage,
-          query: cleanSearchQuery(profile.marketModelQuery),
-          terrainUrl: cleanSearchQuery(profile.marketModelQuery),
+          query,
+          terrainUrl: query,
           marketSymbols: profile.symbols,
           agentNarration: profile.agentUse,
           visualDescription: profile.visualIdentity
