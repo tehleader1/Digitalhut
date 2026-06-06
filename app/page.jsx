@@ -45,7 +45,7 @@ function feedFromFeature(feature, options={}){
 }
 
 function normalizeFeed(feed={}, options={}){
- const query = feed.query || feed.mainGLBSearch || feed.title || "home renovation furniture room layout garden project glb"
+ const query = feed.query || feed.mainGLBSearch || feed.title || "household room layout garden renovation"
  const title = feed.title || feed.mainFeatureTitle || query
  return {
   id: feed.id || `${feed.intent || feed.category || "feed"}:${query}`,
@@ -178,7 +178,7 @@ export default function Home(){
     ...requestedFeed,
     id: `scan:${model.uid || requestedFeed.query}`,
     title: model.title || requestedFeed.title,
-    source: json.provider,
+    source: json.providerLabel || json.searchStatusLabel || json.provider,
     modelUrl: model.glbUrl || model.downloadUrl || requestedFeed.modelUrl,
     previewImage: model.image || requestedFeed.previewImage,
     feedUrl: model.url || requestedFeed.feedUrl,
@@ -187,7 +187,7 @@ export default function Home(){
    setResult(json)
    setActiveFeed(nextFeed)
    setQuery(nextFeed.query)
-   setToast(json.provider==="sketchfab-live"?"Live model route acquired":"Model feed found; renderer using metadata or fallback mode")
+   setToast(json.providerLabel || json.searchStatusLabel || "Model feed found; renderer using metadata or fallback mode")
    await fetch("/api/history",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:nextFeed.query,result:model,tier,provider:json.provider,type:"active-glb-snapshot",snapshot:{title:nextFeed.title,previewImage:nextFeed.previewImage,modelUrl:nextFeed.modelUrl},surfaces:["main-blog-feature","library","examples","observatory-renderer","quick-recent-activity"]})})
    await refreshAdaptive({tier})
   } finally { setBusy(false) }
