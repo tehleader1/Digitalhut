@@ -1,5 +1,4 @@
 import React, {useEffect, useMemo, useRef, useState} from "react"
-import "@google/model-viewer"
 import {ConnectButton} from "../wallet"
 
 const INACTIVITY_MS = 8 * 60 * 1000
@@ -7,20 +6,65 @@ const layers = ["Base", "Architect", "Lighting", "Props", "Grid", "Coordinates"]
 const accounts = ["guest", "standard", "premium", "pro"]
 
 const feeds = [
-  ["Wall Street New York", "Structure", "/glbs/new_york_city._manhattan.glb", "Financial district, city structure, and market-context observatory."],
-  ["California Hollywood", "Continent", "/glbs/hollywood_sign_los_angeles_ca_usa.glb", "Public culture signal with city terrain and tourism context."],
-  ["International Space Station", "Planetary", "/glbs/international_space_station.glb", "Orbital research feed for space, engineering, and education."],
-  ["Surfside Florida", "Structure", "/glbs/surfside_florida_usa_beachfront_properties.glb", "Coastal structure, real estate, terrain, and climate inspection."],
-  ["Cape Town South Africa", "Continent", "/glbs/cape_town_-_south_africa.glb", "Civic geography, terrain contrast, and global travel feed."],
-  ["Moon Observatory", "Planetary", "/glbs/moon.glb", "Planetary science, classroom, research, and exploration mode."],
-  ["Caribbean Colonial Zone", "Animated Environment", "/glbs/tourist_colonial_zone_dominican_republic.glb", "Tourism, history, culture, and guided public exploration."],
-  ["City Pack Prototype", "Animated Character", "/glbs/city_pack_7.glb", "Prototype city kit for builders, developers, AIs, and experiments."]
-].map(([title, region, model, note]) => ({title, region, model, note}))
+  ["Wall Street New York", "Structure", "/glbs/new_york_city._manhattan.glb", "Financial district, city structure, and market-context observatory.", "#67e8f9"],
+  ["California Hollywood", "Continent", "/glbs/hollywood_sign_los_angeles_ca_usa.glb", "Public culture signal with city terrain and tourism context.", "#facc15"],
+  ["International Space Station", "Planetary", "/glbs/international_space_station.glb", "Orbital research feed for space, engineering, and education.", "#a78bfa"],
+  ["Surfside Florida", "Structure", "/glbs/surfside_florida_usa_beachfront_properties.glb", "Coastal structure, real estate, terrain, and climate inspection.", "#2dd4bf"],
+  ["Cape Town South Africa", "Continent", "/glbs/cape_town_-_south_africa.glb", "Civic geography, terrain contrast, and global travel feed.", "#fb7185"],
+  ["Moon Observatory", "Planetary", "/glbs/moon.glb", "Planetary science, classroom, research, and exploration mode.", "#cbd5e1"],
+  ["Caribbean Colonial Zone", "Animated Environment", "/glbs/tourist_colonial_zone_dominican_republic.glb", "Tourism, history, culture, and guided public exploration.", "#38bdf8"],
+  ["City Pack Prototype", "Animated Character", "/glbs/city_pack_7.glb", "Prototype city kit for builders, developers, AIs, and experiments.", "#22c55e"]
+].map(([title, region, model, note, accent]) => ({title, region, model, note, accent}))
 
 function freshEntry(){
   if(typeof window === "undefined") return false
   const last = Number(window.localStorage.getItem("digitalhut:lastAccountEntry") || 0)
   return last > 0 && Date.now() - last < INACTIVITY_MS
+}
+
+function playLoaderTone(){
+  try{
+    const Audio = window.AudioContext || window.webkitAudioContext
+    if(!Audio) return
+    const ctx = new Audio()
+    const osc = ctx.createOscillator()
+    const gain = ctx.createGain()
+    osc.type = "sine"
+    osc.frequency.setValueAtTime(146.83, ctx.currentTime)
+    osc.frequency.exponentialRampToValueAtTime(220, ctx.currentTime + 1.1)
+    gain.gain.setValueAtTime(0.0001, ctx.currentTime)
+    gain.gain.exponentialRampToValueAtTime(0.045, ctx.currentTime + 0.18)
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1.25)
+    osc.connect(gain)
+    gain.connect(ctx.destination)
+    osc.start()
+    osc.stop(ctx.currentTime + 1.3)
+    window.setTimeout(() => ctx.close().catch(() => null), 1500)
+  } catch {
+    return
+  }
+}
+
+function RendererVisual({feed, layer, playing}){
+  const bars = Array.from({length: 18})
+  return <div style={{...s.renderVisual, background: `radial-gradient(circle at 38% 38%,${feed.accent}28,transparent 28%),linear-gradient(135deg,#040814,#0b1222 48%,#050816)`}}>
+    <div style={{...s.orbit, borderColor: `${feed.accent}88`, animation: playing ? "dhDrift 18s linear infinite" : "none"}} />
+    <div style={{...s.orbitTwo, borderColor: `${feed.accent}55`, animation: playing ? "dhDrift 11s linear infinite reverse" : "none"}} />
+    <div style={s.sweep} />
+    <div style={s.skyline}>
+      {bars.map((_, index) => <span key={index} style={{height: `${22 + ((index * 19) % 58)}%`, background: index % 3 === 0 ? feed.accent : "rgba(219,234,254,.58)"}} />)}
+    </div>
+    <div style={layer === "Grid" || layer === "Coordinates" ? s.visualGrid : s.hidden} />
+    <div style={s.coreGlow} />
+    <div style={s.visualLabel}>{feed.region}</div>
+  </div>
+}
+
+function MiniVisual({feed, active}){
+  return <div style={{...s.miniVisual, borderColor: active ? feed.accent : "rgba(226,232,240,.16)"}}>
+    <div style={{...s.miniOrb, background: `${feed.accent}55`}} />
+    <div style={s.miniBars}>{[0,1,2,3,4].map((item) => <span key={item} style={{height: `${28 + item * 11}%`, background: item === 2 ? feed.accent : "rgba(219,234,254,.52)"}} />)}</div>
+  </div>
 }
 
 export default function FullscreenObservatory(){
@@ -64,6 +108,7 @@ export default function FullscreenObservatory(){
   function enter(nextTier = tier){
     setTier(nextTier)
     setEntryLoading(true)
+    playLoaderTone()
     window.setTimeout(() => {
       window.localStorage.setItem("digitalhut:lastAccountEntry", String(Date.now()))
       window.localStorage.setItem("digitalhut:tier", nextTier)
@@ -71,7 +116,7 @@ export default function FullscreenObservatory(){
       setEntryLoading(false)
       setEntryOpen(false)
       wake()
-    }, 1050)
+    }, 1150)
   }
 
   function choose(item){
@@ -120,9 +165,9 @@ export default function FullscreenObservatory(){
   }
 
   return <main onPointerMove={wake} onPointerDown={wake} style={s.page}>
-    <style>{"@keyframes dhLoad{0%{transform:translateX(-80%);opacity:.35}55%{opacity:1}100%{transform:translateX(180%);opacity:.25}}"}</style>
+    <style>{"@keyframes dhLoad{0%{transform:translateX(-80%);opacity:.35}55%{opacity:1}100%{transform:translateX(180%);opacity:.25}}@keyframes dhDrift{to{transform:rotate(360deg)}}@keyframes dhSweep{0%,100%{opacity:.12;transform:translateX(-24%) rotate(14deg)}50%{opacity:.62;transform:translateX(24%) rotate(14deg)}}"}</style>
     <section style={s.stage}>
-      <model-viewer key={`${feed.model}:${playing}:${layer}`} src={feed.model} camera-controls auto-rotate={playing && !manual ? "" : undefined} autoplay shadow-intensity="1" exposure={layer === "Lighting" ? "1.35" : "1"} style={s.viewer} />
+      <RendererVisual feed={feed} layer={layer} playing={playing && !manual} />
       <div style={s.vignette} />
       <div style={layer === "Grid" || layer === "Coordinates" ? s.grid : s.hidden} />
       <div style={layer === "Architect" ? s.architect : s.hidden}><b>Architect Layer</b><span>builders / developers / researchers / AIs / experimental</span></div>
@@ -139,10 +184,10 @@ export default function FullscreenObservatory(){
         <button onClick={() => setEntryOpen(true)} style={s.account}>{username || "Choose account"} / {tier}</button>
       </div>
 
-      <aside style={{...s.rail, opacity: awake ? 1 : 0.18}}>
-        <div style={s.railHead}><span>Library</span><button onClick={() => shift(4)} style={s.small}>Load 4</button></div>
+      <aside style={{...s.rail, opacity: awake || manual ? 1 : 0.2}}>
+        <div style={s.railHead}><span>{manual ? "Manual options" : "Library"}</span><button onClick={() => shift(4)} style={s.small}>Load 4</button></div>
         {railFeeds.map((item) => <button key={`${item.title}:${offset}`} onPointerEnter={() => choose(item)} onFocus={() => choose(item)} onClick={() => choose(item)} style={item.title === feed.title ? s.activeCard : s.card}>
-          <div style={s.visual}><model-viewer src={item.model} auto-rotate interaction-prompt="none" camera-orbit="0deg 70deg 3m" style={s.cardViewer} /></div>
+          <MiniVisual feed={item} active={item.title === feed.title} />
           <div style={s.cardText}><b>{item.title}</b><small>{item.region}</small></div>
         </button>)}
       </aside>
@@ -186,7 +231,14 @@ const button = {borderRadius: 7, border: `1px solid ${line}`, color: "white", fo
 const s = {
   page: {height: "100dvh", minHeight: "100vh", width: "100%", overflow: "hidden", background: "#000", color: "white", fontFamily: "Arial,sans-serif"},
   stage: {position: "relative", width: "100%", height: "100%", overflow: "hidden", background: "#000"},
-  viewer: {position: "absolute", inset: 0, width: "100%", height: "100%", background: "#000"},
+  renderVisual: {position: "absolute", inset: 0, overflow: "hidden"},
+  orbit: {position: "absolute", width: "min(78vw,900px)", aspectRatio: "1", border: "1px solid", borderRadius: "50%", left: "18%", top: "-14%", opacity: .78},
+  orbitTwo: {position: "absolute", width: "min(46vw,540px)", aspectRatio: "1", border: "2px solid", borderRadius: "50%", right: "17%", top: "18%", opacity: .64},
+  sweep: {position: "absolute", width: "140%", height: "18%", left: "-20%", top: "38%", background: "linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent)", filter: "blur(14px)", animation: "dhSweep 8s ease-in-out infinite"},
+  skyline: {position: "absolute", left: "11%", right: "34%", bottom: "8%", height: "42%", display: "flex", alignItems: "end", gap: 9, transform: "perspective(720px) rotateX(48deg)", transformOrigin: "50% 100%", opacity: .82},
+  visualGrid: {position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(103,232,249,.13) 1px,transparent 1px),linear-gradient(90deg,rgba(103,232,249,.13) 1px,transparent 1px)", backgroundSize: "54px 54px", mixBlendMode: "screen"},
+  coreGlow: {position: "absolute", width: "28vw", height: "28vw", borderRadius: "50%", left: "30%", top: "28%", background: "radial-gradient(circle,rgba(255,255,255,.22),transparent 62%)", filter: "blur(4px)"},
+  visualLabel: {position: "absolute", left: 24, top: 88, color: "rgba(255,255,255,.22)", fontSize: "clamp(42px,9vw,140px)", fontWeight: 900, lineHeight: .9, textTransform: "uppercase"},
   vignette: {position: "absolute", inset: 0, pointerEvents: "none", background: "radial-gradient(circle at 42% 42%,transparent 0,rgba(0,0,0,.05) 42%,rgba(0,0,0,.72) 100%),linear-gradient(90deg,rgba(0,0,0,.62),transparent 20%,transparent 70%,rgba(0,0,0,.72))"},
   hidden: {display: "none"},
   grid: {position: "absolute", inset: 0, pointerEvents: "none", backgroundImage: "linear-gradient(rgba(103,232,249,.16) 1px,transparent 1px),linear-gradient(90deg,rgba(103,232,249,.16) 1px,transparent 1px)", backgroundSize: "52px 52px", mixBlendMode: "screen", opacity: .55},
@@ -203,8 +255,9 @@ const s = {
   small: {...button, padding: "7px 9px", background: "rgba(255,255,255,.08)"},
   card: {display: "grid", gridTemplateColumns: "92px minmax(0,1fr)", gap: 9, padding: 7, borderRadius: 8, border: `1px solid ${line}`, background: "rgba(15,23,42,.62)", color: "white", textAlign: "left", cursor: "pointer", overflow: "hidden"},
   activeCard: {display: "grid", gridTemplateColumns: "92px minmax(0,1fr)", gap: 9, padding: 7, borderRadius: 8, border: "1px solid rgba(103,232,249,.66)", background: "rgba(8,145,178,.24)", color: "white", textAlign: "left", cursor: "pointer", overflow: "hidden", boxShadow: "0 0 28px rgba(103,232,249,.16)"},
-  visual: {borderRadius: 7, overflow: "hidden", background: "#020617", minHeight: 74},
-  cardViewer: {width: "100%", height: "100%", minHeight: 74, background: "#020617"},
+  miniVisual: {position: "relative", borderRadius: 7, overflow: "hidden", minHeight: 74, border: "1px solid", background: "linear-gradient(135deg,#020617,#0f172a)"},
+  miniOrb: {position: "absolute", width: 54, height: 54, borderRadius: "50%", left: 17, top: 9, filter: "blur(2px)"},
+  miniBars: {position: "absolute", left: 8, right: 8, bottom: 8, height: 36, display: "flex", alignItems: "end", gap: 4},
   cardText: {display: "grid", gap: 5, alignContent: "center", minWidth: 0},
   info: {position: "absolute", left: 22, bottom: 98, width: "min(620px,48vw)", display: "grid", gap: 7, transition: "opacity .22s ease"},
   eyebrow: {margin: 0, color: "#67e8f9", fontSize: 12, fontWeight: 900, textTransform: "uppercase", letterSpacing: 0},
