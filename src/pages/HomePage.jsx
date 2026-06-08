@@ -1,5 +1,6 @@
-import FullscreenObservatory from "../components/FullscreenObservatory"
+import PremiumLoadGate from "../components/PremiumLoadGate"
+import FullscreenObservatoryV2 from "../components/FullscreenObservatoryV2"
 
 export default function HomePage(){
-  return <FullscreenObservatory />
+  return <PremiumLoadGate><FullscreenObservatoryV2 /></PremiumLoadGate>
 }
