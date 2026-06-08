@@ -20,47 +20,43 @@ function closeAssets(renderer){
   })
 }
 
-function openAssets(renderer){
-  assetNodes(renderer).forEach((node) => {
-    const src = rememberSource(node)
-    if(src && !node.getAttribute("src")) node.setAttribute("src", src)
-    node.removeAttribute("aria-hidden")
-  })
-  renderer.classList.add("live-open")
+function stageFor(renderer){
+  return renderer.closest(".dh-stage") || renderer.parentElement || document
 }
 
-function ensureLiveControls(renderer){
-  const firstSource = assetNodes(renderer).map(rememberSource).find(Boolean) || ""
+function previewSource(renderer){
+  const stage = stageFor(renderer)
+  const activeThumb = stage.querySelector(".dh-feed-card.active .dh-mini-thumb")
+  const firstThumb = stage.querySelector(".dh-mini-thumb")
+  const image = activeThumb || firstThumb
+  return image?.currentSrc || image?.getAttribute("src") || ""
+}
 
-  if(renderer.dataset.liveSource !== firstSource){
-    renderer.dataset.liveSource = firstSource
-    closeAssets(renderer)
+function ensureSystemPreview(renderer){
+  renderer.classList.add("api-system-view")
+  renderer.querySelectorAll(".dh-live-toggle, .dh-live-close").forEach((node) => node.remove())
+
+  let preview = renderer.querySelector(".dh-api-system-preview")
+  if(!preview){
+    preview = document.createElement("div")
+    preview.className = "dh-api-system-preview"
+    preview.innerHTML = "<span>API system view</span><b>Feed loaded</b>"
+    renderer.append(preview)
   }
 
-  if(!renderer.classList.contains("live-open")) closeAssets(renderer)
-  if(renderer.querySelector(".dh-live-toggle")) return
+  const src = previewSource(renderer)
+  if(src){
+    preview.style.setProperty("--api-preview-url", `url("${src}")`)
+    preview.classList.add("api-preview-ready")
+  } else {
+    preview.style.removeProperty("--api-preview-url")
+    preview.classList.remove("api-preview-ready")
+  }
+}
 
-  const open = document.createElement("button")
-  open.type = "button"
-  open.className = "dh-live-toggle"
-  open.innerHTML = "<b>Open live view</b><span>controlled asset</span>"
-  open.addEventListener("click", (event) => {
-    event.preventDefault()
-    event.stopPropagation()
-    openAssets(renderer)
-  })
-
-  const close = document.createElement("button")
-  close.type = "button"
-  close.className = "dh-live-close"
-  close.textContent = "Close live view"
-  close.addEventListener("click", (event) => {
-    event.preventDefault()
-    event.stopPropagation()
-    closeAssets(renderer)
-  })
-
-  renderer.append(open, close)
+function stabilizeRenderer(renderer){
+  closeAssets(renderer)
+  ensureSystemPreview(renderer)
 }
 
 export default function RendererContainmentGate({children}){
@@ -68,7 +64,7 @@ export default function RendererContainmentGate({children}){
     if(typeof document === "undefined") return undefined
 
     function wireRenderers(){
-      document.querySelectorAll(".dh-renderer.has-api").forEach(ensureLiveControls)
+      document.querySelectorAll(".dh-renderer.has-api").forEach(stabilizeRenderer)
     }
 
     wireRenderers()
@@ -77,7 +73,7 @@ export default function RendererContainmentGate({children}){
 
     function closeWithEscape(event){
       if(event.key !== "Escape") return
-      document.querySelectorAll(".dh-renderer.live-open").forEach(closeAssets)
+      document.querySelectorAll(".dh-renderer.has-api").forEach(stabilizeRenderer)
     }
 
     document.addEventListener("keydown", closeWithEscape)
@@ -85,7 +81,7 @@ export default function RendererContainmentGate({children}){
     return () => {
       observer.disconnect()
       document.removeEventListener("keydown", closeWithEscape)
-      document.querySelectorAll(".dh-live-toggle, .dh-live-close").forEach((node) => node.remove())
+      document.querySelectorAll(".dh-api-system-preview, .dh-live-toggle, .dh-live-close").forEach((node) => node.remove())
     }
   }, [])
 
