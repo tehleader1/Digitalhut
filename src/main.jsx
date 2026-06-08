@@ -16,6 +16,7 @@ import LibraryPage from "./pages/LibraryPage"
 import UpdatesPage from "./pages/UpdatesPage"
 import UpgradePage from "./pages/UpgradePage"
 import InsightsPage from "./pages/InsightsPage"
+import FaqPage from "./pages/FaqPage"
 
 import ObservatoryScanner
 from "./components/ObservatoryScanner"
@@ -58,6 +59,11 @@ ReactDOM.createRoot(
         <Route
           path="/insights"
           element={<InsightsPage />}
+        />
+
+        <Route
+          path="/faq"
+          element={<FaqPage />}
         />
 
       </Routes>
