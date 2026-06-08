@@ -1,5 +1,6 @@
-import FullscreenObservatory from "./FullscreenObservatory"
+import PremiumLoadGate from "./PremiumLoadGate"
+import FullscreenObservatoryV2 from "./FullscreenObservatoryV2"
 
 export default function ObservatoryScanner(){
-  return <FullscreenObservatory />
+  return <PremiumLoadGate><FullscreenObservatoryV2 /></PremiumLoadGate>
 }
