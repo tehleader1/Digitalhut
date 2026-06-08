@@ -1,0 +1,59 @@
+.dh-renderer.has-api .dh-scene-object {
+  opacity: .28;
+}
+
+.dh-api-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #000;
+  opacity: .96;
+  z-index: 4;
+}
+
+.dh-api-loading {
+  position: absolute;
+  left: 132px;
+  top: 166px;
+  padding: 8px 10px;
+  border: 1px solid rgba(103,232,249,.42);
+  border-radius: 8px;
+  background: rgba(2,6,23,.64);
+  color: #cffafe;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  backdrop-filter: blur(12px);
+}
+
+.dh-mini-visual.has-thumb .dh-scene-object.compact {
+  opacity: .25;
+}
+
+.dh-mini-thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: .92;
+  z-index: 1;
+}
+
+.dh-mini-visual.has-thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    linear-gradient(180deg, rgba(2,6,23,.05), rgba(2,6,23,.72)),
+    radial-gradient(circle at 40% 30%, transparent, rgba(0,0,0,.4));
+  pointer-events: none;
+}
+
+.dh-mini-visual.has-thumb .dh-mini-scan,
+.dh-mini-visual.has-thumb .dh-scene-object.compact {
+  z-index: 3;
+}
