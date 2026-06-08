@@ -67,7 +67,7 @@ const feedBank = {
     ["Developer Scene", "Prototype scene for APIs, agents, and runtime logic.", "developer scene api prototype 3d"],
     ["Renderer Stress Test", "GLB load state, layers, and camera behavior.", "renderer stress test 3d model"],
     ["Data Twin", "Structured city data and observatory state testing.", "city data twin 3d"],
-    ["Tool Builder", "Developer inspection and extension planning.", "tool builder 3d interface" ]
+    ["Tool Builder", "Developer inspection and extension planning.", "tool builder 3d interface"]
   ],
   "Researcher": [
     ["Research Archive", "Evidence review, source context, and annotation mode.", "research archive 3d visualization"],
@@ -77,15 +77,69 @@ const feedBank = {
   ]
 }
 
-const guidedTours = [
-  {id: "Overview", icon: "OV", prompt: "Start with the big picture and explain what the visitor is seeing."},
-  {id: "Structure", icon: "ST", prompt: "Explain structure, layers, scale, and inspection points."},
-  {id: "Researcher", icon: "RS", prompt: "Narrate as a researcher reviewing evidence, context, and open questions."},
-  {id: "Free Use", icon: "FU", prompt: "Explain practical public use cases without assuming a paid workflow."}
-]
+const categoryGuidedTours = {
+  "Continent": [
+    {id: "Terrain", icon: "TR", prompt: "Guide the terrain first: elevation, coastline, road flow, neighborhoods, and what the visitor can learn by orbiting the scene."},
+    {id: "Culture", icon: "CU", prompt: "Narrate the cultural layer: landmarks, public spaces, historical signals, tourism value, and education use cases."},
+    {id: "Route", icon: "RT", prompt: "Move like a travel and logistics scout: entry points, walkable paths, nearby context, and how the place connects to the larger region."},
+    {id: "Compare", icon: "CP", prompt: "Compare this region against similar global places and explain why the feed matters inside the Observatory."}
+  ],
+  "Planetary": [
+    {id: "Orbit", icon: "OR", prompt: "Start from orbit: scale, trajectory, lighting, station keeping, and planetary perspective."},
+    {id: "Surface", icon: "SF", prompt: "Drop into surface inspection: terrain shape, research targets, hazards, and science questions."},
+    {id: "Mission", icon: "MS", prompt: "Narrate like a mission controller: objective, asset purpose, constraints, and next observation point."},
+    {id: "Research", icon: "RS", prompt: "Use a researcher lens: evidence, data gaps, open questions, and why this object deserves more study."}
+  ],
+  "Gamer": [
+    {id: "Spawn", icon: "SP", prompt: "Introduce the playable spawn: sightlines, movement paths, objectives, cover, scale, and first player decision."},
+    {id: "Mechanics", icon: "MC", prompt: "Explain possible mechanics: interaction zones, loops, hazards, rewards, physics, and animation opportunities."},
+    {id: "Assets", icon: "AS", prompt: "Inspect the asset pack: modular pieces, reuse value, performance risk, and prototype readiness."},
+    {id: "Quest", icon: "QS", prompt: "Turn the scene into a quest pitch with route, goal, tension, and discovery moments."}
+  ],
+  "Real Estate": [
+    {id: "Property", icon: "PR", prompt: "Tour like a property scout: location, access, structure, terrain, nearby value, and development potential."},
+    {id: "Block", icon: "BK", prompt: "Read the block: roads, neighbors, foot traffic, zoning feel, and real-world demand signals."},
+    {id: "Risk", icon: "RK", prompt: "Call out risk: weather, slope, infrastructure, liquidity, maintenance, and inspection questions."},
+    {id: "Market", icon: "MK", prompt: "Blend market context with the 3D site: financial district signals, trend pressure, and premium-user decision points."}
+  ],
+  "Workforce": [
+    {id: "Safety", icon: "SF", prompt: "Guide a safety walk: access, hazard zones, traffic flow, staging areas, and worker awareness."},
+    {id: "Training", icon: "TR", prompt: "Narrate as a training module: what a new worker should notice first, second, and before leaving the scene."},
+    {id: "Ops", icon: "OP", prompt: "Explain operations: routing, resource placement, crew movement, bottlenecks, and handoff points."},
+    {id: "Audit", icon: "AU", prompt: "Audit the jobsite like a supervisor: what is working, what needs verification, and what to record."}
+  ],
+  "Home Project": [
+    {id: "Plan", icon: "PL", prompt: "Help the homeowner plan: layout, measurements, needed materials, access, and the next practical step."},
+    {id: "Repair", icon: "RP", prompt: "Narrate a repair inspection: likely issue zones, sequence, tools, caution points, and before-after value."},
+    {id: "Design", icon: "DS", prompt: "Guide a design pass: style, placement, lighting, props, and how the project should feel when finished."},
+    {id: "Budget", icon: "BG", prompt: "Explain cost awareness: scope creep, premium choices, practical substitutions, and what to verify before buying."}
+  ],
+  "Political": [
+    {id: "Civic", icon: "CV", prompt: "Read the civic space: public access, service zones, community value, and governance context."},
+    {id: "Policy", icon: "PY", prompt: "Explain policy impact: infrastructure choices, funding visibility, public benefit, and planning tradeoffs."},
+    {id: "Public", icon: "PB", prompt: "Narrate for the public: what normal visitors should understand without technical background."},
+    {id: "Map", icon: "MP", prompt: "Use map intelligence: boundaries, routes, population pressure, and regional comparison."}
+  ],
+  "Programmer": [
+    {id: "API", icon: "AP", prompt: "Inspect the API layer: provider source, payload shape, fallback state, latency, and what data is driving the renderer."},
+    {id: "Runtime", icon: "RT", prompt: "Narrate the runtime: renderer state, user mode, asset load path, wallet state, and what should update next."},
+    {id: "Agent", icon: "AG", prompt: "Explain agent opportunities: monitoring, SEO, GLB testing, market overlays, and FireCuda operations."},
+    {id: "Debug", icon: "DB", prompt: "Run a builder debug tour: what is live, what is fallback, what is blocked, and how to verify it."}
+  ],
+  "Researcher": [
+    {id: "Evidence", icon: "EV", prompt: "Review evidence: source quality, scene context, uncertainty, and the strongest claim the feed can support."},
+    {id: "Sources", icon: "SO", prompt: "Narrate source work: APIs used, missing data, verification path, and what should be cited."},
+    {id: "Compare", icon: "CP", prompt: "Compare against similar feeds and explain what changes when the category, market, or map layer changes."},
+    {id: "Hypothesis", icon: "HY", prompt: "Build a research hypothesis from the scene, then name the next observation that would confirm or reject it."}
+  ]
+}
 
 function metaFor(category){
   return categories.find((item) => item.id === category) || categories[0]
+}
+
+function toursFor(category){
+  return categoryGuidedTours[category] || categoryGuidedTours.Continent
 }
 
 function makeFeeds(category){
@@ -132,15 +186,7 @@ function payloadItems(payload){
 function normalizeAsset(item, category, index, source, term){
   const meta = metaFor(category)
   const uid = item?.uid || item?.modelUid || item?.model_uid || item?.model?.uid || ""
-  const embedUrl = cleanUrl(
-    item?.embedUrl ||
-    item?.embed_url ||
-    item?.viewerEmbedUrl ||
-    item?.viewer_embed_url ||
-    item?.embed?.url ||
-    item?.urls?.embed ||
-    (uid ? `https://sketchfab.com/models/${uid}/embed` : "")
-  )
+  const embedUrl = cleanUrl(item?.embedUrl || item?.embed_url || item?.viewerEmbedUrl || item?.viewer_embed_url || item?.embed?.url || item?.urls?.embed || (uid ? `https://sketchfab.com/models/${uid}/embed` : ""))
   const modelUrl = cleanUrl(item?.modelUrl || item?.model_url || item?.glbUrl || item?.glb_url || item?.gltfUrl || item?.gltf_url || item?.downloadUrl || item?.download_url)
   const viewerUrl = cleanUrl(item?.viewerUrl || item?.viewer_url || item?.url || item?.urls?.viewer || item?.webUrl || item?.web_url)
   const thumbnail = firstThumbnail(item)
@@ -160,8 +206,9 @@ function normalizeAsset(item, category, index, source, term){
     embedUrl,
     modelUrl,
     viewerUrl,
-    apiSource: source,
-    apiStatus: embedUrl || modelUrl || thumbnail ? "connected" : "metadata"
+    providerMix: item?.providerMix || item?.providers || [source],
+    apiSource: item?.apiSource || source,
+    apiStatus: item?.apiStatus || (embedUrl || modelUrl || thumbnail ? "connected" : "metadata")
   }
 }
 
@@ -182,7 +229,7 @@ async function resolveApiFeeds(category, term){
       if(!response.ok) continue
       const payload = await response.json()
       const items = payloadItems(payload)
-      const feeds = items.map((item, index) => normalizeAsset(item, category, index, source, term)).filter((item) => item.embedUrl || item.modelUrl || item.thumbnail || item.viewerUrl)
+      const feeds = items.map((item, index) => normalizeAsset(item, category, index, source, term)).filter((item) => item.embedUrl || item.modelUrl || item.thumbnail || item.viewerUrl || item.apiStatus)
       if(feeds.length) return feeds.slice(0, 8)
     } catch {
       continue
@@ -277,16 +324,7 @@ function RendererVisual({feed, layer, guided, loading}){
     <div className="dh-stars">{stars.map((_, index) => <span key={index} style={{left: `${4 + (index * 43) % 91}%`, top: `${7 + (index * 31) % 78}%`}} />)}</div>
     <SceneObject feed={feed} />
     {hasEmbed && <iframe className="dh-api-frame" title={feed.title} src={feed.embedUrl} allow="autoplay; fullscreen; xr-spatial-tracking" allowFullScreen />}
-    {!hasEmbed && hasModel && <model-viewer
-      ref={modelRef}
-      className={modelReady ? "dh-model is-ready" : "dh-model"}
-      src={feed.modelUrl}
-      camera-controls="true"
-      auto-rotate={guided ? "true" : undefined}
-      autoplay="true"
-      shadow-intensity="1"
-      exposure={layer === "Lighting" ? "1.45" : "1"}
-    />}
+    {!hasEmbed && hasModel && <model-viewer ref={modelRef} className={modelReady ? "dh-model is-ready" : "dh-model"} src={feed.modelUrl} camera-controls="true" auto-rotate={guided ? "true" : undefined} autoplay="true" shadow-intensity="1" exposure={layer === "Lighting" ? "1.45" : "1"} />}
     <div className="dh-orbit" />
     <div className="dh-orbit-two" />
     <div className="dh-sweep" />
@@ -312,7 +350,7 @@ export default function FullscreenObservatory(){
   const [active, setActive] = useState(0)
   const [query, setQuery] = useState("wall street new york")
   const [searchMode, setSearchMode] = useState("regular")
-  const [tour, setTour] = useState("Overview")
+  const [tour, setTour] = useState(toursFor("Continent")[0].id)
   const [tier, setTier] = useState("guest")
   const [username, setUsername] = useState("")
   const [entryOpen, setEntryOpen] = useState(true)
@@ -326,6 +364,8 @@ export default function FullscreenObservatory(){
   const hideTimer = useRef(null)
   const requestRef = useRef(0)
 
+  const activeTours = toursFor(category)
+  const activeTour = activeTours.find((item) => item.id === tour) || activeTours[0]
   const categoryFeeds = feeds.length ? feeds : makeFeeds(category)
   const feed = categoryFeeds[active] || categoryFeeds[0]
   const paid = ["premium", "pro"].includes(tier)
@@ -390,12 +430,12 @@ export default function FullscreenObservatory(){
 
   function selectCategory(nextCategory){
     setCategory(nextCategory)
-    setTour("Overview")
+    setTour(toursFor(nextCategory)[0].id)
     const meta = metaFor(nextCategory)
     setQuery(nextCategory)
     setPlaying(true)
     wake()
-    speak(`DigitalHut library set to ${nextCategory}. Renderer context reset for ${meta.context}.`)
+    speak(`DigitalHut library set to ${nextCategory}. Guided tours now match ${meta.context}.`)
   }
 
   function chooseFeed(item){
@@ -411,7 +451,7 @@ export default function FullscreenObservatory(){
     setSearchMode("premium")
     setPlaying(true)
     wake()
-    speak(`Premium guided tour. ${item.id}. ${item.prompt} Category context: ${category}. Project context: ${feed.note}`)
+    speak(`Premium ${category} guided tour. ${item.id}. ${item.prompt} Current feed: ${feed.title}. ${feed.note}`)
   }
 
   async function runSearch(){
@@ -419,9 +459,9 @@ export default function FullscreenObservatory(){
     const nextFeeds = await loadApiFeeds(category, query)
     const nextFeed = nextFeeds[0] || feed
     if(searchMode === "premium"){
-      speak(`Premium guided tour started for ${nextFeed.title}. I am orbiting the API scene and narrating ${category} context, researcher details, and free-use possibilities.`)
+      speak(`Premium ${category} guided tour started for ${nextFeed.title}. ${activeTour.prompt}`)
     } else {
-      speak(`Regular API feed loading ${nextFeed.title}. Displaying API assets and keeping the renderer ready for exploration.`)
+      speak(`Regular API feed loading ${nextFeed.title}. Displaying provider assets and keeping the renderer ready for exploration.`)
     }
     wake()
   }
@@ -478,8 +518,8 @@ export default function FullscreenObservatory(){
 
       <aside className="dh-quick-rail" style={{opacity: awake ? 1 : 0.2}}>
         <div className="dh-quick-section">
-          <div className="dh-rail-head"><span>Guided Tour</span><b>{tour}</b></div>
-          <div className="dh-tour-grid">{guidedTours.map((item) => <button key={item.id} className={`dh-btn dh-tour-card ${item.id === tour ? "active" : ""}`} onClick={() => chooseTour(item)}>
+          <div className="dh-rail-head"><span>{category} Tour</span><b>{tour}</b></div>
+          <div className="dh-tour-grid">{activeTours.map((item) => <button key={item.id} className={`dh-btn dh-tour-card ${item.id === tour ? "active" : ""}`} onClick={() => chooseTour(item)}>
             <TourVisual item={item} active={item.id === tour} accent={feed.accent} />
             <small>{item.id}</small>
           </button>)}</div>
@@ -496,15 +536,15 @@ export default function FullscreenObservatory(){
       <div className="dh-info" style={{opacity: awake ? 1 : 0.16}}>
         <p className="dh-eyebrow">Renderer State</p>
         <h1 className="dh-title">{feed.title}</h1>
-        <p className="dh-note">{searchMode === "premium" ? `AI guided: ${tour}. ` : "Regular API feed. "}{feed.note}</p>
-        <div className="dh-state-badges"><span>{category}</span><span>{searchMode}</span><span>{feed.apiStatus || "api"}</span><span>Researcher ready</span></div>
+        <p className="dh-note">{searchMode === "premium" ? `AI guided ${category}: ${tour}. ` : "Regular API feed. "}{feed.note}</p>
+        <div className="dh-state-badges"><span>{category}</span><span>{searchMode}</span><span>{feed.apiStatus || "api"}</span><span>{activeTour.icon}</span><span>Researcher ready</span></div>
       </div>
 
       <div className="dh-media" style={{opacity: awake ? 1 : 0.12}}>
         <button className="dh-btn" onClick={() => setPlaying((value) => !value)}>{playing ? "Pause" : "Resume"}</button>
         <button className="dh-btn" onClick={() => step(-1)}>Back 10s</button>
         <button className="dh-btn" onClick={() => step(1)}>Forward 10s</button>
-        <button className="dh-btn" onClick={() => chooseTour(guidedTours[(guidedTours.findIndex((item) => item.id === tour) + 1) % guidedTours.length])}>Switch Tour</button>
+        <button className="dh-btn" onClick={() => chooseTour(activeTours[(activeTours.findIndex((item) => item.id === tour) + 1) % activeTours.length])}>Switch Tour</button>
       </div>
 
       <div className="dh-utility" style={{opacity: awake ? 1 : 0.1}}>{["Save", "Share", "Embed", "Download", "Comment", "Related"].map((label) => <button key={label} className="dh-btn" onClick={() => action(label)}>{label}</button>)}</div>
