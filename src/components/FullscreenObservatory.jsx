@@ -1,7 +1,8 @@
-import React, {useEffect, useMemo, useRef, useState} from "react"
+import React, {useEffect, useRef, useState} from "react"
 import "@google/model-viewer"
 import {ConnectButton} from "../wallet"
 import "./FullscreenObservatory.css"
+import "./FullscreenObservatory.api.css"
 
 const INACTIVITY_MS = 8 * 60 * 1000
 const layers = ["Base", "Architect", "Lighting", "Props", "Grid", "Coordinates"]
@@ -21,58 +22,58 @@ const categories = [
 
 const feedBank = {
   "Continent": [
-    ["Cape Town South Africa", "Global civic terrain and coastline study.", "/glbs/cape_town_-_south_africa.glb"],
-    ["Caribbean Colonial Zone", "History, tourism, and public cultural exploration.", "/glbs/tourist_colonial_zone_dominican_republic.glb"],
-    ["California Hollywood", "Culture, tourism, and city landmark context.", "/glbs/hollywood_sign_los_angeles_ca_usa.glb"],
-    ["European Buildings", "Architecture and old-city structure set.", "/glbs/european_buildings_asset_pack_3.glb"]
+    ["Cape Town South Africa", "Global civic terrain and coastline study.", "cape town south africa 3d city terrain"],
+    ["Caribbean Colonial Zone", "History, tourism, and public cultural exploration.", "caribbean colonial zone historic 3d"],
+    ["California Hollywood", "Culture, tourism, and city landmark context.", "hollywood sign los angeles 3d landmark"],
+    ["European Buildings", "Architecture and old-city structure set.", "european buildings old city architecture 3d"]
   ],
   "Planetary": [
-    ["International Space Station", "Orbital research feed for space and engineering.", "/glbs/international_space_station.glb"],
-    ["Moon Observatory", "Planetary science and lunar study mode.", "/glbs/moon.glb"],
-    ["Europe Heightmap", "Large terrain review for planetary-style elevation.", "/glbs/europe_with_4k_heightmap.glb"],
-    ["Orbital City Grid", "Synthetic orbit and infrastructure planner.", "/glbs/city_pack_7.glb"]
+    ["International Space Station", "Orbital research feed for space and engineering.", "international space station 3d model"],
+    ["Moon Observatory", "Planetary science and lunar study mode.", "moon surface observatory 3d"],
+    ["Europe Heightmap", "Large terrain review for planetary-style elevation.", "europe heightmap terrain 3d"],
+    ["Orbital City Grid", "Synthetic orbit and infrastructure planner.", "orbital city grid 3d"]
   ],
   "Gamer": [
-    ["City Pack Prototype", "Game-ready city block and navigation prototype.", "/glbs/city_pack_7.glb"],
-    ["Animated Environment", "Playable scene and environment tour context.", "/glbs/tourist_colonial_zone_dominican_republic.glb"],
-    ["Mission Hub", "Prototype hub for characters, quests, and props.", "/glbs/european_buildings_asset_pack_3.glb"],
-    ["Orbit Arena", "Synthetic arena flow for gameplay testing.", "/glbs/moon.glb"]
+    ["City Pack Prototype", "Game-ready city block and navigation prototype.", "game city pack prototype 3d"],
+    ["Animated Environment", "Playable scene and environment tour context.", "animated environment game scene 3d"],
+    ["Mission Hub", "Prototype hub for characters, quests, and props.", "mission hub game prototype 3d"],
+    ["Orbit Arena", "Synthetic arena flow for gameplay testing.", "orbit arena game 3d"]
   ],
   "Real Estate": [
-    ["Surfside Florida", "Beachfront property, terrain, and climate inspection.", "/glbs/surfside_florida_usa_beachfront_properties.glb"],
-    ["Wall Street New York", "Financial district, city structure, and market context.", "/glbs/new_york_city._manhattan.glb"],
-    ["Morgantown West Virginia", "Residential terrain and local development scan.", "/glbs/morgantown_west_virginia_usa_x2.glb"],
-    ["Vancouver Canada", "Urban development and civic context.", "/glbs/dtes_vancouver_canada.glb"]
+    ["Surfside Florida", "Beachfront property, terrain, and climate inspection.", "surfside florida beachfront properties 3d"],
+    ["Wall Street New York", "Financial district, city structure, and market context.", "wall street new york financial district 3d"],
+    ["Morgantown West Virginia", "Residential terrain and local development scan.", "morgantown west virginia residential terrain 3d"],
+    ["Vancouver Canada", "Urban development and civic context.", "vancouver canada downtown eastside 3d"]
   ],
   "Workforce": [
-    ["Training Yard", "Operations, workforce routing, and team walk-through.", "/glbs/city_pack_7.glb"],
-    ["Jobsite Structure", "Inspection, safety, and workflow planning.", "/glbs/european_buildings_asset_pack_3.glb"],
-    ["Civic Operations", "Public service logistics and infrastructure mode.", "/glbs/new_york_city._manhattan.glb"],
-    ["Coastal Response", "Weather, access, and emergency planning.", "/glbs/surfside_florida_usa_beachfront_properties.glb"]
+    ["Training Yard", "Operations, workforce routing, and team walk-through.", "workforce training yard 3d"],
+    ["Jobsite Structure", "Inspection, safety, and workflow planning.", "construction jobsite structure 3d"],
+    ["Civic Operations", "Public service logistics and infrastructure mode.", "civic operations city infrastructure 3d"],
+    ["Coastal Response", "Weather, access, and emergency planning.", "coastal response emergency planning 3d"]
   ],
   "Home Project": [
-    ["Home Build Sketch", "Personal project, room flow, and repair planning.", "/glbs/european_buildings_asset_pack_3.glb"],
-    ["Neighborhood Context", "Home area, local terrain, and property context.", "/glbs/morgantown_west_virginia_usa_x2.glb"],
-    ["Interior Props", "Props, furniture, and home concept testing.", "/glbs/city_pack_7.glb"],
-    ["Coastal Home", "Beachfront home and environmental review.", "/glbs/surfside_florida_usa_beachfront_properties.glb"]
+    ["Home Build Sketch", "Personal project, room flow, and repair planning.", "home build sketch 3d"],
+    ["Neighborhood Context", "Home area, local terrain, and property context.", "neighborhood context home terrain 3d"],
+    ["Interior Props", "Props, furniture, and home concept testing.", "interior props home project 3d"],
+    ["Coastal Home", "Beachfront home and environmental review.", "coastal home beachfront 3d"]
   ],
   "Political": [
-    ["Civic District", "Public works, governance, and city policy context.", "/glbs/new_york_city._manhattan.glb"],
-    ["Global Region", "Maps, boundaries, and public planning review.", "/glbs/europe_with_4k_heightmap.glb"],
-    ["Historical Zone", "Culture, tourism, and public memory space.", "/glbs/tourist_colonial_zone_dominican_republic.glb"],
-    ["Infrastructure View", "Civic assets and transport context.", "/glbs/dtes_vancouver_canada.glb"]
+    ["Civic District", "Public works, governance, and city policy context.", "civic district public works 3d"],
+    ["Global Region", "Maps, boundaries, and public planning review.", "global region political map 3d"],
+    ["Historical Zone", "Culture, tourism, and public memory space.", "historical zone public memory 3d"],
+    ["Infrastructure View", "Civic assets and transport context.", "infrastructure civic assets 3d"]
   ],
   "Programmer": [
-    ["Developer Scene", "Prototype scene for APIs, agents, and runtime logic.", "/glbs/city_pack_7.glb"],
-    ["Renderer Stress Test", "GLB load state, layers, and camera behavior.", "/glbs/international_space_station.glb"],
-    ["Data Twin", "Structured city data and observatory state testing.", "/glbs/new_york_city._manhattan.glb"],
-    ["Tool Builder", "Developer inspection and extension planning.", "/glbs/european_buildings_asset_pack_3.glb"]
+    ["Developer Scene", "Prototype scene for APIs, agents, and runtime logic.", "developer scene api prototype 3d"],
+    ["Renderer Stress Test", "GLB load state, layers, and camera behavior.", "renderer stress test 3d model"],
+    ["Data Twin", "Structured city data and observatory state testing.", "city data twin 3d"],
+    ["Tool Builder", "Developer inspection and extension planning.", "tool builder 3d interface" ]
   ],
   "Researcher": [
-    ["Research Archive", "Evidence review, source context, and annotation mode.", "/glbs/europe_with_4k_heightmap.glb"],
-    ["Scientific Orbit", "Researcher lens for space and engineering details.", "/glbs/international_space_station.glb"],
-    ["Field Study", "Terrain, site notes, and comparative observation.", "/glbs/cape_town_-_south_africa.glb"],
-    ["AI Analysis Room", "Researcher plus AI review for experimental insight.", "/glbs/city_pack_7.glb"]
+    ["Research Archive", "Evidence review, source context, and annotation mode.", "research archive 3d visualization"],
+    ["Scientific Orbit", "Researcher lens for space and engineering details.", "scientific orbit research 3d"],
+    ["Field Study", "Terrain, site notes, and comparative observation.", "field study terrain 3d"],
+    ["AI Analysis Room", "Researcher plus AI review for experimental insight.", "ai analysis room 3d"]
   ]
 }
 
@@ -83,18 +84,111 @@ const guidedTours = [
   {id: "Free Use", icon: "FU", prompt: "Explain practical public use cases without assuming a paid workflow."}
 ]
 
+function metaFor(category){
+  return categories.find((item) => item.id === category) || categories[0]
+}
+
 function makeFeeds(category){
-  const meta = categories.find((item) => item.id === category) || categories[0]
-  return (feedBank[category] || feedBank.Continent).map(([title, note, model], index) => ({
-    id: `${category}:${index}:${title}`,
+  const meta = metaFor(category)
+  return (feedBank[category] || feedBank.Continent).map(([title, note, query], index) => ({
+    id: `seed:${category}:${index}:${title}`,
     title,
     note,
-    model,
+    query,
     category,
     icon: meta.icon,
     accent: meta.accent,
-    context: meta.context
+    context: meta.context,
+    apiStatus: "seed"
   }))
+}
+
+function cleanUrl(value){
+  if(!value || typeof value !== "string") return ""
+  if(value.startsWith("//")) return `https:${value}`
+  return value
+}
+
+function firstThumbnail(item){
+  const images = item?.thumbnails?.images || item?.thumbnail?.images || item?.images || []
+  if(Array.isArray(images) && images.length){
+    const image = [...images].sort((a, b) => (b.width || 0) - (a.width || 0))[0]
+    return cleanUrl(image?.url || image?.src)
+  }
+  return cleanUrl(item?.thumbnailUrl || item?.thumbnail_url || item?.thumbnail || item?.image || item?.poster || item?.cover)
+}
+
+function payloadItems(payload){
+  const candidates = [payload?.assets, payload?.results, payload?.items, payload?.models, payload?.feed, payload?.data]
+  for(const candidate of candidates){
+    if(Array.isArray(candidate)) return candidate
+    if(Array.isArray(candidate?.results)) return candidate.results
+    if(Array.isArray(candidate?.items)) return candidate.items
+  }
+  if(payload?.uid || payload?.id || payload?.title || payload?.name) return [payload]
+  return []
+}
+
+function normalizeAsset(item, category, index, source, term){
+  const meta = metaFor(category)
+  const uid = item?.uid || item?.modelUid || item?.model_uid || item?.model?.uid || ""
+  const embedUrl = cleanUrl(
+    item?.embedUrl ||
+    item?.embed_url ||
+    item?.viewerEmbedUrl ||
+    item?.viewer_embed_url ||
+    item?.embed?.url ||
+    item?.urls?.embed ||
+    (uid ? `https://sketchfab.com/models/${uid}/embed` : "")
+  )
+  const modelUrl = cleanUrl(item?.modelUrl || item?.model_url || item?.glbUrl || item?.glb_url || item?.gltfUrl || item?.gltf_url || item?.downloadUrl || item?.download_url)
+  const viewerUrl = cleanUrl(item?.viewerUrl || item?.viewer_url || item?.url || item?.urls?.viewer || item?.webUrl || item?.web_url)
+  const thumbnail = firstThumbnail(item)
+  const title = item?.title || item?.name || item?.displayName || `${category} API feed ${index + 1}`
+  const note = item?.note || item?.description || item?.summary || `Live API result for ${term || category}.`
+
+  return {
+    id: `api:${source}:${category}:${uid || index}:${title}`,
+    title,
+    note,
+    query: term || title,
+    category,
+    icon: meta.icon,
+    accent: meta.accent,
+    context: meta.context,
+    thumbnail,
+    embedUrl,
+    modelUrl,
+    viewerUrl,
+    apiSource: source,
+    apiStatus: embedUrl || modelUrl || thumbnail ? "connected" : "metadata"
+  }
+}
+
+async function resolveApiFeeds(category, term){
+  if(typeof window === "undefined") return []
+  const query = encodeURIComponent(term || category)
+  const encodedCategory = encodeURIComponent(category)
+  const endpoints = [
+    [`observatory-feed`, `/api/observatory-feed?category=${encodedCategory}&query=${query}`],
+    [`sketchfab`, `/api/sketchfab?query=${query}&category=${encodedCategory}`],
+    [`sketchfab-search`, `/api/search/sketchfab?query=${query}&category=${encodedCategory}`],
+    [`observatory`, `/api/observatory?category=${encodedCategory}&query=${query}`]
+  ]
+
+  for(const [source, endpoint] of endpoints){
+    try{
+      const response = await fetch(endpoint, {headers: {Accept: "application/json"}})
+      if(!response.ok) continue
+      const payload = await response.json()
+      const items = payloadItems(payload)
+      const feeds = items.map((item, index) => normalizeAsset(item, category, index, source, term)).filter((item) => item.embedUrl || item.modelUrl || item.thumbnail || item.viewerUrl)
+      if(feeds.length) return feeds.slice(0, 8)
+    } catch {
+      continue
+    }
+  }
+  return []
 }
 
 function freshEntry(){
@@ -154,16 +248,20 @@ function TourVisual({item, active, accent}){
   </div>
 }
 
-function RendererVisual({feed, layer, guided}){
+function RendererVisual({feed, layer, guided, loading}){
   const [modelReady, setModelReady] = useState(false)
   const modelRef = useRef(null)
   const stars = Array.from({length: 24})
   const skyline = Array.from({length: 18})
+  const hasEmbed = Boolean(feed.embedUrl)
+  const hasModel = Boolean(feed.modelUrl)
+  const hasApi = hasEmbed || hasModel
+  const status = loading ? "API resolving" : hasEmbed ? "API viewer active" : modelReady ? "API model active" : hasApi ? "API model loading" : "API preview active"
 
   useEffect(() => {
     setModelReady(false)
     const model = modelRef.current
-    if(!model) return
+    if(!model || !hasModel) return
     const ready = () => setModelReady(true)
     const failed = () => setModelReady(false)
     model.addEventListener("load", ready)
@@ -172,22 +270,23 @@ function RendererVisual({feed, layer, guided}){
       model.removeEventListener("load", ready)
       model.removeEventListener("error", failed)
     }
-  }, [feed.model])
+  }, [feed.modelUrl, hasModel])
 
-  return <div className={`dh-renderer ${guided ? "guided" : ""}`} style={{"--accent": feed.accent}}>
+  return <div className={`dh-renderer ${guided ? "guided" : ""} ${hasApi ? "has-api" : ""}`} style={{"--accent": feed.accent}}>
     <div className="dh-motion-sky" />
     <div className="dh-stars">{stars.map((_, index) => <span key={index} style={{left: `${4 + (index * 43) % 91}%`, top: `${7 + (index * 31) % 78}%`}} />)}</div>
     <SceneObject feed={feed} />
-    <model-viewer
+    {hasEmbed && <iframe className="dh-api-frame" title={feed.title} src={feed.embedUrl} allow="autoplay; fullscreen; xr-spatial-tracking" allowFullScreen />}
+    {!hasEmbed && hasModel && <model-viewer
       ref={modelRef}
-      class={modelReady ? "dh-model is-ready" : "dh-model"}
-      src={feed.model}
+      className={modelReady ? "dh-model is-ready" : "dh-model"}
+      src={feed.modelUrl}
       camera-controls="true"
       auto-rotate={guided ? "true" : undefined}
       autoplay="true"
       shadow-intensity="1"
       exposure={layer === "Lighting" ? "1.45" : "1"}
-    />
+    />}
     <div className="dh-orbit" />
     <div className="dh-orbit-two" />
     <div className="dh-sweep" />
@@ -195,12 +294,14 @@ function RendererVisual({feed, layer, guided}){
     {(layer === "Grid" || layer === "Coordinates") && <div className="dh-visual-grid" />}
     <div className="dh-core-glow" />
     <div className="dh-visual-label">{feed.category}</div>
-    <div className={`dh-model-status ${modelReady ? "ready" : ""}`}>{modelReady ? "GLB active" : "Live preview active"}</div>
+    <div className={`dh-model-status ${hasApi || modelReady ? "ready" : ""}`}>{status}</div>
+    {loading && <div className="dh-api-loading">Searching live observatory APIs</div>}
   </div>
 }
 
 function MiniVisual({feed, active}){
-  return <div className={`dh-mini-visual ${active ? "active" : ""}`} style={{"--accent": feed.accent, borderColor: active ? feed.accent : undefined}}>
+  return <div className={`dh-mini-visual ${feed.thumbnail ? "has-thumb" : ""} ${active ? "active" : ""}`} style={{"--accent": feed.accent, borderColor: active ? feed.accent : undefined}}>
+    {feed.thumbnail && <img className="dh-mini-thumb" src={feed.thumbnail} alt="" loading="lazy" />}
     <SceneObject feed={feed} compact />
     <div className="dh-mini-scan" />
   </div>
@@ -220,9 +321,12 @@ export default function FullscreenObservatory(){
   const [playing, setPlaying] = useState(true)
   const [layer, setLayer] = useState("Base")
   const [layerOpen, setLayerOpen] = useState(false)
+  const [feeds, setFeeds] = useState(() => makeFeeds("Continent"))
+  const [apiLoading, setApiLoading] = useState(false)
   const hideTimer = useRef(null)
+  const requestRef = useRef(0)
 
-  const categoryFeeds = useMemo(() => makeFeeds(category), [category])
+  const categoryFeeds = feeds.length ? feeds : makeFeeds(category)
   const feed = categoryFeeds[active] || categoryFeeds[0]
   const paid = ["premium", "pro"].includes(tier)
   const guided = searchMode === "premium" && playing
@@ -235,6 +339,10 @@ export default function FullscreenObservatory(){
   }, [])
 
   useEffect(() => {
+    loadApiFeeds(category, category, {silent: true})
+  }, [category])
+
+  useEffect(() => {
     if(entryOpen || !playing || searchMode !== "premium") return
     const timer = window.setInterval(() => setActive((current) => (current + 1) % categoryFeeds.length), awake ? 12000 : 17000)
     return () => window.clearInterval(timer)
@@ -244,6 +352,26 @@ export default function FullscreenObservatory(){
     setAwake(true)
     window.clearTimeout(hideTimer.current)
     hideTimer.current = window.setTimeout(() => setAwake(false), 2600)
+  }
+
+  async function loadApiFeeds(nextCategory, term, options = {}){
+    const id = requestRef.current + 1
+    requestRef.current = id
+    const seed = makeFeeds(nextCategory)
+    setFeeds(seed)
+    setActive(0)
+    setApiLoading(true)
+    const apiResults = await resolveApiFeeds(nextCategory, term)
+    if(requestRef.current !== id) return seed
+    const nextFeeds = apiResults.length ? apiResults : seed
+    setFeeds(nextFeeds)
+    setActive(0)
+    setApiLoading(false)
+    if(!options.silent){
+      const mode = apiResults.length ? "Live API feed connected" : "API metadata preview active"
+      speak(`${mode}. ${nextFeeds[0]?.title || nextCategory}.`)
+    }
+    return nextFeeds
   }
 
   function enter(nextTier = tier){
@@ -262,21 +390,20 @@ export default function FullscreenObservatory(){
 
   function selectCategory(nextCategory){
     setCategory(nextCategory)
-    setActive(0)
     setTour("Overview")
-    const meta = categories.find((item) => item.id === nextCategory)
+    const meta = metaFor(nextCategory)
     setQuery(nextCategory)
     setPlaying(true)
     wake()
-    speak(`DigitalHut library set to ${nextCategory}. Renderer context reset for ${meta?.context || "observatory exploration"}.`)
+    speak(`DigitalHut library set to ${nextCategory}. Renderer context reset for ${meta.context}.`)
   }
 
   function chooseFeed(item){
     const index = categoryFeeds.findIndex((candidate) => candidate.id === item.id)
     if(index >= 0) setActive(index)
-    setQuery(item.title)
+    setQuery(item.query || item.title)
     wake()
-    speak(`${searchMode === "premium" ? "Premium guided tour" : "Regular GLB mode"}. ${item.title}. ${item.note}`)
+    speak(`${searchMode === "premium" ? "Premium guided tour" : "Regular API feed"}. ${item.title}. ${item.note}`)
   }
 
   function chooseTour(item){
@@ -287,17 +414,14 @@ export default function FullscreenObservatory(){
     speak(`Premium guided tour. ${item.id}. ${item.prompt} Category context: ${category}. Project context: ${feed.note}`)
   }
 
-  function runSearch(){
-    const term = query.toLowerCase()
-    const found = categoryFeeds.findIndex((item) => `${item.title} ${item.note} ${item.category}`.toLowerCase().includes(term))
-    const nextIndex = found >= 0 ? found : 0
-    const nextFeed = categoryFeeds[nextIndex]
-    setActive(nextIndex)
+  async function runSearch(){
     setPlaying(true)
+    const nextFeeds = await loadApiFeeds(category, query)
+    const nextFeed = nextFeeds[0] || feed
     if(searchMode === "premium"){
-      speak(`Premium guided tour started for ${nextFeed.title}. I am orbiting the scene and narrating ${category} context, researcher details, and free-use possibilities.`)
+      speak(`Premium guided tour started for ${nextFeed.title}. I am orbiting the API scene and narrating ${category} context, researcher details, and free-use possibilities.`)
     } else {
-      speak(`Regular GLB mode loading ${nextFeed.title}. Displaying the asset and keeping the renderer ready for exploration.`)
+      speak(`Regular API feed loading ${nextFeed.title}. Displaying API assets and keeping the renderer ready for exploration.`)
     }
     wake()
   }
@@ -317,17 +441,18 @@ export default function FullscreenObservatory(){
   }
 
   function action(label){
+    const target = feed.modelUrl || feed.embedUrl || feed.viewerUrl || ""
     if(label === "Save") window.localStorage.setItem("digitalhut:savedFeed", JSON.stringify(feed))
-    if(label === "Share" && navigator.share) navigator.share({title: feed.title, text: feed.note, url: window.location.href}).catch(() => null)
-    if(label === "Embed" && navigator.clipboard) navigator.clipboard.writeText(`<iframe src="${window.location.origin}/viewer.html?model=${feed.model}"></iframe>`).catch(() => null)
-    if(label === "Download") paid ? window.open(feed.model, "_blank") : setEntryOpen(true)
+    if(label === "Share" && navigator.share) navigator.share({title: feed.title, text: feed.note, url: feed.viewerUrl || window.location.href}).catch(() => null)
+    if(label === "Embed" && navigator.clipboard) navigator.clipboard.writeText(feed.embedUrl ? `<iframe src="${feed.embedUrl}"></iframe>` : window.location.href).catch(() => null)
+    if(label === "Download") target && paid ? window.open(target, "_blank") : setEntryOpen(true)
     if(label === "Related") setActive((current) => (current + 1) % categoryFeeds.length)
     wake()
   }
 
   return <main className="dh-observatory" onPointerMove={wake} onPointerDown={wake}>
     <section className="dh-stage">
-      <RendererVisual feed={feed} layer={layer} guided={guided} />
+      <RendererVisual feed={feed} layer={layer} guided={guided} loading={apiLoading} />
       <div className="dh-vignette" />
       {(layer === "Grid" || layer === "Coordinates") && <div className="dh-grid-layer" />}
       {layer === "Architect" && <div className="dh-architect"><b>Architect Layer</b><span>builders / developers / researchers / AIs / experimental</span></div>}
@@ -335,8 +460,8 @@ export default function FullscreenObservatory(){
 
       <div className="dh-top" style={{opacity: awake ? 1 : 0.08}}>
         <div className="dh-search">
-          <input value={query} onChange={(event) => setQuery(event.target.value)} onFocus={wake} placeholder="Search GLB or guided tour..." />
-          <button className={`dh-btn mode ${searchMode === "regular" ? "active" : ""}`} onClick={() => setSearchMode("regular")}>Regular GLB</button>
+          <input value={query} onChange={(event) => setQuery(event.target.value)} onFocus={wake} placeholder="Search observatory APIs..." />
+          <button className={`dh-btn mode ${searchMode === "regular" ? "active" : ""}`} onClick={() => setSearchMode("regular")}>Regular API</button>
           <button className={`dh-btn mode ${searchMode === "premium" ? "active" : ""}`} onClick={() => setSearchMode("premium")}>Premium Tour</button>
           <button className="dh-btn hot" onClick={runSearch}>Search</button>
           <button className="dh-btn hot" onClick={voice}>Voice</button>
@@ -360,10 +485,10 @@ export default function FullscreenObservatory(){
           </button>)}</div>
         </div>
         <div className="dh-quick-section">
-          <div className="dh-rail-head"><span>Regular Feed</span><b>{category}</b></div>
-          <div className="dh-feed-grid">{categoryFeeds.map((item) => <button key={item.id} className={`dh-feed-card ${item.id === feed.id ? "active" : ""}`} onClick={() => chooseFeed(item)}>
+          <div className="dh-rail-head"><span>Regular Feed</span><b>{apiLoading ? "API" : category}</b></div>
+          <div className="dh-feed-grid">{categoryFeeds.slice(0, 4).map((item) => <button key={item.id} className={`dh-feed-card ${item.id === feed.id ? "active" : ""}`} onClick={() => chooseFeed(item)}>
             <MiniVisual feed={item} active={item.id === feed.id} />
-            <div className="dh-card-text"><b>{item.title}</b><small>{item.category}</small></div>
+            <div className="dh-card-text"><b>{item.title}</b><small>{item.apiSource || item.category}</small></div>
           </button>)}</div>
         </div>
       </aside>
@@ -371,8 +496,8 @@ export default function FullscreenObservatory(){
       <div className="dh-info" style={{opacity: awake ? 1 : 0.16}}>
         <p className="dh-eyebrow">Renderer State</p>
         <h1 className="dh-title">{feed.title}</h1>
-        <p className="dh-note">{searchMode === "premium" ? `AI guided: ${tour}. ` : "Regular GLB mode. "}{feed.note}</p>
-        <div className="dh-state-badges"><span>{category}</span><span>{searchMode}</span><span>Researcher ready</span></div>
+        <p className="dh-note">{searchMode === "premium" ? `AI guided: ${tour}. ` : "Regular API feed. "}{feed.note}</p>
+        <div className="dh-state-badges"><span>{category}</span><span>{searchMode}</span><span>{feed.apiStatus || "api"}</span><span>Researcher ready</span></div>
       </div>
 
       <div className="dh-media" style={{opacity: awake ? 1 : 0.12}}>
