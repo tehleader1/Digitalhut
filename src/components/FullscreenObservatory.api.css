@@ -1,102 +1,80 @@
 .dh-renderer.has-api .dh-scene-object {
-  opacity: .92;
+  opacity: .24;
 }
 
 .dh-renderer.has-api .dh-api-frame,
 .dh-renderer.has-api .dh-model {
-  position: absolute;
-  inset: 12% 18% 18% 16%;
-  width: auto;
-  height: auto;
-  border: 1px solid rgba(103,232,249,.28);
-  border-radius: 8px;
-  background: #000;
+  display: none !important;
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
-  transform: scale(.965);
-  transform-origin: center;
-  box-shadow: 0 28px 90px rgba(0,0,0,.52), 0 0 44px rgba(103,232,249,.13);
-  transition: opacity .25s ease, transform .25s ease, visibility .25s ease;
-  z-index: 4;
 }
 
-.dh-renderer.has-api .dh-api-frame {
-  display: none !important;
-}
-
-.dh-renderer.has-api .dh-model {
-  display: block;
-}
-
-.dh-renderer.has-api.live-open .dh-api-frame,
-.dh-renderer.has-api.live-open .dh-model.is-ready {
-  opacity: .96 !important;
-  visibility: visible !important;
-  pointer-events: auto !important;
-  transform: scale(1);
-}
-
-.dh-renderer.has-api.live-open .dh-api-frame {
-  display: block !important;
-}
-
-.dh-live-toggle,
-.dh-live-close {
+.dh-api-system-preview {
   position: absolute;
-  z-index: 12;
-  border: 1px solid rgba(226,232,240,.2);
+  inset: 9% 22% 17% 13%;
+  z-index: 1;
+  overflow: hidden;
+  border: 1px solid rgba(103,232,249,.24);
   border-radius: 8px;
-  color: #ecfeff;
-  background: rgba(2,6,23,.72);
-  backdrop-filter: blur(14px);
-  cursor: pointer;
-  box-shadow: 0 18px 50px rgba(0,0,0,.32);
+  background:
+    radial-gradient(circle at 45% 35%, rgba(103,232,249,.2), transparent 34%),
+    linear-gradient(135deg, rgba(15,23,42,.72), rgba(2,6,23,.42));
+  box-shadow: 0 28px 90px rgba(0,0,0,.38), 0 0 58px rgba(103,232,249,.12);
+  pointer-events: none;
 }
 
-.dh-live-toggle {
-  left: 132px;
-  top: 168px;
-  min-width: 176px;
-  display: grid;
-  gap: 2px;
-  padding: 10px 12px;
-  text-align: left;
+.dh-api-system-preview.api-preview-ready {
+  background-image:
+    linear-gradient(180deg, rgba(2,6,23,.06), rgba(2,6,23,.76)),
+    radial-gradient(circle at 50% 32%, transparent, rgba(2,6,23,.42)),
+    var(--api-preview-url);
+  background-size: cover;
+  background-position: center;
 }
 
-.dh-live-toggle b {
-  font-size: 13px;
-  line-height: 1;
+.dh-api-system-preview::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(103,232,249,.12) 1px, transparent 1px),
+    linear-gradient(rgba(103,232,249,.12) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mix-blend-mode: screen;
+  opacity: .38;
 }
 
-.dh-live-toggle span {
-  color: #94a3b8;
+.dh-api-system-preview::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 20%, rgba(255,255,255,.18) 46%, transparent 68%);
+  transform: translateX(-120%);
+  animation: dhApiPreviewSweep 5.5s ease-in-out infinite;
+}
+
+.dh-api-system-preview span,
+.dh-api-system-preview b {
+  position: absolute;
+  left: 14px;
+  z-index: 2;
+  text-shadow: 0 2px 18px rgba(0,0,0,.74);
+}
+
+.dh-api-system-preview span {
+  bottom: 42px;
+  color: #67e8f9;
   font-size: 11px;
-  font-weight: 800;
+  font-weight: 900;
   text-transform: uppercase;
 }
 
-.dh-live-close {
-  display: none;
-  right: min(470px, 36vw);
-  top: 86px;
-  padding: 10px 12px;
-  font-size: 12px;
-  font-weight: 900;
-}
-
-.dh-renderer.has-api.live-open .dh-live-toggle {
-  display: none;
-}
-
-.dh-renderer.has-api.live-open .dh-live-close {
-  display: block;
-}
-
-.dh-renderer.has-api.live-open .dh-scene-object,
-.dh-renderer.has-api.live-open .dh-skyline,
-.dh-renderer.has-api.live-open .dh-core-glow {
-  opacity: .12 !important;
+.dh-api-system-preview b {
+  bottom: 16px;
+  color: #f8fafc;
+  font-size: 18px;
+  line-height: 1;
 }
 
 .dh-api-loading {
@@ -144,19 +122,13 @@
   z-index: 3;
 }
 
+@keyframes dhApiPreviewSweep {
+  0%, 30% { transform: translateX(-120%); }
+  70%, 100% { transform: translateX(120%); }
+}
+
 @media (max-width: 840px) {
-  .dh-renderer.has-api .dh-api-frame,
-  .dh-renderer.has-api .dh-model {
-    inset: 13% 4% 20% 4%;
-  }
-
-  .dh-live-toggle {
-    left: 18px;
-    top: 146px;
-  }
-
-  .dh-live-close {
-    right: 14px;
-    top: 84px;
+  .dh-api-system-preview {
+    inset: 12% 4% 22% 4%;
   }
 }
