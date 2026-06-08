@@ -1,0 +1,97 @@
+.dh-renderer.has-api .dh-api-frame{
+  inset:12% 18% 18% 16% !important;
+  width:auto !important;
+  height:auto !important;
+  max-width:none !important;
+  max-height:none !important;
+  border:1px solid rgba(103,232,249,.28) !important;
+  border-radius:8px !important;
+  opacity:0 !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+  transform:scale(.965) !important;
+  transform-origin:center !important;
+  box-shadow:0 28px 90px rgba(0,0,0,.52), 0 0 44px rgba(103,232,249,.13) !important;
+  transition:opacity .25s ease, transform .25s ease, visibility .25s ease !important;
+}
+
+.dh-renderer.has-api.live-open .dh-api-frame{
+  opacity:.96 !important;
+  visibility:visible !important;
+  pointer-events:auto !important;
+  transform:scale(1) !important;
+}
+
+.dh-live-toggle,
+.dh-live-close{
+  position:absolute;
+  z-index:12;
+  border:1px solid rgba(226,232,240,.2);
+  border-radius:8px;
+  color:#ecfeff;
+  background:rgba(2,6,23,.72);
+  backdrop-filter:blur(14px);
+  cursor:pointer;
+  box-shadow:0 18px 50px rgba(0,0,0,.32);
+}
+
+.dh-live-toggle{
+  left:132px;
+  top:168px;
+  min-width:176px;
+  display:grid;
+  gap:2px;
+  padding:10px 12px;
+  text-align:left;
+}
+
+.dh-live-toggle b{
+  font-size:13px;
+  line-height:1;
+}
+
+.dh-live-toggle span{
+  color:#94a3b8;
+  font-size:11px;
+  font-weight:800;
+  text-transform:uppercase;
+}
+
+.dh-live-close{
+  display:none;
+  right:min(470px, 36vw);
+  top:86px;
+  padding:10px 12px;
+  font-size:12px;
+  font-weight:900;
+}
+
+.dh-renderer.has-api.live-open .dh-live-toggle{
+  display:none;
+}
+
+.dh-renderer.has-api.live-open .dh-live-close{
+  display:block;
+}
+
+.dh-renderer.has-api.live-open .dh-scene-object,
+.dh-renderer.has-api.live-open .dh-skyline,
+.dh-renderer.has-api.live-open .dh-core-glow{
+  opacity:.12 !important;
+}
+
+@media (max-width:840px){
+  .dh-renderer.has-api .dh-api-frame{
+    inset:13% 4% 20% 4% !important;
+  }
+
+  .dh-live-toggle{
+    left:18px;
+    top:146px;
+  }
+
+  .dh-live-close{
+    right:14px;
+    top:84px;
+  }
+}
