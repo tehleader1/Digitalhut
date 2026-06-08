@@ -1,0 +1,110 @@
+.dh-preflight{
+  position:fixed;
+  inset:0;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  background:#07111f;
+  color:#eefbff;
+  z-index:9999;
+}
+
+.dh-preflight::before{
+  content:"";
+  position:absolute;
+  inset:-20%;
+  background:
+    radial-gradient(circle at 34% 38%, rgba(103,232,249,.22), transparent 28%),
+    radial-gradient(circle at 68% 54%, rgba(45,212,191,.16), transparent 30%),
+    linear-gradient(135deg, #08111f, #10192a 54%, #061018);
+  animation:dh-preflight-breathe 2.8s ease-in-out infinite alternate;
+}
+
+.dh-preflight-orb{
+  position:absolute;
+  width:min(58vw, 520px);
+  aspect-ratio:1;
+  border:1px solid rgba(103,232,249,.34);
+  border-radius:50%;
+  box-shadow:0 0 70px rgba(34,211,238,.16), inset 0 0 70px rgba(45,212,191,.08);
+  animation:dh-preflight-orbit 5s linear infinite;
+}
+
+.dh-preflight-orb::after{
+  content:"";
+  position:absolute;
+  inset:13%;
+  border-radius:50%;
+  border:1px solid rgba(250,204,21,.28);
+}
+
+.dh-preflight-panel{
+  position:relative;
+  width:min(520px, calc(100vw - 36px));
+  padding:24px;
+  border:1px solid rgba(148,163,184,.3);
+  border-radius:8px;
+  background:rgba(2,6,23,.5);
+  backdrop-filter:blur(18px);
+  box-shadow:0 24px 90px rgba(0,0,0,.34);
+}
+
+.dh-preflight-panel p{
+  margin:0 0 8px;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:0;
+  text-transform:uppercase;
+  color:#67e8f9;
+}
+
+.dh-preflight-panel h1{
+  margin:0 0 18px;
+  font-size:clamp(32px, 7vw, 62px);
+  line-height:.95;
+  letter-spacing:0;
+}
+
+.dh-preflight-bar{
+  width:100%;
+  height:8px;
+  overflow:hidden;
+  border-radius:999px;
+  background:rgba(148,163,184,.2);
+}
+
+.dh-preflight-bar span{
+  display:block;
+  height:100%;
+  border-radius:inherit;
+  background:linear-gradient(90deg, #67e8f9, #facc15);
+  box-shadow:0 0 24px rgba(103,232,249,.45);
+  transition:width .18s ease;
+}
+
+.dh-preflight-readout{
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  margin-top:12px;
+  color:#dffbff;
+}
+
+.dh-preflight-readout b,
+.dh-preflight-readout small{
+  font-size:12px;
+}
+
+.dh-preflight-readout small{
+  color:#94a3b8;
+}
+
+@keyframes dh-preflight-breathe{
+  from{transform:scale(1); filter:saturate(1)}
+  to{transform:scale(1.025); filter:saturate(1.18)}
+}
+
+@keyframes dh-preflight-orbit{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
