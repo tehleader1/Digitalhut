@@ -1,8 +1,9 @@
 .dh-renderer.has-api .dh-scene-object {
-  opacity: .28;
+  opacity: .92;
 }
 
-.dh-api-frame {
+.dh-renderer.has-api .dh-api-frame,
+.dh-renderer.has-api .dh-model {
   position: absolute;
   inset: 12% 18% 18% 16%;
   width: auto;
@@ -10,9 +11,9 @@
   border: 1px solid rgba(103,232,249,.28);
   border-radius: 8px;
   background: #000;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
   transform: scale(.965);
   transform-origin: center;
   box-shadow: 0 28px 90px rgba(0,0,0,.52), 0 0 44px rgba(103,232,249,.13);
@@ -20,11 +21,24 @@
   z-index: 4;
 }
 
-.dh-renderer.has-api.live-open .dh-api-frame {
-  opacity: .96;
-  visibility: visible;
-  pointer-events: auto;
+.dh-renderer.has-api .dh-api-frame {
+  display: none !important;
+}
+
+.dh-renderer.has-api .dh-model {
+  display: block;
+}
+
+.dh-renderer.has-api.live-open .dh-api-frame,
+.dh-renderer.has-api.live-open .dh-model.is-ready {
+  opacity: .96 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
   transform: scale(1);
+}
+
+.dh-renderer.has-api.live-open .dh-api-frame {
+  display: block !important;
 }
 
 .dh-live-toggle,
@@ -131,7 +145,8 @@
 }
 
 @media (max-width: 840px) {
-  .dh-api-frame {
+  .dh-renderer.has-api .dh-api-frame,
+  .dh-renderer.has-api .dh-model {
     inset: 13% 4% 20% 4%;
   }
 
