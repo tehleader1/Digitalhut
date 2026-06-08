@@ -1,0 +1,39 @@
+.dh-observatory .dh-top,
+.dh-observatory .dh-category-dock,
+.dh-observatory .dh-quick-rail,
+.dh-observatory .dh-info,
+.dh-observatory .dh-media,
+.dh-observatory .dh-utility,
+.dh-observatory .dh-layer-dock{
+  transition:opacity .45s ease 16s !important;
+}
+
+.dh-observatory:hover .dh-top,
+.dh-observatory:hover .dh-category-dock,
+.dh-observatory:hover .dh-quick-rail,
+.dh-observatory:hover .dh-info,
+.dh-observatory:hover .dh-media,
+.dh-observatory:hover .dh-utility,
+.dh-observatory:hover .dh-layer-dock,
+.dh-observatory:focus-within .dh-top,
+.dh-observatory:focus-within .dh-category-dock,
+.dh-observatory:focus-within .dh-quick-rail,
+.dh-observatory:focus-within .dh-info,
+.dh-observatory:focus-within .dh-media,
+.dh-observatory:focus-within .dh-utility,
+.dh-observatory:focus-within .dh-layer-dock{
+  opacity:1 !important;
+  transition-delay:0s !important;
+}
+
+@media (hover:none){
+  .dh-observatory .dh-top,
+  .dh-observatory .dh-category-dock,
+  .dh-observatory .dh-quick-rail,
+  .dh-observatory .dh-info,
+  .dh-observatory .dh-media,
+  .dh-observatory .dh-utility,
+  .dh-observatory .dh-layer-dock{
+    transition-delay:20s !important;
+  }
+}
