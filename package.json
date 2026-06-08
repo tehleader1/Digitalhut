@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
     "backend": "node server.js",
-    "start": "concurrently \"npm run backend\" \"npm run dev -- --host\""
+    "start": "node server.js",
+    "dev:full": "concurrently \"npm run backend\" \"npm run dev -- --host\""
   },
   "dependencies": {
     "@babylonjs/core": "^9.8.0",
