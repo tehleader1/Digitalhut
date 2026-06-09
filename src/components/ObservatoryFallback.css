@@ -1,0 +1,260 @@
+:root {
+  --dh-bg:#020617;
+  --dh-panel:rgba(15,23,42,.82);
+  --dh-border:rgba(125,211,252,.25);
+  --dh-cyan:#67e8f9;
+  --dh-mint:#5eead4;
+  --dh-text:#f8fafc;
+  --dh-muted:#94a3b8;
+}
+
+* { box-sizing:border-box; }
+
+body {
+  margin:0;
+  background:var(--dh-bg);
+  color:var(--dh-text);
+  font-family:system-ui, sans-serif;
+}
+
+.dh-app {
+  min-height:100vh;
+  display:grid;
+  grid-template-rows:auto 1fr auto;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(34,211,238,.18), transparent 35%),
+    linear-gradient(180deg,#020617,#050816);
+}
+
+.dh-topbar {
+  position:sticky;
+  top:0;
+  z-index:20;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  padding:12px;
+  background:rgba(2,6,23,.86);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--dh-border);
+}
+
+.dh-brand {
+  font-weight:900;
+  color:var(--dh-cyan);
+  white-space:nowrap;
+}
+
+.dh-search {
+  flex:1;
+  min-width:0;
+  border:1px solid var(--dh-border);
+  background:#070b18;
+  color:white;
+  border-radius:14px;
+  padding:12px;
+  font-size:16px;
+}
+
+.dh-main {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 340px;
+  gap:14px;
+  padding:14px;
+  min-height:0;
+}
+
+.dh-render {
+  position:relative;
+  min-height:62vh;
+  border:1px solid var(--dh-border);
+  border-radius:24px;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at center, rgba(45,212,191,.22), transparent 32%),
+    linear-gradient(135deg,#08111f,#020617);
+}
+
+.dh-render iframe,
+.dh-render canvas,
+.dh-render model-viewer {
+  width:100%;
+  height:100%;
+  min-height:62vh;
+  display:block;
+}
+
+.dh-brain {
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  padding:24px;
+  pointer-events:none;
+}
+
+.dh-brain-card {
+  width:min(520px,90%);
+  border:1px solid var(--dh-border);
+  border-radius:28px;
+  background:rgba(15,23,42,.72);
+  backdrop-filter:blur(16px);
+  padding:24px;
+}
+
+.dh-orb {
+  width:96px;
+  height:96px;
+  margin:0 auto 16px;
+  border-radius:50%;
+  border:2px solid var(--dh-cyan);
+  box-shadow:0 0 40px rgba(103,232,249,.45);
+  background:
+    radial-gradient(circle at 35% 30%, #e0f2fe, #22d3ee 35%, #0f172a 72%);
+  animation:dhPulse 2.2s infinite ease-in-out;
+}
+
+@keyframes dhPulse {
+  0%,100% { transform:scale(1); opacity:.85; }
+  50% { transform:scale(1.06); opacity:1; }
+}
+
+.dh-panel {
+  min-height:0;
+  border:1px solid var(--dh-border);
+  border-radius:24px;
+  background:var(--dh-panel);
+  padding:14px;
+  overflow:auto;
+}
+
+.dh-panel h2 {
+  margin:0 0 12px;
+  color:var(--dh-cyan);
+  font-size:18px;
+}
+
+.dh-cats,
+.dh-thumbs,
+.dh-actions {
+  display:grid;
+  gap:10px;
+}
+
+.dh-cat,
+.dh-thumb,
+.dh-action {
+  border:1px solid rgba(148,163,184,.22);
+  background:rgba(15,23,42,.82);
+  color:white;
+  border-radius:16px;
+  padding:12px;
+  text-align:left;
+  font-weight:800;
+}
+
+.dh-cat small,
+.dh-thumb small {
+  display:block;
+  color:var(--dh-muted);
+  font-weight:600;
+  margin-top:4px;
+}
+
+.dh-thumb {
+  display:grid;
+  grid-template-columns:58px 1fr;
+  align-items:center;
+  gap:10px;
+}
+
+.dh-thumb-img {
+  width:58px;
+  height:58px;
+  border-radius:14px;
+  background:
+    linear-gradient(135deg,rgba(94,234,212,.85),rgba(59,130,246,.65)),
+    radial-gradient(circle,#fff,transparent);
+}
+
+.dh-bottom {
+  z-index:18;
+  display:grid;
+  gap:8px;
+  padding:12px;
+  border-top:1px solid var(--dh-border);
+  background:rgba(2,6,23,.88);
+}
+
+.dh-row {
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding-bottom:2px;
+}
+
+.dh-pill {
+  flex:0 0 auto;
+  border:1px solid rgba(148,163,184,.25);
+  background:rgba(15,23,42,.9);
+  color:white;
+  border-radius:999px;
+  padding:11px 14px;
+  font-weight:900;
+}
+
+.dh-pill.active {
+  color:#001018;
+  background:var(--dh-mint);
+}
+
+@media (max-width: 760px) {
+  .dh-app {
+    height:auto;
+    min-height:100vh;
+  }
+
+  .dh-topbar {
+    display:grid;
+    grid-template-columns:1fr;
+  }
+
+  .dh-main {
+    grid-template-columns:1fr;
+    padding:10px;
+  }
+
+  .dh-render {
+    min-height:56vh;
+    border-radius:18px;
+  }
+
+  .dh-render iframe,
+  .dh-render canvas,
+  .dh-render model-viewer {
+    min-height:56vh;
+  }
+
+  .dh-panel {
+    max-height:none;
+    border-radius:18px;
+  }
+
+  .dh-cats {
+    grid-template-columns:1fr 1fr;
+  }
+
+  .dh-bottom {
+    position:sticky;
+    bottom:0;
+  }
+
+  .dh-brain-card {
+    padding:18px;
+  }
+
+  .dh-brain-card h1 {
+    font-size:24px;
+  }
+}

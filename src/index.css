@@ -1,0 +1,52 @@
+
+/* DigitalHut emergency interaction fix */
+.dh-brain,
+.dh-brain-card {
+  pointer-events: none !important;
+}
+
+button,
+a,
+input,
+select,
+textarea,
+[role="button"],
+.dh-cat,
+.dh-thumb,
+.dh-action,
+.dh-pill {
+  pointer-events: auto !important;
+  touch-action: manipulation;
+}
+
+.dh-panel,
+.dh-topbar,
+.dh-bottom {
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 50;
+}
+
+.dh-render iframe,
+.dh-render canvas,
+.dh-render model-viewer {
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 5;
+}
+
+@media (max-width: 760px) {
+  .dh-main {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .dh-render {
+    min-height: 58vh !important;
+  }
+
+  .dh-panel {
+    width: 100% !important;
+    overflow: visible !important;
+  }
+}
