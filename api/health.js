@@ -10,7 +10,13 @@ export default async function handler(req, res){
     renderer: {
       mode: "fullscreen-api",
       loadGate: "fps-calibrated",
-      idleFadeSeconds: 18
+      idleFadeSeconds: 18,
+      containment: "closed-until-clicked",
+      hoverPreview: "fullscreen-system-preview"
+    },
+    guidedTour: {
+      active: true,
+      stages: ["establish", "inspect", "orbit", "category", "data", "compare", "conclude"]
     }
   })
 }
