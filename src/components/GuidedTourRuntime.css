@@ -224,6 +224,17 @@
   box-shadow:0 0 32px rgba(103,232,249,.17), 0 18px 42px rgba(0,0,0,.28);
 }
 
+.dh-api-system-preview.preview-peek{
+  inset:0 !important;
+  border-color:rgba(103,232,249,.58) !important;
+  box-shadow:0 34px 120px rgba(0,0,0,.58), 0 0 86px rgba(103,232,249,.2) !important;
+}
+
+.dh-api-system-preview.preview-peek .dh-open-containment{
+  background:rgba(8,145,178,.55);
+  box-shadow:0 0 28px rgba(103,232,249,.24);
+}
+
 @media (max-width:840px){
   .dh-guide-brain{
     left:14px;
