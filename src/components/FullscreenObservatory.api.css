@@ -38,11 +38,20 @@
     radial-gradient(circle at 45% 35%, rgba(103,232,249,.2), transparent 34%),
     linear-gradient(135deg, rgba(15,23,42,.72), rgba(2,6,23,.42));
   box-shadow: 0 28px 90px rgba(0,0,0,.38), 0 0 58px rgba(103,232,249,.12);
-  pointer-events: none;
+  pointer-events: auto;
+  transition: inset .26s ease, border-color .26s ease, box-shadow .26s ease, opacity .2s ease;
+}
+
+.dh-api-system-preview:hover,
+.dh-api-system-preview:focus-within {
+  inset: 0;
+  border-color: rgba(103,232,249,.48);
+  box-shadow: 0 34px 120px rgba(0,0,0,.58), 0 0 80px rgba(103,232,249,.18);
 }
 
 .dh-renderer.has-api.live-open .dh-api-system-preview {
   opacity: .1;
+  pointer-events: none;
 }
 
 .dh-api-system-preview.api-preview-ready {
@@ -113,6 +122,12 @@
   pointer-events: auto;
 }
 
+.dh-api-system-preview:hover .dh-open-containment,
+.dh-api-system-preview:focus-within .dh-open-containment {
+  background: rgba(8,145,178,.52);
+  box-shadow: 0 0 28px rgba(103,232,249,.22);
+}
+
 .dh-api-loading {
   position: absolute;
   left: 132px;
@@ -168,5 +183,10 @@
   .dh-renderer.has-api.live-open .dh-api-frame,
   .dh-renderer.has-api.live-open .dh-model {
     inset: 12% 4% 22% 4%;
+  }
+
+  .dh-api-system-preview:hover,
+  .dh-api-system-preview:focus-within {
+    inset: 0;
   }
 }
