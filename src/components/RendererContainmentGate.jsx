@@ -12,12 +12,23 @@ function rememberSource(node){
 }
 
 function closeAssets(renderer){
+  renderer.dataset.containmentOpen = "false"
   renderer.classList.remove("live-open")
   assetNodes(renderer).forEach((node) => {
     rememberSource(node)
     node.removeAttribute("src")
     node.setAttribute("aria-hidden", "true")
   })
+}
+
+function openAssets(renderer){
+  assetNodes(renderer).forEach((node) => {
+    const src = rememberSource(node)
+    if(src && !node.getAttribute("src")) node.setAttribute("src", src)
+    node.removeAttribute("aria-hidden")
+  })
+  renderer.dataset.containmentOpen = "true"
+  renderer.classList.add("live-open")
 }
 
 function stageFor(renderer){
@@ -40,8 +51,18 @@ function ensureSystemPreview(renderer){
   if(!preview){
     preview = document.createElement("div")
     preview.className = "dh-api-system-preview"
-    preview.innerHTML = "<span>API system view</span><b>Feed loaded</b>"
+    preview.innerHTML = "<span>API system view</span><b>Feed loaded</b><button class=\"dh-open-containment\" type=\"button\">Open Containment</button>"
     renderer.append(preview)
+  }
+
+  const open = preview.querySelector(".dh-open-containment")
+  if(open && !open.dataset.bound){
+    open.dataset.bound = "true"
+    open.addEventListener("click", (event) => {
+      event.preventDefault()
+      event.stopPropagation()
+      openAssets(renderer)
+    })
   }
 
   const src = previewSource(renderer)
@@ -55,8 +76,19 @@ function ensureSystemPreview(renderer){
 }
 
 function stabilizeRenderer(renderer){
-  closeAssets(renderer)
+  const source = assetNodes(renderer).map(rememberSource).find(Boolean) || renderer.dataset.liveSource || ""
+  if(source && renderer.dataset.liveSource !== source){
+    renderer.dataset.liveSource = source
+    closeAssets(renderer)
+  }
+
+  if(!renderer.classList.contains("live-open")) closeAssets(renderer)
   ensureSystemPreview(renderer)
+}
+
+function openFirstRenderer(){
+  const renderer = document.querySelector(".dh-renderer.has-api")
+  if(renderer) openAssets(renderer)
 }
 
 export default function RendererContainmentGate({children}){
@@ -73,14 +105,20 @@ export default function RendererContainmentGate({children}){
 
     function closeWithEscape(event){
       if(event.key !== "Escape") return
-      document.querySelectorAll(".dh-renderer.has-api").forEach(stabilizeRenderer)
+      document.querySelectorAll(".dh-renderer.has-api").forEach(closeAssets)
+    }
+
+    function openFromGuide(){
+      openFirstRenderer()
     }
 
     document.addEventListener("keydown", closeWithEscape)
+    window.addEventListener("digitalhut:open-containment", openFromGuide)
 
     return () => {
       observer.disconnect()
       document.removeEventListener("keydown", closeWithEscape)
+      window.removeEventListener("digitalhut:open-containment", openFromGuide)
       document.querySelectorAll(".dh-api-system-preview, .dh-live-toggle, .dh-live-close").forEach((node) => node.remove())
     }
   }, [])
