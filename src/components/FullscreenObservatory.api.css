@@ -10,6 +10,23 @@
   pointer-events: none !important;
 }
 
+.dh-renderer.has-api.live-open .dh-api-frame,
+.dh-renderer.has-api.live-open .dh-model {
+  display: block !important;
+  position: absolute;
+  inset: 9% 22% 17% 13%;
+  width: auto;
+  height: auto;
+  border: 1px solid rgba(103,232,249,.34);
+  border-radius: 8px;
+  opacity: .98 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  z-index: 4;
+  background: #000;
+  box-shadow: 0 28px 90px rgba(0,0,0,.52), 0 0 54px rgba(103,232,249,.16);
+}
+
 .dh-api-system-preview {
   position: absolute;
   inset: 9% 22% 17% 13%;
@@ -22,6 +39,10 @@
     linear-gradient(135deg, rgba(15,23,42,.72), rgba(2,6,23,.42));
   box-shadow: 0 28px 90px rgba(0,0,0,.38), 0 0 58px rgba(103,232,249,.12);
   pointer-events: none;
+}
+
+.dh-renderer.has-api.live-open .dh-api-system-preview {
+  opacity: .1;
 }
 
 .dh-api-system-preview.api-preview-ready {
@@ -55,7 +76,8 @@
 }
 
 .dh-api-system-preview span,
-.dh-api-system-preview b {
+.dh-api-system-preview b,
+.dh-open-containment {
   position: absolute;
   left: 14px;
   z-index: 2;
@@ -63,7 +85,7 @@
 }
 
 .dh-api-system-preview span {
-  bottom: 42px;
+  bottom: 78px;
   color: #67e8f9;
   font-size: 11px;
   font-weight: 900;
@@ -71,10 +93,24 @@
 }
 
 .dh-api-system-preview b {
-  bottom: 16px;
+  bottom: 52px;
   color: #f8fafc;
   font-size: 18px;
   line-height: 1;
+}
+
+.dh-open-containment {
+  bottom: 14px;
+  min-height: 32px;
+  padding: 0 11px;
+  border: 1px solid rgba(103,232,249,.42);
+  border-radius: 7px;
+  background: rgba(8,145,178,.34);
+  color: #ecfeff;
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .dh-api-loading {
@@ -128,7 +164,9 @@
 }
 
 @media (max-width: 840px) {
-  .dh-api-system-preview {
+  .dh-api-system-preview,
+  .dh-renderer.has-api.live-open .dh-api-frame,
+  .dh-renderer.has-api.live-open .dh-model {
     inset: 12% 4% 22% 4%;
   }
 }
