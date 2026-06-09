@@ -157,7 +157,8 @@ export default function GuidedTourRuntime({children}){
 
     function clearPreview(event){
       const card = cardFrom(event)
-      if(!card || card.contains(event.relatedTarget)) return
+      const next = event.relatedTarget
+      if(!card || (next?.nodeType && card.contains(next))) return
       window.dispatchEvent(new CustomEvent("digitalhut:preview-containment", {detail: {clearFull: true}}))
     }
 
