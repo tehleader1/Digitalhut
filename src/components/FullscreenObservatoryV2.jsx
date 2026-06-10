@@ -14,7 +14,15 @@ const digitalHutBrainMap = {
   features3d: ["Orbit Mode", "Layers", "Architect Mode", "Lighting", "Props", "Grid", "Coordinates"],
   physicalAssets: ["Android", "FireCuda", "HP Mini Laptop"],
   dataPolicy: "Physical assets are sensitive. Public data stays translucent, current, and verifiable through live observatory activity.",
-  seoCanal: ["current category", "active renderer feed", "provider status", "asset title", "guided tour stage"]
+  seoCanal: ["current category", "active renderer feed", "provider status", "asset title", "guided tour stage"],
+  sessions: {
+    Gamer: "Update real-life game concepts, inspect new game visuals, and turn models into playable session ideas.",
+    "Real Estate": "Use models and housing data for agent-license career work, client scouting, and property decisions.",
+    Programmer: "Inspect research data, backend features, API logic, and up-to-date decentralized network ideas.",
+    Researcher: "Rotate models, log details, shuffle evidence quickly, and verify information before saving claims.",
+    "Mainstream Streaming": "Track 2026 trends, interesting topics, creator clips, funny videos, and stream hooks.",
+    Planetary: "Explore structures, environments, places around the world, and planetary-style observation sessions."
+  }
 }
 
 const stockImages = {
@@ -26,6 +34,7 @@ const stockImages = {
   "Home Project": ["photo-1513694203232-719a280e022f", "photo-1600585154526-990dced4db0d", "photo-1586023492125-27b2c045efd7", "photo-1505693416388-ac5ce068fe85"],
   "Political": ["photo-1529107386315-e1a2ed48a620", "photo-1464692805480-a69dfaafdb0d", "photo-1523292562811-8fa7962a78c8", "photo-1500534314209-a25ddb2bd429"],
   "Programmer": ["photo-1515879218367-8466d910aaa4", "photo-1555066931-4365d14bab8c", "photo-1516321318423-f06f85e504b3", "photo-1558494949-ef010cbdcc31"],
+  "Mainstream Streaming": ["photo-1611162617474-5b21e879e113", "photo-1557804506-669a67965ba0", "photo-1516321497487-e288fb19713f", "photo-1495020689067-958852a7765e"],
   "Researcher": ["photo-1532094349884-543bc11b234d", "photo-1507413245164-6160d8298b31", "photo-1581093588401-fbb62a02f120", "photo-1451187580459-43490279c0fa"]
 }
 
@@ -83,14 +92,15 @@ function observatoryRecord({category, stage, sceneFeed, mode, tier, loading}){
 
 const categories = [
   ["Continent", "CO", "#67e8f9", "global terrain, travel, culture, and education"],
-  ["Planetary", "PL", "#a78bfa", "space, science, orbit, and planetary research"],
-  ["Gamer", "GM", "#22c55e", "interactive worlds, character movement, and gameplay prototypes"],
-  ["Real Estate", "RE", "#2dd4bf", "property, city blocks, structures, and development scouting"],
+  ["Planetary", "PL", "#a78bfa", "structures, environments, and places around the world or off-world"],
+  ["Gamer", "GM", "#22c55e", "real-life game updates, new game visuals, level ideas, and play-session scouting"],
+  ["Real Estate", "RE", "#2dd4bf", "agent-license career sessions, property models, housing data, and client-ready scouting"],
   ["Workforce", "WF", "#fb7185", "jobsites, training, operations, and safety walkthroughs"],
   ["Home Project", "HP", "#facc15", "personal builds, interiors, repairs, and home planning"],
   ["Political", "PO", "#f97316", "civic geography, public works, maps, and policy spaces"],
-  ["Programmer", "PR", "#38bdf8", "developer inspection, APIs, agents, and prototype logic"],
-  ["Researcher", "RS", "#c084fc", "research notes, evidence review, archives, and AI analysis"]
+  ["Programmer", "PR", "#38bdf8", "research data, backend features, decentralized networks, APIs, and prototype logic"],
+  ["Mainstream Streaming", "MS", "#f43f5e", "2026 trends, interesting topics, creator clips, funny videos, and stream-ready discussion"],
+  ["Researcher", "RS", "#c084fc", "research notes, model rotation, detail logging, fast shuffling, verification, and AI analysis"]
 ].map(([id, icon, accent, context]) => ({id, icon, accent, context}))
 
 const seedQueries = {
@@ -102,6 +112,7 @@ const seedQueries = {
   "Home Project": ["home build sketch 3d", "interior design room 3d", "home repair tools 3d", "coastal home beachfront 3d"],
   "Political": ["civic district public works 3d", "government building city 3d", "historical public square 3d", "infrastructure civic assets 3d"],
   "Programmer": ["developer api data center 3d", "renderer stress test 3d model", "city data twin 3d", "tool builder 3d interface"],
+  "Mainstream Streaming": ["2026 viral video studio set", "funny creator clip environment", "streaming trend room visual", "social media trend visualization"],
   "Researcher": ["research archive 3d visualization", "scientific orbit research 3d", "field study terrain 3d", "ai analysis room 3d"]
 }
 
@@ -114,6 +125,7 @@ const guidedTours = {
   "Home Project": [["Plan", "PL", "Plan layout, measurements, materials, and next step."], ["Repair", "RP", "Inspect issue zones, sequence, tools, and cautions."], ["Design", "DS", "Guide style, lighting, props, and finished feel."], ["Budget", "BG", "Explain cost, substitutions, scope creep, and buying checks."]],
   "Political": [["Civic", "CV", "Read public access, service zones, and community value."], ["Policy", "PY", "Explain infrastructure choices, funding, and tradeoffs."], ["Public", "PB", "Narrate so normal visitors understand the space."], ["Map", "MP", "Use boundaries, routes, population pressure, and comparison."]],
   "Programmer": [["API", "AP", "Inspect provider source, payload shape, and fallback state."], ["Runtime", "RT", "Narrate renderer state, wallet state, and asset load path."], ["Agent", "AG", "Explain monitoring, SEO, GLB testing, and FireCuda ops."], ["Debug", "DB", "State what is live, fallback, blocked, and how to verify."]],
+  "Mainstream Streaming": [["Trend", "TR", "Frame why this topic, clip, or visual could hold attention in 2026."], ["Hook", "HK", "Name the funny, surprising, useful, or visual moment to lead with."], ["Audience", "AU", "Explain who would watch, share, remix, or react to it."], ["Next Clip", "NC", "Move to a related model or visual so the stream keeps momentum."]],
   "Researcher": [["Evidence", "EV", "Review source quality, uncertainty, and strongest supportable claim."], ["Sources", "SO", "Name APIs, missing data, and verification path."], ["Compare", "CP", "Compare against related scenes and datasets."], ["Hypothesis", "HY", "Build a testable hypothesis and next observation."]]
 }
 
@@ -248,7 +260,8 @@ function announceOpen3dModel(feed){
 
 function guideLine({category, stage, feed, tour, expanded = false}){
   const base = `${stage.label}. ${feed.title}.`
-  if(stage.kind === "current") return expanded ? `${base} I am staying with the contained model and checking the main shape, source, and viewing angle.` : `${base} First I hold on the model.`
+  const session = metaFor(category).context
+  if(stage.kind === "current") return expanded ? `${base} I am staying with the contained model for this ${session} session and checking the main shape, source, and viewing angle.` : `${base} First I hold on the model for the ${category} session.`
   if(stage.kind === "angle") return expanded ? `${base} Now I rotate the view slowly and look for layout, access, scale, and visible risk.` : `${base} Next angle, slow pass.`
   if(stage.kind === "similar") return expanded ? `${base} I compare this against a nearby or similar feed before making a stronger claim.` : `${base} Similar model comparison.`
   if(stage.kind === "stats") return expanded ? `${base} I move into market, provider, and verification context for ${category}. ${tour.prompt}` : `${base} Statistics and verification.`
@@ -256,16 +269,18 @@ function guideLine({category, stage, feed, tour, expanded = false}){
 }
 
 function extendedGuideLine({category, stage, feed, tour, depth}){
+  const session = metaFor(category).context
   if(depth <= 0) return guideLine({category, stage, feed, tour, expanded: true})
-  if(depth === 1) return `${feed.title}. I am staying on this model a little longer and checking source, visual evidence, and what should be verified before the demo moves on.`
+  if(depth === 1) return `${feed.title}. I am staying on this model a little longer and checking source, visual evidence, and what matters for ${session}.`
   return `${feed.title}. I have enough on this view. Next I need room to load a related model so the presentation can compare instead of overthinking one asset.`
 }
 
 function followUpNotes({category, stage, feed, tour}){
   const source = feed.apiSource || feed.apiStatus || "provider"
+  const session = metaFor(category).context
   const notes = [
     `Verify ${feed.title} against the ${source} record.`,
-    `Save this ${category} view if it supports the demo story.`,
+    `Save this ${category} view if it supports ${session}.`,
     `Ask one follow-up: ${tour.prompt}`
   ]
   if(stage.kind === "angle") notes[0] = "Check the model from one more angle before explaining value."
