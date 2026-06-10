@@ -830,6 +830,7 @@
 .dh-ai-space,
 .dh-ai-command,
 .dh-live-stage,
+.dh-presentation-feature,
 .dh-smart-notes {
   position: absolute;
   z-index: 18;
@@ -900,6 +901,7 @@
 
 .dh-ai-command,
 .dh-live-stage,
+.dh-presentation-feature,
 .dh-smart-notes {
   right: 92px;
   top: 92px;
@@ -915,9 +917,21 @@
   backdrop-filter: blur(14px);
 }
 
+.dh-presentation-entry {
+  border-color: rgba(250,204,21,.38);
+  background: rgba(113,63,18,.22);
+}
+
 .dh-smart-notes {
   top: 238px;
   width: min(560px, calc(100vw - 130px));
+}
+
+.dh-presentation-feature {
+  top: 168px;
+  width: min(580px, calc(100vw - 130px));
+  border-color: rgba(250,204,21,.42);
+  background: rgba(15,23,42,.9);
 }
 
 .dh-live-stage {
@@ -929,6 +943,7 @@
 
 .dh-ai-command div,
 .dh-live-stage div,
+.dh-presentation-feature div,
 .dh-smart-notes div,
 .dh-ai-actions {
   display: flex;
@@ -956,6 +971,8 @@
 .dh-ai-command input,
 .dh-live-stage input,
 .dh-live-stage textarea,
+.dh-presentation-feature input,
+.dh-presentation-feature textarea,
 .dh-smart-notes textarea {
   width: 100%;
   border: 1px solid rgba(226,232,240,.18);
@@ -971,6 +988,45 @@
   resize: vertical;
   background: rgba(255,255,255,.94);
   color: #0f172a;
+}
+
+.dh-presentation-feature label {
+  color: #fde68a;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.dh-presentation-feature textarea {
+  min-height: 84px;
+  resize: vertical;
+}
+
+.dh-presentation-search {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.dh-presentation-edits {
+  display: grid !important;
+  gap: 7px !important;
+  max-height: 150px;
+  overflow: auto;
+}
+
+.dh-presentation-edits article {
+  display: grid;
+  gap: 4px;
+  padding: 8px;
+  border: 1px solid rgba(250,204,21,.2);
+  border-radius: 8px;
+  background: rgba(113,63,18,.2);
+}
+
+.dh-presentation-edits span,
+.dh-presentation-edits small {
+  color: #e0f2fe;
+  font-size: 11px;
 }
 
 .dh-live-stage label {
@@ -1099,6 +1155,7 @@
 .dh-ai-command button,
 .dh-live-stage button,
 .dh-live-stage a,
+.dh-presentation-feature button,
 .dh-smart-notes button,
 .dh-smart-notes a {
   border: 1px solid rgba(103,232,249,.28);
@@ -1251,6 +1308,7 @@
 
   .dh-ai-command,
   .dh-live-stage,
+  .dh-presentation-feature,
   .dh-smart-notes {
     left: 12px;
     right: 12px;

@@ -9,7 +9,7 @@ const AI_WINDOW_MS = 12 * 60 * 60 * 1000
 const AI_TIER_LIMITS = {guest: 0, standard: 2 * 60 * 60 * 1000, premium: 4 * 60 * 60 * 1000, pro: Infinity}
 const accounts = ["guest", "standard", "premium", "pro"]
 const layers = ["Base", "Architect", "Lighting", "Props", "Grid", "Coordinates"]
-const bridgeFlow = ["Mainstream Streaming", "Gamer", "Planetary", "Programmer", "Workforce", "Researcher", "Real Estate", "Continent", "Home Project", "Political"]
+const bridgeFlow = ["DigitalHut Presentation", "Mainstream Streaming", "Gamer", "Planetary", "Programmer", "Workforce", "Researcher", "Real Estate", "Continent", "Political"]
 const liveFeedStorageKey = "digitalhut:liveGlbFeed"
 const digitalHutBrainMap = {
   mainFrame: "Double 007 Observatory Database",
@@ -41,7 +41,7 @@ const stockImages = {
   "Gamer": ["photo-1542751371-adc38448a05e", "photo-1511512578047-dfb367046420", "photo-1550745165-9bc0b252726f", "photo-1493711662062-fa541adb3fc8"],
   "Real Estate": ["photo-1560518883-ce09059eeffa", "photo-1600585154340-be6161a56a0c", "photo-1484154218962-a197022b5858", "photo-1600607687939-ce8a6c25118c"],
   "Workforce": ["photo-1504307651254-35680f356dfd", "photo-1517048676732-d65bc937f952", "photo-1521791136064-7986c2920216", "photo-1581092918056-0c4c3acd3789"],
-  "Home Project": ["photo-1513694203232-719a280e022f", "photo-1600585154526-990dced4db0d", "photo-1586023492125-27b2c045efd7", "photo-1505693416388-ac5ce068fe85"],
+  "DigitalHut Presentation": ["photo-1497366754035-f200968a6e72", "photo-1515879218367-8466d910aaa4", "photo-1558494949-ef010cbdcc31", "photo-1516321318423-f06f85e504b3"],
   "Political": ["photo-1529107386315-e1a2ed48a620", "photo-1464692805480-a69dfaafdb0d", "photo-1523292562811-8fa7962a78c8", "photo-1500534314209-a25ddb2bd429"],
   "Programmer": ["photo-1515879218367-8466d910aaa4", "photo-1555066931-4365d14bab8c", "photo-1516321318423-f06f85e504b3", "photo-1558494949-ef010cbdcc31"],
   "Mainstream Streaming": ["photo-1611162617474-5b21e879e113", "photo-1557804506-669a67965ba0", "photo-1516321497487-e288fb19713f", "photo-1495020689067-958852a7765e"],
@@ -121,12 +121,12 @@ function observatoryRecord({category, stage, sceneFeed, mode, tier, loading}){
 }
 
 const categories = [
+  ["DigitalHut Presentation", "DP", "#facc15", "default GLB editing workspace, presentation files, live model search, and advanced creator tools"],
   ["Continent", "CO", "#67e8f9", "global terrain, travel, culture, and education"],
   ["Planetary", "PL", "#a78bfa", "structures, environments, and places around the world or off-world"],
   ["Gamer", "GM", "#22c55e", "real-life game updates, new game visuals, level ideas, and play-session scouting"],
   ["Real Estate", "RE", "#2dd4bf", "agent-license career sessions, property models, housing data, and client-ready scouting"],
   ["Workforce", "WF", "#fb7185", "jobsites, training, operations, and safety walkthroughs"],
-  ["Home Project", "HP", "#facc15", "personal builds, interiors, repairs, and home planning"],
   ["Political", "PO", "#f97316", "civic geography, public works, maps, and policy spaces"],
   ["Programmer", "PR", "#38bdf8", "research data, backend features, decentralized networks, APIs, and prototype logic"],
   ["Mainstream Streaming", "MS", "#f43f5e", "2026 trends, interesting topics, creator clips, funny videos, and stream-ready discussion"],
@@ -134,12 +134,12 @@ const categories = [
 ].map(([id, icon, accent, context]) => ({id, icon, accent, context}))
 
 const seedQueries = {
+  "DigitalHut Presentation": ["editable glb presentation stage", "custom glb feature file overlay", "digitalhut model editing workspace", "presentation feature mode 3d"],
   "Continent": ["cape town south africa 3d city terrain", "caribbean colonial zone historic 3d", "hollywood sign los angeles 3d", "european buildings old city architecture 3d"],
   "Planetary": ["international space station 3d model", "moon surface observatory 3d", "mars terrain 3d", "orbital city grid 3d"],
   "Gamer": ["game city pack prototype 3d", "animated environment game scene 3d", "mission hub game prototype 3d", "sci fi arena 3d"],
   "Real Estate": ["modern house real estate 3d", "wall street new york financial district 3d", "residential neighborhood terrain 3d", "apartment building architecture 3d"],
   "Workforce": ["construction jobsite structure 3d", "warehouse training safety 3d", "city infrastructure operations 3d", "coastal response emergency planning 3d"],
-  "Home Project": ["home build sketch 3d", "interior design room 3d", "home repair tools 3d", "coastal home beachfront 3d"],
   "Political": ["civic district public works 3d", "government building city 3d", "historical public square 3d", "infrastructure civic assets 3d"],
   "Programmer": ["developer api data center 3d", "renderer stress test 3d model", "city data twin 3d", "tool builder 3d interface"],
   "Mainstream Streaming": ["2026 viral video studio set", "funny creator clip environment", "streaming trend room visual", "social media trend visualization"],
@@ -147,6 +147,12 @@ const seedQueries = {
 }
 
 const featuredFeeds = {
+  "DigitalHut Presentation": [
+    ["Editable GLB presentation stage", "Default creator view for choosing a GLB, opening editing controls, and staging the model for a live presentation.", "editable glb presentation stage"],
+    ["Presentation feature mode", "Second-click advanced mode for adding overlays, special files, model notes, audio cues, and share packaging.", "presentation featured mode glb editor"],
+    ["Custom GLB search bay", "Dedicated GLB search space for finding the model you want to edit before going live.", "custom glb search edit model"],
+    ["DigitalHut sponsor package", "Backlink, title, sponsor line, contest prompt, and share metadata for the selected presentation.", "digitalhut sponsor presentation package"]
+  ],
   "Real Estate": [
     ["Trending glass courtyard house model", "A modern glass courtyard house reel for layout, light, and buyer presentation.", "trending glass courtyard house 3d model"],
     ["Trending compact smart home model", "A compact smart home model for starter-home planning and middle-market walkthroughs.", "compact smart home 3d model"],
@@ -195,12 +201,6 @@ const featuredFeeds = {
     ["Amazon river research route", "Environment route that can bridge to researcher and planetary modes.", "amazon river terrain 3d"],
     ["Alps village winter pass", "Travel and terrain session with a related GLB attached.", "alps village winter 3d"]
   ],
-  "Home Project": [
-    ["Kitchen remodel visual", "Home project model for layout, materials, and budget choices.", "kitchen remodel 3d model"],
-    ["Backyard deck planner", "Outdoor planning scene for measurements and next steps.", "backyard deck planner 3d"],
-    ["Bathroom repair sequence", "Repair session with tools, caution, and sequence notes.", "bathroom repair 3d"],
-    ["Studio room lighting setup", "Interior setup for lighting, props, and finished feel.", "studio room lighting 3d"]
-  ],
   "Political": [
     ["Civic plaza public works", "Public space and policy readout with a related GLB attached.", "civic plaza public works 3d"],
     ["Transit station funding map", "Infrastructure policy card for access, routes, and funding tradeoffs.", "transit station infrastructure 3d"],
@@ -210,12 +210,12 @@ const featuredFeeds = {
 }
 
 const guidedTours = {
+  "DigitalHut Presentation": [["Select GLB", "GL", "Choose the editable model and keep it open in the main renderer."], ["Edit Files", "EF", "Add overlays, notes, audio cues, attachments, and special files for the presentation."], ["Feature Mode", "FM", "Stage the model as a polished live feature with backlink, sponsor line, and creator controls."], ["Publish", "PB", "Package the GLB presentation for sharing, saving, and future realtime feed posting."]],
   "Continent": [["Terrain", "TR", "Read elevation, coastline, streets, routes, and what the region teaches."], ["Culture", "CU", "Explain landmarks, public memory, travel value, and culture."], ["Route", "RT", "Move through access points and nearby context."], ["Compare", "CP", "Compare this place against similar regions."]],
   "Planetary": [["Orbit", "OR", "Start from orbit, scale, lighting, and mission frame."], ["Surface", "SF", "Inspect terrain, hazards, and research targets."], ["Mission", "MS", "Narrate objectives and next observation."], ["Research", "RS", "Name evidence, uncertainty, and open questions."]],
   "Gamer": [["Spawn", "SP", "Read spawn, sightlines, paths, and first player decision."], ["Mechanics", "MC", "Explain loops, hazards, rewards, and interaction zones."], ["Assets", "AS", "Inspect modular value and prototype readiness."], ["Quest", "QS", "Turn the scene into a playable quest route."]],
   "Real Estate": [["Property", "PR", "Explain the house or site model, layout, access, value, and development potential."], ["Block", "BK", "Read nearby streets, neighbors, demand signals, and zoning feel."], ["Risk", "RK", "Call out weather, slope, maintenance, liquidity, and inspection questions."], ["Market", "MK", "Move into statistics: price context, market pressure, comparable assets, and premium decision points."]],
   "Workforce": [["Safety", "SF", "Walk hazards, access, staging, and worker awareness."], ["Training", "TR", "Teach the scene as a new-worker module."], ["Ops", "OP", "Explain routing, resources, crew flow, and bottlenecks."], ["Audit", "AU", "Record what is live, what needs verification, and what changed."]],
-  "Home Project": [["Plan", "PL", "Plan layout, measurements, materials, and next step."], ["Repair", "RP", "Inspect issue zones, sequence, tools, and cautions."], ["Design", "DS", "Guide style, lighting, props, and finished feel."], ["Budget", "BG", "Explain cost, substitutions, scope creep, and buying checks."]],
   "Political": [["Civic", "CV", "Read public access, service zones, and community value."], ["Policy", "PY", "Explain infrastructure choices, funding, and tradeoffs."], ["Public", "PB", "Narrate so normal visitors understand the space."], ["Map", "MP", "Use boundaries, routes, population pressure, and comparison."]],
   "Programmer": [["API", "AP", "Inspect provider source, payload shape, and fallback state."], ["Runtime", "RT", "Narrate renderer state, wallet state, and asset load path."], ["Agent", "AG", "Explain monitoring, SEO, GLB testing, and FireCuda ops."], ["Debug", "DB", "State what is live, fallback, blocked, and how to verify."]],
   "Mainstream Streaming": [["Trend", "TR", "Frame why this topic, clip, or visual could hold attention in 2026."], ["Hook", "HK", "Name the funny, surprising, useful, or visual moment to lead with."], ["Audience", "AU", "Explain who would watch, share, remix, or react to it."], ["Next Clip", "NC", "Move to a related model or visual so the stream keeps momentum."]],
@@ -385,7 +385,7 @@ function categoryFromCommand(text){
     ["Programmer", ["programmer", "code", "backend", "decentralized", "api", "network", "database", "ai model", "production company", "developer"]],
     ["Real Estate", ["real estate", "housing", "house", "property", "agent", "north carolina", "middle class", "neighborhood", "rent", "mortgage"]],
     ["Planetary", ["space", "planet", "planetary", "saturn", "mars", "moon", "orbit", "canada", "mountain", "environment", "place", "waterfall", "waterfalls"]],
-    ["Home Project", ["home project", "remodel", "kitchen", "bathroom", "deck", "repair", "interior"]],
+    ["DigitalHut Presentation", ["digitalhut presentation", "presentation featured", "featured mode", "edit glb", "editable glb", "custom glb", "glb editor", "presentation mode"]],
     ["Political", ["political", "civic", "policy", "government", "public notice", "election"]],
     ["Continent", ["continent", "country", "world", "travel"]]
   ]
@@ -462,6 +462,9 @@ function movieBeat({category, feed, stage}){
   const title = feed.title
   if(category === "Mainstream Streaming"){
     return `Ten minutes into the live feed: featuring ${title}. I am opening the related GLB so the post is not just a thumbnail. Sound cue: fun stream bounce, then a clean pause for the visual.`
+  }
+  if(category === "DigitalHut Presentation"){
+    return `DigitalHut Presentation is the creator workspace. ${title} stays in the renderer while the editor searches, attaches files, and prepares Presentation Featured Mode.`
   }
   if(category === "Gamer"){
     return `Now switching GLBs to Gamer. ${title} is on screen; I am reading effects, character shape, level path, and the part viewers would want to play.`
@@ -824,6 +827,10 @@ export default function FullscreenObservatoryV2(){
   const [contestPrompt, setContestPrompt] = useState("Contest: find a hidden layer in this GLB and post what you noticed.")
   const [livePosts, setLivePosts] = useState(() => readLiveFeed())
   const [liveSyncStatus, setLiveSyncStatus] = useState("Local live stage ready")
+  const [presentationFeatureOpen, setPresentationFeatureOpen] = useState(false)
+  const [presentationSearch, setPresentationSearch] = useState("editable glb presentation stage")
+  const [presentationFileNote, setPresentationFileNote] = useState("")
+  const [presentationEdits, setPresentationEdits] = useState([])
   const hideTimer = useRef(null)
   const requestRef = useRef(0)
   const recognitionRef = useRef(null)
@@ -843,7 +850,7 @@ export default function FullscreenObservatoryV2(){
   const aiRemainingMs = aiLimit === Infinity ? Infinity : Math.max(0, aiLimit - aiUsage.usedMs)
   const currentGuideLine = guideDepth > 0 ? extendedGuideLine({category, stage, feed: sceneFeed, tour: activeTour, depth: guideDepth - 1}) : guideLine({category, stage, feed: sceneFeed, tour: activeTour})
   const currentFollowUps = followUpNotes({category, stage, feed: sceneFeed, tour: activeTour})
-  const aiDock = notesOpen ? "notes" : aiOpen ? "command" : modelOpen ? `stage-${stage.kind}` : guided ? "guided" : "idle"
+  const aiDock = presentationFeatureOpen ? "notes" : notesOpen ? "notes" : aiOpen ? "command" : modelOpen ? `stage-${stage.kind}` : guided ? "guided" : "idle"
   const liveModelLink = sceneFeed.modelUrl || sceneFeed.viewerUrl || sceneFeed.embedUrl || window.location.href
 
   useEffect(() => {
@@ -1375,6 +1382,35 @@ export default function FullscreenObservatoryV2(){
     speak(`Live viral 3D project created for ${sceneFeed.title}. DigitalHut stays as the sponsor line.`)
   }
 
+  async function runPresentationSearch(){
+    setCategory("DigitalHut Presentation")
+    setTour(toursFor("DigitalHut Presentation")[0].id)
+    setStageIndex(0)
+    setModelOpen(true)
+    setQuery(presentationSearch)
+    announceOpen3dModel({title: presentationSearch, category: "DigitalHut Presentation"})
+    const next = await loadFeeds("DigitalHut Presentation", presentationSearch, {silent: true, keepOpen: true})
+    setActive(0)
+    setModelOpen(true)
+    const loaded = next[0] || seedFeeds("DigitalHut Presentation")[0]
+    speak(`Presentation Featured Mode found ${loaded.title}. The model is open for editing. Add overlays, files, notes, audio cues, or share packaging.`)
+  }
+
+  function addPresentationEdit(kind){
+    const edit = {
+      id: `edit-${Date.now()}`,
+      kind,
+      title: sceneFeed.title,
+      modelLink: sceneFeed.modelUrl || sceneFeed.viewerUrl || sceneFeed.embedUrl || "",
+      note: presentationFileNote || `${kind} change for ${sceneFeed.title}`,
+      createdAt: new Date().toISOString()
+    }
+    setPresentationEdits((current) => [edit, ...current].slice(0, 8))
+    setPresentationFileNote("")
+    playSessionSound("DigitalHut Presentation", "open")
+    speak(`${kind} edit added to ${sceneFeed.title}.`)
+  }
+
   async function copyBacklink(){
     const text = `${viralShareTitle(sceneFeed)}\n${liveModelLink}\n${viralShareText({feed: sceneFeed, hostLine, contestPrompt})}`
     await navigator.clipboard?.writeText(text).catch(() => null)
@@ -1425,6 +1461,10 @@ export default function FullscreenObservatoryV2(){
       </div>
 
       <aside className="dh-quick-rail" style={{opacity: awake ? 1 : 0.2}}>
+        {category === "DigitalHut Presentation" && <div className="dh-quick-section dh-presentation-entry">
+          <div className="dh-rail-head"><span>DigitalHut Presentation</span><b>Advanced</b></div>
+          <button className="dh-btn hot" type="button" onClick={() => {setPresentationFeatureOpen(true); setModelOpen(true); playSessionSound("DigitalHut Presentation", "bridge"); speak("Presentation Featured Mode is open. Search a GLB, attach files, add overlays, and package the model.")}}>Presentation Featured Mode</button>
+        </div>}
         <div className="dh-quick-section">
           <div className="dh-rail-head"><span>{category} Tour</span><b>{stage.label}</b></div>
           <div className="dh-tour-grid">{activeTours.map((item, index) => <button key={item.id} className={`dh-btn dh-tour-card ${item.id === tour ? "active" : ""}`} onClick={() => chooseTour(item)}>
@@ -1501,6 +1541,27 @@ export default function FullscreenObservatoryV2(){
             <small>{post.sponsor_line || "Featured on digitalhut.app"}</small>
             <div><button type="button" onClick={() => likeLivePost(post.id)}>Like {post.likes || 0}</button><a href={post.model_link} target="_blank" rel="noreferrer">Open</a></div>
           </article>)}
+        </div>
+      </div>}
+
+      {presentationFeatureOpen && <div className="dh-presentation-feature">
+        <div><b>Presentation Featured Mode</b><button type="button" onClick={() => setPresentationFeatureOpen(false)}>Close</button></div>
+        <label>Dedicated GLB search</label>
+        <div className="dh-presentation-search">
+          <input value={presentationSearch} onChange={(event) => setPresentationSearch(event.target.value)} onKeyDown={(event) => {if(event.key === "Enter") runPresentationSearch()}} />
+          <button type="button" onClick={runPresentationSearch}>Find GLB</button>
+        </div>
+        <div className="dh-live-model"><b>{sceneFeed.title}</b><span>{sceneFeed.modelUrl || sceneFeed.viewerUrl || sceneFeed.embedUrl || "Related GLB attached by DigitalHut"}</span><small>{layer} layer / {stage.label}</small></div>
+        <label>Special file / edit instruction</label>
+        <textarea value={presentationFileNote} onChange={(event) => setPresentationFileNote(event.target.value)} placeholder="Example: add intro audio, attach brand overlay, expand model note, add sponsor card, add contest prompt..." />
+        <div className="dh-ai-actions">
+          <button type="button" onClick={() => addPresentationEdit("Overlay")}>Add Overlay</button>
+          <button type="button" onClick={() => addPresentationEdit("Special File")}>Attach File Note</button>
+          <button type="button" onClick={() => addPresentationEdit("Audio Cue")}>Add Audio Cue</button>
+          <button type="button" onClick={() => {setLiveStageOpen(true); setPresentationFeatureOpen(false)}}>Send To Live</button>
+        </div>
+        <div className="dh-presentation-edits">
+          {presentationEdits.map((edit) => <article key={edit.id}><b>{edit.kind}</b><span>{edit.note}</span><small>{edit.title}</small></article>)}
         </div>
       </div>}
 
