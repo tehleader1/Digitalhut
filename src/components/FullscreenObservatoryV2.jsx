@@ -7,6 +7,15 @@ import "./FullscreenObservatory.sequence.css"
 const INACTIVITY_MS = 8 * 60 * 1000
 const accounts = ["guest", "standard", "premium", "pro"]
 const layers = ["Base", "Architect", "Lighting", "Props", "Grid", "Coordinates"]
+const digitalHutBrainMap = {
+  mainFrame: "Double 007 Observatory Database",
+  foundation: ["Supabase", "Vercel", "GitHub", "Codex", "APIs", "Back End"],
+  experience: ["Main Screen Login", "Renderer", "Market Intelligence", "Library", "Quick Panels", "Category Feed", "Description"],
+  features3d: ["Orbit Mode", "Layers", "Architect Mode", "Lighting", "Props", "Grid", "Coordinates"],
+  physicalAssets: ["Android", "FireCuda", "HP Mini Laptop"],
+  dataPolicy: "Physical assets are sensitive. Public data stays translucent, current, and verifiable through live observatory activity.",
+  seoCanal: ["current category", "active renderer feed", "provider status", "asset title", "guided tour stage"]
+}
 
 const stockImages = {
   "Continent": ["photo-1500530855697-b586d89ba3ee", "photo-1486406146926-c627a92ad1ab", "photo-1518005020951-eccb494ad742", "photo-1493246507139-91e8fad9978e"],
@@ -24,6 +33,52 @@ function stockUrl(category, index = 0){
   const pool = stockImages[category] || stockImages.Continent
   const id = pool[index % pool.length]
   return `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1200&q=82`
+}
+
+function pausedEmbedUrl(value){
+  if(!value) return ""
+  return value
+    .replace("autostart=1", "autostart=0")
+    .replace("autospin=.15", "autospin=0")
+}
+
+function readStorage(key, fallback = ""){
+  if(typeof window === "undefined") return fallback
+  return window.localStorage.getItem(key) || fallback
+}
+
+function hasFreshEntry(){
+  if(typeof window === "undefined") return false
+  const last = Number(readStorage("digitalhut:lastAccountEntry", "0"))
+  return last > 0 && Date.now() - last < INACTIVITY_MS
+}
+
+function preloadImages(urls){
+  if(typeof window === "undefined") return Promise.resolve()
+  const unique = [...new Set(urls.filter(Boolean))]
+  return Promise.all(unique.map((src) => new Promise((resolve) => {
+    const image = new Image()
+    const done = () => resolve()
+    image.onload = done
+    image.onerror = done
+    image.src = src
+  })))
+}
+
+function observatoryRecord({category, stage, sceneFeed, mode, tier, loading}){
+  return {
+    mainFrame: digitalHutBrainMap.mainFrame,
+    category,
+    stage: stage.label,
+    mode,
+    tier,
+    title: sceneFeed.title,
+    provider: sceneFeed.apiSource || sceneFeed.apiStatus || "seed",
+    status: loading ? "verifying" : sceneFeed.apiStatus || "ready",
+    physicalAssets: digitalHutBrainMap.physicalAssets,
+    seoCanal: digitalHutBrainMap.seoCanal,
+    verifiedAt: new Date().toISOString()
+  }
 }
 
 const categories = [
@@ -191,11 +246,6 @@ function playLoaderTone(){
   return
 }
 
-function freshEntry(){
-  const last = Number(window.localStorage.getItem("digitalhut:lastAccountEntry") || 0)
-  return last > 0 && Date.now() - last < INACTIVITY_MS
-}
-
 function createStatsFeed(feed, category, tour){
   const meta = metaFor(category)
   const marketLine = feed.market?.summary || feed.note || "Provider statistics and comparison layer."
@@ -233,22 +283,27 @@ function MiniVisual({feed, active}){
   </div>
 }
 
-function TourVisual({item, active, accent}){
-  return <div className="dh-tour-visual" style={{"--accent": accent, borderColor: active ? accent : undefined}}><span /><span /><b>{item.icon}</b></div>
+function TourVisual({item, active, accent, image}){
+  return <div className="dh-tour-visual" style={{"--accent": accent, borderColor: active ? accent : undefined}}>
+    <img src={image} alt="" loading="lazy" />
+    <span /><span /><b>{item.icon}</b>
+  </div>
 }
 
-function RendererVisual({feed, stage, guided, loading, layer, renderLive}){
+function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelOpen, onOpenModel}){
   const hasEmbed = Boolean(feed.embedUrl)
   const hasModel = Boolean(feed.modelUrl)
   const isStats = stage.kind === "stats"
   const [modelReady, setModelReady] = useState(false)
+  const [imageReady, setImageReady] = useState(false)
   const stars = Array.from({length: 24})
   const skyline = Array.from({length: 18})
-  const liveOpen = renderLive && !isStats && (hasEmbed || hasModel)
+  const canOpenModel = renderLive && !isStats && (hasEmbed || hasModel)
+  const liveOpen = canOpenModel && modelOpen
 
   useEffect(() => {
     setModelReady(false)
-    if(!renderLive || !hasModel || hasEmbed || isStats) return
+    if(!liveOpen || !hasModel || hasEmbed || isStats) return
     let cancelled = false
     import("@google/model-viewer").then(() => {
       if(!cancelled) setModelReady(true)
@@ -256,15 +311,22 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive}){
     return () => {
       cancelled = true
     }
-  }, [renderLive, hasModel, hasEmbed, isStats, feed.modelUrl])
+  }, [liveOpen, hasModel, hasEmbed, isStats, feed.modelUrl])
+
+  useEffect(() => {
+    setImageReady(false)
+  }, [feed.thumbnail])
 
   return <div className={`dh-renderer ${guided ? "guided" : ""} ${(hasEmbed || hasModel) && !isStats ? "has-api" : ""} ${liveOpen ? "live-open" : ""} stage-${stage.kind}`} style={{"--accent": feed.accent}}>
-    {feed.thumbnail && <img className="dh-renderer-stock" src={feed.thumbnail} alt="" loading="eager" />}
+    {feed.thumbnail && <img className={`dh-renderer-stock ${imageReady ? "is-ready" : ""}`} src={feed.thumbnail} alt="" loading="eager" onLoad={() => setImageReady(true)} />}
     <div className="dh-motion-sky" />
     <div className="dh-stars">{stars.map((_, index) => <span key={index} style={{left: `${4 + (index * 43) % 91}%`, top: `${7 + (index * 31) % 78}%`}} />)}</div>
     <SceneObject feed={feed} />
-    {renderLive && hasEmbed && !isStats && <iframe className="dh-api-frame" title={feed.title} src={feed.embedUrl} allow="fullscreen; xr-spatial-tracking" loading="lazy" allowFullScreen />}
-    {renderLive && !hasEmbed && hasModel && !isStats && modelReady && <model-viewer className="dh-model is-ready" src={feed.modelUrl} poster={feed.thumbnail || ""} camera-controls auto-rotate camera-orbit={stage.orbit} exposure="1.1" shadow-intensity=".65" />}
+    {canOpenModel && !modelOpen && <button className={`dh-api-system-preview ${feed.thumbnail ? "api-preview-ready" : ""}`} style={feed.thumbnail ? {"--api-preview-url": `url("${feed.thumbnail}")`} : undefined} onClick={onOpenModel}>
+      <span>Paused contained model</span><b>{feed.title}</b><em className="dh-open-containment">Activate Model</em>
+    </button>}
+    {liveOpen && hasEmbed && <iframe className="dh-api-frame" title={feed.title} src={pausedEmbedUrl(feed.embedUrl)} allow="fullscreen; xr-spatial-tracking" loading="lazy" allowFullScreen />}
+    {liveOpen && !hasEmbed && hasModel && modelReady && <model-viewer className="dh-model is-ready" src={feed.modelUrl} poster={feed.thumbnail || ""} camera-controls camera-orbit={stage.orbit} exposure="1.1" shadow-intensity=".65" />}
     {isStats && <div className="dh-stat-model"><b>{feed.title}</b><span>{feed.market?.symbol || feed.providerMix?.join(" + ") || "data"}</span><p>{feed.note}</p></div>}
     <div className="dh-orbit" />
     <div className="dh-orbit-two" />
@@ -287,14 +349,15 @@ export default function FullscreenObservatoryV2(){
   const [tour, setTour] = useState(toursFor("Real Estate")[0].id)
   const [stageIndex, setStageIndex] = useState(0)
   const [loading, setLoading] = useState(false)
-  const [tier, setTier] = useState("guest")
-  const [username, setUsername] = useState("")
-  const [entryOpen, setEntryOpen] = useState(true)
+  const [tier, setTier] = useState(() => readStorage("digitalhut:tier", "guest"))
+  const [username, setUsername] = useState(() => readStorage("digitalhut:username", ""))
+  const [entryOpen, setEntryOpen] = useState(() => !hasFreshEntry())
   const [entryLoading, setEntryLoading] = useState(false)
   const [awake, setAwake] = useState(true)
   const [playing, setPlaying] = useState(true)
   const [layer, setLayer] = useState("Base")
   const [layerOpen, setLayerOpen] = useState(false)
+  const [modelOpen, setModelOpen] = useState(false)
   const hideTimer = useRef(null)
   const requestRef = useRef(0)
 
@@ -309,10 +372,29 @@ export default function FullscreenObservatoryV2(){
   const guided = mode === "premium" && playing
 
   useEffect(() => {
-    setTier(window.localStorage.getItem("digitalhut:tier") || "guest")
-    setUsername(window.localStorage.getItem("digitalhut:username") || "")
-    setEntryOpen(!freshEntry())
+    window.digitalHutBrainMap = digitalHutBrainMap
   }, [])
+
+  useEffect(() => {
+    const record = observatoryRecord({category, stage, sceneFeed, mode, tier, loading})
+    window.digitalHutObservatoryRecord = record
+    document.title = `DigitalHut Observatory - ${record.category} - ${record.title}`
+    let meta = document.querySelector('meta[name="description"]')
+    if(!meta){
+      meta = document.createElement("meta")
+      meta.setAttribute("name", "description")
+      document.head.appendChild(meta)
+    }
+    meta.setAttribute("content", `Real observatory activity: ${record.category} ${record.stage}. ${record.title}. Status: ${record.status}.`)
+  }, [category, stage.label, sceneFeed.id, sceneFeed.title, sceneFeed.apiStatus, sceneFeed.apiSource, mode, tier, loading])
+
+  useEffect(() => {
+    const urls = [
+      ...seedFeeds(category).map((item) => item.thumbnail),
+      ...toursFor(category).map((_, index) => stockUrl(category, index))
+    ]
+    preloadImages(urls)
+  }, [category])
 
   useEffect(() => {
     if(!guided || entryOpen) return
@@ -334,14 +416,22 @@ export default function FullscreenObservatoryV2(){
   async function loadFeeds(nextCategory, term, options = {}){
     const id = requestRef.current + 1
     requestRef.current = id
+    const seeds = seedFeeds(nextCategory)
     setLoading(true)
-    setFeeds(seedFeeds(nextCategory))
     setActive(0)
+    setModelOpen(false)
+    await preloadImages(seeds.map((item) => item.thumbnail))
+    if(requestRef.current !== id) return seeds
+    setFeeds(seeds)
     const results = await resolveApiFeeds(nextCategory, term)
-    if(requestRef.current !== id) return seedFeeds(nextCategory)
-    const next = results.length ? results : seedFeeds(nextCategory)
-    setFeeds(next)
-    setLoading(false)
+    if(requestRef.current !== id) return seeds
+    const next = results.length ? results : seeds
+    await preloadImages(next.map((item) => item.thumbnail))
+    if(requestRef.current !== id) return next
+    window.requestAnimationFrame(() => {
+      setFeeds(next)
+      setLoading(false)
+    })
     if(!options.silent) speak(`${results.length ? "Live provider models connected" : "API preview mode"}. ${next[0]?.title || nextCategory}.`)
     return next
   }
@@ -370,6 +460,7 @@ export default function FullscreenObservatoryV2(){
     setTour(toursFor(nextCategory)[0].id)
     setStageIndex(0)
     setStatsFeeds([])
+    setModelOpen(false)
     const seed = seedFeeds(nextCategory)[0]
     setQuery(seed.query)
     loadFeeds(nextCategory, seed.query, {silent: true})
@@ -382,6 +473,7 @@ export default function FullscreenObservatoryV2(){
     setMode("premium")
     setStageIndex(0)
     setPlaying(true)
+    setModelOpen(true)
     speak(`Starting ${category} ${item.id} guided sequence. Current model first. Then I rotate the camera, choose a similar model, and move into statistics.`)
     wake()
   }
@@ -391,6 +483,7 @@ export default function FullscreenObservatoryV2(){
     if(index >= 0) setActive(index)
     setQuery(item.query || item.title)
     setStageIndex(0)
+    setModelOpen(false)
     speak(`Loaded ${item.title}. ${mode === "premium" ? "Guided sequence ready." : "Regular API mode."}`)
     wake()
   }
@@ -398,6 +491,7 @@ export default function FullscreenObservatoryV2(){
   async function runSearch(){
     setPlaying(true)
     setStageIndex(0)
+    setModelOpen(false)
     const next = await loadFeeds(category, query)
     const first = next[0] || feed
     if(mode === "premium") speak(`Premium guided tour started for ${first.title}. ${activeTour.prompt}`)
@@ -423,9 +517,9 @@ export default function FullscreenObservatoryV2(){
     wake()
   }
 
-  return <main className="dh-observatory" onPointerMove={wake} onPointerDown={wake}>
+  return <main className={`dh-observatory ${loading ? "is-loading" : "is-ready"} ${entryOpen ? "entry-open" : "entry-complete"}`} data-main-frame={digitalHutBrainMap.mainFrame} data-observatory-category={category} data-observatory-status={loading ? "verifying" : sceneFeed.apiStatus || "ready"} data-physical-assets="sensitive" onPointerMove={wake} onPointerDown={wake}>
     <section className="dh-stage">
-      <RendererVisual feed={sceneFeed} stage={stage} guided={guided} loading={loading} layer={layer} renderLive={!entryOpen} />
+      <RendererVisual feed={sceneFeed} stage={stage} guided={guided} loading={loading} layer={layer} renderLive={!entryOpen} modelOpen={modelOpen} onOpenModel={() => {setModelOpen(true); wake()}} />
       <div className="dh-vignette" />
       {layer === "Architect" && <div className="dh-architect"><b>Architect Layer</b><span>builders / developers / researchers / AIs / experimental</span></div>}
 
@@ -449,8 +543,8 @@ export default function FullscreenObservatoryV2(){
       <aside className="dh-quick-rail" style={{opacity: awake ? 1 : 0.2}}>
         <div className="dh-quick-section">
           <div className="dh-rail-head"><span>{category} Tour</span><b>{stage.label}</b></div>
-          <div className="dh-tour-grid">{activeTours.map((item) => <button key={item.id} className={`dh-btn dh-tour-card ${item.id === tour ? "active" : ""}`} onClick={() => chooseTour(item)}>
-            <TourVisual item={item} active={item.id === tour} accent={sceneFeed.accent} /><small>{item.id}</small>
+          <div className="dh-tour-grid">{activeTours.map((item, index) => <button key={item.id} className={`dh-btn dh-tour-card ${item.id === tour ? "active" : ""}`} onClick={() => chooseTour(item)}>
+            <TourVisual item={item} active={item.id === tour} accent={sceneFeed.accent} image={stockUrl(category, index)} /><small>{item.id}</small>
           </button>)}</div>
         </div>
         <div className="dh-quick-section">
