@@ -8,6 +8,24 @@ const INACTIVITY_MS = 8 * 60 * 1000
 const layers = ["Base", "Architect", "Lighting", "Props", "Grid", "Coordinates"]
 const accounts = ["guest", "standard", "premium", "pro"]
 
+const stockImages = {
+  "Continent": ["photo-1500530855697-b586d89ba3ee", "photo-1486406146926-c627a92ad1ab", "photo-1518005020951-eccb494ad742", "photo-1493246507139-91e8fad9978e"],
+  "Planetary": ["photo-1446776811953-b23d57bd21aa", "photo-1454789548928-9efd52dc4031", "photo-1462331940025-496dfbfc7564", "photo-1419242902214-272b3f66ee7a"],
+  "Gamer": ["photo-1542751371-adc38448a05e", "photo-1511512578047-dfb367046420", "photo-1550745165-9bc0b252726f", "photo-1493711662062-fa541adb3fc8"],
+  "Real Estate": ["photo-1560518883-ce09059eeffa", "photo-1600585154340-be6161a56a0c", "photo-1484154218962-a197022b5858", "photo-1600607687939-ce8a6c25118c"],
+  "Workforce": ["photo-1504307651254-35680f356dfd", "photo-1517048676732-d65bc937f952", "photo-1521791136064-7986c2920216", "photo-1581092918056-0c4c3acd3789"],
+  "Home Project": ["photo-1513694203232-719a280e022f", "photo-1600585154526-990dced4db0d", "photo-1586023492125-27b2c045efd7", "photo-1505693416388-ac5ce068fe85"],
+  "Political": ["photo-1529107386315-e1a2ed48a620", "photo-1464692805480-a69dfaafdb0d", "photo-1523292562811-8fa7962a78c8", "photo-1500534314209-a25ddb2bd429"],
+  "Programmer": ["photo-1515879218367-8466d910aaa4", "photo-1555066931-4365d14bab8c", "photo-1516321318423-f06f85e504b3", "photo-1558494949-ef010cbdcc31"],
+  "Researcher": ["photo-1532094349884-543bc11b234d", "photo-1507413245164-6160d8298b31", "photo-1581093588401-fbb62a02f120", "photo-1451187580459-43490279c0fa"]
+}
+
+function stockUrl(category, index = 0){
+  const pool = stockImages[category] || stockImages.Continent
+  const id = pool[index % pool.length]
+  return `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1200&q=82`
+}
+
 const categories = [
   {id: "Continent", icon: "CO", accent: "#67e8f9", context: "global terrain, travel, culture, and education"},
   {id: "Planetary", icon: "PL", accent: "#a78bfa", context: "space, science, orbit, and planetary research"},
@@ -153,6 +171,7 @@ function makeFeeds(category){
     icon: meta.icon,
     accent: meta.accent,
     context: meta.context,
+    thumbnail: stockUrl(category, index),
     apiStatus: "seed"
   }))
 }
@@ -189,7 +208,7 @@ function normalizeAsset(item, category, index, source, term){
   const embedUrl = cleanUrl(item?.embedUrl || item?.embed_url || item?.viewerEmbedUrl || item?.viewer_embed_url || item?.embed?.url || item?.urls?.embed || (uid ? `https://sketchfab.com/models/${uid}/embed` : ""))
   const modelUrl = cleanUrl(item?.modelUrl || item?.model_url || item?.glbUrl || item?.glb_url || item?.gltfUrl || item?.gltf_url || item?.downloadUrl || item?.download_url)
   const viewerUrl = cleanUrl(item?.viewerUrl || item?.viewer_url || item?.url || item?.urls?.viewer || item?.webUrl || item?.web_url)
-  const thumbnail = firstThumbnail(item)
+  const thumbnail = firstThumbnail(item) || stockUrl(category, index)
   const title = item?.title || item?.name || item?.displayName || `${category} API feed ${index + 1}`
   const note = item?.note || item?.description || item?.summary || `Live API result for ${term || category}.`
 
@@ -212,6 +231,16 @@ function normalizeAsset(item, category, index, source, term){
   }
 }
 
+async function fetchWithTimeout(endpoint, options = {}, timeoutMs = 3600){
+  const controller = new AbortController()
+  const timeout = window.setTimeout(() => controller.abort(), timeoutMs)
+  try{
+    return await fetch(endpoint, {...options, signal: controller.signal})
+  } finally {
+    window.clearTimeout(timeout)
+  }
+}
+
 async function resolveApiFeeds(category, term){
   if(typeof window === "undefined") return []
   const query = encodeURIComponent(term || category)
@@ -225,7 +254,7 @@ async function resolveApiFeeds(category, term){
 
   for(const [source, endpoint] of endpoints){
     try{
-      const response = await fetch(endpoint, {headers: {Accept: "application/json"}})
+      const response = await fetchWithTimeout(endpoint, {headers: {Accept: "application/json"}})
       if(!response.ok) continue
       const payload = await response.json()
       const items = payloadItems(payload)
@@ -320,6 +349,7 @@ function RendererVisual({feed, layer, guided, loading}){
   }, [feed.modelUrl, hasModel])
 
   return <div className={`dh-renderer ${guided ? "guided" : ""} ${hasApi ? "has-api" : ""}`} style={{"--accent": feed.accent}}>
+    {feed.thumbnail && <img className="dh-renderer-stock" src={feed.thumbnail} alt="" loading="eager" />}
     <div className="dh-motion-sky" />
     <div className="dh-stars">{stars.map((_, index) => <span key={index} style={{left: `${4 + (index * 43) % 91}%`, top: `${7 + (index * 31) % 78}%`}} />)}</div>
     <SceneObject feed={feed} />
