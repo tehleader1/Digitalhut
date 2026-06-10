@@ -30,7 +30,7 @@
 .dh-api-system-preview {
   position: absolute;
   inset: 9% 22% 17% 13%;
-  z-index: 1;
+  z-index: 4;
   overflow: hidden;
   border: 1px solid rgba(103,232,249,.24);
   border-radius: 8px;
@@ -44,9 +44,12 @@
 
 .dh-api-system-preview:hover,
 .dh-api-system-preview:focus-within {
-  inset: 0;
   border-color: rgba(103,232,249,.48);
   box-shadow: 0 34px 120px rgba(0,0,0,.58), 0 0 80px rgba(103,232,249,.18);
+}
+
+.dh-api-system-preview.is-resolving {
+  border-color: rgba(250,204,21,.5);
 }
 
 .dh-renderer.has-api.live-open .dh-api-system-preview {
@@ -187,6 +190,6 @@
 
   .dh-api-system-preview:hover,
   .dh-api-system-preview:focus-within {
-    inset: 0;
+    border-color: rgba(103,232,249,.48);
   }
 }

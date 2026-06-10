@@ -298,8 +298,8 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
   const [imageReady, setImageReady] = useState(false)
   const stars = Array.from({length: 24})
   const skyline = Array.from({length: 18})
-  const canOpenModel = renderLive && !isStats && (hasEmbed || hasModel)
-  const liveOpen = canOpenModel && modelOpen
+  const canShowContainment = renderLive && !isStats
+  const liveOpen = canShowContainment && modelOpen && (hasEmbed || hasModel)
 
   useEffect(() => {
     setModelReady(false)
@@ -317,13 +317,13 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     setImageReady(false)
   }, [feed.thumbnail])
 
-  return <div className={`dh-renderer ${guided ? "guided" : ""} ${(hasEmbed || hasModel) && !isStats ? "has-api" : ""} ${liveOpen ? "live-open" : ""} stage-${stage.kind}`} style={{"--accent": feed.accent}}>
+  return <div className={`dh-renderer ${guided ? "guided" : ""} ${canShowContainment ? "has-api" : ""} ${liveOpen ? "live-open" : ""} stage-${stage.kind}`} style={{"--accent": feed.accent}}>
     {feed.thumbnail && <img className={`dh-renderer-stock ${imageReady ? "is-ready" : ""}`} src={feed.thumbnail} alt="" loading="eager" onLoad={() => setImageReady(true)} />}
     <div className="dh-motion-sky" />
     <div className="dh-stars">{stars.map((_, index) => <span key={index} style={{left: `${4 + (index * 43) % 91}%`, top: `${7 + (index * 31) % 78}%`}} />)}</div>
     <SceneObject feed={feed} />
-    {canOpenModel && !modelOpen && <button className={`dh-api-system-preview ${feed.thumbnail ? "api-preview-ready" : ""}`} style={feed.thumbnail ? {"--api-preview-url": `url("${feed.thumbnail}")`} : undefined} onClick={onOpenModel}>
-      <span>Paused contained model</span><b>{feed.title}</b><em className="dh-open-containment">Activate Model</em>
+    {canShowContainment && !liveOpen && <button className={`dh-api-system-preview ${feed.thumbnail ? "api-preview-ready" : ""} ${modelOpen ? "is-resolving" : ""}`} style={feed.thumbnail ? {"--api-preview-url": `url("${feed.thumbnail}")`} : undefined} onClick={onOpenModel}>
+      <span>{modelOpen || loading ? "Resolving provider model" : "Paused contained model"}</span><b>{feed.title}</b><em className="dh-open-containment">{modelOpen || loading ? "Scanning APIs" : "Activate Model"}</em>
     </button>}
     {liveOpen && hasEmbed && <iframe className="dh-api-frame" title={feed.title} src={pausedEmbedUrl(feed.embedUrl)} allow="fullscreen; xr-spatial-tracking" loading="lazy" allowFullScreen />}
     {liveOpen && !hasEmbed && hasModel && modelReady && <model-viewer className="dh-model is-ready" src={feed.modelUrl} poster={feed.thumbnail || ""} camera-controls camera-orbit={stage.orbit} exposure="1.1" shadow-intensity=".65" />}
@@ -419,7 +419,7 @@ export default function FullscreenObservatoryV2(){
     const seeds = seedFeeds(nextCategory)
     setLoading(true)
     setActive(0)
-    setModelOpen(false)
+    if(!options.keepOpen) setModelOpen(false)
     await preloadImages(seeds.map((item) => item.thumbnail))
     if(requestRef.current !== id) return seeds
     setFeeds(seeds)
@@ -468,12 +468,23 @@ export default function FullscreenObservatoryV2(){
     wake()
   }
 
-  function chooseTour(item){
+  async function openContainedModel(){
+    setModelOpen(true)
+    wake()
+    if(sceneFeed.embedUrl || sceneFeed.modelUrl || loading) return
+    await loadFeeds(category, sceneFeed.query || query, {silent: true, keepOpen: true})
+    setModelOpen(true)
+  }
+
+  async function chooseTour(item){
     setTour(item.id)
     setMode("premium")
     setStageIndex(0)
     setPlaying(true)
     setModelOpen(true)
+    if(!sceneFeed.embedUrl && !sceneFeed.modelUrl && !loading) {
+      loadFeeds(category, sceneFeed.query || query, {silent: true, keepOpen: true}).then(() => setModelOpen(true))
+    }
     speak(`Starting ${category} ${item.id} guided sequence. Current model first. Then I rotate the camera, choose a similar model, and move into statistics.`)
     wake()
   }
@@ -519,7 +530,7 @@ export default function FullscreenObservatoryV2(){
 
   return <main className={`dh-observatory ${loading ? "is-loading" : "is-ready"} ${entryOpen ? "entry-open" : "entry-complete"}`} data-main-frame={digitalHutBrainMap.mainFrame} data-observatory-category={category} data-observatory-status={loading ? "verifying" : sceneFeed.apiStatus || "ready"} data-physical-assets="sensitive" onPointerMove={wake} onPointerDown={wake}>
     <section className="dh-stage">
-      <RendererVisual feed={sceneFeed} stage={stage} guided={guided} loading={loading} layer={layer} renderLive={!entryOpen} modelOpen={modelOpen} onOpenModel={() => {setModelOpen(true); wake()}} />
+      <RendererVisual feed={sceneFeed} stage={stage} guided={guided} loading={loading} layer={layer} renderLive={!entryOpen} modelOpen={modelOpen} onOpenModel={openContainedModel} />
       <div className="dh-vignette" />
       {layer === "Architect" && <div className="dh-architect"><b>Architect Layer</b><span>builders / developers / researchers / AIs / experimental</span></div>}
 
