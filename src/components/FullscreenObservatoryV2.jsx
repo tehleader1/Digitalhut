@@ -237,18 +237,34 @@ function TourVisual({item, active, accent}){
   return <div className="dh-tour-visual" style={{"--accent": accent, borderColor: active ? accent : undefined}}><span /><span /><b>{item.icon}</b></div>
 }
 
-function RendererVisual({feed, stage, guided, loading, layer}){
+function RendererVisual({feed, stage, guided, loading, layer, renderLive}){
   const hasEmbed = Boolean(feed.embedUrl)
+  const hasModel = Boolean(feed.modelUrl)
   const isStats = stage.kind === "stats"
+  const [modelReady, setModelReady] = useState(false)
   const stars = Array.from({length: 24})
   const skyline = Array.from({length: 18})
+  const liveOpen = renderLive && !isStats && (hasEmbed || hasModel)
 
-  return <div className={`dh-renderer ${guided ? "guided" : ""} ${hasEmbed && !isStats ? "has-api" : ""} stage-${stage.kind}`} style={{"--accent": feed.accent}}>
+  useEffect(() => {
+    setModelReady(false)
+    if(!renderLive || !hasModel || hasEmbed || isStats) return
+    let cancelled = false
+    import("@google/model-viewer").then(() => {
+      if(!cancelled) setModelReady(true)
+    }).catch(() => null)
+    return () => {
+      cancelled = true
+    }
+  }, [renderLive, hasModel, hasEmbed, isStats, feed.modelUrl])
+
+  return <div className={`dh-renderer ${guided ? "guided" : ""} ${(hasEmbed || hasModel) && !isStats ? "has-api" : ""} ${liveOpen ? "live-open" : ""} stage-${stage.kind}`} style={{"--accent": feed.accent}}>
     {feed.thumbnail && <img className="dh-renderer-stock" src={feed.thumbnail} alt="" loading="eager" />}
     <div className="dh-motion-sky" />
     <div className="dh-stars">{stars.map((_, index) => <span key={index} style={{left: `${4 + (index * 43) % 91}%`, top: `${7 + (index * 31) % 78}%`}} />)}</div>
     <SceneObject feed={feed} />
-    {hasEmbed && !isStats && stage.kind !== "current" && <iframe className="dh-api-frame" title={feed.title} src={feed.embedUrl} allow="fullscreen; xr-spatial-tracking" allowFullScreen />}
+    {renderLive && hasEmbed && !isStats && <iframe className="dh-api-frame" title={feed.title} src={feed.embedUrl} allow="fullscreen; xr-spatial-tracking" loading="lazy" allowFullScreen />}
+    {renderLive && !hasEmbed && hasModel && !isStats && modelReady && <model-viewer className="dh-model is-ready" src={feed.modelUrl} poster={feed.thumbnail || ""} camera-controls auto-rotate camera-orbit={stage.orbit} exposure="1.1" shadow-intensity=".65" />}
     {isStats && <div className="dh-stat-model"><b>{feed.title}</b><span>{feed.market?.symbol || feed.providerMix?.join(" + ") || "data"}</span><p>{feed.note}</p></div>}
     <div className="dh-orbit" />
     <div className="dh-orbit-two" />
@@ -409,7 +425,7 @@ export default function FullscreenObservatoryV2(){
 
   return <main className="dh-observatory" onPointerMove={wake} onPointerDown={wake}>
     <section className="dh-stage">
-      <RendererVisual feed={sceneFeed} stage={stage} guided={guided} loading={loading} layer={layer} />
+      <RendererVisual feed={sceneFeed} stage={stage} guided={guided} loading={loading} layer={layer} renderLive={!entryOpen} />
       <div className="dh-vignette" />
       {layer === "Architect" && <div className="dh-architect"><b>Architect Layer</b><span>builders / developers / researchers / AIs / experimental</span></div>}
 
@@ -425,8 +441,8 @@ export default function FullscreenObservatoryV2(){
       </div>
 
       <div className="dh-category-dock" style={{opacity: awake ? 1 : 0.18}}>
-        {categories.map((item) => <button key={item.id} className={`dh-category-card ${item.id === category ? "active" : ""}`} style={{"--accent": item.accent}} onClick={() => selectCategory(item.id)}>
-          <span className="dh-category-icon">{item.icon}</span><small>{item.id}</small>
+        {categories.map((item, index) => <button key={item.id} className={`dh-category-card ${item.id === category ? "active" : ""}`} style={{"--accent": item.accent}} onClick={() => selectCategory(item.id)}>
+          <span className="dh-category-icon"><img src={stockUrl(item.id, index)} alt="" loading="lazy" /><b>{item.icon}</b></span><small>{item.id}</small>
         </button>)}
       </div>
 
