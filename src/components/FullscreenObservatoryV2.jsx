@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useState} from "react"
-import "@google/model-viewer"
 import {ConnectButton} from "../wallet"
 import "./FullscreenObservatory.css"
 import "./FullscreenObservatory.api.css"
@@ -8,6 +7,24 @@ import "./FullscreenObservatory.sequence.css"
 const INACTIVITY_MS = 8 * 60 * 1000
 const accounts = ["guest", "standard", "premium", "pro"]
 const layers = ["Base", "Architect", "Lighting", "Props", "Grid", "Coordinates"]
+
+const stockImages = {
+  "Continent": ["photo-1500530855697-b586d89ba3ee", "photo-1486406146926-c627a92ad1ab", "photo-1518005020951-eccb494ad742", "photo-1493246507139-91e8fad9978e"],
+  "Planetary": ["photo-1446776811953-b23d57bd21aa", "photo-1454789548928-9efd52dc4031", "photo-1462331940025-496dfbfc7564", "photo-1419242902214-272b3f66ee7a"],
+  "Gamer": ["photo-1542751371-adc38448a05e", "photo-1511512578047-dfb367046420", "photo-1550745165-9bc0b252726f", "photo-1493711662062-fa541adb3fc8"],
+  "Real Estate": ["photo-1560518883-ce09059eeffa", "photo-1600585154340-be6161a56a0c", "photo-1484154218962-a197022b5858", "photo-1600607687939-ce8a6c25118c"],
+  "Workforce": ["photo-1504307651254-35680f356dfd", "photo-1517048676732-d65bc937f952", "photo-1521791136064-7986c2920216", "photo-1581092918056-0c4c3acd3789"],
+  "Home Project": ["photo-1513694203232-719a280e022f", "photo-1600585154526-990dced4db0d", "photo-1586023492125-27b2c045efd7", "photo-1505693416388-ac5ce068fe85"],
+  "Political": ["photo-1529107386315-e1a2ed48a620", "photo-1464692805480-a69dfaafdb0d", "photo-1523292562811-8fa7962a78c8", "photo-1500534314209-a25ddb2bd429"],
+  "Programmer": ["photo-1515879218367-8466d910aaa4", "photo-1555066931-4365d14bab8c", "photo-1516321318423-f06f85e504b3", "photo-1558494949-ef010cbdcc31"],
+  "Researcher": ["photo-1532094349884-543bc11b234d", "photo-1507413245164-6160d8298b31", "photo-1581093588401-fbb62a02f120", "photo-1451187580459-43490279c0fa"]
+}
+
+function stockUrl(category, index = 0){
+  const pool = stockImages[category] || stockImages.Continent
+  const id = pool[index % pool.length]
+  return `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1200&q=82`
+}
 
 const categories = [
   ["Continent", "CO", "#67e8f9", "global terrain, travel, culture, and education"],
@@ -71,6 +88,7 @@ function seedFeeds(category){
     icon: meta.icon,
     accent: meta.accent,
     context: meta.context,
+    thumbnail: stockUrl(category, index),
     apiStatus: "seed"
   }))
 }
@@ -115,7 +133,7 @@ function normalizeAsset(item, category, index, source, term){
     icon: meta.icon,
     accent: meta.accent,
     context: meta.context,
-    thumbnail: firstThumbnail(item),
+    thumbnail: firstThumbnail(item) || stockUrl(category, index),
     embedUrl,
     modelUrl,
     viewerUrl,
@@ -124,6 +142,16 @@ function normalizeAsset(item, category, index, source, term){
     providerMix: item?.providerMix || item?.providers || [source],
     market: item?.market,
     cesium: item?.cesium
+  }
+}
+
+async function fetchWithTimeout(endpoint, options = {}, timeoutMs = 3200){
+  const controller = new AbortController()
+  const timeout = window.setTimeout(() => controller.abort(), timeoutMs)
+  try{
+    return await fetch(endpoint, {...options, signal: controller.signal})
+  } finally {
+    window.clearTimeout(timeout)
   }
 }
 
@@ -138,7 +166,7 @@ async function resolveApiFeeds(category, term){
 
   for(const [source, endpoint] of endpoints){
     try{
-      const response = await fetch(endpoint, {headers: {Accept: "application/json"}})
+      const response = await fetchWithTimeout(endpoint, {headers: {Accept: "application/json"}})
       if(!response.ok) continue
       const payload = await response.json()
       const feeds = payloadItems(payload).map((item, index) => normalizeAsset(item, category, index, source, term))
@@ -160,26 +188,7 @@ function speak(text){
 }
 
 function playLoaderTone(){
-  try{
-    const Audio = window.AudioContext || window.webkitAudioContext
-    if(!Audio) return
-    const ctx = new Audio()
-    const osc = ctx.createOscillator()
-    const gain = ctx.createGain()
-    osc.type = "sine"
-    osc.frequency.setValueAtTime(146.83, ctx.currentTime)
-    osc.frequency.exponentialRampToValueAtTime(220, ctx.currentTime + 1.1)
-    gain.gain.setValueAtTime(0.0001, ctx.currentTime)
-    gain.gain.exponentialRampToValueAtTime(0.045, ctx.currentTime + 0.18)
-    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1.25)
-    osc.connect(gain)
-    gain.connect(ctx.destination)
-    osc.start()
-    osc.stop(ctx.currentTime + 1.3)
-    window.setTimeout(() => ctx.close().catch(() => null), 1500)
-  } catch {
-    return
-  }
+  return
 }
 
 function freshEntry(){
@@ -229,34 +238,17 @@ function TourVisual({item, active, accent}){
 }
 
 function RendererVisual({feed, stage, guided, loading, layer}){
-  const [modelReady, setModelReady] = useState(false)
-  const modelRef = useRef(null)
   const hasEmbed = Boolean(feed.embedUrl)
-  const hasModel = Boolean(feed.modelUrl)
   const isStats = stage.kind === "stats"
   const stars = Array.from({length: 24})
   const skyline = Array.from({length: 18})
 
-  useEffect(() => {
-    setModelReady(false)
-    const model = modelRef.current
-    if(!model || !hasModel) return
-    const ready = () => setModelReady(true)
-    const failed = () => setModelReady(false)
-    model.addEventListener("load", ready)
-    model.addEventListener("error", failed)
-    return () => {
-      model.removeEventListener("load", ready)
-      model.removeEventListener("error", failed)
-    }
-  }, [feed.modelUrl, hasModel])
-
-  return <div className={`dh-renderer ${guided ? "guided" : ""} ${(hasEmbed || hasModel) && !isStats ? "has-api" : ""} stage-${stage.kind}`} style={{"--accent": feed.accent}}>
+  return <div className={`dh-renderer ${guided ? "guided" : ""} ${hasEmbed && !isStats ? "has-api" : ""} stage-${stage.kind}`} style={{"--accent": feed.accent}}>
+    {feed.thumbnail && <img className="dh-renderer-stock" src={feed.thumbnail} alt="" loading="eager" />}
     <div className="dh-motion-sky" />
     <div className="dh-stars">{stars.map((_, index) => <span key={index} style={{left: `${4 + (index * 43) % 91}%`, top: `${7 + (index * 31) % 78}%`}} />)}</div>
     <SceneObject feed={feed} />
-    {hasEmbed && !isStats && <iframe className="dh-api-frame" title={feed.title} src={feed.embedUrl} allow="autoplay; fullscreen; xr-spatial-tracking" allowFullScreen />}
-    {!hasEmbed && hasModel && !isStats && <model-viewer ref={modelRef} className={modelReady ? "dh-model is-ready" : "dh-model"} src={feed.modelUrl} camera-controls="true" camera-orbit={stage.orbit} auto-rotate={guided ? "true" : undefined} autoplay="true" exposure={layer === "Lighting" ? "1.45" : "1"} shadow-intensity="1" />}
+    {hasEmbed && !isStats && stage.kind !== "current" && <iframe className="dh-api-frame" title={feed.title} src={feed.embedUrl} allow="fullscreen; xr-spatial-tracking" allowFullScreen />}
     {isStats && <div className="dh-stat-model"><b>{feed.title}</b><span>{feed.market?.symbol || feed.providerMix?.join(" + ") || "data"}</span><p>{feed.note}</p></div>}
     <div className="dh-orbit" />
     <div className="dh-orbit-two" />
@@ -304,7 +296,6 @@ export default function FullscreenObservatoryV2(){
     setTier(window.localStorage.getItem("digitalhut:tier") || "guest")
     setUsername(window.localStorage.getItem("digitalhut:username") || "")
     setEntryOpen(!freshEntry())
-    loadFeeds("Real Estate", "modern house real estate 3d", {silent: true})
   }, [])
 
   useEffect(() => {
@@ -355,7 +346,7 @@ export default function FullscreenObservatoryV2(){
       setEntryLoading(false)
       setEntryOpen(false)
       wake()
-    }, 1100)
+    }, 120)
   }
 
   function selectCategory(nextCategory){
