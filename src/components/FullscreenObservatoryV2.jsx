@@ -266,12 +266,12 @@ function speechEngine(){
 function categoryFromCommand(text){
   const value = text.toLowerCase()
   const matches = [
-    ["Planetary", ["space", "planet", "planetary", "saturn", "mars", "moon", "orbit"]],
-    ["Gamer", ["game", "gamer", "gaming", "level"]],
-    ["Real Estate", ["real estate", "housing", "house", "property", "agent"]],
-    ["Programmer", ["programmer", "code", "backend", "decentralized", "api"]],
-    ["Researcher", ["research", "researcher", "fossil", "history", "experiment", "analysis"]],
-    ["Mainstream Streaming", ["stream", "streaming", "trend", "funny video", "creator"]],
+    ["Planetary", ["space", "planet", "planetary", "saturn", "mars", "moon", "orbit", "canada", "mountain", "environment", "place"]],
+    ["Gamer", ["game", "gamer", "gaming", "level", "character", "avatar", "cool game"]],
+    ["Real Estate", ["real estate", "housing", "house", "property", "agent", "north carolina", "middle class", "neighborhood"]],
+    ["Programmer", ["programmer", "code", "backend", "decentralized", "api", "network", "database"]],
+    ["Researcher", ["research", "researcher", "fossil", "history", "experiment", "analysis", "verify", "artifact"]],
+    ["Mainstream Streaming", ["stream", "streaming", "trend", "funny video", "creator", "cat video", "viral"]],
     ["Workforce", ["workforce", "jobsite", "training"]],
     ["Home Project", ["home project", "repair", "interior"]],
     ["Political", ["political", "civic", "government"]],
@@ -282,12 +282,41 @@ function categoryFromCommand(text){
 
 function queryFromCommand(text, fallback){
   const value = text.toLowerCase()
+  const cleaned = text.replace(/\b(open|show me|find|search|category|please|digitalhut|ai|preview|next|model|guided tour|tour)\b/gi, " ").replace(/\s+/g, " ").trim()
+  if(cleaned.length > 2) return `${cleaned} 3d model visual`
+  if(value.includes("canada")) return "canada landscape city terrain 3d model"
   if(value.includes("saturn")) return "saturn planet rings 3d model"
+  if(value.includes("game character")) return "2026 cool game character 3d model"
+  if(value.includes("north carolina")) return "north carolina middle class real estate housing 3d model"
+  if(value.includes("cat")) return "funny cat video viral 2026 visual"
   if(value.includes("fossil")) return "fossil artifact dinosaur bone 3d model"
   if(value.includes("housing")) return "housing market property 3d model"
   if(value.includes("decentralized")) return "decentralized network data center 3d model"
   if(value.includes("funny")) return "funny creator video studio 2026 trend visual"
   return fallback
+}
+
+function topicInsight({category, query, feed, stage}){
+  const subject = query.replace(/\b3d model visual\b/i, "").replace(/\b3d model\b/i, "").trim() || feed.title
+  const source = feed.apiSource || feed.apiStatus || "observatory feed"
+  if(category === "Planetary") return `I read ${subject} as a place or environment session. I would start wide, then rotate into the structure, terrain, scale, and visible landmarks. Source status is ${source}.`
+  if(category === "Gamer") return `${subject} fits the Gamer lane. I am looking for silhouette, character readability, animation potential, world fit, and whether it could inspire a playable update. Source status is ${source}.`
+  if(category === "Real Estate") return `${subject} fits Real Estate. I am checking location signal, property class, neighborhood context, middle-market usefulness, and what an agent could explain to a client. Source status is ${source}.`
+  if(category === "Programmer") return `${subject} fits Programmer mode. I am checking data shape, backend use, provider reliability, decentralized network relevance, and what can be logged or automated. Source status is ${source}.`
+  if(category === "Researcher") return `${subject} fits Researcher mode. I am checking evidence, age or history clues, broken areas, visible details, and what still needs verification. Source status is ${source}.`
+  if(category === "Mainstream Streaming") return `${subject} fits Mainstream Streaming. I am looking for the hook, what makes it funny or shareable, why it could trend in 2026, and what clip should come next. Source status is ${source}.`
+  return `${subject} is loaded in ${category}. I am checking the current model, the stage ${stage.label}, and what related model should come next.`
+}
+
+function shouldTreatAsSearch(text){
+  const lower = text.toLowerCase()
+  if(lower.includes("save") || lower.includes("download note") || lower.includes("guided") || lower.includes("tour") || lower.includes("rotate") || lower.includes("camera") || lower.includes("tell me more") || lower.includes("history") || lower.includes("facts") || lower.includes("preview next") || lower.includes("next model")) return false
+  return true
+}
+
+function isNoteCommand(text){
+  const lower = text.toLowerCase()
+  return lower.includes("take note") || lower.includes("write note") || lower.includes("add note") || lower.includes("note this")
 }
 
 function guideLine({category, stage, feed, tour, expanded = false}){
@@ -674,20 +703,6 @@ export default function FullscreenObservatoryV2(){
     const lower = text.toLowerCase()
     const nextCategory = categoryFromCommand(text)
     const nextQuery = queryFromCommand(text, query)
-    if(nextCategory && nextCategory !== category){
-      setCategory(nextCategory)
-      setTour(toursFor(nextCategory)[0].id)
-      setStageIndex(0)
-      setStatsFeeds([])
-      setGuideDepth(0)
-      setModelOpen(true)
-      setQuery(nextQuery)
-      announceOpen3dModel({title: nextQuery})
-      await loadFeeds(nextCategory, nextQuery, {silent: true, keepOpen: true})
-      setModelOpen(true)
-      speak(`Opening ${nextCategory}. I found ${nextQuery}. Start a guided tour when you are ready.`)
-      return
-    }
     if(lower.includes("preview next") || lower.includes("next model") || lower.includes("show me next")){
       setActive((current) => (current + 1) % feeds.length)
       setStageIndex(2)
@@ -714,9 +729,26 @@ export default function FullscreenObservatoryV2(){
       await saveSmartNote(text)
       return
     }
-    setSmartNote(text)
-    setNotesOpen(true)
-    speak("I added that to the smart note panel. Say save my note when you want the download link.")
+    if(isNoteCommand(text)){
+      setSmartNote((current) => [current, text].filter(Boolean).join("\n"))
+      setNotesOpen(true)
+      return
+    }
+    if(shouldTreatAsSearch(text)){
+      const targetCategory = nextCategory || category
+      setCategory(targetCategory)
+      setTour(toursFor(targetCategory)[0].id)
+      setStageIndex(0)
+      setStatsFeeds([])
+      setGuideDepth(0)
+      setModelOpen(true)
+      setQuery(nextQuery)
+      announceOpen3dModel({title: nextQuery})
+      const next = await loadFeeds(targetCategory, nextQuery, {silent: true, keepOpen: true})
+      const loaded = next[0] || sceneFeed
+      setModelOpen(true)
+      speak(topicInsight({category: targetCategory, query: nextQuery, feed: loaded, stage}))
+    }
   }
 
   function startVoiceCommand(){
@@ -821,7 +853,7 @@ export default function FullscreenObservatoryV2(){
       </button>
       {aiOpen && <div className="dh-ai-command">
         <div><b>DigitalHut AI</b><button type="button" onClick={() => setAiOpen(false)}>Close</button></div>
-        <input value={aiCommand} onChange={(event) => setAiCommand(event.target.value)} onKeyDown={(event) => {if(event.key === "Enter") runAiCommand(aiCommand)}} placeholder="Type or speak: Open Space category and show me Saturn" />
+        <input value={aiCommand} onChange={(event) => setAiCommand(event.target.value)} onKeyDown={(event) => {if(event.key === "Enter") runAiCommand(aiCommand)}} placeholder="Ask: Canada, Saturn, funny cat video, NC real estate, rotate, tell me more" />
         <div className="dh-ai-actions">
           <button type="button" onClick={() => runAiCommand(aiCommand)}>Run</button>
           <button type="button" onClick={startVoiceCommand}>{aiListening ? "Listening" : "Voice"}</button>
@@ -831,7 +863,7 @@ export default function FullscreenObservatoryV2(){
 
       {notesOpen && <div className="dh-smart-notes">
         <div><b>Smart Note / Chat Record</b><button type="button" onClick={() => setNotesOpen(false)}>Close</button></div>
-        <textarea value={smartNote} onChange={(event) => setSmartNote(event.target.value)} placeholder="Take notes here. Example: DigitalHut AI save my note." />
+        <textarea value={smartNote} onChange={(event) => setSmartNote(event.target.value)} placeholder="Your notes stay here until you explicitly save or download them." />
         <div className="dh-ai-actions">
           <button type="button" onClick={() => saveSmartNote()}>Save Note</button>
           <button type="button" onClick={() => navigator.share?.({title: sceneFeed.title, text: smartNote || currentGuideLine}).catch(() => null)}>Share</button>
