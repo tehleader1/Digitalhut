@@ -208,6 +208,24 @@
   text-transform: uppercase;
 }
 
+.dh-followup-notes div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.dh-followup-notes button {
+  border: 1px solid rgba(103,232,249,.28);
+  border-radius: 7px;
+  background: rgba(8,145,178,.18);
+  color: #ecfeff;
+  font-size: 10px;
+  font-weight: 900;
+  padding: 5px 7px;
+  cursor: pointer;
+}
+
 .dh-followup-notes span {
   font-size: 11px;
   line-height: 1.32;

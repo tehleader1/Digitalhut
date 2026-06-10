@@ -322,7 +322,7 @@ function TourVisual({item, active, accent, image}){
   </div>
 }
 
-function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelOpen, onOpenModel, onNext, onPlayMore, guideText, followUps}){
+function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelOpen, onOpenModel, onNext, onPlayMore, onVoiceNotes, guideText, followUps}){
   const hasEmbed = Boolean(feed.embedUrl)
   const hasModel = Boolean(feed.modelUrl)
   const isStats = stage.kind === "stats"
@@ -365,7 +365,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
       <button type="button" onClick={onPlayMore}>Play More</button>
     </div>}
     {canShowContainment && modelOpen && <div className="dh-followup-notes">
-      <b>Suggested Follow-Up</b>
+      <div><b>Suggested Follow-Up</b><button type="button" onClick={onVoiceNotes}>Voice Notes</button></div>
       {followUps.map((item) => <span key={item}>{item}</span>)}
     </div>}
     {isStats && <div className="dh-stat-model"><b>{feed.title}</b><span>{feed.market?.symbol || feed.providerMix?.join(" + ") || "data"}</span><p>{feed.note}</p></div>}
@@ -587,6 +587,11 @@ export default function FullscreenObservatoryV2(){
     wake()
   }
 
+  function voiceFollowUps(){
+    speak(`Suggested follow up. ${currentFollowUps.join(" ")}`)
+    wake()
+  }
+
   function action(label){
     const target = sceneFeed.modelUrl || sceneFeed.embedUrl || sceneFeed.viewerUrl || ""
     if(label === "Save") window.localStorage.setItem("digitalhut:savedFeed", JSON.stringify(sceneFeed))
@@ -600,7 +605,7 @@ export default function FullscreenObservatoryV2(){
 
   return <main className={`dh-observatory ${loading ? "is-loading" : "is-ready"} ${entryOpen ? "entry-open" : "entry-complete"}`} data-main-frame={digitalHutBrainMap.mainFrame} data-observatory-category={category} data-observatory-status={loading ? "verifying" : sceneFeed.apiStatus || "ready"} data-physical-assets="sensitive" onPointerMove={wake} onPointerDown={wake}>
     <section className="dh-stage">
-      <RendererVisual feed={sceneFeed} stage={stage} guided={guided} loading={loading} layer={layer} renderLive={!entryOpen} modelOpen={modelOpen} onOpenModel={openContainedModel} onNext={nextStage} onPlayMore={playMore} guideText={currentGuideLine} followUps={currentFollowUps} />
+      <RendererVisual feed={sceneFeed} stage={stage} guided={guided} loading={loading} layer={layer} renderLive={!entryOpen} modelOpen={modelOpen} onOpenModel={openContainedModel} onNext={nextStage} onPlayMore={playMore} onVoiceNotes={voiceFollowUps} guideText={currentGuideLine} followUps={currentFollowUps} />
       <div className="dh-vignette" />
       {layer === "Architect" && <div className="dh-architect"><b>Architect Layer</b><span>builders / developers / researchers / AIs / experimental</span></div>}
 
