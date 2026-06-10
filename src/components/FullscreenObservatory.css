@@ -447,11 +447,15 @@
 }
 
 .dh-category-dock {
-  left: 14px;
-  top: 82px;
-  bottom: 92px;
-  width: 156px;
+  left: 132px;
+  right: min(456px, 36vw);
+  top: auto;
+  bottom: 82px;
+  width: auto;
+  height: 70px;
   display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(112px, 1fr);
   gap: 7px;
   align-content: start;
   padding: 7px;
@@ -459,15 +463,16 @@
   border-radius: 8px;
   background: rgba(2,6,23,.42);
   backdrop-filter: blur(12px);
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .dh-category-card {
   display: grid;
-  grid-template-columns: 42px minmax(0, 1fr);
-  gap: 8px;
+  grid-template-columns: 38px minmax(0, 1fr);
+  gap: 7px;
   align-items: center;
-  min-height: 38px;
+  min-height: 54px;
   padding: 5px;
   border: 1px solid rgba(226,232,240,.16);
   border-radius: 8px;
@@ -484,8 +489,8 @@
 }
 
 .dh-category-icon {
-  width: 40px;
-  height: 32px;
+  width: 36px;
+  height: 38px;
   border-radius: 7px;
   display: grid;
   place-items: center;
@@ -527,7 +532,7 @@
 
 .dh-category-card small {
   color: #f8fafc;
-  font-size: 11px;
+  font-size: 10px;
   line-height: 1.05;
   white-space: normal;
   text-shadow: 0 1px 10px rgba(0,0,0,.85);
@@ -1003,6 +1008,36 @@
   color: #fde68a;
   font-size: 10px;
   text-transform: uppercase;
+}
+
+.dh-live-metrics {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px !important;
+}
+
+.dh-live-metrics span,
+.dh-live-metrics b {
+  min-width: 0;
+  padding: 7px;
+  border: 1px solid rgba(103,232,249,.18);
+  border-radius: 7px;
+  background: rgba(8,145,178,.14);
+  color: #e0f2fe;
+  font-size: 10px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dh-live-metrics span {
+  color: #fde68a;
+  text-transform: uppercase;
+}
+
+.dh-live-metrics.compact {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .dh-live-stage textarea {

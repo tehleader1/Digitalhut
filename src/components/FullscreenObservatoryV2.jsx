@@ -9,7 +9,7 @@ const AI_WINDOW_MS = 12 * 60 * 60 * 1000
 const AI_TIER_LIMITS = {guest: 0, standard: 2 * 60 * 60 * 1000, premium: 4 * 60 * 60 * 1000, pro: Infinity}
 const accounts = ["guest", "standard", "premium", "pro"]
 const layers = ["Base", "Architect", "Lighting", "Props", "Grid", "Coordinates"]
-const bridgeFlow = ["Planetary", "Programmer", "Researcher", "Workforce"]
+const bridgeFlow = ["Mainstream Streaming", "Gamer", "Planetary", "Programmer", "Workforce", "Researcher", "Real Estate", "Continent", "Home Project", "Political"]
 const liveFeedStorageKey = "digitalhut:liveGlbFeed"
 const digitalHutBrainMap = {
   mainFrame: "Double 007 Observatory Database",
@@ -52,6 +52,26 @@ function stockUrl(category, index = 0){
   const pool = stockImages[category] || stockImages.Continent
   const id = pool[index % pool.length]
   return `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1200&q=82`
+}
+
+const fallbackGlbs = [
+  "https://modelviewer.dev/shared-assets/models/Astronaut.glb",
+  "https://modelviewer.dev/shared-assets/models/RobotExpressive.glb",
+  "https://modelviewer.dev/shared-assets/models/NeilArmstrong.glb",
+  "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/DamagedHelmet/glTF-Binary/DamagedHelmet.glb"
+]
+
+function relatedGlb(category, index = 0){
+  const offsets = {
+    "Real Estate": 1,
+    Gamer: 3,
+    Planetary: 0,
+    Workforce: 2,
+    "Mainstream Streaming": 1,
+    Researcher: 3,
+    Programmer: 2
+  }
+  return fallbackGlbs[((offsets[category] || 0) + index) % fallbackGlbs.length]
 }
 
 function pausedEmbedUrl(value){
@@ -126,6 +146,69 @@ const seedQueries = {
   "Researcher": ["research archive 3d visualization", "scientific orbit research 3d", "field study terrain 3d", "ai analysis room 3d"]
 }
 
+const featuredFeeds = {
+  "Real Estate": [
+    ["Trending glass courtyard house model", "A modern glass courtyard house reel for layout, light, and buyer presentation.", "trending glass courtyard house 3d model"],
+    ["Trending compact smart home model", "A compact smart home model for starter-home planning and middle-market walkthroughs.", "compact smart home 3d model"],
+    ["Housing affordability pressure map", "Internet housing-market feature view with a related property GLB attached for the presentation.", "housing affordability market feature 2026"],
+    ["Build-to-rent neighborhood trend", "Housing market feature on build-to-rent demand, attached to a neighborhood-style GLB.", "build to rent housing market trend"]
+  ],
+  "Gamer": [
+    ["Link-inspired adventure hero GLB", "A fantasy adventure character lane for game visuals, quest framing, and hero silhouette.", "link fantasy game hero 3d model"],
+    ["Neon arena boss room GLB", "A high-energy game environment for spawn, mechanics, cover, and effects.", "neon arena boss room game 3d model"],
+    ["Indie game visual post", "Gaming post view with a related GLB attached so the stream can still rotate a model.", "interesting indie game visual post"],
+    ["2026 character update post", "A game trend post about character updates with a related playable model attached.", "2026 game character trend post"]
+  ],
+  "Planetary": [
+    ["Saturn ring mission zone", "Planetary zone for orbit, scale, shadow, and ring observation.", "saturn rings mission 3d model"],
+    ["Green-season waterfall zone", "Waterfall environment view for a slow nature pass and seasonal color story.", "green season waterfall terrain 3d"],
+    ["Mars ridge survey zone", "Terrain zone for rocks, route planning, and research hazards.", "mars ridge terrain 3d model"],
+    ["London bridge river zone", "World structure zone that can bridge into workforce construction and civic engineering.", "london bridge construction river 3d model"]
+  ],
+  "Workforce": [
+    ["London bridge construction project", "Public construction and workforce training view with an attached GLB.", "london bridge construction project 3d"],
+    ["State road expansion project", "State infrastructure project for lane planning, safety, and public works.", "state road expansion government project 3d"],
+    ["Water treatment upgrade project", "Government utility project for operations, workforce routing, and audit notes.", "water treatment plant upgrade 3d"],
+    ["Airport terminal workforce project", "Large-site workforce model for crew movement, security, and public access.", "airport terminal construction project 3d"]
+  ],
+  "Mainstream Streaming": [
+    ["Live SpongeBob-style 3D feature", "Stream hook: a cartoon ocean character topic with a related GLB for 3D effects.", "spongebob viral 3d feature"],
+    ["Viral challenge model hunt", "20,000-plus style share prompt where viewers hunt for a hidden layer in the GLB.", "viral challenge 3d model hunt"],
+    ["Funny creator room post", "Creator post lane with a related GLB so the show stays visual.", "funny creator room viral post"],
+    ["Unexpected trend replay", "Fast mainstream replay slot for a topic that is starting to blow up.", "viral trend replay 2026 3d"]
+  ],
+  "Researcher": [
+    ["New germ microscope find", "Research find lane for a serious evidence readout and related GLB inspection.", "new germ found microscope research"],
+    ["Dinosaur fossil fracture scan", "Fossil session for broken areas, age clues, and careful analysis.", "dinosaur fossil fracture 3d scan"],
+    ["Ocean microplastic research project", "Actual research-project style card with a related model for presentation.", "ocean microplastic research project 3d"],
+    ["Ancient tool lab archive", "Research archive for artifacts, comparison, and verification questions.", "ancient tool lab archive 3d"]
+  ],
+  "Programmer": [
+    ["New AI model production stack", "Developer movie beat: an AI model discovery moves into production company workflow.", "new AI model production code feature"],
+    ["Decentralized render network", "Backend and decentralized network visual with a related GLB attached.", "decentralized render network 3d"],
+    ["API data observatory room", "Provider payload, fallback, and monitoring room for debugging.", "api data observatory room 3d"],
+    ["Search classifier engine", "Programmer card for category routing and query intent testing.", "search classifier engine 3d"]
+  ],
+  "Continent": [
+    ["Tokyo crossing city layer", "Global city moment with a related model for travel and culture.", "tokyo crossing city 3d"],
+    ["Cape Town coastal terrain", "Coastline, elevation, and route readout for continent mode.", "cape town coastal terrain 3d"],
+    ["Amazon river research route", "Environment route that can bridge to researcher and planetary modes.", "amazon river terrain 3d"],
+    ["Alps village winter pass", "Travel and terrain session with a related GLB attached.", "alps village winter 3d"]
+  ],
+  "Home Project": [
+    ["Kitchen remodel visual", "Home project model for layout, materials, and budget choices.", "kitchen remodel 3d model"],
+    ["Backyard deck planner", "Outdoor planning scene for measurements and next steps.", "backyard deck planner 3d"],
+    ["Bathroom repair sequence", "Repair session with tools, caution, and sequence notes.", "bathroom repair 3d"],
+    ["Studio room lighting setup", "Interior setup for lighting, props, and finished feel.", "studio room lighting 3d"]
+  ],
+  "Political": [
+    ["Civic plaza public works", "Public space and policy readout with a related GLB attached.", "civic plaza public works 3d"],
+    ["Transit station funding map", "Infrastructure policy card for access, routes, and funding tradeoffs.", "transit station infrastructure 3d"],
+    ["Government building access plan", "Civic access and security walkthrough.", "government building access 3d"],
+    ["Bridge repair public notice", "Public works bridge repair lane that can bridge to workforce.", "bridge repair public works 3d"]
+  ]
+}
+
 const guidedTours = {
   "Continent": [["Terrain", "TR", "Read elevation, coastline, streets, routes, and what the region teaches."], ["Culture", "CU", "Explain landmarks, public memory, travel value, and culture."], ["Route", "RT", "Move through access points and nearby context."], ["Compare", "CP", "Compare this place against similar regions."]],
   "Planetary": [["Orbit", "OR", "Start from orbit, scale, lighting, and mission frame."], ["Surface", "SF", "Inspect terrain, hazards, and research targets."], ["Mission", "MS", "Narrate objectives and next observation."], ["Research", "RS", "Name evidence, uncertainty, and open questions."]],
@@ -156,6 +239,22 @@ function toursFor(category){
 
 function seedFeeds(category){
   const meta = metaFor(category)
+  const featured = featuredFeeds[category]
+  if(featured?.length) return featured.map(([title, note, query], index) => ({
+    id: `featured:${category}:${index}:${query}`,
+    title,
+    note,
+    query,
+    category,
+    icon: meta.icon,
+    accent: meta.accent,
+    context: meta.context,
+    thumbnail: stockUrl(category, index),
+    modelUrl: relatedGlb(category, index),
+    viewerUrl: "",
+    apiSource: "DigitalHut featured reel",
+    apiStatus: index < 2 ? "featured-glb" : "featured-post-with-glb"
+  }))
   return (seedQueries[category] || seedQueries.Continent).map((query, index) => ({
     id: `seed:${category}:${index}:${query}`,
     title: query.replace(/\b3d\b/gi, "").replace(/\s+/g, " ").trim(),
@@ -166,6 +265,7 @@ function seedFeeds(category){
     accent: meta.accent,
     context: meta.context,
     thumbnail: stockUrl(category, index),
+    modelUrl: relatedGlb(category, index),
     apiStatus: "seed"
   }))
 }
@@ -198,9 +298,10 @@ function normalizeAsset(item, category, index, source, term){
   const meta = metaFor(category)
   const uid = item?.uid || item?.modelUid || item?.model_uid || item?.model?.uid || ""
   const embedUrl = cleanUrl(item?.embedUrl || item?.embed_url || item?.viewerEmbedUrl || item?.viewer_embed_url || item?.embed?.url || item?.urls?.embed || (uid ? `https://sketchfab.com/models/${uid}/embed?autostart=1&autospin=.15&ui_theme=dark&ui_infos=0&ui_watermark=0` : ""))
-  const modelUrl = cleanUrl(item?.modelUrl || item?.model_url || item?.glbUrl || item?.glb_url || item?.gltfUrl || item?.gltf_url || item?.downloadUrl || item?.download_url)
+  const rawModelUrl = cleanUrl(item?.modelUrl || item?.model_url || item?.glbUrl || item?.glb_url || item?.gltfUrl || item?.gltf_url || item?.downloadUrl || item?.download_url)
   const viewerUrl = cleanUrl(item?.viewerUrl || item?.viewer_url || item?.url || item?.urls?.viewer || item?.webUrl || item?.web_url)
   const title = item?.title || item?.name || item?.displayName || `${category} API feed ${index + 1}`
+  const modelUrl = rawModelUrl || (!embedUrl ? relatedGlb(category, index) : "")
   return {
     id: `api:${source}:${category}:${uid || index}:${title}`,
     title,
@@ -215,7 +316,7 @@ function normalizeAsset(item, category, index, source, term){
     modelUrl,
     viewerUrl,
     apiSource: item?.apiSource || source,
-    apiStatus: item?.apiStatus || (embedUrl || modelUrl ? "model-connected" : "metadata"),
+    apiStatus: item?.apiStatus || (embedUrl || rawModelUrl ? "model-connected" : "post-with-related-glb"),
     providerMix: item?.providerMix || item?.providers || [source],
     market: item?.market,
     cesium: item?.cesium
@@ -277,15 +378,15 @@ function speechEngine(){
 function categoryFromCommand(text){
   const value = text.toLowerCase()
   const matches = [
-    ["Planetary", ["space", "planet", "planetary", "saturn", "mars", "moon", "orbit", "canada", "mountain", "environment", "place"]],
-    ["Gamer", ["game", "gamer", "gaming", "level", "character", "avatar", "cool game"]],
-    ["Real Estate", ["real estate", "housing", "house", "property", "agent", "north carolina", "middle class", "neighborhood"]],
-    ["Programmer", ["programmer", "code", "backend", "decentralized", "api", "network", "database"]],
-    ["Researcher", ["research", "researcher", "fossil", "history", "experiment", "analysis", "verify", "artifact"]],
-    ["Mainstream Streaming", ["stream", "streaming", "trend", "funny video", "creator", "cat video", "viral"]],
-    ["Workforce", ["workforce", "jobsite", "training"]],
-    ["Home Project", ["home project", "repair", "interior"]],
-    ["Political", ["political", "civic", "government"]],
+    ["Mainstream Streaming", ["spongebob", "viral", "stream", "streaming", "trend", "funny video", "creator", "cat video", "youtube", "tiktok", "meme"]],
+    ["Gamer", ["link", "zelda", "game", "gamer", "gaming", "level", "character", "avatar", "cool game", "boss", "quest"]],
+    ["Workforce", ["construction", "bridge", "london bridge", "state project", "government project", "workforce", "jobsite", "training", "public works", "road", "airport", "terminal"]],
+    ["Researcher", ["new germ", "germ", "research", "researcher", "fossil", "dinosaur", "history", "experiment", "analysis", "verify", "artifact", "lab", "microscope"]],
+    ["Programmer", ["programmer", "code", "backend", "decentralized", "api", "network", "database", "ai model", "production company", "developer"]],
+    ["Real Estate", ["real estate", "housing", "house", "property", "agent", "north carolina", "middle class", "neighborhood", "rent", "mortgage"]],
+    ["Planetary", ["space", "planet", "planetary", "saturn", "mars", "moon", "orbit", "canada", "mountain", "environment", "place", "waterfall", "waterfalls"]],
+    ["Home Project", ["home project", "remodel", "kitchen", "bathroom", "deck", "repair", "interior"]],
+    ["Political", ["political", "civic", "policy", "government", "public notice", "election"]],
     ["Continent", ["continent", "country", "world", "travel"]]
   ]
   return matches.find(([, aliases]) => aliases.some((alias) => value.includes(alias)))?.[0] || ""
@@ -293,10 +394,13 @@ function categoryFromCommand(text){
 
 function queryFromCommand(text, fallback){
   const value = text.toLowerCase()
-  const cleaned = text.replace(/\b(open|show me|find|search|category|please|digitalhut|ai|preview|next|model|guided tour|tour)\b/gi, " ").replace(/\s+/g, " ").trim()
-  if(cleaned.length > 2) return `${cleaned} 3d model visual`
+  if(value.includes("spongebob")) return "spongebob style underwater viral 3d feature"
+  if(value.includes("link")) return "link fantasy adventure game hero 3d model"
+  if(value.includes("london bridge")) return "london bridge construction workforce project 3d model"
+  if(value.includes("new germ") || value.includes("germ")) return "new germ microscope research discovery 3d model"
   if(value.includes("canada")) return "canada landscape city terrain 3d model"
   if(value.includes("saturn")) return "saturn planet rings 3d model"
+  if(value.includes("waterfall")) return "green season waterfall terrain 3d model"
   if(value.includes("game character")) return "2026 cool game character 3d model"
   if(value.includes("north carolina")) return "north carolina middle class real estate housing 3d model"
   if(value.includes("cat")) return "funny cat video viral 2026 visual"
@@ -304,6 +408,9 @@ function queryFromCommand(text, fallback){
   if(value.includes("housing")) return "housing market property 3d model"
   if(value.includes("decentralized")) return "decentralized network data center 3d model"
   if(value.includes("funny")) return "funny creator video studio 2026 trend visual"
+  if(value.includes("ai model")) return "new AI model production code feature 3d"
+  const cleaned = text.replace(/\b(open|show me|find|search|category|please|digitalhut|ai|preview|next|model|guided tour|tour)\b/gi, " ").replace(/\s+/g, " ").trim()
+  if(cleaned.length > 2) return `${cleaned} 3d model visual`
   return fallback
 }
 
@@ -348,7 +455,33 @@ function feedbackPrompt({category, feed}){
 
 function streamReadout({category, query, feed, stage}){
   const readout = modelDataReadout({feed, category, stage})
-  return `${topicInsight({category, query, feed, stage})} ${readout.lines.slice(2).join(" ")} ${feedbackPrompt({category, feed})}`
+  return `${movieBeat({category, feed, stage})} ${topicInsight({category, query, feed, stage})} ${readout.lines.slice(2).join(" ")} ${feedbackPrompt({category, feed})}`
+}
+
+function movieBeat({category, feed, stage}){
+  const title = feed.title
+  if(category === "Mainstream Streaming"){
+    return `Ten minutes into the live feed: featuring ${title}. I am opening the related GLB so the post is not just a thumbnail. Sound cue: fun stream bounce, then a clean pause for the visual.`
+  }
+  if(category === "Gamer"){
+    return `Now switching GLBs to Gamer. ${title} is on screen; I am reading effects, character shape, level path, and the part viewers would want to play.`
+  }
+  if(category === "Planetary"){
+    return `Now switching GLBs to Planetary. Take your time with ${title}; I will slow the camera and let the environment carry the scene.`
+  }
+  if(category === "Programmer"){
+    return `Next reel: Programmer. ${title} is the production-stack moment; I am checking the code, data, backend, and what makes it useful.`
+  }
+  if(category === "Researcher"){
+    return `Researcher mode is serious now. ${title} needs evidence, source caution, and a slow ${stage.label} before I make a claim.`
+  }
+  if(category === "Workforce"){
+    return `Workforce bridge is live. ${title} becomes a project walkthrough: crews, public access, safety, and what has to be verified.`
+  }
+  if(category === "Real Estate"){
+    return `Real Estate reel is live. ${title} is presented like an agent showing value, market pressure, layout, and what buyers should notice.`
+  }
+  return `Next live reel: ${category}. ${title} is attached to a GLB so the show stays visual.`
 }
 
 function shouldTreatAsSearch(text){
@@ -398,6 +531,16 @@ function viralShareTitle(feed){
 
 function viralShareText({feed, hostLine, contestPrompt}){
   return `${hostLine}\n\n${contestPrompt}\n\nFeatured on digitalhut.app`
+}
+
+function liveMetricsFor(category, index = 0){
+  const base = category === "Mainstream Streaming" ? 23800 : category === "Gamer" ? 18400 : category === "Real Estate" ? 9200 : category === "Researcher" ? 7600 : 11200
+  return {
+    minute: "10:00",
+    views: base + index * 1200,
+    likes: Math.round((base + index * 1200) * .052),
+    comments: Math.round((base + index * 1200) * .008)
+  }
 }
 
 async function publishLiveFeedPost(post){
@@ -608,7 +751,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
       <span>{modelOpen || loading ? "Resolving provider model" : "Paused contained model"}</span><b>{feed.title}</b><em className="dh-open-containment">{modelOpen || loading ? "Scanning APIs" : "Activate Model"}</em>
     </button>}
     {liveOpen && hasEmbed && <iframe className="dh-api-frame" title={feed.title} src={pausedEmbedUrl(feed.embedUrl)} allow="fullscreen; xr-spatial-tracking" loading="lazy" allowFullScreen />}
-    {liveOpen && !hasEmbed && hasModel && modelReady && <model-viewer className="dh-model is-ready" src={feed.modelUrl} poster={feed.thumbnail || ""} camera-controls camera-orbit={stage.orbit} exposure="1.1" shadow-intensity=".65" />}
+    {liveOpen && !hasEmbed && hasModel && <model-viewer className={`dh-model ${modelReady ? "is-ready" : "is-loading"}`} src={feed.modelUrl} poster={feed.thumbnail || ""} camera-controls camera-orbit={stage.orbit} exposure="1.1" shadow-intensity=".65" />}
     {containedDataOpen && <section className="dh-contained-model" aria-label="Contained model session">
       <div className="dh-contained-screen" style={feed.thumbnail ? {"--contained-image": `url("${feed.thumbnail}")`} : undefined}>
         <div className="dh-contained-scan" />
@@ -814,7 +957,7 @@ export default function FullscreenObservatoryV2(){
     setFeeds(seeds)
     const results = await resolveApiFeeds(nextCategory, term)
     if(requestRef.current !== id) return seeds
-    const next = results.length ? results : seeds
+    const next = results.length ? [...results, ...seeds.filter((seed) => !results.some((item) => item.title === seed.title))].slice(0, 8) : seeds
     await preloadImages(next.map((item) => item.thumbnail))
     if(requestRef.current !== id) return next
     window.requestAnimationFrame(() => {
@@ -835,7 +978,8 @@ export default function FullscreenObservatoryV2(){
   async function bridgeNextCategory(prefix = "I found a new trend"){
     const currentIndex = bridgeFlow.indexOf(category)
     const targetCategory = bridgeFlow[(currentIndex >= 0 ? currentIndex + 1 : 0) % bridgeFlow.length]
-    const term = `${targetCategory} bridge project ${sceneFeed.query || sceneFeed.title}`
+    const bridgeSeed = seedFeeds(targetCategory)[0]
+    const term = bridgeSeed?.query || `${targetCategory} live 3d featured reel`
     const firstTour = toursFor(targetCategory)[0]
     setCategory(targetCategory)
     setTour(firstTour.id)
@@ -928,16 +1072,24 @@ export default function FullscreenObservatoryV2(){
   }
 
   async function runSearch(){
+    const targetCategory = categoryFromCommand(query) || category
+    const nextQuery = queryFromCommand(query, query)
+    if(targetCategory !== category){
+      setCategory(targetCategory)
+      setTour(toursFor(targetCategory)[0].id)
+    }
     setPlaying(true)
     setStageIndex(0)
+    setStatsFeeds([])
     setModelOpen(true)
     setGuideDepth(0)
-    announceOpen3dModel({title: query})
-    const next = await loadFeeds(category, query, {keepOpen: true})
+    setQuery(nextQuery)
+    announceOpen3dModel({title: nextQuery, category: targetCategory})
+    const next = await loadFeeds(targetCategory, nextQuery, {keepOpen: true})
     const first = next[0] || feed
     setModelOpen(true)
-    if(mode === "premium") speak(`Premium guide ready. ${streamReadout({category, query, feed: first, stage})}`)
-    else speak(`Regular API feed loading. ${streamReadout({category, query, feed: first, stage})}`)
+    if(mode === "premium") speak(`Premium guide ready. ${streamReadout({category: targetCategory, query: nextQuery, feed: first, stage})}`)
+    else speak(`Regular API feed loading. ${streamReadout({category: targetCategory, query: nextQuery, feed: first, stage})}`)
     wake()
   }
 
@@ -1193,6 +1345,7 @@ export default function FullscreenObservatoryV2(){
 
   async function createLivePost(){
     setModelOpen(true)
+    const metrics = liveMetricsFor(category, livePosts.length)
     const post = {
       id: `live-${Date.now()}`,
       created_at: new Date().toISOString(),
@@ -1205,7 +1358,10 @@ export default function FullscreenObservatoryV2(){
       contest_prompt: contestPrompt,
       model_link: liveModelLink,
       model_source: sceneFeed.apiSource || sceneFeed.apiStatus || "observatory feed",
-      likes: 0,
+      views: metrics.views,
+      likes: metrics.likes,
+      comments: metrics.comments,
+      minute: metrics.minute,
       layer: layer,
       replay_note: currentGuideLine
     }
@@ -1322,6 +1478,9 @@ export default function FullscreenObservatoryV2(){
       {liveStageOpen && <div className="dh-live-stage">
         <div><b>Live GLB Stage</b><button type="button" onClick={() => setLiveStageOpen(false)}>Close</button></div>
         <a className="dh-big-share-link" href={liveModelLink} target="_blank" rel="noreferrer">{viralShareTitle(sceneFeed)}<span>{liveModelLink}</span><small>Featured on digitalhut.app</small></a>
+        <div className="dh-live-metrics">
+          <span>10:00 live</span><b>{liveMetricsFor(category).views.toLocaleString()} views</b><b>{liveMetricsFor(category).likes.toLocaleString()} likes</b><b>{liveMetricsFor(category).comments.toLocaleString()} comments</b>
+        </div>
         <label>Host line</label>
         <textarea value={hostLine} onChange={(event) => setHostLine(event.target.value)} />
         <label>Contest / viewer prompt</label>
@@ -1336,6 +1495,7 @@ export default function FullscreenObservatoryV2(){
         <div className="dh-live-feed">
           {livePosts.slice(0, 3).map((post) => <article key={post.id}>
             <b>{post.share_title || viralShareTitle(post)}</b>
+            <div className="dh-live-metrics compact"><span>{post.minute || "10:00"} live</span><b>{(post.views || 0).toLocaleString()} views</b><b>{(post.comments || 0).toLocaleString()} comments</b></div>
             <p>{post.host_line}</p>
             <small>{post.contest_prompt}</small>
             <small>{post.sponsor_line || "Featured on digitalhut.app"}</small>
