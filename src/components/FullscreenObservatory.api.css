@@ -146,6 +146,73 @@
   backdrop-filter: blur(12px);
 }
 
+.dh-contained-guide {
+  position: absolute;
+  left: 14%;
+  right: 23%;
+  bottom: 18%;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid rgba(226,232,240,.16);
+  border-radius: 8px;
+  background: rgba(2,6,23,.72);
+  color: #e0f2fe;
+  box-shadow: 0 18px 50px rgba(0,0,0,.34);
+  backdrop-filter: blur(14px);
+}
+
+.dh-contained-guide span {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.dh-contained-guide button {
+  border: 1px solid rgba(103,232,249,.34);
+  border-radius: 7px;
+  background: rgba(8,145,178,.22);
+  color: #ecfeff;
+  font-size: 12px;
+  font-weight: 900;
+  padding: 7px 9px;
+  cursor: pointer;
+}
+
+.dh-followup-notes {
+  position: absolute;
+  left: 14%;
+  bottom: calc(18% + 52px);
+  width: min(360px, 34vw);
+  z-index: 6;
+  display: grid;
+  gap: 5px;
+  padding: 9px;
+  border: 1px solid rgba(226,232,240,.14);
+  border-radius: 8px;
+  background: rgba(2,6,23,.62);
+  color: #cbd5e1;
+  box-shadow: 0 18px 50px rgba(0,0,0,.28);
+  backdrop-filter: blur(14px);
+}
+
+.dh-followup-notes b {
+  color: #f8fafc;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.dh-followup-notes span {
+  font-size: 11px;
+  line-height: 1.32;
+}
+
 .dh-mini-visual.has-thumb .dh-scene-object.compact {
   opacity: .25;
 }
@@ -186,6 +253,18 @@
   .dh-renderer.has-api.live-open .dh-api-frame,
   .dh-renderer.has-api.live-open .dh-model {
     inset: 12% 4% 22% 4%;
+  }
+
+  .dh-contained-guide {
+    left: 5%;
+    right: 5%;
+    bottom: 23%;
+  }
+
+  .dh-followup-notes {
+    left: 5%;
+    bottom: calc(23% + 58px);
+    width: min(90vw, 360px);
   }
 
   .dh-api-system-preview:hover,

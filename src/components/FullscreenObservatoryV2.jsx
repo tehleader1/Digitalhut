@@ -242,6 +242,28 @@ function speak(text){
   window.speechSynthesis.speak(utter)
 }
 
+function guideLine({category, stage, feed, tour, expanded = false}){
+  const base = `${stage.label}. ${feed.title}.`
+  if(stage.kind === "current") return expanded ? `${base} I am staying with the contained model and checking the main shape, source, and viewing angle.` : `${base} First I hold on the model.`
+  if(stage.kind === "angle") return expanded ? `${base} Now I rotate the view slowly and look for layout, access, scale, and visible risk.` : `${base} Next angle, slow pass.`
+  if(stage.kind === "similar") return expanded ? `${base} I compare this against a nearby or similar feed before making a stronger claim.` : `${base} Similar model comparison.`
+  if(stage.kind === "stats") return expanded ? `${base} I move into market, provider, and verification context for ${category}. ${tour.prompt}` : `${base} Statistics and verification.`
+  return expanded ? `${base} ${tour.prompt}` : base
+}
+
+function followUpNotes({category, stage, feed, tour}){
+  const source = feed.apiSource || feed.apiStatus || "provider"
+  const notes = [
+    `Verify ${feed.title} against the ${source} record.`,
+    `Save this ${category} view if it supports the demo story.`,
+    `Ask one follow-up: ${tour.prompt}`
+  ]
+  if(stage.kind === "angle") notes[0] = "Check the model from one more angle before explaining value."
+  if(stage.kind === "similar") notes[1] = "Compare this asset against the next related feed before downloading."
+  if(stage.kind === "stats") notes[2] = "Use market intelligence only after provider and asset status are clear."
+  return notes
+}
+
 function playLoaderTone(){
   return
 }
@@ -290,7 +312,7 @@ function TourVisual({item, active, accent, image}){
   </div>
 }
 
-function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelOpen, onOpenModel}){
+function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelOpen, onOpenModel, onNext, onPlayMore, guideText, followUps}){
   const hasEmbed = Boolean(feed.embedUrl)
   const hasModel = Boolean(feed.modelUrl)
   const isStats = stage.kind === "stats"
@@ -327,6 +349,15 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     </button>}
     {liveOpen && hasEmbed && <iframe className="dh-api-frame" title={feed.title} src={pausedEmbedUrl(feed.embedUrl)} allow="fullscreen; xr-spatial-tracking" loading="lazy" allowFullScreen />}
     {liveOpen && !hasEmbed && hasModel && modelReady && <model-viewer className="dh-model is-ready" src={feed.modelUrl} poster={feed.thumbnail || ""} camera-controls camera-orbit={stage.orbit} exposure="1.1" shadow-intensity=".65" />}
+    {canShowContainment && modelOpen && <div className="dh-contained-guide">
+      <span>{guideText}</span>
+      <button type="button" onClick={onNext}>Next</button>
+      <button type="button" onClick={onPlayMore}>Play More</button>
+    </div>}
+    {canShowContainment && modelOpen && <div className="dh-followup-notes">
+      <b>Suggested Follow-Up</b>
+      {followUps.map((item) => <span key={item}>{item}</span>)}
+    </div>}
     {isStats && <div className="dh-stat-model"><b>{feed.title}</b><span>{feed.market?.symbol || feed.providerMix?.join(" + ") || "data"}</span><p>{feed.note}</p></div>}
     <div className="dh-orbit" />
     <div className="dh-orbit-two" />
@@ -370,6 +401,8 @@ export default function FullscreenObservatoryV2(){
   const sceneFeed = stage.kind === "similar" ? similarFeed : stage.kind === "stats" ? statsFeed : feed
   const paid = ["premium", "pro"].includes(tier)
   const guided = mode === "premium" && playing
+  const currentGuideLine = guideLine({category, stage, feed: sceneFeed, tour: activeTour})
+  const currentFollowUps = followUpNotes({category, stage, feed: sceneFeed, tour: activeTour})
 
   useEffect(() => {
     window.digitalHutBrainMap = digitalHutBrainMap
@@ -397,10 +430,12 @@ export default function FullscreenObservatoryV2(){
   }, [category])
 
   useEffect(() => {
-    if(!guided || entryOpen) return
-    const timer = window.setInterval(() => setStageIndex((current) => (current + 1) % stages.length), stage.kind === "stats" ? 9000 : 6500)
+    if(!guided || entryOpen || !modelOpen) return
+    const timer = window.setInterval(() => {
+      setStageIndex((current) => (current + 1) % stages.length)
+    }, stage.kind === "stats" ? 26000 : 18000)
     return () => window.clearInterval(timer)
-  }, [guided, entryOpen, stage.kind])
+  }, [guided, entryOpen, stage.kind, modelOpen])
 
   useEffect(() => {
     if(!guided || stage.kind !== "stats") return
@@ -464,7 +499,7 @@ export default function FullscreenObservatoryV2(){
     const seed = seedFeeds(nextCategory)[0]
     setQuery(seed.query)
     loadFeeds(nextCategory, seed.query, {silent: true})
-    speak(`DigitalHut set to ${nextCategory}. Premium tour will move from current model, to angle pass, to similar model, then statistics model.`)
+    speak(`DigitalHut set to ${nextCategory}. I will hold the model first.`)
     wake()
   }
 
@@ -485,7 +520,7 @@ export default function FullscreenObservatoryV2(){
     if(!sceneFeed.embedUrl && !sceneFeed.modelUrl && !loading) {
       loadFeeds(category, sceneFeed.query || query, {silent: true, keepOpen: true}).then(() => setModelOpen(true))
     }
-    speak(`Starting ${category} ${item.id} guided sequence. Current model first. Then I rotate the camera, choose a similar model, and move into statistics.`)
+    speak(guideLine({category, stage: stages[0], feed: sceneFeed, tour: item}))
     wake()
   }
 
@@ -495,7 +530,7 @@ export default function FullscreenObservatoryV2(){
     setQuery(item.query || item.title)
     setStageIndex(0)
     setModelOpen(false)
-    speak(`Loaded ${item.title}. ${mode === "premium" ? "Guided sequence ready." : "Regular API mode."}`)
+    speak(`Loaded ${item.title}. Containment is paused until you open it.`)
     wake()
   }
 
@@ -505,7 +540,7 @@ export default function FullscreenObservatoryV2(){
     setModelOpen(false)
     const next = await loadFeeds(category, query)
     const first = next[0] || feed
-    if(mode === "premium") speak(`Premium guided tour started for ${first.title}. ${activeTour.prompt}`)
+    if(mode === "premium") speak(`Premium guide ready for ${first.title}. Open the contained model when ready.`)
     else speak(`Regular API feed loading ${first.title}.`)
     wake()
   }
@@ -513,7 +548,14 @@ export default function FullscreenObservatoryV2(){
   function nextStage(){
     setStageIndex((current) => (current + 1) % stages.length)
     const next = stages[(stageIndex + 1) % stages.length]
-    speak(`${next.label}. ${next.kind === "stats" ? "Moving into statistics and provider data." : next.kind === "similar" ? "Choosing a similar model next to compare." : next.kind === "angle" ? "Rotating the model for another angle." : "Returning to the current model."}`)
+    speak(guideLine({category, stage: next, feed: sceneFeed, tour: activeTour}))
+    wake()
+  }
+
+  function playMore(){
+    setModelOpen(true)
+    setPlaying(false)
+    speak(guideLine({category, stage, feed: sceneFeed, tour: activeTour, expanded: true}))
     wake()
   }
 
@@ -530,7 +572,7 @@ export default function FullscreenObservatoryV2(){
 
   return <main className={`dh-observatory ${loading ? "is-loading" : "is-ready"} ${entryOpen ? "entry-open" : "entry-complete"}`} data-main-frame={digitalHutBrainMap.mainFrame} data-observatory-category={category} data-observatory-status={loading ? "verifying" : sceneFeed.apiStatus || "ready"} data-physical-assets="sensitive" onPointerMove={wake} onPointerDown={wake}>
     <section className="dh-stage">
-      <RendererVisual feed={sceneFeed} stage={stage} guided={guided} loading={loading} layer={layer} renderLive={!entryOpen} modelOpen={modelOpen} onOpenModel={openContainedModel} />
+      <RendererVisual feed={sceneFeed} stage={stage} guided={guided} loading={loading} layer={layer} renderLive={!entryOpen} modelOpen={modelOpen} onOpenModel={openContainedModel} onNext={nextStage} onPlayMore={playMore} guideText={currentGuideLine} followUps={currentFollowUps} />
       <div className="dh-vignette" />
       {layer === "Architect" && <div className="dh-architect"><b>Architect Layer</b><span>builders / developers / researchers / AIs / experimental</span></div>}
 
