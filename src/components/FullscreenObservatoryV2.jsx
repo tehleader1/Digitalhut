@@ -251,6 +251,12 @@ function guideLine({category, stage, feed, tour, expanded = false}){
   return expanded ? `${base} ${tour.prompt}` : base
 }
 
+function extendedGuideLine({category, stage, feed, tour, depth}){
+  if(depth <= 0) return guideLine({category, stage, feed, tour, expanded: true})
+  if(depth === 1) return `${feed.title}. I am staying on this model a little longer and checking source, visual evidence, and what should be verified before the demo moves on.`
+  return `${feed.title}. I have enough on this view. Next I need room to load a related model so the presentation can compare instead of overthinking one asset.`
+}
+
 function followUpNotes({category, stage, feed, tour}){
   const source = feed.apiSource || feed.apiStatus || "provider"
   const notes = [
@@ -389,6 +395,7 @@ export default function FullscreenObservatoryV2(){
   const [layer, setLayer] = useState("Base")
   const [layerOpen, setLayerOpen] = useState(false)
   const [modelOpen, setModelOpen] = useState(false)
+  const [guideDepth, setGuideDepth] = useState(0)
   const hideTimer = useRef(null)
   const requestRef = useRef(0)
 
@@ -401,7 +408,7 @@ export default function FullscreenObservatoryV2(){
   const sceneFeed = stage.kind === "similar" ? similarFeed : stage.kind === "stats" ? statsFeed : feed
   const paid = ["premium", "pro"].includes(tier)
   const guided = mode === "premium" && playing
-  const currentGuideLine = guideLine({category, stage, feed: sceneFeed, tour: activeTour})
+  const currentGuideLine = guideDepth > 0 ? extendedGuideLine({category, stage, feed: sceneFeed, tour: activeTour, depth: guideDepth - 1}) : guideLine({category, stage, feed: sceneFeed, tour: activeTour})
   const currentFollowUps = followUpNotes({category, stage, feed: sceneFeed, tour: activeTour})
 
   useEffect(() => {
@@ -455,6 +462,7 @@ export default function FullscreenObservatoryV2(){
     setLoading(true)
     setActive(0)
     if(!options.keepOpen) setModelOpen(false)
+    setGuideDepth(0)
     await preloadImages(seeds.map((item) => item.thumbnail))
     if(requestRef.current !== id) return seeds
     setFeeds(seeds)
@@ -496,6 +504,7 @@ export default function FullscreenObservatoryV2(){
     setStageIndex(0)
     setStatsFeeds([])
     setModelOpen(false)
+    setGuideDepth(0)
     const seed = seedFeeds(nextCategory)[0]
     setQuery(seed.query)
     loadFeeds(nextCategory, seed.query, {silent: true})
@@ -517,6 +526,7 @@ export default function FullscreenObservatoryV2(){
     setStageIndex(0)
     setPlaying(true)
     setModelOpen(true)
+    setGuideDepth(0)
     if(!sceneFeed.embedUrl && !sceneFeed.modelUrl && !loading) {
       loadFeeds(category, sceneFeed.query || query, {silent: true, keepOpen: true}).then(() => setModelOpen(true))
     }
@@ -530,6 +540,7 @@ export default function FullscreenObservatoryV2(){
     setQuery(item.query || item.title)
     setStageIndex(0)
     setModelOpen(false)
+    setGuideDepth(0)
     speak(`Loaded ${item.title}. Containment is paused until you open it.`)
     wake()
   }
@@ -538,6 +549,7 @@ export default function FullscreenObservatoryV2(){
     setPlaying(true)
     setStageIndex(0)
     setModelOpen(false)
+    setGuideDepth(0)
     const next = await loadFeeds(category, query)
     const first = next[0] || feed
     if(mode === "premium") speak(`Premium guide ready for ${first.title}. Open the contained model when ready.`)
@@ -547,6 +559,7 @@ export default function FullscreenObservatoryV2(){
 
   function nextStage(){
     setStageIndex((current) => (current + 1) % stages.length)
+    setGuideDepth(0)
     const next = stages[(stageIndex + 1) % stages.length]
     speak(guideLine({category, stage: next, feed: sceneFeed, tour: activeTour}))
     wake()
@@ -555,7 +568,16 @@ export default function FullscreenObservatoryV2(){
   function playMore(){
     setModelOpen(true)
     setPlaying(false)
-    speak(guideLine({category, stage, feed: sceneFeed, tour: activeTour, expanded: true}))
+    if(guideDepth >= 2 && feeds.length > 1){
+      setActive((current) => (current + 1) % feeds.length)
+      setStageIndex(2)
+      setGuideDepth(0)
+      speak(`Loading a related model for the presentation. I will compare it slowly before saying more.`)
+    } else {
+      const nextDepth = guideDepth + 1
+      setGuideDepth(nextDepth)
+      speak(extendedGuideLine({category, stage, feed: sceneFeed, tour: activeTour, depth: nextDepth - 1}))
+    }
     wake()
   }
 
