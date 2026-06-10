@@ -22,6 +22,11 @@ const digitalHutBrainMap = {
     Researcher: "Rotate models, log details, shuffle evidence quickly, and verify information before saving claims.",
     "Mainstream Streaming": "Track 2026 trends, interesting topics, creator clips, funny videos, and stream hooks.",
     Planetary: "Explore structures, environments, places around the world, and planetary-style observation sessions."
+  },
+  futureBranding: {
+    current: "DigitalHut",
+    direction: "shorter, stronger probe/search/vision brand for AI observatory sessions",
+    candidates: ["Probevision", "ProbeOne", "Probe", "ProbeNet", "VisionProbe"]
   }
 }
 
@@ -398,7 +403,7 @@ function TourVisual({item, active, accent, image}){
   </div>
 }
 
-function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelOpen, onOpenModel, onNext, onPlayMore, onVoiceNotes, guideText, followUps}){
+function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelOpen, onOpenModel, onNext, onPlayMore, guideText, followUps}){
   const hasEmbed = Boolean(feed.embedUrl)
   const hasModel = Boolean(feed.modelUrl)
   const isStats = stage.kind === "stats"
@@ -441,7 +446,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
       <button type="button" onClick={onPlayMore}>Play More</button>
     </div>}
     {canShowContainment && modelOpen && <div className="dh-followup-notes">
-      <div><b>Suggested Follow-Up</b><button type="button" onClick={onVoiceNotes}>Voice Notes</button></div>
+      <div><b>Suggested Follow-Up</b></div>
       {followUps.map((item) => <span key={item}>{item}</span>)}
     </div>}
     {isStats && <div className="dh-stat-model"><b>{feed.title}</b><span>{feed.market?.symbol || feed.providerMix?.join(" + ") || "data"}</span><p>{feed.note}</p></div>}
@@ -482,6 +487,7 @@ export default function FullscreenObservatoryV2(){
   const [notesOpen, setNotesOpen] = useState(false)
   const [smartNote, setSmartNote] = useState("")
   const [downloadUrl, setDownloadUrl] = useState("")
+  const [noteFormat, setNoteFormat] = useState({font: "Arial", size: "14", spacing: "1.45", color: "#0f172a"})
   const hideTimer = useRef(null)
   const requestRef = useRef(0)
   const recognitionRef = useRef(null)
@@ -671,26 +677,38 @@ export default function FullscreenObservatoryV2(){
     wake()
   }
 
-  function voiceFollowUps(){
-    speak(`Suggested follow up. ${currentFollowUps.join(" ")}`)
-    wake()
-  }
-
-  async function saveSmartNote(note = smartNote){
-    const text = note || `${sceneFeed.title}: ${currentGuideLine} ${currentFollowUps.join(" ")}`
-    const record = {
+  function lastFindRecord(note = smartNote){
+    const modelLink = sceneFeed.modelUrl || sceneFeed.viewerUrl || sceneFeed.embedUrl || ""
+    const text = note || `${sceneFeed.title}: ${currentGuideLine}\n\nFollow-up:\n- ${currentFollowUps.join("\n- ")}`
+    return {
       createdAt: new Date().toISOString(),
       category,
       stage: stage.label,
       title: sceneFeed.title,
       note: text,
+      modelLink,
+      software: {
+        app: "DigitalHut Observatory",
+        renderer: sceneFeed.embedUrl ? "Sketchfab embed" : sceneFeed.modelUrl ? "model-viewer GLB" : "stock/API preview",
+        provider: sceneFeed.apiSource || sceneFeed.apiStatus || "observatory feed",
+        supportedActions: ["view", "rotate", "guided tour", "save note", "share", "download record", "open model link"]
+      },
       followUps: currentFollowUps
+    }
+  }
+
+  async function saveSmartNote(note = smartNote){
+    const baseRecord = lastFindRecord(note)
+    const text = baseRecord.note
+    const record = {
+      ...lastFindRecord(text),
+      noteFormat
     }
     const blob = new Blob([JSON.stringify(record, null, 2)], {type: "application/json"})
     const url = URL.createObjectURL(blob)
     setDownloadUrl(url)
-    window.localStorage.setItem("digitalhut:smartNote", JSON.stringify(record))
-    speak("DigitalHut AI saved your note. The download link is ready.")
+    setSmartNote(text)
+    window.localStorage.setItem("digitalhut:lastRecordedFind", JSON.stringify(record))
     return url
   }
 
@@ -724,9 +742,17 @@ export default function FullscreenObservatoryV2(){
       playMore()
       return
     }
-    if(lower.includes("save") || lower.includes("download note")){
+    if(lower.includes("download glb") || lower.includes("download model")){
+      const target = sceneFeed.modelUrl || sceneFeed.viewerUrl || sceneFeed.embedUrl || ""
       setNotesOpen(true)
-      await saveSmartNote(text)
+      await saveSmartNote()
+      if(target) window.open(target, "_blank")
+      else speak("I saved the find. This feed does not expose a direct GLB link yet, so I attached the available model record.")
+      return
+    }
+    if(lower.includes("save my last recorded find") || lower.includes("save last recorded find") || lower.includes("download note")){
+      setNotesOpen(true)
+      await saveSmartNote()
       return
     }
     if(isNoteCommand(text)){
@@ -790,7 +816,7 @@ export default function FullscreenObservatoryV2(){
 
   return <main className={`dh-observatory ${loading ? "is-loading" : "is-ready"} ${entryOpen ? "entry-open" : "entry-complete"}`} data-main-frame={digitalHutBrainMap.mainFrame} data-observatory-category={category} data-observatory-status={loading ? "verifying" : sceneFeed.apiStatus || "ready"} data-physical-assets="sensitive" onPointerMove={wake} onPointerDown={wake}>
     <section className="dh-stage">
-      <RendererVisual feed={sceneFeed} stage={stage} guided={guided} loading={loading} layer={layer} renderLive={!entryOpen} modelOpen={modelOpen} onOpenModel={openContainedModel} onNext={nextStage} onPlayMore={playMore} onVoiceNotes={voiceFollowUps} guideText={currentGuideLine} followUps={currentFollowUps} />
+      <RendererVisual feed={sceneFeed} stage={stage} guided={guided} loading={loading} layer={layer} renderLive={!entryOpen} modelOpen={modelOpen} onOpenModel={openContainedModel} onNext={nextStage} onPlayMore={playMore} guideText={currentGuideLine} followUps={currentFollowUps} />
       <div className="dh-vignette" />
       {layer === "Architect" && <div className="dh-architect"><b>Architect Layer</b><span>builders / developers / researchers / AIs / experimental</span></div>}
 
@@ -807,7 +833,7 @@ export default function FullscreenObservatoryV2(){
 
       <div className="dh-category-dock" style={{opacity: awake ? 1 : 0.18}}>
         {categories.map((item, index) => <button key={item.id} className={`dh-category-card ${item.id === category ? "active" : ""}`} style={{"--accent": item.accent}} onClick={() => selectCategory(item.id)}>
-          <span className="dh-category-icon"><img src={stockUrl(item.id, index)} alt="" loading="lazy" /><b>{item.icon}</b></span><small>{item.id}</small>
+          <span className="dh-category-icon"><img src={stockUrl(item.id, index)} alt="" loading="lazy" /><i /></span><small>{item.id}</small>
         </button>)}
       </div>
 
@@ -863,10 +889,19 @@ export default function FullscreenObservatoryV2(){
 
       {notesOpen && <div className="dh-smart-notes">
         <div><b>Smart Note / Chat Record</b><button type="button" onClick={() => setNotesOpen(false)}>Close</button></div>
-        <textarea value={smartNote} onChange={(event) => setSmartNote(event.target.value)} placeholder="Your notes stay here until you explicitly save or download them." />
+        <div className="dh-note-tools">
+          <select value={noteFormat.font} onChange={(event) => setNoteFormat((current) => ({...current, font: event.target.value}))}><option>Arial</option><option>Georgia</option><option>Courier New</option></select>
+          <select value={noteFormat.size} onChange={(event) => setNoteFormat((current) => ({...current, size: event.target.value}))}><option value="13">13</option><option value="14">14</option><option value="16">16</option><option value="18">18</option></select>
+          <select value={noteFormat.spacing} onChange={(event) => setNoteFormat((current) => ({...current, spacing: event.target.value}))}><option value="1.25">Tight</option><option value="1.45">Normal</option><option value="1.7">Open</option></select>
+          <input type="color" value={noteFormat.color} onChange={(event) => setNoteFormat((current) => ({...current, color: event.target.value}))} />
+          <button type="button" onClick={() => setSmartNote((current) => `${current}\n- `)}>Bullets</button>
+        </div>
+        <textarea style={{fontFamily: noteFormat.font, fontSize: `${noteFormat.size}px`, lineHeight: noteFormat.spacing, color: noteFormat.color}} value={smartNote} onChange={(event) => setSmartNote(event.target.value)} placeholder="Your research notes stay here until you explicitly save or download them." />
+        <div className="dh-note-attachment"><b>Attached Model</b><span>{sceneFeed.title}</span><small>{sceneFeed.modelUrl || sceneFeed.viewerUrl || sceneFeed.embedUrl || "Provider model link not exposed yet"}</small></div>
         <div className="dh-ai-actions">
-          <button type="button" onClick={() => saveSmartNote()}>Save Note</button>
+          <button type="button" onClick={() => saveSmartNote()}>Save Last Find</button>
           <button type="button" onClick={() => navigator.share?.({title: sceneFeed.title, text: smartNote || currentGuideLine}).catch(() => null)}>Share</button>
+          {(sceneFeed.modelUrl || sceneFeed.viewerUrl || sceneFeed.embedUrl) && <a href={sceneFeed.modelUrl || sceneFeed.viewerUrl || sceneFeed.embedUrl} target="_blank" rel="noreferrer">Open Model Link</a>}
           {downloadUrl && <a href={downloadUrl} download={`digitalhut-${category}-${Date.now()}.json`}>Download</a>}
         </div>
       </div>}
