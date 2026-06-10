@@ -9,6 +9,8 @@ const AI_WINDOW_MS = 12 * 60 * 60 * 1000
 const AI_TIER_LIMITS = {guest: 0, standard: 2 * 60 * 60 * 1000, premium: 4 * 60 * 60 * 1000, pro: Infinity}
 const accounts = ["guest", "standard", "premium", "pro"]
 const layers = ["Base", "Architect", "Lighting", "Props", "Grid", "Coordinates"]
+const bridgeFlow = ["Planetary", "Programmer", "Researcher", "Workforce"]
+const liveFeedStorageKey = "digitalhut:liveGlbFeed"
 const digitalHutBrainMap = {
   mainFrame: "Double 007 Observatory Database",
   foundation: ["Supabase", "Vercel", "GitHub", "Codex", "APIs", "Back End"],
@@ -17,6 +19,7 @@ const digitalHutBrainMap = {
   physicalAssets: ["Android", "FireCuda", "HP Mini Laptop"],
   dataPolicy: "Physical assets are sensitive. Public data stays translucent, current, and verifiable through live observatory activity.",
   seoCanal: ["current category", "active renderer feed", "provider status", "asset title", "guided tour stage"],
+  liveCreatorLayer: ["live GLB room", "creator voice", "contest prompt", "viewer layer hunt", "likes", "shareable replay"],
   sessions: {
     Gamer: "Update real-life game concepts, inspect new game visuals, and turn models into playable session ideas.",
     "Real Estate": "Use models and housing data for agent-license career work, client scouting, and property decisions.",
@@ -262,6 +265,7 @@ function speak(text){
 }
 
 function announceOpen3dModel(feed){
+  playSessionSound(feed.category || "System", "open")
   speak(`Open 3D Model View. Attaching the AI to ${feed.title}.`)
 }
 
@@ -315,9 +319,41 @@ function topicInsight({category, query, feed, stage}){
   return `${subject} is loaded in ${category}. I am checking the current model, the stage ${stage.label}, and what related model should come next.`
 }
 
+function modelDataReadout({feed, category, stage}){
+  const provider = feed.apiSource || feed.apiStatus || "observatory feed"
+  const modelLink = feed.modelUrl || feed.viewerUrl || feed.embedUrl || ""
+  const session = metaFor(category).context
+  return {
+    provider,
+    modelLink,
+    lines: [
+      `I am reading ${feed.title}.`,
+      `Category is ${category}, stage is ${stage.label}.`,
+      `Source status is ${provider}.`,
+      `Session context: ${session}`,
+      `Visible note: ${feed.note || "no extra note attached yet"}`,
+      modelLink ? "A model or viewer link is attached to this record." : "The provider did not expose a direct GLB yet, so I am holding the contained data view open."
+    ]
+  }
+}
+
+function feedbackPrompt({category, feed}){
+  if(category === "Researcher") return `Did you see the details on ${feed.title} clearly, or should I rotate and compare another source?`
+  if(category === "Programmer") return "Should I inspect the backend/API relevance, or bridge this into researcher verification?"
+  if(category === "Workforce") return "Should I turn this into training, safety, or project workflow notes?"
+  if(category === "Planetary") return "Did you see the structure yet, or should I bridge from this view into developer and research mode?"
+  if(category === "Mainstream Streaming") return "Should I keep this moving like a stream and load the next trend?"
+  return `Did you see the model yet, or should I open a related view?`
+}
+
+function streamReadout({category, query, feed, stage}){
+  const readout = modelDataReadout({feed, category, stage})
+  return `${topicInsight({category, query, feed, stage})} ${readout.lines.slice(2).join(" ")} ${feedbackPrompt({category, feed})}`
+}
+
 function shouldTreatAsSearch(text){
   const lower = text.toLowerCase()
-  if(lower.includes("save") || lower.includes("download note") || lower.includes("guided") || lower.includes("tour") || lower.includes("rotate") || lower.includes("camera") || lower.includes("tell me more") || lower.includes("history") || lower.includes("facts") || lower.includes("preview next") || lower.includes("next model")) return false
+  if(lower.includes("save") || lower.includes("download note") || lower.includes("guided") || lower.includes("tour") || lower.includes("rotate") || lower.includes("camera") || lower.includes("tell me more") || lower.includes("history") || lower.includes("facts") || lower.includes("preview next") || lower.includes("next model") || lower.includes("deep research") || lower.includes("new trend") || lower.includes("jump category") || lower.includes("bridge")) return false
   return true
 }
 
@@ -340,6 +376,43 @@ function readAiUsage(tier){
 
 function writeAiUsage(tier, usage){
   window.localStorage.setItem(`digitalhut:aiUsage:${tier}`, JSON.stringify(usage))
+}
+
+function readLiveFeed(){
+  if(typeof window === "undefined") return []
+  try{
+    const saved = JSON.parse(window.localStorage.getItem(liveFeedStorageKey) || "[]")
+    return Array.isArray(saved) ? saved : []
+  } catch {
+    return []
+  }
+}
+
+function writeLiveFeed(items){
+  window.localStorage.setItem(liveFeedStorageKey, JSON.stringify(items.slice(0, 24)))
+}
+
+function viralShareTitle(feed){
+  return `Live 3D Project: ${feed.title}`
+}
+
+function viralShareText({feed, hostLine, contestPrompt}){
+  return `${hostLine}\n\n${contestPrompt}\n\nFeatured on digitalhut.app`
+}
+
+async function publishLiveFeedPost(post){
+  const url = import.meta.env?.VITE_SUPABASE_URL
+  const key = import.meta.env?.VITE_SUPABASE_ANON_KEY
+  if(!url || !key) return {synced: false, reason: "Supabase env not configured"}
+  try{
+    const {createClient} = await import("@supabase/supabase-js")
+    const supabase = createClient(url, key)
+    const {error} = await supabase.from("digitalhut_live_feed").insert(post)
+    if(error) throw error
+    return {synced: true}
+  } catch (error) {
+    return {synced: false, reason: error.message}
+  }
 }
 
 function guideLine({category, stage, feed, tour, expanded = false}){
@@ -374,7 +447,83 @@ function followUpNotes({category, stage, feed, tour}){
 }
 
 function playLoaderTone(){
-  return
+  playSessionSound("System", "login")
+}
+
+function audioContext(){
+  if(typeof window === "undefined") return null
+  const Audio = window.AudioContext || window.webkitAudioContext
+  if(!Audio) return null
+  if(!window.__digitalhutAudio) window.__digitalhutAudio = new Audio()
+  const ctx = window.__digitalhutAudio
+  if(ctx.state === "suspended") ctx.resume().catch(() => null)
+  return ctx
+}
+
+function tone(ctx, freq, start, duration, type = "sine", volume = .04){
+  const osc = ctx.createOscillator()
+  const gain = ctx.createGain()
+  osc.type = type
+  osc.frequency.setValueAtTime(freq, start)
+  gain.gain.setValueAtTime(0.0001, start)
+  gain.gain.exponentialRampToValueAtTime(volume, start + .02)
+  gain.gain.exponentialRampToValueAtTime(0.0001, start + duration)
+  osc.connect(gain).connect(ctx.destination)
+  osc.start(start)
+  osc.stop(start + duration + .02)
+}
+
+function noise(ctx, start, duration, volume = .03, frequency = 260){
+  const bufferSize = Math.max(1, Math.floor(ctx.sampleRate * duration))
+  const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate)
+  const data = buffer.getChannelData(0)
+  for(let index = 0; index < bufferSize; index += 1) data[index] = Math.random() * 2 - 1
+  const source = ctx.createBufferSource()
+  const filter = ctx.createBiquadFilter()
+  const gain = ctx.createGain()
+  filter.type = "lowpass"
+  filter.frequency.setValueAtTime(frequency, start)
+  gain.gain.setValueAtTime(0.0001, start)
+  gain.gain.exponentialRampToValueAtTime(volume, start + .04)
+  gain.gain.exponentialRampToValueAtTime(0.0001, start + duration)
+  source.buffer = buffer
+  source.connect(filter).connect(gain).connect(ctx.destination)
+  source.start(start)
+  source.stop(start + duration + .02)
+}
+
+function playSessionSound(category, event = "open"){
+  const ctx = audioContext()
+  if(!ctx) return
+  const now = ctx.currentTime + .01
+  const fun = category === "Gamer" || category === "Mainstream Streaming"
+  const serious = category === "Researcher" || category === "Fossils" || category === "Political"
+  const professional = category === "Real Estate" || category === "Programmer" || category === "Workforce"
+  if(event === "stop"){
+    tone(ctx, 320, now, .16, "sine", .025)
+    tone(ctx, 180, now + .11, .22, "sine", .02)
+    return
+  }
+  if(fun){
+    tone(ctx, 520, now, .11, "triangle", .035)
+    tone(ctx, 780, now + .09, .12, "triangle", .035)
+    tone(ctx, 1040, now + .19, .16, "sine", .025)
+    if(event === "bridge") noise(ctx, now + .06, .2, .012, 1800)
+    return
+  }
+  if(serious){
+    tone(ctx, event === "bridge" ? 72 : 88, now, .5, "sawtooth", .035)
+    tone(ctx, 148, now + .08, .42, "sine", .025)
+    noise(ctx, now + .12, .45, .028, 180)
+    return
+  }
+  if(professional){
+    tone(ctx, 220, now, .18, "sine", .025)
+    tone(ctx, event === "bridge" ? 440 : 330, now + .13, .2, "triangle", .022)
+    return
+  }
+  tone(ctx, 280, now, .18, "sine", .025)
+  tone(ctx, 560, now + .12, .2, "triangle", .02)
 }
 
 function createStatsFeed(feed, category, tour){
@@ -431,6 +580,8 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
   const skyline = Array.from({length: 18})
   const canShowContainment = renderLive && !isStats
   const liveOpen = canShowContainment && modelOpen && (hasEmbed || hasModel)
+  const containedDataOpen = canShowContainment && modelOpen && !hasEmbed && !hasModel
+  const readout = modelDataReadout({feed, category: feed.category, stage})
 
   useEffect(() => {
     setModelReady(false)
@@ -448,16 +599,33 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     setImageReady(false)
   }, [feed.thumbnail])
 
-  return <div className={`dh-renderer ${guided ? "guided" : ""} ${canShowContainment ? "has-api" : ""} ${liveOpen ? "live-open" : ""} stage-${stage.kind}`} style={{"--accent": feed.accent}}>
+  return <div className={`dh-renderer ${guided ? "guided" : ""} ${canShowContainment ? "has-api" : ""} ${liveOpen || containedDataOpen ? "live-open" : ""} ${containedDataOpen ? "data-open" : ""} stage-${stage.kind}`} style={{"--accent": feed.accent}}>
     {feed.thumbnail && <img className={`dh-renderer-stock ${imageReady ? "is-ready" : ""}`} src={feed.thumbnail} alt="" loading="eager" onLoad={() => setImageReady(true)} />}
     <div className="dh-motion-sky" />
     <div className="dh-stars">{stars.map((_, index) => <span key={index} style={{left: `${4 + (index * 43) % 91}%`, top: `${7 + (index * 31) % 78}%`}} />)}</div>
     <SceneObject feed={feed} />
-    {canShowContainment && !liveOpen && <button className={`dh-api-system-preview ${feed.thumbnail ? "api-preview-ready" : ""} ${modelOpen ? "is-resolving" : ""}`} style={feed.thumbnail ? {"--api-preview-url": `url("${feed.thumbnail}")`} : undefined} onClick={onOpenModel}>
+    {canShowContainment && !liveOpen && !containedDataOpen && <button className={`dh-api-system-preview ${feed.thumbnail ? "api-preview-ready" : ""} ${modelOpen ? "is-resolving" : ""}`} style={feed.thumbnail ? {"--api-preview-url": `url("${feed.thumbnail}")`} : undefined} onClick={onOpenModel}>
       <span>{modelOpen || loading ? "Resolving provider model" : "Paused contained model"}</span><b>{feed.title}</b><em className="dh-open-containment">{modelOpen || loading ? "Scanning APIs" : "Activate Model"}</em>
     </button>}
     {liveOpen && hasEmbed && <iframe className="dh-api-frame" title={feed.title} src={pausedEmbedUrl(feed.embedUrl)} allow="fullscreen; xr-spatial-tracking" loading="lazy" allowFullScreen />}
     {liveOpen && !hasEmbed && hasModel && modelReady && <model-viewer className="dh-model is-ready" src={feed.modelUrl} poster={feed.thumbnail || ""} camera-controls camera-orbit={stage.orbit} exposure="1.1" shadow-intensity=".65" />}
+    {containedDataOpen && <section className="dh-contained-model" aria-label="Contained model session">
+      <div className="dh-contained-screen" style={feed.thumbnail ? {"--contained-image": `url("${feed.thumbnail}")`} : undefined}>
+        <div className="dh-contained-scan" />
+        <div className="dh-contained-meta">
+          <span>{readout.provider}</span>
+          <b>{feed.title}</b>
+          <p>{feed.note}</p>
+        </div>
+      </div>
+      <div className="dh-contained-readout">
+        {readout.lines.slice(1).map((line) => <span key={line}>{line}</span>)}
+      </div>
+      <div className="dh-contained-actions">
+        <button type="button" onClick={onNext}>Rotate View</button>
+        <button type="button" onClick={onPlayMore}>Deep Read</button>
+      </div>
+    </section>}
     {canShowContainment && modelOpen && <div className="dh-contained-guide">
       <span>{guideText}</span>
       <button type="button" onClick={onNext}>Next</button>
@@ -508,10 +676,16 @@ export default function FullscreenObservatoryV2(){
   const [noteFormat, setNoteFormat] = useState({font: "Arial", size: "14", spacing: "1.45", color: "#0f172a"})
   const [autoPresent, setAutoPresent] = useState(false)
   const [aiUsage, setAiUsage] = useState(() => readAiUsage(readStorage("digitalhut:tier", "guest")))
+  const [liveStageOpen, setLiveStageOpen] = useState(false)
+  const [hostLine, setHostLine] = useState("Hey live 3D GLB presentation, what's up. Featuring DigitalHut. Give me some likes and find a new layer in my GLB.")
+  const [contestPrompt, setContestPrompt] = useState("Contest: find a hidden layer in this GLB and post what you noticed.")
+  const [livePosts, setLivePosts] = useState(() => readLiveFeed())
+  const [liveSyncStatus, setLiveSyncStatus] = useState("Local live stage ready")
   const hideTimer = useRef(null)
   const requestRef = useRef(0)
   const recognitionRef = useRef(null)
   const autoStartedRef = useRef(null)
+  const autoStepRef = useRef(0)
 
   const activeTours = toursFor(category)
   const activeTour = activeTours.find((item) => item.id === tour) || activeTours[0]
@@ -527,6 +701,7 @@ export default function FullscreenObservatoryV2(){
   const currentGuideLine = guideDepth > 0 ? extendedGuideLine({category, stage, feed: sceneFeed, tour: activeTour, depth: guideDepth - 1}) : guideLine({category, stage, feed: sceneFeed, tour: activeTour})
   const currentFollowUps = followUpNotes({category, stage, feed: sceneFeed, tour: activeTour})
   const aiDock = notesOpen ? "notes" : aiOpen ? "command" : modelOpen ? `stage-${stage.kind}` : guided ? "guided" : "idle"
+  const liveModelLink = sceneFeed.modelUrl || sceneFeed.viewerUrl || sceneFeed.embedUrl || window.location.href
 
   useEffect(() => {
     window.digitalHutBrainMap = digitalHutBrainMap
@@ -595,11 +770,18 @@ export default function FullscreenObservatoryV2(){
           return
         }
       }
+      autoStepRef.current += 1
       setModelOpen(true)
       setPlaying(true)
+      if(autoStepRef.current % 4 === 0){
+        playSessionSound(category, "bridge")
+        bridgeNextCategory("I found a new trend bridge")
+        return
+      }
+      playSessionSound(category, stage.kind === "angle" ? "rotate" : "open")
       setStageIndex((current) => (current + 1) % stages.length)
       setActive((current) => (current + 1) % Math.max(feeds.length, 1))
-      speak(guideLine({category, stage, feed: sceneFeed, tour: activeTour, expanded: true}))
+      speak(`${guideLine({category, stage, feed: sceneFeed, tour: activeTour, expanded: true})} ${feedbackPrompt({category, feed: sceneFeed})}`)
     }, 22000)
     return () => {
       window.clearInterval(timer)
@@ -643,6 +825,34 @@ export default function FullscreenObservatoryV2(){
     return next
   }
 
+  function speakModelReadout(targetFeed = sceneFeed, targetCategory = category, targetStage = stage){
+    const readout = modelDataReadout({feed: targetFeed, category: targetCategory, stage: targetStage})
+    setModelOpen(true)
+    playSessionSound(targetCategory, "open")
+    speak(`${readout.lines.join(" ")} ${feedbackPrompt({category: targetCategory, feed: targetFeed})}`)
+  }
+
+  async function bridgeNextCategory(prefix = "I found a new trend"){
+    const currentIndex = bridgeFlow.indexOf(category)
+    const targetCategory = bridgeFlow[(currentIndex >= 0 ? currentIndex + 1 : 0) % bridgeFlow.length]
+    const term = `${targetCategory} bridge project ${sceneFeed.query || sceneFeed.title}`
+    const firstTour = toursFor(targetCategory)[0]
+    setCategory(targetCategory)
+    setTour(firstTour.id)
+    setStageIndex(0)
+    setStatsFeeds([])
+    setGuideDepth(0)
+    setModelOpen(true)
+    setQuery(term)
+    playSessionSound(targetCategory, "bridge")
+    announceOpen3dModel({title: term})
+    const next = await loadFeeds(targetCategory, term, {silent: true, keepOpen: true})
+    const loaded = next[0] || seedFeeds(targetCategory)[0]
+    setActive(0)
+    setModelOpen(true)
+    speak(`${prefix}: ${targetCategory}. ${streamReadout({category: targetCategory, query: term, feed: loaded, stage: stages[0]})}`)
+  }
+
   async function loadStatsModel(){
     const results = await resolveApiFeeds(category, `${category} statistics data visualization 3d ${feed.query || feed.title}`)
     setStatsFeeds(results.length ? results.map((item) => ({...item, icon: "ST", apiStatus: "statistics"})) : [])
@@ -663,6 +873,7 @@ export default function FullscreenObservatoryV2(){
   }
 
   function selectCategory(nextCategory){
+    playSessionSound(nextCategory, "open")
     setCategory(nextCategory)
     setTour(toursFor(nextCategory)[0].id)
     setStageIndex(0)
@@ -680,9 +891,14 @@ export default function FullscreenObservatoryV2(){
     announceOpen3dModel(sceneFeed)
     setModelOpen(true)
     wake()
-    if(sceneFeed.embedUrl || sceneFeed.modelUrl || loading) return
-    await loadFeeds(category, sceneFeed.query || query, {silent: true, keepOpen: true})
+    if(sceneFeed.embedUrl || sceneFeed.modelUrl || loading){
+      speakModelReadout(sceneFeed, category, stage)
+      return
+    }
+    const next = await loadFeeds(category, sceneFeed.query || query, {silent: true, keepOpen: true})
+    const loaded = next[0] || sceneFeed
     setModelOpen(true)
+    speakModelReadout(loaded, category, stage)
   }
 
   async function chooseTour(item){
@@ -696,7 +912,7 @@ export default function FullscreenObservatoryV2(){
     if(!sceneFeed.embedUrl && !sceneFeed.modelUrl && !loading) {
       loadFeeds(category, sceneFeed.query || query, {silent: true, keepOpen: true}).then(() => setModelOpen(true))
     }
-    window.setTimeout(() => speak(guideLine({category, stage: stages[0], feed: sceneFeed, tour: item})), 2600)
+    window.setTimeout(() => speak(`${guideLine({category, stage: stages[0], feed: sceneFeed, tour: item})} ${feedbackPrompt({category, feed: sceneFeed})}`), 2600)
     wake()
   }
 
@@ -720,20 +936,22 @@ export default function FullscreenObservatoryV2(){
     const next = await loadFeeds(category, query, {keepOpen: true})
     const first = next[0] || feed
     setModelOpen(true)
-    if(mode === "premium") speak(`Premium guide ready for ${first.title}. Open the contained model when ready.`)
-    else speak(`Regular API feed loading ${first.title}.`)
+    if(mode === "premium") speak(`Premium guide ready. ${streamReadout({category, query, feed: first, stage})}`)
+    else speak(`Regular API feed loading. ${streamReadout({category, query, feed: first, stage})}`)
     wake()
   }
 
   function nextStage(){
+    playSessionSound(category, "rotate")
     setStageIndex((current) => (current + 1) % stages.length)
     setGuideDepth(0)
     const next = stages[(stageIndex + 1) % stages.length]
-    speak(guideLine({category, stage: next, feed: sceneFeed, tour: activeTour}))
+    speak(`${guideLine({category, stage: next, feed: sceneFeed, tour: activeTour})} ${feedbackPrompt({category, feed: sceneFeed})}`)
     wake()
   }
 
   function previousFeed(){
+    playSessionSound(category, "open")
     setActive((value) => (value - 1 + feeds.length) % feeds.length)
     setStageIndex(0)
     setModelOpen(true)
@@ -743,6 +961,7 @@ export default function FullscreenObservatoryV2(){
   }
 
   function nextFeed(){
+    playSessionSound(category, "open")
     setActive((value) => (value + 1) % feeds.length)
     setStageIndex(0)
     setModelOpen(true)
@@ -764,21 +983,24 @@ export default function FullscreenObservatoryV2(){
     setMode("premium")
     setPlaying(next)
     setModelOpen(next || modelOpen)
-    speak(next ? "Auto presentation is on. I will keep presenting until you tell me to stop." : "Auto presentation stopped.")
+    if(next) autoStepRef.current = 0
+    playSessionSound(category, next ? "open" : "stop")
+    speak(next ? "Auto presentation is on. I will keep presenting, ask for feedback, and bridge into related categories until you tell me to stop." : "Auto presentation stopped.")
   }
 
   function playMore(){
+    playSessionSound(category, guideDepth >= 2 ? "bridge" : "open")
     setModelOpen(true)
     setPlaying(false)
     if(guideDepth >= 2 && feeds.length > 1){
       setActive((current) => (current + 1) % feeds.length)
       setStageIndex(2)
       setGuideDepth(0)
-      speak(`Loading a related model for the presentation. I will compare it slowly before saying more.`)
+      speak(`Loading a related model for the presentation. ${feedbackPrompt({category, feed: sceneFeed})}`)
     } else {
       const nextDepth = guideDepth + 1
       setGuideDepth(nextDepth)
-      speak(extendedGuideLine({category, stage, feed: sceneFeed, tour: activeTour, depth: nextDepth - 1}))
+      speak(`${extendedGuideLine({category, stage, feed: sceneFeed, tour: activeTour, depth: nextDepth - 1})} ${modelDataReadout({feed: sceneFeed, category, stage}).lines.slice(2, 5).join(" ")} ${feedbackPrompt({category, feed: sceneFeed})}`)
     }
     wake()
   }
@@ -841,6 +1063,32 @@ export default function FullscreenObservatoryV2(){
       toggleAutoPresent()
       return
     }
+    if(lower.includes("go live") || lower.includes("live glb") || lower.includes("start live") || lower.includes("broadcast")){
+      setLiveStageOpen(true)
+      setModelOpen(true)
+      playSessionSound(category, "bridge")
+      speak(`Live GLB stage is ready for ${sceneFeed.title}. Speak your host line, add a contest prompt, then post the live model.`)
+      return
+    }
+    if(lower.includes("new trend") || lower.includes("jump category") || lower.includes("bridge")){
+      await bridgeNextCategory("I found a new trend")
+      return
+    }
+    if(lower.includes("read data") || lower.includes("what do you see") || lower.includes("did you see the model") || lower.includes("current model")){
+      speakModelReadout()
+      return
+    }
+    if(lower.includes("deep research")){
+      setModelOpen(true)
+      setNotesOpen(true)
+      if(tier !== "pro"){
+        speak(`Deep research is a Pro operating mode. I can still read this model, rotate it, save the find, and bridge categories on ${tier}. ${feedbackPrompt({category, feed: sceneFeed})}`)
+        return
+      }
+      await saveSmartNote(`${sceneFeed.title}\n\n${modelDataReadout({feed: sceneFeed, category, stage}).lines.join("\n")}`)
+      speak(`Pro deep research is active. I saved the current readout, I am keeping the model open, and I can bridge into a related source next. ${feedbackPrompt({category, feed: sceneFeed})}`)
+      return
+    }
     if(lower.includes("guided") || lower.includes("tour")){
       chooseTour(activeTour)
       return
@@ -887,7 +1135,7 @@ export default function FullscreenObservatoryV2(){
       setActive(0)
       setStageIndex(0)
       setModelOpen(true)
-      speak(topicInsight({category: targetCategory, query: nextQuery, feed: loaded, stage}))
+      speak(streamReadout({category: targetCategory, query: nextQuery, feed: loaded, stage}))
     }
   }
 
@@ -917,14 +1165,83 @@ export default function FullscreenObservatoryV2(){
     recognition.start()
   }
 
+  function startHostVoice(){
+    const Engine = speechEngine()
+    setLiveStageOpen(true)
+    if(!Engine){
+      speak("Host voice capture is not available in this browser. Type your live line instead.")
+      return
+    }
+    const recognition = new Engine()
+    recognition.lang = "en-US"
+    recognition.interimResults = false
+    recognition.maxAlternatives = 1
+    recognition.onstart = () => setAiListening(true)
+    recognition.onend = () => setAiListening(false)
+    recognition.onerror = () => {
+      setAiListening(false)
+      speak("I could not capture the host line. Type it in the live stage box.")
+    }
+    recognition.onresult = (event) => {
+      const transcript = event.results?.[0]?.[0]?.transcript || ""
+      setHostLine(transcript)
+      playSessionSound(category, "open")
+    }
+    recognitionRef.current = recognition
+    recognition.start()
+  }
+
+  async function createLivePost(){
+    setModelOpen(true)
+    const post = {
+      id: `live-${Date.now()}`,
+      created_at: new Date().toISOString(),
+      creator: "digitalhut.app",
+      share_title: viralShareTitle(sceneFeed),
+      sponsor_line: "Featured on digitalhut.app",
+      category,
+      title: sceneFeed.title,
+      host_line: hostLine,
+      contest_prompt: contestPrompt,
+      model_link: liveModelLink,
+      model_source: sceneFeed.apiSource || sceneFeed.apiStatus || "observatory feed",
+      likes: 0,
+      layer: layer,
+      replay_note: currentGuideLine
+    }
+    const nextPosts = [post, ...livePosts].slice(0, 24)
+    setLivePosts(nextPosts)
+    writeLiveFeed(nextPosts)
+    setLiveSyncStatus("Saving live post...")
+    const result = await publishLiveFeedPost(post)
+    setLiveSyncStatus(result.synced ? "Synced to Supabase live feed" : `Saved locally. ${result.reason}`)
+    playSessionSound(category, "bridge")
+    speak(`Live viral 3D project created for ${sceneFeed.title}. DigitalHut stays as the sponsor line.`)
+  }
+
+  async function copyBacklink(){
+    const text = `${viralShareTitle(sceneFeed)}\n${liveModelLink}\n${viralShareText({feed: sceneFeed, hostLine, contestPrompt})}`
+    await navigator.clipboard?.writeText(text).catch(() => null)
+    setLiveSyncStatus("Backlink copy ready")
+    playSessionSound("Mainstream Streaming", "open")
+  }
+
+  function likeLivePost(id){
+    const nextPosts = livePosts.map((post) => post.id === id ? {...post, likes: (post.likes || 0) + 1} : post)
+    setLivePosts(nextPosts)
+    writeLiveFeed(nextPosts)
+    playSessionSound("Mainstream Streaming", "open")
+  }
+
   function action(label){
     const target = sceneFeed.modelUrl || sceneFeed.embedUrl || sceneFeed.viewerUrl || ""
     if(label === "Save") window.localStorage.setItem("digitalhut:savedFeed", JSON.stringify(sceneFeed))
-    if(label === "Share" && navigator.share) navigator.share({title: sceneFeed.title, text: sceneFeed.note, url: sceneFeed.viewerUrl || window.location.href}).catch(() => null)
+    if(label === "Share" && navigator.share) navigator.share({title: viralShareTitle(sceneFeed), text: viralShareText({feed: sceneFeed, hostLine, contestPrompt}), url: sceneFeed.viewerUrl || window.location.href}).catch(() => null)
     if(label === "Embed" && navigator.clipboard) navigator.clipboard.writeText(sceneFeed.embedUrl ? `<iframe src="${sceneFeed.embedUrl}"></iframe>` : window.location.href).catch(() => null)
     if(label === "Download") target && paid ? window.open(target, "_blank") : setEntryOpen(true)
     if(label === "Related") setActive((current) => (current + 1) % feeds.length)
     if(label === "FAQ") window.location.href = "/faq"
+    if(label === "Live") setLiveStageOpen((value) => !value)
     wake()
   }
 
@@ -982,7 +1299,7 @@ export default function FullscreenObservatoryV2(){
         <button className="dh-btn" onClick={() => speak(aiLimit === Infinity ? "Pro AI research is unlimited." : `${Math.round(aiRemainingMs / 60000)} AI minutes remain in this 12 hour window.`)}>{aiLimit === Infinity ? "Pro Unlimited" : `${Math.round(aiRemainingMs / 60000)}m left`}</button>
       </div>
 
-      <div className="dh-utility" style={{opacity: awake ? 1 : 0.1}}>{["Save", "Share", "Embed", "Download", "Related", "FAQ"].map((label) => <button key={label} className="dh-btn" onClick={() => action(label)}>{label}</button>)}</div>
+      <div className="dh-utility" style={{opacity: awake ? 1 : 0.1}}>{["Save", "Share", "Live", "Embed", "Download", "Related", "FAQ"].map((label) => <button key={label} className="dh-btn" onClick={() => action(label)}>{label}</button>)}</div>
 
       <div className="dh-layer-dock" style={{opacity: awake ? 1 : 0.12}}>
         <button className={`dh-btn ${paid ? "" : "locked"}`} onClick={() => paid ? setLayerOpen((value) => !value) : setEntryOpen(true)}>{paid ? `Smart Layers: ${layer}` : "Smart Layers: Premium / Pro"}</button>
@@ -999,6 +1316,31 @@ export default function FullscreenObservatoryV2(){
           <button type="button" onClick={() => runAiCommand(aiCommand)}>Run</button>
           <button type="button" onClick={startVoiceCommand}>{aiListening ? "Listening" : "Voice"}</button>
           <button type="button" onClick={() => setNotesOpen((value) => !value)}>Smart Notes</button>
+        </div>
+      </div>}
+
+      {liveStageOpen && <div className="dh-live-stage">
+        <div><b>Live GLB Stage</b><button type="button" onClick={() => setLiveStageOpen(false)}>Close</button></div>
+        <a className="dh-big-share-link" href={liveModelLink} target="_blank" rel="noreferrer">{viralShareTitle(sceneFeed)}<span>{liveModelLink}</span><small>Featured on digitalhut.app</small></a>
+        <label>Host line</label>
+        <textarea value={hostLine} onChange={(event) => setHostLine(event.target.value)} />
+        <label>Contest / viewer prompt</label>
+        <input value={contestPrompt} onChange={(event) => setContestPrompt(event.target.value)} />
+        <div className="dh-live-model"><b>{sceneFeed.title}</b><span>{liveModelLink}</span><small>{liveSyncStatus}</small></div>
+        <div className="dh-ai-actions">
+          <button type="button" onClick={startHostVoice}>{aiListening ? "Listening" : "Speak Host Line"}</button>
+          <button type="button" onClick={createLivePost}>Post Live GLB</button>
+          <button type="button" onClick={copyBacklink}>Copy Backlink</button>
+          <button type="button" onClick={() => navigator.share?.({title: viralShareTitle(sceneFeed), text: viralShareText({feed: sceneFeed, hostLine, contestPrompt}), url: liveModelLink}).catch(() => null)}>Share</button>
+        </div>
+        <div className="dh-live-feed">
+          {livePosts.slice(0, 3).map((post) => <article key={post.id}>
+            <b>{post.share_title || viralShareTitle(post)}</b>
+            <p>{post.host_line}</p>
+            <small>{post.contest_prompt}</small>
+            <small>{post.sponsor_line || "Featured on digitalhut.app"}</small>
+            <div><button type="button" onClick={() => likeLivePost(post.id)}>Like {post.likes || 0}</button><a href={post.model_link} target="_blank" rel="noreferrer">Open</a></div>
+          </article>)}
         </div>
       </div>}
 

@@ -824,6 +824,7 @@
 
 .dh-ai-space,
 .dh-ai-command,
+.dh-live-stage,
 .dh-smart-notes {
   position: absolute;
   z-index: 18;
@@ -893,6 +894,7 @@
 }
 
 .dh-ai-command,
+.dh-live-stage,
 .dh-smart-notes {
   right: 92px;
   top: 92px;
@@ -913,7 +915,15 @@
   width: min(560px, calc(100vw - 130px));
 }
 
+.dh-live-stage {
+  top: 188px;
+  width: min(520px, calc(100vw - 130px));
+  border-color: rgba(34,211,238,.4);
+  background: rgba(2,6,23,.84);
+}
+
 .dh-ai-command div,
+.dh-live-stage div,
 .dh-smart-notes div,
 .dh-ai-actions {
   display: flex;
@@ -939,6 +949,8 @@
 }
 
 .dh-ai-command input,
+.dh-live-stage input,
+.dh-live-stage textarea,
 .dh-smart-notes textarea {
   width: 100%;
   border: 1px solid rgba(226,232,240,.18);
@@ -956,6 +968,49 @@
   color: #0f172a;
 }
 
+.dh-live-stage label {
+  color: #67e8f9;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.dh-big-share-link {
+  display: grid;
+  gap: 5px;
+  padding: 12px;
+  border: 1px solid rgba(250,204,21,.56);
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(14,116,144,.58), rgba(113,63,18,.48));
+  color: #fefce8;
+  text-decoration: none;
+  box-shadow: 0 0 32px rgba(250,204,21,.16);
+}
+
+.dh-big-share-link span,
+.dh-big-share-link small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dh-big-share-link span {
+  color: #cffafe;
+  font-size: 11px;
+}
+
+.dh-big-share-link small {
+  color: #fde68a;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.dh-live-stage textarea {
+  min-height: 76px;
+  resize: vertical;
+}
+
+.dh-live-model,
 .dh-note-attachment {
   display: grid !important;
   gap: 3px;
@@ -965,17 +1020,50 @@
   background: rgba(8,145,178,.12);
 }
 
+.dh-live-model span,
+.dh-live-model small,
 .dh-note-attachment span,
 .dh-note-attachment small {
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+.dh-live-model small,
 .dh-note-attachment small {
   color: #94a3b8;
 }
 
+.dh-live-feed {
+  display: grid !important;
+  gap: 7px !important;
+  max-height: 180px;
+  overflow: auto;
+}
+
+.dh-live-feed article {
+  display: grid;
+  gap: 5px;
+  padding: 8px;
+  border: 1px solid rgba(226,232,240,.14);
+  border-radius: 8px;
+  background: rgba(15,23,42,.56);
+}
+
+.dh-live-feed article p {
+  margin: 0;
+  color: #e0f2fe;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.dh-live-feed article small {
+  color: #fef3c7;
+  font-size: 11px;
+}
+
 .dh-ai-command button,
+.dh-live-stage button,
+.dh-live-stage a,
 .dh-smart-notes button,
 .dh-smart-notes a {
   border: 1px solid rgba(103,232,249,.28);
@@ -1127,6 +1215,7 @@
   }
 
   .dh-ai-command,
+  .dh-live-stage,
   .dh-smart-notes {
     left: 12px;
     right: 12px;
