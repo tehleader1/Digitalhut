@@ -242,6 +242,10 @@ function speak(text){
   window.speechSynthesis.speak(utter)
 }
 
+function announceOpen3dModel(feed){
+  speak(`Open 3D Model View. Attaching the AI to ${feed.title}.`)
+}
+
 function guideLine({category, stage, feed, tour, expanded = false}){
   const base = `${stage.label}. ${feed.title}.`
   if(stage.kind === "current") return expanded ? `${base} I am staying with the contained model and checking the main shape, source, and viewing angle.` : `${base} First I hold on the model.`
@@ -513,6 +517,7 @@ export default function FullscreenObservatoryV2(){
   }
 
   async function openContainedModel(){
+    announceOpen3dModel(sceneFeed)
     setModelOpen(true)
     wake()
     if(sceneFeed.embedUrl || sceneFeed.modelUrl || loading) return
@@ -525,12 +530,13 @@ export default function FullscreenObservatoryV2(){
     setMode("premium")
     setStageIndex(0)
     setPlaying(true)
+    announceOpen3dModel(sceneFeed)
     setModelOpen(true)
     setGuideDepth(0)
     if(!sceneFeed.embedUrl && !sceneFeed.modelUrl && !loading) {
       loadFeeds(category, sceneFeed.query || query, {silent: true, keepOpen: true}).then(() => setModelOpen(true))
     }
-    speak(guideLine({category, stage: stages[0], feed: sceneFeed, tour: item}))
+    window.setTimeout(() => speak(guideLine({category, stage: stages[0], feed: sceneFeed, tour: item})), 2600)
     wake()
   }
 
