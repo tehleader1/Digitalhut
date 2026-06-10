@@ -258,6 +258,38 @@ function announceOpen3dModel(feed){
   speak(`Open 3D Model View. Attaching the AI to ${feed.title}.`)
 }
 
+function speechEngine(){
+  if(typeof window === "undefined") return null
+  return window.SpeechRecognition || window.webkitSpeechRecognition || null
+}
+
+function categoryFromCommand(text){
+  const value = text.toLowerCase()
+  const matches = [
+    ["Planetary", ["space", "planet", "planetary", "saturn", "mars", "moon", "orbit"]],
+    ["Gamer", ["game", "gamer", "gaming", "level"]],
+    ["Real Estate", ["real estate", "housing", "house", "property", "agent"]],
+    ["Programmer", ["programmer", "code", "backend", "decentralized", "api"]],
+    ["Researcher", ["research", "researcher", "fossil", "history", "experiment", "analysis"]],
+    ["Mainstream Streaming", ["stream", "streaming", "trend", "funny video", "creator"]],
+    ["Workforce", ["workforce", "jobsite", "training"]],
+    ["Home Project", ["home project", "repair", "interior"]],
+    ["Political", ["political", "civic", "government"]],
+    ["Continent", ["continent", "country", "world", "travel"]]
+  ]
+  return matches.find(([, aliases]) => aliases.some((alias) => value.includes(alias)))?.[0] || ""
+}
+
+function queryFromCommand(text, fallback){
+  const value = text.toLowerCase()
+  if(value.includes("saturn")) return "saturn planet rings 3d model"
+  if(value.includes("fossil")) return "fossil artifact dinosaur bone 3d model"
+  if(value.includes("housing")) return "housing market property 3d model"
+  if(value.includes("decentralized")) return "decentralized network data center 3d model"
+  if(value.includes("funny")) return "funny creator video studio 2026 trend visual"
+  return fallback
+}
+
 function guideLine({category, stage, feed, tour, expanded = false}){
   const base = `${stage.label}. ${feed.title}.`
   const session = metaFor(category).context
@@ -415,8 +447,15 @@ export default function FullscreenObservatoryV2(){
   const [layerOpen, setLayerOpen] = useState(false)
   const [modelOpen, setModelOpen] = useState(false)
   const [guideDepth, setGuideDepth] = useState(0)
+  const [aiOpen, setAiOpen] = useState(false)
+  const [aiListening, setAiListening] = useState(false)
+  const [aiCommand, setAiCommand] = useState("")
+  const [notesOpen, setNotesOpen] = useState(false)
+  const [smartNote, setSmartNote] = useState("")
+  const [downloadUrl, setDownloadUrl] = useState("")
   const hideTimer = useRef(null)
   const requestRef = useRef(0)
+  const recognitionRef = useRef(null)
 
   const activeTours = toursFor(category)
   const activeTour = activeTours.find((item) => item.id === tour) || activeTours[0]
@@ -429,6 +468,7 @@ export default function FullscreenObservatoryV2(){
   const guided = mode === "premium" && playing
   const currentGuideLine = guideDepth > 0 ? extendedGuideLine({category, stage, feed: sceneFeed, tour: activeTour, depth: guideDepth - 1}) : guideLine({category, stage, feed: sceneFeed, tour: activeTour})
   const currentFollowUps = followUpNotes({category, stage, feed: sceneFeed, tour: activeTour})
+  const aiDock = notesOpen ? "notes" : aiOpen ? "command" : modelOpen ? `stage-${stage.kind}` : guided ? "guided" : "idle"
 
   useEffect(() => {
     window.digitalHutBrainMap = digitalHutBrainMap
@@ -607,6 +647,104 @@ export default function FullscreenObservatoryV2(){
     wake()
   }
 
+  async function saveSmartNote(note = smartNote){
+    const text = note || `${sceneFeed.title}: ${currentGuideLine} ${currentFollowUps.join(" ")}`
+    const record = {
+      createdAt: new Date().toISOString(),
+      category,
+      stage: stage.label,
+      title: sceneFeed.title,
+      note: text,
+      followUps: currentFollowUps
+    }
+    const blob = new Blob([JSON.stringify(record, null, 2)], {type: "application/json"})
+    const url = URL.createObjectURL(blob)
+    setDownloadUrl(url)
+    window.localStorage.setItem("digitalhut:smartNote", JSON.stringify(record))
+    speak("DigitalHut AI saved your note. The download link is ready.")
+    return url
+  }
+
+  async function runAiCommand(command){
+    const text = command.trim()
+    if(!text) return
+    setAiCommand(text)
+    setAiOpen(true)
+    wake()
+    const lower = text.toLowerCase()
+    const nextCategory = categoryFromCommand(text)
+    const nextQuery = queryFromCommand(text, query)
+    if(nextCategory && nextCategory !== category){
+      setCategory(nextCategory)
+      setTour(toursFor(nextCategory)[0].id)
+      setStageIndex(0)
+      setStatsFeeds([])
+      setGuideDepth(0)
+      setModelOpen(true)
+      setQuery(nextQuery)
+      announceOpen3dModel({title: nextQuery})
+      await loadFeeds(nextCategory, nextQuery, {silent: true, keepOpen: true})
+      setModelOpen(true)
+      speak(`Opening ${nextCategory}. I found ${nextQuery}. Start a guided tour when you are ready.`)
+      return
+    }
+    if(lower.includes("preview next") || lower.includes("next model") || lower.includes("show me next")){
+      setActive((current) => (current + 1) % feeds.length)
+      setStageIndex(2)
+      setModelOpen(true)
+      setGuideDepth(0)
+      speak("Previewing the next related model. I will hold here so you can take notes.")
+      return
+    }
+    if(lower.includes("guided") || lower.includes("tour")){
+      chooseTour(activeTour)
+      return
+    }
+    if(lower.includes("rotate") || lower.includes("camera")){
+      nextStage()
+      speak("Rotating the camera a little more for detail analysis.")
+      return
+    }
+    if(lower.includes("tell me more") || lower.includes("history") || lower.includes("experience") || lower.includes("facts")){
+      playMore()
+      return
+    }
+    if(lower.includes("save") || lower.includes("download note")){
+      setNotesOpen(true)
+      await saveSmartNote(text)
+      return
+    }
+    setSmartNote(text)
+    setNotesOpen(true)
+    speak("I added that to the smart note panel. Say save my note when you want the download link.")
+  }
+
+  function startVoiceCommand(){
+    const Engine = speechEngine()
+    setAiOpen(true)
+    if(!Engine){
+      speak("Voice input is not available in this browser. Type your command instead.")
+      return
+    }
+    const recognition = new Engine()
+    recognition.lang = "en-US"
+    recognition.interimResults = false
+    recognition.maxAlternatives = 1
+    recognition.onstart = () => setAiListening(true)
+    recognition.onend = () => setAiListening(false)
+    recognition.onerror = () => {
+      setAiListening(false)
+      speak("I could not hear that. You can type the command instead.")
+    }
+    recognition.onresult = (event) => {
+      const transcript = event.results?.[0]?.[0]?.transcript || ""
+      setAiCommand(transcript)
+      runAiCommand(transcript)
+    }
+    recognitionRef.current = recognition
+    recognition.start()
+  }
+
   function action(label){
     const target = sceneFeed.modelUrl || sceneFeed.embedUrl || sceneFeed.viewerUrl || ""
     if(label === "Save") window.localStorage.setItem("digitalhut:savedFeed", JSON.stringify(sceneFeed))
@@ -677,6 +815,29 @@ export default function FullscreenObservatoryV2(){
         <button className={`dh-btn ${paid ? "" : "locked"}`} onClick={() => paid ? setLayerOpen((value) => !value) : setEntryOpen(true)}>{paid ? `Smart Layers: ${layer}` : "Smart Layers: Premium / Pro"}</button>
         {layerOpen && paid && <div className="dh-layer-menu">{layers.map((item) => <button key={item} className={`dh-btn ${item === layer ? "active" : ""}`} onClick={() => {setLayer(item); setLayerOpen(false)}}>{item}</button>)}</div>}
       </div>
+
+      <button className={`dh-ai-space ${aiListening ? "listening" : ""} dock-${aiDock}`} type="button" onClick={startVoiceCommand}>
+        <span>DigitalHut AI</span><b>{aiListening ? "Listening" : "Interact"}</b>
+      </button>
+      {aiOpen && <div className="dh-ai-command">
+        <div><b>DigitalHut AI</b><button type="button" onClick={() => setAiOpen(false)}>Close</button></div>
+        <input value={aiCommand} onChange={(event) => setAiCommand(event.target.value)} onKeyDown={(event) => {if(event.key === "Enter") runAiCommand(aiCommand)}} placeholder="Type or speak: Open Space category and show me Saturn" />
+        <div className="dh-ai-actions">
+          <button type="button" onClick={() => runAiCommand(aiCommand)}>Run</button>
+          <button type="button" onClick={startVoiceCommand}>{aiListening ? "Listening" : "Voice"}</button>
+          <button type="button" onClick={() => setNotesOpen((value) => !value)}>Smart Notes</button>
+        </div>
+      </div>}
+
+      {notesOpen && <div className="dh-smart-notes">
+        <div><b>Smart Note / Chat Record</b><button type="button" onClick={() => setNotesOpen(false)}>Close</button></div>
+        <textarea value={smartNote} onChange={(event) => setSmartNote(event.target.value)} placeholder="Take notes here. Example: DigitalHut AI save my note." />
+        <div className="dh-ai-actions">
+          <button type="button" onClick={() => saveSmartNote()}>Save Note</button>
+          <button type="button" onClick={() => navigator.share?.({title: sceneFeed.title, text: smartNote || currentGuideLine}).catch(() => null)}>Share</button>
+          {downloadUrl && <a href={downloadUrl} download={`digitalhut-${category}-${Date.now()}.json`}>Download</a>}
+        </div>
+      </div>}
     </section>
 
     {entryOpen && <section className="dh-entry"><div className="dh-entry-panel">{entryLoading ? <><div className="dh-logo">DigitalHut</div><div className="dh-load"><span /></div><p>Loading your observatory system</p></> : <><p className="dh-eyebrow">Choose profile</p><h2 className="dh-welcome">Welcome!</h2><input className="dh-entry-input" value={username} onChange={(event) => setUsername(event.target.value)} placeholder="Username Account" /><div className="dh-account-grid">{accounts.map((item) => <button key={item} className={`dh-btn ${tier === item ? "active" : ""}`} onClick={() => enter(item)}>{item.toUpperCase()}</button>)}</div><div className="dh-wallet"><ConnectButton /></div><p className="dh-entry-small">Premium starts guided model sequences. Regular users can still search and inspect API feeds.</p></>}</div></section>}

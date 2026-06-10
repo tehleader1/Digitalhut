@@ -809,6 +809,140 @@
   background: rgba(103,232,249,.16);
 }
 
+.dh-ai-space,
+.dh-ai-command,
+.dh-smart-notes {
+  position: absolute;
+  z-index: 18;
+}
+
+.dh-ai-space {
+  width: 168px;
+  min-height: 58px;
+  display: grid;
+  gap: 3px;
+  align-content: center;
+  padding: 10px 14px;
+  border: 1px solid rgba(103,232,249,.42);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.12), rgba(103,232,249,.08)),
+    radial-gradient(circle at 20% 20%, rgba(103,232,249,.28), transparent 44%),
+    rgba(2,6,23,.46);
+  color: #ecfeff;
+  text-align: left;
+  box-shadow: 0 0 34px rgba(103,232,249,.22), 0 18px 70px rgba(0,0,0,.46);
+  backdrop-filter: blur(16px);
+  cursor: pointer;
+  transition: left .44s ease, right .44s ease, top .44s ease, bottom .44s ease, transform .44s ease, box-shadow .28s ease;
+  animation: dhAiSpaceFloat 5.2s ease-in-out infinite;
+}
+
+.dh-ai-space span {
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #67e8f9;
+}
+
+.dh-ai-space b {
+  font-size: 17px;
+  line-height: 1;
+}
+
+.dh-ai-space.dock-idle,
+.dh-ai-space.dock-guided {
+  right: 20px;
+  top: 49%;
+}
+
+.dh-ai-space.dock-stage-current,
+.dh-ai-space.dock-stage-angle {
+  left: 17%;
+  bottom: 12%;
+}
+
+.dh-ai-space.dock-stage-similar {
+  left: 48%;
+  bottom: 12%;
+}
+
+.dh-ai-space.dock-stage-stats,
+.dh-ai-space.dock-command,
+.dh-ai-space.dock-notes {
+  right: 20px;
+  top: 96px;
+}
+
+.dh-ai-space.listening {
+  border-color: rgba(250,204,21,.62);
+  box-shadow: 0 0 52px rgba(250,204,21,.62), 0 18px 70px rgba(0,0,0,.46);
+}
+
+.dh-ai-command,
+.dh-smart-notes {
+  right: 92px;
+  top: 92px;
+  width: min(390px, calc(100vw - 130px));
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid rgba(103,232,249,.28);
+  border-radius: 8px;
+  background: rgba(2,6,23,.78);
+  color: #e0f2fe;
+  box-shadow: 0 22px 70px rgba(0,0,0,.42);
+  backdrop-filter: blur(14px);
+}
+
+.dh-smart-notes {
+  top: 238px;
+}
+
+.dh-ai-command div,
+.dh-smart-notes div,
+.dh-ai-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.dh-ai-command input,
+.dh-smart-notes textarea {
+  width: 100%;
+  border: 1px solid rgba(226,232,240,.18);
+  border-radius: 7px;
+  background: rgba(0,0,0,.38);
+  color: #fff;
+  padding: 10px;
+  font-weight: 800;
+}
+
+.dh-smart-notes textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.dh-ai-command button,
+.dh-smart-notes button,
+.dh-smart-notes a {
+  border: 1px solid rgba(103,232,249,.28);
+  border-radius: 7px;
+  background: rgba(8,145,178,.2);
+  color: #ecfeff;
+  font-size: 11px;
+  font-weight: 900;
+  padding: 7px 9px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@keyframes dhAiSpaceFloat {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(0, -7px, 0) scale(1.015); }
+}
+
 .dh-architect,
 .dh-props {
   position: absolute;
@@ -922,6 +1056,31 @@
   0% { transform: translateX(-80%); opacity: .35; }
   55% { opacity: 1; }
   100% { transform: translateX(180%); opacity: .25; }
+}
+
+@media (max-width: 920px) {
+  .dh-ai-space,
+  .dh-ai-space.dock-idle,
+  .dh-ai-space.dock-guided,
+  .dh-ai-space.dock-stage-current,
+  .dh-ai-space.dock-stage-angle,
+  .dh-ai-space.dock-stage-similar,
+  .dh-ai-space.dock-stage-stats,
+  .dh-ai-space.dock-command,
+  .dh-ai-space.dock-notes {
+    left: 12px;
+    right: auto;
+    top: auto;
+    bottom: 18px;
+    width: min(172px, 44vw);
+  }
+
+  .dh-ai-command,
+  .dh-smart-notes {
+    left: 12px;
+    right: 12px;
+    width: auto;
+  }
 }
 
 @keyframes dhDrift {
