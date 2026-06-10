@@ -94,7 +94,7 @@ function hasFreshEntry(){
 
 function preloadImages(urls){
   if(typeof window === "undefined") return Promise.resolve()
-  const unique = [...new Set(urls.filter(Boolean))]
+  const unique = [...new Set(urls.filter(Boolean))].slice(0, 4)
   return Promise.all(unique.map((src) => new Promise((resolve) => {
     const image = new Image()
     const done = () => resolve()
@@ -323,7 +323,7 @@ function normalizeAsset(item, category, index, source, term){
   }
 }
 
-async function fetchWithTimeout(endpoint, options = {}, timeoutMs = 3200){
+async function fetchWithTimeout(endpoint, options = {}, timeoutMs = 1800){
   const controller = new AbortController()
   const timeout = window.setTimeout(() => controller.abort(), timeoutMs)
   try{
@@ -342,16 +342,14 @@ async function resolveApiFeeds(category, term){
     [`observatory`, `/api/observatory?category=${encodedCategory}&query=${query}`]
   ]
 
-  for(const [source, endpoint] of endpoints){
-    try{
-      const response = await fetchWithTimeout(endpoint, {headers: {Accept: "application/json"}})
-      if(!response.ok) continue
-      const payload = await response.json()
-      const feeds = payloadItems(payload).map((item, index) => normalizeAsset(item, category, index, source, term))
-      if(feeds.length) return feeds.slice(0, 8)
-    } catch {
-      continue
-    }
+  const attempts = await Promise.allSettled(endpoints.map(async ([source, endpoint]) => {
+    const response = await fetchWithTimeout(endpoint, {headers: {Accept: "application/json"}})
+    if(!response.ok) return []
+    const payload = await response.json()
+    return payloadItems(payload).map((item, index) => normalizeAsset(item, category, index, source, term))
+  }))
+  for(const attempt of attempts){
+    if(attempt.status === "fulfilled" && attempt.value.length) return attempt.value.slice(0, 8)
   }
   return []
 }
@@ -831,6 +829,7 @@ export default function FullscreenObservatoryV2(){
   const [presentationSearch, setPresentationSearch] = useState("editable glb presentation stage")
   const [presentationFileNote, setPresentationFileNote] = useState("")
   const [presentationEdits, setPresentationEdits] = useState([])
+  const [presentationSpeed, setPresentationSpeed] = useState(1)
   const hideTimer = useRef(null)
   const requestRef = useRef(0)
   const recognitionRef = useRef(null)
@@ -852,6 +851,8 @@ export default function FullscreenObservatoryV2(){
   const currentFollowUps = followUpNotes({category, stage, feed: sceneFeed, tour: activeTour})
   const aiDock = presentationFeatureOpen ? "notes" : notesOpen ? "notes" : aiOpen ? "command" : modelOpen ? `stage-${stage.kind}` : guided ? "guided" : "idle"
   const liveModelLink = sceneFeed.modelUrl || sceneFeed.viewerUrl || sceneFeed.embedUrl || window.location.href
+  const stageDelay = Math.round((stage.kind === "stats" ? 26000 : 18000) / presentationSpeed)
+  const autoDelay = Math.round(22000 / presentationSpeed)
 
   useEffect(() => {
     window.digitalHutBrainMap = digitalHutBrainMap
@@ -886,9 +887,9 @@ export default function FullscreenObservatoryV2(){
     if(!guided || entryOpen || !modelOpen) return
     const timer = window.setInterval(() => {
       setStageIndex((current) => (current + 1) % stages.length)
-    }, stage.kind === "stats" ? 26000 : 18000)
+    }, stageDelay)
     return () => window.clearInterval(timer)
-  }, [guided, entryOpen, stage.kind, modelOpen])
+  }, [guided, entryOpen, stageDelay, modelOpen])
 
   useEffect(() => {
     if(!guided || stage.kind !== "stats") return
@@ -932,7 +933,7 @@ export default function FullscreenObservatoryV2(){
       setStageIndex((current) => (current + 1) % stages.length)
       setActive((current) => (current + 1) % Math.max(feeds.length, 1))
       speak(`${guideLine({category, stage, feed: sceneFeed, tour: activeTour, expanded: true})} ${feedbackPrompt({category, feed: sceneFeed})}`)
-    }, 22000)
+    }, autoDelay)
     return () => {
       window.clearInterval(timer)
       if(limit !== Infinity && autoStartedRef.current){
@@ -943,7 +944,7 @@ export default function FullscreenObservatoryV2(){
       }
       autoStartedRef.current = null
     }
-  }, [autoPresent, tier, category, stage.kind, sceneFeed.id, feeds.length])
+  }, [autoPresent, tier, category, stage.kind, sceneFeed.id, feeds.length, autoDelay])
 
   function wake(){
     setAwake(true)
@@ -959,13 +960,13 @@ export default function FullscreenObservatoryV2(){
     setActive(0)
     if(!options.keepOpen) setModelOpen(false)
     setGuideDepth(0)
-    await preloadImages(seeds.map((item) => item.thumbnail))
+    preloadImages(seeds.map((item) => item.thumbnail))
     if(requestRef.current !== id) return seeds
     setFeeds(seeds)
     const results = await resolveApiFeeds(nextCategory, term)
     if(requestRef.current !== id) return seeds
     const next = results.length ? [...results, ...seeds.filter((seed) => !results.some((item) => item.title === seed.title))].slice(0, 8) : seeds
-    await preloadImages(next.map((item) => item.thumbnail))
+    preloadImages(next.map((item) => item.thumbnail))
     if(requestRef.current !== id) return next
     window.requestAnimationFrame(() => {
       setFeeds(next)
@@ -1492,6 +1493,7 @@ export default function FullscreenObservatoryV2(){
         <button className="dh-btn" onClick={previousFeed}>Back Model</button>
         <button className="dh-btn" onClick={nextFeed}>Next Model</button>
         <button className="dh-btn" onClick={nextStage}>Rotate</button>
+        <label className="dh-speed-control"><span>Speed</span><select value={presentationSpeed} onChange={(event) => setPresentationSpeed(Number(event.target.value))}><option value="0.75">Slow</option><option value="1">Normal</option><option value="1.35">Fast</option><option value="1.75">Sprint</option></select></label>
         <button className="dh-btn" onClick={() => speak(aiLimit === Infinity ? "Pro AI research is unlimited." : `${Math.round(aiRemainingMs / 60000)} AI minutes remain in this 12 hour window.`)}>{aiLimit === Infinity ? "Pro Unlimited" : `${Math.round(aiRemainingMs / 60000)}m left`}</button>
       </div>
 

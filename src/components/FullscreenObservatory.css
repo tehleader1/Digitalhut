@@ -449,13 +449,13 @@
 .dh-category-dock {
   left: 132px;
   right: min(456px, 36vw);
-  top: auto;
-  bottom: 82px;
+  top: 74px;
+  bottom: auto;
   width: auto;
-  height: 70px;
+  height: 62px;
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: minmax(112px, 1fr);
+  grid-auto-columns: minmax(108px, 1fr);
   gap: 7px;
   align-content: start;
   padding: 7px;
@@ -472,7 +472,7 @@
   grid-template-columns: 38px minmax(0, 1fr);
   gap: 7px;
   align-items: center;
-  min-height: 54px;
+  min-height: 46px;
   padding: 5px;
   border: 1px solid rgba(226,232,240,.16);
   border-radius: 8px;
@@ -490,7 +490,7 @@
 
 .dh-category-icon {
   width: 36px;
-  height: 38px;
+  height: 31px;
   border-radius: 7px;
   display: grid;
   place-items: center;
@@ -768,6 +768,30 @@
 .dh-media .dh-btn {
   padding: 10px 12px;
   white-space: nowrap;
+}
+
+.dh-speed-control {
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 8px;
+  border: 1px solid rgba(103,232,249,.22);
+  border-radius: 7px;
+  background: rgba(8,145,178,.14);
+  color: #cffafe;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.dh-speed-control select {
+  min-height: 26px;
+  border: 1px solid rgba(226,232,240,.18);
+  border-radius: 6px;
+  background: rgba(2,6,23,.72);
+  color: #ecfeff;
+  font-size: 11px;
+  font-weight: 900;
 }
 
 .dh-utility {
@@ -1343,17 +1367,19 @@
 
 @media (max-width: 920px) {
   .dh-category-dock {
-    top: auto;
+    top: 70px;
     left: 10px;
     right: 10px;
-    bottom: 86px;
+    bottom: auto;
+    height: 58px;
     width: auto;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(96px, 1fr);
   }
 
   .dh-quick-rail {
     right: 10px;
-    top: 74px;
+    top: 136px;
     width: min(360px, 46vw);
   }
 

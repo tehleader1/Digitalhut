@@ -14,9 +14,11 @@
 .dh-renderer.has-api.live-open .dh-model {
   display: block !important;
   position: absolute;
-  inset: 9% 22% 17% 13%;
-  width: auto;
-  height: auto;
+  left: 50%;
+  top: 47%;
+  width: min(660px, 52vw);
+  height: min(420px, 48vh);
+  transform: translate(-50%, -50%);
   border: 1px solid rgba(103,232,249,.34);
   border-radius: 8px;
   opacity: .98 !important;
@@ -29,7 +31,11 @@
 
 .dh-api-system-preview {
   position: absolute;
-  inset: 9% 22% 17% 13%;
+  left: 50%;
+  top: 47%;
+  width: min(660px, 52vw);
+  height: min(420px, 48vh);
+  transform: translate(-50%, -50%);
   z-index: 4;
   overflow: hidden;
   border: 1px solid rgba(103,232,249,.24);
@@ -148,7 +154,11 @@
 
 .dh-contained-model {
   position: absolute;
-  inset: 9% 22% 17% 13%;
+  left: 50%;
+  top: 47%;
+  width: min(700px, 56vw);
+  height: min(430px, 50vh);
+  transform: translate(-50%, -50%);
   z-index: 4;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(180px, .55fr);
@@ -268,9 +278,11 @@
 
 .dh-contained-guide {
   position: absolute;
-  left: 14%;
-  right: 23%;
-  bottom: 18%;
+  left: 50%;
+  right: auto;
+  bottom: 17%;
+  width: min(620px, 52vw);
+  transform: translateX(-50%);
   z-index: 6;
   display: flex;
   align-items: center;
@@ -307,9 +319,10 @@
 
 .dh-followup-notes {
   position: absolute;
-  left: 14%;
+  left: 50%;
   bottom: calc(18% + 52px);
   width: min(360px, 34vw);
+  transform: translateX(-50%);
   z-index: 6;
   display: grid;
   gap: 5px;
@@ -391,7 +404,11 @@
   .dh-renderer.has-api.live-open .dh-api-frame,
   .dh-renderer.has-api.live-open .dh-model,
   .dh-contained-model {
-    inset: 12% 4% 22% 4%;
+    left: 50%;
+    top: 45%;
+    width: min(92vw, 620px);
+    height: min(48vh, 420px);
+    transform: translate(-50%, -50%);
   }
 
   .dh-contained-model {
