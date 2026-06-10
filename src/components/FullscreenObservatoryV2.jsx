@@ -5,6 +5,8 @@ import "./FullscreenObservatory.api.css"
 import "./FullscreenObservatory.sequence.css"
 
 const INACTIVITY_MS = 8 * 60 * 1000
+const AI_WINDOW_MS = 12 * 60 * 60 * 1000
+const AI_TIER_LIMITS = {guest: 0, standard: 2 * 60 * 60 * 1000, premium: 4 * 60 * 60 * 1000, pro: Infinity}
 const accounts = ["guest", "standard", "premium", "pro"]
 const layers = ["Base", "Architect", "Lighting", "Props", "Grid", "Coordinates"]
 const digitalHutBrainMap = {
@@ -324,6 +326,22 @@ function isNoteCommand(text){
   return lower.includes("take note") || lower.includes("write note") || lower.includes("add note") || lower.includes("note this")
 }
 
+function readAiUsage(tier){
+  const key = `digitalhut:aiUsage:${tier}`
+  const fallback = {startedAt: Date.now(), usedMs: 0}
+  try{
+    const saved = JSON.parse(window.localStorage.getItem(key) || "null")
+    if(!saved || Date.now() - saved.startedAt > AI_WINDOW_MS) return fallback
+    return saved
+  } catch {
+    return fallback
+  }
+}
+
+function writeAiUsage(tier, usage){
+  window.localStorage.setItem(`digitalhut:aiUsage:${tier}`, JSON.stringify(usage))
+}
+
 function guideLine({category, stage, feed, tour, expanded = false}){
   const base = `${stage.label}. ${feed.title}.`
   const session = metaFor(category).context
@@ -488,9 +506,12 @@ export default function FullscreenObservatoryV2(){
   const [smartNote, setSmartNote] = useState("")
   const [downloadUrl, setDownloadUrl] = useState("")
   const [noteFormat, setNoteFormat] = useState({font: "Arial", size: "14", spacing: "1.45", color: "#0f172a"})
+  const [autoPresent, setAutoPresent] = useState(false)
+  const [aiUsage, setAiUsage] = useState(() => readAiUsage(readStorage("digitalhut:tier", "guest")))
   const hideTimer = useRef(null)
   const requestRef = useRef(0)
   const recognitionRef = useRef(null)
+  const autoStartedRef = useRef(null)
 
   const activeTours = toursFor(category)
   const activeTour = activeTours.find((item) => item.id === tour) || activeTours[0]
@@ -501,6 +522,8 @@ export default function FullscreenObservatoryV2(){
   const sceneFeed = stage.kind === "similar" ? similarFeed : stage.kind === "stats" ? statsFeed : feed
   const paid = ["premium", "pro"].includes(tier)
   const guided = mode === "premium" && playing
+  const aiLimit = AI_TIER_LIMITS[tier] ?? AI_TIER_LIMITS.guest
+  const aiRemainingMs = aiLimit === Infinity ? Infinity : Math.max(0, aiLimit - aiUsage.usedMs)
   const currentGuideLine = guideDepth > 0 ? extendedGuideLine({category, stage, feed: sceneFeed, tour: activeTour, depth: guideDepth - 1}) : guideLine({category, stage, feed: sceneFeed, tour: activeTour})
   const currentFollowUps = followUpNotes({category, stage, feed: sceneFeed, tour: activeTour})
   const aiDock = notesOpen ? "notes" : aiOpen ? "command" : modelOpen ? `stage-${stage.kind}` : guided ? "guided" : "idle"
@@ -523,6 +546,10 @@ export default function FullscreenObservatoryV2(){
   }, [category, stage.label, sceneFeed.id, sceneFeed.title, sceneFeed.apiStatus, sceneFeed.apiSource, mode, tier, loading])
 
   useEffect(() => {
+    setAiUsage(readAiUsage(tier))
+  }, [tier])
+
+  useEffect(() => {
     const urls = [
       ...seedFeeds(category).map((item) => item.thumbnail),
       ...toursFor(category).map((_, index) => stockUrl(category, index))
@@ -542,6 +569,49 @@ export default function FullscreenObservatoryV2(){
     if(!guided || stage.kind !== "stats") return
     loadStatsModel()
   }, [guided, stage.kind, category, active, tour])
+
+  useEffect(() => {
+    if(!autoPresent) return
+    const limit = AI_TIER_LIMITS[tier] ?? AI_TIER_LIMITS.guest
+    if(limit !== Infinity && aiUsage.usedMs >= limit){
+      setAutoPresent(false)
+      setPlaying(false)
+      speak("AI presentation time is used for this 12 hour window. Upgrade tier or wait for the next window.")
+      return
+    }
+    autoStartedRef.current = Date.now()
+    const timer = window.setInterval(() => {
+      if(limit !== Infinity){
+        const usage = readAiUsage(tier)
+        const delta = Date.now() - (autoStartedRef.current || Date.now())
+        autoStartedRef.current = Date.now()
+        const nextUsage = {...usage, usedMs: usage.usedMs + delta}
+        writeAiUsage(tier, nextUsage)
+        setAiUsage(nextUsage)
+        if(nextUsage.usedMs >= limit){
+          setAutoPresent(false)
+          setPlaying(false)
+          speak("AI presentation limit reached for this 12 hour window.")
+          return
+        }
+      }
+      setModelOpen(true)
+      setPlaying(true)
+      setStageIndex((current) => (current + 1) % stages.length)
+      setActive((current) => (current + 1) % Math.max(feeds.length, 1))
+      speak(guideLine({category, stage, feed: sceneFeed, tour: activeTour, expanded: true}))
+    }, 22000)
+    return () => {
+      window.clearInterval(timer)
+      if(limit !== Infinity && autoStartedRef.current){
+        const usage = readAiUsage(tier)
+        const nextUsage = {...usage, usedMs: usage.usedMs + (Date.now() - autoStartedRef.current)}
+        writeAiUsage(tier, nextUsage)
+        setAiUsage(nextUsage)
+      }
+      autoStartedRef.current = null
+    }
+  }, [autoPresent, tier, category, stage.kind, sceneFeed.id, feeds.length])
 
   function wake(){
     setAwake(true)
@@ -644,10 +714,12 @@ export default function FullscreenObservatoryV2(){
   async function runSearch(){
     setPlaying(true)
     setStageIndex(0)
-    setModelOpen(false)
+    setModelOpen(true)
     setGuideDepth(0)
-    const next = await loadFeeds(category, query)
+    announceOpen3dModel({title: query})
+    const next = await loadFeeds(category, query, {keepOpen: true})
     const first = next[0] || feed
+    setModelOpen(true)
     if(mode === "premium") speak(`Premium guide ready for ${first.title}. Open the contained model when ready.`)
     else speak(`Regular API feed loading ${first.title}.`)
     wake()
@@ -659,6 +731,40 @@ export default function FullscreenObservatoryV2(){
     const next = stages[(stageIndex + 1) % stages.length]
     speak(guideLine({category, stage: next, feed: sceneFeed, tour: activeTour}))
     wake()
+  }
+
+  function previousFeed(){
+    setActive((value) => (value - 1 + feeds.length) % feeds.length)
+    setStageIndex(0)
+    setModelOpen(true)
+    setGuideDepth(0)
+    speak("Moving back one model in the feed.")
+    wake()
+  }
+
+  function nextFeed(){
+    setActive((value) => (value + 1) % feeds.length)
+    setStageIndex(0)
+    setModelOpen(true)
+    setGuideDepth(0)
+    speak("Opening the next model in the feed.")
+    wake()
+  }
+
+  function toggleAutoPresent(){
+    const limit = AI_TIER_LIMITS[tier] ?? AI_TIER_LIMITS.guest
+    const usage = readAiUsage(tier)
+    if(limit !== Infinity && usage.usedMs >= limit){
+      setAiUsage(usage)
+      speak("This tier has used its AI presentation time for the 12 hour window.")
+      return
+    }
+    const next = !autoPresent
+    setAutoPresent(next)
+    setMode("premium")
+    setPlaying(next)
+    setModelOpen(next || modelOpen)
+    speak(next ? "Auto presentation is on. I will keep presenting until you tell me to stop." : "Auto presentation stopped.")
   }
 
   function playMore(){
@@ -722,11 +828,17 @@ export default function FullscreenObservatoryV2(){
     const nextCategory = categoryFromCommand(text)
     const nextQuery = queryFromCommand(text, query)
     if(lower.includes("preview next") || lower.includes("next model") || lower.includes("show me next")){
-      setActive((current) => (current + 1) % feeds.length)
-      setStageIndex(2)
-      setModelOpen(true)
-      setGuideDepth(0)
-      speak("Previewing the next related model. I will hold here so you can take notes.")
+      nextFeed()
+      return
+    }
+    if(lower.includes("stop")){
+      setAutoPresent(false)
+      setPlaying(false)
+      speak("Stopping AI presentation.")
+      return
+    }
+    if(lower.includes("auto mode") || lower.includes("keep presenting") || lower.includes("play feed")){
+      toggleAutoPresent()
       return
     }
     if(lower.includes("guided") || lower.includes("tour")){
@@ -772,6 +884,8 @@ export default function FullscreenObservatoryV2(){
       announceOpen3dModel({title: nextQuery})
       const next = await loadFeeds(targetCategory, nextQuery, {silent: true, keepOpen: true})
       const loaded = next[0] || sceneFeed
+      setActive(0)
+      setStageIndex(0)
       setModelOpen(true)
       speak(topicInsight({category: targetCategory, query: nextQuery, feed: loaded, stage}))
     }
@@ -861,10 +975,11 @@ export default function FullscreenObservatoryV2(){
       </div>
 
       <div className="dh-media" style={{opacity: awake ? 1 : 0.12}}>
-        <button className="dh-btn" onClick={() => setPlaying((value) => !value)}>{playing ? "Pause" : "Resume"}</button>
-        <button className="dh-btn" onClick={() => setActive((value) => (value - 1 + feeds.length) % feeds.length)}>Back 10s</button>
-        <button className="dh-btn" onClick={() => setActive((value) => (value + 1) % feeds.length)}>Forward 10s</button>
-        <button className="dh-btn" onClick={nextStage}>Next Stage</button>
+        <button className="dh-btn" onClick={toggleAutoPresent}>{autoPresent ? "Stop AI" : "Play Feed"}</button>
+        <button className="dh-btn" onClick={previousFeed}>Back Model</button>
+        <button className="dh-btn" onClick={nextFeed}>Next Model</button>
+        <button className="dh-btn" onClick={nextStage}>Rotate</button>
+        <button className="dh-btn" onClick={() => speak(aiLimit === Infinity ? "Pro AI research is unlimited." : `${Math.round(aiRemainingMs / 60000)} AI minutes remain in this 12 hour window.`)}>{aiLimit === Infinity ? "Pro Unlimited" : `${Math.round(aiRemainingMs / 60000)}m left`}</button>
       </div>
 
       <div className="dh-utility" style={{opacity: awake ? 1 : 0.1}}>{["Save", "Share", "Embed", "Download", "Related", "FAQ"].map((label) => <button key={label} className="dh-btn" onClick={() => action(label)}>{label}</button>)}</div>
