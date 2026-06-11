@@ -1,9 +1,21 @@
 .dh-renderer.has-api .dh-scene-object {
-  opacity: .24;
+  opacity: .1;
+}
+
+.dh-renderer.model-mode .dh-scene-object,
+.dh-renderer.model-mode .dh-motion-sky,
+.dh-renderer.model-mode .dh-stars,
+.dh-renderer.model-mode .dh-orbit,
+.dh-renderer.model-mode .dh-orbit-two,
+.dh-renderer.model-mode .dh-sweep,
+.dh-renderer.model-mode .dh-skyline,
+.dh-renderer.model-mode .dh-core-glow {
+  display: none !important;
 }
 
 .dh-renderer.has-api .dh-api-frame,
-.dh-renderer.has-api .dh-model {
+.dh-renderer.has-api .dh-model,
+.dh-renderer.has-api .dh-model-shell {
   display: none !important;
   opacity: 0 !important;
   visibility: hidden !important;
@@ -11,32 +23,72 @@
 }
 
 .dh-renderer.has-api.live-open .dh-api-frame,
-.dh-renderer.has-api.live-open .dh-model {
+.dh-renderer.has-api.live-open .dh-model,
+.dh-renderer.has-api.live-open .dh-model-shell {
   display: block !important;
   position: absolute;
   left: 50%;
-  top: 50%;
-  width: min(620px, 48vw);
-  height: min(380px, 44vh);
+  top: 47%;
+  width: min(640px, 58vw);
+  height: min(390px, 48vh);
   transform: translate(-50%, -50%);
   border: 1px solid rgba(103,232,249,.34);
   border-radius: 8px;
   opacity: .98 !important;
   visibility: visible !important;
   pointer-events: auto !important;
-  z-index: 4;
+  z-index: 12;
   background: #000;
   box-shadow: 0 28px 90px rgba(0,0,0,.52), 0 0 54px rgba(103,232,249,.16);
+}
+
+.dh-renderer.has-api.live-open .dh-model {
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  transform: none !important;
+  border: 0;
+  border-radius: 8px;
+  box-shadow: none;
+  z-index: 2;
+}
+
+.dh-model-shell {
+  overflow: hidden;
+}
+
+.dh-model-loader {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  place-content: center;
+  gap: 7px;
+  padding: 18px;
+  background: radial-gradient(circle at 50% 35%, rgba(103,232,249,.2), rgba(2,6,23,.96) 68%);
+  color: #e0f2fe;
+  text-align: center;
+}
+
+.dh-model-loader b {
+  font-size: 15px;
+  text-transform: uppercase;
+}
+
+.dh-model-loader span {
+  color: #93c5fd;
+  font-size: 12px;
+  font-weight: 900;
 }
 
 .dh-api-system-preview {
   position: absolute;
   left: 50%;
-  top: 50%;
-  width: min(620px, 48vw);
-  height: min(380px, 44vh);
+  top: 47%;
+  width: min(640px, 58vw);
+  height: min(390px, 48vh);
   transform: translate(-50%, -50%);
-  z-index: 4;
+  z-index: 12;
   overflow: hidden;
   border: 1px solid rgba(103,232,249,.24);
   border-radius: 8px;
@@ -155,11 +207,11 @@
 .dh-contained-model {
   position: absolute;
   left: 50%;
-  top: 50%;
-  width: min(640px, 50vw);
-  height: min(390px, 46vh);
+  top: 47%;
+  width: min(640px, 58vw);
+  height: min(390px, 48vh);
   transform: translate(-50%, -50%);
-  z-index: 4;
+  z-index: 12;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(180px, .55fr);
   grid-template-rows: minmax(0, 1fr) auto;

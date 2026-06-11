@@ -723,9 +723,11 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
   const hasModel = Boolean(feed.modelUrl)
   const isStats = stage.kind === "stats"
   const [modelReady, setModelReady] = useState(false)
+  const [modelLoaded, setModelLoaded] = useState(false)
   const [imageReady, setImageReady] = useState(false)
-  const stars = Array.from({length: 24})
-  const skyline = Array.from({length: 18})
+  const decorationActive = !modelOpen && !loading
+  const stars = decorationActive ? Array.from({length: 10}) : []
+  const skyline = decorationActive ? Array.from({length: 8}) : []
   const canShowContainment = renderLive && !isStats
   const liveOpen = canShowContainment && modelOpen && (hasEmbed || hasModel)
   const containedDataOpen = canShowContainment && modelOpen && !hasEmbed && !hasModel
@@ -734,6 +736,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
 
   useEffect(() => {
     setModelReady(false)
+    setModelLoaded(false)
     if(!modelOpen || isStats) return
     onVisualPending?.(visualKey)
     if(containedDataOpen){
@@ -743,11 +746,15 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     if(hasEmbed) return
     if(!liveOpen || !hasModel) return
     let cancelled = false
+    const fallback = window.setTimeout(() => {
+      if(!cancelled) onVisualReady?.(visualKey)
+    }, 4200)
     import("@google/model-viewer").then(() => {
       if(!cancelled) setModelReady(true)
     }).catch(() => null)
     return () => {
       cancelled = true
+      window.clearTimeout(fallback)
     }
   }, [modelOpen, liveOpen, containedDataOpen, hasModel, hasEmbed, isStats, feed.modelUrl, visualKey])
 
@@ -755,16 +762,19 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     setImageReady(false)
   }, [feed.thumbnail])
 
-  return <div className={`dh-renderer ${guided ? "guided" : ""} ${canShowContainment ? "has-api" : ""} ${liveOpen || containedDataOpen ? "live-open" : ""} ${containedDataOpen ? "data-open" : ""} stage-${stage.kind}`} style={{"--accent": feed.accent}}>
+  return <div className={`dh-renderer ${guided ? "guided" : ""} ${canShowContainment ? "has-api" : ""} ${modelOpen ? "model-mode" : ""} ${liveOpen || containedDataOpen ? "live-open" : ""} ${containedDataOpen ? "data-open" : ""} stage-${stage.kind}`} style={{"--accent": feed.accent}}>
     {feed.thumbnail && <img className={`dh-renderer-stock ${imageReady ? "is-ready" : ""}`} src={feed.thumbnail} alt="" loading="eager" onLoad={() => setImageReady(true)} />}
-    <div className="dh-motion-sky" />
-    <div className="dh-stars">{stars.map((_, index) => <span key={index} style={{left: `${4 + (index * 43) % 91}%`, top: `${7 + (index * 31) % 78}%`}} />)}</div>
-    <SceneObject feed={feed} />
+    {decorationActive && <div className="dh-motion-sky" />}
+    {decorationActive && <div className="dh-stars">{stars.map((_, index) => <span key={index} style={{left: `${4 + (index * 43) % 91}%`, top: `${7 + (index * 31) % 78}%`}} />)}</div>}
+    {decorationActive && <SceneObject feed={feed} />}
     {canShowContainment && !liveOpen && !containedDataOpen && <button className={`dh-api-system-preview ${feed.thumbnail ? "api-preview-ready" : ""} ${modelOpen ? "is-resolving" : ""}`} style={feed.thumbnail ? {"--api-preview-url": `url("${feed.thumbnail}")`} : undefined} onClick={onOpenModel}>
       <span>{modelOpen || loading ? "Resolving provider model" : "Paused contained model"}</span><b>{feed.title}</b><em className="dh-open-containment">{modelOpen || loading ? "Scanning APIs" : "Activate Model"}</em>
     </button>}
     {liveOpen && hasEmbed && <iframe className="dh-api-frame" title={feed.title} src={pausedEmbedUrl(feed.embedUrl)} allow="fullscreen; xr-spatial-tracking" loading="lazy" allowFullScreen onLoad={() => onVisualReady?.(visualKey)} />}
-    {liveOpen && !hasEmbed && hasModel && <model-viewer className={`dh-model ${modelReady ? "is-ready" : "is-loading"}`} src={feed.modelUrl} poster={feed.thumbnail || ""} camera-controls camera-orbit={stage.orbit} exposure="1.1" shadow-intensity=".65" onLoad={() => onVisualReady?.(visualKey)} onError={() => onVisualReady?.(visualKey)} />}
+    {liveOpen && !hasEmbed && hasModel && <div className="dh-model-shell">
+      {!modelLoaded && <div className="dh-model-loader"><b>Loading GLB Renderer</b><span>{feed.title}</span></div>}
+      <model-viewer className={`dh-model ${modelReady ? "is-ready" : "is-loading"}`} src={feed.modelUrl} poster={feed.thumbnail || ""} camera-controls camera-orbit={stage.orbit} exposure="1.1" shadow-intensity=".65" reveal="auto" interaction-prompt="none" onLoad={() => {setModelLoaded(true); onVisualReady?.(visualKey)}} onError={() => {setModelLoaded(true); onVisualReady?.(visualKey)}} />
+    </div>}
     {containedDataOpen && <section className="dh-contained-model" aria-label="Contained model session">
       <div className="dh-contained-screen" style={feed.thumbnail ? {"--contained-image": `url("${feed.thumbnail}")`} : undefined}>
         <div className="dh-contained-scan" />
@@ -792,12 +802,12 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
       {followUps.map((item) => <span key={item}>{item}</span>)}
     </div>}
     {isStats && <div className="dh-stat-model"><b>{feed.title}</b><span>{feed.market?.symbol || feed.providerMix?.join(" + ") || "data"}</span><p>{feed.note}</p></div>}
-    <div className="dh-orbit" />
-    <div className="dh-orbit-two" />
-    <div className="dh-sweep" />
-    <div className="dh-skyline">{skyline.map((_, index) => <span key={index} style={{height: `${26 + ((index * 19) % 64)}%`}} />)}</div>
+    {decorationActive && <div className="dh-orbit" />}
+    {decorationActive && <div className="dh-orbit-two" />}
+    {decorationActive && <div className="dh-sweep" />}
+    {decorationActive && <div className="dh-skyline">{skyline.map((_, index) => <span key={index} style={{height: `${26 + ((index * 19) % 64)}%`}} />)}</div>}
     {(layer === "Grid" || layer === "Coordinates") && <div className="dh-visual-grid" />}
-    <div className="dh-core-glow" />
+    {decorationActive && <div className="dh-core-glow" />}
     <div className="dh-visual-label">{feed.category}</div>
     <div className="dh-model-status ready">{loading ? "API resolving" : stage.label}</div>
   </div>

@@ -52,6 +52,11 @@
   opacity: .58;
 }
 
+.dh-renderer.model-mode .dh-renderer-stock.is-ready {
+  opacity: .16;
+  filter: saturate(.72) contrast(.86);
+}
+
 .dh-observatory.is-loading .dh-renderer-stock.is-ready {
   opacity: .42;
   filter: saturate(.92) contrast(1.02);
@@ -707,6 +712,11 @@
   width: min(620px, 46vw);
   display: grid;
   gap: 7px;
+}
+
+.dh-stage:has(.dh-renderer.model-mode) .dh-info {
+  opacity: .06 !important;
+  pointer-events: none;
 }
 
 .dh-eyebrow {
