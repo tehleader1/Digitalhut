@@ -841,6 +841,7 @@ export default function FullscreenObservatoryV2(){
   const [downloadUrl, setDownloadUrl] = useState("")
   const [noteFormat, setNoteFormat] = useState({font: "Arial", size: "14", spacing: "1.45", color: "#0f172a"})
   const [autoPresent, setAutoPresent] = useState(false)
+  const [demoMode, setDemoMode] = useState("")
   const [aiUsage, setAiUsage] = useState(() => readAiUsage(readStorage("digitalhut:tier", "guest")))
   const [liveStageOpen, setLiveStageOpen] = useState(false)
   const [hostLine, setHostLine] = useState("Hey live 3D GLB presentation, what's up. Featuring DigitalHut. Give me some likes and find a new layer in my GLB.")
@@ -950,7 +951,7 @@ export default function FullscreenObservatoryV2(){
       autoStepRef.current += 1
       setModelOpen(true)
       setPlaying(true)
-      if(autoStepRef.current % 4 === 0){
+      if(demoMode === "all" && autoStepRef.current % 4 === 0){
         playSessionSound(category, "bridge")
         bridgeNextCategory("I found a new trend bridge")
         return
@@ -970,7 +971,7 @@ export default function FullscreenObservatoryV2(){
       }
       autoStartedRef.current = null
     }
-  }, [autoPresent, tier, category, stage.kind, sceneFeed.id, feeds.length, autoDelay])
+  }, [autoPresent, demoMode, tier, category, stage.kind, sceneFeed.id, feeds.length, autoDelay])
 
   useEffect(() => {
     const pending = pendingSpeechRef.current
@@ -1092,6 +1093,9 @@ export default function FullscreenObservatoryV2(){
 
   function selectCategory(nextCategory){
     playSessionSound(nextCategory, "open")
+    setDemoMode("")
+    setAutoPresent(false)
+    setPlaying(false)
     setCategory(nextCategory)
     setTour(toursFor(nextCategory)[0].id)
     setStageIndex(0)
@@ -1103,6 +1107,33 @@ export default function FullscreenObservatoryV2(){
     loadFeeds(nextCategory, seed.query, {silent: true})
     speak(`DigitalHut set to ${nextCategory}. I will hold the model first.`)
     wake()
+  }
+
+  function startDemoMode(kind){
+    const limit = AI_TIER_LIMITS[tier] ?? AI_TIER_LIMITS.guest
+    const usage = readAiUsage(tier)
+    if(limit !== Infinity && usage.usedMs >= limit){
+      setAiUsage(usage)
+      speak("This tier has used its AI presentation time for the 12 hour window.")
+      return
+    }
+    const isSameActive = autoPresent && demoMode === kind
+    if(isSameActive){
+      setAutoPresent(false)
+      setDemoMode("")
+      setPlaying(false)
+      playSessionSound(category, "stop")
+      speak("Auto demo stopped.")
+      return
+    }
+    autoStepRef.current = 0
+    setDemoMode(kind)
+    setAutoPresent(true)
+    setMode("premium")
+    setPlaying(true)
+    setModelOpen(true)
+    playSessionSound(category, "open")
+    speak(kind === "all" ? "All Category Auto Demo is on. I will move through every category like a full presentation." : `Current Category Auto Demo is on. I will stay inside ${category} and keep the topic focused.`)
   }
 
   async function openContainedModel(){
@@ -1206,6 +1237,7 @@ export default function FullscreenObservatoryV2(){
     }
     const next = !autoPresent
     setAutoPresent(next)
+    setDemoMode(next ? "all" : "")
     setMode("premium")
     setPlaying(next)
     setModelOpen(next || modelOpen)
@@ -1286,7 +1318,7 @@ export default function FullscreenObservatoryV2(){
       return
     }
     if(lower.includes("auto mode") || lower.includes("keep presenting") || lower.includes("play feed")){
-      toggleAutoPresent()
+      startDemoMode(lower.includes("current") || lower.includes("stay on topic") ? "current" : "all")
       return
     }
     if(lower.includes("go live") || lower.includes("live glb") || lower.includes("start live") || lower.includes("broadcast")){
@@ -1554,7 +1586,8 @@ export default function FullscreenObservatoryV2(){
       </div>
 
       <div className="dh-media" style={{opacity: awake ? 1 : 0.12}}>
-        <button className="dh-btn" onClick={toggleAutoPresent}>{autoPresent ? "Stop AI" : "Play Feed"}</button>
+        <button className={`dh-btn ${demoMode === "all" ? "active" : ""}`} onClick={() => startDemoMode("all")}>{demoMode === "all" ? "Stop All Demo" : "All Category Demo"}</button>
+        <button className={`dh-btn ${demoMode === "current" ? "active" : ""}`} onClick={() => startDemoMode("current")}>{demoMode === "current" ? "Stop Current Demo" : "Current Category Demo"}</button>
         <button className="dh-btn" onClick={previousFeed}>Back Model</button>
         <button className="dh-btn" onClick={nextFeed}>Next Model</button>
         <button className="dh-btn" onClick={nextStage}>Rotate</button>
