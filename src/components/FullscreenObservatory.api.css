@@ -81,6 +81,27 @@
   font-weight: 900;
 }
 
+.dh-observatory.low-power .dh-renderer.has-api.live-open .dh-api-frame,
+.dh-observatory.low-power .dh-renderer.has-api.live-open .dh-model-shell,
+.dh-observatory.low-power .dh-api-system-preview,
+.dh-observatory.low-power .dh-contained-model,
+.dh-observatory.low-power .dh-contained-guide,
+.dh-observatory.low-power .dh-followup-notes {
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.dh-observatory.low-power .dh-api-system-preview::before,
+.dh-observatory.low-power .dh-api-system-preview::after,
+.dh-observatory.low-power .dh-contained-screen::before,
+.dh-observatory.low-power .dh-contained-scan {
+  display: none;
+}
+
+.dh-observatory.low-power .dh-model-loader {
+  background: #020617;
+}
+
 .dh-api-system-preview {
   position: absolute;
   left: 50%;

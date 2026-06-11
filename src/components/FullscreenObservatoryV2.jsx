@@ -725,7 +725,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
   const [modelReady, setModelReady] = useState(false)
   const [modelLoaded, setModelLoaded] = useState(false)
   const [imageReady, setImageReady] = useState(false)
-  const decorationActive = !modelOpen && !loading
+  const decorationActive = false
   const stars = decorationActive ? Array.from({length: 10}) : []
   const skyline = decorationActive ? Array.from({length: 8}) : []
   const canShowContainment = renderLive && !isStats
@@ -763,7 +763,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
   }, [feed.thumbnail])
 
   return <div className={`dh-renderer ${guided ? "guided" : ""} ${canShowContainment ? "has-api" : ""} ${modelOpen ? "model-mode" : ""} ${liveOpen || containedDataOpen ? "live-open" : ""} ${containedDataOpen ? "data-open" : ""} stage-${stage.kind}`} style={{"--accent": feed.accent}}>
-    {feed.thumbnail && <img className={`dh-renderer-stock ${imageReady ? "is-ready" : ""}`} src={feed.thumbnail} alt="" loading="eager" onLoad={() => setImageReady(true)} />}
+    {feed.thumbnail && <img className={`dh-renderer-stock ${imageReady ? "is-ready" : ""}`} src={feed.thumbnail} alt="" loading="lazy" decoding="async" onLoad={() => setImageReady(true)} />}
     {decorationActive && <div className="dh-motion-sky" />}
     {decorationActive && <div className="dh-stars">{stars.map((_, index) => <span key={index} style={{left: `${4 + (index * 43) % 91}%`, top: `${7 + (index * 31) % 78}%`}} />)}</div>}
     {decorationActive && <SceneObject feed={feed} />}
@@ -773,7 +773,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     {liveOpen && hasEmbed && <iframe className="dh-api-frame" title={feed.title} src={pausedEmbedUrl(feed.embedUrl)} allow="fullscreen; xr-spatial-tracking" loading="lazy" allowFullScreen onLoad={() => onVisualReady?.(visualKey)} />}
     {liveOpen && !hasEmbed && hasModel && <div className="dh-model-shell">
       {!modelLoaded && <div className="dh-model-loader"><b>Loading GLB Renderer</b><span>{feed.title}</span></div>}
-      <model-viewer className={`dh-model ${modelReady ? "is-ready" : "is-loading"}`} src={feed.modelUrl} poster={feed.thumbnail || ""} camera-controls camera-orbit={stage.orbit} exposure="1.1" shadow-intensity=".65" reveal="auto" interaction-prompt="none" onLoad={() => {setModelLoaded(true); onVisualReady?.(visualKey)}} onError={() => {setModelLoaded(true); onVisualReady?.(visualKey)}} />
+      <model-viewer className={`dh-model ${modelReady ? "is-ready" : "is-loading"}`} src={feed.modelUrl} poster={feed.thumbnail || ""} camera-controls camera-orbit={stage.orbit} exposure="1" shadow-intensity="0" reveal="auto" interaction-prompt="none" onLoad={() => {setModelLoaded(true); onVisualReady?.(visualKey)}} onError={() => {setModelLoaded(true); onVisualReady?.(visualKey)}} />
     </div>}
     {containedDataOpen && <section className="dh-contained-model" aria-label="Contained model session">
       <div className="dh-contained-screen" style={feed.thumbnail ? {"--contained-image": `url("${feed.thumbnail}")`} : undefined}>
@@ -1503,7 +1503,7 @@ export default function FullscreenObservatoryV2(){
     wake()
   }
 
-  return <main className={`dh-observatory ${loading ? "is-loading" : "is-ready"} ${entryOpen ? "entry-open" : "entry-complete"}`} data-main-frame={digitalHutBrainMap.mainFrame} data-observatory-category={category} data-observatory-status={loading ? "verifying" : sceneFeed.apiStatus || "ready"} data-physical-assets="sensitive" onPointerMove={wake} onPointerDown={wake}>
+  return <main className={`dh-observatory low-power ${loading ? "is-loading" : "is-ready"} ${entryOpen ? "entry-open" : "entry-complete"}`} data-main-frame={digitalHutBrainMap.mainFrame} data-observatory-category={category} data-observatory-status={loading ? "verifying" : sceneFeed.apiStatus || "ready"} data-physical-assets="sensitive" onPointerMove={wake} onPointerDown={wake}>
     <section className="dh-stage">
       <RendererVisual feed={sceneFeed} stage={stage} guided={guided} loading={loading} layer={layer} renderLive={!entryOpen} modelOpen={modelOpen} onOpenModel={openContainedModel} onNext={nextStage} onPlayMore={playMore} onVisualPending={markVisualPending} onVisualReady={markVisualReady} guideText={currentGuideLine} followUps={currentFollowUps} />
       <div className="dh-vignette" />

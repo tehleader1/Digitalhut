@@ -85,3 +85,13 @@
   font-size: 16px;
   line-height: 1.55;
 }
+
+.dh-observatory.low-power .dh-stage-pill.active,
+.dh-observatory.low-power .dh-stat-model {
+  box-shadow: none;
+}
+
+.dh-observatory.low-power .dh-stat-model {
+  transform: none;
+  background: rgba(2,6,23,.82);
+}

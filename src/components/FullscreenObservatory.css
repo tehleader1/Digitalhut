@@ -367,6 +367,56 @@
   border-color: color-mix(in srgb, var(--accent) 70%, white);
 }
 
+.dh-observatory.low-power .dh-renderer {
+  background: linear-gradient(135deg, #030712, #07111f 52%, #020617);
+}
+
+.dh-observatory.low-power .dh-renderer-stock {
+  filter: none;
+  transform: none;
+  transition: opacity .16s ease;
+}
+
+.dh-observatory.low-power .dh-renderer-stock.is-ready {
+  opacity: .34;
+}
+
+.dh-observatory.low-power .dh-vignette {
+  background: linear-gradient(90deg, rgba(0,0,0,.52), transparent 30%, rgba(0,0,0,.62));
+}
+
+.dh-observatory.low-power .dh-category-icon i,
+.dh-observatory.low-power .dh-tour-visual span,
+.dh-observatory.low-power .dh-mini-scan {
+  display: none;
+}
+
+.dh-observatory.low-power .dh-tour-visual,
+.dh-observatory.low-power .dh-mini-visual,
+.dh-observatory.low-power .dh-category-icon {
+  background: rgba(15,23,42,.72);
+}
+
+.dh-observatory.low-power .dh-top,
+.dh-observatory.low-power .dh-category-dock,
+.dh-observatory.low-power .dh-quick-section,
+.dh-observatory.low-power .dh-media,
+.dh-observatory.low-power .dh-utility,
+.dh-observatory.low-power .dh-layer-dock > .dh-btn,
+.dh-observatory.low-power .dh-ai-command,
+.dh-observatory.low-power .dh-live-stage,
+.dh-observatory.low-power .dh-presentation-feature,
+.dh-observatory.low-power .dh-smart-notes {
+  backdrop-filter: none;
+  box-shadow: none;
+}
+
+.dh-observatory.low-power .dh-title,
+.dh-observatory.low-power .dh-note,
+.dh-observatory.low-power .dh-category-card small {
+  text-shadow: none;
+}
+
 .dh-top,
 .dh-category-dock,
 .dh-quick-rail,
