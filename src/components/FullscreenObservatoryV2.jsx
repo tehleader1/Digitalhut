@@ -714,7 +714,11 @@ function TourVisual({item, active, accent, image}){
   </div>
 }
 
-function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelOpen, onOpenModel, onNext, onPlayMore, guideText, followUps}){
+function visualKeyFor(feed, stage){
+  return `${feed?.id || feed?.title || "feed"}:${stage?.id || stage?.label || "stage"}`
+}
+
+function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelOpen, onOpenModel, onNext, onPlayMore, onVisualPending, onVisualReady, guideText, followUps}){
   const hasEmbed = Boolean(feed.embedUrl)
   const hasModel = Boolean(feed.modelUrl)
   const isStats = stage.kind === "stats"
@@ -726,10 +730,18 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
   const liveOpen = canShowContainment && modelOpen && (hasEmbed || hasModel)
   const containedDataOpen = canShowContainment && modelOpen && !hasEmbed && !hasModel
   const readout = modelDataReadout({feed, category: feed.category, stage})
+  const visualKey = visualKeyFor(feed, stage)
 
   useEffect(() => {
     setModelReady(false)
-    if(!liveOpen || !hasModel || hasEmbed || isStats) return
+    if(!modelOpen || isStats) return
+    onVisualPending?.(visualKey)
+    if(containedDataOpen){
+      const timer = window.setTimeout(() => onVisualReady?.(visualKey), 900)
+      return () => window.clearTimeout(timer)
+    }
+    if(hasEmbed) return
+    if(!liveOpen || !hasModel) return
     let cancelled = false
     import("@google/model-viewer").then(() => {
       if(!cancelled) setModelReady(true)
@@ -737,7 +749,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     return () => {
       cancelled = true
     }
-  }, [liveOpen, hasModel, hasEmbed, isStats, feed.modelUrl])
+  }, [modelOpen, liveOpen, containedDataOpen, hasModel, hasEmbed, isStats, feed.modelUrl, visualKey])
 
   useEffect(() => {
     setImageReady(false)
@@ -751,8 +763,8 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     {canShowContainment && !liveOpen && !containedDataOpen && <button className={`dh-api-system-preview ${feed.thumbnail ? "api-preview-ready" : ""} ${modelOpen ? "is-resolving" : ""}`} style={feed.thumbnail ? {"--api-preview-url": `url("${feed.thumbnail}")`} : undefined} onClick={onOpenModel}>
       <span>{modelOpen || loading ? "Resolving provider model" : "Paused contained model"}</span><b>{feed.title}</b><em className="dh-open-containment">{modelOpen || loading ? "Scanning APIs" : "Activate Model"}</em>
     </button>}
-    {liveOpen && hasEmbed && <iframe className="dh-api-frame" title={feed.title} src={pausedEmbedUrl(feed.embedUrl)} allow="fullscreen; xr-spatial-tracking" loading="lazy" allowFullScreen />}
-    {liveOpen && !hasEmbed && hasModel && <model-viewer className={`dh-model ${modelReady ? "is-ready" : "is-loading"}`} src={feed.modelUrl} poster={feed.thumbnail || ""} camera-controls camera-orbit={stage.orbit} exposure="1.1" shadow-intensity=".65" />}
+    {liveOpen && hasEmbed && <iframe className="dh-api-frame" title={feed.title} src={pausedEmbedUrl(feed.embedUrl)} allow="fullscreen; xr-spatial-tracking" loading="lazy" allowFullScreen onLoad={() => onVisualReady?.(visualKey)} />}
+    {liveOpen && !hasEmbed && hasModel && <model-viewer className={`dh-model ${modelReady ? "is-ready" : "is-loading"}`} src={feed.modelUrl} poster={feed.thumbnail || ""} camera-controls camera-orbit={stage.orbit} exposure="1.1" shadow-intensity=".65" onLoad={() => onVisualReady?.(visualKey)} onError={() => onVisualReady?.(visualKey)} />}
     {containedDataOpen && <section className="dh-contained-model" aria-label="Contained model session">
       <div className="dh-contained-screen" style={feed.thumbnail ? {"--contained-image": `url("${feed.thumbnail}")`} : undefined}>
         <div className="dh-contained-scan" />
@@ -830,11 +842,14 @@ export default function FullscreenObservatoryV2(){
   const [presentationFileNote, setPresentationFileNote] = useState("")
   const [presentationEdits, setPresentationEdits] = useState([])
   const [presentationSpeed, setPresentationSpeed] = useState(1)
+  const [visualReadyKey, setVisualReadyKey] = useState("")
   const hideTimer = useRef(null)
   const requestRef = useRef(0)
   const recognitionRef = useRef(null)
   const autoStartedRef = useRef(null)
   const autoStepRef = useRef(0)
+  const pendingSpeechRef = useRef(null)
+  const pendingSpeechTimer = useRef(null)
 
   const activeTours = toursFor(category)
   const activeTour = activeTours.find((item) => item.id === tour) || activeTours[0]
@@ -851,6 +866,7 @@ export default function FullscreenObservatoryV2(){
   const currentFollowUps = followUpNotes({category, stage, feed: sceneFeed, tour: activeTour})
   const aiDock = presentationFeatureOpen ? "notes" : notesOpen ? "notes" : aiOpen ? "command" : modelOpen ? `stage-${stage.kind}` : guided ? "guided" : "idle"
   const liveModelLink = sceneFeed.modelUrl || sceneFeed.viewerUrl || sceneFeed.embedUrl || window.location.href
+  const sceneVisualKey = visualKeyFor(sceneFeed, stage)
   const stageDelay = Math.round((stage.kind === "stats" ? 26000 : 18000) / presentationSpeed)
   const autoDelay = Math.round(22000 / presentationSpeed)
 
@@ -932,7 +948,7 @@ export default function FullscreenObservatoryV2(){
       playSessionSound(category, stage.kind === "angle" ? "rotate" : "open")
       setStageIndex((current) => (current + 1) % stages.length)
       setActive((current) => (current + 1) % Math.max(feeds.length, 1))
-      speak(`${guideLine({category, stage, feed: sceneFeed, tour: activeTour, expanded: true})} ${feedbackPrompt({category, feed: sceneFeed})}`)
+      speakAfterVisual(`${guideLine({category, stage, feed: sceneFeed, tour: activeTour, expanded: true})} ${feedbackPrompt({category, feed: sceneFeed})}`, visualKeyFor(sceneFeed, stage))
     }, autoDelay)
     return () => {
       window.clearInterval(timer)
@@ -945,6 +961,42 @@ export default function FullscreenObservatoryV2(){
       autoStartedRef.current = null
     }
   }, [autoPresent, tier, category, stage.kind, sceneFeed.id, feeds.length, autoDelay])
+
+  useEffect(() => {
+    const pending = pendingSpeechRef.current
+    if(!pending || pending.key !== visualReadyKey) return
+    window.clearTimeout(pendingSpeechTimer.current)
+    pendingSpeechTimer.current = window.setTimeout(() => {
+      speak(pending.text)
+      pendingSpeechRef.current = null
+    }, pending.delay)
+  }, [visualReadyKey])
+
+  function markVisualPending(key){
+    setVisualReadyKey((current) => current === key ? "" : current)
+  }
+
+  function markVisualReady(key){
+    setVisualReadyKey(key)
+  }
+
+  function speakAfterVisual(text, key = sceneVisualKey, delay = Math.round(900 / presentationSpeed)){
+    window.clearTimeout(pendingSpeechTimer.current)
+    pendingSpeechRef.current = {key, text, delay}
+    if(visualReadyKey === key){
+      pendingSpeechTimer.current = window.setTimeout(() => {
+        speak(text)
+        pendingSpeechRef.current = null
+      }, delay)
+      return
+    }
+    pendingSpeechTimer.current = window.setTimeout(() => {
+      if(pendingSpeechRef.current?.key === key){
+        speak(text)
+        pendingSpeechRef.current = null
+      }
+    }, Math.max(3200, Math.round(5200 / presentationSpeed)))
+  }
 
   function wake(){
     setAwake(true)
@@ -972,7 +1024,11 @@ export default function FullscreenObservatoryV2(){
       setFeeds(next)
       setLoading(false)
     })
-    if(!options.silent) speak(`${results.length ? "Live provider models connected" : "API preview mode"}. ${next[0]?.title || nextCategory}.`)
+    if(!options.silent) {
+      const line = `${results.length ? "Live provider models connected" : "API preview mode"}. ${next[0]?.title || nextCategory}.`
+      if(options.keepOpen) speakAfterVisual(line, visualKeyFor(next[0] || seeds[0], stages[0]))
+      else speak(line)
+    }
     return next
   }
 
@@ -980,7 +1036,7 @@ export default function FullscreenObservatoryV2(){
     const readout = modelDataReadout({feed: targetFeed, category: targetCategory, stage: targetStage})
     setModelOpen(true)
     playSessionSound(targetCategory, "open")
-    speak(`${readout.lines.join(" ")} ${feedbackPrompt({category: targetCategory, feed: targetFeed})}`)
+    speakAfterVisual(`${readout.lines.join(" ")} ${feedbackPrompt({category: targetCategory, feed: targetFeed})}`, visualKeyFor(targetFeed, targetStage))
   }
 
   async function bridgeNextCategory(prefix = "I found a new trend"){
@@ -1002,7 +1058,7 @@ export default function FullscreenObservatoryV2(){
     const loaded = next[0] || seedFeeds(targetCategory)[0]
     setActive(0)
     setModelOpen(true)
-    speak(`${prefix}: ${targetCategory}. ${streamReadout({category: targetCategory, query: term, feed: loaded, stage: stages[0]})}`)
+    speakAfterVisual(`${prefix}: ${targetCategory}. ${streamReadout({category: targetCategory, query: term, feed: loaded, stage: stages[0]})}`, visualKeyFor(loaded, stages[0]))
   }
 
   async function loadStatsModel(){
@@ -1064,7 +1120,7 @@ export default function FullscreenObservatoryV2(){
     if(!sceneFeed.embedUrl && !sceneFeed.modelUrl && !loading) {
       loadFeeds(category, sceneFeed.query || query, {silent: true, keepOpen: true}).then(() => setModelOpen(true))
     }
-    window.setTimeout(() => speak(`${guideLine({category, stage: stages[0], feed: sceneFeed, tour: item})} ${feedbackPrompt({category, feed: sceneFeed})}`), 2600)
+    speakAfterVisual(`${guideLine({category, stage: stages[0], feed: sceneFeed, tour: item})} ${feedbackPrompt({category, feed: sceneFeed})}`, visualKeyFor(sceneFeed, stages[0]), 1200)
     wake()
   }
 
@@ -1096,8 +1152,8 @@ export default function FullscreenObservatoryV2(){
     const next = await loadFeeds(targetCategory, nextQuery, {keepOpen: true})
     const first = next[0] || feed
     setModelOpen(true)
-    if(mode === "premium") speak(`Premium guide ready. ${streamReadout({category: targetCategory, query: nextQuery, feed: first, stage})}`)
-    else speak(`Regular API feed loading. ${streamReadout({category: targetCategory, query: nextQuery, feed: first, stage})}`)
+    if(mode === "premium") speakAfterVisual(`Premium guide ready. ${streamReadout({category: targetCategory, query: nextQuery, feed: first, stage})}`, visualKeyFor(first, stage))
+    else speakAfterVisual(`Regular API feed loading. ${streamReadout({category: targetCategory, query: nextQuery, feed: first, stage})}`, visualKeyFor(first, stage))
     wake()
   }
 
@@ -1106,7 +1162,7 @@ export default function FullscreenObservatoryV2(){
     setStageIndex((current) => (current + 1) % stages.length)
     setGuideDepth(0)
     const next = stages[(stageIndex + 1) % stages.length]
-    speak(`${guideLine({category, stage: next, feed: sceneFeed, tour: activeTour})} ${feedbackPrompt({category, feed: sceneFeed})}`)
+    speakAfterVisual(`${guideLine({category, stage: next, feed: sceneFeed, tour: activeTour})} ${feedbackPrompt({category, feed: sceneFeed})}`, visualKeyFor(sceneFeed, next), Math.round(1400 / presentationSpeed))
     wake()
   }
 
@@ -1116,7 +1172,7 @@ export default function FullscreenObservatoryV2(){
     setStageIndex(0)
     setModelOpen(true)
     setGuideDepth(0)
-    speak("Moving back one model in the feed.")
+    speakAfterVisual("Moving back one model in the feed.", visualKeyFor(feeds[(active - 1 + feeds.length) % feeds.length] || sceneFeed, stages[0]))
     wake()
   }
 
@@ -1126,7 +1182,7 @@ export default function FullscreenObservatoryV2(){
     setStageIndex(0)
     setModelOpen(true)
     setGuideDepth(0)
-    speak("Opening the next model in the feed.")
+    speakAfterVisual("Opening the next model in the feed.", visualKeyFor(feeds[(active + 1) % feeds.length] || sceneFeed, stages[0]))
     wake()
   }
 
@@ -1156,11 +1212,11 @@ export default function FullscreenObservatoryV2(){
       setActive((current) => (current + 1) % feeds.length)
       setStageIndex(2)
       setGuideDepth(0)
-      speak(`Loading a related model for the presentation. ${feedbackPrompt({category, feed: sceneFeed})}`)
+      speakAfterVisual(`Loading a related model for the presentation. ${feedbackPrompt({category, feed: sceneFeed})}`, visualKeyFor(feeds[(active + 1) % feeds.length] || sceneFeed, stages[2]))
     } else {
       const nextDepth = guideDepth + 1
       setGuideDepth(nextDepth)
-      speak(`${extendedGuideLine({category, stage, feed: sceneFeed, tour: activeTour, depth: nextDepth - 1})} ${modelDataReadout({feed: sceneFeed, category, stage}).lines.slice(2, 5).join(" ")} ${feedbackPrompt({category, feed: sceneFeed})}`)
+      speakAfterVisual(`${extendedGuideLine({category, stage, feed: sceneFeed, tour: activeTour, depth: nextDepth - 1})} ${modelDataReadout({feed: sceneFeed, category, stage}).lines.slice(2, 5).join(" ")} ${feedbackPrompt({category, feed: sceneFeed})}`, sceneVisualKey)
     }
     wake()
   }
@@ -1255,7 +1311,6 @@ export default function FullscreenObservatoryV2(){
     }
     if(lower.includes("rotate") || lower.includes("camera")){
       nextStage()
-      speak("Rotating the camera a little more for detail analysis.")
       return
     }
     if(lower.includes("tell me more") || lower.includes("history") || lower.includes("experience") || lower.includes("facts")){
@@ -1295,7 +1350,7 @@ export default function FullscreenObservatoryV2(){
       setActive(0)
       setStageIndex(0)
       setModelOpen(true)
-      speak(streamReadout({category: targetCategory, query: nextQuery, feed: loaded, stage}))
+      speakAfterVisual(streamReadout({category: targetCategory, query: nextQuery, feed: loaded, stage}), visualKeyFor(loaded, stage))
     }
   }
 
@@ -1394,7 +1449,7 @@ export default function FullscreenObservatoryV2(){
     setActive(0)
     setModelOpen(true)
     const loaded = next[0] || seedFeeds("DigitalHut Presentation")[0]
-    speak(`Presentation Featured Mode found ${loaded.title}. The model is open for editing. Add overlays, files, notes, audio cues, or share packaging.`)
+    speakAfterVisual(`Presentation Featured Mode found ${loaded.title}. The model is open for editing. Add overlays, files, notes, audio cues, or share packaging.`, visualKeyFor(loaded, stages[0]))
   }
 
   function addPresentationEdit(kind){
@@ -1440,7 +1495,7 @@ export default function FullscreenObservatoryV2(){
 
   return <main className={`dh-observatory ${loading ? "is-loading" : "is-ready"} ${entryOpen ? "entry-open" : "entry-complete"}`} data-main-frame={digitalHutBrainMap.mainFrame} data-observatory-category={category} data-observatory-status={loading ? "verifying" : sceneFeed.apiStatus || "ready"} data-physical-assets="sensitive" onPointerMove={wake} onPointerDown={wake}>
     <section className="dh-stage">
-      <RendererVisual feed={sceneFeed} stage={stage} guided={guided} loading={loading} layer={layer} renderLive={!entryOpen} modelOpen={modelOpen} onOpenModel={openContainedModel} onNext={nextStage} onPlayMore={playMore} guideText={currentGuideLine} followUps={currentFollowUps} />
+      <RendererVisual feed={sceneFeed} stage={stage} guided={guided} loading={loading} layer={layer} renderLive={!entryOpen} modelOpen={modelOpen} onOpenModel={openContainedModel} onNext={nextStage} onPlayMore={playMore} onVisualPending={markVisualPending} onVisualReady={markVisualReady} guideText={currentGuideLine} followUps={currentFollowUps} />
       <div className="dh-vignette" />
       {layer === "Architect" && <div className="dh-architect"><b>Architect Layer</b><span>builders / developers / researchers / AIs / experimental</span></div>}
 
