@@ -10,7 +10,7 @@ const AI_WINDOW_MS = 12 * 60 * 60 * 1000
 const AI_TIER_LIMITS = {guest: 0, standard: 2 * 60 * 60 * 1000, premium: 4 * 60 * 60 * 1000, pro: Infinity}
 const accounts = ["guest", "standard", "premium", "pro"]
 const layers = ["Base", "Architect", "Lighting", "Props", "Grid", "Coordinates"]
-const bridgeFlow = ["DigitalHut Presentation", "Mainstream Streaming", "Gamer", "Planetary", "Programmer", "Workforce", "Researcher", "Real Estate", "Continent", "Political"]
+const bridgeFlow = ["DigitalHut Presentation", "Mainstream Streaming", "Gamer", "Planetary", "Programmer", "Workforce", "Researcher", "Science", "History", "Businesses", "Real Estate", "Continent", "Political"]
 const liveFeedStorageKey = "digitalhut:liveGlbFeed"
 const digitalHutBrainMap = {
   mainFrame: "Double 007 Observatory Database",
@@ -48,7 +48,10 @@ const stockImages = {
   "Political": ["photo-1529107386315-e1a2ed48a620", "photo-1464692805480-a69dfaafdb0d", "photo-1523292562811-8fa7962a78c8", "photo-1500534314209-a25ddb2bd429"],
   "Programmer": ["photo-1515879218367-8466d910aaa4", "photo-1555066931-4365d14bab8c", "photo-1516321318423-f06f85e504b3", "photo-1558494949-ef010cbdcc31"],
   "Mainstream Streaming": ["photo-1611162617474-5b21e879e113", "photo-1557804506-669a67965ba0", "photo-1516321497487-e288fb19713f", "photo-1495020689067-958852a7765e"],
-  "Researcher": ["photo-1532094349884-543bc11b234d", "photo-1507413245164-6160d8298b31", "photo-1581093588401-fbb62a02f120", "photo-1451187580459-43490279c0fa"]
+  "Researcher": ["photo-1532094349884-543bc11b234d", "photo-1507413245164-6160d8298b31", "photo-1581093588401-fbb62a02f120", "photo-1451187580459-43490279c0fa"],
+  "Science": ["photo-1532094349884-543bc11b234d", "photo-1581093588401-fbb62a02f120", "photo-1507413245164-6160d8298b31", "photo-1451187580459-43490279c0fa"],
+  "History": ["photo-1461360370896-922624d12aa1", "photo-1500530855697-b586d89ba3ee", "photo-1528181304800-259b08848526", "photo-1518005020951-eccb494ad742"],
+  "Businesses": ["photo-1486406146926-c627a92ad1ab", "photo-1504384308090-c894fdcc538d", "photo-1497366754035-f200968a6e72", "photo-1517048676732-d65bc937f952"]
 }
 
 function stockUrl(category, index = 0){
@@ -69,7 +72,24 @@ function warmModelViewer(){
 }
 
 function relatedGlb(category, index = 0){
-  return ""
+  const base = "/models/environments/"
+  const pools = {
+    "Mainstream Streaming": ["mainstream-feed.glb", "undersea-media.glb", "business-district.glb", "presentation-stage.glb", "continent-city.glb", "orlando-traffic.glb"],
+    Gamer: ["gaming-world.glb", "mainstream-feed.glb", "business-district.glb", "workforce-site.glb", "continent-city.glb"],
+    Planetary: ["planetary-hub.glb", "science-voyage.glb", "research-lab.glb", "continent-city.glb", "presentation-stage.glb"],
+    Continent: ["continent-city.glb", "history-district.glb", "real-estate-island.glb", "science-voyage.glb", "business-district.glb"],
+    "Real Estate": ["real-estate-island.glb", "business-district.glb", "continent-city.glb", "public-works.glb", "orlando-traffic.glb"],
+    Science: ["science-voyage.glb", "research-lab.glb", "planetary-hub.glb", "continent-city.glb", "airport-delay.glb"],
+    Researcher: ["science-voyage.glb", "research-lab.glb", "history-district.glb", "planetary-hub.glb", "continent-city.glb"],
+    History: ["history-district.glb", "continent-city.glb", "public-works.glb", "real-estate-island.glb", "presentation-stage.glb"],
+    Businesses: ["business-district.glb", "presentation-stage.glb", "real-estate-island.glb", "public-works.glb", "workforce-site.glb"],
+    Workforce: ["workforce-site.glb", "public-works.glb", "airport-delay.glb", "orlando-traffic.glb", "business-district.glb"],
+    Political: ["public-works.glb", "business-district.glb", "history-district.glb", "continent-city.glb", "workforce-site.glb"],
+    Programmer: ["business-district.glb", "presentation-stage.glb", "research-lab.glb", "workforce-site.glb", "science-voyage.glb"],
+    "DigitalHut Presentation": ["presentation-stage.glb", "business-district.glb", "mainstream-feed.glb", "science-voyage.glb", "real-estate-island.glb"]
+  }
+  const pool = pools[category] || pools["Mainstream Streaming"]
+  return `${base}${pool[index % pool.length]}`
 }
 
 function environmentLabel(feed = {}){
@@ -160,7 +180,10 @@ const categories = [
   ["Political", "PO", "#f97316", "civic geography, public works, maps, and policy spaces"],
   ["Programmer", "PR", "#38bdf8", "research data, backend features, decentralized networks, APIs, and prototype logic"],
   ["Mainstream Streaming", "MS", "#f43f5e", "2026 trends, interesting topics, creator clips, funny videos, and stream-ready discussion"],
-  ["Researcher", "RS", "#c084fc", "research notes, model rotation, detail logging, fast shuffling, verification, and AI analysis"]
+  ["Researcher", "RS", "#c084fc", "research notes, model rotation, detail logging, fast shuffling, verification, and AI analysis"],
+  ["Science", "SC", "#60a5fa", "science experiments, voyages, labs, field studies, and evidence environments"],
+  ["History", "HI", "#d6a85d", "historic districts, culture, timelines, ruins, archives, and public memory"],
+  ["Businesses", "BU", "#22c55e", "business districts, storefronts, offices, market movement, and sponsor environments"]
 ].map(([id, icon, accent, context]) => ({id, icon, accent, context}))
 
 const seedQueries = {
@@ -173,7 +196,10 @@ const seedQueries = {
   "Political": ["civic district public works 3d", "government building city 3d", "historical public square 3d", "infrastructure civic assets 3d"],
   "Programmer": ["developer api data center 3d", "renderer stress test 3d model", "city data twin 3d", "tool builder 3d interface"],
   "Mainstream Streaming": ["spongebob underwater media environment read", "viral creator studio environment read", "streaming trend room environment read", "social media trend environment read"],
-  "Researcher": ["research archive 3d visualization", "scientific orbit research 3d", "field study terrain 3d", "ai analysis room 3d"]
+  "Researcher": ["research archive 3d visualization", "scientific orbit research 3d", "field study terrain 3d", "ai analysis room 3d"],
+  "Science": ["south america science voyage environment", "public health field lab environment", "weather experiment observatory", "environmental monitoring station"],
+  "History": ["historic district environment read", "ancient city public memory", "museum archive environment", "heritage travel route"],
+  "Businesses": ["business district sponsor environment", "local storefront market environment", "office tower data environment", "commerce route environment"]
 }
 
 const featuredFeeds = {
@@ -221,6 +247,27 @@ const featuredFeeds = {
     ["Ocean microplastic research project", "Actual research-project style card with a related model for presentation.", "ocean microplastic research project 3d"],
     ["South America science voyage", "Science experiment and voyage environment: closest Brazil or South America city context, research source link, terrain, route, and observation notes.", "south america science voyage brazil city environment read"]
   ],
+  "Science": [
+    ["South America science voyage", "Science experiment and voyage environment with Brazil/South America city context, terrain, route, and evidence notes.", "south america science voyage environment"],
+    ["Public health field lab", "A field-lab environment for public health data, contact tracing, clinics, uncertainty, and response timing.", "public health field lab environment"],
+    ["Weather experiment observatory", "A weather-data environment with storm bands, sensors, route risk, airport pressure, and public safety notes.", "weather experiment observatory environment"],
+    ["Environmental monitoring station", "Air, water, sensor, and satellite observation environment with confidence layers and public guidance.", "environmental monitoring station environment"],
+    ["Research lab evidence room", "Indoor lab and evidence environment for comparing claims, sources, and next observations.", "research lab evidence room environment"]
+  ],
+  "History": [
+    ["Historic district environment", "A district-level history read with buildings, streets, access, public memory, and timeline context.", "historic district environment read"],
+    ["Ancient city public memory", "Historic city environment for routes, ruins, old public spaces, and cultural pressure.", "ancient city public memory environment"],
+    ["Museum archive environment", "Archive and exhibit environment for artifacts, source notes, and public learning.", "museum archive environment"],
+    ["Heritage travel route", "Travel and culture environment with landmarks, routes, and local historical notes.", "heritage travel route environment"],
+    ["Old civic plaza", "Public-history environment around a civic plaza, monuments, routes, and community memory.", "old civic plaza environment"]
+  ],
+  "Businesses": [
+    ["Business district sponsor environment", "Office, sponsor, storefront, and city movement environment for public business viewing.", "business district sponsor environment"],
+    ["Local storefront market", "Street-level business environment for food, local commerce, foot traffic, and customer flow.", "local storefront market environment"],
+    ["Office tower data environment", "Business intelligence environment with office blocks, data routes, service lanes, and sponsor surfaces.", "office tower data environment"],
+    ["Commerce route environment", "Route and logistics environment for local business movement, deliveries, and customer access.", "commerce route environment"],
+    ["Startup showcase environment", "Presentation space for startup demos, sponsor attachments, and shareable backlinks.", "startup showcase environment"]
+  ],
   "Programmer": [
     ["New AI model production stack", "Developer movie beat: an AI model discovery moves into production company workflow.", "new AI model production code feature"],
     ["Decentralized render network", "Backend and decentralized network visual as an environment of nodes, routes, providers, and system pressure.", "decentralized render network environment"],
@@ -251,7 +298,10 @@ const guidedTours = {
   "Political": [["Civic", "CV", "Read public access, service zones, and community value."], ["Policy", "PY", "Explain infrastructure choices, funding, and tradeoffs."], ["Public", "PB", "Narrate so normal visitors understand the space."], ["Map", "MP", "Use boundaries, routes, population pressure, and comparison."]],
   "Programmer": [["API", "AP", "Inspect provider source, payload shape, and fallback state."], ["Runtime", "RT", "Narrate renderer state, wallet state, and asset load path."], ["Agent", "AG", "Explain monitoring, SEO, GLB testing, and FireCuda ops."], ["Debug", "DB", "State what is live, fallback, blocked, and how to verify."]],
   "Mainstream Streaming": [["Trend", "TR", "Frame why this topic, clip, or visual could hold attention in 2026."], ["Hook", "HK", "Name the funny, surprising, useful, or visual moment to lead with."], ["Audience", "AU", "Explain who would watch, share, remix, or react to it."], ["Next Clip", "NC", "Move to a related model or visual so the stream keeps momentum."]],
-  "Researcher": [["Evidence", "EV", "Review source quality, uncertainty, and strongest supportable claim."], ["Sources", "SO", "Name APIs, missing data, and verification path."], ["Compare", "CP", "Compare against related scenes and datasets."], ["Hypothesis", "HY", "Build a testable hypothesis and next observation."]]
+  "Researcher": [["Evidence", "EV", "Review source quality, uncertainty, and strongest supportable claim."], ["Sources", "SO", "Name APIs, missing data, and verification path."], ["Compare", "CP", "Compare against related scenes and datasets."], ["Hypothesis", "HY", "Build a testable hypothesis and next observation."]],
+  "Science": [["Experiment", "EX", "Open the experiment environment and identify what is being measured."], ["Voyage", "VY", "Read the field route, terrain, local city context, and observation path."], ["Evidence", "EV", "Separate confirmed evidence from uncertain data."], ["Publish", "PB", "Prepare the science report for backend SEO publishing."]],
+  "History": [["District", "DS", "Read the historic district, roads, buildings, and public memory."], ["Timeline", "TL", "Explain the time period and what changed in the place."], ["Culture", "CU", "Name cultural signals and public learning value."], ["Route", "RT", "Move through the heritage route like a 3D story."]],
+  "Businesses": [["District", "BD", "Read the business district environment and sponsor surfaces."], ["Traffic", "TR", "Explain customer movement, storefront access, and commerce flow."], ["Sponsor", "SP", "Attach sponsor/backlink language without taking over the content."], ["Publish", "PB", "Package the business report for sharing and SEO indexing."]]
 }
 
 const stages = [
@@ -420,6 +470,9 @@ function categoryFromCommand(text){
     ["Mainstream Streaming", ["spongebob", "viral", "stream", "streaming", "trend", "funny video", "creator", "cat video", "youtube", "tiktok", "meme"]],
     ["Gamer", ["link", "zelda", "game", "gamer", "gaming", "level", "character", "avatar", "cool game", "boss", "quest"]],
     ["Workforce", ["construction", "bridge", "london bridge", "state project", "government project", "workforce", "jobsite", "training", "public works", "road", "airport", "terminal"]],
+    ["Science", ["science", "experiment", "voyage", "field study", "public health", "weather experiment", "environmental monitoring", "south america", "brazil"]],
+    ["History", ["history", "historic", "ancient", "museum", "heritage", "old city", "archive", "timeline"]],
+    ["Businesses", ["business", "businesses", "sponsor", "storefront", "office", "commerce", "startup", "market district"]],
     ["Researcher", ["new germ", "germ", "research", "researcher", "fossil", "dinosaur", "history", "experiment", "analysis", "verify", "artifact", "lab", "microscope"]],
     ["Programmer", ["programmer", "code", "backend", "decentralized", "api", "network", "database", "ai model", "production company", "developer"]],
     ["Real Estate", ["real estate", "housing", "house", "property", "agent", "north carolina", "middle class", "neighborhood", "rent", "mortgage"]],
