@@ -61,6 +61,17 @@ const fallbackGlbs = [
   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/DamagedHelmet/glTF-Binary/DamagedHelmet.glb"
 ]
 
+let modelViewerReadyPromise
+
+function warmModelViewer(){
+  if(typeof window === "undefined") return Promise.resolve()
+  if(customElements.get("model-viewer")) return Promise.resolve()
+  if(!modelViewerReadyPromise){
+    modelViewerReadyPromise = import("@google/model-viewer").then(() => customElements.whenDefined("model-viewer"))
+  }
+  return modelViewerReadyPromise
+}
+
 function relatedGlb(category, index = 0){
   const offsets = {
     "Real Estate": 1,
@@ -722,6 +733,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
   const hasEmbed = Boolean(feed.embedUrl)
   const hasModel = Boolean(feed.modelUrl)
   const isStats = stage.kind === "stats"
+  const modelElementRef = useRef(null)
   const [modelReady, setModelReady] = useState(false)
   const [modelLoaded, setModelLoaded] = useState(false)
   const [imageReady, setImageReady] = useState(false)
@@ -735,6 +747,11 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
   const visualKey = visualKeyFor(feed, stage)
 
   useEffect(() => {
+    if(!hasModel) return
+    warmModelViewer().then(() => setModelReady(true)).catch(() => null)
+  }, [hasModel])
+
+  useEffect(() => {
     setModelReady(false)
     setModelLoaded(false)
     if(!modelOpen || isStats) return
@@ -746,17 +763,44 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     if(hasEmbed) return
     if(!liveOpen || !hasModel) return
     let cancelled = false
+    const markReady = () => {
+      if(cancelled) return
+      setModelReady(true)
+      setModelLoaded(true)
+      onVisualReady?.(visualKey)
+    }
     const fallback = window.setTimeout(() => {
-      if(!cancelled) onVisualReady?.(visualKey)
-    }, 4200)
-    import("@google/model-viewer").then(() => {
-      if(!cancelled) setModelReady(true)
+      if(!cancelled) markReady()
+    }, 5200)
+    warmModelViewer().then(() => {
+      if(cancelled) return
+      setModelReady(true)
+      const element = modelElementRef.current
+      if(!element) return
+      if(element.loaded) markReady()
     }).catch(() => null)
     return () => {
       cancelled = true
       window.clearTimeout(fallback)
     }
   }, [modelOpen, liveOpen, containedDataOpen, hasModel, hasEmbed, isStats, feed.modelUrl, visualKey])
+
+  useEffect(() => {
+    const element = modelElementRef.current
+    if(!element || !liveOpen || hasEmbed || !hasModel) return
+    const markReady = () => {
+      setModelReady(true)
+      setModelLoaded(true)
+      onVisualReady?.(visualKey)
+    }
+    element.addEventListener("load", markReady)
+    element.addEventListener("error", markReady)
+    if(element.loaded) markReady()
+    return () => {
+      element.removeEventListener("load", markReady)
+      element.removeEventListener("error", markReady)
+    }
+  }, [liveOpen, hasEmbed, hasModel, feed.modelUrl, visualKey])
 
   useEffect(() => {
     setImageReady(false)
@@ -773,7 +817,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     {liveOpen && hasEmbed && <iframe className="dh-api-frame" title={feed.title} src={pausedEmbedUrl(feed.embedUrl)} allow="fullscreen; xr-spatial-tracking" loading="lazy" allowFullScreen onLoad={() => onVisualReady?.(visualKey)} />}
     {liveOpen && !hasEmbed && hasModel && <div className="dh-model-shell">
       {!modelLoaded && <div className="dh-model-loader"><b>Loading GLB Renderer</b><span>{feed.title}</span></div>}
-      <model-viewer className={`dh-model ${modelReady ? "is-ready" : "is-loading"}`} src={feed.modelUrl} poster={feed.thumbnail || ""} camera-controls camera-orbit={stage.orbit} exposure="1" shadow-intensity="0" reveal="auto" interaction-prompt="none" onLoad={() => {setModelLoaded(true); onVisualReady?.(visualKey)}} onError={() => {setModelLoaded(true); onVisualReady?.(visualKey)}} />
+      <model-viewer ref={modelElementRef} className={`dh-model ${modelReady ? "is-ready" : "is-loading"}`} src={feed.modelUrl} poster={feed.thumbnail || ""} camera-controls camera-orbit={stage.orbit} exposure="1" shadow-intensity="0" reveal="auto" interaction-prompt="none" onLoad={() => {setModelReady(true); setModelLoaded(true); onVisualReady?.(visualKey)}} onError={() => {setModelReady(true); setModelLoaded(true); onVisualReady?.(visualKey)}} />
     </div>}
     {containedDataOpen && <section className="dh-contained-model" aria-label="Contained model session">
       <div className="dh-contained-screen" style={feed.thumbnail ? {"--contained-image": `url("${feed.thumbnail}")`} : undefined}>
