@@ -1,5 +1,6 @@
 import {useEffect, useMemo, useState} from "react"
 import {Link} from "react-router-dom"
+import "@google/model-viewer"
 import {
   createDiscoveryQueue,
   discoveryCategories,
@@ -63,9 +64,16 @@ function makeAssetFromCandidate(candidate){
   }
 }
 
+function saveAssetForCandidate(candidate, patch = {}){
+  const asset = {...makeAssetFromCandidate(candidate), ...patch}
+  const currentAssets = JSON.parse(window.localStorage.getItem(assetKey) || "[]")
+  window.localStorage.setItem(assetKey, JSON.stringify([asset, ...currentAssets.filter((item) => item.slug !== asset.slug)].slice(0, 60)))
+  return asset
+}
+
 export default function DailySituationQueuePage(){
   const [items, setItems] = useState(readQueue)
-  const [tab, setTab] = useState("Suggested Today")
+  const [tab, setTab] = useState("Morning Live Report")
   const [activeId, setActiveId] = useState(items[0]?.id || "")
   const [code, setCode] = useState("")
   const [unlocked, setUnlocked] = useState(() => window.localStorage.getItem(accessKey) === "yes")
@@ -74,6 +82,7 @@ export default function DailySituationQueuePage(){
   useEffect(() => writeQueue(items), [items])
 
   const visible = useMemo(() => {
+    if(tab === "Morning Live Report") return items.filter((item) => item.tags?.includes("morning") || item.category === "International Incidents").slice(0, 4)
     if(tab === "Suggested Today") return items.filter((item) => !["Published", "Archived"].includes(item.status))
     if(tab === "High Priority") return items.filter((item) => item.priority === "High Priority" || item.confidence >= 80)
     if(tab === "International Incidents") return items.filter((item) => ["International Incidents", "Researcher Science", "Weather", "Scams", "Overpromising Websites"].includes(item.category) || item.location.toLowerCase().includes("international"))
@@ -94,18 +103,17 @@ export default function DailySituationQueuePage(){
     const next = createDiscoveryQueue()
     setItems(next)
     setActiveId(next[0]?.id || "")
-    setTab("Suggested Today")
+    setTab("Morning Live Report")
   }
 
   function renderThis(candidate){
-    const asset = makeAssetFromCandidate(candidate)
-    const currentAssets = JSON.parse(window.localStorage.getItem(assetKey) || "[]")
-    window.localStorage.setItem(assetKey, JSON.stringify([asset, ...currentAssets.filter((item) => item.slug !== asset.slug)].slice(0, 60)))
-    updateCandidate(candidate.id, {status: "Selected for Render", selectedAssetId: asset.id})
+    const asset = saveAssetForCandidate(candidate)
+    updateCandidate(candidate.id, {status: "Selected for Render", selectedAssetId: asset.id, publicAssetSlug: asset.slug, renderedModelUrl: asset.url})
   }
 
   function publish(candidate){
-    const published = {...candidate, status: "Published", publishedAt: new Date().toISOString()}
+    const asset = saveAssetForCandidate(candidate, {status: "Published 3D report", visibility: "Share link live"})
+    const published = {...candidate, status: "Published", publishedAt: new Date().toISOString(), selectedAssetId: asset.id, publicAssetSlug: asset.slug, renderedModelUrl: asset.url}
     updateCandidate(candidate.id, published)
     const archive = JSON.parse(window.localStorage.getItem(archiveKey) || "[]")
     window.localStorage.setItem(archiveKey, JSON.stringify([published, ...archive].slice(0, 100)))
@@ -140,7 +148,7 @@ export default function DailySituationQueuePage(){
       <div>
         <p>Exclusive DigitalHut Intelligence Backend</p>
         <h1>Daily International Real-World Reports</h1>
-        <p>Private queue for real-world incidents, weather issues, scammy or overpromising websites, tourist congestion, and researcher science scenarios. Each candidate attempts to attach a usable 3D/GLB asset before Anthony chooses what becomes public.</p>
+        <p>Private queue for morning international reports, real-world incidents, weather issues, scammy or overpromising websites, tourist congestion, and researcher science scenarios. Each candidate attempts to attach a usable 3D/GLB asset before Anthony chooses what becomes public.</p>
       </div>
       <nav className="dh-backend-nav">
         <Link to="/">Main System</Link>
@@ -193,8 +201,11 @@ export default function DailySituationQueuePage(){
       </div>
 
       <div className="dh-backend-panel">
-        <h2>Related 3D Asset Match</h2>
+        <h2>Complete Live Report Renderer</h2>
         {active?.relatedAsset && <>
+          <div className="dh-situation-renderer">
+            <model-viewer src={active.relatedAsset.url || "https://modelviewer.dev/shared-assets/models/RobotExpressive.glb"} poster={active.relatedAsset.previewThumbnail || ""} camera-controls auto-rotate auto-rotate-delay="400" rotation-per-second="8deg" camera-orbit="35deg 60deg auto" field-of-view="34deg" exposure="1" reveal="auto" />
+          </div>
           {active.relatedAsset.previewThumbnail && <img className="dh-match-thumb" src={active.relatedAsset.previewThumbnail} alt="" />}
           <div className="dh-report-card">
             <b>{active.relatedAsset.closestGlb}</b>
@@ -204,6 +215,8 @@ export default function DailySituationQueuePage(){
             <span><strong>Reason matched:</strong> {active.relatedAsset.reasonMatched}</span>
             <span><strong>Freshness:</strong> {active.relatedAsset.freshness}</span>
             <span><strong>Status:</strong> {active.assetMatchStatus}</span>
+            {active.publicAssetSlug && <span><strong>Public preview:</strong> <Link to={`/${active.publicAssetSlug}`}>/{active.publicAssetSlug}</Link></span>}
+            <span><strong>Current GLB:</strong> {active.renderedModelUrl || active.relatedAsset.url || "fallback generated scene model"}</span>
           </div>
           <div className="dh-asset-actions">
             <button type="button" onClick={() => renderThis(active)}>Use This Asset</button>

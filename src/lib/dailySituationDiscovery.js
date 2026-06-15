@@ -46,6 +46,7 @@ const fallbackAssets = [
 ]
 
 export const discoveryTabs = [
+  "Morning Live Report",
   "Suggested Today",
   "High Priority",
   "International Incidents",
@@ -108,6 +109,23 @@ export function readRecentAssets(){
 export function createDailyCandidates(date = new Date()){
   const stamp = date.toISOString().slice(0, 10)
   return [
+    {
+      id: `daily-morning-indore-airport-storm-${stamp}`,
+      title: "Morning International Report: Indore Airport Storm Diversion",
+      problem: "A severe storm and poor visibility forced a passenger flight diversion at Indore airport, creating a travel-safety and airport-delay situation that needs a clear visual explanation.",
+      location: "Indore, India",
+      category: "International Incidents",
+      whyItMatters: "International travel reports become more useful when DigitalHut can show the airport, storm layer, visibility problem, diverted flight path, and passenger decision points in 3D.",
+      sourceNotes: ["Current source: Times of India report on severe storm and poor visibility at Indore airport", "Verification lane: airport notices, airline status, weather radar, local public safety updates"],
+      confidence: 84,
+      renderIdea: "Airport terminal block, runway visibility layer, storm cell, diverted flight arrow, ground transport delay markers, traveler safety notes.",
+      glbSceneType: "airport-storm-diversion-live-report",
+      solutions: ["Check airline status before leaving", "Track local weather and airport notices", "Delay pickup until flight path is stable", "Keep alternate route and hotel timing ready"],
+      voiceDraft: "Open 3D model view. This morning international report shows an airport storm diversion in Indore. I am highlighting the runway visibility issue, the diverted flight path, and what travelers should verify before moving.",
+      status: "Suggested Today",
+      priority: "High Priority",
+      tags: ["morning", "international", "airport", "storm", "weather", "flight", "diversion", "visibility", "travel", "delay"]
+    },
     {
       id: `daily-orlando-traffic-${stamp}`,
       title: "5 PM Orlando Theme Park Exit Congestion",
