@@ -392,7 +392,6 @@ function normalizeAsset(item, category, index, source, term){
   const rawModelUrl = cleanUrl(item?.modelUrl || item?.model_url || item?.glbUrl || item?.glb_url || item?.gltfUrl || item?.gltf_url || item?.downloadUrl || item?.download_url)
   const viewerUrl = cleanUrl(item?.viewerUrl || item?.viewer_url || item?.url || item?.urls?.viewer || item?.webUrl || item?.web_url)
   const title = item?.title || item?.name || item?.displayName || `${category} API feed ${index + 1}`
-  const modelUrl = rawModelUrl || (!embedUrl ? relatedGlb(category, index) : "")
   return {
     id: `api:${source}:${category}:${uid || index}:${title}`,
     title,
@@ -404,10 +403,10 @@ function normalizeAsset(item, category, index, source, term){
     context: meta.context,
     thumbnail: firstThumbnail(item) || stockUrl(category, index),
     embedUrl,
-    modelUrl,
+    modelUrl: rawModelUrl,
     viewerUrl,
     apiSource: item?.apiSource || source,
-    apiStatus: item?.apiStatus || (embedUrl || rawModelUrl ? "model-connected" : "environment-read-ready"),
+    apiStatus: item?.apiStatus || (embedUrl || rawModelUrl ? "direct-api-model" : "api-record-no-model"),
     providerMix: item?.providerMix || item?.providers || [source],
     market: item?.market,
     cesium: item?.cesium
@@ -1001,6 +1000,7 @@ export default function FullscreenObservatoryV2(){
   const requestRef = useRef(0)
   const recognitionRef = useRef(null)
   const autoStartedRef = useRef(null)
+  const initialFeedLoadedRef = useRef(false)
   const autoStepRef = useRef(0)
   const pendingSpeechRef = useRef(null)
   const pendingSpeechTimer = useRef(null)
@@ -1073,6 +1073,13 @@ export default function FullscreenObservatoryV2(){
     if(!guided || stage.kind !== "stats") return
     loadStatsModel()
   }, [guided, stage.kind, category, active, tour])
+
+  useEffect(() => {
+    if(entryOpen || initialFeedLoadedRef.current) return
+    initialFeedLoadedRef.current = true
+    const seed = seedFeeds(category)[0]
+    loadFeeds(category, seed.query || query, {silent: true, keepOpen: true})
+  }, [entryOpen])
 
   useEffect(() => {
     if(!autoPresent) return
@@ -1179,7 +1186,13 @@ export default function FullscreenObservatoryV2(){
     setFeeds(seeds)
     const results = await resolveApiFeeds(nextCategory, term)
     if(requestRef.current !== id) return seeds
-    const next = results.length ? [...results, ...seeds.filter((seed) => !results.some((item) => item.title === seed.title))].slice(0, 8) : seeds
+    const directResults = results.filter((item) => item.embedUrl || item.modelUrl)
+    const textResults = results.filter((item) => !item.embedUrl && !item.modelUrl)
+    const seedTitles = new Set(results.map((item) => item.title))
+    const seedModels = seeds.filter((seed) => !seedTitles.has(seed.title))
+    const next = directResults.length
+      ? [...directResults, ...seedModels, ...textResults].slice(0, 8)
+      : [...seedModels, ...textResults].slice(0, 8)
     preloadImages(next.map((item) => item.thumbnail))
     if(requestRef.current !== id) return next
     window.requestAnimationFrame(() => {
