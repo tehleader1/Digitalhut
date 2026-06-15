@@ -81,6 +81,19 @@ Every candidate attempts to attach a 3D asset. The matcher checks:
 - previous viewer interest
 - public/private permission
 
+## Vector Math Layer
+
+DigitalHut should not rely on filenames alone. The matching layer uses normalized vector scoring inspired by 3D search systems:
+
+- semantic shape: airport, weather, road, building, map, website, health, environment, workforce, game, research, stream
+- topology: linear flow, enclosure, network, hazard field, cluster, terrain, object model
+- scale, volume, and flow estimates
+- cosine similarity between the situation candidate and available assets
+- freshness, permission, and viewer-interest weighting
+- penalties for generic demo models when a scenario-specific environment is better
+
+This gives DigitalHut a local math path now, and a future upgrade path toward real mesh embeddings, spherical-harmonic descriptors, and cross-modal query-by-example search.
+
 Search sources can include:
 
 - recent DigitalHut uploads

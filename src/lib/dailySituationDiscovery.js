@@ -1,3 +1,5 @@
+import {vectorMatchScore} from "./assetVectorMath"
+
 const fallbackAssets = [
   {
     id: "asset-road-grid",
@@ -282,20 +284,12 @@ export function createDailyCandidates(date = new Date()){
 }
 
 function scoreAsset(candidate, asset){
-  const words = new Set([...candidate.tags, candidate.category.toLowerCase(), candidate.glbSceneType.toLowerCase()])
+  const vectorScore = Math.round(vectorMatchScore(candidate, asset) * 100)
   const assetWords = new Set([...(asset.tags || []), asset.name, asset.type].join(" ").toLowerCase().split(/\W+/).filter(Boolean))
-  let score = 0
-  words.forEach((word) => { if(assetWords.has(word)) score += 12 })
-  if(candidate.glbSceneType.includes("airport") && assetWords.has("airport")) score += 35
-  if(candidate.location.toLowerCase().includes("indore") && assetWords.has("indore")) score += 25
-  if(asset.type?.toLowerCase().includes("generated")) score += 14
-  if(asset.permission?.toLowerCase().includes("public")) score += 8
-  if(asset.permission?.toLowerCase().includes("private")) score += 4
-  if(asset.type?.toLowerCase().includes("glb")) score += 10
-  if(asset.genericDemo) score -= 28
-  if(Date.now() - new Date(asset.createdAt).getTime() < 1000 * 60 * 60 * 48) score += 8
-  score += Math.min(10, Math.round((asset.views || 0) / 60))
-  return Math.min(99, score)
+  let boost = 0
+  if(candidate.glbSceneType.includes("airport") && assetWords.has("airport")) boost += 16
+  if(candidate.location.toLowerCase().includes("indore") && assetWords.has("indore")) boost += 12
+  return Math.min(99, vectorScore + boost)
 }
 
 export function attachBestAsset(candidate, assets = readRecentAssets()){

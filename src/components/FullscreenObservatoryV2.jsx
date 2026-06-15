@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from "react"
 import {ConnectButton} from "../wallet"
+import {inferCategoryByVector} from "../lib/assetVectorMath"
 import "./FullscreenObservatory.css"
 import "./FullscreenObservatory.api.css"
 import "./FullscreenObservatory.sequence.css"
@@ -398,7 +399,9 @@ function categoryFromCommand(text){
     ["Political", ["political", "civic", "policy", "government", "public notice", "election"]],
     ["Continent", ["continent", "country", "world", "travel"]]
   ]
-  return matches.find(([, aliases]) => aliases.some((alias) => value.includes(alias)))?.[0] || ""
+  const keywordMatch = matches.find(([, aliases]) => aliases.some((alias) => value.includes(alias)))?.[0]
+  if(keywordMatch) return keywordMatch
+  return inferCategoryByVector(value, categories)
 }
 
 function queryFromCommand(text, fallback){
