@@ -15,6 +15,17 @@ Assets:
 - `glaceons_christmas_miracle.glb`
 - `transformers_prime_game_bumblebee.glb`
 
+## Google Drive Batch 001
+
+Anthony supplied 25 Google Drive file IDs for the next FireCuda library batch. The IDs are captured in `src/lib/firecudaLibraryManifest.js` as `firecudaDriveBatch001`.
+
+The Codex workspace could not download them directly because network access to Google Drive was blocked from the sandbox. The working import flow is:
+
+1. Download the Drive files into `D:\UserBackups\Downloads`.
+2. Run `tools\import-firecuda-library.ps1` from the repo root.
+3. Add category tags for the new files in `src/lib/firecudaLibraryManifest.js`.
+4. Commit the new GLBs and manifest update.
+
 ## Category Use
 
 - Real Estate: built environment placeholder until dedicated housing packs arrive.

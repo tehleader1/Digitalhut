@@ -1,4 +1,5 @@
 import {vectorMatchScore} from "./assetVectorMath"
+import {firecudaDiscoveryAssets} from "./firecudaLibraryManifest"
 
 const fallbackAssets = [
   {
@@ -109,54 +110,7 @@ const fallbackAssets = [
     createdAt: "2026-06-13T16:20:00.000Z",
     views: 165
   },
-  {
-    id: "firecuda-museum-ice-cream-singapore",
-    name: "FireCuda library - Museum of Ice Cream Singapore welcome environment",
-    type: "Personal GLB Library",
-    url: "/models/firecuda-library/museum_of_ice_cream_singapore_-_welcome.glb",
-    thumbnail: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=900&q=80",
-    tags: ["singapore", "museum", "mainstream", "continent", "business", "real estate", "tourism", "indoor environment"],
-    permission: "owner-personal-library",
-    genericDemo: false,
-    createdAt: "2026-06-15T20:17:56.000Z",
-    views: 1
-  },
-  {
-    id: "firecuda-international-space-elevator",
-    name: "FireCuda library - International space elevator",
-    type: "Personal GLB Library",
-    url: "/models/firecuda-library/international_space_elevator.glb",
-    thumbnail: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=900&q=80",
-    tags: ["space", "planetary", "science", "engineering", "research", "international", "observatory"],
-    permission: "owner-personal-library",
-    genericDemo: false,
-    createdAt: "2026-06-15T20:17:56.000Z",
-    views: 1
-  },
-  {
-    id: "firecuda-glaceon-christmas",
-    name: "FireCuda library - Glaceon's Christmas Miracle scene",
-    type: "Personal GLB Library",
-    url: "/models/firecuda-library/glaceons_christmas_miracle.glb",
-    thumbnail: "https://images.unsplash.com/photo-1512389142860-9c449e58a543?auto=format&fit=crop&w=900&q=80",
-    tags: ["gaming", "viral", "mainstream", "winter", "character scene", "presentation"],
-    permission: "owner-personal-library",
-    genericDemo: false,
-    createdAt: "2026-06-15T20:17:56.000Z",
-    views: 1
-  },
-  {
-    id: "firecuda-transformers-bumblebee",
-    name: "FireCuda library - Transformers Prime game Bumblebee",
-    type: "Personal GLB Library",
-    url: "/models/firecuda-library/transformers_prime_game_bumblebee.glb",
-    thumbnail: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80",
-    tags: ["gaming", "viral", "mainstream", "game model", "robot", "character scene"],
-    permission: "owner-personal-library",
-    genericDemo: false,
-    createdAt: "2026-06-15T20:17:56.000Z",
-    views: 1
-  }
+  ...firecudaDiscoveryAssets()
 ]
 
 export const discoveryTabs = [
