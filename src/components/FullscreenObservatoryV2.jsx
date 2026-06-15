@@ -854,7 +854,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     {decorationActive && <div className="dh-stars">{stars.map((_, index) => <span key={index} style={{left: `${4 + (index * 43) % 91}%`, top: `${7 + (index * 31) % 78}%`}} />)}</div>}
     {decorationActive && <SceneObject feed={feed} />}
     {canShowContainment && !liveOpen && !containedDataOpen && <button className={`dh-api-system-preview ${feed.thumbnail ? "api-preview-ready" : ""} ${modelOpen ? "is-resolving" : ""}`} style={feed.thumbnail ? {"--api-preview-url": `url("${feed.thumbnail}")`} : undefined} onClick={onOpenModel}>
-      <span>{modelOpen || loading ? "Resolving provider model" : "Paused contained model"}</span><b>{feed.title}</b><em className="dh-open-containment">{modelOpen || loading ? "Scanning APIs" : "Activate Model"}</em>
+      <span>{modelOpen || loading ? "Preparing 3D preview" : "Presentation card"}</span><b>{feed.title}</b><em className="dh-open-containment">{modelOpen || loading ? "Rendering" : "Play 3D Preview"}</em>
     </button>}
     {liveOpen && hasEmbed && <iframe className="dh-api-frame" title={feed.title} src={pausedEmbedUrl(feed.embedUrl)} allow="fullscreen; xr-spatial-tracking" loading="lazy" allowFullScreen onLoad={() => onVisualReady?.(visualKey)} />}
     {liveOpen && !hasEmbed && hasModel && <div className="dh-model-shell">
@@ -883,6 +883,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     {canShowContainment && modelOpen && !guideDismissed && <div className="dh-contained-guide">
       <button className="dh-guide-close" type="button" aria-label="Close presentation card" onClick={() => setGuideDismissed(true)}>X</button>
       <span>{guideText}</span>
+      <button type="button" onClick={() => setGuideDismissed(true)}>Play 3D Preview</button>
       <button type="button" onClick={onNext}>Next</button>
       <button type="button" onClick={onPlayMore}>Play More</button>
     </div>}
@@ -990,6 +991,14 @@ export default function FullscreenObservatoryV2(){
   useEffect(() => {
     setAiUsage(readAiUsage(tier))
   }, [tier])
+
+  useEffect(() => {
+    if(entryOpen || stage.kind === "stats") return
+    if(!sceneFeed.modelUrl && !sceneFeed.embedUrl) return
+    if(modelOpen) return
+    const timer = window.setTimeout(() => setModelOpen(true), 180)
+    return () => window.clearTimeout(timer)
+  }, [entryOpen, stage.kind, sceneFeed.id, sceneFeed.modelUrl, sceneFeed.embedUrl, modelOpen])
 
   useEffect(() => {
     const urls = [
