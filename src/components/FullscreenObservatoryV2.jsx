@@ -69,7 +69,7 @@ function warmModelViewer(){
 }
 
 function relatedGlb(category, index = 0){
-  return "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Sponza/glTF/Sponza.gltf"
+  return ""
 }
 
 function environmentLabel(feed = {}){
