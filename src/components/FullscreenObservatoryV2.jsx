@@ -72,24 +72,25 @@ function warmModelViewer(){
 }
 
 function relatedGlb(category, index = 0){
-  const base = "/models/environments/"
+  const environment = (name) => `/models/environments/${name}`
+  const firecuda = (name) => `/models/firecuda-library/${name}`
   const pools = {
-    "Mainstream Streaming": ["mainstream-feed.glb", "undersea-media.glb", "business-district.glb", "presentation-stage.glb", "continent-city.glb", "orlando-traffic.glb"],
-    Gamer: ["gaming-world.glb", "mainstream-feed.glb", "business-district.glb", "workforce-site.glb", "continent-city.glb"],
-    Planetary: ["planetary-hub.glb", "science-voyage.glb", "research-lab.glb", "continent-city.glb", "presentation-stage.glb"],
-    Continent: ["continent-city.glb", "history-district.glb", "real-estate-island.glb", "science-voyage.glb", "business-district.glb"],
-    "Real Estate": ["real-estate-island.glb", "business-district.glb", "continent-city.glb", "public-works.glb", "orlando-traffic.glb"],
-    Science: ["science-voyage.glb", "research-lab.glb", "planetary-hub.glb", "continent-city.glb", "airport-delay.glb"],
-    Researcher: ["science-voyage.glb", "research-lab.glb", "history-district.glb", "planetary-hub.glb", "continent-city.glb"],
-    History: ["history-district.glb", "continent-city.glb", "public-works.glb", "real-estate-island.glb", "presentation-stage.glb"],
-    Businesses: ["business-district.glb", "presentation-stage.glb", "real-estate-island.glb", "public-works.glb", "workforce-site.glb"],
-    Workforce: ["workforce-site.glb", "public-works.glb", "airport-delay.glb", "orlando-traffic.glb", "business-district.glb"],
-    Political: ["public-works.glb", "business-district.glb", "history-district.glb", "continent-city.glb", "workforce-site.glb"],
-    Programmer: ["business-district.glb", "presentation-stage.glb", "research-lab.glb", "workforce-site.glb", "science-voyage.glb"],
-    "DigitalHut Presentation": ["presentation-stage.glb", "business-district.glb", "mainstream-feed.glb", "science-voyage.glb", "real-estate-island.glb"]
+    "Mainstream Streaming": [firecuda("museum_of_ice_cream_singapore_-_welcome.glb"), firecuda("glaceons_christmas_miracle.glb"), environment("mainstream-feed.glb"), environment("undersea-media.glb"), environment("business-district.glb"), environment("presentation-stage.glb"), environment("continent-city.glb"), environment("orlando-traffic.glb")],
+    Gamer: [firecuda("transformers_prime_game_bumblebee.glb"), firecuda("glaceons_christmas_miracle.glb"), environment("gaming-world.glb"), environment("mainstream-feed.glb"), environment("business-district.glb"), environment("workforce-site.glb"), environment("continent-city.glb")],
+    Planetary: [firecuda("international_space_elevator.glb"), environment("planetary-hub.glb"), environment("science-voyage.glb"), environment("research-lab.glb"), environment("continent-city.glb"), environment("presentation-stage.glb")],
+    Continent: [firecuda("museum_of_ice_cream_singapore_-_welcome.glb"), firecuda("international_space_elevator.glb"), environment("continent-city.glb"), environment("history-district.glb"), environment("real-estate-island.glb"), environment("science-voyage.glb"), environment("business-district.glb")],
+    "Real Estate": [firecuda("museum_of_ice_cream_singapore_-_welcome.glb"), environment("real-estate-island.glb"), environment("business-district.glb"), environment("continent-city.glb"), environment("public-works.glb"), environment("orlando-traffic.glb")],
+    Science: [firecuda("international_space_elevator.glb"), environment("science-voyage.glb"), environment("research-lab.glb"), environment("planetary-hub.glb"), environment("continent-city.glb"), environment("airport-delay.glb")],
+    Researcher: [firecuda("international_space_elevator.glb"), environment("science-voyage.glb"), environment("research-lab.glb"), environment("history-district.glb"), environment("planetary-hub.glb"), environment("continent-city.glb")],
+    History: [environment("history-district.glb"), firecuda("museum_of_ice_cream_singapore_-_welcome.glb"), environment("continent-city.glb"), environment("public-works.glb"), environment("real-estate-island.glb"), environment("presentation-stage.glb")],
+    Businesses: [firecuda("museum_of_ice_cream_singapore_-_welcome.glb"), environment("business-district.glb"), environment("presentation-stage.glb"), environment("real-estate-island.glb"), environment("public-works.glb"), environment("workforce-site.glb")],
+    Workforce: [environment("workforce-site.glb"), environment("public-works.glb"), firecuda("international_space_elevator.glb"), environment("airport-delay.glb"), environment("orlando-traffic.glb"), environment("business-district.glb")],
+    Political: [environment("public-works.glb"), environment("business-district.glb"), environment("history-district.glb"), environment("continent-city.glb"), environment("workforce-site.glb")],
+    Programmer: [environment("business-district.glb"), environment("presentation-stage.glb"), firecuda("international_space_elevator.glb"), environment("research-lab.glb"), environment("workforce-site.glb"), environment("science-voyage.glb")],
+    "DigitalHut Presentation": [environment("presentation-stage.glb"), firecuda("museum_of_ice_cream_singapore_-_welcome.glb"), firecuda("international_space_elevator.glb"), environment("business-district.glb"), environment("mainstream-feed.glb"), environment("science-voyage.glb"), environment("real-estate-island.glb")]
   }
   const pool = pools[category] || pools["Mainstream Streaming"]
-  return `${base}${pool[index % pool.length]}`
+  return pool[index % pool.length]
 }
 
 function environmentLabel(feed = {}){
