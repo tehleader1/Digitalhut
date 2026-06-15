@@ -26,6 +26,30 @@ The Codex workspace could not download them directly because network access to G
 3. Add category tags for the new files in `src/lib/firecudaLibraryManifest.js`.
 4. Commit the new GLBs and manifest update.
 
+## Google Drive Batch 002
+
+Anthony supplied a second 30-link batch. Some files repeat Batch 001, and the rest are new. The IDs are captured in `src/lib/firecudaLibraryManifest.js` as:
+
+- `firecudaDriveBatch002`
+- `firecudaDriveBatch002NewIds`
+- `firecudaDriveBatch002ExistingIds`
+
+Download Batch 002 directly to FireCuda:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File ".\tools\download-firecuda-drive-batch.ps1" -Batch 002
+```
+
+Batch 002 saves to:
+
+`D:\UserBackups\Downloads\DigitalHutDriveBatch002`
+
+Import only Batch 002:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File ".\tools\import-firecuda-library.ps1" -Source "D:\UserBackups\Downloads\DigitalHutDriveBatch002"
+```
+
 ## Category Use
 
 - Real Estate: built environment placeholder until dedicated housing packs arrive.
