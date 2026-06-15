@@ -1,5 +1,7 @@
 .dh-backend-page {
   min-height: 100vh;
+  height: 100vh;
+  overflow-y: auto;
   background: #07111f;
   color: #f8fafc;
   font-family: Arial, sans-serif;
@@ -7,8 +9,9 @@
 
 .dh-backend-header,
 .dh-backend-grid,
-.dh-public-asset {
-  width: min(1180px, calc(100% - 28px));
+.dh-public-asset,
+.dh-backend-tabs {
+  width: min(1440px, calc(100% - 28px));
   margin: 0 auto;
 }
 
@@ -35,7 +38,9 @@
 .dh-backend-nav,
 .dh-form-actions,
 .dh-asset-actions,
-.dh-language-grid {
+.dh-language-grid,
+.dh-backend-tabs,
+.dh-system-map {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -43,6 +48,7 @@
 
 .dh-backend-nav a,
 .dh-backend-btn,
+.dh-backend-tabs button,
 .dh-asset-actions button,
 .dh-asset-actions a,
 .dh-form-actions button,
@@ -58,10 +64,34 @@
 }
 
 .dh-backend-btn.hot,
+.dh-backend-tabs button.active,
 .dh-form-actions button:first-child,
 .dh-language-grid button.active {
   border-color: rgba(56, 189, 248, .85);
   background: #0e7490;
+}
+
+.dh-backend-tabs {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: 10px 0;
+  background: rgba(7, 17, 31, .96);
+}
+
+.dh-system-map {
+  width: min(1440px, calc(100% - 28px));
+  margin: 0 auto 12px;
+}
+
+.dh-system-map span {
+  border: 1px solid rgba(125, 211, 252, .28);
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: rgba(2, 6, 23, .55);
+  color: #bfdbfe;
+  font-size: 12px;
+  font-weight: 900;
 }
 
 .dh-backend-grid {
@@ -69,6 +99,15 @@
   grid-template-columns: minmax(280px, .85fr) minmax(320px, 1.15fr) minmax(260px, .9fr);
   gap: 12px;
   padding-bottom: 28px;
+}
+
+.dh-backend-grid.studio {
+  grid-template-columns: minmax(280px, .7fr) minmax(420px, 1.4fr) minmax(260px, .75fr);
+}
+
+.dh-backend-grid.queue,
+.dh-backend-grid.profile {
+  grid-template-columns: minmax(320px, .9fr) minmax(320px, 1fr) minmax(280px, .8fr);
 }
 
 .dh-backend-panel,
@@ -193,6 +232,58 @@
   background: rgba(14, 116, 144, .28);
 }
 
+.dh-library-card.active {
+  border-color: rgba(56, 189, 248, .85);
+}
+
+.dh-compare-viewers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.dh-compare-viewers > div {
+  min-width: 0;
+  border: 1px solid rgba(148, 163, 184, .2);
+  border-radius: 8px;
+  padding: 10px;
+  background: rgba(2, 6, 23, .42);
+}
+
+.dh-compare-viewers b {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.dh-compare-viewers img,
+.dh-file-preview {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: rgba(15, 23, 42, .9);
+}
+
+.dh-file-preview {
+  display: grid;
+  place-items: center;
+  color: #94a3b8;
+  padding: 12px;
+  box-sizing: border-box;
+  overflow-wrap: anywhere;
+}
+
+.dh-asset-viewer.compact {
+  height: 320px;
+  min-height: 320px;
+}
+
+.dh-profile-list {
+  max-height: 72vh;
+  overflow: auto;
+}
+
 .dh-owner-gate {
   max-width: 760px;
 }
@@ -211,5 +302,9 @@
   .dh-backend-panel,
   .dh-public-card {
     margin-bottom: 12px;
+  }
+
+  .dh-compare-viewers {
+    grid-template-columns: 1fr;
   }
 }

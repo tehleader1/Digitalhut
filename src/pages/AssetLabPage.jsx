@@ -41,6 +41,10 @@ function slugify(value){
   return value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "asset"
 }
 
+function isImageUrl(value = ""){
+  return /\.(png|jpe?g|webp|gif|avif)(\?|$)/i.test(value) || value.includes("images.unsplash.com")
+}
+
 function readAssets(){
   try {
     const parsed = JSON.parse(window.localStorage.getItem(storageKey) || "[]")
@@ -68,8 +72,12 @@ function createAsset(input, index = 0){
     slug,
     name,
     type: input.type || "GLB",
+    sourceType: String(input.sourceType || input.type || "GLB").toLowerCase(),
     source: input.source || "Manual researcher upload",
     url: input.url || demoModels[0].url,
+    originalFileUrl: input.originalFileUrl || input.oldFileUrl || input.url || "",
+    convertedGlbUrl: input.convertedGlbUrl || input.convertedUrl || input.url || demoModels[0].url,
+    optimizedGlbUrl: input.optimizedGlbUrl || input.convertedUrl || input.url || demoModels[0].url,
     relatedUrl: input.relatedUrl || demoModels[1].url,
     description: input.description || "DigitalHut asset prepared for AI-guided 3D presentation.",
     status: "AI dialogue ready",
@@ -91,6 +99,8 @@ export default function AssetLabPage(){
   const [ownerKey, setOwnerKey] = useState("")
   const [unlocked, setUnlocked] = useState(() => window.localStorage.getItem("digitalhut:assetLabOwner") === "yes")
   const [sponsor, setSponsor] = useState({name: "", link: "", placement: "Subtle sponsor tag", note: ""})
+  const [tab, setTab] = useState("studio")
+  const [editTools, setEditTools] = useState({stretch: 100, lighting: 55, layer: "Base", objects: "None", zoomRate: 1})
   const selected = assets.find((item) => item.id === selectedId) || assets[0]
   const shareUrl = selected ? `${window.location.origin}/${selected.slug}` : ""
   const orbit = ["25deg 62deg auto", "80deg 66deg auto", "-40deg 58deg auto", "18deg 44deg auto"][demoStep % 4]
@@ -99,15 +109,56 @@ export default function AssetLabPage(){
 
   useEffect(() => writeAssets(assets), [assets])
 
-  function queueAsset(){
+  async function queueAsset(){
     const queued = createAsset({...form, status: "Queued: building metadata and AI dialogue"}, assets.length)
     queued.progress = 35
+    queued.oldFileUrl = form.url
+    queued.convertedUrl = form.url
+    queued.likes = 0
+    queued.shares = 0
+    queued.zoomRate = 1
     queued.dialogue[0] = `Open 3D model view. ${queued.name} is in the DigitalHut backend queue.`
     setAssets((current) => [queued, ...current])
     setSelectedId(queued.id)
-    window.setTimeout(() => {
-      setAssets((current) => current.map((item) => item.id === queued.id ? {...item, status: "AI dialogue ready", progress: 100} : item))
-    }, 900)
+    try {
+      const response = await fetch("/api/asset-conversion", {
+        method: "POST",
+        headers: {"content-type": "application/json"},
+        body: JSON.stringify({
+          name: form.name,
+          sourceType: form.type,
+          source: form.source,
+          sourceUrl: form.url,
+          description: form.description,
+          relatedUrl: form.relatedUrl,
+          createdBy: "owner"
+        })
+      })
+      const payload = await response.json()
+      if(!payload.ok) throw new Error(payload.error || "conversion failed")
+      const record = payload.record
+      setAssets((current) => current.map((item) => item.id === queued.id ? {
+        ...item,
+        id: record.id || item.id,
+        slug: record.slug || item.slug,
+        sourceType: record.sourceType || item.sourceType,
+        originalFileUrl: record.originalFileUrl || item.oldFileUrl,
+        oldFileUrl: record.originalFileUrl || item.oldFileUrl,
+        convertedGlbUrl: record.convertedGlbUrl || record.optimizedGlbUrl || item.convertedGlbUrl,
+        convertedUrl: record.optimizedGlbUrl || record.convertedGlbUrl || item.convertedUrl,
+        url: record.optimizedGlbUrl || record.convertedGlbUrl || item.url,
+        status: payload.conversionWorkerConnected ? "Converted GLB ready with AI narration" : record.status,
+        progress: record.progress || 100,
+        description: record.metadata?.description || item.description,
+        dialogue: record.aiNarration || item.dialogue
+      } : item))
+    } catch (error) {
+      setAssets((current) => current.map((item) => item.id === queued.id ? {
+        ...item,
+        status: `Queued locally. Backend worker pending: ${error.message}`,
+        progress: 55
+      } : item))
+    }
   }
 
   function updateSelected(patch){
@@ -134,6 +185,21 @@ export default function AssetLabPage(){
     setSponsor({name: "", link: "", placement: "Subtle sponsor tag", note: ""})
   }
 
+  function applyEditTool(){
+    if(!selected) return
+    updateSelected({
+      editTools: {...editTools},
+      zoomRate: editTools.zoomRate,
+      status: "Professional edit settings staged"
+    })
+  }
+
+  function reactToAsset(kind){
+    if(!selected) return
+    const field = kind === "share" ? "shares" : "likes"
+    updateSelected({[field]: (selected[field] || 0) + 1})
+  }
+
   if(!unlocked){
     return <main className="dh-backend-page">
       <section className="dh-public-asset dh-owner-gate">
@@ -154,7 +220,7 @@ export default function AssetLabPage(){
       <div>
         <p>DigitalHut Backend</p>
         <h1>Asset Lab</h1>
-        <p>Private researcher queue, AI metadata, spoken one-model demo dialogue, translated narration, sponsor attachment, comments, edits, and profile library control.</p>
+        <p>Private control center for library storage, source-file conversion, profile GLBs, comments, likes, shares, sponsor lanes, wallet-tier access, and the protected AI demo system.</p>
       </div>
       <nav className="dh-backend-nav">
         <Link to="/">Main System</Link>
@@ -163,7 +229,17 @@ export default function AssetLabPage(){
       </nav>
     </header>
 
-    <section className="dh-backend-grid">
+    <div className="dh-backend-tabs">
+      <button className={tab === "studio" ? "active" : ""} type="button" onClick={() => setTab("studio")}>Backend Studio</button>
+      <button className={tab === "queue" ? "active" : ""} type="button" onClick={() => setTab("queue")}>Upload Queue</button>
+      <button className={tab === "profile" ? "active" : ""} type="button" onClick={() => setTab("profile")}>Profile / GLBs</button>
+    </div>
+
+    <section className="dh-system-map">
+      {["Website / DApp", "Wallet + tiers", "APIs", "Backend queue", "Profiles", "Comments", "Files", "360 recommendation", "Protected AI demo"].map((item) => <span key={item}>{item}</span>)}
+    </section>
+
+    {tab === "studio" && <section className="dh-backend-grid studio">
       <div className="dh-backend-panel">
         <h2>Researcher Intake</h2>
         <label>Name<input value={form.name} onChange={(event) => setForm({...form, name: event.target.value})} /></label>
@@ -179,8 +255,18 @@ export default function AssetLabPage(){
       </div>
 
       <div className="dh-backend-panel dh-conductor-panel">
+        <h2>Old File / Converted 3D File</h2>
+        <div className="dh-compare-viewers">
+          <div>
+            <b>Old File</b>
+            {isImageUrl(selected?.oldFileUrl) ? <img src={selected.oldFileUrl} alt="" /> : <div className="dh-file-preview"><span>{selected?.oldFileUrl || "Original source waiting"}</span></div>}
+          </div>
+          <div>
+            <b>Converted 3D</b>
+            {selected && <model-viewer className="dh-asset-viewer compact" src={selected.convertedUrl || selected.url} camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second={demoStep === 1 ? "18deg" : "9deg"} camera-orbit={orbit} field-of-view={fov} exposure="1" reveal="auto" style={{filter: `brightness(${.75 + editTools.lighting / 100})`, transform: `scaleX(${editTools.stretch / 100})`}} />}
+          </div>
+        </div>
         <h2>AI One-Model Conductor</h2>
-        {selected && <model-viewer className="dh-asset-viewer" src={selected.url} camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second={demoStep === 1 ? "18deg" : "9deg"} camera-orbit={orbit} field-of-view={fov} exposure="1" reveal="auto" />}
         <div className="dh-asset-actions">
           <button type="button" onClick={() => setDemoStep(0)}>Open View</button>
           <button type="button" onClick={conductNext}>Conduct Next</button>
@@ -197,23 +283,25 @@ export default function AssetLabPage(){
       </div>
 
       <div className="dh-backend-panel">
-        <h2>Queue</h2>
+        <h2>Professional Edit Tools</h2>
+        <label>Stretch<input type="range" min="70" max="130" value={editTools.stretch} onChange={(event) => setEditTools({...editTools, stretch: Number(event.target.value)})} /></label>
+        <label>Lighting<input type="range" min="10" max="100" value={editTools.lighting} onChange={(event) => setEditTools({...editTools, lighting: Number(event.target.value)})} /></label>
+        <label>Layer<select value={editTools.layer} onChange={(event) => setEditTools({...editTools, layer: event.target.value})}><option>Base</option><option>Architect</option><option>Lighting</option><option>Props</option><option>Grid</option><option>Coordinates</option></select></label>
+        <label>Add Object<select value={editTools.objects} onChange={(event) => setEditTools({...editTools, objects: event.target.value})}><option>None</option><option>Label Pins</option><option>Measurement Lines</option><option>Sponsor Plate</option><option>Research Markers</option></select></label>
+        <label>Zoom Rate<input type="range" min=".5" max="2" step=".1" value={editTools.zoomRate} onChange={(event) => setEditTools({...editTools, zoomRate: Number(event.target.value)})} /></label>
+        <button className="dh-backend-btn hot" type="button" onClick={applyEditTool}>Stage Edit Settings</button>
+      </div>
+    </section>}
+
+    {tab === "queue" && <section className="dh-backend-grid queue">
+      <div className="dh-backend-panel">
+        <h2>Downloaded / Created Files Queue</h2>
         {assets.map((item) => <button key={item.id} className={`dh-queue-card ${item.id === selected?.id ? "active" : ""}`} type="button" onClick={() => setSelectedId(item.id)}>
           <b>{item.name}</b>
           <span>{item.status}</span>
           <div className="dh-progress"><span style={{width: `${item.progress}%`}} /></div>
           <small>{item.type} / {item.visibility}</small>
         </button>)}
-      </div>
-
-      <div className="dh-backend-panel">
-        <h2>Profile Library Edit</h2>
-        {selected && <>
-          <label>Description<textarea value={selected.description} onChange={(event) => updateSelected({description: event.target.value})} /></label>
-          <label>Visibility<select value={selected.visibility} onChange={(event) => updateSelected({visibility: event.target.value})}><option>Private until published</option><option>Share link live</option><option>Public profile</option></select></label>
-          <label>Comment<input onKeyDown={(event) => {if(event.key === "Enter" && event.currentTarget.value.trim()){updateSelected({comments: [...selected.comments, event.currentTarget.value.trim()]}); event.currentTarget.value = ""}}} placeholder="Add comment and press Enter" /></label>
-          <div className="dh-comment-row">{selected.comments.map((item) => <span key={item}>{item}</span>)}</div>
-        </>}
       </div>
 
       <div className="dh-backend-panel">
@@ -231,6 +319,34 @@ export default function AssetLabPage(){
         <div className="dh-progress"><span style={{width: "7%"}} /></div>
         <small>Current public max: AI speaks and presents one current model.</small>
       </div>
+    </section>}
+
+    {tab === "profile" && <section className="dh-backend-grid profile">
+      <div className="dh-backend-panel dh-profile-list">
+        <h2>Profile / GLBs</h2>
+        {assets.map((item) => <button key={item.id} className={`dh-library-card ${item.id === selected?.id ? "active" : ""}`} type="button" onClick={() => setSelectedId(item.id)}>
+          <b>{item.name}</b>
+          <span>{item.description}</span>
+          <small>{item.likes || 0} likes / {item.comments?.length || 0} comments / {item.shares || 0} shares</small>
+        </button>)}
+      </div>
+
+      <div className="dh-backend-panel">
+        <h2>Featured GLB Edit</h2>
+        {selected && <>
+          <label>Name<input value={selected.name} onChange={(event) => updateSelected({name: event.target.value, slug: `asset_${slugify(event.target.value)}`})} /></label>
+          <label>Description<textarea value={selected.description} onChange={(event) => updateSelected({description: event.target.value})} /></label>
+          <label>Zoom In / Out Rate<input type="range" min=".5" max="2" step=".1" value={selected.zoomRate || 1} onChange={(event) => updateSelected({zoomRate: Number(event.target.value)})} /></label>
+          <label>Visibility<select value={selected.visibility} onChange={(event) => updateSelected({visibility: event.target.value})}><option>Private until published</option><option>Share link live</option><option>Public profile</option></select></label>
+          <a className="dh-share-link" href={`${window.location.origin}/${selected.slug}`}>{window.location.origin}/{selected.slug}</a>
+          <div className="dh-asset-actions">
+            <button type="button" onClick={() => reactToAsset("like")}>Like {selected.likes || 0}</button>
+            <button type="button" onClick={() => reactToAsset("share")}>Share Count {selected.shares || 0}</button>
+          </div>
+          <label>Comment<input onKeyDown={(event) => {if(event.key === "Enter" && event.currentTarget.value.trim()){updateSelected({comments: [...(selected.comments || []), event.currentTarget.value.trim()]}); event.currentTarget.value = ""}}} placeholder="Add comment and press Enter" /></label>
+          <div className="dh-comment-row">{(selected.comments || []).map((item) => <span key={item}>{item}</span>)}</div>
+        </>}
+      </div>
 
       <div className="dh-backend-panel">
         <h2>Spoken Dialogue</h2>
@@ -243,6 +359,6 @@ export default function AssetLabPage(){
         <p>{spokenLine}</p>
         <p>Public user demo creation is coming soon. Owner system demos are active here first.</p>
       </div>
-    </section>
+    </section>}
   </main>
 }

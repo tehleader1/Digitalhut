@@ -1571,13 +1571,41 @@ export default function FullscreenObservatoryV2(){
 
   function action(label){
     const target = sceneFeed.modelUrl || sceneFeed.embedUrl || sceneFeed.viewerUrl || ""
-    if(label === "Save") window.localStorage.setItem("digitalhut:savedFeed", JSON.stringify(sceneFeed))
+    if(label === "Save") {
+      window.localStorage.setItem("digitalhut:savedFeed", JSON.stringify(sceneFeed))
+      const currentAssets = JSON.parse(window.localStorage.getItem("digitalhut:assetLab") || "[]")
+      const slug = `asset_${(sceneFeed.title || "digitalhut-model").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`
+      const assetRecord = {
+        id: `main-${sceneFeed.id || Date.now()}`,
+        slug,
+        name: sceneFeed.title,
+        type: sceneFeed.modelUrl ? "GLB" : sceneFeed.embedUrl ? "Embed" : "Research Source",
+        source: sceneFeed.apiSource || sceneFeed.apiStatus || category,
+        url: sceneFeed.modelUrl || sceneFeed.embedUrl || sceneFeed.viewerUrl || "",
+        oldFileUrl: sceneFeed.thumbnail || "",
+        convertedUrl: sceneFeed.modelUrl || sceneFeed.embedUrl || sceneFeed.viewerUrl || "",
+        description: sceneFeed.note || currentGuideLine,
+        status: "Saved from main renderer",
+        progress: 100,
+        visibility: "Private until published",
+        zoomRate: presentationSpeed,
+        likes: 0,
+        shares: 0,
+        comments: ["Saved from the DigitalHut main renderer."],
+        dialogue: [`Open 3D model view. ${sceneFeed.title} is ready.`, currentGuideLine],
+        createdAt: new Date().toISOString()
+      }
+      const nextAssets = [assetRecord, ...currentAssets.filter((item) => item.slug !== slug)].slice(0, 40)
+      window.localStorage.setItem("digitalhut:assetLab", JSON.stringify(nextAssets))
+      speak(`${sceneFeed.title} saved into the protected backend GLB library.`)
+    }
     if(label === "Share" && navigator.share) navigator.share({title: viralShareTitle(sceneFeed), text: viralShareText({feed: sceneFeed, hostLine, contestPrompt}), url: sceneFeed.viewerUrl || window.location.href}).catch(() => null)
     if(label === "Embed" && navigator.clipboard) navigator.clipboard.writeText(sceneFeed.embedUrl ? `<iframe src="${sceneFeed.embedUrl}"></iframe>` : window.location.href).catch(() => null)
     if(label === "Download") target && paid ? window.open(target, "_blank") : setEntryOpen(true)
     if(label === "Related") setActive((current) => (current + 1) % feeds.length)
     if(label === "FAQ") window.location.href = "/faq"
     if(label === "Live") setLiveStageOpen((value) => !value)
+    if(label === "Backend") window.location.href = "/asset-lab"
     wake()
   }
 
@@ -1641,7 +1669,7 @@ export default function FullscreenObservatoryV2(){
         <button className="dh-btn" onClick={() => speak(aiLimit === Infinity ? "Pro AI research is unlimited." : `${Math.round(aiRemainingMs / 60000)} AI minutes remain in this 12 hour window.`)}>{aiLimit === Infinity ? "Pro Unlimited" : `${Math.round(aiRemainingMs / 60000)}m left`}</button>
       </div>
 
-      <div className="dh-utility" style={{opacity: awake ? 1 : 0.1}}>{["Save", "Share", "Live", "Embed", "Download", "Related", "FAQ"].map((label) => <button key={label} className="dh-btn" onClick={() => action(label)}>{label}</button>)}</div>
+      <div className="dh-utility" style={{opacity: awake ? 1 : 0.1}}>{["Save", "Backend", "Share", "Live", "Embed", "Download", "Related", "FAQ"].map((label) => <button key={label} className="dh-btn" onClick={() => action(label)}>{label}</button>)}</div>
 
       <div className="dh-layer-dock" style={{opacity: awake ? 1 : 0.12}}>
         <button className={`dh-btn ${paid ? "" : "locked"}`} onClick={() => paid ? setLayerOpen((value) => !value) : setEntryOpen(true)}>{paid ? `Smart Layers: ${layer}` : "Smart Layers: Premium / Pro"}</button>
