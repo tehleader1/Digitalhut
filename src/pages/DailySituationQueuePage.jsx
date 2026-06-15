@@ -8,7 +8,7 @@ import {
 } from "../lib/dailySituationDiscovery"
 import "./AssetLab.css"
 
-const queueKey = "digitalhut:dailySituationQueue:v3"
+const queueKey = "digitalhut:dailySituationQueue:v4"
 const archiveKey = "digitalhut:dailySituationArchive"
 const assetKey = "digitalhut:assetLab"
 const accessKey = "digitalhut:dailySituationAccess"
@@ -127,7 +127,7 @@ export default function DailySituationQueuePage(){
   }
 
   function refreshDiscovery(){
-    ["digitalhut:dailySituationQueue", "digitalhut:dailySituationQueue:v2", "digitalhut:dailySituationQueue:v3"].forEach((key) => window.localStorage.removeItem(key))
+    ["digitalhut:dailySituationQueue", "digitalhut:dailySituationQueue:v2", "digitalhut:dailySituationQueue:v3", "digitalhut:dailySituationQueue:v4"].forEach((key) => window.localStorage.removeItem(key))
     const next = createDiscoveryQueue()
     setItems(next)
     setActiveId(next[0]?.id || "")

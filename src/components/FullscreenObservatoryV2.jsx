@@ -21,6 +21,8 @@ const digitalHutBrainMap = {
   dataPolicy: "Physical assets are sensitive. Public data stays translucent, current, and verifiable through live observatory activity.",
   seoCanal: ["current category", "active renderer feed", "provider status", "asset title", "guided tour stage"],
   liveCreatorLayer: ["live GLB room", "creator voice", "contest prompt", "viewer layer hunt", "likes", "shareable replay"],
+  assetResolverIdentity: "DigitalHut Category Asset Resolver",
+  assetResolverDirective: "Every displayed category starts with real category-matched GLB assets. Search is allowed to take over only after the public viewing feed is already rendering.",
   sessions: {
     Gamer: "Update real-life game concepts, inspect new game visuals, and turn models into playable session ideas.",
     "Real Estate": "Use models and housing data for agent-license career work, client scouting, and property decisions.",
@@ -55,6 +57,30 @@ function stockUrl(category, index = 0){
   return `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1200&q=82`
 }
 
+const sampleModelBase = "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0"
+const realCategoryModels = {
+  "Mainstream Streaming": ["BoomBox", "AntiqueCamera", "Lantern", "Avocado", "ToyCar"],
+  Gamer: ["ToyCar", "FlightHelmet", "DamagedHelmet", "BoomBox", "GearboxAssy"],
+  Planetary: ["FlightHelmet", "MetalRoughSpheres", "Lantern", "WaterBottle", "BrainStem"],
+  Workforce: ["GearboxAssy", "CesiumMilkTruck", "ToyCar", "BoxTextured", "Lantern"],
+  Researcher: ["BrainStem", "DamagedHelmet", "MetalRoughSpheres", "Avocado", "WaterBottle"],
+  "Real Estate": ["Sponza", "BoxTextured", "Lantern", "CesiumMilkTruck", "WaterBottle"],
+  Programmer: ["GearboxAssy", "BoxTextured", "MetalRoughSpheres", "BrainStem", "BoomBox"],
+  Continent: ["Sponza", "CesiumMilkTruck", "ToyCar", "Lantern", "BoxTextured"],
+  Political: ["Sponza", "CesiumMilkTruck", "BoxTextured", "ToyCar", "GearboxAssy"],
+  "DigitalHut Presentation": ["Sponza", "FlightHelmet", "BoomBox", "ToyCar", "DamagedHelmet"]
+}
+
+function modelUrlForName(name){
+  if(name === "Sponza") return `${sampleModelBase}/Sponza/glTF/Sponza.gltf`
+  return `${sampleModelBase}/${name}/glTF-Binary/${name}.glb`
+}
+
+function curatedModelUrl(category, index = 0){
+  const pool = realCategoryModels[category] || realCategoryModels["Mainstream Streaming"]
+  return modelUrlForName(pool[index % pool.length])
+}
+
 let modelViewerReadyPromise
 
 function warmModelViewer(){
@@ -67,7 +93,7 @@ function warmModelViewer(){
 }
 
 function relatedGlb(category, index = 0){
-  return ""
+  return curatedModelUrl(category, index)
 }
 
 function pausedEmbedUrl(value){
@@ -112,6 +138,8 @@ function observatoryRecord({category, stage, sceneFeed, mode, tier, loading}){
     status: loading ? "verifying" : sceneFeed.apiStatus || "ready",
     physicalAssets: digitalHutBrainMap.physicalAssets,
     seoCanal: digitalHutBrainMap.seoCanal,
+    assetResolver: digitalHutBrainMap.assetResolverIdentity,
+    assetDirective: digitalHutBrainMap.assetResolverDirective,
     verifiedAt: new Date().toISOString()
   }
 }
@@ -236,7 +264,15 @@ function toursFor(category){
 function seedFeeds(category){
   const meta = metaFor(category)
   const featured = featuredFeeds[category]
-  if(featured?.length) return featured.map(([title, note, query], index) => ({
+  if(featured?.length) {
+    const expanded = [...featured]
+    const queries = seedQueries[category] || seedQueries.Continent
+    while(expanded.length < 5){
+      const index = expanded.length
+      const query = queries[index % queries.length]
+      expanded.push([`${category} live 3D model ${index + 1}`, `${category} default live model with a real renderer asset attached before search takes over.`, query])
+    }
+    return expanded.map(([title, note, query], index) => ({
     id: `featured:${category}:${index}:${query}`,
     title,
     note,
@@ -246,11 +282,12 @@ function seedFeeds(category){
     accent: meta.accent,
     context: meta.context,
     thumbnail: stockUrl(category, index),
-    modelUrl: "",
+    modelUrl: relatedGlb(category, index),
     viewerUrl: "",
     apiSource: "DigitalHut featured reel",
-    apiStatus: index < 2 ? "featured-scene-preview" : "featured-post-with-scene"
+    apiStatus: index < 5 ? "featured-real-glb" : "featured-post-with-scene"
   }))
+  }
   return (seedQueries[category] || seedQueries.Continent).map((query, index) => ({
     id: `seed:${category}:${index}:${query}`,
     title: query.replace(/\b3d\b/gi, "").replace(/\s+/g, " ").trim(),
@@ -261,8 +298,8 @@ function seedFeeds(category){
     accent: meta.accent,
     context: meta.context,
     thumbnail: stockUrl(category, index),
-    modelUrl: "",
-    apiStatus: "scene-seed"
+    modelUrl: relatedGlb(category, index),
+    apiStatus: "seed-real-glb"
   }))
 }
 
@@ -845,13 +882,13 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
 }
 
 export default function FullscreenObservatoryV2(){
-  const [category, setCategory] = useState("Real Estate")
-  const [feeds, setFeeds] = useState(() => seedFeeds("Real Estate"))
+  const [category, setCategory] = useState("Mainstream Streaming")
+  const [feeds, setFeeds] = useState(() => seedFeeds("Mainstream Streaming"))
   const [statsFeeds, setStatsFeeds] = useState([])
   const [active, setActive] = useState(0)
-  const [query, setQuery] = useState("modern house real estate 3d")
+  const [query, setQuery] = useState("2026 viral 3d streaming feed")
   const [mode, setMode] = useState("regular")
-  const [tour, setTour] = useState(toursFor("Real Estate")[0].id)
+  const [tour, setTour] = useState(toursFor("Mainstream Streaming")[0].id)
   const [stageIndex, setStageIndex] = useState(0)
   const [loading, setLoading] = useState(false)
   const [tier, setTier] = useState(() => readStorage("digitalhut:tier", "guest"))
