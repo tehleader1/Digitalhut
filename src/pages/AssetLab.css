@@ -71,6 +71,11 @@
   background: #0e7490;
 }
 
+.dh-asset-actions button:disabled {
+  cursor: not-allowed;
+  opacity: .45;
+}
+
 .dh-backend-tabs {
   position: sticky;
   top: 0;

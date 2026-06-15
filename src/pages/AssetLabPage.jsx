@@ -200,21 +200,6 @@ export default function AssetLabPage(){
     updateSelected({[field]: (selected[field] || 0) + 1})
   }
 
-  if(!unlocked){
-    return <main className="dh-backend-page">
-      <section className="dh-public-asset dh-owner-gate">
-        <p>Protected DigitalHut Backend</p>
-        <h1>Asset Lab is private</h1>
-        <p>This backend stays hidden while the public system warms up. Public users only see the AI presenting one current model. Full demo editing unlocks later after the subscriber base is ready.</p>
-        <div className="dh-backend-panel">
-          <label>Owner key<input value={ownerKey} onChange={(event) => setOwnerKey(event.target.value)} onKeyDown={(event) => {if(event.key === "Enter") unlockOwner()}} placeholder="Owner access" /></label>
-          <button className="dh-backend-btn hot" type="button" onClick={unlockOwner}>Unlock Owner Backend</button>
-        </div>
-        <Link className="dh-backend-btn" to="/">Return to Main System</Link>
-      </section>
-    </main>
-  }
-
   return <main className="dh-backend-page">
     <header className="dh-backend-header">
       <div>
@@ -269,14 +254,15 @@ export default function AssetLabPage(){
         <h2>AI One-Model Conductor</h2>
         <div className="dh-asset-actions">
           <button type="button" onClick={() => setDemoStep(0)}>Open View</button>
-          <button type="button" onClick={conductNext}>Conduct Next</button>
-          <button type="button" onClick={() => setDemoStep(1)}>Rotate</button>
-          <button type="button" onClick={() => setDemoStep(3)}>Zoom</button>
+          <button type="button" disabled={!unlocked} onClick={conductNext}>Conduct Next</button>
+          <button type="button" disabled={!unlocked} onClick={() => setDemoStep(1)}>Rotate</button>
+          <button type="button" disabled={!unlocked} onClick={() => setDemoStep(3)}>Zoom</button>
         </div>
         <div className="dh-asset-meta">
           <b>{selected?.name}</b>
           <span>{selected?.status}</span>
           <span>{spokenLine}</span>
+          {!unlocked && <span>AI control demo is protected. Backend queue, profile GLBs, comments, likes, shares, and sponsors stay visible.</span>}
           {selected?.sponsor?.name && <span>Sponsored by {selected.sponsor.name}: {selected.sponsor.placement}</span>}
           <a className="dh-share-link" href={shareUrl}>{shareUrl}</a>
         </div>
@@ -314,10 +300,16 @@ export default function AssetLabPage(){
       </div>
 
       <div className="dh-backend-panel">
-        <h2>Future Demo Editor</h2>
-        <p>Coming soon after 10,000 subscribers: public demo editing, multi-model scene cutting, deeper camera choreography, download queue expansion, and creator-controlled demo publishing.</p>
-        <div className="dh-progress"><span style={{width: "7%"}} /></div>
-        <small>Current public max: AI speaks and presents one current model.</small>
+        <h2>Protected AI Control Demo</h2>
+        {unlocked ? <>
+          <p>Owner AI control is unlocked for internal testing: conduct next, rotate, zoom, and prepare the future related-GLB shuffle without exposing public demo editing.</p>
+          <div className="dh-progress"><span style={{width: "22%"}} /></div>
+          <small>Public unlock target remains 10,000 subscribers.</small>
+        </> : <>
+          <p>Only this AI control demo is locked. The backend system remains visible so the community can warm up around uploads, profile GLBs, likes, comments, shares, and sponsors.</p>
+          <label>Owner key<input value={ownerKey} onChange={(event) => setOwnerKey(event.target.value)} onKeyDown={(event) => {if(event.key === "Enter") unlockOwner()}} placeholder="Owner access" /></label>
+          <button className="dh-backend-btn hot" type="button" onClick={unlockOwner}>Unlock AI Control Demo</button>
+        </>}
       </div>
     </section>}
 
