@@ -1,6 +1,6 @@
 param(
-  [ValidateSet("001", "002")]
-  [string]$Batch = "002",
+  [ValidateSet("001", "002", "003")]
+  [string]$Batch = "003",
   [string]$Destination = ""
 )
 
@@ -66,13 +66,47 @@ $driveBatch002 = @(
   "14Fb1eEYmvP-aZeesp1CE28-zbKet-g74"
 )
 
+$driveBatch003 = @(
+  "1AM2qpyEasZaoIl2HJ5vooe4IL7YVvYN3",
+  "14eTGRv5g0eZbnMtYoPqcYyOjGMuU40D6",
+  "1nuAOIuo_Z0DFkF1Qnj6JspZSg74fG2NU",
+  "1kNz4SpYZU_vg94d-m4TTS8Ttg-7vr9Aj",
+  "186Bd5Mk94gGn2yUqlkt8Rx-qBQgsU-f9",
+  "1svVunRANrfFGISTjunayCZk54yKpwVpA",
+  "1fEtS-ZjEn7qqZ-xJGxBujDA2FWO9vLCS",
+  "1YOLG3t-sMF2Qibf_HEkPvd9z8R4_K6Z0",
+  "1z5JvxiK0B0c22wRpDbsb06UxOHJeBukm",
+  "1GgDlWpOhYqGASSezwDs3MJhlOWO4Wbd-",
+  "1J-UsxfLhLOWuDYVy-zmyvne8q04osh6m",
+  "1KUa1ALN8Hh2X9g-AXBZGsh0YNVMy6zOw",
+  "1ul4YMMdz9Q5Nx8P09HBiUo3qZaOIw41C",
+  "1IYxIotMZaaItu2HJH87LxIfPCglFX5eE",
+  "1ZekhMOTCq1DJtrFgJzKnvt32EHvG9Ou1",
+  "1dESiBN5AKFVW1TApkYfuNMQYUGQK7hDD",
+  "1JzuTT38zfUIOw83HeQPEDPUlhODWa7qt",
+  "1PubMVZHNLAYSHZTKOryAzhULqJFofZuT",
+  "14Fb1eEYmvP-aZeesp1CE28-zbKet-g74",
+  "1N5af_WsmIef40JTnGnwh-XwWD6PxEm4D",
+  "1RzlUKwR9OIr58BRJT-FzoVf8IdbmNf6r",
+  "10l-R7SLRhu8NvGalmgYd0fZYLEF3jRuo",
+  "1EyJREaTttytp-uwVhai3ak9xq6eBxWiC",
+  "1-YY7aB27KA26WHGy6a12EeyAVuGcr0J4",
+  "1yR-QKJ0jQ-fS7w9YKH6lwCsv_CSBNnOW",
+  "1nDoh9dMSEvum9p5tnpJSSxGhorZPikiK",
+  "1RUSc2VdaiHcAUwi6LYPEokj3n6ZRe3ki",
+  "1fASNAMhDLCcFOoGu9_1102q3qK4Icifl",
+  "1zupyRFIgXc8J8p4VukDQm7ZVMohNppCx",
+  "1HGV8v5o0BkKNbAX-c-wZlTQGVIq7HW0F"
+)
+
 if(-not $Destination){
   $Destination = "D:\UserBackups\Downloads\DigitalHutDriveBatch$Batch"
 }
 
 $knownIds = @{}
 foreach($id in $driveBatch001){ $knownIds[$id] = "001" }
-$driveIds = if($Batch -eq "001"){ $driveBatch001 } else { $driveBatch002 }
+foreach($id in $driveBatch002){ if(-not $knownIds.ContainsKey($id)){ $knownIds[$id] = "002" } }
+$driveIds = if($Batch -eq "001"){ $driveBatch001 } elseif($Batch -eq "002"){ $driveBatch002 } else { $driveBatch003 }
 
 New-Item -ItemType Directory -Force -Path $Destination | Out-Null
 
@@ -145,7 +179,12 @@ $downloaded = foreach($id in $driveIds){
 }
 
 $downloaded | Format-Table -AutoSize
+$downloadedCount = @($downloaded | Where-Object { $_.Status -eq "Downloaded" }).Count
 Write-Host ""
-Write-Host "Saved downloads to $Destination"
 Write-Host "Batch $Batch has $($driveIds.Count) IDs."
-Write-Host "Next: powershell -ExecutionPolicy Bypass -File .\tools\import-firecuda-library.ps1 -Source `"$Destination`""
+Write-Host "Downloaded $downloadedCount files to $Destination"
+if($downloadedCount -gt 0){
+  Write-Host "Next: powershell -ExecutionPolicy Bypass -File .\tools\import-firecuda-library.ps1 -Source `"$Destination`""
+} else {
+  Write-Host "No files landed in the FireCuda batch folder yet. Check Drive sharing or download the files through Chrome into this folder."
+}
