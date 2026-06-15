@@ -55,13 +55,6 @@ function stockUrl(category, index = 0){
   return `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1200&q=82`
 }
 
-const fallbackGlbs = [
-  "https://modelviewer.dev/shared-assets/models/Astronaut.glb",
-  "https://modelviewer.dev/shared-assets/models/RobotExpressive.glb",
-  "https://modelviewer.dev/shared-assets/models/NeilArmstrong.glb",
-  "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/DamagedHelmet/glTF-Binary/DamagedHelmet.glb"
-]
-
 let modelViewerReadyPromise
 
 function warmModelViewer(){
@@ -74,16 +67,7 @@ function warmModelViewer(){
 }
 
 function relatedGlb(category, index = 0){
-  const offsets = {
-    "Real Estate": 1,
-    Gamer: 3,
-    Planetary: 0,
-    Workforce: 2,
-    "Mainstream Streaming": 1,
-    Researcher: 3,
-    Programmer: 2
-  }
-  return fallbackGlbs[((offsets[category] || 0) + index) % fallbackGlbs.length]
+  return ""
 }
 
 function pausedEmbedUrl(value){
@@ -137,7 +121,7 @@ const categories = [
   ["Continent", "CO", "#67e8f9", "global terrain, travel, culture, and education"],
   ["Planetary", "PL", "#a78bfa", "structures, environments, and places around the world or off-world"],
   ["Gamer", "GM", "#22c55e", "real-life game updates, new game visuals, level ideas, and play-session scouting"],
-  ["Real Estate", "RE", "#2dd4bf", "agent-license career sessions, property models, housing data, and client-ready scouting"],
+  ["Real Estate", "RE", "#2dd4bf", "international housing options, market pressure, property models, rental demand, travel access, and agent-ready scouting"],
   ["Workforce", "WF", "#fb7185", "jobsites, training, operations, and safety walkthroughs"],
   ["Political", "PO", "#f97316", "civic geography, public works, maps, and policy spaces"],
   ["Programmer", "PR", "#38bdf8", "research data, backend features, decentralized networks, APIs, and prototype logic"],
@@ -150,7 +134,7 @@ const seedQueries = {
   "Continent": ["cape town south africa 3d city terrain", "caribbean colonial zone historic 3d", "hollywood sign los angeles 3d", "european buildings old city architecture 3d"],
   "Planetary": ["international space station 3d model", "moon surface observatory 3d", "mars terrain 3d", "orbital city grid 3d"],
   "Gamer": ["game city pack prototype 3d", "animated environment game scene 3d", "mission hub game prototype 3d", "sci fi arena 3d"],
-  "Real Estate": ["modern house real estate 3d", "wall street new york financial district 3d", "residential neighborhood terrain 3d", "apartment building architecture 3d"],
+  "Real Estate": ["international coastal housing market 3d", "global smart apartment housing data 3d", "tourist city rental pressure map 3d", "middle class international housing options 3d"],
   "Workforce": ["construction jobsite structure 3d", "warehouse training safety 3d", "city infrastructure operations 3d", "coastal response emergency planning 3d"],
   "Political": ["civic district public works 3d", "government building city 3d", "historical public square 3d", "infrastructure civic assets 3d"],
   "Programmer": ["developer api data center 3d", "renderer stress test 3d model", "city data twin 3d", "tool builder 3d interface"],
@@ -166,10 +150,10 @@ const featuredFeeds = {
     ["DigitalHut sponsor package", "Backlink, title, sponsor line, contest prompt, and share metadata for the selected presentation.", "digitalhut sponsor presentation package"]
   ],
   "Real Estate": [
-    ["Trending glass courtyard house model", "A modern glass courtyard house reel for layout, light, and buyer presentation.", "trending glass courtyard house 3d model"],
-    ["Trending compact smart home model", "A compact smart home model for starter-home planning and middle-market walkthroughs.", "compact smart home 3d model"],
-    ["Housing affordability pressure map", "Internet housing-market feature view with a related property GLB attached for the presentation.", "housing affordability market feature 2026"],
-    ["Build-to-rent neighborhood trend", "Housing market feature on build-to-rent demand, attached to a neighborhood-style GLB.", "build to rent housing market trend"]
+    ["International coastal housing options", "Compare coastal housing pressure across tourism markets, insurance risk, rental demand, and relocation value.", "international coastal housing market 3d"],
+    ["Global smart apartment housing data", "A city-apartment housing lane for international renters, remote workers, middle-class buyers, and agent-ready walkthroughs.", "global smart apartment housing data 3d"],
+    ["Tourist city rental pressure map", "Shows how tourism, hotels, airport access, and short-term rental pressure affect real housing decisions.", "tourist city rental pressure map 3d"],
+    ["Middle-class international housing watch", "Tracks realistic housing options across regions instead of only luxury listings, with market notes attached.", "middle class international housing options 3d"]
   ],
   "Gamer": [
     ["Link-inspired adventure hero GLB", "A fantasy adventure character lane for game visuals, quest framing, and hero silhouette.", "link fantasy game hero 3d model"],
@@ -226,7 +210,7 @@ const guidedTours = {
   "Continent": [["Terrain", "TR", "Read elevation, coastline, streets, routes, and what the region teaches."], ["Culture", "CU", "Explain landmarks, public memory, travel value, and culture."], ["Route", "RT", "Move through access points and nearby context."], ["Compare", "CP", "Compare this place against similar regions."]],
   "Planetary": [["Orbit", "OR", "Start from orbit, scale, lighting, and mission frame."], ["Surface", "SF", "Inspect terrain, hazards, and research targets."], ["Mission", "MS", "Narrate objectives and next observation."], ["Research", "RS", "Name evidence, uncertainty, and open questions."]],
   "Gamer": [["Spawn", "SP", "Read spawn, sightlines, paths, and first player decision."], ["Mechanics", "MC", "Explain loops, hazards, rewards, and interaction zones."], ["Assets", "AS", "Inspect modular value and prototype readiness."], ["Quest", "QS", "Turn the scene into a playable quest route."]],
-  "Real Estate": [["Property", "PR", "Explain the house or site model, layout, access, value, and development potential."], ["Block", "BK", "Read nearby streets, neighbors, demand signals, and zoning feel."], ["Risk", "RK", "Call out weather, slope, maintenance, liquidity, and inspection questions."], ["Market", "MK", "Move into statistics: price context, market pressure, comparable assets, and premium decision points."]],
+  "Real Estate": [["International", "IN", "Compare country, city, travel access, buyer path, and housing option type."], ["Market", "MK", "Read affordability, rental pressure, tourism pressure, demand signals, and comparable regions."], ["Risk", "RK", "Call out weather, insurance, title, liquidity, maintenance, and local verification questions."], ["Agent View", "AV", "Turn the scene into an agent-ready explanation for buyers, renters, or relocation clients."]],
   "Workforce": [["Safety", "SF", "Walk hazards, access, staging, and worker awareness."], ["Training", "TR", "Teach the scene as a new-worker module."], ["Ops", "OP", "Explain routing, resources, crew flow, and bottlenecks."], ["Audit", "AU", "Record what is live, what needs verification, and what changed."]],
   "Political": [["Civic", "CV", "Read public access, service zones, and community value."], ["Policy", "PY", "Explain infrastructure choices, funding, and tradeoffs."], ["Public", "PB", "Narrate so normal visitors understand the space."], ["Map", "MP", "Use boundaries, routes, population pressure, and comparison."]],
   "Programmer": [["API", "AP", "Inspect provider source, payload shape, and fallback state."], ["Runtime", "RT", "Narrate renderer state, wallet state, and asset load path."], ["Agent", "AG", "Explain monitoring, SEO, GLB testing, and FireCuda ops."], ["Debug", "DB", "State what is live, fallback, blocked, and how to verify."]],
@@ -262,10 +246,10 @@ function seedFeeds(category){
     accent: meta.accent,
     context: meta.context,
     thumbnail: stockUrl(category, index),
-    modelUrl: relatedGlb(category, index),
+    modelUrl: "",
     viewerUrl: "",
     apiSource: "DigitalHut featured reel",
-    apiStatus: index < 2 ? "featured-glb" : "featured-post-with-glb"
+    apiStatus: index < 2 ? "featured-scene-preview" : "featured-post-with-scene"
   }))
   return (seedQueries[category] || seedQueries.Continent).map((query, index) => ({
     id: `seed:${category}:${index}:${query}`,
@@ -277,8 +261,8 @@ function seedFeeds(category){
     accent: meta.accent,
     context: meta.context,
     thumbnail: stockUrl(category, index),
-    modelUrl: relatedGlb(category, index),
-    apiStatus: "seed"
+    modelUrl: "",
+    apiStatus: "scene-seed"
   }))
 }
 
@@ -328,7 +312,7 @@ function normalizeAsset(item, category, index, source, term){
     modelUrl,
     viewerUrl,
     apiSource: item?.apiSource || source,
-    apiStatus: item?.apiStatus || (embedUrl || rawModelUrl ? "model-connected" : "post-with-related-glb"),
+    apiStatus: item?.apiStatus || (embedUrl || rawModelUrl ? "model-connected" : "post-preview-needs-scene"),
     providerMix: item?.providerMix || item?.providers || [source],
     market: item?.market,
     cesium: item?.cesium
@@ -431,7 +415,7 @@ function topicInsight({category, query, feed, stage}){
   const source = feed.apiSource || feed.apiStatus || "observatory feed"
   if(category === "Planetary") return `I read ${subject} as a place or environment session. I would start wide, then rotate into the structure, terrain, scale, and visible landmarks. Source status is ${source}.`
   if(category === "Gamer") return `${subject} fits the Gamer lane. I am looking for silhouette, character readability, animation potential, world fit, and whether it could inspire a playable update. Source status is ${source}.`
-  if(category === "Real Estate") return `${subject} fits Real Estate. I am checking location signal, property class, neighborhood context, middle-market usefulness, and what an agent could explain to a client. Source status is ${source}.`
+  if(category === "Real Estate") return `${subject} fits the international Real Estate lane. I am checking country and city signal, housing affordability, rental pressure, insurance or travel risk, neighborhood context, and what an agent or buyer should verify before trusting the opportunity. Source status is ${source}.`
   if(category === "Programmer") return `${subject} fits Programmer mode. I am checking data shape, backend use, provider reliability, decentralized network relevance, and what can be logged or automated. Source status is ${source}.`
   if(category === "Researcher") return `${subject} fits Researcher mode. I am checking evidence, age or history clues, broken areas, visible details, and what still needs verification. Source status is ${source}.`
   if(category === "Mainstream Streaming") return `${subject} fits Mainstream Streaming. I am looking for the hook, what makes it funny or shareable, why it could trend in 2026, and what clip should come next. Source status is ${source}.`
@@ -494,7 +478,7 @@ function movieBeat({category, feed, stage}){
     return `Workforce bridge is live. ${title} becomes a project walkthrough: crews, public access, safety, and what has to be verified.`
   }
   if(category === "Real Estate"){
-    return `Real Estate reel is live. ${title} is presented like an agent showing value, market pressure, layout, and what buyers should notice.`
+    return `International Real Estate reel is live. ${title} is presented like an observatory housing report: location, market pressure, affordability, travel access, rental demand, and what buyers or agents should verify next.`
   }
   return `Next live reel: ${category}. ${title} is attached to a GLB so the show stays visual.`
 }
@@ -1197,6 +1181,20 @@ export default function FullscreenObservatoryV2(){
     speakModelReadout(loaded, category, stage)
   }
 
+  async function refreshLiveRenderer(){
+    setLoading(true)
+    setModelOpen(true)
+    setStageIndex(0)
+    setGuideDepth(0)
+    playSessionSound(category, "bridge")
+    speak("Refreshing the live renderer. I will rebuild the feed and use the newest real model or scene preview instead of a stale fallback.")
+    const next = await loadFeeds(category, sceneFeed.query || query, {silent: true, keepOpen: true})
+    const loaded = next[0] || seedFeeds(category)[0] || sceneFeed
+    setActive(0)
+    setModelOpen(true)
+    speakAfterVisual(`Live renderer refreshed for ${loaded.title}. ${streamReadout({category, query: loaded.query || query, feed: loaded, stage: stages[0]})}`, visualKeyFor(loaded, stages[0]))
+  }
+
   async function chooseTour(item){
     setTour(item.id)
     setMode("premium")
@@ -1606,6 +1604,7 @@ export default function FullscreenObservatoryV2(){
     if(label === "Embed" && navigator.clipboard) navigator.clipboard.writeText(sceneFeed.embedUrl ? `<iframe src="${sceneFeed.embedUrl}"></iframe>` : window.location.href).catch(() => null)
     if(label === "Download") target && paid ? window.open(target, "_blank") : setEntryOpen(true)
     if(label === "Related") setActive((current) => (current + 1) % feeds.length)
+    if(label === "Refresh") refreshLiveRenderer()
     if(label === "FAQ") window.location.href = "/faq"
     if(label === "Live") setLiveStageOpen((value) => !value)
     if(label === "Backend") window.location.href = "/asset-lab"
@@ -1675,7 +1674,7 @@ export default function FullscreenObservatoryV2(){
         <button className="dh-btn" onClick={() => speak(aiLimit === Infinity ? "Pro AI research is unlimited." : `${Math.round(aiRemainingMs / 60000)} AI minutes remain in this 12 hour window.`)}>{aiLimit === Infinity ? "Pro Unlimited" : `${Math.round(aiRemainingMs / 60000)}m left`}</button>
       </div>
 
-      <div className="dh-utility" style={{opacity: awake ? 1 : 0.1}}>{["Save", "Share", "Live", "Embed", "Download", "Related", "FAQ"].map((label) => <button key={label} className="dh-btn" onClick={() => action(label)}>{label}</button>)}</div>
+      <div className="dh-utility" style={{opacity: awake ? 1 : 0.1}}>{["Save", "Share", "Live", "Embed", "Download", "Related", "Refresh", "FAQ"].map((label) => <button key={label} className="dh-btn" onClick={() => action(label)}>{label}</button>)}</div>
 
       <div className="dh-layer-dock" style={{opacity: awake ? 1 : 0.12}}>
         <button className={`dh-btn ${paid ? "" : "locked"}`} onClick={() => paid ? setLayerOpen((value) => !value) : setEntryOpen(true)}>{paid ? `Smart Layers: ${layer}` : "Smart Layers: Premium / Pro"}</button>

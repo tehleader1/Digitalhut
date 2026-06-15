@@ -295,7 +295,7 @@ function scoreAsset(candidate, asset){
 export function attachBestAsset(candidate, assets = readRecentAssets()){
   const ranked = assets.map((asset) => ({asset, score: scoreAsset(candidate, asset)})).sort((a, b) => b.score - a.score)
   const best = ranked[0]
-  if(!best || best.score < 18){
+  if(!best || best.score < 18 || best.asset.genericDemo){
     return {
       ...candidate,
       assetMatchStatus: "No match - generate new scene",
@@ -305,7 +305,7 @@ export function attachBestAsset(candidate, assets = readRecentAssets()){
         fileType: "Generated GLB plan",
         previewThumbnail: "",
         matchConfidence: 0,
-        reasonMatched: "No recent asset matched location, category, object type, scenario, freshness, or permission.",
+        reasonMatched: best?.asset?.genericDemo ? "A sample demo GLB was blocked. DigitalHut will render a situation-specific environment instead of showing a robot, astronaut, or generic character." : "No recent asset matched location, category, object type, scenario, freshness, or permission.",
         freshness: "new scene required",
         url: ""
       }

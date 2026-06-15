@@ -8,7 +8,7 @@ import {
 } from "../lib/dailySituationDiscovery"
 import "./AssetLab.css"
 
-const queueKey = "digitalhut:dailySituationQueue"
+const queueKey = "digitalhut:dailySituationQueue:v3"
 const archiveKey = "digitalhut:dailySituationArchive"
 const assetKey = "digitalhut:assetLab"
 const accessKey = "digitalhut:dailySituationAccess"
@@ -127,10 +127,18 @@ export default function DailySituationQueuePage(){
   }
 
   function refreshDiscovery(){
+    ["digitalhut:dailySituationQueue", "digitalhut:dailySituationQueue:v2", "digitalhut:dailySituationQueue:v3"].forEach((key) => window.localStorage.removeItem(key))
     const next = createDiscoveryQueue()
     setItems(next)
     setActiveId(next[0]?.id || "")
     setTab("Morning Live Report")
+  }
+
+  function refreshActiveRenderer(){
+    const refreshed = createDiscoveryQueue()
+    const current = refreshed.find((item) => item.id === active?.id) || refreshed.find((item) => item.title === active?.title) || refreshed[0]
+    setItems(refreshed)
+    setActiveId(current?.id || "")
   }
 
   function renderThis(candidate){
@@ -223,6 +231,7 @@ export default function DailySituationQueuePage(){
             <button type="button" onClick={() => updateCandidate(active.id, {status: "Needs Verification"})}>Needs Verification</button>
             <button type="button" onClick={() => updateCandidate(active.id, {voiceDraft: `${active.voiceDraft} DigitalHut AI will keep the report practical and safety-first.`})}>Generate Voice</button>
             <button type="button" onClick={() => publish(active)}>Publish Report</button>
+            <button type="button" onClick={refreshActiveRenderer}>Refresh Live Renderer</button>
           </div>
         </>}
       </div>
@@ -243,12 +252,13 @@ export default function DailySituationQueuePage(){
             <span><strong>Freshness:</strong> {active.relatedAsset.freshness}</span>
             <span><strong>Status:</strong> {active.assetMatchStatus}</span>
             {active.publicAssetSlug && <span><strong>Public preview:</strong> <Link to={`/${active.publicAssetSlug}`}>/{active.publicAssetSlug}</Link></span>}
-            <span><strong>Current GLB:</strong> {active.renderedModelUrl || active.relatedAsset.url || "fallback generated scene model"}</span>
+            <span><strong>Current GLB:</strong> {active.renderedModelUrl || active.relatedAsset.url || "Generated situation scene"}</span>
           </div>
           <div className="dh-asset-actions">
             <button type="button" onClick={() => renderThis(active)}>Use This Asset</button>
             <button type="button" onClick={() => updateCandidate(active.id, {assetMatchStatus: "Choose another asset"})}>Choose Another</button>
             <button type="button" onClick={() => updateCandidate(active.id, {assetMatchStatus: "Generate new scene"})}>Generate New</button>
+            <button type="button" onClick={refreshActiveRenderer}>Refresh Live Renderer</button>
           </div>
         </>}
         <h2>AI Voice Draft</h2>
