@@ -76,6 +76,9 @@ export default function DailySituationQueuePage(){
   const visible = useMemo(() => {
     if(tab === "Suggested Today") return items.filter((item) => !["Published", "Archived"].includes(item.status))
     if(tab === "High Priority") return items.filter((item) => item.priority === "High Priority" || item.confidence >= 80)
+    if(tab === "International Incidents") return items.filter((item) => ["International Incidents", "Researcher Science", "Weather", "Scams", "Overpromising Websites"].includes(item.category) || item.location.toLowerCase().includes("international"))
+    if(tab === "Researcher Science") return items.filter((item) => item.category === "Researcher Science")
+    if(tab === "Overpromising Websites") return items.filter((item) => item.category === "Overpromising Websites")
     if(tab === "Selected for Render") return items.filter((item) => item.status === "Selected for Render")
     if(tab === "Published") return items.filter((item) => item.status === "Published")
     if(tab === "Archived") return items.filter((item) => item.status === "Archived")
@@ -135,9 +138,9 @@ export default function DailySituationQueuePage(){
   return <main className="dh-backend-page">
     <header className="dh-backend-header">
       <div>
-        <p>DigitalHut Daily Situation Discovery Engine</p>
-        <h1>Daily Situation Queue</h1>
-        <p>DigitalHut finds real-world challenges every day, matches the closest usable 3D/GLB asset, and lets Anthony choose what becomes a blog-style 3D report with AI narration.</p>
+        <p>Exclusive DigitalHut Intelligence Backend</p>
+        <h1>Daily International Real-World Reports</h1>
+        <p>Private queue for real-world incidents, weather issues, scammy or overpromising websites, tourist congestion, and researcher science scenarios. Each candidate attempts to attach a usable 3D/GLB asset before Anthony chooses what becomes public.</p>
       </div>
       <nav className="dh-backend-nav">
         <Link to="/">Main System</Link>

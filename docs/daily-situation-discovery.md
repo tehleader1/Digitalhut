@@ -4,6 +4,16 @@ DigitalHut should not wait for Anthony to manually invent every post.
 
 The daily engine surfaces real-world situations, turns them into candidate report cards, attempts to attach the nearest usable 3D/GLB asset, then lets Anthony decide what becomes a rendered DigitalHut report.
 
+This is an exclusive backend lane for:
+
+- daily international real-world incidents
+- weather-related issues
+- scammy websites
+- overpromising websites
+- tourist congestion
+- researcher science data problems
+- ongoing public-health, environmental, and scientific monitoring scenarios
+
 ## Flow
 
 1. Auto-discover daily situations.
@@ -33,6 +43,10 @@ The daily engine surfaces real-world situations, turns them into candidate repor
 - dangerous weather patterns
 - regional/global travel concerns
 - local public safety patterns
+- public health data gaps
+- environmental monitoring blind spots
+- forecast/model data conflicts
+- overpromising website complaint patterns
 
 ## Candidate Report Card
 
@@ -85,3 +99,5 @@ If no match is found, DigitalHut creates a simplified generated-scene plan.
 ## Product Identity
 
 DigitalHut becomes a daily AI observatory that finds real-world challenges, lets Anthony choose the best ones, then turns them into useful blog-style 3D reports with voice narration and backend asset records.
+
+The researcher part focuses on currently developing science-data situations that need careful verification before public release, such as outbreak data gaps, weather model conflicts, environmental sensor uncertainty, wildfire smoke or water-quality monitoring, scientific project delays, and public data sources that disagree.
