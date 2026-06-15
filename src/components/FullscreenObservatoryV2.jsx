@@ -1623,7 +1623,10 @@ export default function FullscreenObservatoryV2(){
           <button className="dh-btn hot" onClick={runSearch}>Search</button>
           <button className="dh-btn hot" onClick={() => speak(`${category} ${activeTour.id}. ${activeTour.prompt}`)}>Voice</button>
         </div>
-        <button className="dh-btn dh-account" onClick={() => setEntryOpen(true)}>{username || "Choose account"} / {tier}</button>
+        <div className="dh-account-cluster">
+          <button className="dh-btn dh-backend-top" onClick={() => window.location.href = "/asset-lab"}>Backend</button>
+          <button className="dh-btn dh-account" onClick={() => setEntryOpen(true)}>{username || "Choose account"} / {tier}</button>
+        </div>
       </div>
 
       <div className="dh-category-dock" style={{opacity: awake ? 1 : 0.18}}>
@@ -1669,7 +1672,7 @@ export default function FullscreenObservatoryV2(){
         <button className="dh-btn" onClick={() => speak(aiLimit === Infinity ? "Pro AI research is unlimited." : `${Math.round(aiRemainingMs / 60000)} AI minutes remain in this 12 hour window.`)}>{aiLimit === Infinity ? "Pro Unlimited" : `${Math.round(aiRemainingMs / 60000)}m left`}</button>
       </div>
 
-      <div className="dh-utility" style={{opacity: awake ? 1 : 0.1}}>{["Save", "Backend", "Share", "Live", "Embed", "Download", "Related", "FAQ"].map((label) => <button key={label} className="dh-btn" onClick={() => action(label)}>{label}</button>)}</div>
+      <div className="dh-utility" style={{opacity: awake ? 1 : 0.1}}>{["Save", "Share", "Live", "Embed", "Download", "Related", "FAQ"].map((label) => <button key={label} className="dh-btn" onClick={() => action(label)}>{label}</button>)}</div>
 
       <div className="dh-layer-dock" style={{opacity: awake ? 1 : 0.12}}>
         <button className={`dh-btn ${paid ? "" : "locked"}`} onClick={() => paid ? setLayerOpen((value) => !value) : setEntryOpen(true)}>{paid ? `Smart Layers: ${layer}` : "Smart Layers: Premium / Pro"}</button>

@@ -501,6 +501,19 @@
   text-transform: capitalize;
 }
 
+.dh-account-cluster {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dh-backend-top {
+  border-color: rgba(56,189,248,.62);
+  background: rgba(14,116,144,.78);
+  color: #ecfeff;
+  letter-spacing: 0;
+}
+
 .dh-category-dock {
   left: 132px;
   right: min(456px, 36vw);
