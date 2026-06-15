@@ -69,7 +69,7 @@ function warmModelViewer(){
 }
 
 function relatedGlb(category, index = 0){
-  return ""
+  return "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Sponza/glTF/Sponza.gltf"
 }
 
 function environmentLabel(feed = {}){
@@ -187,7 +187,8 @@ const featuredFeeds = {
     ["International coastal housing options", "Compare coastal housing pressure across tourism markets, insurance risk, rental demand, and relocation value.", "international coastal housing market 3d"],
     ["Global smart apartment housing data", "A city-apartment housing lane for international renters, remote workers, middle-class buyers, and agent-ready walkthroughs.", "global smart apartment housing data 3d"],
     ["Tourist city rental pressure map", "Shows how tourism, hotels, airport access, and short-term rental pressure affect real housing decisions.", "tourist city rental pressure map 3d"],
-    ["Middle-class international housing watch", "Tracks realistic housing options across regions instead of only luxury listings, with market notes attached.", "middle class international housing options 3d"]
+    ["Fiji island family immersion", "Own a two-acre Fiji island section as a full environment: family, friends, coastline, local life, access, and what the place feels like.", "fiji island real estate environment read"],
+    ["Texas Plano New Masjid Housing", "Plano housing environment around community access, local roads, nearby services, family living, and a new masjid housing context.", "texas plano masjid housing environment read"]
   ],
   "Gamer": [
     ["Open-world game environment read", "A full gameplay-place read for spawn, pathing, lighting, cover, and mood. No isolated subject unless the world loads with it.", "open world game environment read"],
@@ -199,7 +200,7 @@ const featuredFeeds = {
     ["Saturn ring mission zone", "Planetary zone for orbit, scale, shadow, and ring observation.", "saturn rings mission 3d model"],
     ["Green-season waterfall zone", "Waterfall environment view for a slow nature pass and seasonal color story.", "green season waterfall terrain 3d"],
     ["Mars ridge survey zone", "Terrain zone for rocks, route planning, and research hazards.", "mars ridge terrain 3d model"],
-    ["London bridge river zone", "World structure zone that can bridge into workforce construction and civic engineering.", "london bridge construction river 3d model"]
+    ["Starlink mothership hub", "Planetary tech environment around a Starlink-style hub, orbit routes, launch context, and related aerospace preview.", "elon musk starlink mothership hub environment read"]
   ],
   "Workforce": [
     ["London bridge construction project", "Public construction and workforce training view with an attached GLB.", "london bridge construction project 3d"],
@@ -208,7 +209,8 @@ const featuredFeeds = {
     ["Airport terminal workforce project", "Large-site workforce model for crew movement, security, and public access.", "airport terminal construction project 3d"]
   ],
   "Mainstream Streaming": [
-    ["SpongeBob undersea environment read", "Stream hook: read the undersea cartoon-style environment, color, set pieces, and visual mood instead of showing an isolated subject.", "spongebob underwater environment read"],
+    ["SpongeBob undersea environment read", "HA HA HA, I love SpongeBob. Viral trend: funny Patrick interaction. Read the undersea cartoon-style environment, color, set pieces, and visual mood.", "spongebob underwater environment read funny patrick interaction"],
+    ["Water balloon splash trend", "Nice viral trend: a water balloon popped and splashed someone. Read the creator scene, timing, crowd angle, and best related 3D environment.", "water balloon splash viral environment read"],
     ["Viral challenge environment hunt", "20,000-plus style share prompt where viewers hunt for a hidden layer inside a place, room, set, or scene.", "viral challenge environment hunt"],
     ["Funny creator room environment", "Creator post lane anchored to a studio, room, set, or social scene so the show stays visual and coherent.", "funny creator room environment read"],
     ["Unexpected trend environment replay", "Fast mainstream replay slot for a topic that is starting to blow up, shown as the environment around the trend.", "viral trend environment replay"]
@@ -217,7 +219,7 @@ const featuredFeeds = {
     ["New germ microscope environment", "Research find lane for a serious lab, evidence, and observation environment read.", "new germ found microscope research environment"],
     ["Dinosaur fossil fracture scan", "Fossil session for broken areas, age clues, and careful analysis.", "dinosaur fossil fracture 3d scan"],
     ["Ocean microplastic research project", "Actual research-project style card with a related model for presentation.", "ocean microplastic research project 3d"],
-    ["Ancient tool lab archive", "Research archive for artifacts, comparison, and verification questions.", "ancient tool lab archive 3d"]
+    ["South America science voyage", "Science experiment and voyage environment: closest Brazil or South America city context, research source link, terrain, route, and observation notes.", "south america science voyage brazil city environment read"]
   ],
   "Programmer": [
     ["New AI model production stack", "Developer movie beat: an AI model discovery moves into production company workflow.", "new AI model production code feature"],
@@ -433,8 +435,8 @@ function categoryFromCommand(text){
 
 function queryFromCommand(text, fallback){
   const value = text.toLowerCase()
-  if(value.includes("spongebob")) return "spongebob style underwater viral 3d feature"
-  if(value.includes("link")) return "link fantasy adventure game hero 3d model"
+  if(value.includes("spongebob")) return "spongebob style underwater environment viral 3d preview"
+  if(value.includes("link")) return "link fantasy adventure game environment 3d preview"
   if(value.includes("london bridge")) return "london bridge construction workforce project 3d model"
   if(value.includes("new germ") || value.includes("germ")) return "new germ microscope research discovery 3d model"
   if(value.includes("canada")) return "canada landscape city terrain 3d model"
@@ -500,6 +502,9 @@ function streamReadout({category, query, feed, stage}){
 function movieBeat({category, feed, stage}){
   const title = feed.title
   if(category === "Mainstream Streaming"){
+    const lower = `${title} ${feed.note || ""}`.toLowerCase()
+    if(lower.includes("spongebob")) return `HA HA HA, I love SpongeBob. Viral trend: funny Patrick interaction. I am putting the undersea environment next to the best 3D preview so the joke has a place to live.`
+    if(lower.includes("water balloon")) return `Nice viral trend: a water balloon popped and splashed someone. HA HA, now I am reading the scene around it so the viewer sees the setup, splash area, and reaction space.`
     return `Ten minutes into the live feed: featuring ${title}. I am opening the environment around the topic so the post is not just a loose object or thumbnail. Sound cue: fun stream bounce, then a clean pause for the visual.`
   }
   if(category === "DigitalHut Presentation"){
@@ -767,6 +772,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
   const [modelReady, setModelReady] = useState(false)
   const [modelLoaded, setModelLoaded] = useState(false)
   const [imageReady, setImageReady] = useState(false)
+  const [guideDismissed, setGuideDismissed] = useState(false)
   const decorationActive = false
   const stars = decorationActive ? Array.from({length: 10}) : []
   const skyline = decorationActive ? Array.from({length: 8}) : []
@@ -838,6 +844,10 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     setImageReady(false)
   }, [feed.thumbnail])
 
+  useEffect(() => {
+    setGuideDismissed(false)
+  }, [visualKey])
+
   return <div className={`dh-renderer ${guided ? "guided" : ""} ${canShowContainment ? "has-api" : ""} ${modelOpen ? "model-mode" : ""} ${liveOpen || containedDataOpen ? "live-open" : ""} ${containedDataOpen ? "data-open" : ""} stage-${stage.kind}`} style={{"--accent": feed.accent}}>
     {feed.thumbnail && <img className={`dh-renderer-stock ${imageReady ? "is-ready" : ""}`} src={feed.thumbnail} alt="" loading="lazy" decoding="async" onLoad={() => setImageReady(true)} />}
     {decorationActive && <div className="dh-motion-sky" />}
@@ -870,7 +880,8 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
         <button type="button" onClick={onPlayMore}>Deep Read</button>
       </div>
     </section>}
-    {canShowContainment && modelOpen && <div className="dh-contained-guide">
+    {canShowContainment && modelOpen && !guideDismissed && <div className="dh-contained-guide">
+      <button className="dh-guide-close" type="button" aria-label="Close presentation card" onClick={() => setGuideDismissed(true)}>X</button>
       <span>{guideText}</span>
       <button type="button" onClick={onNext}>Next</button>
       <button type="button" onClick={onPlayMore}>Play More</button>
@@ -1099,7 +1110,7 @@ export default function FullscreenObservatoryV2(){
     const seeds = seedFeeds(nextCategory)
     setLoading(true)
     setActive(0)
-    if(!options.keepOpen) setModelOpen(false)
+    setModelOpen(true)
     setGuideDepth(0)
     preloadImages(seeds.map((item) => item.thumbnail))
     if(requestRef.current !== id) return seeds
@@ -1178,12 +1189,12 @@ export default function FullscreenObservatoryV2(){
     setTour(toursFor(nextCategory)[0].id)
     setStageIndex(0)
     setStatsFeeds([])
-    setModelOpen(false)
+    setModelOpen(true)
     setGuideDepth(0)
     const seed = seedFeeds(nextCategory)[0]
     setQuery(seed.query)
-    loadFeeds(nextCategory, seed.query, {silent: true})
-    speak(`DigitalHut set to ${nextCategory}. I will hold the model first.`)
+    loadFeeds(nextCategory, seed.query, {silent: true, keepOpen: true})
+    speak(`DigitalHut set to ${nextCategory}. I am opening the 3D environment preview now.`)
     wake()
   }
 
@@ -1262,9 +1273,9 @@ export default function FullscreenObservatoryV2(){
     if(index >= 0) setActive(index)
     setQuery(item.query || item.title)
     setStageIndex(0)
-    setModelOpen(false)
+    setModelOpen(true)
     setGuideDepth(0)
-    speak(`Loaded ${item.title}. Containment is paused until you open it.`)
+    speakAfterVisual(`Loaded ${item.title}. The presentation card can be closed with X; the 3D environment preview is already playing.`, visualKeyFor(item, stages[0]), 600)
     wake()
   }
 

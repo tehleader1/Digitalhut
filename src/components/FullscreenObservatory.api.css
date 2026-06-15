@@ -463,6 +463,16 @@
   backdrop-filter: blur(14px);
 }
 
+.dh-contained-guide .dh-guide-close {
+  width: 28px;
+  min-width: 28px;
+  height: 28px;
+  padding: 0;
+  border-color: rgba(248,250,252,.32);
+  background: rgba(15,23,42,.72);
+  color: #f8fafc;
+}
+
 .dh-contained-guide span {
   min-width: 0;
   flex: 1;

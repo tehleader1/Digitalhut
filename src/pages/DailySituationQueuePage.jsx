@@ -60,7 +60,17 @@ function makeAssetFromCandidate(candidate){
       sources: candidate.sourceNotes,
       assetMatch: candidate.relatedAsset,
       generatedScene: !modelUrl,
-      generatedSceneType: candidate.glbSceneType
+      generatedSceneType: candidate.glbSceneType,
+      seoBacklinkWords: [
+        "DigitalHut 3D report",
+        "rendered situation asset",
+        candidate.location,
+        candidate.category,
+        candidate.glbSceneType,
+        candidate.title,
+        "public 3D preview",
+        "AI narrated environment"
+      ].filter(Boolean)
     },
     createdAt: new Date().toISOString()
   }
