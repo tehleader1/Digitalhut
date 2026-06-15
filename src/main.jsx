@@ -14,6 +14,7 @@ import {
 import HomePage from "./pages/HomePage"
 import AssetLabPage from "./pages/AssetLabPage"
 import AssetPublicPage from "./pages/AssetPublicPage"
+import DailySituationQueuePage from "./pages/DailySituationQueuePage"
 import LibraryPage from "./pages/LibraryPage"
 import UpdatesPage from "./pages/UpdatesPage"
 import UpgradePage from "./pages/UpgradePage"
@@ -51,6 +52,11 @@ ReactDOM.createRoot(
         <Route
           path="/asset-lab"
           element={<AssetLabPage />}
+        />
+
+        <Route
+          path="/daily-situations"
+          element={<DailySituationQueuePage />}
         />
 
         <Route

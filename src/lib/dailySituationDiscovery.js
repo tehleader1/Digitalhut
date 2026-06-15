@@ -1,0 +1,226 @@
+const fallbackAssets = [
+  {
+    id: "asset-road-grid",
+    name: "City road congestion grid",
+    type: "GLB",
+    url: "https://modelviewer.dev/shared-assets/models/RobotExpressive.glb",
+    thumbnail: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=900&q=80",
+    tags: ["traffic", "road", "city", "congestion", "travel"],
+    permission: "public-approved",
+    createdAt: "2026-06-15T08:00:00.000Z",
+    views: 420
+  },
+  {
+    id: "asset-weather-zone",
+    name: "Weather disruption zone",
+    type: "GLB",
+    url: "https://modelviewer.dev/shared-assets/models/Astronaut.glb",
+    thumbnail: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
+    tags: ["weather", "storm", "travel", "safety", "airport"],
+    permission: "public-approved",
+    createdAt: "2026-06-15T07:15:00.000Z",
+    views: 388
+  },
+  {
+    id: "asset-workforce-project",
+    name: "Workforce project site",
+    type: "GLB",
+    url: "https://modelviewer.dev/shared-assets/models/NeilArmstrong.glb",
+    thumbnail: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=80",
+    tags: ["construction", "workforce", "public works", "project", "delay"],
+    permission: "private-owner",
+    createdAt: "2026-06-14T19:30:00.000Z",
+    views: 210
+  },
+  {
+    id: "asset-research-lab",
+    name: "Research lab evidence model",
+    type: "GLB",
+    url: "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/DamagedHelmet/glTF-Binary/DamagedHelmet.glb",
+    thumbnail: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=900&q=80",
+    tags: ["science", "research", "project", "verification", "lab"],
+    permission: "public-approved",
+    createdAt: "2026-06-13T16:20:00.000Z",
+    views: 165
+  }
+]
+
+export const discoveryTabs = [
+  "Suggested Today",
+  "High Priority",
+  "Tourist Alerts",
+  "Weather",
+  "Traffic",
+  "Scams",
+  "Scientific/Workforce",
+  "Local",
+  "Selected for Render",
+  "Published",
+  "Archived"
+]
+
+export const discoveryCategories = [
+  "tourist alerts",
+  "weather disruptions",
+  "traffic congestion",
+  "accidents",
+  "airport delays",
+  "sailing/boating issues",
+  "scam complaints",
+  "website/service complaints",
+  "construction delays",
+  "workforce projects",
+  "scientific projects",
+  "animal migration/access blocks",
+  "dangerous weather patterns",
+  "regional/global travel concerns",
+  "local public safety patterns"
+]
+
+export function readRecentAssets(){
+  if(typeof window === "undefined") return fallbackAssets
+  try {
+    const stored = JSON.parse(window.localStorage.getItem("digitalhut:assetLab") || "[]")
+    const mapped = Array.isArray(stored) ? stored.map((item) => ({
+      id: item.id || item.slug,
+      name: item.name,
+      type: item.type || item.sourceType || "GLB",
+      url: item.convertedUrl || item.optimizedGlbUrl || item.convertedGlbUrl || item.url,
+      thumbnail: item.thumbnailUrl || item.oldFileUrl || item.originalFileUrl || "",
+      tags: [item.type, item.sourceType, item.source, item.description].filter(Boolean).join(" ").toLowerCase().split(/\W+/).filter(Boolean),
+      permission: item.visibility || "private-owner",
+      createdAt: item.createdAt || new Date().toISOString(),
+      views: item.views || item.likes || 0
+    })).filter((item) => item.url)
+    return mapped.length ? [...mapped, ...fallbackAssets] : fallbackAssets
+  } catch {
+    return fallbackAssets
+  }
+}
+
+export function createDailyCandidates(date = new Date()){
+  const stamp = date.toISOString().slice(0, 10)
+  return [
+    {
+      id: `daily-orlando-traffic-${stamp}`,
+      title: "5 PM Orlando Theme Park Exit Congestion",
+      problem: "After-work traffic and tourist traffic are overlapping near major hotel, park entrance, and shuttle routes.",
+      location: "Orlando, Florida",
+      category: "Traffic",
+      whyItMatters: "Family travel reports are stronger when traffic pressure, hotel movement, and tourism timing can be visualized in 3D.",
+      sourceNotes: ["Live provider lane: traffic APIs, tourism alerts, local public safety notes", "Needs verification before publish"],
+      confidence: 82,
+      renderIdea: "Road grid, cars, hotel blocks, park entrance, congestion heat zone, alternate route arrows.",
+      glbSceneType: "road-grid-congestion",
+      solutions: ["Leave earlier", "Use alternate entrance", "Check live route before departure"],
+      voiceDraft: "Open 3D model view. This report shows Orlando theme park exit congestion around 5 PM. I am highlighting the hotel blocks, route pressure, and safer alternate movement.",
+      status: "Suggested Today",
+      priority: "High Priority",
+      tags: ["orlando", "traffic", "tourist", "hotel", "road", "congestion", "travel"]
+    },
+    {
+      id: `daily-airport-weather-${stamp}`,
+      title: "Airport Delay Risk From Afternoon Storm Cells",
+      problem: "Afternoon weather can stack delays across departures, ground transport, and hotel check-ins.",
+      location: "Southeast travel corridor",
+      category: "Weather",
+      whyItMatters: "Travelers need a quick visual of weather disruption zones before committing to airport or hotel timing.",
+      sourceNotes: ["Live provider lane: weather APIs, airport delay feeds, travel advisories"],
+      confidence: 74,
+      renderIdea: "Airport terminal block, storm layer, delayed aircraft markers, ride-share congestion lane.",
+      glbSceneType: "airport-weather-delay",
+      solutions: ["Check airline app", "Track storm timing", "Delay ground pickup until gate status is stable"],
+      voiceDraft: "Open 3D model view. This report shows how storm timing can delay airport movement and ground transport.",
+      status: "Suggested Today",
+      priority: "High Priority",
+      tags: ["airport", "weather", "storm", "travel", "delay", "safety"]
+    },
+    {
+      id: `daily-scam-complaints-${stamp}`,
+      title: "Travel Booking Scam Complaint Pattern",
+      problem: "Visitors report confusing booking pages, duplicate listings, and support problems around urgent travel purchases.",
+      location: "Regional/global travel concern",
+      category: "Scams",
+      whyItMatters: "A 3D report can explain the decision path, risk points, and safer verification steps without making it feel like a plain warning.",
+      sourceNotes: ["Live provider lane: complaint boards, consumer protection notes, service-status pages"],
+      confidence: 68,
+      renderIdea: "Website flow model, warning flags, payment checkpoint, verification path.",
+      glbSceneType: "digital-service-complaint",
+      solutions: ["Verify official domain", "Avoid rushed payment links", "Save screenshots and support case numbers"],
+      voiceDraft: "Open 3D model view. This report maps where travel booking confusion can turn into a scam risk.",
+      status: "Suggested Today",
+      priority: "Needs Verification",
+      tags: ["scam", "website", "complaint", "travel", "service", "payment"]
+    },
+    {
+      id: `daily-workforce-project-${stamp}`,
+      title: "Construction Delay Around Public Works Zone",
+      problem: "A public works zone may slow commuting, deliveries, and nearby business access.",
+      location: "Local workforce route",
+      category: "Scientific/Workforce",
+      whyItMatters: "Workforce reports are useful when drivers, workers, and local businesses can see the project zone in a 3D layout.",
+      sourceNotes: ["Live provider lane: DOT feeds, city project pages, workforce notices"],
+      confidence: 71,
+      renderIdea: "Work zone model, lane closures, equipment markers, business access arrows.",
+      glbSceneType: "workforce-project-zone",
+      solutions: ["Plan delivery windows", "Mark alternate access points", "Check city project updates"],
+      voiceDraft: "Open 3D model view. This report explains a public works zone and where access may slow down.",
+      status: "Suggested Today",
+      priority: "Local",
+      tags: ["construction", "workforce", "project", "road", "delay", "public works"]
+    }
+  ]
+}
+
+function scoreAsset(candidate, asset){
+  const words = new Set([...candidate.tags, candidate.category.toLowerCase(), candidate.glbSceneType.toLowerCase()])
+  const assetWords = new Set([...(asset.tags || []), asset.name, asset.type].join(" ").toLowerCase().split(/\W+/).filter(Boolean))
+  let score = 0
+  words.forEach((word) => { if(assetWords.has(word)) score += 12 })
+  if(asset.permission?.toLowerCase().includes("public")) score += 8
+  if(asset.permission?.toLowerCase().includes("private")) score += 4
+  if(asset.type?.toLowerCase().includes("glb")) score += 10
+  if(Date.now() - new Date(asset.createdAt).getTime() < 1000 * 60 * 60 * 48) score += 8
+  score += Math.min(10, Math.round((asset.views || 0) / 60))
+  return Math.min(99, score)
+}
+
+export function attachBestAsset(candidate, assets = readRecentAssets()){
+  const ranked = assets.map((asset) => ({asset, score: scoreAsset(candidate, asset)})).sort((a, b) => b.score - a.score)
+  const best = ranked[0]
+  if(!best || best.score < 18){
+    return {
+      ...candidate,
+      assetMatchStatus: "No match - generate new scene",
+      relatedAsset: {
+        closestGlb: "Generate simplified 3D scene",
+        assetId: "",
+        fileType: "Generated GLB plan",
+        previewThumbnail: "",
+        matchConfidence: 0,
+        reasonMatched: "No recent asset matched location, category, object type, scenario, freshness, or permission.",
+        freshness: "new scene required",
+        url: ""
+      }
+    }
+  }
+  return {
+    ...candidate,
+    assetMatchStatus: "Preview ready",
+    relatedAsset: {
+      closestGlb: best.asset.name,
+      assetId: best.asset.id,
+      fileType: best.asset.type,
+      previewThumbnail: best.asset.thumbnail,
+      matchConfidence: best.score,
+      reasonMatched: "Matched by category, scenario tags, file type, freshness, and permission.",
+      freshness: best.asset.createdAt,
+      url: best.asset.url
+    }
+  }
+}
+
+export function createDiscoveryQueue(){
+  const assets = readRecentAssets()
+  return createDailyCandidates().map((candidate) => attachBestAsset(candidate, assets))
+}

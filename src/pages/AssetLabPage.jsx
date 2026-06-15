@@ -209,6 +209,7 @@ export default function AssetLabPage(){
       </div>
       <nav className="dh-backend-nav">
         <Link to="/">Main System</Link>
+        <Link to="/daily-situations">Daily Queue</Link>
         <Link to="/library">Profile Library</Link>
         {selected && <Link to={`/asset/${selected.slug}`}>Public Asset</Link>}
       </nav>

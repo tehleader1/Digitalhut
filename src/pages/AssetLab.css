@@ -111,7 +111,8 @@
 }
 
 .dh-backend-grid.queue,
-.dh-backend-grid.profile {
+.dh-backend-grid.profile,
+.dh-backend-grid.daily {
   grid-template-columns: minmax(320px, .9fr) minmax(320px, 1fr) minmax(280px, .8fr);
 }
 
@@ -287,6 +288,32 @@
 .dh-profile-list {
   max-height: 72vh;
   overflow: auto;
+}
+
+.dh-report-card {
+  display: grid;
+  gap: 9px;
+  color: #cbd5e1;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.dh-report-card b {
+  color: #f8fafc;
+  font-size: 16px;
+}
+
+.dh-report-card strong {
+  color: #93c5fd;
+}
+
+.dh-match-thumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(148, 163, 184, .22);
 }
 
 .dh-owner-gate {
