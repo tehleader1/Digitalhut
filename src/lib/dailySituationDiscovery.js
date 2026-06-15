@@ -98,7 +98,7 @@ export function readRecentAssets(){
       permission: item.visibility || "private-owner",
       createdAt: item.createdAt || new Date().toISOString(),
       views: item.views || item.likes || 0
-    })).filter((item) => item.url)
+    })).filter((item) => item.url) : []
     return mapped.length ? [...mapped, ...fallbackAssets] : fallbackAssets
   } catch {
     return fallbackAssets
