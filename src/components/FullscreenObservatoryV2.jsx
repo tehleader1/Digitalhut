@@ -86,8 +86,8 @@ function relatedGlb(category, index = 0){
     Businesses: [environment("business-district.glb"), environment("presentation-stage.glb"), environment("real-estate-island.glb"), environment("public-works.glb"), environment("workforce-site.glb")],
     Workforce: [environment("workforce-site.glb"), environment("public-works.glb"), environment("airport-delay.glb"), environment("orlando-traffic.glb"), environment("business-district.glb")],
     Political: [environment("public-works.glb"), environment("business-district.glb"), environment("history-district.glb"), environment("continent-city.glb"), environment("workforce-site.glb")],
-    Programmer: [environment("business-district.glb"), environment("presentation-stage.glb"), firecuda("international_space_elevator.glb"), environment("research-lab.glb"), environment("workforce-site.glb"), environment("science-voyage.glb")],
-    "DigitalHut Presentation": [environment("presentation-stage.glb"), firecuda("museum_of_ice_cream_singapore_-_welcome.glb"), firecuda("international_space_elevator.glb"), environment("business-district.glb"), environment("mainstream-feed.glb"), environment("science-voyage.glb"), environment("real-estate-island.glb")]
+    Programmer: [environment("business-district.glb"), environment("presentation-stage.glb"), environment("research-lab.glb"), environment("workforce-site.glb"), environment("science-voyage.glb")],
+    "DigitalHut Presentation": [environment("presentation-stage.glb"), environment("business-district.glb"), environment("mainstream-feed.glb"), environment("science-voyage.glb"), environment("real-estate-island.glb")]
   }
   const pool = [...firecudaModelPool(category), ...(pools[category] || pools["Mainstream Streaming"])]
   return pool[index % pool.length]
