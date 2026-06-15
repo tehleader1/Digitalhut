@@ -7,8 +7,21 @@ const fallbackAssets = [
     thumbnail: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=900&q=80",
     tags: ["traffic", "road", "city", "congestion", "travel"],
     permission: "public-approved",
+    genericDemo: true,
     createdAt: "2026-06-15T08:00:00.000Z",
     views: 420
+  },
+  {
+    id: "generated-indore-airport-storm-scene",
+    name: "Generated Indore airport storm diversion scene",
+    type: "Generated Airport Scene",
+    url: "",
+    thumbnail: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=900&q=80",
+    tags: ["indore", "india", "airport", "storm", "weather", "flight", "diversion", "visibility", "runway", "terminal", "travel", "delay"],
+    permission: "generated-scene-plan",
+    genericDemo: false,
+    createdAt: "2026-06-15T09:00:00.000Z",
+    views: 600
   },
   {
     id: "asset-weather-zone",
@@ -18,6 +31,7 @@ const fallbackAssets = [
     thumbnail: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
     tags: ["weather", "storm", "travel", "safety", "airport"],
     permission: "public-approved",
+    genericDemo: true,
     createdAt: "2026-06-15T07:15:00.000Z",
     views: 388
   },
@@ -29,6 +43,7 @@ const fallbackAssets = [
     thumbnail: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=80",
     tags: ["construction", "workforce", "public works", "project", "delay"],
     permission: "private-owner",
+    genericDemo: true,
     createdAt: "2026-06-14T19:30:00.000Z",
     views: 210
   },
@@ -40,6 +55,7 @@ const fallbackAssets = [
     thumbnail: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=900&q=80",
     tags: ["science", "research", "project", "verification", "lab"],
     permission: "public-approved",
+    genericDemo: true,
     createdAt: "2026-06-13T16:20:00.000Z",
     views: 165
   }
@@ -270,9 +286,13 @@ function scoreAsset(candidate, asset){
   const assetWords = new Set([...(asset.tags || []), asset.name, asset.type].join(" ").toLowerCase().split(/\W+/).filter(Boolean))
   let score = 0
   words.forEach((word) => { if(assetWords.has(word)) score += 12 })
+  if(candidate.glbSceneType.includes("airport") && assetWords.has("airport")) score += 35
+  if(candidate.location.toLowerCase().includes("indore") && assetWords.has("indore")) score += 25
+  if(asset.type?.toLowerCase().includes("generated")) score += 14
   if(asset.permission?.toLowerCase().includes("public")) score += 8
   if(asset.permission?.toLowerCase().includes("private")) score += 4
   if(asset.type?.toLowerCase().includes("glb")) score += 10
+  if(asset.genericDemo) score -= 28
   if(Date.now() - new Date(asset.createdAt).getTime() < 1000 * 60 * 60 * 48) score += 8
   score += Math.min(10, Math.round((asset.views || 0) / 60))
   return Math.min(99, score)
@@ -306,7 +326,7 @@ export function attachBestAsset(candidate, assets = readRecentAssets()){
       fileType: best.asset.type,
       previewThumbnail: best.asset.thumbnail,
       matchConfidence: best.score,
-      reasonMatched: "Matched by category, scenario tags, file type, freshness, and permission.",
+      reasonMatched: best.asset.type?.toLowerCase().includes("generated") ? "No verified airport GLB was found in uploads/APIs, so DigitalHut generated an environment-specific airport storm scene plan." : "Matched by category, scenario tags, file type, freshness, and permission.",
       freshness: best.asset.createdAt,
       url: best.asset.url
     }

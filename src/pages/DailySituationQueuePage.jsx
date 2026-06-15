@@ -29,7 +29,7 @@ function writeQueue(items){
 
 function makeAssetFromCandidate(candidate){
   const slug = `asset_${candidate.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`
-  const modelUrl = candidate.relatedAsset?.url || "https://modelviewer.dev/shared-assets/models/RobotExpressive.glb"
+  const modelUrl = candidate.relatedAsset?.url || ""
   return {
     id: `daily-render-${candidate.id}`,
     slug,
@@ -58,7 +58,9 @@ function makeAssetFromCandidate(candidate){
       renderIdea: candidate.renderIdea,
       solutions: candidate.solutions,
       sources: candidate.sourceNotes,
-      assetMatch: candidate.relatedAsset
+      assetMatch: candidate.relatedAsset,
+      generatedScene: !modelUrl,
+      generatedSceneType: candidate.glbSceneType
     },
     createdAt: new Date().toISOString()
   }
@@ -69,6 +71,31 @@ function saveAssetForCandidate(candidate, patch = {}){
   const currentAssets = JSON.parse(window.localStorage.getItem(assetKey) || "[]")
   window.localStorage.setItem(assetKey, JSON.stringify([asset, ...currentAssets.filter((item) => item.slug !== asset.slug)].slice(0, 60)))
   return asset
+}
+
+function sceneClass(candidate){
+  const text = `${candidate?.glbSceneType || ""} ${candidate?.category || ""} ${candidate?.title || ""}`.toLowerCase()
+  if(text.includes("airport")) return "airport"
+  if(text.includes("weather") || text.includes("storm") || text.includes("forecast")) return "weather"
+  if(text.includes("website") || text.includes("scam") || text.includes("complaint")) return "website"
+  if(text.includes("health") || text.includes("contact") || text.includes("outbreak")) return "health"
+  if(text.includes("environment") || text.includes("sensor") || text.includes("pollution")) return "environment"
+  if(text.includes("workforce") || text.includes("construction") || text.includes("project")) return "workforce"
+  return "map"
+}
+
+function GeneratedSituationScene({candidate}){
+  return <div className={`dh-generated-situation-scene ${sceneClass(candidate)}`}>
+    <div className="dh-situation-sky" />
+    <div className="dh-situation-grid" />
+    <div className="dh-situation-primary"><b>{candidate.location}</b><span>{candidate.glbSceneType}</span></div>
+    <div className="dh-situation-path"><i />{candidate.category}</div>
+    <div className="dh-situation-marker one" />
+    <div className="dh-situation-marker two" />
+    <div className="dh-situation-marker three" />
+    <div className="dh-situation-card"><b>{candidate.title}</b><span>{candidate.renderIdea}</span></div>
+    <div className="dh-situation-card secondary"><b>Safety / Solution</b><span>{candidate.solutions?.[0] || "Verify before publishing"}</span></div>
+  </div>
 }
 
 export default function DailySituationQueuePage(){
@@ -204,7 +231,7 @@ export default function DailySituationQueuePage(){
         <h2>Complete Live Report Renderer</h2>
         {active?.relatedAsset && <>
           <div className="dh-situation-renderer">
-            <model-viewer src={active.relatedAsset.url || "https://modelviewer.dev/shared-assets/models/RobotExpressive.glb"} poster={active.relatedAsset.previewThumbnail || ""} camera-controls auto-rotate auto-rotate-delay="400" rotation-per-second="8deg" camera-orbit="35deg 60deg auto" field-of-view="34deg" exposure="1" reveal="auto" />
+            {active.relatedAsset.url ? <model-viewer src={active.relatedAsset.url} poster={active.relatedAsset.previewThumbnail || ""} camera-controls auto-rotate auto-rotate-delay="400" rotation-per-second="8deg" camera-orbit="35deg 60deg auto" field-of-view="34deg" exposure="1" reveal="auto" /> : <GeneratedSituationScene candidate={active} />}
           </div>
           {active.relatedAsset.previewThumbnail && <img className="dh-match-thumb" src={active.relatedAsset.previewThumbnail} alt="" />}
           <div className="dh-report-card">
