@@ -279,11 +279,105 @@
   animation: dhContainedScan 7s ease-in-out infinite;
 }
 
+.dh-environment-read .dh-contained-screen {
+  perspective: 900px;
+  background:
+    linear-gradient(180deg, rgba(2,6,23,.02), rgba(2,6,23,.74)),
+    var(--contained-image),
+    radial-gradient(circle at 50% 38%, rgba(103,232,249,.24), rgba(15,23,42,.92) 62%);
+  background-size: cover;
+  background-position: center;
+}
+
+.dh-environment-read .dh-contained-screen::after {
+  content: "";
+  position: absolute;
+  left: 9%;
+  right: 9%;
+  bottom: -18%;
+  height: 48%;
+  border: 1px solid rgba(226,232,240,.18);
+  background:
+    linear-gradient(90deg, rgba(248,250,252,.12) 1px, transparent 1px),
+    linear-gradient(rgba(248,250,252,.1) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(103,232,249,.18), rgba(15,23,42,.1));
+  background-size: 42px 42px, 42px 42px, 100% 100%;
+  transform: rotateX(64deg);
+  transform-origin: center bottom;
+  opacity: .82;
+}
+
+.dh-environment-depth,
+.dh-environment-depth i {
+  position: absolute;
+  pointer-events: none;
+}
+
+.dh-environment-depth {
+  inset: 0;
+  z-index: 1;
+}
+
+.dh-environment-depth i {
+  display: block;
+  width: 16%;
+  height: 28%;
+  bottom: 18%;
+  border: 1px solid rgba(226,232,240,.22);
+  background: rgba(15,23,42,.42);
+  box-shadow: 0 18px 42px rgba(0,0,0,.26);
+}
+
+.dh-environment-depth i:nth-child(1) { left: 14%; height: 34%; }
+.dh-environment-depth i:nth-child(2) { left: 35%; height: 46%; }
+.dh-environment-depth i:nth-child(3) { right: 28%; height: 31%; }
+.dh-environment-depth i:nth-child(4) { right: 10%; height: 40%; }
+
+.dh-environment-read.undersea .dh-contained-screen {
+  background:
+    radial-gradient(circle at 62% 20%, rgba(45,212,191,.32), transparent 22%),
+    linear-gradient(180deg, rgba(14,165,233,.12), rgba(6,78,112,.72)),
+    var(--contained-image);
+}
+
+.dh-environment-read.japan .dh-contained-screen,
+.dh-environment-read.market .dh-contained-screen {
+  background:
+    radial-gradient(circle at 24% 18%, rgba(248,113,113,.22), transparent 20%),
+    linear-gradient(180deg, rgba(15,23,42,.04), rgba(30,41,59,.76)),
+    var(--contained-image);
+}
+
+.dh-environment-read.housing .dh-contained-screen,
+.dh-environment-read.project .dh-contained-screen {
+  background:
+    radial-gradient(circle at 78% 22%, rgba(45,212,191,.22), transparent 22%),
+    linear-gradient(180deg, rgba(15,23,42,.04), rgba(20,83,45,.54)),
+    var(--contained-image);
+}
+
+.dh-environment-read.airport .dh-contained-screen,
+.dh-environment-read.traffic .dh-contained-screen {
+  background:
+    radial-gradient(circle at 78% 20%, rgba(148,163,184,.34), transparent 24%),
+    linear-gradient(180deg, rgba(15,23,42,.06), rgba(30,41,59,.82)),
+    var(--contained-image);
+}
+
+.dh-environment-read.research .dh-contained-screen,
+.dh-environment-read.observatory .dh-contained-screen {
+  background:
+    radial-gradient(circle at 70% 16%, rgba(167,139,250,.28), transparent 22%),
+    linear-gradient(180deg, rgba(15,23,42,.04), rgba(49,46,129,.72)),
+    var(--contained-image);
+}
+
 .dh-contained-meta {
   position: absolute;
   left: 12px;
   right: 12px;
   bottom: 12px;
+  z-index: 2;
   display: grid;
   gap: 5px;
   padding: 10px;

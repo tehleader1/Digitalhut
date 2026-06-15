@@ -2,6 +2,54 @@ import {vectorMatchScore} from "./assetVectorMath"
 
 const fallbackAssets = [
   {
+    id: "environment-best-known-airport",
+    name: "Best known airport environment read",
+    type: "Generated Airport Environment",
+    url: "",
+    thumbnail: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=900&q=80",
+    tags: ["airport", "flight", "runway", "terminal", "delay", "weather", "diversion", "travel", "environment"],
+    permission: "generated-scene-plan",
+    genericDemo: false,
+    createdAt: "2026-06-15T09:40:00.000Z",
+    views: 820
+  },
+  {
+    id: "environment-orlando-traffic",
+    name: "Best known Orlando traffic environment read",
+    type: "Generated Orlando Traffic Environment",
+    url: "",
+    thumbnail: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=900&q=80",
+    tags: ["orlando", "florida", "traffic", "theme", "park", "hotel", "road", "congestion", "tourist", "environment"],
+    permission: "generated-scene-plan",
+    genericDemo: false,
+    createdAt: "2026-06-15T09:38:00.000Z",
+    views: 760
+  },
+  {
+    id: "environment-south-america-research",
+    name: "Best known South American research environment read",
+    type: "Generated Science Environment",
+    url: "",
+    thumbnail: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=900&q=80",
+    tags: ["south", "america", "science", "experiment", "research", "environment", "monitoring", "public", "health", "data"],
+    permission: "generated-scene-plan",
+    genericDemo: false,
+    createdAt: "2026-06-15T09:36:00.000Z",
+    views: 610
+  },
+  {
+    id: "environment-food-market",
+    name: "Local food market environment read",
+    type: "Generated Market Environment",
+    url: "",
+    thumbnail: "https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=900&q=80",
+    tags: ["food", "market", "local", "tourist", "travel", "japan", "public", "environment"],
+    permission: "generated-scene-plan",
+    genericDemo: false,
+    createdAt: "2026-06-15T09:34:00.000Z",
+    views: 540
+  },
+  {
     id: "asset-road-grid",
     name: "Generated city road congestion scene",
     type: "Generated Traffic Scene",
@@ -298,22 +346,22 @@ export function attachBestAsset(candidate, assets = readRecentAssets()){
   if(!best || best.score < 18 || best.asset.genericDemo){
     return {
       ...candidate,
-      assetMatchStatus: "No match - generate new scene",
+      assetMatchStatus: "Environment read ready",
       relatedAsset: {
-        closestGlb: "Generate simplified 3D scene",
-        assetId: "",
-        fileType: "Generated GLB plan",
+        closestGlb: `Generated ${candidate.glbSceneType} environment read`,
+        assetId: `generated-${candidate.id}`,
+        fileType: "Generated Environment Scene",
         previewThumbnail: "",
         matchConfidence: 0,
-        reasonMatched: best?.asset?.genericDemo ? "A sample demo GLB was blocked. DigitalHut will render a situation-specific environment instead of showing a robot, astronaut, or generic character." : "No recent asset matched location, category, object type, scenario, freshness, or permission.",
-        freshness: "new scene required",
+        reasonMatched: best?.asset?.genericDemo ? "A sample demo GLB was blocked. DigitalHut will render a situation-specific environment instead of showing a robot, astronaut, or generic character." : "No perfect uploaded environment GLB was found yet, so DigitalHut is rendering the best-known generated environment for this situation.",
+        freshness: "generated environment now",
         url: ""
       }
     }
   }
   return {
     ...candidate,
-    assetMatchStatus: "Preview ready",
+    assetMatchStatus: best.asset.url ? "Preview ready" : "Environment read ready",
     relatedAsset: {
       closestGlb: best.asset.name,
       assetId: best.asset.id,

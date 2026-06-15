@@ -22,7 +22,7 @@ const digitalHutBrainMap = {
   seoCanal: ["current category", "active renderer feed", "provider status", "asset title", "guided tour stage"],
   liveCreatorLayer: ["live GLB room", "creator voice", "contest prompt", "viewer layer hunt", "likes", "shareable replay"],
   assetResolverIdentity: "DigitalHut Category Asset Resolver",
-  assetResolverDirective: "Every displayed category starts with real category-matched GLB assets. Search is allowed to take over only after the public viewing feed is already rendering.",
+  assetResolverDirective: "Every displayed category starts with an environment read. Search is allowed to take over only when it finds a real environment GLB, map, scene, or verified model source. Individual characters and loose objects are blocked from default presentation.",
   sessions: {
     Gamer: "Update real-life game concepts, inspect new game visuals, and turn models into playable session ideas.",
     "Real Estate": "Use models and housing data for agent-license career work, client scouting, and property decisions.",
@@ -57,30 +57,6 @@ function stockUrl(category, index = 0){
   return `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1200&q=82`
 }
 
-const sampleModelBase = "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0"
-const realCategoryModels = {
-  "Mainstream Streaming": ["BoomBox", "AntiqueCamera", "Lantern", "Avocado", "ToyCar"],
-  Gamer: ["ToyCar", "FlightHelmet", "DamagedHelmet", "BoomBox", "GearboxAssy"],
-  Planetary: ["FlightHelmet", "MetalRoughSpheres", "Lantern", "WaterBottle", "BrainStem"],
-  Workforce: ["GearboxAssy", "CesiumMilkTruck", "ToyCar", "BoxTextured", "Lantern"],
-  Researcher: ["BrainStem", "DamagedHelmet", "MetalRoughSpheres", "Avocado", "WaterBottle"],
-  "Real Estate": ["Sponza", "BoxTextured", "Lantern", "CesiumMilkTruck", "WaterBottle"],
-  Programmer: ["GearboxAssy", "BoxTextured", "MetalRoughSpheres", "BrainStem", "BoomBox"],
-  Continent: ["Sponza", "CesiumMilkTruck", "ToyCar", "Lantern", "BoxTextured"],
-  Political: ["Sponza", "CesiumMilkTruck", "BoxTextured", "ToyCar", "GearboxAssy"],
-  "DigitalHut Presentation": ["Sponza", "FlightHelmet", "BoomBox", "ToyCar", "DamagedHelmet"]
-}
-
-function modelUrlForName(name){
-  if(name === "Sponza") return `${sampleModelBase}/Sponza/glTF/Sponza.gltf`
-  return `${sampleModelBase}/${name}/glTF-Binary/${name}.glb`
-}
-
-function curatedModelUrl(category, index = 0){
-  const pool = realCategoryModels[category] || realCategoryModels["Mainstream Streaming"]
-  return modelUrlForName(pool[index % pool.length])
-}
-
 let modelViewerReadyPromise
 
 function warmModelViewer(){
@@ -93,7 +69,37 @@ function warmModelViewer(){
 }
 
 function relatedGlb(category, index = 0){
-  return curatedModelUrl(category, index)
+  return ""
+}
+
+function environmentLabel(feed = {}){
+  const text = `${feed.title || ""} ${feed.query || ""} ${feed.note || ""} ${feed.category || ""}`.toLowerCase()
+  if(text.includes("spongebob") || text.includes("underwater") || text.includes("ocean")) return "Undersea Media Environment"
+  if(text.includes("japan") || text.includes("tokyo")) return "Japan Environment Read"
+  if(text.includes("food") || text.includes("market")) return "Local Food Market Environment"
+  if(text.includes("real estate") || text.includes("housing") || text.includes("apartment") || text.includes("bedroom")) return "Housing Environment Read"
+  if(text.includes("airport") || text.includes("flight")) return "Airport Environment Read"
+  if(text.includes("orlando") || text.includes("traffic") || text.includes("road")) return "City Traffic Environment"
+  if(text.includes("science") || text.includes("experiment") || text.includes("research")) return "Research Environment Read"
+  if(text.includes("game") || text.includes("arena") || text.includes("boss") || text.includes("level")) return "Game World Environment"
+  if(text.includes("construction") || text.includes("workforce") || text.includes("project")) return "Project Site Environment"
+  if(text.includes("planet") || text.includes("mars") || text.includes("saturn") || text.includes("space")) return "Observatory Environment"
+  return `${feed.category || "DigitalHut"} Environment Read`
+}
+
+function environmentClass(feed = {}){
+  const label = environmentLabel(feed).toLowerCase()
+  if(label.includes("undersea")) return "undersea"
+  if(label.includes("japan")) return "japan"
+  if(label.includes("market")) return "market"
+  if(label.includes("housing")) return "housing"
+  if(label.includes("airport")) return "airport"
+  if(label.includes("traffic")) return "traffic"
+  if(label.includes("research")) return "research"
+  if(label.includes("game")) return "game"
+  if(label.includes("project")) return "project"
+  if(label.includes("observatory")) return "observatory"
+  return "general"
 }
 
 function pausedEmbedUrl(value){
@@ -159,14 +165,14 @@ const categories = [
 
 const seedQueries = {
   "DigitalHut Presentation": ["editable glb presentation stage", "custom glb feature file overlay", "digitalhut model editing workspace", "presentation feature mode 3d"],
-  "Continent": ["cape town south africa 3d city terrain", "caribbean colonial zone historic 3d", "hollywood sign los angeles 3d", "european buildings old city architecture 3d"],
+  "Continent": ["japan urban environment read", "cape town coastal environment read", "amazon river environment read", "europe old city environment read"],
   "Planetary": ["international space station 3d model", "moon surface observatory 3d", "mars terrain 3d", "orbital city grid 3d"],
-  "Gamer": ["game city pack prototype 3d", "animated environment game scene 3d", "mission hub game prototype 3d", "sci fi arena 3d"],
+  "Gamer": ["open world game environment read", "animated boss room environment read", "mission hub game environment read", "sci fi arena environment read"],
   "Real Estate": ["international coastal housing market 3d", "global smart apartment housing data 3d", "tourist city rental pressure map 3d", "middle class international housing options 3d"],
   "Workforce": ["construction jobsite structure 3d", "warehouse training safety 3d", "city infrastructure operations 3d", "coastal response emergency planning 3d"],
   "Political": ["civic district public works 3d", "government building city 3d", "historical public square 3d", "infrastructure civic assets 3d"],
   "Programmer": ["developer api data center 3d", "renderer stress test 3d model", "city data twin 3d", "tool builder 3d interface"],
-  "Mainstream Streaming": ["2026 viral video studio set", "funny creator clip environment", "streaming trend room visual", "social media trend visualization"],
+  "Mainstream Streaming": ["spongebob underwater media environment read", "viral creator studio environment read", "streaming trend room environment read", "social media trend environment read"],
   "Researcher": ["research archive 3d visualization", "scientific orbit research 3d", "field study terrain 3d", "ai analysis room 3d"]
 }
 
@@ -184,10 +190,10 @@ const featuredFeeds = {
     ["Middle-class international housing watch", "Tracks realistic housing options across regions instead of only luxury listings, with market notes attached.", "middle class international housing options 3d"]
   ],
   "Gamer": [
-    ["Link-inspired adventure hero GLB", "A fantasy adventure character lane for game visuals, quest framing, and hero silhouette.", "link fantasy game hero 3d model"],
-    ["Neon arena boss room GLB", "A high-energy game environment for spawn, mechanics, cover, and effects.", "neon arena boss room game 3d model"],
-    ["Indie game visual post", "Gaming post view with a related GLB attached so the stream can still rotate a model.", "interesting indie game visual post"],
-    ["2026 character update post", "A game trend post about character updates with a related playable model attached.", "2026 game character trend post"]
+    ["Open-world game environment read", "A full gameplay-place read for spawn, pathing, lighting, cover, and mood. No isolated subject unless the world loads with it.", "open world game environment read"],
+    ["Neon arena boss room environment", "A high-energy game location for spawn, mechanics, cover, effects, and player decision points.", "neon arena boss room environment read"],
+    ["Indie game visual environment", "Gaming post view anchored to a level, room, city, arena, or map space so the stream does not feel broken.", "indie game environment read"],
+    ["2026 game world update", "A game trend post presented as an environment update instead of a single character/object preview.", "2026 game world environment read"]
   ],
   "Planetary": [
     ["Saturn ring mission zone", "Planetary zone for orbit, scale, shadow, and ring observation.", "saturn rings mission 3d model"],
@@ -202,31 +208,31 @@ const featuredFeeds = {
     ["Airport terminal workforce project", "Large-site workforce model for crew movement, security, and public access.", "airport terminal construction project 3d"]
   ],
   "Mainstream Streaming": [
-    ["Live SpongeBob-style 3D feature", "Stream hook: a cartoon ocean character topic with a related GLB for 3D effects.", "spongebob viral 3d feature"],
-    ["Viral challenge model hunt", "20,000-plus style share prompt where viewers hunt for a hidden layer in the GLB.", "viral challenge 3d model hunt"],
-    ["Funny creator room post", "Creator post lane with a related GLB so the show stays visual.", "funny creator room viral post"],
-    ["Unexpected trend replay", "Fast mainstream replay slot for a topic that is starting to blow up.", "viral trend replay 2026 3d"]
+    ["SpongeBob undersea environment read", "Stream hook: read the undersea cartoon-style environment, color, set pieces, and visual mood instead of showing an isolated subject.", "spongebob underwater environment read"],
+    ["Viral challenge environment hunt", "20,000-plus style share prompt where viewers hunt for a hidden layer inside a place, room, set, or scene.", "viral challenge environment hunt"],
+    ["Funny creator room environment", "Creator post lane anchored to a studio, room, set, or social scene so the show stays visual and coherent.", "funny creator room environment read"],
+    ["Unexpected trend environment replay", "Fast mainstream replay slot for a topic that is starting to blow up, shown as the environment around the trend.", "viral trend environment replay"]
   ],
   "Researcher": [
-    ["New germ microscope find", "Research find lane for a serious evidence readout and related GLB inspection.", "new germ found microscope research"],
+    ["New germ microscope environment", "Research find lane for a serious lab, evidence, and observation environment read.", "new germ found microscope research environment"],
     ["Dinosaur fossil fracture scan", "Fossil session for broken areas, age clues, and careful analysis.", "dinosaur fossil fracture 3d scan"],
     ["Ocean microplastic research project", "Actual research-project style card with a related model for presentation.", "ocean microplastic research project 3d"],
     ["Ancient tool lab archive", "Research archive for artifacts, comparison, and verification questions.", "ancient tool lab archive 3d"]
   ],
   "Programmer": [
     ["New AI model production stack", "Developer movie beat: an AI model discovery moves into production company workflow.", "new AI model production code feature"],
-    ["Decentralized render network", "Backend and decentralized network visual with a related GLB attached.", "decentralized render network 3d"],
+    ["Decentralized render network", "Backend and decentralized network visual as an environment of nodes, routes, providers, and system pressure.", "decentralized render network environment"],
     ["API data observatory room", "Provider payload, fallback, and monitoring room for debugging.", "api data observatory room 3d"],
     ["Search classifier engine", "Programmer card for category routing and query intent testing.", "search classifier engine 3d"]
   ],
   "Continent": [
-    ["Tokyo crossing city layer", "Global city moment with a related model for travel and culture.", "tokyo crossing city 3d"],
+    ["Japan environment read", "Global place moment focused on streets, buildings, routes, culture, and public scene context.", "japan urban environment read"],
     ["Cape Town coastal terrain", "Coastline, elevation, and route readout for continent mode.", "cape town coastal terrain 3d"],
     ["Amazon river research route", "Environment route that can bridge to researcher and planetary modes.", "amazon river terrain 3d"],
-    ["Alps village winter pass", "Travel and terrain session with a related GLB attached.", "alps village winter 3d"]
+    ["Alps village winter pass", "Travel and terrain environment session with routes, buildings, access, and weather context.", "alps village winter environment"]
   ],
   "Political": [
-    ["Civic plaza public works", "Public space and policy readout with a related GLB attached.", "civic plaza public works 3d"],
+    ["Civic plaza public works", "Public space and policy environment read with access, routes, structures, and public pressure.", "civic plaza public works environment"],
     ["Transit station funding map", "Infrastructure policy card for access, routes, and funding tradeoffs.", "transit station infrastructure 3d"],
     ["Government building access plan", "Civic access and security walkthrough.", "government building access 3d"],
     ["Bridge repair public notice", "Public works bridge repair lane that can bridge to workforce.", "bridge repair public works 3d"]
@@ -285,7 +291,7 @@ function seedFeeds(category){
     modelUrl: relatedGlb(category, index),
     viewerUrl: "",
     apiSource: "DigitalHut featured reel",
-    apiStatus: index < 5 ? "featured-real-glb" : "featured-post-with-scene"
+    apiStatus: "environment-read-ready"
   }))
   }
   return (seedQueries[category] || seedQueries.Continent).map((query, index) => ({
@@ -299,7 +305,7 @@ function seedFeeds(category){
     context: meta.context,
     thumbnail: stockUrl(category, index),
     modelUrl: relatedGlb(category, index),
-    apiStatus: "seed-real-glb"
+    apiStatus: "environment-read-ready"
   }))
 }
 
@@ -349,7 +355,7 @@ function normalizeAsset(item, category, index, source, term){
     modelUrl,
     viewerUrl,
     apiSource: item?.apiSource || source,
-    apiStatus: item?.apiStatus || (embedUrl || rawModelUrl ? "model-connected" : "post-preview-needs-scene"),
+    apiStatus: item?.apiStatus || (embedUrl || rawModelUrl ? "model-connected" : "environment-read-ready"),
     providerMix: item?.providerMix || item?.providers || [source],
     market: item?.market,
     cesium: item?.cesium
@@ -434,7 +440,7 @@ function queryFromCommand(text, fallback){
   if(value.includes("canada")) return "canada landscape city terrain 3d model"
   if(value.includes("saturn")) return "saturn planet rings 3d model"
   if(value.includes("waterfall")) return "green season waterfall terrain 3d model"
-  if(value.includes("game character")) return "2026 cool game character 3d model"
+  if(value.includes("game character")) return "2026 game world environment read"
   if(value.includes("north carolina")) return "north carolina middle class real estate housing 3d model"
   if(value.includes("cat")) return "funny cat video viral 2026 visual"
   if(value.includes("fossil")) return "fossil artifact dinosaur bone 3d model"
@@ -451,7 +457,7 @@ function topicInsight({category, query, feed, stage}){
   const subject = query.replace(/\b3d model visual\b/i, "").replace(/\b3d model\b/i, "").trim() || feed.title
   const source = feed.apiSource || feed.apiStatus || "observatory feed"
   if(category === "Planetary") return `I read ${subject} as a place or environment session. I would start wide, then rotate into the structure, terrain, scale, and visible landmarks. Source status is ${source}.`
-  if(category === "Gamer") return `${subject} fits the Gamer lane. I am looking for silhouette, character readability, animation potential, world fit, and whether it could inspire a playable update. Source status is ${source}.`
+  if(category === "Gamer") return `${subject} fits the Gamer lane. I am reading it as a playable environment: spawn space, routes, lighting, world mood, hazards, and what a player would do first. Source status is ${source}.`
   if(category === "Real Estate") return `${subject} fits the international Real Estate lane. I am checking country and city signal, housing affordability, rental pressure, insurance or travel risk, neighborhood context, and what an agent or buyer should verify before trusting the opportunity. Source status is ${source}.`
   if(category === "Programmer") return `${subject} fits Programmer mode. I am checking data shape, backend use, provider reliability, decentralized network relevance, and what can be logged or automated. Source status is ${source}.`
   if(category === "Researcher") return `${subject} fits Researcher mode. I am checking evidence, age or history clues, broken areas, visible details, and what still needs verification. Source status is ${source}.`
@@ -472,7 +478,7 @@ function modelDataReadout({feed, category, stage}){
       `Source status is ${provider}.`,
       `Session context: ${session}`,
       `Visible note: ${feed.note || "no extra note attached yet"}`,
-      modelLink ? "A model or viewer link is attached to this record." : "The provider did not expose a direct GLB yet, so I am holding the contained data view open."
+      modelLink ? "A verified environment model or viewer link is attached to this record." : "The provider did not expose a direct environment GLB yet, so I am rendering the environment read from the scene data."
     ]
   }
 }
@@ -494,13 +500,13 @@ function streamReadout({category, query, feed, stage}){
 function movieBeat({category, feed, stage}){
   const title = feed.title
   if(category === "Mainstream Streaming"){
-    return `Ten minutes into the live feed: featuring ${title}. I am opening the related GLB so the post is not just a thumbnail. Sound cue: fun stream bounce, then a clean pause for the visual.`
+    return `Ten minutes into the live feed: featuring ${title}. I am opening the environment around the topic so the post is not just a loose object or thumbnail. Sound cue: fun stream bounce, then a clean pause for the visual.`
   }
   if(category === "DigitalHut Presentation"){
     return `DigitalHut Presentation is the creator workspace. ${title} stays in the renderer while the editor searches, attaches files, and prepares Presentation Featured Mode.`
   }
   if(category === "Gamer"){
-    return `Now switching GLBs to Gamer. ${title} is on screen; I am reading effects, character shape, level path, and the part viewers would want to play.`
+    return `Now switching to Gamer. ${title} is on screen; I am reading the world space, effects, level path, and the part viewers would want to play.`
   }
   if(category === "Planetary"){
     return `Now switching GLBs to Planetary. Take your time with ${title}; I will slow the camera and let the environment carry the scene.`
@@ -517,7 +523,7 @@ function movieBeat({category, feed, stage}){
   if(category === "Real Estate"){
     return `International Real Estate reel is live. ${title} is presented like an observatory housing report: location, market pressure, affordability, travel access, rental demand, and what buyers or agents should verify next.`
   }
-  return `Next live reel: ${category}. ${title} is attached to a GLB so the show stays visual.`
+  return `Next live reel: ${category}. ${title} is attached to an environment read so the show stays visual and grounded.`
 }
 
 function shouldTreatAsSearch(text){
@@ -769,6 +775,8 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
   const containedDataOpen = canShowContainment && modelOpen && !hasEmbed && !hasModel
   const readout = modelDataReadout({feed, category: feed.category, stage})
   const visualKey = visualKeyFor(feed, stage)
+  const envLabel = environmentLabel(feed)
+  const envClass = environmentClass(feed)
 
   useEffect(() => {
     if(!hasModel) return
@@ -843,16 +851,18 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
       {!modelLoaded && <div className="dh-model-loader"><b>Loading GLB Renderer</b><span>{feed.title}</span></div>}
       <model-viewer ref={modelElementRef} className={`dh-model ${modelReady ? "is-ready" : "is-loading"}`} src={feed.modelUrl} poster={feed.thumbnail || ""} camera-controls auto-rotate={guided ? true : undefined} auto-rotate-delay="450" rotation-per-second={stage.kind === "angle" ? "18deg" : "9deg"} camera-orbit={stage.orbit} field-of-view={stage.fov || "34deg"} interpolation-decay="160" exposure="1" shadow-intensity="0" reveal="auto" interaction-prompt="none" onLoad={() => {setModelReady(true); setModelLoaded(true); onVisualReady?.(visualKey)}} onError={() => {setModelReady(true); setModelLoaded(true); onVisualReady?.(visualKey)}} />
     </div>}
-    {containedDataOpen && <section className="dh-contained-model" aria-label="Contained model session">
+    {containedDataOpen && <section className={`dh-contained-model dh-environment-read ${envClass}`} aria-label="Environment read session">
       <div className="dh-contained-screen" style={feed.thumbnail ? {"--contained-image": `url("${feed.thumbnail}")`} : undefined}>
         <div className="dh-contained-scan" />
+        <div className="dh-environment-depth"><i /><i /><i /><i /></div>
         <div className="dh-contained-meta">
-          <span>{readout.provider}</span>
+          <span>{envLabel}</span>
           <b>{feed.title}</b>
-          <p>{feed.note}</p>
+          <p>{feed.note} DigitalHut is reading this as a full environment: place, routes, layers, pressure points, and what the viewer should notice.</p>
         </div>
       </div>
       <div className="dh-contained-readout">
+        <span>{readout.provider}</span>
         {readout.lines.slice(1).map((line) => <span key={line}>{line}</span>)}
       </div>
       <div className="dh-contained-actions">
@@ -899,7 +909,7 @@ export default function FullscreenObservatoryV2(){
   const [playing, setPlaying] = useState(true)
   const [layer, setLayer] = useState("Base")
   const [layerOpen, setLayerOpen] = useState(false)
-  const [modelOpen, setModelOpen] = useState(false)
+  const [modelOpen, setModelOpen] = useState(true)
   const [guideDepth, setGuideDepth] = useState(0)
   const [aiOpen, setAiOpen] = useState(false)
   const [aiListening, setAiListening] = useState(false)
@@ -1767,7 +1777,7 @@ export default function FullscreenObservatoryV2(){
           <input value={presentationSearch} onChange={(event) => setPresentationSearch(event.target.value)} onKeyDown={(event) => {if(event.key === "Enter") runPresentationSearch()}} />
           <button type="button" onClick={runPresentationSearch}>Find GLB</button>
         </div>
-        <div className="dh-live-model"><b>{sceneFeed.title}</b><span>{sceneFeed.modelUrl || sceneFeed.viewerUrl || sceneFeed.embedUrl || "Related GLB attached by DigitalHut"}</span><small>{layer} layer / {stage.label}</small></div>
+        <div className="dh-live-model"><b>{sceneFeed.title}</b><span>{sceneFeed.modelUrl || sceneFeed.viewerUrl || sceneFeed.embedUrl || "Environment read attached by DigitalHut"}</span><small>{layer} layer / {stage.label}</small></div>
         <label>Special file / edit instruction</label>
         <textarea value={presentationFileNote} onChange={(event) => setPresentationFileNote(event.target.value)} placeholder="Example: add intro audio, attach brand overlay, expand model note, add sponsor card, add contest prompt..." />
         <div className="dh-ai-actions">
