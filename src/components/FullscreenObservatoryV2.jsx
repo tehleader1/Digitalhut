@@ -234,10 +234,10 @@ const guidedTours = {
 }
 
 const stages = [
-  {id: "Model", label: "Current GLB", kind: "current", orbit: "25deg 62deg auto"},
-  {id: "Angle", label: "Angle Pass", kind: "angle", orbit: "70deg 68deg auto"},
-  {id: "Similar", label: "Similar GLB", kind: "similar", orbit: "-35deg 64deg auto"},
-  {id: "Stats", label: "Statistics GLB", kind: "stats", orbit: "35deg 58deg auto"}
+  {id: "Model", label: "Current GLB", kind: "current", orbit: "25deg 62deg auto", fov: "34deg"},
+  {id: "Angle", label: "Angle Pass", kind: "angle", orbit: "70deg 68deg auto", fov: "27deg"},
+  {id: "Similar", label: "Similar GLB", kind: "similar", orbit: "-35deg 64deg auto", fov: "38deg"},
+  {id: "Stats", label: "Statistics GLB", kind: "stats", orbit: "35deg 58deg auto", fov: "31deg"}
 ]
 
 function metaFor(category){
@@ -817,7 +817,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     {liveOpen && hasEmbed && <iframe className="dh-api-frame" title={feed.title} src={pausedEmbedUrl(feed.embedUrl)} allow="fullscreen; xr-spatial-tracking" loading="lazy" allowFullScreen onLoad={() => onVisualReady?.(visualKey)} />}
     {liveOpen && !hasEmbed && hasModel && <div className="dh-model-shell">
       {!modelLoaded && <div className="dh-model-loader"><b>Loading GLB Renderer</b><span>{feed.title}</span></div>}
-      <model-viewer ref={modelElementRef} className={`dh-model ${modelReady ? "is-ready" : "is-loading"}`} src={feed.modelUrl} poster={feed.thumbnail || ""} camera-controls camera-orbit={stage.orbit} exposure="1" shadow-intensity="0" reveal="auto" interaction-prompt="none" onLoad={() => {setModelReady(true); setModelLoaded(true); onVisualReady?.(visualKey)}} onError={() => {setModelReady(true); setModelLoaded(true); onVisualReady?.(visualKey)}} />
+      <model-viewer ref={modelElementRef} className={`dh-model ${modelReady ? "is-ready" : "is-loading"}`} src={feed.modelUrl} poster={feed.thumbnail || ""} camera-controls auto-rotate={guided ? true : undefined} auto-rotate-delay="450" rotation-per-second={stage.kind === "angle" ? "18deg" : "9deg"} camera-orbit={stage.orbit} field-of-view={stage.fov || "34deg"} interpolation-decay="160" exposure="1" shadow-intensity="0" reveal="auto" interaction-prompt="none" onLoad={() => {setModelReady(true); setModelLoaded(true); onVisualReady?.(visualKey)}} onError={() => {setModelReady(true); setModelLoaded(true); onVisualReady?.(visualKey)}} />
     </div>}
     {containedDataOpen && <section className="dh-contained-model" aria-label="Contained model session">
       <div className="dh-contained-screen" style={feed.thumbnail ? {"--contained-image": `url("${feed.thumbnail}")`} : undefined}>
@@ -1253,21 +1253,23 @@ export default function FullscreenObservatoryV2(){
 
   function previousFeed(){
     playSessionSound(category, "open")
+    const nextItem = feeds[(active - 1 + feeds.length) % feeds.length] || sceneFeed
     setActive((value) => (value - 1 + feeds.length) % feeds.length)
     setStageIndex(0)
     setModelOpen(true)
     setGuideDepth(0)
-    speakAfterVisual("Moving back one model in the feed.", visualKeyFor(feeds[(active - 1 + feeds.length) % feeds.length] || sceneFeed, stages[0]))
+    speakAfterVisual(`Moving back to ${nextItem.title}. I will reopen the model before continuing.`, visualKeyFor(nextItem, stages[0]))
     wake()
   }
 
   function nextFeed(){
     playSessionSound(category, "open")
+    const nextItem = feeds[(active + 1) % feeds.length] || sceneFeed
     setActive((value) => (value + 1) % feeds.length)
     setStageIndex(0)
     setModelOpen(true)
     setGuideDepth(0)
-    speakAfterVisual("Opening the next model in the feed.", visualKeyFor(feeds[(active + 1) % feeds.length] || sceneFeed, stages[0]))
+    speakAfterVisual(`Opening ${nextItem.title}. I will wait for the renderer, then continue the presentation.`, visualKeyFor(nextItem, stages[0]))
     wake()
   }
 

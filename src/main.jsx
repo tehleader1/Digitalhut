@@ -12,6 +12,8 @@ import {
 } from "./wallet"
 
 import HomePage from "./pages/HomePage"
+import AssetLabPage from "./pages/AssetLabPage"
+import AssetPublicPage from "./pages/AssetPublicPage"
 import LibraryPage from "./pages/LibraryPage"
 import UpdatesPage from "./pages/UpdatesPage"
 import UpgradePage from "./pages/UpgradePage"
@@ -44,6 +46,21 @@ ReactDOM.createRoot(
         <Route
           path="/library"
           element={<LibraryPage />}
+        />
+
+        <Route
+          path="/asset-lab"
+          element={<AssetLabPage />}
+        />
+
+        <Route
+          path="/asset/:slug"
+          element={<AssetPublicPage />}
+        />
+
+        <Route
+          path="/asset_:slug"
+          element={<AssetPublicPage />}
         />
 
         <Route

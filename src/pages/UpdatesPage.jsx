@@ -1,59 +1,6 @@
-import React from "react"
+import {Link} from "react-router-dom"
+import "./AssetLab.css"
 
 export default function UpdatesPage(){
-
-  return(
-
-    <main style={{
-      background:"#050816",
-      minHeight:"100vh",
-      color:"white",
-      padding:"20px",
-      fontFamily:"Arial,sans-serif"
-    }}>
-
-      <h1>
-        Observatory Updates
-      </h1>
-
-      <p style={{
-        color:"#94a3b8"
-      }}>
-        Receive SMS updates for:
-        latest observatory signals,
-        new environmental maps,
-        premium observatory releases,
-        and scientific discovery updates.
-      </p>
-
-      <input
-        placeholder="Phone Number"
-        style={{
-          width:"100%",
-          marginTop:"20px",
-          padding:"16px",
-          borderRadius:"14px",
-          background:"#0b1020",
-          border:"1px solid #26334f",
-          color:"white"
-        }}
-      />
-
-      <button style={{
-        marginTop:"20px",
-        width:"100%",
-        padding:"18px",
-        borderRadius:"14px",
-        background:"#7c3aed",
-        color:"white",
-        border:"none",
-        fontWeight:"900"
-      }}>
-        Join Observatory Updates
-      </button>
-
-    </main>
-
-  )
-
+  return <main className="dh-backend-page"><section className="dh-public-asset"><h1>Updates</h1><p>DigitalHut system updates, backend asset queue notes, and release status will live here.</p><Link className="dh-backend-btn" to="/">Main System</Link></section></main>
 }
