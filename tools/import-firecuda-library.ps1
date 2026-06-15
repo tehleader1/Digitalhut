@@ -6,6 +6,7 @@ param(
 $ErrorActionPreference = "Stop"
 $targetPath = Resolve-Path -LiteralPath "." | ForEach-Object { Join-Path $_.Path $Target }
 New-Item -ItemType Directory -Force -Path $targetPath | Out-Null
+$modelExtensions = @(".glb", ".gltf", ".obj", ".fbx", ".stl")
 
 function Copy-ModelFile($path){
   $name = [System.IO.Path]::GetFileName($path).ToLowerInvariant() -replace "[^a-z0-9._-]", "_"
@@ -21,7 +22,7 @@ function Import-Zip($path){
     foreach($entry in $archive.Entries){
       if([string]::IsNullOrWhiteSpace($entry.Name)){ continue }
       $extension = [System.IO.Path]::GetExtension($entry.Name).ToLowerInvariant()
-      if($extension -notin @(".glb", ".gltf", ".obj", ".fbx", ".stl")){ continue }
+      if($extension -notin $modelExtensions){ continue }
       $name = $entry.Name.ToLowerInvariant() -replace "[^a-z0-9._-]", "_"
       $dest = Join-Path $targetPath $name
       [System.IO.Compression.ZipFileExtensions]::ExtractToFile($entry, $dest, $true)
@@ -33,7 +34,10 @@ function Import-Zip($path){
 }
 
 $imported = @()
-$files = Get-ChildItem -LiteralPath $Source -File -Recurse -Include *.glb,*.gltf,*.obj,*.fbx,*.stl,*.zip
+$files = Get-ChildItem -LiteralPath $Source -File -Recurse | Where-Object {
+  $extension = $_.Extension.ToLowerInvariant()
+  $extension -eq ".zip" -or $extension -in $modelExtensions
+}
 foreach($file in $files){
   if($file.Extension.ToLowerInvariant() -eq ".zip"){
     $imported += Import-Zip $file.FullName
