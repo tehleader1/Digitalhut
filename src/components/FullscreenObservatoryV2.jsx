@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from "react"
 import {ConnectButton} from "../wallet"
 import {inferCategoryByVector} from "../lib/assetVectorMath"
-import {firecudaModelPool} from "../lib/firecudaLibraryManifest"
+import {firecudaAssetsForCategory, firecudaModelPool, firecudaUrl} from "../lib/firecudaLibraryManifest"
 import "./FullscreenObservatory.css"
 import "./FullscreenObservatory.api.css"
 import "./FullscreenObservatory.sequence.css"
@@ -93,6 +93,27 @@ function relatedGlb(category, index = 0){
   return pool[index % pool.length]
 }
 
+function firecudaSeedFeeds(category){
+  const meta = metaFor(category)
+  return firecudaAssetsForCategory(category).map((asset, index) => ({
+    id: `firecuda:${category}:${asset.id}`,
+    title: asset.title,
+    note: `FireCuda personal GLB library asset for ${category}. This model is preloaded into the main DigitalHut renderer so the category opens directly into a real 3D scene.`,
+    query: `${asset.title} ${asset.tags.join(" ")} 3d`,
+    category,
+    icon: meta.icon,
+    accent: meta.accent,
+    context: meta.context,
+    thumbnail: asset.thumbnail || stockUrl(category, index),
+    modelUrl: firecudaUrl(asset.file),
+    viewerUrl: "",
+    apiSource: "FireCuda personal GLB library",
+    apiStatus: "preloaded-firecuda-model",
+    providerMix: ["FireCuda", "DigitalHut library"],
+    tags: asset.tags
+  }))
+}
+
 function environmentLabel(feed = {}){
   const text = `${feed.title || ""} ${feed.query || ""} ${feed.note || ""} ${feed.category || ""}`.toLowerCase()
   if(text.includes("spongebob") || text.includes("underwater") || text.includes("ocean")) return "Undersea Media Environment"
@@ -151,6 +172,21 @@ function preloadImages(urls){
     image.onerror = done
     image.src = src
   })))
+}
+
+function preloadModels(urls){
+  if(typeof document === "undefined") return
+  const unique = [...new Set(urls.filter(Boolean))].slice(0, 3)
+  unique.forEach((href) => {
+    if(document.querySelector(`link[data-dh-model-preload="${href}"]`)) return
+    const link = document.createElement("link")
+    link.rel = "preload"
+    link.as = "fetch"
+    link.href = href
+    link.crossOrigin = "anonymous"
+    link.setAttribute("data-dh-model-preload", href)
+    document.head.appendChild(link)
+  })
 }
 
 function observatoryRecord({category, stage, sceneFeed, mode, tier, loading}){
@@ -322,6 +358,7 @@ function toursFor(category){
 
 function seedFeeds(category){
   const meta = metaFor(category)
+  const firecudaFeeds = firecudaSeedFeeds(category)
   const featured = featuredFeeds[category]
   if(featured?.length) {
     const expanded = [...featured]
@@ -331,23 +368,24 @@ function seedFeeds(category){
       const query = queries[index % queries.length]
       expanded.push([`${category} live 3D model ${index + 1}`, `${category} default live model with a real renderer asset attached before search takes over.`, query])
     }
-    return expanded.map(([title, note, query], index) => ({
-    id: `featured:${category}:${index}:${query}`,
-    title,
-    note,
-    query,
-    category,
-    icon: meta.icon,
-    accent: meta.accent,
-    context: meta.context,
-    thumbnail: stockUrl(category, index),
-    modelUrl: relatedGlb(category, index),
-    viewerUrl: "",
-    apiSource: "DigitalHut featured reel",
-    apiStatus: "environment-read-ready"
-  }))
+    const featuredSeeds = expanded.map(([title, note, query], index) => ({
+      id: `featured:${category}:${index}:${query}`,
+      title,
+      note,
+      query,
+      category,
+      icon: meta.icon,
+      accent: meta.accent,
+      context: meta.context,
+      thumbnail: stockUrl(category, index),
+      modelUrl: relatedGlb(category, index),
+      viewerUrl: "",
+      apiSource: "DigitalHut featured reel",
+      apiStatus: "environment-read-ready"
+    }))
+    return [...firecudaFeeds, ...featuredSeeds].slice(0, 10)
   }
-  return (seedQueries[category] || seedQueries.Continent).map((query, index) => ({
+  const querySeeds = (seedQueries[category] || seedQueries.Continent).map((query, index) => ({
     id: `seed:${category}:${index}:${query}`,
     title: query.replace(/\b3d\b/gi, "").replace(/\s+/g, " ").trim(),
     note: `API seed for ${meta.context}.`,
@@ -360,6 +398,7 @@ function seedFeeds(category){
     modelUrl: relatedGlb(category, index),
     apiStatus: "environment-read-ready"
   }))
+  return [...firecudaFeeds, ...querySeeds].slice(0, 10)
 }
 
 function cleanUrl(value){
@@ -1055,11 +1094,13 @@ export default function FullscreenObservatoryV2(){
   }, [entryOpen, stage.kind, sceneFeed.id, sceneFeed.modelUrl, sceneFeed.embedUrl, modelOpen])
 
   useEffect(() => {
+    const seeds = seedFeeds(category)
     const urls = [
-      ...seedFeeds(category).map((item) => item.thumbnail),
+      ...seeds.map((item) => item.thumbnail),
       ...toursFor(category).map((_, index) => stockUrl(category, index))
     ]
     preloadImages(urls)
+    preloadModels(seeds.map((item) => item.modelUrl))
   }, [category])
 
   useEffect(() => {
@@ -1183,6 +1224,7 @@ export default function FullscreenObservatoryV2(){
     setModelOpen(true)
     setGuideDepth(0)
     preloadImages(seeds.map((item) => item.thumbnail))
+    preloadModels(seeds.map((item) => item.modelUrl))
     if(requestRef.current !== id) return seeds
     setFeeds(seeds)
     const results = await resolveApiFeeds(nextCategory, term)
@@ -1195,6 +1237,7 @@ export default function FullscreenObservatoryV2(){
       ? [...directResults, ...seedModels, ...textResults].slice(0, 8)
       : [...seedModels, ...textResults].slice(0, 8)
     preloadImages(next.map((item) => item.thumbnail))
+    preloadModels(next.map((item) => item.modelUrl))
     if(requestRef.current !== id) return next
     window.requestAnimationFrame(() => {
       setFeeds(next)

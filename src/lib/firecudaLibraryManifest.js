@@ -135,6 +135,159 @@ export const firecudaLibraryAssets = [
     tags: ["gaming", "viral", "mainstream", "game model", "robot", "character scene"],
     thumbnail: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80",
     createdAt: "2026-06-15T20:17:56.000Z"
+  },
+  {
+    id: "firecuda-abandoned-farm-house",
+    file: "abandoned_farm_house_with_hay.glb",
+    title: "Abandoned farm house with hay",
+    categories: ["Real Estate", "History", "Continent", "Researcher"],
+    tags: ["real estate", "farm house", "rural", "history", "environment", "property"],
+    thumbnail: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=900&q=80",
+    createdAt: "2026-06-16T00:47:17.000Z"
+  },
+  {
+    id: "firecuda-cape-town-south-africa",
+    file: "cape_town_-_south_africa.glb",
+    title: "Cape Town South Africa",
+    categories: ["Continent", "Real Estate", "Mainstream Streaming", "Businesses"],
+    tags: ["cape town", "south africa", "city", "continent", "travel", "urban environment"],
+    thumbnail: "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=900&q=80",
+    createdAt: "2026-06-16T00:47:17.000Z"
+  },
+  {
+    id: "firecuda-earth",
+    file: "earth.glb",
+    title: "Earth",
+    categories: ["Planetary", "Science", "Researcher", "Continent"],
+    tags: ["earth", "planet", "science", "global", "observatory", "research"],
+    thumbnail: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=900&q=80",
+    createdAt: "2026-06-16T00:47:17.000Z"
+  },
+  {
+    id: "firecuda-europe-heightmap",
+    file: "europe_with_4k_heightmap.glb",
+    title: "Europe with 4K heightmap",
+    categories: ["Continent", "Science", "Researcher", "Planetary"],
+    tags: ["europe", "heightmap", "terrain", "continent", "geography", "science"],
+    thumbnail: "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=900&q=80",
+    createdAt: "2026-06-16T00:47:17.000Z"
+  },
+  {
+    id: "firecuda-international-space-station",
+    file: "international_space_station.glb",
+    title: "International Space Station",
+    categories: ["Planetary", "Science", "Researcher", "Programmer"],
+    tags: ["space station", "orbit", "science", "planetary", "research", "engineering"],
+    thumbnail: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=900&q=80",
+    createdAt: "2026-06-16T00:47:17.000Z"
+  },
+  {
+    id: "firecuda-low-poly-environments",
+    file: "low_poly_environments_01.glb",
+    title: "Low poly environments 01",
+    categories: ["Gamer", "Mainstream Streaming", "DigitalHut Presentation"],
+    tags: ["gaming", "environment", "low poly", "presentation", "viral"],
+    thumbnail: "https://images.unsplash.com/photo-1556438064-2d7646166914?auto=format&fit=crop&w=900&q=80",
+    createdAt: "2026-06-16T00:47:17.000Z"
+  },
+  {
+    id: "firecuda-mars-one-base",
+    file: "mars_one_mission_-_base.glb",
+    title: "Mars One mission base",
+    categories: ["Planetary", "Science", "Researcher"],
+    tags: ["mars", "base", "planetary", "science", "research", "space"],
+    thumbnail: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=900&q=80",
+    createdAt: "2026-06-16T00:47:17.000Z"
+  },
+  {
+    id: "firecuda-morgantown-west-virginia",
+    file: "morgantown_west_virginia_usa_x2.glb",
+    title: "Morgantown West Virginia USA",
+    categories: ["Continent", "Real Estate", "Workforce"],
+    tags: ["morgantown", "west virginia", "usa", "city", "housing", "local environment"],
+    thumbnail: "https://images.unsplash.com/photo-1449034446853-66c86144b0ad?auto=format&fit=crop&w=900&q=80",
+    createdAt: "2026-06-16T00:47:17.000Z"
+  },
+  {
+    id: "firecuda-new-york-city",
+    file: "new_york_city.glb",
+    title: "New York City",
+    categories: ["Continent", "Real Estate", "Businesses", "Mainstream Streaming"],
+    tags: ["new york", "city", "business", "real estate", "urban", "mainstream"],
+    thumbnail: "https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?auto=format&fit=crop&w=900&q=80",
+    createdAt: "2026-06-16T00:47:17.000Z"
+  },
+  {
+    id: "firecuda-puertas-verdes",
+    file: "puertas_verdes.glb",
+    title: "Puertas Verdes",
+    categories: ["Real Estate", "History", "Continent"],
+    tags: ["architecture", "doors", "building", "real estate", "historic", "environment"],
+    thumbnail: "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80",
+    createdAt: "2026-06-16T00:47:17.000Z"
+  },
+  {
+    id: "firecuda-real-estate-demo",
+    file: "real_estate_demo.glb",
+    title: "Real estate demo",
+    categories: ["Real Estate", "Businesses", "DigitalHut Presentation"],
+    tags: ["real estate", "property", "housing", "demo", "business"],
+    thumbnail: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=900&q=80",
+    createdAt: "2026-06-16T00:47:17.000Z"
+  },
+  {
+    id: "firecuda-rio-de-janeiro-brazil",
+    file: "rio_de_janeiro_-_brazil.glb",
+    title: "Rio de Janeiro Brazil",
+    categories: ["Continent", "Mainstream Streaming", "Real Estate"],
+    tags: ["rio de janeiro", "brazil", "city", "continent", "travel", "urban"],
+    thumbnail: "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?auto=format&fit=crop&w=900&q=80",
+    createdAt: "2026-06-16T00:47:17.000Z"
+  },
+  {
+    id: "firecuda-snowy-village",
+    file: "snowy_village__ps1_environment.glb",
+    title: "Snowy village PS1 environment",
+    categories: ["Gamer", "Mainstream Streaming", "Continent"],
+    tags: ["snowy village", "gaming", "environment", "winter", "mainstream"],
+    thumbnail: "https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=900&q=80",
+    createdAt: "2026-06-16T00:47:17.000Z"
+  },
+  {
+    id: "firecuda-split-point-victoria",
+    file: "split_point_victoria_australia.glb",
+    title: "Split Point Victoria Australia",
+    categories: ["Continent", "Science", "Mainstream Streaming"],
+    tags: ["australia", "victoria", "coast", "travel", "continent", "environment"],
+    thumbnail: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?auto=format&fit=crop&w=900&q=80",
+    createdAt: "2026-06-16T00:47:17.000Z"
+  },
+  {
+    id: "firecuda-trappist-1-system",
+    file: "the_planetary_system_of_trappist-1.glb",
+    title: "The planetary system of TRAPPIST-1",
+    categories: ["Planetary", "Science", "Researcher"],
+    tags: ["trappist-1", "planetary system", "space", "science", "research"],
+    thumbnail: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=900&q=80",
+    createdAt: "2026-06-16T00:47:17.000Z"
+  },
+  {
+    id: "firecuda-tourist-colonial-zone",
+    file: "tourist_colonial_zone_dominican_republic.glb",
+    title: "Tourist colonial zone Dominican Republic",
+    categories: ["Continent", "History", "Mainstream Streaming", "Real Estate"],
+    tags: ["dominican republic", "tourism", "colonial zone", "history", "travel", "city"],
+    thumbnail: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
+    createdAt: "2026-06-16T00:47:17.000Z"
+  },
+  {
+    id: "firecuda-zed-league-of-legends",
+    file: "zed_-_league_of_legends.glb",
+    title: "Zed League of Legends",
+    categories: ["Gamer", "Mainstream Streaming"],
+    tags: ["league of legends", "zed", "gaming", "viral", "character scene"],
+    thumbnail: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=80",
+    createdAt: "2026-06-16T00:47:17.000Z"
   }
 ]
 
@@ -146,6 +299,10 @@ export function firecudaModelPool(category){
   return firecudaLibraryAssets
     .filter((asset) => asset.categories.includes(category))
     .map((asset) => firecudaUrl(asset.file))
+}
+
+export function firecudaAssetsForCategory(category){
+  return firecudaLibraryAssets.filter((asset) => asset.categories.includes(category))
 }
 
 export function firecudaDiscoveryAssets(){
