@@ -856,7 +856,7 @@ function visualKeyFor(feed, stage){
   return `${feed?.id || feed?.title || "feed"}:${stage?.id || stage?.label || "stage"}`
 }
 
-function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelOpen, onOpenModel, onNext, onPlayMore, onVisualPending, onVisualReady, guideText, followUps}){
+function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelOpen, onOpenModel, onNext, onPlayMore, onVisualPending, onVisualReady, onDirectorUpdate, guideText, followUps}){
   const hasEmbed = Boolean(feed.embedUrl)
   const hasModel = Boolean(feed.modelUrl)
   const isStats = stage.kind === "stats"
@@ -877,17 +877,16 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
   const envClass = environmentClass(feed)
 
   useEffect(() => {
-    if(!hasModel) return
-    warmModelViewer().then(() => setModelReady(true)).catch(() => null)
-  }, [hasModel])
-
-  useEffect(() => {
     setModelReady(false)
     setModelLoaded(false)
     if(!modelOpen || isStats) return
     onVisualPending?.(visualKey)
+    onDirectorUpdate?.({phase: "Loading GLB", detail: feed.title, status: "Waiting for renderer asset"})
     if(containedDataOpen){
-      const timer = window.setTimeout(() => onVisualReady?.(visualKey), 900)
+      const timer = window.setTimeout(() => {
+        onDirectorUpdate?.({phase: "Ready to present", detail: feed.title, status: "Environment read ready"})
+        onVisualReady?.(visualKey)
+      }, 900)
       return () => window.clearTimeout(timer)
     }
     if(hasEmbed) return
@@ -897,14 +896,17 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
       if(cancelled) return
       setModelReady(true)
       setModelLoaded(true)
+      onDirectorUpdate?.({phase: "Ready to present", detail: feed.title, status: "GLB loaded"})
       onVisualReady?.(visualKey)
     }
     const fallback = window.setTimeout(() => {
-      if(!cancelled) markReady()
-    }, 5200)
+      if(cancelled) return
+      setModelLoaded(true)
+      onDirectorUpdate?.({phase: "Ready with fallback", detail: feed.title, status: "Large model is still resolving; presentation can continue"})
+      onVisualReady?.(visualKey)
+    }, feed.modelUrl?.includes("/firecuda-library/") ? 18000 : 9000)
     warmModelViewer().then(() => {
       if(cancelled) return
-      setModelReady(true)
       const element = modelElementRef.current
       if(!element) return
       if(element.loaded) markReady()
@@ -913,7 +915,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
       cancelled = true
       window.clearTimeout(fallback)
     }
-  }, [modelOpen, liveOpen, containedDataOpen, hasModel, hasEmbed, isStats, feed.modelUrl, visualKey])
+  }, [modelOpen, liveOpen, containedDataOpen, hasModel, hasEmbed, isStats, feed.modelUrl, feed.title, visualKey])
 
   useEffect(() => {
     const element = modelElementRef.current
@@ -921,6 +923,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     const markReady = () => {
       setModelReady(true)
       setModelLoaded(true)
+      onDirectorUpdate?.({phase: "Ready to present", detail: feed.title, status: "GLB loaded"})
       onVisualReady?.(visualKey)
     }
     element.addEventListener("load", markReady)
@@ -930,7 +933,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
       element.removeEventListener("load", markReady)
       element.removeEventListener("error", markReady)
     }
-  }, [liveOpen, hasEmbed, hasModel, feed.modelUrl, visualKey])
+  }, [liveOpen, hasEmbed, hasModel, feed.modelUrl, feed.title, visualKey])
 
   useEffect(() => {
     setImageReady(false)
@@ -1036,6 +1039,7 @@ export default function FullscreenObservatoryV2(){
   const [presentationEdits, setPresentationEdits] = useState([])
   const [presentationSpeed, setPresentationSpeed] = useState(1)
   const [visualReadyKey, setVisualReadyKey] = useState("")
+  const [directorStatus, setDirectorStatus] = useState({phase: "Finding model", detail: "Preparing DigitalHut renderer", status: "Idle"})
   const hideTimer = useRef(null)
   const requestRef = useRef(0)
   const recognitionRef = useRef(null)
@@ -1106,10 +1110,14 @@ export default function FullscreenObservatoryV2(){
   useEffect(() => {
     if(!guided || entryOpen || !modelOpen) return
     const timer = window.setInterval(() => {
+      if(sceneVisualKey !== visualReadyKey){
+        setDirectorStatus({phase: "Waiting for GLB", detail: sceneFeed.title, status: "Holding camera until model is ready"})
+        return
+      }
       setStageIndex((current) => (current + 1) % stages.length)
     }, stageDelay)
     return () => window.clearInterval(timer)
-  }, [guided, entryOpen, stageDelay, modelOpen])
+  }, [guided, entryOpen, stageDelay, modelOpen, sceneVisualKey, visualReadyKey, sceneFeed.title])
 
   useEffect(() => {
     if(!guided || stage.kind !== "stats") return
@@ -1151,6 +1159,10 @@ export default function FullscreenObservatoryV2(){
       autoStepRef.current += 1
       setModelOpen(true)
       setPlaying(true)
+      if(sceneVisualKey !== visualReadyKey){
+        setDirectorStatus({phase: "Waiting for GLB", detail: sceneFeed.title, status: "Auto demo paused until current model is ready"})
+        return
+      }
       if(demoMode === "all" && autoStepRef.current % 4 === 0){
         playSessionSound(category, "bridge")
         bridgeNextCategory("I found a new trend bridge")
@@ -1171,7 +1183,7 @@ export default function FullscreenObservatoryV2(){
       }
       autoStartedRef.current = null
     }
-  }, [autoPresent, demoMode, tier, category, stage.kind, sceneFeed.id, feeds.length, autoDelay])
+  }, [autoPresent, demoMode, tier, category, stage.kind, sceneFeed.id, sceneFeed.title, sceneVisualKey, visualReadyKey, feeds.length, autoDelay])
 
   useEffect(() => {
     const pending = pendingSpeechRef.current
@@ -1185,10 +1197,12 @@ export default function FullscreenObservatoryV2(){
 
   function markVisualPending(key){
     setVisualReadyKey((current) => current === key ? "" : current)
+    setDirectorStatus({phase: "Loading GLB", detail: sceneFeed.title, status: "Waiting for renderer asset"})
   }
 
   function markVisualReady(key){
     setVisualReadyKey(key)
+    setDirectorStatus({phase: "Ready to present", detail: sceneFeed.title, status: "Model loaded; AI can continue"})
   }
 
   function speakAfterVisual(text, key = sceneVisualKey, delay = Math.round(900 / presentationSpeed)){
@@ -1790,7 +1804,7 @@ export default function FullscreenObservatoryV2(){
 
   return <main className={`dh-observatory low-power ${loading ? "is-loading" : "is-ready"} ${entryOpen ? "entry-open" : "entry-complete"}`} data-main-frame={digitalHutBrainMap.mainFrame} data-observatory-category={category} data-observatory-status={loading ? "verifying" : sceneFeed.apiStatus || "ready"} data-physical-assets="sensitive" onPointerMove={wake} onPointerDown={wake}>
     <section className="dh-stage">
-      <RendererVisual feed={sceneFeed} stage={stage} guided={guided} loading={loading} layer={layer} renderLive={!entryOpen} modelOpen={modelOpen} onOpenModel={openContainedModel} onNext={nextStage} onPlayMore={playMore} onVisualPending={markVisualPending} onVisualReady={markVisualReady} guideText={currentGuideLine} followUps={currentFollowUps} />
+      <RendererVisual feed={sceneFeed} stage={stage} guided={guided} loading={loading} layer={layer} renderLive={!entryOpen} modelOpen={modelOpen} onOpenModel={openContainedModel} onNext={nextStage} onPlayMore={playMore} onVisualPending={markVisualPending} onVisualReady={markVisualReady} onDirectorUpdate={setDirectorStatus} guideText={currentGuideLine} followUps={currentFollowUps} />
       <div className="dh-vignette" />
       {layer === "Architect" && <div className="dh-architect"><b>Architect Layer</b><span>builders / developers / researchers / AIs / experimental</span></div>}
 
@@ -1861,6 +1875,15 @@ export default function FullscreenObservatoryV2(){
       <button className={`dh-ai-space ${aiListening ? "listening" : ""} dock-${aiDock}`} type="button" onClick={startVoiceCommand}>
         <span>DigitalHut AI</span><b>{aiListening ? "Listening" : "Interact"}</b>
       </button>
+      <div className="dh-director-panel">
+        <div><b>AI Director</b><span>{tier.toUpperCase()}</span></div>
+        <strong>{directorStatus.phase}</strong>
+        <p>{directorStatus.detail}</p>
+        <small>{directorStatus.status}</small>
+        <ol>
+          {["Finding model", "Loading GLB", "Preparing camera", "Reading metadata", "Ready to present"].map((item) => <li key={item} className={directorStatus.phase === item || (directorStatus.phase.includes("Ready") && item === "Ready to present") ? "active" : ""}>{item}</li>)}
+        </ol>
+      </div>
       {aiOpen && <div className="dh-ai-command">
         <div><b>DigitalHut AI</b><button type="button" onClick={() => setAiOpen(false)}>Close</button></div>
         <input value={aiCommand} onChange={(event) => setAiCommand(event.target.value)} onKeyDown={(event) => {if(event.key === "Enter") runAiCommand(aiCommand)}} placeholder="Ask: Canada, Saturn, funny cat video, NC real estate, rotate, tell me more" />
