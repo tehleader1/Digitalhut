@@ -1,4 +1,5 @@
 import React, {useEffect, useRef, useState} from "react"
+import "@google/model-viewer"
 import {ConnectButton} from "../wallet"
 import {inferCategoryByVector} from "../lib/assetVectorMath"
 import {firecudaAssetsForCategory, firecudaLibraryStatus, firecudaModelPool, firecudaUrl} from "../lib/firecudaLibraryManifest"
@@ -944,8 +945,9 @@ function visualKeyFor(feed, stage){
 }
 
 function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelOpen, onOpenModel, onNext, onPlayMore, onVisualPending, onVisualReady, onDirectorUpdate, guideText, followUps}){
-  const [renderModelUrl, setRenderModelUrl] = useState(feed.modelUrl || feed.renderFallbackUrl || "")
-  const hasEmbed = Boolean(feed.embedUrl && !renderModelUrl)
+  const rendererFallbackUrl = feed.renderFallbackUrl || topicEnvironmentGlb(feed.category, `${feed.title || ""} ${feed.query || ""}`, 0)
+  const [renderModelUrl, setRenderModelUrl] = useState(feed.modelUrl || rendererFallbackUrl)
+  const hasEmbed = false
   const hasModel = Boolean(renderModelUrl)
   const isStats = stage.kind === "stats"
   const modelElementRef = useRef(null)
@@ -966,8 +968,8 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
   const isPersonalLibraryModel = renderModelUrl?.includes("/firecuda-library/") || renderModelUrl?.includes("supabase.co") || renderModelUrl?.includes("vercel-storage.com")
 
   useEffect(() => {
-    setRenderModelUrl(feed.modelUrl || feed.renderFallbackUrl || "")
-  }, [feed.modelUrl, feed.renderFallbackUrl, visualKey])
+    setRenderModelUrl(feed.modelUrl || rendererFallbackUrl)
+  }, [feed.modelUrl, rendererFallbackUrl, visualKey])
 
   useEffect(() => {
     setModelReady(false)
@@ -1002,6 +1004,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
         return
       }
       setModelLoaded(true)
+      setModelReady(true)
       onDirectorUpdate?.({phase: "Still loading GLB", detail: feed.title, status: "Keeping the selected personal model active"})
       onVisualReady?.(visualKey)
     }, isPersonalLibraryModel ? 28000 : 7000)
@@ -1029,6 +1032,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     const markError = () => {
       if(isPersonalLibraryModel){
         setModelLoaded(true)
+        setModelReady(true)
         onDirectorUpdate?.({phase: "GLB URL failed", detail: feed.title, status: "Check Supabase public URL, CORS, file name, and .glb content type"})
         return
       }
@@ -1071,6 +1075,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
       {!modelLoaded && <div className="dh-model-loader"><b>Loading GLB Renderer</b><span>{feed.title}</span></div>}
       <model-viewer key={renderModelUrl} ref={modelElementRef} className={`dh-model ${modelReady ? "is-ready" : "is-loading"}`} src={renderModelUrl} poster={feed.thumbnail || ""} camera-controls auto-rotate={guided ? true : undefined} auto-rotate-delay="450" rotation-per-second={stage.kind === "angle" ? "18deg" : "9deg"} camera-orbit={stage.orbit} field-of-view={stage.fov || "34deg"} interpolation-decay="160" exposure="1" shadow-intensity="0" reveal="auto" interaction-prompt="none" onLoad={() => {setModelReady(true); setModelLoaded(true); onVisualReady?.(visualKey)}} onError={() => {
         if(isPersonalLibraryModel){
+          setModelReady(true)
           setModelLoaded(true)
           onDirectorUpdate?.({phase: "GLB URL failed", detail: feed.title, status: "Selected uploaded model did not load. Verify Supabase public URL and filename."})
           return

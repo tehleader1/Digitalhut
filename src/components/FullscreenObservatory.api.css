@@ -29,8 +29,8 @@
   position: absolute;
   left: 50%;
   top: 47%;
-  width: min(640px, 58vw);
-  height: min(390px, 48vh);
+  width: min(780px, 62vw);
+  height: min(500px, 54vh);
   transform: translate(-50%, -50%);
   border: 1px solid rgba(103,232,249,.34);
   border-radius: 8px;
@@ -38,7 +38,7 @@
   visibility: visible !important;
   pointer-events: auto !important;
   z-index: 12;
-  background: #000;
+  background: radial-gradient(circle at 50% 42%, rgba(15,23,42,.28), rgba(2,6,23,.52));
   box-shadow: 0 28px 90px rgba(0,0,0,.52), 0 0 54px rgba(103,232,249,.16);
 }
 
@@ -65,9 +65,10 @@
   place-content: center;
   gap: 7px;
   padding: 18px;
-  background: radial-gradient(circle at 50% 35%, rgba(103,232,249,.2), rgba(2,6,23,.96) 68%);
+  background: radial-gradient(circle at 50% 35%, rgba(103,232,249,.16), rgba(2,6,23,.58) 68%);
   color: #e0f2fe;
   text-align: center;
+  pointer-events: none;
 }
 
 .dh-model-loader b {
