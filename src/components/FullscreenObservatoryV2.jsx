@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from "react"
 import {ConnectButton} from "../wallet"
 import {inferCategoryByVector} from "../lib/assetVectorMath"
-import {firecudaAssetsForCategory, firecudaModelPool, firecudaUrl} from "../lib/firecudaLibraryManifest"
+import {firecudaAssetsForCategory, firecudaLibraryStatus, firecudaModelPool, firecudaUrl} from "../lib/firecudaLibraryManifest"
 import "./FullscreenObservatory.css"
 import "./FullscreenObservatory.api.css"
 import "./FullscreenObservatory.sequence.css"
@@ -92,6 +92,51 @@ function relatedGlb(category, index = 0){
   }
   const pool = [...firecudaModelPool(category), ...(pools[category] || pools["Mainstream Streaming"])]
   return pool[index % pool.length]
+}
+
+function topicEnvironmentGlb(category, text = "", index = 0){
+  const environment = (name) => `/models/environments/${name}`
+  const value = `${category} ${text}`.toLowerCase()
+  if(value.includes("spongebob") || value.includes("underwater") || value.includes("ocean") || value.includes("sponge")) return environment("undersea-media.glb")
+  if(value.includes("airport") || value.includes("flight") || value.includes("runway") || value.includes("indore") || value.includes("delay")) return environment("airport-delay.glb")
+  if(value.includes("orlando") || value.includes("traffic") || value.includes("road") || value.includes("congestion")) return environment("orlando-traffic.glb")
+  if(value.includes("real estate") || value.includes("housing") || value.includes("house") || value.includes("property") || value.includes("island") || value.includes("bedroom")) return environment("real-estate-island.glb")
+  if(value.includes("game") || value.includes("gamer") || value.includes("zelda") || value.includes("link") || value.includes("level")) return environment("gaming-world.glb")
+  if(value.includes("planet") || value.includes("space") || value.includes("saturn") || value.includes("mars") || value.includes("starlink") || value.includes("elon")) return environment("planetary-hub.glb")
+  if(value.includes("science") || value.includes("research") || value.includes("germ") || value.includes("fossil") || value.includes("experiment") || value.includes("south america")) return environment("science-voyage.glb")
+  if(value.includes("history") || value.includes("ancient") || value.includes("museum") || value.includes("heritage")) return environment("history-district.glb")
+  if(value.includes("construction") || value.includes("workforce") || value.includes("project") || value.includes("bridge")) return environment("workforce-site.glb")
+  if(value.includes("business") || value.includes("sponsor") || value.includes("market") || value.includes("startup")) return environment("business-district.glb")
+  if(value.includes("japan") || value.includes("canada") || value.includes("london") || value.includes("brazil") || value.includes("city") || value.includes("continent")) return environment("continent-city.glb")
+  return relatedGlb(category, index)
+}
+
+function attachRendererModel(item, category, term, index){
+  const renderText = `${term || ""} ${item.title || ""} ${item.note || ""} ${item.query || ""}`
+  const environmentUrl = topicEnvironmentGlb(category, renderText, index)
+  if(isDirectRenderableModel(item.modelUrl)){
+    return {
+      ...item,
+      renderFallbackUrl: environmentUrl,
+      apiStatus: item.apiStatus || "direct-api-model"
+    }
+  }
+  const sourceViewerUrl = item.viewerUrl || item.embedUrl || item.modelUrl || ""
+  return {
+    ...item,
+    embedUrl: "",
+    modelUrl: environmentUrl,
+    viewerUrl: sourceViewerUrl,
+    sourceModelUrl: item.modelUrl || "",
+    sourceEmbedUrl: item.embedUrl || "",
+    apiStatus: "topic-environment-render",
+    apiSource: item.apiSource ? `${item.apiSource} + DigitalHut environment renderer` : "DigitalHut environment renderer",
+    note: `${item.note || `Live API result for ${term || category}.`} DigitalHut attached a topic environment GLB so the active asset opens directly in 3D instead of stopping on a card.`
+  }
+}
+
+function isDirectRenderableModel(value){
+  return Boolean(value && /\.(glb|gltf)(\?|#|$)/i.test(value))
 }
 
 function firecudaSeedFeeds(category){
@@ -479,10 +524,26 @@ async function resolveApiFeeds(category, term){
     const payload = await response.json()
     return payloadItems(payload).map((item, index) => normalizeAsset(item, category, index, source, term))
   }))
-  for(const attempt of attempts){
-    if(attempt.status === "fulfilled" && attempt.value.length) return attempt.value.slice(0, 8)
-  }
-  return []
+  const termTokens = String(term || category).toLowerCase().split(/[^a-z0-9]+/).filter((item) => item.length > 2)
+  const seen = new Set()
+  const items = attempts
+    .filter((attempt) => attempt.status === "fulfilled")
+    .flatMap((attempt) => attempt.value)
+    .filter((item) => {
+      const key = item.modelUrl || item.embedUrl || item.viewerUrl || item.title
+      if(!key || seen.has(key)) return false
+      seen.add(key)
+      return true
+    })
+    .map((item) => {
+      const haystack = `${item.title || ""} ${item.note || ""} ${item.query || ""} ${item.apiSource || ""}`.toLowerCase()
+      const tokenScore = termTokens.reduce((score, token) => score + (haystack.includes(token) ? 4 : 0), 0)
+      const directScore = item.modelUrl ? 60 : item.embedUrl ? 45 : item.viewerUrl ? 18 : 0
+      const sourceScore = item.apiSource === "sketchfab" ? 8 : item.apiSource === "observatory-feed" ? 6 : 3
+      return {...item, matchScore: directScore + sourceScore + tokenScore}
+    })
+    .sort((a, b) => b.matchScore - a.matchScore)
+  return items.slice(0, 8)
 }
 
 function speak(text){
@@ -543,7 +604,7 @@ function queryFromCommand(text, fallback){
   if(value.includes("decentralized")) return "decentralized network data center 3d model"
   if(value.includes("funny")) return "funny creator video studio 2026 trend visual"
   if(value.includes("ai model")) return "new AI model production code feature 3d"
-  const cleaned = text.replace(/\b(open|show me|find|search|category|please|digitalhut|ai|preview|next|model|guided tour|tour)\b/gi, " ").replace(/\s+/g, " ").trim()
+  const cleaned = text.replace(/\b(open|show me|find|search|run|command|look up|category|please|digitalhut|ai|preview|next|model|guided tour|tour)\b/gi, " ").replace(/\s+/g, " ").trim()
   if(cleaned.length > 2) return `${cleaned} 3d model visual`
   return fallback
 }
@@ -873,8 +934,9 @@ function visualKeyFor(feed, stage){
 }
 
 function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelOpen, onOpenModel, onNext, onPlayMore, onVisualPending, onVisualReady, onDirectorUpdate, guideText, followUps}){
-  const hasEmbed = Boolean(feed.embedUrl)
-  const hasModel = Boolean(feed.modelUrl)
+  const [renderModelUrl, setRenderModelUrl] = useState(feed.modelUrl || feed.renderFallbackUrl || "")
+  const hasEmbed = Boolean(feed.embedUrl && !renderModelUrl)
+  const hasModel = Boolean(renderModelUrl)
   const isStats = stage.kind === "stats"
   const modelElementRef = useRef(null)
   const [modelReady, setModelReady] = useState(false)
@@ -891,6 +953,10 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
   const visualKey = visualKeyFor(feed, stage)
   const envLabel = environmentLabel(feed)
   const envClass = environmentClass(feed)
+
+  useEffect(() => {
+    setRenderModelUrl(feed.modelUrl || feed.renderFallbackUrl || "")
+  }, [feed.modelUrl, feed.renderFallbackUrl, visualKey])
 
   useEffect(() => {
     setModelReady(false)
@@ -917,10 +983,17 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     }
     const fallback = window.setTimeout(() => {
       if(cancelled) return
+      if(feed.renderFallbackUrl && renderModelUrl !== feed.renderFallbackUrl){
+        setModelReady(false)
+        setModelLoaded(false)
+        setRenderModelUrl(feed.renderFallbackUrl)
+        onDirectorUpdate?.({phase: "Loading GLB", detail: feed.title, status: "Primary model delayed; switching to matched environment GLB"})
+        return
+      }
       setModelLoaded(true)
       onDirectorUpdate?.({phase: "Ready with fallback", detail: feed.title, status: "Large model is still resolving; presentation can continue"})
       onVisualReady?.(visualKey)
-    }, feed.modelUrl?.includes("/firecuda-library/") ? 18000 : 9000)
+    }, renderModelUrl?.includes("/firecuda-library/") || renderModelUrl?.includes("supabase.co") || renderModelUrl?.includes("vercel-storage.com") ? 16000 : 7000)
     warmModelViewer().then(() => {
       if(cancelled) return
       const element = modelElementRef.current
@@ -931,7 +1004,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
       cancelled = true
       window.clearTimeout(fallback)
     }
-  }, [modelOpen, liveOpen, containedDataOpen, hasModel, hasEmbed, isStats, feed.modelUrl, feed.title, visualKey])
+  }, [modelOpen, liveOpen, containedDataOpen, hasModel, hasEmbed, isStats, renderModelUrl, feed.renderFallbackUrl, feed.title, visualKey])
 
   useEffect(() => {
     const element = modelElementRef.current
@@ -942,14 +1015,24 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
       onDirectorUpdate?.({phase: "Ready to present", detail: feed.title, status: "GLB loaded"})
       onVisualReady?.(visualKey)
     }
+    const markError = () => {
+      if(feed.renderFallbackUrl && renderModelUrl !== feed.renderFallbackUrl){
+        setModelReady(false)
+        setModelLoaded(false)
+        setRenderModelUrl(feed.renderFallbackUrl)
+        onDirectorUpdate?.({phase: "Loading GLB", detail: feed.title, status: "Model failed; loading matched environment GLB"})
+        return
+      }
+      markReady()
+    }
     element.addEventListener("load", markReady)
-    element.addEventListener("error", markReady)
+    element.addEventListener("error", markError)
     if(element.loaded) markReady()
     return () => {
       element.removeEventListener("load", markReady)
-      element.removeEventListener("error", markReady)
+      element.removeEventListener("error", markError)
     }
-  }, [liveOpen, hasEmbed, hasModel, feed.modelUrl, feed.title, visualKey])
+  }, [liveOpen, hasEmbed, hasModel, renderModelUrl, feed.renderFallbackUrl, feed.title, visualKey])
 
   useEffect(() => {
     setImageReady(false)
@@ -970,7 +1053,18 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     {liveOpen && hasEmbed && <iframe className="dh-api-frame" title={feed.title} src={pausedEmbedUrl(feed.embedUrl)} allow="fullscreen; xr-spatial-tracking" loading="lazy" allowFullScreen onLoad={() => onVisualReady?.(visualKey)} />}
     {liveOpen && !hasEmbed && hasModel && <div className="dh-model-shell">
       {!modelLoaded && <div className="dh-model-loader"><b>Loading GLB Renderer</b><span>{feed.title}</span></div>}
-      <model-viewer ref={modelElementRef} className={`dh-model ${modelReady ? "is-ready" : "is-loading"}`} src={feed.modelUrl} poster={feed.thumbnail || ""} camera-controls auto-rotate={guided ? true : undefined} auto-rotate-delay="450" rotation-per-second={stage.kind === "angle" ? "18deg" : "9deg"} camera-orbit={stage.orbit} field-of-view={stage.fov || "34deg"} interpolation-decay="160" exposure="1" shadow-intensity="0" reveal="auto" interaction-prompt="none" onLoad={() => {setModelReady(true); setModelLoaded(true); onVisualReady?.(visualKey)}} onError={() => {setModelReady(true); setModelLoaded(true); onVisualReady?.(visualKey)}} />
+      <model-viewer ref={modelElementRef} className={`dh-model ${modelReady ? "is-ready" : "is-loading"}`} src={renderModelUrl} poster={feed.thumbnail || ""} camera-controls auto-rotate={guided ? true : undefined} auto-rotate-delay="450" rotation-per-second={stage.kind === "angle" ? "18deg" : "9deg"} camera-orbit={stage.orbit} field-of-view={stage.fov || "34deg"} interpolation-decay="160" exposure="1" shadow-intensity="0" reveal="auto" interaction-prompt="none" onLoad={() => {setModelReady(true); setModelLoaded(true); onVisualReady?.(visualKey)}} onError={() => {
+        if(feed.renderFallbackUrl && renderModelUrl !== feed.renderFallbackUrl){
+          setModelReady(false)
+          setModelLoaded(false)
+          setRenderModelUrl(feed.renderFallbackUrl)
+          onDirectorUpdate?.({phase: "Loading GLB", detail: feed.title, status: "Retrying with matched environment GLB"})
+          return
+        }
+        setModelReady(true)
+        setModelLoaded(true)
+        onVisualReady?.(visualKey)
+      }} />
     </div>}
     {containedDataOpen && <section className={`dh-contained-model dh-environment-read ${envClass}`} aria-label="Environment read session">
       <div className="dh-contained-screen" style={feed.thumbnail ? {"--contained-image": `url("${feed.thumbnail}")`} : undefined}>
@@ -991,7 +1085,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
         <button type="button" onClick={onPlayMore}>Deep Read</button>
       </div>
     </section>}
-    {canShowContainment && modelOpen && !guideDismissed && <div className={`dh-contained-guide ${liveOpen ? "is-compact" : ""}`}>
+    {canShowContainment && modelOpen && !guideDismissed && !liveOpen && !containedDataOpen && <div className="dh-contained-guide">
       <button className="dh-guide-close" type="button" aria-label="Close presentation card" onClick={() => setGuideDismissed(true)}>X</button>
       <span>{guideText}</span>
       <button type="button" onClick={() => {setGuideDismissed(true); onOpenModel?.()}}>Play 3D Preview</button>
@@ -1085,6 +1179,7 @@ export default function FullscreenObservatoryV2(){
   const sceneVisualKey = visualKeyFor(sceneFeed, stage)
   const stageDelay = Math.round((stage.kind === "stats" ? 26000 : 18000) / presentationSpeed)
   const autoDelay = Math.round(22000 / presentationSpeed)
+  const assetLibraryStatus = firecudaLibraryStatus()
 
   function recordDirectorMessage(role, text, status = directorStatus.phase){
     const message = {
@@ -1286,7 +1381,7 @@ export default function FullscreenObservatoryV2(){
   async function loadFeeds(nextCategory, term, options = {}){
     const id = requestRef.current + 1
     requestRef.current = id
-    const seeds = seedFeeds(nextCategory)
+    const seeds = seedFeeds(nextCategory).map((item, index) => attachRendererModel(item, nextCategory, term, index))
     setLoading(true)
     setActive(0)
     setModelOpen(true)
@@ -1295,15 +1390,11 @@ export default function FullscreenObservatoryV2(){
     preloadModels(seeds.map((item) => item.modelUrl))
     if(requestRef.current !== id) return seeds
     setFeeds(seeds)
-    const results = await resolveApiFeeds(nextCategory, term)
+    const results = (await resolveApiFeeds(nextCategory, term)).map((item, index) => attachRendererModel(item, nextCategory, term, index))
     if(requestRef.current !== id) return seeds
-    const directResults = results.filter((item) => item.embedUrl || item.modelUrl)
-    const textResults = results.filter((item) => !item.embedUrl && !item.modelUrl)
     const seedTitles = new Set(results.map((item) => item.title))
     const seedModels = seeds.filter((seed) => !seedTitles.has(seed.title))
-    const next = directResults.length
-      ? [...directResults, ...seedModels, ...textResults].slice(0, 8)
-      : [...seedModels, ...textResults].slice(0, 8)
+    const next = results.length ? [...results, ...seedModels].slice(0, 8) : seedModels.slice(0, 8)
     preloadImages(next.map((item) => item.thumbnail))
     preloadModels(next.map((item) => item.modelUrl))
     if(requestRef.current !== id) return next
@@ -1951,6 +2042,7 @@ export default function FullscreenObservatoryV2(){
           <strong>{directorStatus.phase}</strong>
           <p>{directorStatus.detail}</p>
           <small>{directorStatus.status}</small>
+          <small className="dh-director-asset-source">{assetLibraryStatus.mode === "uploaded-personal-library" ? "Supabase library connected" : "Local render library"}: {assetLibraryStatus.availableCount}/{assetLibraryStatus.totalCount} GLBs</small>
         </div>
         <ol>
           {["Finding model", "Loading GLB", "Preparing camera", "Reading metadata", "Ready to present"].map((item) => <li key={item} className={directorStatus.phase === item || (directorStatus.phase.includes("Ready") && item === "Ready to present") ? "active" : ""}>{item}</li>)}

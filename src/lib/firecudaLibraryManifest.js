@@ -334,3 +334,13 @@ export function firecudaDiscoveryAssets(){
     views: 1
   }))
 }
+
+export function firecudaLibraryStatus(){
+  const available = firecudaLibraryAssets.filter(isFirecudaAssetAvailable)
+  return {
+    mode: firecudaExternalBase ? "uploaded-personal-library" : "local-git-library",
+    baseUrl: firecudaExternalBase || firecudaBase,
+    availableCount: available.length,
+    totalCount: firecudaLibraryAssets.length
+  }
+}

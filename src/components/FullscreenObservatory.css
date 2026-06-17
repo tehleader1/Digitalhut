@@ -417,12 +417,13 @@
 
 .dh-director-panel {
   position: absolute;
-  right: 18px;
-  top: 118px;
-  width: min(340px, 34vw);
-  max-height: calc(100vh - 214px);
+  left: 14px;
+  right: auto;
+  top: 142px;
+  width: min(318px, 27vw);
+  max-height: calc(100vh - 254px);
   overflow: hidden;
-  z-index: 12;
+  z-index: 16;
   padding: 12px;
   border: 1px solid rgba(125, 211, 252, .34);
   border-radius: 10px;
@@ -444,6 +445,12 @@
 .dh-director-panel small {
   color: #93c5fd;
   font-size: 11px;
+}
+
+.dh-director-asset-source {
+  display: block;
+  margin-top: 5px;
+  color: #bef264 !important;
 }
 
 .dh-director-panel strong {
@@ -503,7 +510,7 @@
 .dh-director-history {
   display: grid;
   gap: 6px;
-  max-height: min(210px, 28vh);
+  max-height: min(150px, 22vh);
   overflow-y: auto;
   padding-right: 2px;
 }
@@ -1666,6 +1673,14 @@
     right: 10px;
     top: 136px;
     width: min(360px, 46vw);
+  }
+
+  .dh-director-panel {
+    left: 10px;
+    right: auto;
+    top: 136px;
+    width: min(300px, 42vw);
+    max-height: calc(100vh - 260px);
   }
 
   .dh-info {
