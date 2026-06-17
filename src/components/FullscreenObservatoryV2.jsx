@@ -948,6 +948,48 @@ function splitModelUrl(src){
   }
 }
 
+function hasWebGlSupport(){
+  if(typeof document === "undefined") return false
+  const canvas = document.createElement("canvas")
+  try {
+    return Boolean(
+      canvas.getContext("webgl2", {failIfMajorPerformanceCaveat: false}) ||
+      canvas.getContext("webgl", {failIfMajorPerformanceCaveat: false}) ||
+      canvas.getContext("experimental-webgl", {failIfMajorPerformanceCaveat: false})
+    )
+  } catch {
+    return false
+  }
+}
+
+function isWebGlError(error){
+  const message = String(error?.message || error || "").toLowerCase()
+  return message.includes("webgl") || message.includes("context") || message.includes("gpu")
+}
+
+function createBabylonEngine(Engine, canvas){
+  const lowPowerOptions = {
+    adaptToDeviceRatio: false,
+    antialias: false,
+    audioEngine: false,
+    doNotHandleContextLost: false,
+    failIfMajorPerformanceCaveat: false,
+    limitDeviceRatio: 1.25,
+    powerPreference: "default",
+    preserveDrawingBuffer: false,
+    stencil: false
+  }
+  try {
+    return new Engine(canvas, false, lowPowerOptions)
+  } catch (firstError) {
+    try {
+      return new Engine(canvas, false, {...lowPowerOptions, disableWebGL2Support: true})
+    } catch {
+      throw firstError
+    }
+  }
+}
+
 function BabylonGlbStage({src, title, guided, stage, visualKey, onReady, onError}){
   const canvasRef = useRef(null)
 
@@ -983,13 +1025,12 @@ function BabylonGlbStage({src, title, guided, stage, visualKey, onReady, onError
         await import("@babylonjs/loaders/glTF/glTFFileLoader.js")
         await import("@babylonjs/loaders/glTF/2.0/glTFLoader.js")
         if(disposed || !canvasRef.current) return
-        engine = new Engine(canvasRef.current, true, {
-          adaptToDeviceRatio: true,
-          antialias: true,
-          powerPreference: "high-performance",
-          preserveDrawingBuffer: false,
-          stencil: false
-        })
+        if(!hasWebGlSupport()){
+          const error = new Error("WebGL is disabled or unavailable in this browser/device")
+          error.digitalhutCode = "webgl-unavailable"
+          throw error
+        }
+        engine = createBabylonEngine(Engine, canvasRef.current)
         scene = new Scene(engine)
         scene.clearColor = new Color4(0, 0, 0, 0)
         const camera = new ArcRotateCamera("dh-camera", Math.PI / 2, Math.PI / 2.35, 4, Vector3.Zero(), scene)
@@ -1075,6 +1116,8 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
   const envLabel = environmentLabel(feed)
   const envClass = environmentClass(feed)
   const isPersonalLibraryModel = renderModelUrl?.includes("/firecuda-library/") || renderModelUrl?.includes("supabase.co") || renderModelUrl?.includes("vercel-storage.com")
+  const modelErrorText = String(modelError || "")
+  const webGlBlocked = modelErrorText.toLowerCase().includes("webgl")
 
   useEffect(() => {
     setRenderModelUrl(feed.modelUrl || rendererFallbackUrl)
@@ -1113,6 +1156,15 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
 
   function markBabylonError(error){
     const reason = error?.message || "Babylon could not import this GLB"
+    const isWebGlFailure = error?.digitalhutCode === "webgl-unavailable" || isWebGlError(error)
+    if(isWebGlFailure){
+      setModelReady(false)
+      setModelLoaded(true)
+      setModelError("WebGL is unavailable in this browser/device. Enable browser hardware acceleration or use a browser/device with WebGL to render GLB models.")
+      onDirectorUpdate?.({phase: "WebGL unavailable", detail: feed.title, status: "The GLB URL can be valid, but this browser cannot start the renderer."})
+      onVisualReady?.(visualKey)
+      return
+    }
     const localFirecudaFallback = firecudaLocalFallbackUrl(renderModelUrl)
     if(localFirecudaFallback && renderModelUrl !== localFirecudaFallback){
       setModelReady(false)
@@ -1156,7 +1208,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     {liveOpen && hasEmbed && <iframe className="dh-api-frame" title={feed.title} src={pausedEmbedUrl(feed.embedUrl)} allow="fullscreen; xr-spatial-tracking" loading="lazy" allowFullScreen onLoad={() => onVisualReady?.(visualKey)} />}
     {liveOpen && !hasEmbed && hasModel && <div className="dh-model-shell">
       {!modelLoaded && <div className="dh-model-loader"><b>Loading Babylon GLB Renderer</b><span>{feed.title}</span></div>}
-      {modelError && <div className="dh-model-loader error"><b>Renderer needs a valid GLB URL</b><span>{modelError}</span></div>}
+      {modelError && <div className={`dh-model-loader error ${webGlBlocked ? "webgl-error" : ""}`}><b>{webGlBlocked ? "WebGL renderer unavailable" : "Renderer needs a valid GLB URL"}</b><span>{modelError}</span>{webGlBlocked && renderModelUrl && <a href={renderModelUrl} target="_blank" rel="noreferrer">Open GLB file</a>}</div>}
       <BabylonGlbStage key={renderModelUrl} src={renderModelUrl} title={feed.title} guided={guided} stage={stage} visualKey={visualKey} onReady={markBabylonReady} onError={markBabylonError} />
     </div>}
     {containedDataOpen && <section className={`dh-contained-model dh-environment-read ${envClass}`} aria-label="Environment read session">

@@ -101,6 +101,26 @@
   max-width: min(520px, 84%);
 }
 
+.dh-model-loader.error a {
+  justify-self: center;
+  margin-top: 8px;
+  color: #e0f2fe;
+  border: 1px solid rgba(254,202,202,.45);
+  border-radius: 6px;
+  padding: 7px 10px;
+  text-decoration: none;
+  background: rgba(15,23,42,.64);
+}
+
+.dh-model-loader.webgl-error {
+  background: radial-gradient(circle at 50% 35%, rgba(250,204,21,.22), rgba(15,23,42,.84) 72%);
+  color: #fef9c3;
+}
+
+.dh-model-loader.webgl-error span {
+  color: #fde68a;
+}
+
 .dh-observatory.low-power .dh-renderer.has-api.live-open .dh-api-frame,
 .dh-observatory.low-power .dh-renderer.has-api.live-open .dh-model-shell,
 .dh-observatory.low-power .dh-api-system-preview,
