@@ -4,6 +4,12 @@ import { VitePWA } from "vite-plugin-pwa"
 
 export default defineConfig({
 
+  build:{
+
+    cssMinify:false
+
+  },
+
   plugins:[
 
     react(),

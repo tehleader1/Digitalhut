@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useState} from "react"
-import "@google/model-viewer"
 import {ConnectButton} from "../wallet"
 import {inferCategoryByVector} from "../lib/assetVectorMath"
 import {firecudaAssetsForCategory, firecudaLibraryStatus, firecudaModelPool, firecudaUrl} from "../lib/firecudaLibraryManifest"
@@ -61,17 +60,6 @@ function stockUrl(category, index = 0){
   const pool = stockImages[category] || stockImages.Continent
   const id = pool[index % pool.length]
   return `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1200&q=82`
-}
-
-let modelViewerReadyPromise
-
-function warmModelViewer(){
-  if(typeof window === "undefined") return Promise.resolve()
-  if(customElements.get("model-viewer")) return Promise.resolve()
-  if(!modelViewerReadyPromise){
-    modelViewerReadyPromise = import("@google/model-viewer").then(() => customElements.whenDefined("model-viewer"))
-  }
-  return modelViewerReadyPromise
 }
 
 function relatedGlb(category, index = 0){
@@ -944,15 +932,134 @@ function visualKeyFor(feed, stage){
   return `${feed?.id || feed?.title || "feed"}:${stage?.id || stage?.label || "stage"}`
 }
 
+function splitModelUrl(src){
+  try {
+    const url = new URL(src, window.location.href)
+    const filename = `${url.pathname.split("/").pop() || ""}${url.search || ""}`
+    return {
+      rootUrl: url.href.slice(0, Math.max(0, url.href.length - filename.length)),
+      sceneFilename: filename || url.href
+    }
+  } catch {
+    const index = String(src || "").lastIndexOf("/")
+    return index >= 0
+      ? {rootUrl: src.slice(0, index + 1), sceneFilename: src.slice(index + 1)}
+      : {rootUrl: "", sceneFilename: src}
+  }
+}
+
+function BabylonGlbStage({src, title, guided, stage, visualKey, onReady, onError}){
+  const canvasRef = useRef(null)
+
+  useEffect(() => {
+    if(!src || !canvasRef.current) return undefined
+    let disposed = false
+    let engine
+    let scene
+    let resizeHandler
+    let spinObserver
+
+    async function loadBabylon(){
+      try {
+        const [
+          {Engine},
+          {Scene},
+          {ArcRotateCamera},
+          {Vector3},
+          {Color4},
+          {HemisphericLight},
+          {DirectionalLight},
+          {SceneLoader}
+        ] = await Promise.all([
+          import("@babylonjs/core/Engines/engine.js"),
+          import("@babylonjs/core/scene.js"),
+          import("@babylonjs/core/Cameras/arcRotateCamera.js"),
+          import("@babylonjs/core/Maths/math.vector.js"),
+          import("@babylonjs/core/Maths/math.color.js"),
+          import("@babylonjs/core/Lights/hemisphericLight.js"),
+          import("@babylonjs/core/Lights/directionalLight.js"),
+          import("@babylonjs/core/Loading/sceneLoader.js")
+        ])
+        await import("@babylonjs/loaders/glTF/glTFFileLoader.js")
+        if(disposed || !canvasRef.current) return
+        engine = new Engine(canvasRef.current, true, {
+          adaptToDeviceRatio: true,
+          antialias: true,
+          powerPreference: "high-performance",
+          preserveDrawingBuffer: false,
+          stencil: false
+        })
+        scene = new Scene(engine)
+        scene.clearColor = new Color4(0, 0, 0, 0)
+        const camera = new ArcRotateCamera("dh-camera", Math.PI / 2, Math.PI / 2.35, 4, Vector3.Zero(), scene)
+        camera.attachControl(canvasRef.current, true)
+        camera.wheelDeltaPercentage = 0.012
+        camera.pinchDeltaPercentage = 0.01
+        camera.angularSensibilityX = 650
+        camera.angularSensibilityY = 650
+        new HemisphericLight("dh-hemi", new Vector3(0, 1, 0), scene).intensity = 0.95
+        const key = new DirectionalLight("dh-key", new Vector3(-0.4, -1, -0.35), scene)
+        key.intensity = 0.7
+
+        const {rootUrl, sceneFilename} = splitModelUrl(src)
+        const result = await SceneLoader.ImportMeshAsync("", rootUrl, sceneFilename, scene)
+        if(disposed) return
+        const renderable = scene.meshes.filter((mesh) => mesh.isEnabled() && typeof mesh.getTotalVertices === "function" && mesh.getTotalVertices() > 0)
+        if(!renderable.length) throw new Error("GLB loaded without visible meshes")
+        const bounds = scene.getWorldExtends((mesh) => renderable.includes(mesh))
+        const center = bounds.min.add(bounds.max).scale(0.5)
+        const size = bounds.max.subtract(bounds.min)
+        const maxDim = Math.max(size.x, size.y, size.z, 0.1)
+        camera.setTarget(center)
+        camera.radius = maxDim * 2.05
+        camera.lowerRadiusLimit = maxDim * 0.38
+        camera.upperRadiusLimit = maxDim * 6
+        camera.minZ = Math.max(maxDim / 120, 0.01)
+        camera.maxZ = maxDim * 120
+        if(stage?.kind === "angle") camera.beta = Math.PI / 2.55
+        if(stage?.kind === "similar") camera.alpha += 0.55
+        if(guided) {
+          spinObserver = scene.onBeforeRenderObservable.add(() => {
+            camera.alpha += (engine.getDeltaTime() / 1000) * (stage?.kind === "angle" ? 0.28 : 0.12)
+          })
+        }
+        engine.runRenderLoop(() => scene?.render())
+        resizeHandler = () => engine?.resize()
+        window.addEventListener("resize", resizeHandler)
+        window.setTimeout(() => {
+          if(!disposed){
+            engine?.resize()
+            onReady?.(visualKey)
+          }
+        }, 120)
+      } catch (error) {
+        if(!disposed) onError?.(error)
+      }
+    }
+
+    loadBabylon()
+
+    return () => {
+      disposed = true
+      if(resizeHandler) window.removeEventListener("resize", resizeHandler)
+      if(scene && spinObserver) scene.onBeforeRenderObservable.remove(spinObserver)
+      scene?.dispose()
+      engine?.dispose()
+    }
+  }, [src, guided, stage?.kind, visualKey])
+
+  return <canvas ref={canvasRef} className="dh-model dh-babylon-canvas" aria-label={`3D renderer for ${title}`} />
+}
+
 function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelOpen, onOpenModel, onNext, onPlayMore, onVisualPending, onVisualReady, onDirectorUpdate, guideText, followUps}){
   const rendererFallbackUrl = feed.renderFallbackUrl || topicEnvironmentGlb(feed.category, `${feed.title || ""} ${feed.query || ""}`, 0)
   const [renderModelUrl, setRenderModelUrl] = useState(feed.modelUrl || rendererFallbackUrl)
   const hasEmbed = false
   const hasModel = Boolean(renderModelUrl)
   const isStats = stage.kind === "stats"
-  const modelElementRef = useRef(null)
   const [modelReady, setModelReady] = useState(false)
   const [modelLoaded, setModelLoaded] = useState(false)
+  const [modelError, setModelError] = useState("")
   const [imageReady, setImageReady] = useState(false)
   const [guideDismissed, setGuideDismissed] = useState(false)
   const decorationActive = false
@@ -975,9 +1082,10 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
   useEffect(() => {
     setModelReady(false)
     setModelLoaded(false)
+    setModelError("")
     if(!rendererOpen || isStats) return
     onVisualPending?.(visualKey)
-    onDirectorUpdate?.({phase: "Loading GLB", detail: feed.title, status: "Waiting for renderer asset"})
+    onDirectorUpdate?.({phase: "Loading Babylon GLB", detail: feed.title, status: "Waiting for renderer asset"})
     if(containedDataOpen){
       const timer = window.setTimeout(() => {
         onDirectorUpdate?.({phase: "Ready to present", detail: feed.title, status: "Environment read ready"})
@@ -985,75 +1093,39 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
       }, 900)
       return () => window.clearTimeout(timer)
     }
-    if(hasEmbed) return
-    if(!liveOpen || !hasModel) return
-    let cancelled = false
-    const markReady = () => {
-      if(cancelled) return
-      setModelReady(true)
-      setModelLoaded(true)
-      onDirectorUpdate?.({phase: "Ready to present", detail: feed.title, status: "GLB loaded"})
-      onVisualReady?.(visualKey)
-    }
-    const fallback = window.setTimeout(() => {
-      if(cancelled) return
-      if(!isPersonalLibraryModel && feed.renderFallbackUrl && renderModelUrl !== feed.renderFallbackUrl){
-        setModelReady(false)
-        setModelLoaded(false)
-        setRenderModelUrl(feed.renderFallbackUrl)
-        onDirectorUpdate?.({phase: "Loading GLB", detail: feed.title, status: "Primary model delayed; switching to matched environment GLB"})
-        return
-      }
-      setModelLoaded(true)
-      setModelReady(true)
-      onDirectorUpdate?.({phase: "Still loading GLB", detail: feed.title, status: "Keeping the selected personal model active"})
-      onVisualReady?.(visualKey)
-    }, isPersonalLibraryModel ? 28000 : 7000)
-    warmModelViewer().then(() => {
-      if(cancelled) return
-      const element = modelElementRef.current
-      if(!element) return
-      if(element.loaded) markReady()
-    }).catch(() => null)
+    if(!liveOpen || hasEmbed || !hasModel) return undefined
+    const waiting = window.setTimeout(() => {
+      onDirectorUpdate?.({phase: "Still loading Babylon GLB", detail: feed.title, status: isPersonalLibraryModel ? "Large uploaded model still importing" : "Renderer still importing; fallback remains available"})
+    }, isPersonalLibraryModel ? 18000 : 9000)
     return () => {
-      cancelled = true
-      window.clearTimeout(fallback)
+      window.clearTimeout(waiting)
     }
-  }, [rendererOpen, liveOpen, containedDataOpen, hasModel, hasEmbed, isStats, renderModelUrl, feed.renderFallbackUrl, feed.title, visualKey, isPersonalLibraryModel])
+  }, [rendererOpen, liveOpen, containedDataOpen, hasModel, hasEmbed, isStats, feed.title, visualKey, isPersonalLibraryModel])
 
-  useEffect(() => {
-    const element = modelElementRef.current
-    if(!element || !liveOpen || hasEmbed || !hasModel) return
-    const markReady = () => {
-      setModelReady(true)
-      setModelLoaded(true)
-      onDirectorUpdate?.({phase: "Ready to present", detail: feed.title, status: "GLB loaded"})
-      onVisualReady?.(visualKey)
+  function markBabylonReady(key){
+    setModelReady(true)
+    setModelLoaded(true)
+    setModelError("")
+    onDirectorUpdate?.({phase: "Ready to present", detail: feed.title, status: "Babylon GLB loaded and camera fitted"})
+    onVisualReady?.(key)
+  }
+
+  function markBabylonError(error){
+    const reason = error?.message || "Babylon could not import this GLB"
+    if(!isPersonalLibraryModel && feed.renderFallbackUrl && renderModelUrl !== feed.renderFallbackUrl){
+      setModelReady(false)
+      setModelLoaded(false)
+      setModelError("")
+      setRenderModelUrl(feed.renderFallbackUrl)
+      onDirectorUpdate?.({phase: "Loading Babylon fallback", detail: feed.title, status: "Primary model failed; switching to matched environment GLB"})
+      return
     }
-    const markError = () => {
-      if(isPersonalLibraryModel){
-        setModelLoaded(true)
-        setModelReady(true)
-        onDirectorUpdate?.({phase: "GLB URL failed", detail: feed.title, status: "Check Supabase public URL, CORS, file name, and .glb content type"})
-        return
-      }
-      if(feed.renderFallbackUrl && renderModelUrl !== feed.renderFallbackUrl){
-        setModelReady(false)
-        setModelLoaded(false)
-        setRenderModelUrl(feed.renderFallbackUrl)
-        onDirectorUpdate?.({phase: "Loading GLB", detail: feed.title, status: "Model failed; loading matched environment GLB"})
-        return
-      }
-      markReady()
-    }
-    element.addEventListener("load", markReady)
-    element.addEventListener("error", markError)
-    if(element.loaded) markReady()
-    return () => {
-      element.removeEventListener("load", markReady)
-      element.removeEventListener("error", markError)
-    }
-  }, [liveOpen, hasEmbed, hasModel, renderModelUrl, feed.renderFallbackUrl, feed.title, visualKey, isPersonalLibraryModel])
+    setModelReady(false)
+    setModelLoaded(true)
+    setModelError(reason)
+    onDirectorUpdate?.({phase: "Babylon GLB failed", detail: feed.title, status: isPersonalLibraryModel ? "Verify Supabase public URL, CORS, filename, and GLB content type" : reason})
+    onVisualReady?.(visualKey)
+  }
 
   useEffect(() => {
     setImageReady(false)
@@ -1073,25 +1145,9 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     </button>}
     {liveOpen && hasEmbed && <iframe className="dh-api-frame" title={feed.title} src={pausedEmbedUrl(feed.embedUrl)} allow="fullscreen; xr-spatial-tracking" loading="lazy" allowFullScreen onLoad={() => onVisualReady?.(visualKey)} />}
     {liveOpen && !hasEmbed && hasModel && <div className="dh-model-shell">
-      {!modelLoaded && <div className="dh-model-loader"><b>Loading GLB Renderer</b><span>{feed.title}</span></div>}
-      <model-viewer key={renderModelUrl} ref={modelElementRef} className={`dh-model ${modelReady ? "is-ready" : "is-loading"}`} src={renderModelUrl} poster={feed.thumbnail || ""} camera-controls auto-rotate={guided ? true : undefined} auto-rotate-delay="450" rotation-per-second={stage.kind === "angle" ? "18deg" : "9deg"} camera-orbit={stage.orbit} field-of-view={stage.fov || "34deg"} interpolation-decay="160" exposure="1" shadow-intensity="0" reveal="auto" interaction-prompt="none" onLoad={() => {setModelReady(true); setModelLoaded(true); onVisualReady?.(visualKey)}} onError={() => {
-        if(isPersonalLibraryModel){
-          setModelReady(true)
-          setModelLoaded(true)
-          onDirectorUpdate?.({phase: "GLB URL failed", detail: feed.title, status: "Selected uploaded model did not load. Verify Supabase public URL and filename."})
-          return
-        }
-        if(feed.renderFallbackUrl && renderModelUrl !== feed.renderFallbackUrl){
-          setModelReady(false)
-          setModelLoaded(false)
-          setRenderModelUrl(feed.renderFallbackUrl)
-          onDirectorUpdate?.({phase: "Loading GLB", detail: feed.title, status: "Retrying with matched environment GLB"})
-          return
-        }
-        setModelReady(true)
-        setModelLoaded(true)
-        onVisualReady?.(visualKey)
-      }} />
+      {!modelLoaded && <div className="dh-model-loader"><b>Loading Babylon GLB Renderer</b><span>{feed.title}</span></div>}
+      {modelError && <div className="dh-model-loader error"><b>Renderer needs a valid GLB URL</b><span>{modelError}</span></div>}
+      <BabylonGlbStage key={renderModelUrl} src={renderModelUrl} title={feed.title} guided={guided} stage={stage} visualKey={visualKey} onReady={markBabylonReady} onError={markBabylonError} />
     </div>}
     {containedDataOpen && <section className={`dh-contained-model dh-environment-read ${envClass}`} aria-label="Environment read session">
       <div className="dh-contained-screen" style={feed.thumbnail ? {"--contained-image": `url("${feed.thumbnail}")`} : undefined}>
@@ -1677,7 +1733,7 @@ export default function FullscreenObservatoryV2(){
       modelLink,
       software: {
         app: "DigitalHut Observatory",
-        renderer: sceneFeed.embedUrl ? "Sketchfab embed" : sceneFeed.modelUrl ? "model-viewer GLB" : "stock/API preview",
+        renderer: sceneFeed.embedUrl ? "Sketchfab embed" : sceneFeed.modelUrl ? "Babylon GLB" : "stock/API preview",
         provider: sceneFeed.apiSource || sceneFeed.apiStatus || "observatory feed",
         supportedActions: ["view", "rotate", "guided tour", "save note", "share", "download record", "open model link"]
       },
