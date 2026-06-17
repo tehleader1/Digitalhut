@@ -303,7 +303,15 @@ export const firecudaLibraryAssets = [
 ]
 
 export function firecudaUrl(file){
+  if(localDeployableFirecudaFiles.has(file)) return `${firecudaBase}${file}`
   return `${firecudaExternalBase || firecudaBase}${file}`
+}
+
+export function firecudaLocalFallbackUrl(value){
+  const source = String(value || "")
+  const file = source.split("?")[0].split("#")[0].split("/").pop()
+  if(file && localDeployableFirecudaFiles.has(file)) return `${firecudaBase}${file}`
+  return ""
 }
 
 function isFirecudaAssetAvailable(asset){

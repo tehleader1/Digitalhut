@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from "react"
 import {ConnectButton} from "../wallet"
 import {inferCategoryByVector} from "../lib/assetVectorMath"
-import {firecudaAssetsForCategory, firecudaLibraryStatus, firecudaModelPool, firecudaUrl} from "../lib/firecudaLibraryManifest"
+import {firecudaAssetsForCategory, firecudaLibraryStatus, firecudaLocalFallbackUrl, firecudaModelPool, firecudaUrl} from "../lib/firecudaLibraryManifest"
 import "./FullscreenObservatory.css"
 import "./FullscreenObservatory.api.css"
 import "./FullscreenObservatory.sequence.css"
@@ -1112,7 +1112,16 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
 
   function markBabylonError(error){
     const reason = error?.message || "Babylon could not import this GLB"
-    if(!isPersonalLibraryModel && feed.renderFallbackUrl && renderModelUrl !== feed.renderFallbackUrl){
+    const localFirecudaFallback = firecudaLocalFallbackUrl(renderModelUrl)
+    if(localFirecudaFallback && renderModelUrl !== localFirecudaFallback){
+      setModelReady(false)
+      setModelLoaded(false)
+      setModelError("")
+      setRenderModelUrl(localFirecudaFallback)
+      onDirectorUpdate?.({phase: "Loading local FireCuda GLB", detail: feed.title, status: "External GLB URL failed; switching to bundled deployed copy"})
+      return
+    }
+    if(feed.renderFallbackUrl && renderModelUrl !== feed.renderFallbackUrl){
       setModelReady(false)
       setModelLoaded(false)
       setModelError("")
