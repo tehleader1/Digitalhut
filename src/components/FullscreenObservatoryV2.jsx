@@ -118,6 +118,7 @@ function attachRendererModel(item, category, term, index){
     return {
       ...item,
       renderFallbackUrl: environmentUrl,
+      renderPriority: item.apiSource === "FireCuda personal GLB library" ? 100 : 80,
       apiStatus: item.apiStatus || "direct-api-model"
     }
   }
@@ -129,6 +130,7 @@ function attachRendererModel(item, category, term, index){
     viewerUrl: sourceViewerUrl,
     sourceModelUrl: item.modelUrl || "",
     sourceEmbedUrl: item.embedUrl || "",
+    renderPriority: 20,
     apiStatus: "topic-environment-render",
     apiSource: item.apiSource ? `${item.apiSource} + DigitalHut environment renderer` : "DigitalHut environment renderer",
     note: `${item.note || `Live API result for ${term || category}.`} DigitalHut attached a topic environment GLB so the active asset opens directly in 3D instead of stopping on a card.`
@@ -137,6 +139,14 @@ function attachRendererModel(item, category, term, index){
 
 function isDirectRenderableModel(value){
   return Boolean(value && /\.(glb|gltf)(\?|#|$)/i.test(value))
+}
+
+function sortRendererFeeds(items){
+  return [...items].sort((a, b) => {
+    const scoreA = a.renderPriority ?? (isDirectRenderableModel(a.modelUrl) ? 70 : 10)
+    const scoreB = b.renderPriority ?? (isDirectRenderableModel(b.modelUrl) ? 70 : 10)
+    return scoreB - scoreA
+  })
 }
 
 function firecudaSeedFeeds(category){
@@ -953,6 +963,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
   const visualKey = visualKeyFor(feed, stage)
   const envLabel = environmentLabel(feed)
   const envClass = environmentClass(feed)
+  const isPersonalLibraryModel = renderModelUrl?.includes("/firecuda-library/") || renderModelUrl?.includes("supabase.co") || renderModelUrl?.includes("vercel-storage.com")
 
   useEffect(() => {
     setRenderModelUrl(feed.modelUrl || feed.renderFallbackUrl || "")
@@ -983,7 +994,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     }
     const fallback = window.setTimeout(() => {
       if(cancelled) return
-      if(feed.renderFallbackUrl && renderModelUrl !== feed.renderFallbackUrl){
+      if(!isPersonalLibraryModel && feed.renderFallbackUrl && renderModelUrl !== feed.renderFallbackUrl){
         setModelReady(false)
         setModelLoaded(false)
         setRenderModelUrl(feed.renderFallbackUrl)
@@ -991,9 +1002,9 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
         return
       }
       setModelLoaded(true)
-      onDirectorUpdate?.({phase: "Ready with fallback", detail: feed.title, status: "Large model is still resolving; presentation can continue"})
+      onDirectorUpdate?.({phase: "Still loading GLB", detail: feed.title, status: "Keeping the selected personal model active"})
       onVisualReady?.(visualKey)
-    }, renderModelUrl?.includes("/firecuda-library/") || renderModelUrl?.includes("supabase.co") || renderModelUrl?.includes("vercel-storage.com") ? 16000 : 7000)
+    }, isPersonalLibraryModel ? 28000 : 7000)
     warmModelViewer().then(() => {
       if(cancelled) return
       const element = modelElementRef.current
@@ -1004,7 +1015,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
       cancelled = true
       window.clearTimeout(fallback)
     }
-  }, [modelOpen, liveOpen, containedDataOpen, hasModel, hasEmbed, isStats, renderModelUrl, feed.renderFallbackUrl, feed.title, visualKey])
+  }, [modelOpen, liveOpen, containedDataOpen, hasModel, hasEmbed, isStats, renderModelUrl, feed.renderFallbackUrl, feed.title, visualKey, isPersonalLibraryModel])
 
   useEffect(() => {
     const element = modelElementRef.current
@@ -1016,6 +1027,11 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
       onVisualReady?.(visualKey)
     }
     const markError = () => {
+      if(isPersonalLibraryModel){
+        setModelLoaded(true)
+        onDirectorUpdate?.({phase: "GLB URL failed", detail: feed.title, status: "Check Supabase public URL, CORS, file name, and .glb content type"})
+        return
+      }
       if(feed.renderFallbackUrl && renderModelUrl !== feed.renderFallbackUrl){
         setModelReady(false)
         setModelLoaded(false)
@@ -1032,7 +1048,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
       element.removeEventListener("load", markReady)
       element.removeEventListener("error", markError)
     }
-  }, [liveOpen, hasEmbed, hasModel, renderModelUrl, feed.renderFallbackUrl, feed.title, visualKey])
+  }, [liveOpen, hasEmbed, hasModel, renderModelUrl, feed.renderFallbackUrl, feed.title, visualKey, isPersonalLibraryModel])
 
   useEffect(() => {
     setImageReady(false)
@@ -1053,7 +1069,12 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     {liveOpen && hasEmbed && <iframe className="dh-api-frame" title={feed.title} src={pausedEmbedUrl(feed.embedUrl)} allow="fullscreen; xr-spatial-tracking" loading="lazy" allowFullScreen onLoad={() => onVisualReady?.(visualKey)} />}
     {liveOpen && !hasEmbed && hasModel && <div className="dh-model-shell">
       {!modelLoaded && <div className="dh-model-loader"><b>Loading GLB Renderer</b><span>{feed.title}</span></div>}
-      <model-viewer ref={modelElementRef} className={`dh-model ${modelReady ? "is-ready" : "is-loading"}`} src={renderModelUrl} poster={feed.thumbnail || ""} camera-controls auto-rotate={guided ? true : undefined} auto-rotate-delay="450" rotation-per-second={stage.kind === "angle" ? "18deg" : "9deg"} camera-orbit={stage.orbit} field-of-view={stage.fov || "34deg"} interpolation-decay="160" exposure="1" shadow-intensity="0" reveal="auto" interaction-prompt="none" onLoad={() => {setModelReady(true); setModelLoaded(true); onVisualReady?.(visualKey)}} onError={() => {
+      <model-viewer key={renderModelUrl} ref={modelElementRef} className={`dh-model ${modelReady ? "is-ready" : "is-loading"}`} src={renderModelUrl} poster={feed.thumbnail || ""} camera-controls auto-rotate={guided ? true : undefined} auto-rotate-delay="450" rotation-per-second={stage.kind === "angle" ? "18deg" : "9deg"} camera-orbit={stage.orbit} field-of-view={stage.fov || "34deg"} interpolation-decay="160" exposure="1" shadow-intensity="0" reveal="auto" interaction-prompt="none" onLoad={() => {setModelReady(true); setModelLoaded(true); onVisualReady?.(visualKey)}} onError={() => {
+        if(isPersonalLibraryModel){
+          setModelLoaded(true)
+          onDirectorUpdate?.({phase: "GLB URL failed", detail: feed.title, status: "Selected uploaded model did not load. Verify Supabase public URL and filename."})
+          return
+        }
         if(feed.renderFallbackUrl && renderModelUrl !== feed.renderFallbackUrl){
           setModelReady(false)
           setModelLoaded(false)
@@ -1394,7 +1415,9 @@ export default function FullscreenObservatoryV2(){
     if(requestRef.current !== id) return seeds
     const seedTitles = new Set(results.map((item) => item.title))
     const seedModels = seeds.filter((seed) => !seedTitles.has(seed.title))
-    const next = results.length ? [...results, ...seedModels].slice(0, 8) : seedModels.slice(0, 8)
+    const directResults = results.filter((item) => item.renderPriority >= 70)
+    const fallbackResults = results.filter((item) => item.renderPriority < 70)
+    const next = sortRendererFeeds([...seedModels, ...directResults, ...fallbackResults]).slice(0, 8)
     preloadImages(next.map((item) => item.thumbnail))
     preloadModels(next.map((item) => item.modelUrl))
     if(requestRef.current !== id) return next
