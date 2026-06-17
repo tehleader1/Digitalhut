@@ -1,4 +1,15 @@
+function normalizeAssetBase(value){
+  return value ? `${value.replace(/\/+$/, "")}/` : ""
+}
+
 const firecudaBase = "/models/firecuda-library/"
+const firecudaExternalBase = normalizeAssetBase(import.meta.env?.VITE_FIRECUDA_ASSET_BASE || "")
+const localDeployableFirecudaFiles = new Set([
+  "glaceons_christmas_miracle.glb",
+  "international_space_elevator.glb",
+  "museum_of_ice_cream_singapore_-_welcome.glb",
+  "transformers_prime_game_bumblebee.glb"
+])
 
 export const firecudaDriveBatch001 = [
   "1EyJREaTttytp-uwVhai3ak9xq6eBxWiC",
@@ -292,21 +303,25 @@ export const firecudaLibraryAssets = [
 ]
 
 export function firecudaUrl(file){
-  return `${firecudaBase}${file}`
+  return `${firecudaExternalBase || firecudaBase}${file}`
+}
+
+function isFirecudaAssetAvailable(asset){
+  return Boolean(firecudaExternalBase) || localDeployableFirecudaFiles.has(asset.file)
 }
 
 export function firecudaModelPool(category){
   return firecudaLibraryAssets
-    .filter((asset) => asset.categories.includes(category))
+    .filter((asset) => asset.categories.includes(category) && isFirecudaAssetAvailable(asset))
     .map((asset) => firecudaUrl(asset.file))
 }
 
 export function firecudaAssetsForCategory(category){
-  return firecudaLibraryAssets.filter((asset) => asset.categories.includes(category))
+  return firecudaLibraryAssets.filter((asset) => asset.categories.includes(category) && isFirecudaAssetAvailable(asset))
 }
 
 export function firecudaDiscoveryAssets(){
-  return firecudaLibraryAssets.map((asset) => ({
+  return firecudaLibraryAssets.filter(isFirecudaAssetAvailable).map((asset) => ({
     id: asset.id,
     name: `FireCuda library - ${asset.title}`,
     type: "Personal GLB Library",

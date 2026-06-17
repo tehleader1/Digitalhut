@@ -463,6 +463,15 @@
   backdrop-filter: blur(14px);
 }
 
+.dh-contained-guide.is-compact {
+  left: 24px;
+  bottom: 18px;
+  width: min(520px, calc(100vw - 48px));
+  transform: none;
+  z-index: 7;
+  background: rgba(2,6,23,.58);
+}
+
 .dh-contained-guide .dh-guide-close {
   width: 28px;
   min-width: 28px;

@@ -13,6 +13,7 @@ const accounts = ["guest", "standard", "premium", "pro"]
 const layers = ["Base", "Architect", "Lighting", "Props", "Grid", "Coordinates"]
 const bridgeFlow = ["DigitalHut Presentation", "Mainstream Streaming", "Gamer", "Planetary", "Programmer", "Workforce", "Researcher", "Science", "History", "Businesses", "Real Estate", "Continent", "Political"]
 const liveFeedStorageKey = "digitalhut:liveGlbFeed"
+const directorChatStorageKey = "digitalhut:directorChatHistory"
 const digitalHutBrainMap = {
   mainFrame: "Double 007 Observatory Database",
   foundation: ["Supabase", "Vercel", "GitHub", "Codex", "APIs", "Back End"],
@@ -664,6 +665,21 @@ function writeLiveFeed(items){
   window.localStorage.setItem(liveFeedStorageKey, JSON.stringify(items.slice(0, 24)))
 }
 
+function readDirectorChat(){
+  if(typeof window === "undefined") return []
+  try{
+    const saved = JSON.parse(window.localStorage.getItem(directorChatStorageKey) || "[]")
+    return Array.isArray(saved) ? saved : []
+  } catch {
+    return []
+  }
+}
+
+function writeDirectorChat(items){
+  if(typeof window === "undefined") return
+  window.localStorage.setItem(directorChatStorageKey, JSON.stringify(items.slice(0, 40)))
+}
+
 function viralShareTitle(feed){
   return `Live 3D Project: ${feed.title}`
 }
@@ -975,10 +991,10 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
         <button type="button" onClick={onPlayMore}>Deep Read</button>
       </div>
     </section>}
-    {canShowContainment && modelOpen && !guideDismissed && <div className="dh-contained-guide">
+    {canShowContainment && modelOpen && !guideDismissed && <div className={`dh-contained-guide ${liveOpen ? "is-compact" : ""}`}>
       <button className="dh-guide-close" type="button" aria-label="Close presentation card" onClick={() => setGuideDismissed(true)}>X</button>
       <span>{guideText}</span>
-      <button type="button" onClick={() => setGuideDismissed(true)}>Play 3D Preview</button>
+      <button type="button" onClick={() => {setGuideDismissed(true); onOpenModel?.()}}>Play 3D Preview</button>
       <button type="button" onClick={onNext}>Next</button>
       <button type="button" onClick={onPlayMore}>Play More</button>
     </div>}
@@ -1040,6 +1056,8 @@ export default function FullscreenObservatoryV2(){
   const [presentationSpeed, setPresentationSpeed] = useState(1)
   const [visualReadyKey, setVisualReadyKey] = useState("")
   const [directorStatus, setDirectorStatus] = useState({phase: "Finding model", detail: "Preparing DigitalHut renderer", status: "Idle"})
+  const [directorChat, setDirectorChat] = useState(() => readDirectorChat())
+  const [directorInput, setDirectorInput] = useState("")
   const hideTimer = useRef(null)
   const requestRef = useRef(0)
   const recognitionRef = useRef(null)
@@ -1068,6 +1086,36 @@ export default function FullscreenObservatoryV2(){
   const stageDelay = Math.round((stage.kind === "stats" ? 26000 : 18000) / presentationSpeed)
   const autoDelay = Math.round(22000 / presentationSpeed)
 
+  function recordDirectorMessage(role, text, status = directorStatus.phase){
+    const message = {
+      id: `director-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+      role,
+      text,
+      status,
+      title: sceneFeed.title,
+      category,
+      createdAt: new Date().toISOString()
+    }
+    setDirectorChat((current) => {
+      const next = [message, ...current].slice(0, 40)
+      writeDirectorChat(next)
+      return next
+    })
+    return message
+  }
+
+  function clearDirectorChat(){
+    setDirectorChat([])
+    writeDirectorChat([])
+  }
+
+  function submitDirectorCommand(value = directorInput){
+    const text = String(value || "").trim()
+    if(!text) return
+    setDirectorInput("")
+    runAiCommand(text)
+  }
+
   useEffect(() => {
     window.digitalHutBrainMap = digitalHutBrainMap
   }, [])
@@ -1091,11 +1139,10 @@ export default function FullscreenObservatoryV2(){
 
   useEffect(() => {
     if(entryOpen || stage.kind === "stats") return
-    if(!sceneFeed.modelUrl && !sceneFeed.embedUrl) return
     if(modelOpen) return
     const timer = window.setTimeout(() => setModelOpen(true), 180)
     return () => window.clearTimeout(timer)
-  }, [entryOpen, stage.kind, sceneFeed.id, sceneFeed.modelUrl, sceneFeed.embedUrl, modelOpen])
+  }, [entryOpen, stage.kind, sceneFeed.id, modelOpen])
 
   useEffect(() => {
     const seeds = seedFeeds(category)
@@ -1156,22 +1203,29 @@ export default function FullscreenObservatoryV2(){
           return
         }
       }
-      autoStepRef.current += 1
       setModelOpen(true)
       setPlaying(true)
       if(sceneVisualKey !== visualReadyKey){
         setDirectorStatus({phase: "Waiting for GLB", detail: sceneFeed.title, status: "Auto demo paused until current model is ready"})
         return
       }
-      if(demoMode === "all" && autoStepRef.current % 4 === 0){
+      autoStepRef.current += 1
+      const nextStageIndex = (stageIndex + 1) % stages.length
+      const nextStage = stages[nextStageIndex]
+      const completedModelCycle = nextStageIndex === 0
+      if(demoMode === "all" && completedModelCycle && autoStepRef.current % (stages.length * 2) === 0){
         playSessionSound(category, "bridge")
+        recordDirectorMessage("ai", "Completed the current model cycle. Bridging to the next category with the renderer open.", "Auto bridge")
         bridgeNextCategory("I found a new trend bridge")
         return
       }
-      playSessionSound(category, stage.kind === "angle" ? "rotate" : "open")
-      setStageIndex((current) => (current + 1) % stages.length)
-      setActive((current) => (current + 1) % Math.max(feeds.length, 1))
-      speakAfterVisual(`${guideLine({category, stage, feed: sceneFeed, tour: activeTour, expanded: true})} ${feedbackPrompt({category, feed: sceneFeed})}`, visualKeyFor(sceneFeed, stage))
+      const nextActive = completedModelCycle ? (active + 1) % Math.max(feeds.length, 1) : active
+      const nextFeed = feeds[nextActive] || sceneFeed
+      playSessionSound(category, nextStage.kind === "angle" ? "rotate" : "open")
+      setStageIndex(nextStageIndex)
+      if(completedModelCycle && feeds.length > 1) setActive(nextActive)
+      recordDirectorMessage("ai", completedModelCycle ? `Finished this model sequence. Opening ${nextFeed.title}.` : `Continuing ${sceneFeed.title}: ${nextStage.label}.`, "Auto progression")
+      speakAfterVisual(`${guideLine({category, stage: nextStage, feed: nextFeed, tour: activeTour, expanded: true})} ${feedbackPrompt({category, feed: nextFeed})}`, visualKeyFor(nextFeed, nextStage))
     }, autoDelay)
     return () => {
       window.clearInterval(timer)
@@ -1183,7 +1237,7 @@ export default function FullscreenObservatoryV2(){
       }
       autoStartedRef.current = null
     }
-  }, [autoPresent, demoMode, tier, category, stage.kind, sceneFeed.id, sceneFeed.title, sceneVisualKey, visualReadyKey, feeds.length, autoDelay])
+  }, [autoPresent, demoMode, tier, category, active, stageIndex, sceneFeed.id, sceneFeed.title, sceneVisualKey, visualReadyKey, feeds, autoDelay])
 
   useEffect(() => {
     const pending = pendingSpeechRef.current
@@ -1537,25 +1591,29 @@ export default function FullscreenObservatoryV2(){
   }
 
   async function runAiCommand(command){
-    const text = command.trim()
+    const text = String(command || "").trim()
     if(!text) return
     setAiCommand(text)
-    setAiOpen(true)
+    setAiOpen(false)
     wake()
+    recordDirectorMessage("user", text, "Command")
     const lower = text.toLowerCase()
     const nextCategory = categoryFromCommand(text)
     const nextQuery = queryFromCommand(text, query)
     if(lower.includes("preview next") || lower.includes("next model") || lower.includes("show me next")){
+      recordDirectorMessage("ai", "Opening the next model and waiting for the renderer before narration continues.", "Next model")
       nextFeed()
       return
     }
     if(lower.includes("stop")){
       setAutoPresent(false)
       setPlaying(false)
+      recordDirectorMessage("ai", "Stopping the AI presentation and keeping the current renderer available.", "Stopped")
       speak("Stopping AI presentation.")
       return
     }
     if(lower.includes("auto mode") || lower.includes("keep presenting") || lower.includes("play feed")){
+      recordDirectorMessage("ai", lower.includes("current") || lower.includes("stay on topic") ? "Starting Current Category Auto Demo." : "Starting All Category Auto Demo.", "Auto demo")
       startDemoMode(lower.includes("current") || lower.includes("stay on topic") ? "current" : "all")
       return
     }
@@ -1563,14 +1621,17 @@ export default function FullscreenObservatoryV2(){
       setLiveStageOpen(true)
       setModelOpen(true)
       playSessionSound(category, "bridge")
+      recordDirectorMessage("ai", `Live GLB stage is ready for ${sceneFeed.title}.`, "Live stage")
       speak(`Live GLB stage is ready for ${sceneFeed.title}. Speak your host line, add a contest prompt, then post the live model.`)
       return
     }
     if(lower.includes("new trend") || lower.includes("jump category") || lower.includes("bridge")){
+      recordDirectorMessage("ai", "Looking for the next category bridge and keeping the model view active.", "Bridge")
       await bridgeNextCategory("I found a new trend")
       return
     }
     if(lower.includes("read data") || lower.includes("what do you see") || lower.includes("did you see the model") || lower.includes("current model")){
+      recordDirectorMessage("ai", `Reading the current model: ${sceneFeed.title}.`, "Model readout")
       speakModelReadout()
       return
     }
@@ -1578,22 +1639,27 @@ export default function FullscreenObservatoryV2(){
       setModelOpen(true)
       setNotesOpen(true)
       if(tier !== "pro"){
+        recordDirectorMessage("ai", "Deep research is gated to Pro. I opened notes and kept the current model ready.", "Tier gate")
         speak(`Deep research is a Pro operating mode. I can still read this model, rotate it, save the find, and bridge categories on ${tier}. ${feedbackPrompt({category, feed: sceneFeed})}`)
         return
       }
       await saveSmartNote(`${sceneFeed.title}\n\n${modelDataReadout({feed: sceneFeed, category, stage}).lines.join("\n")}`)
+      recordDirectorMessage("ai", "Pro deep research saved the current readout and kept the renderer open.", "Deep research")
       speak(`Pro deep research is active. I saved the current readout, I am keeping the model open, and I can bridge into a related source next. ${feedbackPrompt({category, feed: sceneFeed})}`)
       return
     }
     if(lower.includes("guided") || lower.includes("tour")){
+      recordDirectorMessage("ai", `Starting the guided tour for ${sceneFeed.title}.`, "Guided tour")
       chooseTour(activeTour)
       return
     }
     if(lower.includes("rotate") || lower.includes("camera")){
+      recordDirectorMessage("ai", "Rotating the camera stage on the open model.", "Camera")
       nextStage()
       return
     }
     if(lower.includes("tell me more") || lower.includes("history") || lower.includes("experience") || lower.includes("facts")){
+      recordDirectorMessage("ai", `Expanding the readout for ${sceneFeed.title}.`, "More detail")
       playMore()
       return
     }
@@ -1601,6 +1667,7 @@ export default function FullscreenObservatoryV2(){
       const target = sceneFeed.modelUrl || sceneFeed.viewerUrl || sceneFeed.embedUrl || ""
       setNotesOpen(true)
       await saveSmartNote()
+      recordDirectorMessage("ai", target ? "Saved the note and opened the direct model link." : "Saved the note; this feed does not expose a direct GLB link.", "Saved")
       if(target) window.open(target, "_blank")
       else speak("I saved the find. This feed does not expose a direct GLB link yet, so I attached the available model record.")
       return
@@ -1608,11 +1675,13 @@ export default function FullscreenObservatoryV2(){
     if(lower.includes("save my last recorded find") || lower.includes("save last recorded find") || lower.includes("download note")){
       setNotesOpen(true)
       await saveSmartNote()
+      recordDirectorMessage("ai", "Saved the last recorded find into Smart Notes.", "Saved note")
       return
     }
     if(isNoteCommand(text)){
       setSmartNote((current) => [current, text].filter(Boolean).join("\n"))
       setNotesOpen(true)
+      recordDirectorMessage("ai", "Added that text to Smart Notes without taking over the presentation.", "Note added")
       return
     }
     if(shouldTreatAsSearch(text)){
@@ -1623,6 +1692,7 @@ export default function FullscreenObservatoryV2(){
       setStatsFeeds([])
       setGuideDepth(0)
       setModelOpen(true)
+      recordDirectorMessage("ai", `Searching ${nextQuery} in ${targetCategory}. I will open the model renderer first, then talk.`, "Search")
       setQuery(nextQuery)
       announceOpen3dModel({title: nextQuery})
       const next = await loadFeeds(targetCategory, nextQuery, {silent: true, keepOpen: true})
@@ -1636,7 +1706,7 @@ export default function FullscreenObservatoryV2(){
 
   function startVoiceCommand(){
     const Engine = speechEngine()
-    setAiOpen(true)
+    setAiOpen(false)
     if(!Engine){
       speak("Voice input is not available in this browser. Type your command instead.")
       return
@@ -1876,13 +1946,34 @@ export default function FullscreenObservatoryV2(){
         <span>DigitalHut AI</span><b>{aiListening ? "Listening" : "Interact"}</b>
       </button>
       <div className="dh-director-panel">
-        <div><b>AI Director</b><span>{tier.toUpperCase()}</span></div>
-        <strong>{directorStatus.phase}</strong>
-        <p>{directorStatus.detail}</p>
-        <small>{directorStatus.status}</small>
+        <div className="dh-director-head"><b>AI Director</b><span>{tier.toUpperCase()}</span></div>
+        <div className="dh-director-status">
+          <strong>{directorStatus.phase}</strong>
+          <p>{directorStatus.detail}</p>
+          <small>{directorStatus.status}</small>
+        </div>
         <ol>
           {["Finding model", "Loading GLB", "Preparing camera", "Reading metadata", "Ready to present"].map((item) => <li key={item} className={directorStatus.phase === item || (directorStatus.phase.includes("Ready") && item === "Ready to present") ? "active" : ""}>{item}</li>)}
         </ol>
+        <div className="dh-director-chat">
+          <div className="dh-director-history">
+            {(directorChat.length ? directorChat : [{id: "seed", role: "ai", text: `Renderer attached to ${sceneFeed.title}. Type next model, rotate, guided tour, current category auto mode, or search a topic.`, status: "Ready"}]).slice(0, 5).map((item) => <div key={item.id} className={`dh-director-message ${item.role === "user" ? "from-user" : "from-ai"}`}>
+              <b>{item.role === "user" ? "You" : "DigitalHut AI"}</b>
+              <span>{item.text}</span>
+              <small>{item.status}</small>
+            </div>)}
+          </div>
+          <div className="dh-director-command">
+            <input value={directorInput} onChange={(event) => setDirectorInput(event.target.value)} onKeyDown={(event) => {if(event.key === "Enter") submitDirectorCommand()}} placeholder="Tell AI: open Science, rotate, next model..." />
+            <button type="button" onClick={() => submitDirectorCommand()}>Run</button>
+            <button type="button" onClick={startVoiceCommand}>{aiListening ? "Listening" : "Voice"}</button>
+          </div>
+          <div className="dh-director-tools">
+            <button type="button" onClick={() => startDemoMode("current")}>Current Auto</button>
+            <button type="button" onClick={() => startDemoMode("all")}>All Auto</button>
+            <button type="button" onClick={clearDirectorChat}>Clear</button>
+          </div>
+        </div>
       </div>
       {aiOpen && <div className="dh-ai-command">
         <div><b>DigitalHut AI</b><button type="button" onClick={() => setAiOpen(false)}>Close</button></div>

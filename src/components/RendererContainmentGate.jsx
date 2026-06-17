@@ -126,10 +126,19 @@ function stabilizeRenderer(renderer){
   const source = assetNodes(renderer).map(rememberSource).find(Boolean) || renderer.dataset.liveSource || ""
   if(source && renderer.dataset.liveSource !== source){
     renderer.dataset.liveSource = source
-    closeAssets(renderer)
   }
 
-  if(!renderer.classList.contains("live-open")) closeAssets(renderer)
+  if(source){
+    openAssets(renderer)
+    renderer.querySelectorAll(".dh-api-system-preview.preview-peek").forEach((node) => node.classList.remove("preview-peek"))
+    return
+  }
+
+  if(renderer.classList.contains("data-open")){
+    renderer.querySelectorAll(".dh-api-system-preview").forEach((node) => node.remove())
+    return
+  }
+
   ensureSystemPreview(renderer)
 }
 
@@ -159,7 +168,7 @@ export default function RendererContainmentGate({children}){
     function closeWithEscape(event){
       if(event.key !== "Escape") return
       window.__digitalhutContainmentIntentUntil = 0
-      document.querySelectorAll(".dh-renderer.has-api").forEach(closeAssets)
+      document.querySelectorAll(".dh-api-system-preview.preview-peek").forEach((node) => node.classList.remove("preview-peek"))
     }
 
     function openFromGuide(){
