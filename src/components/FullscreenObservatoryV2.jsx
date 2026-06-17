@@ -959,8 +959,9 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
   const stars = decorationActive ? Array.from({length: 10}) : []
   const skyline = decorationActive ? Array.from({length: 8}) : []
   const canShowContainment = renderLive && !isStats
-  const liveOpen = canShowContainment && modelOpen && (hasEmbed || hasModel)
-  const containedDataOpen = canShowContainment && modelOpen && !hasEmbed && !hasModel
+  const rendererOpen = canShowContainment && modelOpen
+  const liveOpen = rendererOpen && (hasEmbed || hasModel)
+  const containedDataOpen = rendererOpen && !hasEmbed && !hasModel
   const readout = modelDataReadout({feed, category: feed.category, stage})
   const visualKey = visualKeyFor(feed, stage)
   const envLabel = environmentLabel(feed)
@@ -974,7 +975,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
   useEffect(() => {
     setModelReady(false)
     setModelLoaded(false)
-    if(!modelOpen || isStats) return
+    if(!rendererOpen || isStats) return
     onVisualPending?.(visualKey)
     onDirectorUpdate?.({phase: "Loading GLB", detail: feed.title, status: "Waiting for renderer asset"})
     if(containedDataOpen){
@@ -1018,7 +1019,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
       cancelled = true
       window.clearTimeout(fallback)
     }
-  }, [modelOpen, liveOpen, containedDataOpen, hasModel, hasEmbed, isStats, renderModelUrl, feed.renderFallbackUrl, feed.title, visualKey, isPersonalLibraryModel])
+  }, [rendererOpen, liveOpen, containedDataOpen, hasModel, hasEmbed, isStats, renderModelUrl, feed.renderFallbackUrl, feed.title, visualKey, isPersonalLibraryModel])
 
   useEffect(() => {
     const element = modelElementRef.current
@@ -1062,13 +1063,13 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     setGuideDismissed(false)
   }, [visualKey])
 
-  return <div className={`dh-renderer ${guided ? "guided" : ""} ${canShowContainment ? "has-api" : ""} ${modelOpen ? "model-mode" : ""} ${liveOpen || containedDataOpen ? "live-open" : ""} ${containedDataOpen ? "data-open" : ""} stage-${stage.kind}`} style={{"--accent": feed.accent}}>
+  return <div className={`dh-renderer ${guided ? "guided" : ""} ${canShowContainment ? "has-api" : ""} ${rendererOpen ? "model-mode" : ""} ${liveOpen || containedDataOpen ? "live-open" : ""} ${containedDataOpen ? "data-open" : ""} stage-${stage.kind}`} style={{"--accent": feed.accent}}>
     {feed.thumbnail && <img className={`dh-renderer-stock ${imageReady ? "is-ready" : ""}`} src={feed.thumbnail} alt="" loading="lazy" decoding="async" onLoad={() => setImageReady(true)} />}
     {decorationActive && <div className="dh-motion-sky" />}
     {decorationActive && <div className="dh-stars">{stars.map((_, index) => <span key={index} style={{left: `${4 + (index * 43) % 91}%`, top: `${7 + (index * 31) % 78}%`}} />)}</div>}
     {decorationActive && <SceneObject feed={feed} />}
     {canShowContainment && !liveOpen && !containedDataOpen && <button className={`dh-api-system-preview ${feed.thumbnail ? "api-preview-ready" : ""} ${modelOpen ? "is-resolving" : ""}`} style={feed.thumbnail ? {"--api-preview-url": `url("${feed.thumbnail}")`} : undefined} onClick={onOpenModel}>
-      <span>{modelOpen || loading ? "Preparing 3D preview" : "Presentation card"}</span><b>{feed.title}</b><em className="dh-open-containment">{modelOpen || loading ? "Rendering" : "Play 3D Preview"}</em>
+      <span>{modelOpen || loading ? "Preparing 3D preview" : "Renderer ready"}</span><b>{feed.title}</b><em className="dh-open-containment">{modelOpen || loading ? "Rendering" : "Play 3D Preview"}</em>
     </button>}
     {liveOpen && hasEmbed && <iframe className="dh-api-frame" title={feed.title} src={pausedEmbedUrl(feed.embedUrl)} allow="fullscreen; xr-spatial-tracking" loading="lazy" allowFullScreen onLoad={() => onVisualReady?.(visualKey)} />}
     {liveOpen && !hasEmbed && hasModel && <div className="dh-model-shell">
@@ -1152,7 +1153,7 @@ export default function FullscreenObservatoryV2(){
   const [playing, setPlaying] = useState(true)
   const [layer, setLayer] = useState("Base")
   const [layerOpen, setLayerOpen] = useState(false)
-  const [modelOpen, setModelOpen] = useState(true)
+  const [modelOpen, setModelOpen] = useState(false)
   const [guideDepth, setGuideDepth] = useState(0)
   const [aiOpen, setAiOpen] = useState(false)
   const [aiListening, setAiListening] = useState(false)
@@ -1257,13 +1258,6 @@ export default function FullscreenObservatoryV2(){
   useEffect(() => {
     setAiUsage(readAiUsage(tier))
   }, [tier])
-
-  useEffect(() => {
-    if(entryOpen || stage.kind === "stats") return
-    if(modelOpen) return
-    const timer = window.setTimeout(() => setModelOpen(true), 180)
-    return () => window.clearTimeout(timer)
-  }, [entryOpen, stage.kind, sceneFeed.id, modelOpen])
 
   useEffect(() => {
     const seeds = seedFeeds(category)
@@ -1410,7 +1404,7 @@ export default function FullscreenObservatoryV2(){
     const seeds = seedFeeds(nextCategory).map((item, index) => attachRendererModel(item, nextCategory, term, index))
     setLoading(true)
     setActive(0)
-    setModelOpen(true)
+    setModelOpen(false)
     setGuideDepth(0)
     preloadImages(seeds.map((item) => item.thumbnail))
     preloadModels(seeds.map((item) => item.modelUrl))
@@ -1440,7 +1434,6 @@ export default function FullscreenObservatoryV2(){
 
   function speakModelReadout(targetFeed = sceneFeed, targetCategory = category, targetStage = stage){
     const readout = modelDataReadout({feed: targetFeed, category: targetCategory, stage: targetStage})
-    setModelOpen(true)
     playSessionSound(targetCategory, "open")
     speakAfterVisual(`${readout.lines.join(" ")} ${feedbackPrompt({category: targetCategory, feed: targetFeed})}`, visualKeyFor(targetFeed, targetStage))
   }
@@ -1456,14 +1449,14 @@ export default function FullscreenObservatoryV2(){
     setStageIndex(0)
     setStatsFeeds([])
     setGuideDepth(0)
-    setModelOpen(true)
+    setModelOpen(false)
     setQuery(term)
     playSessionSound(targetCategory, "bridge")
     announceOpen3dModel({title: term})
     const next = await loadFeeds(targetCategory, term, {silent: true, keepOpen: true})
     const loaded = next[0] || seedFeeds(targetCategory)[0]
     setActive(0)
-    setModelOpen(true)
+    setModelOpen(false)
     speakAfterVisual(`${prefix}: ${targetCategory}. ${streamReadout({category: targetCategory, query: term, feed: loaded, stage: stages[0]})}`, visualKeyFor(loaded, stages[0]))
   }
 
@@ -1495,12 +1488,12 @@ export default function FullscreenObservatoryV2(){
     setTour(toursFor(nextCategory)[0].id)
     setStageIndex(0)
     setStatsFeeds([])
-    setModelOpen(true)
+    setModelOpen(false)
     setGuideDepth(0)
     const seed = seedFeeds(nextCategory)[0]
     setQuery(seed.query)
     loadFeeds(nextCategory, seed.query, {silent: true, keepOpen: true})
-    speak(`DigitalHut set to ${nextCategory}. I am opening the 3D environment preview now.`)
+    speak(`DigitalHut set to ${nextCategory}. Click Play 3D Preview to start the renderer.`)
     wake()
   }
 
@@ -1579,9 +1572,9 @@ export default function FullscreenObservatoryV2(){
     if(index >= 0) setActive(index)
     setQuery(item.query || item.title)
     setStageIndex(0)
-    setModelOpen(true)
+    setModelOpen(false)
     setGuideDepth(0)
-    speakAfterVisual(`Loaded ${item.title}. The presentation card can be closed with X; the 3D environment preview is already playing.`, visualKeyFor(item, stages[0]), 600)
+    speakAfterVisual(`Loaded ${item.title}. Click Play 3D Preview to start the renderer for this asset.`, visualKeyFor(item, stages[0]), 600)
     wake()
   }
 
@@ -1595,15 +1588,13 @@ export default function FullscreenObservatoryV2(){
     setPlaying(true)
     setStageIndex(0)
     setStatsFeeds([])
-    setModelOpen(true)
+    setModelOpen(false)
     setGuideDepth(0)
     setQuery(nextQuery)
     announceOpen3dModel({title: nextQuery, category: targetCategory})
-    const next = await loadFeeds(targetCategory, nextQuery, {keepOpen: true})
-    const first = next[0] || feed
-    setModelOpen(true)
-    if(mode === "premium") speakAfterVisual(`Premium guide ready. ${streamReadout({category: targetCategory, query: nextQuery, feed: first, stage})}`, visualKeyFor(first, stage))
-    else speakAfterVisual(`Regular API feed loading. ${streamReadout({category: targetCategory, query: nextQuery, feed: first, stage})}`, visualKeyFor(first, stage))
+    await loadFeeds(targetCategory, nextQuery, {keepOpen: true})
+    setModelOpen(false)
+    speak(`${mode === "premium" ? "Premium guide ready" : "Regular API feed ready"}. Press Play 3D Preview to start the renderer for this asset.`)
     wake()
   }
 
@@ -1621,9 +1612,9 @@ export default function FullscreenObservatoryV2(){
     const nextItem = feeds[(active - 1 + feeds.length) % feeds.length] || sceneFeed
     setActive((value) => (value - 1 + feeds.length) % feeds.length)
     setStageIndex(0)
-    setModelOpen(true)
+    setModelOpen(false)
     setGuideDepth(0)
-    speakAfterVisual(`Moving back to ${nextItem.title}. I will reopen the model before continuing.`, visualKeyFor(nextItem, stages[0]))
+    speakAfterVisual(`Moving back to ${nextItem.title}. Click Play 3D Preview to start the renderer.`, visualKeyFor(nextItem, stages[0]))
     wake()
   }
 
@@ -1632,9 +1623,9 @@ export default function FullscreenObservatoryV2(){
     const nextItem = feeds[(active + 1) % feeds.length] || sceneFeed
     setActive((value) => (value + 1) % feeds.length)
     setStageIndex(0)
-    setModelOpen(true)
+    setModelOpen(false)
     setGuideDepth(0)
-    speakAfterVisual(`Opening ${nextItem.title}. I will wait for the renderer, then continue the presentation.`, visualKeyFor(nextItem, stages[0]))
+    speakAfterVisual(`Opening ${nextItem.title}. Click Play 3D Preview to start the renderer.`, visualKeyFor(nextItem, stages[0]))
     wake()
   }
 
@@ -1745,7 +1736,7 @@ export default function FullscreenObservatoryV2(){
       return
     }
     if(lower.includes("new trend") || lower.includes("jump category") || lower.includes("bridge")){
-      recordDirectorMessage("ai", "Looking for the next category bridge and keeping the model view active.", "Bridge")
+      recordDirectorMessage("ai", "Looking for the next category bridge and preparing the Play 3D Preview gate.", "Bridge")
       await bridgeNextCategory("I found a new trend")
       return
     }
@@ -1810,16 +1801,15 @@ export default function FullscreenObservatoryV2(){
       setStageIndex(0)
       setStatsFeeds([])
       setGuideDepth(0)
-      setModelOpen(true)
-      recordDirectorMessage("ai", `Searching ${nextQuery} in ${targetCategory}. I will open the model renderer first, then talk.`, "Search")
+      setModelOpen(false)
+      recordDirectorMessage("ai", `Searching ${nextQuery} in ${targetCategory}. I will prepare the asset first; press Play 3D Preview to start the renderer.`, "Search")
       setQuery(nextQuery)
       announceOpen3dModel({title: nextQuery})
-      const next = await loadFeeds(targetCategory, nextQuery, {silent: true, keepOpen: true})
-      const loaded = next[0] || sceneFeed
+      await loadFeeds(targetCategory, nextQuery, {silent: true, keepOpen: true})
       setActive(0)
       setStageIndex(0)
-      setModelOpen(true)
-      speakAfterVisual(streamReadout({category: targetCategory, query: nextQuery, feed: loaded, stage}), visualKeyFor(loaded, stage))
+      setModelOpen(false)
+      speak(`Search ready in ${targetCategory}. Press Play 3D Preview when you want the GLB renderer to start.`)
     }
   }
 
