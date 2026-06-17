@@ -2,8 +2,30 @@ function normalizeAssetBase(value){
   return value ? `${value.replace(/\/+$/, "")}/` : ""
 }
 
+function isRejectedAssetBase(value){
+  const source = String(value || "").trim()
+  if(!source) return false
+  const lower = source.toLowerCase()
+  if(lower.includes("xxxxx") || lower.includes("your-store") || lower.includes("store-id")) return true
+  try {
+    const url = new URL(source)
+    const host = url.hostname.toLowerCase()
+    const allowVercelBlob = import.meta.env?.VITE_ALLOW_VERCEL_BLOB_FIRECUDA === "true"
+    if(host.includes("vercel-storage.com") && !allowVercelBlob) return true
+    if(host === "public.blob.vercel-storage.com") return true
+    if(host.endsWith(".public.blob.vercel-storage.com")){
+      const storeId = host.replace(".public.blob.vercel-storage.com", "")
+      return storeId.length < 6
+    }
+  } catch {
+    return true
+  }
+  return false
+}
+
 const firecudaBase = "/models/firecuda-library/"
-const firecudaExternalBase = normalizeAssetBase(import.meta.env?.VITE_FIRECUDA_ASSET_BASE || "")
+const configuredFirecudaExternalBase = normalizeAssetBase(import.meta.env?.VITE_SUPABASE_FIRECUDA_ASSET_BASE || import.meta.env?.VITE_FIRECUDA_ASSET_BASE || "")
+const firecudaExternalBase = isRejectedAssetBase(configuredFirecudaExternalBase) ? "" : configuredFirecudaExternalBase
 const localDeployableFirecudaFiles = new Set([
   "glaceons_christmas_miracle.glb",
   "international_space_elevator.glb",
@@ -348,6 +370,7 @@ export function firecudaLibraryStatus(){
   return {
     mode: firecudaExternalBase ? "uploaded-personal-library" : "local-git-library",
     baseUrl: firecudaExternalBase || firecudaBase,
+    externalBaseRejected: Boolean(configuredFirecudaExternalBase && !firecudaExternalBase),
     availableCount: available.length,
     totalCount: firecudaLibraryAssets.length
   }

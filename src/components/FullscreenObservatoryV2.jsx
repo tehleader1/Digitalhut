@@ -130,6 +130,27 @@ function isDirectRenderableModel(value){
   return Boolean(value && /\.(glb|gltf)(\?|#|$)/i.test(value))
 }
 
+function isLikelyBrokenStorageUrl(value){
+  const source = String(value || "").trim()
+  if(!source) return false
+  const lower = source.toLowerCase()
+  if(lower.includes("xxxxx") || lower.includes("your-store") || lower.includes("store-id")) return true
+  try {
+    const url = new URL(source, typeof window !== "undefined" ? window.location.href : "https://digitalhut.app")
+    const host = url.hostname.toLowerCase()
+    const allowVercelBlob = import.meta.env?.VITE_ALLOW_VERCEL_BLOB_FIRECUDA === "true"
+    if(host.includes("vercel-storage.com") && !allowVercelBlob) return true
+    if(host === "public.blob.vercel-storage.com") return true
+    if(host.endsWith(".public.blob.vercel-storage.com")){
+      const storeId = host.replace(".public.blob.vercel-storage.com", "")
+      return storeId.length < 6
+    }
+  } catch {
+    return false
+  }
+  return false
+}
+
 function sortRendererFeeds(items){
   return [...items].sort((a, b) => {
     const scoreA = a.renderPriority ?? (isDirectRenderableModel(a.modelUrl) ? 70 : 10)
@@ -151,6 +172,7 @@ function firecudaSeedFeeds(category){
     context: meta.context,
     thumbnail: asset.thumbnail || stockUrl(category, index),
     modelUrl: firecudaUrl(asset.file),
+    renderFallbackUrl: topicEnvironmentGlb(category, `${asset.title} ${asset.tags.join(" ")}`, index),
     viewerUrl: "",
     apiSource: "FireCuda personal GLB library",
     apiStatus: "preloaded-firecuda-model",
@@ -448,7 +470,8 @@ function seedFeeds(category){
 
 function cleanUrl(value){
   if(!value || typeof value !== "string") return ""
-  return value.startsWith("//") ? `https:${value}` : value
+  const normalized = value.startsWith("//") ? `https:${value}` : value
+  return isLikelyBrokenStorageUrl(normalized) ? "" : normalized
 }
 
 function payloadItems(payload){
@@ -1118,6 +1141,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
   const isPersonalLibraryModel = renderModelUrl?.includes("/firecuda-library/") || renderModelUrl?.includes("supabase.co") || renderModelUrl?.includes("vercel-storage.com")
   const modelErrorText = String(modelError || "")
   const webGlBlocked = modelErrorText.toLowerCase().includes("webgl")
+  const canOpenModelLink = Boolean(renderModelUrl && !isLikelyBrokenStorageUrl(renderModelUrl))
 
   useEffect(() => {
     setRenderModelUrl(feed.modelUrl || rendererFallbackUrl)
@@ -1208,7 +1232,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     {liveOpen && hasEmbed && <iframe className="dh-api-frame" title={feed.title} src={pausedEmbedUrl(feed.embedUrl)} allow="fullscreen; xr-spatial-tracking" loading="lazy" allowFullScreen onLoad={() => onVisualReady?.(visualKey)} />}
     {liveOpen && !hasEmbed && hasModel && <div className="dh-model-shell">
       {!modelLoaded && <div className="dh-model-loader"><b>Loading Babylon GLB Renderer</b><span>{feed.title}</span></div>}
-      {modelError && <div className={`dh-model-loader error ${webGlBlocked ? "webgl-error" : ""}`}><b>{webGlBlocked ? "WebGL renderer unavailable" : "Renderer needs a valid GLB URL"}</b><span>{modelError}</span>{webGlBlocked && renderModelUrl && <a href={renderModelUrl} target="_blank" rel="noreferrer">Open GLB file</a>}</div>}
+      {modelError && <div className={`dh-model-loader error ${webGlBlocked ? "webgl-error" : ""}`}><b>{webGlBlocked ? "WebGL renderer unavailable" : "Renderer needs a valid GLB URL"}</b><span>{modelError}</span>{webGlBlocked && canOpenModelLink && <a href={renderModelUrl} target="_blank" rel="noreferrer">Open GLB file</a>}</div>}
       <BabylonGlbStage key={renderModelUrl} src={renderModelUrl} title={feed.title} guided={guided} stage={stage} visualKey={visualKey} onReady={markBabylonReady} onError={markBabylonError} />
     </div>}
     {containedDataOpen && <section className={`dh-contained-model dh-environment-read ${envClass}`} aria-label="Environment read session">
