@@ -981,6 +981,7 @@ function BabylonGlbStage({src, title, guided, stage, visualKey, onReady, onError
           import("@babylonjs/core/Loading/sceneLoader.js")
         ])
         await import("@babylonjs/loaders/glTF/glTFFileLoader.js")
+        await import("@babylonjs/loaders/glTF/2.0/glTFLoader.js")
         if(disposed || !canvasRef.current) return
         engine = new Engine(canvasRef.current, true, {
           adaptToDeviceRatio: true,
