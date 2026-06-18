@@ -12,17 +12,18 @@ import {
 } from "./wallet"
 
 import HomePage from "./pages/HomePage"
-import AssetLabPage from "./pages/AssetLabPage"
-import AssetPublicPage from "./pages/AssetPublicPage"
-import DailySituationQueuePage from "./pages/DailySituationQueuePage"
-import LibraryPage from "./pages/LibraryPage"
-import UpdatesPage from "./pages/UpdatesPage"
-import UpgradePage from "./pages/UpgradePage"
-import InsightsPage from "./pages/InsightsPage"
-import FaqPage from "./pages/FaqPage"
+import DefensiveGuardian from "./components/DefensiveGuardian"
 
-import ObservatoryScanner
-from "./components/ObservatoryScanner"
+const AssetLabPage = React.lazy(() => import("./pages/AssetLabPage"))
+const AssetPublicPage = React.lazy(() => import("./pages/AssetPublicPage"))
+const DailySituationQueuePage = React.lazy(() => import("./pages/DailySituationQueuePage"))
+const LibraryPage = React.lazy(() => import("./pages/LibraryPage"))
+const UpdatesPage = React.lazy(() => import("./pages/UpdatesPage"))
+const UpgradePage = React.lazy(() => import("./pages/UpgradePage"))
+const InsightsPage = React.lazy(() => import("./pages/InsightsPage"))
+const FaqPage = React.lazy(() => import("./pages/FaqPage"))
+const TrustPage = React.lazy(() => import("./pages/TrustPage"))
+const ObservatoryScanner = React.lazy(() => import("./components/ObservatoryScanner"))
 
 ReactDOM.createRoot(
   document.getElementById("root")
@@ -32,6 +33,8 @@ ReactDOM.createRoot(
 
     <BrowserRouter>
 
+      <DefensiveGuardian>
+      <React.Suspense fallback={<div style={{minHeight:"100vh",display:"grid",placeItems:"center",background:"#020617",color:"#e0f2fe",fontFamily:"Arial,sans-serif"}}>Loading DigitalHut view</div>}>
       <Routes>
 
         <Route
@@ -89,7 +92,14 @@ ReactDOM.createRoot(
           element={<FaqPage />}
         />
 
+        <Route path="/about" element={<TrustPage type="about" />} />
+        <Route path="/contact" element={<TrustPage type="contact" />} />
+        <Route path="/privacy" element={<TrustPage type="privacy" />} />
+        <Route path="/guardian" element={<TrustPage type="guardian" />} />
+
       </Routes>
+      </React.Suspense>
+      </DefensiveGuardian>
 
     </BrowserRouter>
 

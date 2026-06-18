@@ -32,6 +32,17 @@ const localDeployableFirecudaFiles = new Set([
   "museum_of_ice_cream_singapore_-_welcome.glb",
   "transformers_prime_game_bumblebee.glb"
 ])
+const defaultBlockedSingleObjectFiles = new Set([
+  "glaceons_christmas_miracle.glb",
+  "transformers_prime_game_bumblebee.glb",
+  "zed_-_league_of_legends.glb"
+])
+const environmentSignals = [
+  "environment", "scene", "city", "village", "house", "real estate", "property",
+  "terrain", "heightmap", "continent", "country", "coast", "tourist", "museum",
+  "architecture", "building", "base", "station", "planet", "planetary system",
+  "space elevator", "observatory", "district", "zone", "world", "map"
+]
 
 export const firecudaDriveBatch001 = [
   "1EyJREaTttytp-uwVhai3ak9xq6eBxWiC",
@@ -340,14 +351,20 @@ function isFirecudaAssetAvailable(asset){
   return Boolean(firecudaExternalBase) || localDeployableFirecudaFiles.has(asset.file)
 }
 
+export function isEnvironmentAsset(asset){
+  if(!asset || defaultBlockedSingleObjectFiles.has(asset.file)) return false
+  const value = `${asset.title || ""} ${(asset.tags || []).join(" ")}`.toLowerCase()
+  return environmentSignals.some((signal) => value.includes(signal))
+}
+
 export function firecudaModelPool(category){
   return firecudaLibraryAssets
-    .filter((asset) => asset.categories.includes(category) && isFirecudaAssetAvailable(asset))
+    .filter((asset) => asset.categories.includes(category) && isFirecudaAssetAvailable(asset) && isEnvironmentAsset(asset))
     .map((asset) => firecudaUrl(asset.file))
 }
 
 export function firecudaAssetsForCategory(category){
-  return firecudaLibraryAssets.filter((asset) => asset.categories.includes(category) && isFirecudaAssetAvailable(asset))
+  return firecudaLibraryAssets.filter((asset) => asset.categories.includes(category) && isFirecudaAssetAvailable(asset) && isEnvironmentAsset(asset))
 }
 
 export function firecudaDiscoveryAssets(){
@@ -367,11 +384,13 @@ export function firecudaDiscoveryAssets(){
 
 export function firecudaLibraryStatus(){
   const available = firecudaLibraryAssets.filter(isFirecudaAssetAvailable)
+  const defaultEnvironments = available.filter(isEnvironmentAsset)
   return {
     mode: firecudaExternalBase ? "uploaded-personal-library" : "local-git-library",
     baseUrl: firecudaExternalBase || firecudaBase,
     externalBaseRejected: Boolean(configuredFirecudaExternalBase && !firecudaExternalBase),
     availableCount: available.length,
+    defaultEnvironmentCount: defaultEnvironments.length,
     totalCount: firecudaLibraryAssets.length
   }
 }

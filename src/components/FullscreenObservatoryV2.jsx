@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from "react"
 import {ConnectButton} from "../wallet"
 import {inferCategoryByVector} from "../lib/assetVectorMath"
 import {firecudaAssetsForCategory, firecudaLibraryStatus, firecudaLocalFallbackUrl, firecudaModelPool, firecudaUrl} from "../lib/firecudaLibraryManifest"
+import PodcastMatchPanel from "./PodcastMatchPanel"
 import "./FullscreenObservatory.css"
 import "./FullscreenObservatory.api.css"
 import "./FullscreenObservatory.sequence.css"
@@ -116,7 +117,7 @@ function topicEnvironmentGlb(category, text = "", index = 0){
 function attachRendererModel(item, category, term, index){
   const renderText = `${term || ""} ${item.title || ""} ${item.note || ""} ${item.query || ""}`
   const environmentUrl = topicEnvironmentGlb(category, renderText, index)
-  if(isDirectRenderableModel(item.modelUrl)){
+  if(isDirectRenderableModel(item.modelUrl) && isEnvironmentFeed(item)){
     return {
       ...item,
       renderFallbackUrl: environmentUrl,
@@ -141,6 +142,15 @@ function attachRendererModel(item, category, term, index){
 
 function isDirectRenderableModel(value){
   return Boolean(value && /\.(glb|gltf)(\?|#|$)/i.test(value))
+}
+
+function isEnvironmentFeed(item = {}){
+  const tags = Array.isArray(item.tags) ? item.tags.map((tag) => typeof tag === "string" ? tag : tag?.name || "").join(" ") : ""
+  const value = `${item.title || ""} ${item.note || ""} ${item.query || ""} ${tags}`.toLowerCase()
+  const environmentSignals = ["environment", "scene", "terrain", "city", "village", "house", "property", "architecture", "building", "district", "map", "world", "landscape", "continent", "country", "coast", "station", "base", "planet", "planetary system", "observatory", "facility", "route", "zone"]
+  const singleObjectSignals = ["character", "avatar", "robot", "helmet", "person", "statue", "weapon", "single object", "figurine"]
+  if(singleObjectSignals.some((signal) => value.includes(signal)) && !environmentSignals.some((signal) => value.includes(signal))) return false
+  return environmentSignals.some((signal) => value.includes(signal))
 }
 
 function isLikelyBrokenStorageUrl(value){
@@ -2331,6 +2341,7 @@ export default function FullscreenObservatoryV2(){
           </div>
         </section>}
       </>}
+      {modelOpen && !entryOpen && <PodcastMatchPanel feed={sceneFeed} compact={mechanicMode} />}
 
       <div className="dh-top" style={{opacity: awake ? 1 : 0.08}}>
         <div className="dh-search">

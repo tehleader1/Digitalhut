@@ -1,0 +1,127 @@
+.dh-podcast-panel {
+  position: absolute;
+  left: 50%;
+  bottom: 82px;
+  z-index: 34;
+  width: min(680px,calc(100vw - 620px));
+  transform: translateX(-50%);
+  display: grid;
+  gap: 8px;
+  padding: 9px;
+  border: 1px solid rgba(103,232,249,.26);
+  border-radius: 6px;
+  background: rgba(2,10,20,.92);
+  color: #e2e8f0;
+}
+
+.dh-podcast-panel > span,
+.dh-podcast-panel > small {
+  color: #94a3b8;
+  font-size: 10px;
+}
+
+.dh-podcast-panel header {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.dh-podcast-panel header span {
+  color: #67e8f9;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.dh-podcast-panel header b {
+  color: #bef264;
+  font-size: 9px;
+}
+
+.dh-podcast-list {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 7px;
+}
+
+.dh-podcast-list article {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 44px minmax(0,1fr);
+  grid-template-rows: auto auto;
+  gap: 6px;
+  padding: 6px;
+  border: 1px solid rgba(148,163,184,.18);
+  border-radius: 5px;
+  background: rgba(15,23,42,.72);
+}
+
+.dh-podcast-list article.playing {
+  border-color: #67e8f9;
+}
+
+.dh-podcast-list img,
+.dh-podcast-art {
+  grid-row: 1 / 3;
+  width: 44px;
+  height: 44px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.dh-podcast-art {
+  display: grid;
+  place-items: center;
+  background: #164e63;
+  color: #cffafe;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.dh-podcast-list article > div {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.dh-podcast-list article > div b,
+.dh-podcast-list article > div span,
+.dh-podcast-list article > div small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dh-podcast-list article > div b { font-size: 10px; }
+.dh-podcast-list article > div span { color: #bae6fd; font-size: 9px; }
+.dh-podcast-list article > div small { color: #94a3b8; font-size: 8px; }
+
+.dh-podcast-list button,
+.dh-podcast-list a {
+  padding: 5px 6px;
+  border: 1px solid rgba(103,232,249,.25);
+  border-radius: 4px;
+  background: rgba(8,145,178,.18);
+  color: #e0f2fe;
+  font-size: 8px;
+  font-weight: 900;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .dh-podcast-panel {
+    left: 132px;
+    right: 190px;
+    bottom: 12px;
+    width: auto;
+    transform: none;
+  }
+
+  .dh-podcast-list {
+    grid-template-columns: 1fr;
+    max-height: 150px;
+    overflow-y: auto;
+  }
+}
