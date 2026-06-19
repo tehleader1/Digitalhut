@@ -47,6 +47,22 @@ function externalAssetBase(){
   return value ? `${value.replace(/\/+$/, "")}/` : ""
 }
 
+function assetBaseDiagnostics(){
+  const direct = process.env.SUPABASE_FIRECUDA_ASSET_BASE || process.env.VITE_SUPABASE_FIRECUDA_ASSET_BASE || process.env.FIRECUDA_ASSET_BASE || process.env.VITE_FIRECUDA_ASSET_BASE || ""
+  const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || ""
+  return {
+    mode: direct ? "direct-base" : supabaseUrl ? "derived-supabase-storage-base" : "local-backup-only",
+    hasDirectBase: Boolean(direct),
+    hasSupabaseUrl: Boolean(supabaseUrl),
+    bucket: process.env.SUPABASE_ASSET_BUCKET || process.env.VITE_SUPABASE_ASSET_BUCKET || process.env.SUPABASE_STORAGE_BUCKET || "digitalhut-assets",
+    folder: process.env.SUPABASE_FIRECUDA_FOLDER || process.env.VITE_SUPABASE_FIRECUDA_FOLDER || "firecuda-library",
+    requiredForFullProduction: [
+      "SUPABASE_FIRECUDA_ASSET_BASE or VITE_SUPABASE_FIRECUDA_ASSET_BASE",
+      "or SUPABASE_URL/VITE_SUPABASE_URL plus SUPABASE_ASSET_BUCKET and SUPABASE_FIRECUDA_FOLDER"
+    ]
+  }
+}
+
 export default function handler(req, res){
   const category = String(req.query?.category || "Mainstream Streaming")
   const query = String(req.query?.query || category).replace(/\s+/g, " ").trim().slice(0, 160)
@@ -68,6 +84,7 @@ export default function handler(req, res){
     category,
     query,
     policy: "No synthetic fallback models. Only verified owner-library or API GLBs are returned.",
+    assetBase: assetBaseDiagnostics(),
     assets
   })
 }
