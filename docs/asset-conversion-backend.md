@@ -48,6 +48,18 @@ ASSET_CONVERTER_API_KEY=
 
 ## Supabase Table
 
+Production setup lives in:
+
+```text
+supabase/migrations/202606190001_digitalhut_assets_and_feed.sql
+```
+
+FireCuda/Supabase env setup lives in:
+
+```text
+docs/supabase-firecuda-production.md
+```
+
 ```sql
 create table if not exists digitalhut_asset_conversions (
   id text primary key,
