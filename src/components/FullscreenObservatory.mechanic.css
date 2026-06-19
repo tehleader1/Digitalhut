@@ -57,7 +57,35 @@
   background: linear-gradient(90deg, rgba(0,0,0,.72), transparent 22%, transparent 76%, rgba(0,0,0,.76));
 }
 
-.dh-observatory.mechanic-mode .dh-model-shell {
+.dh-cockpit-frame {
+  position: absolute;
+  top: 84px;
+  right: 296px;
+  bottom: 14px;
+  left: 194px;
+  z-index: 11;
+  pointer-events: none;
+  border: 1px solid rgba(103,232,249,.2);
+  border-radius: 6px;
+  box-shadow: inset 0 0 0 1px rgba(15,23,42,.7);
+}
+
+.dh-cockpit-frame span,
+.dh-cockpit-frame b {
+  position: absolute;
+  top: 8px;
+  padding: 4px 6px;
+  background: rgba(2,10,20,.78);
+  color: #67e8f9;
+  font-size: 8px;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.dh-cockpit-frame span { left: 8px; }
+.dh-cockpit-frame b { right: 8px; color: #94a3b8; }
+
+.dh-observatory.mechanic-mode .dh-renderer.has-api.live-open .dh-model-shell {
   left: 50%;
   top: 54%;
   width: min(760px, calc(100vw - 510px));
@@ -66,6 +94,9 @@
   min-height: 280px;
   border-radius: 6px;
   box-shadow: none;
+  transform: translate(calc(-50% + var(--cockpit-render-x, 0px)), calc(-50% + var(--cockpit-render-y, 0px))) !important;
+  transition: transform 90ms linear;
+  will-change: transform;
 }
 
 .dh-mechanic-categories {
@@ -99,6 +130,9 @@
   background: rgba(15,23,42,.8);
   color: #e2e8f0;
   cursor: pointer;
+  transform: translate3d(var(--cockpit-rail-x, 0px), var(--cockpit-rail-y, 0px), 0);
+  transition: transform 110ms ease-out, border-color 120ms ease, background 120ms ease;
+  will-change: transform;
 }
 
 .dh-mechanic-categories button.active,
@@ -156,6 +190,9 @@
   color: #e2e8f0;
   cursor: pointer;
   text-align: left;
+  transform: translate3d(var(--cockpit-control-x, 0px), var(--cockpit-control-y, 0px), 0);
+  transition: transform 120ms ease-out, border-color 120ms ease, background 120ms ease;
+  will-change: transform;
 }
 
 .dh-mechanic-controls b {
@@ -215,6 +252,9 @@
   border: 1px solid rgba(148,163,184,.2);
   border-radius: 5px;
   background: rgba(15,23,42,.72);
+  transform: translate3d(0, var(--cockpit-status-y, 0px), 0);
+  transition: transform 130ms ease-out;
+  will-change: transform;
 }
 
 .dh-mechanic-readouts b,
@@ -380,5 +420,28 @@
     min-width: 210px;
     height: min(52vh,460px);
     min-height: 230px;
+  }
+
+  .dh-cockpit-frame {
+    top: 127px;
+    right: 186px;
+    bottom: 9px;
+    left: 126px;
+  }
+
+  .dh-cockpit-frame b {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dh-observatory.mechanic-mode .dh-model-shell,
+  .dh-mechanic-categories button,
+  .dh-mechanic-controls > button,
+  .dh-mechanic-mode-list button,
+  .dh-mechanic-readouts section,
+  .dh-mechanic-current {
+    transform: none !important;
+    transition: none !important;
   }
 }

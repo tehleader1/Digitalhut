@@ -60,6 +60,7 @@ export default function DefensiveGuardian({children}){
   const [client, setClient] = useState(() => readClient())
   const [modelReady, setModelReady] = useState(false)
   const [guardianReply, setGuardianReply] = useState("")
+  const [recovery, setRecovery] = useState(null)
   const clickHistory = useRef([])
   const miniTimer = useRef(null)
   const firecuda = useMemo(() => firecudaLibraryStatus(), [])
@@ -97,6 +98,17 @@ export default function DefensiveGuardian({children}){
     writeAudit(event)
     setMessage(reason)
     setLevel(severity)
+    setOpen(true)
+  }
+
+  function raiseRenderRecovery(detail = {}){
+    const next = {
+      title: detail.title || "Current 3D experience",
+      reason: detail.reason || "The verified GLB did not register."
+    }
+    setRecovery(next)
+    setMessage("Verified GLB unavailable. Reload requested.")
+    setLevel("reload")
     setOpen(true)
   }
 
@@ -143,14 +155,17 @@ export default function DefensiveGuardian({children}){
         showMini("Unusually fast interaction detected. Guardian is checking the session.", "checking")
       }
     }
+    const renderFailureHandler = (event) => raiseRenderRecovery(event.detail)
     window.addEventListener("online", onlineHandler)
     window.addEventListener("offline", offlineHandler)
+    window.addEventListener("digitalhut:guardian-render-failure", renderFailureHandler)
     document.addEventListener("click", clickHandler, true)
     if(suspiciousLocation()) raiseIntegrityEvent("Suspicious route input blocked for review", "blocked")
     else showMini("Session loaded. Guardian verification active.", "restored")
     return () => {
       window.removeEventListener("online", onlineHandler)
       window.removeEventListener("offline", offlineHandler)
+      window.removeEventListener("digitalhut:guardian-render-failure", renderFailureHandler)
       document.removeEventListener("click", clickHandler, true)
       window.clearTimeout(miniTimer.current)
     }
@@ -182,6 +197,10 @@ export default function DefensiveGuardian({children}){
     speakGuardian("DigitalHut Guardian online. I am checking your session, privacy, wallet connection, and current experience.")
   }
 
+  function reloadExperience(){
+    window.location.reload()
+  }
+
   function answerGuardian(kind){
     const replies = {
       experience: `I am checking your ${device} session, ${category} category, connection state, selected ${tier} tier, and whether the Guardian controls remain available. Tell me which screen, model, or action is not behaving correctly.`,
@@ -210,8 +229,9 @@ export default function DefensiveGuardian({children}){
           <span>{level === "blocked" ? "Integrity event contained" : "Guardian form online"}</span>
         </div>
         <div className="dh-guardian-copy">
-          <header><div><span>DigitalHut Defensive AI</span><h2>{level === "blocked" ? "Interaction paused for review" : "Client protection check"}</h2></div><button type="button" onClick={() => setOpen(false)}>Close</button></header>
-          <p>{level === "blocked" ? `${message}. The action was rate-limited and copied into the local integrity audit. DigitalHut does not hack back or automatically identify, charge, or enroll another person.` : "The Guardian protects the DigitalHut session through rate limits, duplicate-action controls, continuity checks, and clear privacy status."}</p>
+          <header><div><span>DigitalHut Defensive AI</span><h2>{level === "blocked" ? "Interaction paused for review" : recovery ? "Renderer recovery required" : "Client protection check"}</h2></div><button type="button" onClick={() => setOpen(false)}>Close</button></header>
+          <p>{level === "blocked" ? `${message}. The action was rate-limited and copied into the local integrity audit. DigitalHut does not hack back or automatically identify, charge, or enroll another person.` : recovery ? `${recovery.title}: ${recovery.reason} DigitalHut did not substitute a synthetic block model.` : "The Guardian protects the DigitalHut session through rate limits, duplicate-action controls, continuity checks, and clear privacy status."}</p>
+          {recovery && <section className="dh-guardian-recovery"><b>Verified asset recovery</b><span>Reload to recheck the API, Supabase, Vercel, and FireCuda asset paths. If the same model fails again, upload or repair that exact GLB instead of masking the failure.</span><button type="button" onClick={reloadExperience}>Reload DigitalHut</button></section>}
           <section className="dh-guardian-presentation">
             <b>{clientGreeting}</b>
             <div><button type="button" onClick={() => answerGuardian("experience")}>Check My Experience</button><button type="button" onClick={() => answerGuardian("help")}>How Can You Help?</button><button type="button" onClick={() => answerGuardian("spending")}>Secure Spending Check</button><button type="button" onClick={() => answerGuardian("categories")}>Category Guide</button></div>

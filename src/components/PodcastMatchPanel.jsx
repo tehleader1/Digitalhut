@@ -1,14 +1,35 @@
 import React, {useEffect, useRef, useState} from "react"
 import "./PodcastMatchPanel.css"
 
+const voiceLanes = {
+  "Mainstream Streaming": ["Gary Vaynerchuk podcast", "MrBeast interview", "Joe Rogan podcast", "Asian Boss podcast", "TED Talks Daily", "Fat Trel interview", "El Alfa interview", "Chuck podcast"],
+  Gamer: ["immersive VR MMO podcast", "Roblox creator podcast", "Zenith VR MMO", "Vendetta Online interview"],
+  Planetary: ["Neil deGrasse Tyson podcast", "Elon Musk space interview", "Galileo astronomy history", "Isaac Newton science history"],
+  Science: ["Neil deGrasse Tyson podcast", "Donald Hoffman interview", "Lara Boyd neuroscience", "Tina Seelig Stanford podcast", "Nikola Tesla science history", "Albert Einstein science history"],
+  Researcher: ["Professor Ravi Korisettar archaeology", "Stanford research podcast", "Harvard science podcast", "Donald Hoffman consciousness", "Lara Boyd brain"],
+  Programmer: ["Jensen Huang podcast", "Bill Gates technology podcast", "John Ternus interview", "Elon Musk technology interview"],
+  Businesses: ["Jeff Bezos interview", "AT&T CEO John Stankey interview", "Gary Vaynerchuk podcast", "Bill Gates podcast"],
+  History: ["Galileo history podcast", "Isaac Newton history podcast", "Nikola Tesla history podcast", "Albert Einstein history podcast", "Jesus Christ history scholarship", "Prophet Muhammad history scholarship"],
+  Continent: ["Asian Boss podcast", "Harvard global studies podcast", "Stanford travel culture podcast", "TED global ideas"],
+  "Real Estate": ["international real estate podcast", "global housing podcast", "Gary Vaynerchuk business podcast"]
+}
+
+function laneIndex(feed, length){
+  const value = String(feed?.id || feed?.title || "")
+  return [...value].reduce((total, character) => total + character.charCodeAt(0), 0) % Math.max(length, 1)
+}
+
 function podcastQuery(feed){
-  return [feed?.title, feed?.category, feed?.query, "environment structure terrain research"].filter(Boolean).join(" ").slice(0, 220)
+  const lane = voiceLanes[feed?.category] || ["TED Talks Daily", "Stanford podcast", "Harvard podcast"]
+  const voice = lane[laneIndex(feed, lane.length)]
+  return [voice, feed?.title, feed?.query].filter(Boolean).join(" ").slice(0, 220)
 }
 
 export default function PodcastMatchPanel({feed, compact = false}){
   const [episodes, setEpisodes] = useState([])
   const [status, setStatus] = useState("idle")
   const [activeId, setActiveId] = useState("")
+  const [playbackStatus, setPlaybackStatus] = useState("")
   const audioRef = useRef(null)
   const clipTimer = useRef(null)
 
@@ -36,16 +57,38 @@ export default function PodcastMatchPanel({feed, compact = false}){
   function playClip(episode){
     window.clearTimeout(clipTimer.current)
     audioRef.current?.pause()
-    if(!episode.audioUrl) return
+    setPlaybackStatus("")
+    if(!episode.audioUrl){
+      setPlaybackStatus("Publisher audio is unavailable. Open the official episode page.")
+      return
+    }
     const audio = new Audio(episode.audioUrl)
     audio.preload = "metadata"
+    audio.volume = 1
+    audio.muted = false
     audioRef.current = audio
-    setActiveId(episode.id)
-    audio.play().catch(() => setActiveId(""))
+    audio.addEventListener("loadedmetadata", () => {
+      if(Number.isFinite(audio.duration) && audio.duration > 50){
+        audio.currentTime = Math.min(30, Math.max(8, audio.duration * .08))
+      }
+    }, {once: true})
+    audio.addEventListener("playing", () => {
+      setActiveId(episode.id)
+      setPlaybackStatus(`Playing publisher audio from ${episode.show}`)
+    }, {once: true})
+    audio.addEventListener("error", () => {
+      setActiveId("")
+      setPlaybackStatus("This publisher blocked direct preview audio. Open the official episode page.")
+    }, {once: true})
+    audio.play().catch(() => {
+      setActiveId("")
+      setPlaybackStatus("Your browser blocked the preview. Press Play again or open the official episode.")
+    })
     clipTimer.current = window.setTimeout(() => {
       audio.pause()
       audio.currentTime = 0
       setActiveId("")
+      setPlaybackStatus("10-second publisher clip complete")
     }, 10000)
     audio.addEventListener("ended", () => setActiveId(""), {once: true})
   }
@@ -55,6 +98,7 @@ export default function PodcastMatchPanel({feed, compact = false}){
 
   return <aside className={`dh-podcast-panel ${compact ? "compact" : ""}`}>
     <header><span>Matched Podcast Voices</span><b>3D remains primary</b></header>
+    {playbackStatus && <div className="dh-podcast-status" role="status">{playbackStatus}</div>}
     <div className="dh-podcast-list">
       {episodes.map((episode) => <article key={episode.id} className={activeId === episode.id ? "playing" : ""}>
         {episode.artwork ? <img src={episode.artwork} alt={`${episode.show} official podcast artwork`} loading="lazy" /> : <div className="dh-podcast-art">Audio</div>}
@@ -63,6 +107,6 @@ export default function PodcastMatchPanel({feed, compact = false}){
         {episode.pageUrl && <a href={episode.pageUrl} target="_blank" rel="noreferrer">Podcast</a>}
       </article>)}
     </div>
-    <small>Artwork and attribution come from the podcast publisher feed. DigitalHut does not infer a speaker identity when no official person image is supplied.</small>
+    <small>Artwork, episode audio, and attribution come from publisher feeds. DigitalHut does not clone voices, imply endorsement, or fabricate recordings for historical or religious figures.</small>
   </aside>
 }

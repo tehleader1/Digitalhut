@@ -1,117 +1,7 @@
 import {vectorMatchScore} from "./assetVectorMath"
 import {firecudaDiscoveryAssets} from "./firecudaLibraryManifest"
 
-const fallbackAssets = [
-  {
-    id: "environment-best-known-airport",
-    name: "Best known airport environment read",
-    type: "Generated Airport Environment",
-    url: "/models/environments/airport-delay.glb",
-    thumbnail: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=900&q=80",
-    tags: ["airport", "flight", "runway", "terminal", "delay", "weather", "diversion", "travel", "environment"],
-    permission: "generated-scene-plan",
-    genericDemo: false,
-    createdAt: "2026-06-15T09:40:00.000Z",
-    views: 820
-  },
-  {
-    id: "environment-orlando-traffic",
-    name: "Best known Orlando traffic environment read",
-    type: "Generated Orlando Traffic Environment",
-    url: "/models/environments/orlando-traffic.glb",
-    thumbnail: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=900&q=80",
-    tags: ["orlando", "florida", "traffic", "theme", "park", "hotel", "road", "congestion", "tourist", "environment"],
-    permission: "generated-scene-plan",
-    genericDemo: false,
-    createdAt: "2026-06-15T09:38:00.000Z",
-    views: 760
-  },
-  {
-    id: "environment-south-america-research",
-    name: "Best known South American research environment read",
-    type: "Generated Science Environment",
-    url: "/models/environments/science-voyage.glb",
-    thumbnail: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=900&q=80",
-    tags: ["south", "america", "science", "experiment", "research", "environment", "monitoring", "public", "health", "data"],
-    permission: "generated-scene-plan",
-    genericDemo: false,
-    createdAt: "2026-06-15T09:36:00.000Z",
-    views: 610
-  },
-  {
-    id: "environment-food-market",
-    name: "Local food market environment read",
-    type: "Generated Market Environment",
-    url: "/models/environments/continent-city.glb",
-    thumbnail: "https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=900&q=80",
-    tags: ["food", "market", "local", "tourist", "travel", "japan", "public", "environment"],
-    permission: "generated-scene-plan",
-    genericDemo: false,
-    createdAt: "2026-06-15T09:34:00.000Z",
-    views: 540
-  },
-  {
-    id: "asset-road-grid",
-    name: "Generated city road congestion scene",
-    type: "Generated Traffic Scene",
-    url: "/models/environments/orlando-traffic.glb",
-    thumbnail: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=900&q=80",
-    tags: ["traffic", "road", "city", "congestion", "travel"],
-    permission: "generated-scene-plan",
-    genericDemo: false,
-    createdAt: "2026-06-15T08:00:00.000Z",
-    views: 420
-  },
-  {
-    id: "generated-indore-airport-storm-scene",
-    name: "Generated Indore airport storm diversion scene",
-    type: "Generated Airport Scene",
-    url: "/models/environments/airport-delay.glb",
-    thumbnail: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=900&q=80",
-    tags: ["indore", "india", "airport", "storm", "weather", "flight", "diversion", "visibility", "runway", "terminal", "travel", "delay"],
-    permission: "generated-scene-plan",
-    genericDemo: false,
-    createdAt: "2026-06-15T09:00:00.000Z",
-    views: 600
-  },
-  {
-    id: "asset-weather-zone",
-    name: "Generated weather disruption zone",
-    type: "Generated Weather Scene",
-    url: "/models/environments/airport-delay.glb",
-    thumbnail: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
-    tags: ["weather", "storm", "travel", "safety", "airport"],
-    permission: "generated-scene-plan",
-    genericDemo: false,
-    createdAt: "2026-06-15T07:15:00.000Z",
-    views: 388
-  },
-  {
-    id: "asset-workforce-project",
-    name: "Generated workforce project site",
-    type: "Generated Workforce Scene",
-    url: "/models/environments/workforce-site.glb",
-    thumbnail: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=80",
-    tags: ["construction", "workforce", "public works", "project", "delay"],
-    permission: "generated-scene-plan",
-    genericDemo: false,
-    createdAt: "2026-06-14T19:30:00.000Z",
-    views: 210
-  },
-  {
-    id: "asset-research-lab",
-    name: "Generated research lab evidence scene",
-    type: "Generated Research Scene",
-    url: "/models/environments/research-lab.glb",
-    thumbnail: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=900&q=80",
-    tags: ["science", "research", "project", "verification", "lab"],
-    permission: "generated-scene-plan",
-    genericDemo: false,
-    createdAt: "2026-06-13T16:20:00.000Z",
-    views: 165
-  },
-  ...firecudaDiscoveryAssets()
-]
+const verifiedOwnerAssets = firecudaDiscoveryAssets()
 
 export const discoveryTabs = [
   "Morning Live Report",
@@ -154,7 +44,7 @@ export const discoveryCategories = [
 ]
 
 export function readRecentAssets(){
-  if(typeof window === "undefined") return fallbackAssets
+  if(typeof window === "undefined") return verifiedOwnerAssets
   try {
     const stored = JSON.parse(window.localStorage.getItem("digitalhut:assetLab") || "[]")
     const mapped = Array.isArray(stored) ? stored.map((item) => ({
@@ -168,9 +58,9 @@ export function readRecentAssets(){
       createdAt: item.createdAt || new Date().toISOString(),
       views: item.views || item.likes || 0
     })).filter((item) => item.url) : []
-    return mapped.length ? [...mapped, ...fallbackAssets] : fallbackAssets
+    return mapped.length ? [...mapped, ...verifiedOwnerAssets] : verifiedOwnerAssets
   } catch {
-    return fallbackAssets
+    return verifiedOwnerAssets
   }
 }
 
@@ -348,15 +238,15 @@ export function attachBestAsset(candidate, assets = readRecentAssets()){
   if(!best || best.score < 18 || best.asset.genericDemo){
     return {
       ...candidate,
-      assetMatchStatus: "Environment read ready",
+      assetMatchStatus: "Verified GLB required",
       relatedAsset: {
-        closestGlb: `Generated ${candidate.glbSceneType} environment read`,
-        assetId: `generated-${candidate.id}`,
-        fileType: "Generated Environment Scene",
+        closestGlb: "No verified environment GLB registered",
+        assetId: "",
+        fileType: "",
         previewThumbnail: "",
         matchConfidence: 0,
-        reasonMatched: best?.asset?.genericDemo ? "A sample demo GLB was blocked. DigitalHut will render a situation-specific environment instead of showing a robot, astronaut, or generic character." : "No perfect uploaded environment GLB was found yet, so DigitalHut is rendering the best-known generated environment for this situation.",
-        freshness: "generated environment now",
+        reasonMatched: "Synthetic fallback models are disabled. Upload, license, or connect the closest environment GLB before publishing this report.",
+        freshness: "",
         url: ""
       }
     }
@@ -370,7 +260,7 @@ export function attachBestAsset(candidate, assets = readRecentAssets()){
       fileType: best.asset.type,
       previewThumbnail: best.asset.thumbnail,
       matchConfidence: best.score,
-      reasonMatched: best.asset.type?.toLowerCase().includes("generated") ? "No verified airport GLB was found in uploads/APIs, so DigitalHut generated an environment-specific airport storm scene plan." : "Matched by category, scenario tags, file type, freshness, and permission.",
+      reasonMatched: "Matched by category, scenario tags, file type, freshness, and permission.",
       freshness: best.asset.createdAt,
       url: best.asset.url
     }

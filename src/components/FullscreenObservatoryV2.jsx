@@ -73,54 +73,14 @@ function stockUrl(category, index = 0){
 }
 
 function relatedGlb(category, index = 0){
-  const environment = (name) => `/models/environments/${name}`
-  const pools = {
-    "Mainstream Streaming": [environment("mainstream-feed.glb"), environment("undersea-media.glb"), environment("business-district.glb"), environment("presentation-stage.glb"), environment("continent-city.glb"), environment("orlando-traffic.glb")],
-    Mobility: [environment("orlando-traffic.glb"), environment("airport-delay.glb"), environment("workforce-site.glb"), environment("continent-city.glb"), environment("public-works.glb")],
-    Gamer: [environment("gaming-world.glb"), environment("mainstream-feed.glb"), environment("business-district.glb"), environment("workforce-site.glb"), environment("continent-city.glb")],
-    Planetary: [environment("planetary-hub.glb"), environment("science-voyage.glb"), environment("research-lab.glb"), environment("continent-city.glb"), environment("presentation-stage.glb")],
-    Continent: [environment("continent-city.glb"), environment("history-district.glb"), environment("real-estate-island.glb"), environment("science-voyage.glb"), environment("business-district.glb")],
-    "Real Estate": [environment("real-estate-island.glb"), environment("business-district.glb"), environment("continent-city.glb"), environment("public-works.glb"), environment("orlando-traffic.glb")],
-    Science: [environment("science-voyage.glb"), environment("research-lab.glb"), environment("planetary-hub.glb"), environment("continent-city.glb"), environment("airport-delay.glb")],
-    Researcher: [environment("science-voyage.glb"), environment("research-lab.glb"), environment("history-district.glb"), environment("planetary-hub.glb"), environment("continent-city.glb")],
-    History: [environment("history-district.glb"), environment("continent-city.glb"), environment("public-works.glb"), environment("real-estate-island.glb"), environment("presentation-stage.glb")],
-    Businesses: [environment("business-district.glb"), environment("presentation-stage.glb"), environment("real-estate-island.glb"), environment("public-works.glb"), environment("workforce-site.glb")],
-    Workforce: [environment("workforce-site.glb"), environment("public-works.glb"), environment("airport-delay.glb"), environment("orlando-traffic.glb"), environment("business-district.glb")],
-    Political: [environment("public-works.glb"), environment("business-district.glb"), environment("history-district.glb"), environment("continent-city.glb"), environment("workforce-site.glb")],
-    Programmer: [environment("business-district.glb"), environment("presentation-stage.glb"), environment("research-lab.glb"), environment("workforce-site.glb"), environment("science-voyage.glb")],
-    "DigitalHut Presentation": [environment("presentation-stage.glb"), environment("business-district.glb"), environment("mainstream-feed.glb"), environment("science-voyage.glb"), environment("real-estate-island.glb")]
-  }
-  const pool = [...firecudaModelPool(category), ...(pools[category] || pools["Mainstream Streaming"])]
-  return pool[index % pool.length]
-}
-
-function topicEnvironmentGlb(category, text = "", index = 0){
-  const environment = (name) => `/models/environments/${name}`
-  const value = `${category} ${text}`.toLowerCase()
-  if(value.includes("spongebob") || value.includes("underwater") || value.includes("ocean") || value.includes("sponge")) return environment("undersea-media.glb")
-  if(value.includes("airport") || value.includes("flight") || value.includes("runway") || value.includes("indore") || value.includes("delay")) return environment("airport-delay.glb")
-  if(value.includes("orlando") || value.includes("traffic") || value.includes("road") || value.includes("congestion")) return environment("orlando-traffic.glb")
-  if(value.includes("vehicle") || value.includes("automotive") || value.includes("mechanic") || value.includes("engine") || value.includes("car") || value.includes("truck") || value.includes("motorcycle") || value.includes("route")) return environment("orlando-traffic.glb")
-  if(value.includes("boat") || value.includes("marine") || value.includes("harbor") || value.includes("sailing")) return environment("continent-city.glb")
-  if(value.includes("rail") || value.includes("train") || value.includes("transit")) return environment("public-works.glb")
-  if(value.includes("real estate") || value.includes("housing") || value.includes("house") || value.includes("property") || value.includes("island") || value.includes("bedroom")) return environment("real-estate-island.glb")
-  if(value.includes("game") || value.includes("gamer") || value.includes("zelda") || value.includes("link") || value.includes("level")) return environment("gaming-world.glb")
-  if(value.includes("planet") || value.includes("space") || value.includes("saturn") || value.includes("mars") || value.includes("starlink") || value.includes("elon")) return environment("planetary-hub.glb")
-  if(value.includes("science") || value.includes("research") || value.includes("germ") || value.includes("fossil") || value.includes("experiment") || value.includes("south america")) return environment("science-voyage.glb")
-  if(value.includes("history") || value.includes("ancient") || value.includes("museum") || value.includes("heritage")) return environment("history-district.glb")
-  if(value.includes("construction") || value.includes("workforce") || value.includes("project") || value.includes("bridge")) return environment("workforce-site.glb")
-  if(value.includes("business") || value.includes("sponsor") || value.includes("market") || value.includes("startup")) return environment("business-district.glb")
-  if(value.includes("japan") || value.includes("canada") || value.includes("london") || value.includes("brazil") || value.includes("city") || value.includes("continent")) return environment("continent-city.glb")
-  return relatedGlb(category, index)
+  const pool = firecudaModelPool(category)
+  return pool.length ? pool[index % pool.length] : ""
 }
 
 function attachRendererModel(item, category, term, index){
-  const renderText = `${term || ""} ${item.title || ""} ${item.note || ""} ${item.query || ""}`
-  const environmentUrl = topicEnvironmentGlb(category, renderText, index)
   if(isDirectRenderableModel(item.modelUrl) && isEnvironmentFeed(item)){
     return {
       ...item,
-      renderFallbackUrl: environmentUrl,
       renderPriority: item.apiSource === "FireCuda personal GLB library" ? 100 : 80,
       apiStatus: item.apiStatus || "direct-api-model"
     }
@@ -129,14 +89,13 @@ function attachRendererModel(item, category, term, index){
   return {
     ...item,
     embedUrl: "",
-    modelUrl: environmentUrl,
+    modelUrl: "",
     viewerUrl: sourceViewerUrl,
     sourceModelUrl: item.modelUrl || "",
     sourceEmbedUrl: item.embedUrl || "",
-    renderPriority: 20,
-    apiStatus: "topic-environment-render",
-    apiSource: item.apiSource ? `${item.apiSource} + DigitalHut environment renderer` : "DigitalHut environment renderer",
-    note: `${item.note || `Live API result for ${term || category}.`} DigitalHut attached a topic environment GLB so the active asset opens directly in 3D instead of stopping on a card.`
+    renderPriority: 0,
+    apiStatus: "verified-glb-required",
+    note: `${item.note || `Live API result for ${term || category}.`} A direct licensed, owner-uploaded, API, Vercel, or FireCuda environment GLB is required before this experience can enter the renderer.`
   }
 }
 
@@ -195,7 +154,6 @@ function firecudaSeedFeeds(category){
     context: meta.context,
     thumbnail: asset.thumbnail || stockUrl(category, index),
     modelUrl: firecudaUrl(asset.file),
-    renderFallbackUrl: topicEnvironmentGlb(category, `${asset.title} ${asset.tags.join(" ")}`, index),
     viewerUrl: "",
     apiSource: "FireCuda personal GLB library",
     apiStatus: "preloaded-firecuda-model",
@@ -352,10 +310,12 @@ const featuredFeeds = {
     ["Texas Plano New Masjid Housing", "Plano housing environment around community access, local roads, nearby services, family living, and a new masjid housing context.", "texas plano masjid housing environment read"]
   ],
   "Gamer": [
-    ["Open-world game environment read", "A full gameplay-place read for spawn, pathing, lighting, cover, and mood. No isolated subject unless the world loads with it.", "open world game environment read"],
-    ["Neon arena boss room environment", "A high-energy game location for spawn, mechanics, cover, effects, and player decision points.", "neon arena boss room environment read"],
-    ["Indie game visual environment", "Gaming post view anchored to a level, room, city, arena, or map space so the stream does not feel broken.", "indie game environment read"],
-    ["2026 game world update", "A game trend post presented as an environment update instead of a single character/object preview.", "2026 game world environment read"]
+    ["Zenith VR MMO world watch", "Official-link discovery for Zenith's open-world VR MMO. DigitalHut may attach an authorized trailer or licensed or user-owned environment GLB, but it does not copy the proprietary game world.", "zenith vr mmo open world environment", "https://zenithmmo.com/", "official-link-only"],
+    ["Roblox immersive world discovery", "A discovery lane for public Roblox experiences and creator-authorized exports. Whole Roblox games are not converted into GLB packages.", "roblox immersive vr world environment", "https://www.roblox.com/", "official-link-only"],
+    ["Vendetta Online galaxy watch", "Active 3D space-combat MMO discovery using the official game page and a separately licensed space environment GLB when available.", "vendetta online galaxy space vr environment", "https://www.vendetta-online.com/", "official-link-only"],
+    ["OrbusVR archive world", "Historical VRMMO archive lane. The official OrbusVR site says the service has ended, so DigitalHut labels this as archival rather than live.", "orbusvr archive vr mmo environment", "https://orbusvr.com/", "archive-link-only"],
+    ["Ilysia VR world watch", "Immersive VR-world discovery record awaiting a verified official source and a licensed environment GLB.", "ilysia vr mmo world environment", "", "verification-required"],
+    ["Oasis and Lost Tower discovery request", "A verification lane for the exact title and rights holder before any trailer, artwork, or GLB is attached.", "oasis vr lost tower online environment", "", "verification-required"]
   ],
   "Planetary": [
     ["Saturn ring mission zone", "Planetary zone for orbit, scale, shadow, and ring observation.", "saturn rings mission 3d model"],
@@ -370,11 +330,18 @@ const featuredFeeds = {
     ["Airport terminal workforce project", "Large-site workforce model for crew movement, security, and public access.", "airport terminal construction project 3d"]
   ],
   "Mainstream Streaming": [
-    ["SpongeBob undersea environment read", "HA HA HA, I love SpongeBob. Viral trend: funny Patrick interaction. Read the undersea cartoon-style environment, color, set pieces, and visual mood.", "spongebob underwater environment read funny patrick interaction"],
-    ["Water balloon splash trend", "Nice viral trend: a water balloon popped and splashed someone. Read the creator scene, timing, crowd angle, and best related 3D environment.", "water balloon splash viral environment read"],
-    ["Viral challenge environment hunt", "20,000-plus style share prompt where viewers hunt for a hidden layer inside a place, room, set, or scene.", "viral challenge environment hunt"],
-    ["Funny creator room environment", "Creator post lane anchored to a studio, room, set, or social scene so the show stays visual and coherent.", "funny creator room environment read"],
-    ["Unexpected trend environment replay", "Fast mainstream replay slot for a topic that is starting to blow up, shown as the environment around the trend.", "viral trend environment replay"]
+    ["2026 Launch to the Moon", "All-access production lane for launch structures, mission terrain, crowd energy, and orbital scale. Renderer opens only with a verified space environment GLB.", "2026 launch to the moon immersive environment"],
+    ["Frontier AI: ChatGPT and Claude pushing limits", "Fast technology culture feed around AI systems, production studios, data centers, creators, and the human decisions around them.", "2026 frontier ai production environment"],
+    ["Rap and global music culture watch", "High-energy music discovery lane for authorized performances, artist links, venue environments, and city culture. DigitalHut does not copy protected recordings.", "2026 rap global music venue culture environment"],
+    ["Saturn Ring Immersion", "Deep planetary pass through ring scale, light, shadow, orbital routes, and observatory context.", "saturn rings immersive observatory environment"],
+    ["Jungles of India", "Dense terrain, canopy, river, wildlife-access, weather, and research-route environment presentation.", "india jungle immersive terrain environment"],
+    ["Great Wall of China expedition", "Architecture, mountain terrain, route, history, and large-scale travel environment.", "great wall of china immersive terrain environment"],
+    ["Fiji bungalow real estate", "Coastal housing, access, island services, weather, and family-stay context in an international property environment.", "fiji bungalow real estate immersive environment"],
+    ["Japan local ramen street", "Street-level food culture, storefronts, transit, lighting, and local neighborhood movement.", "japan local ramen shop street environment"],
+    ["California Hollywood Sign", "Hillside terrain, city scale, tourism routes, film culture, and viewpoint access.", "california hollywood sign city environment"],
+    ["New York Central Park and Bronx Zoo", "A city-nature production lane for trails, park scale, animal habitats, surrounding neighborhoods, and visitor access.", "new york central park bronx zoo environment"],
+    ["Iceland scenery", "Volcanic terrain, waterfalls, roads, weather, and remote travel access in a cinematic environment.", "iceland scenery immersive terrain environment"],
+    ["Siberia living", "Cold-climate settlements, terrain, transport, housing, and everyday regional context.", "siberia living winter settlement environment"]
   ],
   "Researcher": [
     ["New germ microscope environment", "Research find lane for a serious lab, evidence, and observation environment read.", "new germ found microscope research environment"],
@@ -467,7 +434,7 @@ function seedFeeds(category){
       const query = queries[index % queries.length]
       expanded.push([`${category} live 3D model ${index + 1}`, `${category} default live model with a real renderer asset attached before search takes over.`, query])
     }
-    const featuredSeeds = expanded.map(([title, note, query], index) => ({
+    const featuredSeeds = expanded.map(([title, note, query, viewerUrl = "", rightsStatus = "curated-discovery"], index) => ({
       id: `featured:${category}:${index}:${query}`,
       title,
       note,
@@ -478,9 +445,11 @@ function seedFeeds(category){
       context: meta.context,
       thumbnail: stockUrl(category, index),
       modelUrl: relatedGlb(category, index),
-      viewerUrl: "",
+      viewerUrl,
       apiSource: "DigitalHut featured reel",
-      apiStatus: "environment-read-ready"
+      apiStatus: relatedGlb(category, index) ? "verified-backup-glb" : "verified-glb-required",
+      rightsStatus,
+      productionStyle: "all-access immersive environment"
     }))
     return [...firecudaFeeds, ...featuredSeeds].slice(0, 10)
   }
@@ -548,6 +517,7 @@ function normalizeAsset(item, category, index, source, term){
     apiSource: item?.apiSource || source,
     apiStatus: item?.apiStatus || (embedUrl || rawModelUrl ? "direct-api-model" : "api-record-no-model"),
     providerMix: item?.providerMix || item?.providers || [source],
+    tags: Array.isArray(item?.tags) ? item.tags : [],
     market: item?.market,
     cesium: item?.cesium
   }
@@ -1170,8 +1140,7 @@ function BabylonGlbStage({src, title, guided, stage, visualKey, onReady, onError
 }
 
 function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelOpen, onOpenModel, onNext, onPlayMore, onVisualPending, onVisualReady, onDirectorUpdate, guideText, followUps}){
-  const rendererFallbackUrl = feed.renderFallbackUrl || topicEnvironmentGlb(feed.category, `${feed.title || ""} ${feed.query || ""}`, 0)
-  const [renderModelUrl, setRenderModelUrl] = useState(feed.modelUrl || rendererFallbackUrl)
+  const [renderModelUrl, setRenderModelUrl] = useState(feed.modelUrl || "")
   const hasEmbed = false
   const hasModel = Boolean(renderModelUrl)
   const isStats = stage.kind === "stats"
@@ -1186,19 +1155,16 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
   const canShowContainment = renderLive && !isStats
   const rendererOpen = canShowContainment && modelOpen
   const liveOpen = rendererOpen && (hasEmbed || hasModel)
-  const containedDataOpen = rendererOpen && !hasEmbed && !hasModel
-  const readout = modelDataReadout({feed, category: feed.category, stage})
+  const rendererUnavailable = rendererOpen && !hasEmbed && !hasModel
   const visualKey = visualKeyFor(feed, stage)
-  const envLabel = environmentLabel(feed)
-  const envClass = environmentClass(feed)
   const isPersonalLibraryModel = renderModelUrl?.includes("/firecuda-library/") || renderModelUrl?.includes("supabase.co") || renderModelUrl?.includes("vercel-storage.com")
   const modelErrorText = String(modelError || "")
   const webGlBlocked = modelErrorText.toLowerCase().includes("webgl")
   const canOpenModelLink = Boolean(renderModelUrl && !isLikelyBrokenStorageUrl(renderModelUrl))
 
   useEffect(() => {
-    setRenderModelUrl(feed.modelUrl || rendererFallbackUrl)
-  }, [feed.modelUrl, rendererFallbackUrl, visualKey])
+    setRenderModelUrl(feed.modelUrl || "")
+  }, [feed.modelUrl, visualKey])
 
   useEffect(() => {
     setModelReady(false)
@@ -1207,21 +1173,20 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     if(!rendererOpen || isStats) return
     onVisualPending?.(visualKey)
     onDirectorUpdate?.({phase: "Loading Babylon GLB", detail: feed.title, status: "Waiting for renderer asset"})
-    if(containedDataOpen){
-      const timer = window.setTimeout(() => {
-        onDirectorUpdate?.({phase: "Ready to present", detail: feed.title, status: "Environment read ready"})
-        onVisualReady?.(visualKey)
-      }, 900)
-      return () => window.clearTimeout(timer)
+    if(rendererUnavailable){
+      const detail = {title: feed.title, reason: "No verified API, Vercel, or FireCuda environment GLB registered for this feed."}
+      onDirectorUpdate?.({phase: "Guardian reload required", detail: feed.title, status: detail.reason})
+      window.dispatchEvent(new CustomEvent("digitalhut:guardian-render-failure", {detail}))
+      return undefined
     }
     if(!liveOpen || hasEmbed || !hasModel) return undefined
     const waiting = window.setTimeout(() => {
-      onDirectorUpdate?.({phase: "Still loading Babylon GLB", detail: feed.title, status: isPersonalLibraryModel ? "Large uploaded model still importing" : "Renderer still importing; fallback remains available"})
+      onDirectorUpdate?.({phase: "Still loading Babylon GLB", detail: feed.title, status: isPersonalLibraryModel ? "Large uploaded model still importing" : "Renderer still importing the verified GLB"})
     }, isPersonalLibraryModel ? 18000 : 9000)
     return () => {
       window.clearTimeout(waiting)
     }
-  }, [rendererOpen, liveOpen, containedDataOpen, hasModel, hasEmbed, isStats, feed.title, visualKey, isPersonalLibraryModel])
+  }, [rendererOpen, liveOpen, rendererUnavailable, hasModel, hasEmbed, isStats, feed.title, visualKey, isPersonalLibraryModel])
 
   function markBabylonReady(key){
     setModelReady(true)
@@ -1251,19 +1216,11 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
       onDirectorUpdate?.({phase: "Loading local FireCuda GLB", detail: feed.title, status: "External GLB URL failed; switching to bundled deployed copy"})
       return
     }
-    if(feed.renderFallbackUrl && renderModelUrl !== feed.renderFallbackUrl){
-      setModelReady(false)
-      setModelLoaded(false)
-      setModelError("")
-      setRenderModelUrl(feed.renderFallbackUrl)
-      onDirectorUpdate?.({phase: "Loading Babylon fallback", detail: feed.title, status: "Primary model failed; switching to matched environment GLB"})
-      return
-    }
     setModelReady(false)
     setModelLoaded(true)
     setModelError(reason)
     onDirectorUpdate?.({phase: "Babylon GLB failed", detail: feed.title, status: isPersonalLibraryModel ? "Verify Supabase public URL, CORS, filename, and GLB content type" : reason})
-    onVisualReady?.(visualKey)
+    window.dispatchEvent(new CustomEvent("digitalhut:guardian-render-failure", {detail: {title: feed.title, reason}}))
   }
 
   useEffect(() => {
@@ -1274,12 +1231,12 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     setGuideDismissed(false)
   }, [visualKey])
 
-  return <div className={`dh-renderer ${guided ? "guided" : ""} ${canShowContainment ? "has-api" : ""} ${rendererOpen ? "model-mode" : ""} ${liveOpen || containedDataOpen ? "live-open" : ""} ${containedDataOpen ? "data-open" : ""} stage-${stage.kind}`} style={{"--accent": feed.accent}}>
+  return <div className={`dh-renderer ${guided ? "guided" : ""} ${canShowContainment ? "has-api" : ""} ${rendererOpen ? "model-mode" : ""} ${liveOpen ? "live-open" : ""} ${rendererUnavailable ? "renderer-unavailable" : ""} stage-${stage.kind}`} style={{"--accent": feed.accent}}>
     {feed.thumbnail && <img className={`dh-renderer-stock ${imageReady ? "is-ready" : ""}`} src={feed.thumbnail} alt="" loading="lazy" decoding="async" onLoad={() => setImageReady(true)} />}
     {decorationActive && <div className="dh-motion-sky" />}
     {decorationActive && <div className="dh-stars">{stars.map((_, index) => <span key={index} style={{left: `${4 + (index * 43) % 91}%`, top: `${7 + (index * 31) % 78}%`}} />)}</div>}
     {decorationActive && <SceneObject feed={feed} />}
-    {canShowContainment && !liveOpen && !containedDataOpen && <button className={`dh-api-system-preview ${feed.thumbnail ? "api-preview-ready" : ""} ${modelOpen ? "is-resolving" : ""}`} style={feed.thumbnail ? {"--api-preview-url": `url("${feed.thumbnail}")`} : undefined} onClick={onOpenModel}>
+    {canShowContainment && !liveOpen && !rendererUnavailable && <button className={`dh-api-system-preview ${feed.thumbnail ? "api-preview-ready" : ""} ${modelOpen ? "is-resolving" : ""}`} style={feed.thumbnail ? {"--api-preview-url": `url("${feed.thumbnail}")`} : undefined} onClick={onOpenModel}>
       <span>{modelOpen || loading ? "Preparing 3D preview" : "Renderer ready"}</span><b>{feed.title}</b><em className="dh-open-containment">{modelOpen || loading ? "Rendering" : "Play 3D Preview"}</em>
     </button>}
     {liveOpen && hasEmbed && <iframe className="dh-api-frame" title={feed.title} src={pausedEmbedUrl(feed.embedUrl)} allow="fullscreen; xr-spatial-tracking" loading="lazy" allowFullScreen onLoad={() => onVisualReady?.(visualKey)} />}
@@ -1288,26 +1245,14 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
       {modelError && <div className={`dh-model-loader error ${webGlBlocked ? "webgl-error" : ""}`}><b>{webGlBlocked ? "WebGL renderer unavailable" : "Renderer needs a valid GLB URL"}</b><span>{modelError}</span>{webGlBlocked && canOpenModelLink && <a href={renderModelUrl} target="_blank" rel="noreferrer">Open GLB file</a>}</div>}
       <BabylonGlbStage key={renderModelUrl} src={renderModelUrl} title={feed.title} guided={guided} stage={stage} visualKey={visualKey} onReady={markBabylonReady} onError={markBabylonError} />
     </div>}
-    {containedDataOpen && <section className={`dh-contained-model dh-environment-read ${envClass}`} aria-label="Environment read session">
-      <div className="dh-contained-screen" style={feed.thumbnail ? {"--contained-image": `url("${feed.thumbnail}")`} : undefined}>
-        <div className="dh-contained-scan" />
-        <div className="dh-environment-depth"><i /><i /><i /><i /></div>
-        <div className="dh-contained-meta">
-          <span>{envLabel}</span>
-          <b>{feed.title}</b>
-          <p>{feed.note} DigitalHut is reading this as a full environment: place, routes, layers, pressure points, and what the viewer should notice.</p>
-        </div>
-      </div>
-      <div className="dh-contained-readout">
-        <span>{readout.provider}</span>
-        {readout.lines.slice(1).map((line) => <span key={line}>{line}</span>)}
-      </div>
-      <div className="dh-contained-actions">
-        <button type="button" onClick={onNext}>Rotate View</button>
-        <button type="button" onClick={onPlayMore}>Deep Read</button>
+    {rendererUnavailable && <section className="dh-model-shell dh-renderer-recovery" aria-label="Renderer recovery required">
+      <div className="dh-model-loader error">
+        <b>Guardian reload required</b>
+        <span>No verified environment GLB registered. Synthetic block-model fallback is disabled.</span>
+        <button type="button" onClick={() => window.dispatchEvent(new CustomEvent("digitalhut:guardian-render-failure", {detail: {title: feed.title, reason: "No verified API, Vercel, or FireCuda environment GLB registered for this feed."}}))}>Open Guardian</button>
       </div>
     </section>}
-    {canShowContainment && modelOpen && !guideDismissed && !liveOpen && !containedDataOpen && <div className="dh-contained-guide">
+    {canShowContainment && modelOpen && !guideDismissed && !liveOpen && !rendererUnavailable && <div className="dh-contained-guide">
       <button className="dh-guide-close" type="button" aria-label="Close presentation card" onClick={() => setGuideDismissed(true)}>X</button>
       <span>{guideText}</span>
       <button type="button" onClick={() => {setGuideDismissed(true); onOpenModel?.()}}>Play 3D Preview</button>
@@ -1391,6 +1336,7 @@ export default function FullscreenObservatoryV2(){
   const pendingSpeechRef = useRef(null)
   const pendingSpeechTimer = useRef(null)
   const preMechanicCategoryRef = useRef("Mainstream Streaming")
+  const mechanicMotionFrameRef = useRef(null)
 
   const activeTours = toursFor(category)
   const activeTour = activeTours.find((item) => item.id === tour) || activeTours[0]
@@ -1625,6 +1571,36 @@ export default function FullscreenObservatoryV2(){
     setAwake(true)
     window.clearTimeout(hideTimer.current)
     hideTimer.current = window.setTimeout(() => setAwake(false), 2800)
+  }
+
+  function handleObservatoryPointer(event){
+    wake()
+    if(!mechanicMode || event.pointerType === "touch") return
+    const node = event.currentTarget
+    const width = Math.max(node.clientWidth, 1)
+    const height = Math.max(node.clientHeight, 1)
+    const x = Math.max(-1, Math.min(1, (event.clientX / width) * 2 - 1))
+    const y = Math.max(-1, Math.min(1, (event.clientY / height) * 2 - 1))
+    window.cancelAnimationFrame(mechanicMotionFrameRef.current)
+    mechanicMotionFrameRef.current = window.requestAnimationFrame(() => {
+      node.style.setProperty("--cockpit-render-x", `${(x * 12).toFixed(2)}px`)
+      node.style.setProperty("--cockpit-render-y", `${(y * 8).toFixed(2)}px`)
+      node.style.setProperty("--cockpit-rail-x", `${(x * 16).toFixed(2)}px`)
+      node.style.setProperty("--cockpit-rail-y", `${(y * 3).toFixed(2)}px`)
+      node.style.setProperty("--cockpit-control-x", `${(x * 3).toFixed(2)}px`)
+      node.style.setProperty("--cockpit-control-y", `${(y * 14).toFixed(2)}px`)
+      node.style.setProperty("--cockpit-status-y", `${(y * -5).toFixed(2)}px`)
+    })
+  }
+
+  function centerCockpitMotion(event){
+    const node = event.currentTarget
+    window.cancelAnimationFrame(mechanicMotionFrameRef.current)
+    mechanicMotionFrameRef.current = window.requestAnimationFrame(() => {
+      for(const name of ["--cockpit-render-x", "--cockpit-render-y", "--cockpit-rail-x", "--cockpit-rail-y", "--cockpit-control-x", "--cockpit-control-y", "--cockpit-status-y"]){
+        node.style.setProperty(name, "0px")
+      }
+    })
   }
 
   async function loadFeeds(nextCategory, term, options = {}){
@@ -2278,7 +2254,7 @@ export default function FullscreenObservatoryV2(){
     wake()
   }
 
-  return <main className={`dh-observatory low-power ${loading ? "is-loading" : "is-ready"} ${entryOpen ? "entry-open" : "entry-complete"} ${mechanicMode ? "mechanic-mode" : ""}`} data-main-frame={digitalHutBrainMap.mainFrame} data-observatory-category={category} data-observatory-status={loading ? "verifying" : sceneFeed.apiStatus || "ready"} data-physical-assets="sensitive" onPointerMove={wake} onPointerDown={wake}>
+  return <main className={`dh-observatory low-power ${loading ? "is-loading" : "is-ready"} ${entryOpen ? "entry-open" : "entry-complete"} ${mechanicMode ? "mechanic-mode" : ""}`} data-main-frame={digitalHutBrainMap.mainFrame} data-observatory-category={category} data-observatory-status={loading ? "verifying" : sceneFeed.apiStatus || "ready"} data-physical-assets="sensitive" onPointerMove={handleObservatoryPointer} onPointerLeave={centerCockpitMotion} onPointerDown={wake}>
     <section className="dh-stage">
       <RendererVisual feed={sceneFeed} stage={stage} guided={guided} loading={loading} layer={layer} renderLive={!entryOpen} modelOpen={modelOpen} onOpenModel={openContainedModel} onNext={nextStage} onPlayMore={playMore} onVisualPending={markVisualPending} onVisualReady={markVisualReady} onDirectorUpdate={setDirectorStatus} guideText={currentGuideLine} followUps={currentFollowUps} />
       <div className="dh-vignette" />
@@ -2289,6 +2265,7 @@ export default function FullscreenObservatoryV2(){
       </button>
 
       {mechanicMode && <>
+        <div className="dh-cockpit-frame" aria-hidden="true"><span>DigitalHut Travel Operations Deck</span><b>Advisory media / verified GLB / public feeds</b></div>
         <nav className="dh-mechanic-categories" aria-label="DigitalHut categories">
           {categories.map((item) => <button key={item.id} className={item.id === category ? "active" : ""} type="button" onClick={() => selectCategory(item.id)}><span>{item.icon}</span><b>{item.id}</b></button>)}
         </nav>

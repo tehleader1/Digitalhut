@@ -41,7 +41,7 @@ export default async function handler(req, res){
       author: clean(item.artistName || item.collectionName || "Podcast publisher"),
       description: clean(item.description || item.shortDescription || "", 420),
       artwork: item.artworkUrl600 || item.artworkUrl100 || "",
-      audioUrl: item.episodeUrl || item.previewUrl || "",
+      audioUrl: String(item.episodeUrl || item.previewUrl || "").replace(/^http:/i, "https:"),
       pageUrl: item.trackViewUrl || item.collectionViewUrl || "",
       publishedAt: item.releaseDate || "",
       durationMs: Number(item.trackTimeMillis || 0),

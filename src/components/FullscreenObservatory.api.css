@@ -96,6 +96,25 @@
   pointer-events: auto;
 }
 
+.dh-renderer-recovery {
+  display: grid;
+  place-items: center;
+}
+
+.dh-renderer-recovery .dh-model-loader {
+  pointer-events: auto;
+}
+
+.dh-renderer-recovery button {
+  border: 1px solid rgba(250,204,21,.68);
+  border-radius: 5px;
+  padding: 7px 10px;
+  background: rgba(250,204,21,.16);
+  color: #fef3c7;
+  font-weight: 900;
+  cursor: pointer;
+}
+
 .dh-model-loader.error span {
   color: #fecaca;
   max-width: min(520px, 84%);

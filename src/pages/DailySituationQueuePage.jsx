@@ -34,7 +34,7 @@ function makeAssetFromCandidate(candidate){
     id: `daily-render-${candidate.id}`,
     slug,
     name: candidate.title,
-    type: candidate.relatedAsset?.fileType || "Generated GLB plan",
+    type: candidate.relatedAsset?.fileType || "Verified GLB required",
     sourceType: "daily-situation-report",
     source: "DigitalHut Daily Situation Discovery",
     url: modelUrl,
@@ -49,7 +49,7 @@ function makeAssetFromCandidate(candidate){
     zoomRate: 1,
     likes: 0,
     shares: 0,
-    comments: [`Daily discovery note: ${candidate.category}. ${candidate.relatedAsset?.reasonMatched || "Generated scene plan attached."}`],
+    comments: [`Daily discovery note: ${candidate.category}. ${candidate.relatedAsset?.reasonMatched || "Verified environment GLB required."}`],
     dialogue: [candidate.voiceDraft],
     metadata: {
       location: candidate.location,
@@ -59,8 +59,8 @@ function makeAssetFromCandidate(candidate){
       solutions: candidate.solutions,
       sources: candidate.sourceNotes,
       assetMatch: candidate.relatedAsset,
-      generatedScene: !modelUrl,
-      generatedSceneType: candidate.glbSceneType,
+      rendererReady: Boolean(modelUrl),
+      requestedSceneType: candidate.glbSceneType,
       seoBacklinkWords: [
         "DigitalHut 3D report",
         "rendered situation asset",
@@ -83,29 +83,13 @@ function saveAssetForCandidate(candidate, patch = {}){
   return asset
 }
 
-function sceneClass(candidate){
-  const text = `${candidate?.glbSceneType || ""} ${candidate?.category || ""} ${candidate?.title || ""}`.toLowerCase()
-  if(text.includes("airport")) return "airport"
-  if(text.includes("weather") || text.includes("storm") || text.includes("forecast")) return "weather"
-  if(text.includes("website") || text.includes("scam") || text.includes("complaint")) return "website"
-  if(text.includes("health") || text.includes("contact") || text.includes("outbreak")) return "health"
-  if(text.includes("environment") || text.includes("sensor") || text.includes("pollution")) return "environment"
-  if(text.includes("workforce") || text.includes("construction") || text.includes("project")) return "workforce"
-  return "map"
-}
-
-function GeneratedSituationScene({candidate}){
-  return <div className={`dh-generated-situation-scene ${sceneClass(candidate)}`}>
-    <div className="dh-situation-sky" />
-    <div className="dh-situation-grid" />
-    <div className="dh-situation-primary"><b>{candidate.location}</b><span>{candidate.glbSceneType}</span></div>
-    <div className="dh-situation-path"><i />{candidate.category}</div>
-    <div className="dh-situation-marker one" />
-    <div className="dh-situation-marker two" />
-    <div className="dh-situation-marker three" />
-    <div className="dh-situation-card"><b>{candidate.title}</b><span>{candidate.renderIdea}</span></div>
-    <div className="dh-situation-card secondary"><b>Safety / Solution</b><span>{candidate.solutions?.[0] || "Verify before publishing"}</span></div>
-  </div>
+function requestGuardian(candidate){
+  window.dispatchEvent(new CustomEvent("digitalhut:guardian-render-failure", {
+    detail: {
+      title: candidate?.title || "Daily Situation report",
+      reason: "No verified API, Supabase, Vercel, or FireCuda GLB is registered for this report."
+    }
+  }))
 }
 
 export default function DailySituationQueuePage(){
@@ -152,11 +136,19 @@ export default function DailySituationQueuePage(){
   }
 
   function renderThis(candidate){
+    if(!candidate.relatedAsset?.url){
+      requestGuardian(candidate)
+      return
+    }
     const asset = saveAssetForCandidate(candidate)
     updateCandidate(candidate.id, {status: "Selected for Render", selectedAssetId: asset.id, publicAssetSlug: asset.slug, renderedModelUrl: asset.url})
   }
 
   function publish(candidate){
+    if(!candidate.relatedAsset?.url){
+      requestGuardian(candidate)
+      return
+    }
     const asset = saveAssetForCandidate(candidate, {status: "Published 3D report", visibility: "Share link live"})
     const published = {...candidate, status: "Published", publishedAt: new Date().toISOString(), selectedAssetId: asset.id, publicAssetSlug: asset.slug, renderedModelUrl: asset.url}
     updateCandidate(candidate.id, published)
@@ -250,7 +242,7 @@ export default function DailySituationQueuePage(){
         <h2>Complete Live Report Renderer</h2>
         {active?.relatedAsset && <>
           <div className="dh-situation-renderer">
-            {active.relatedAsset.url ? <model-viewer src={active.relatedAsset.url} poster={active.relatedAsset.previewThumbnail || ""} camera-controls auto-rotate auto-rotate-delay="400" rotation-per-second="8deg" camera-orbit="35deg 60deg auto" field-of-view="34deg" exposure="1" reveal="auto" /> : <GeneratedSituationScene candidate={active} />}
+            {active.relatedAsset.url ? <model-viewer src={active.relatedAsset.url} poster={active.relatedAsset.previewThumbnail || ""} camera-controls auto-rotate auto-rotate-delay="400" rotation-per-second="8deg" camera-orbit="35deg 60deg auto" field-of-view="34deg" exposure="1" reveal="auto" /> : <button className="dh-missing-verified-glb" type="button" onClick={() => requestGuardian(active)}><b>Verified GLB required</b><span>Synthetic block-model fallback is disabled. Open Guardian to reload or repair this asset connection.</span></button>}
           </div>
           {active.relatedAsset.previewThumbnail && <img className="dh-match-thumb" src={active.relatedAsset.previewThumbnail} alt="" />}
           <div className="dh-report-card">
@@ -262,12 +254,12 @@ export default function DailySituationQueuePage(){
             <span><strong>Freshness:</strong> {active.relatedAsset.freshness}</span>
             <span><strong>Status:</strong> {active.assetMatchStatus}</span>
             {active.publicAssetSlug && <span><strong>Public preview:</strong> <Link to={`/${active.publicAssetSlug}`}>/{active.publicAssetSlug}</Link></span>}
-            <span><strong>Current GLB:</strong> {active.renderedModelUrl || active.relatedAsset.url || "Generated situation scene"}</span>
+            <span><strong>Current GLB:</strong> {active.renderedModelUrl || active.relatedAsset.url || "Not registered"}</span>
           </div>
           <div className="dh-asset-actions">
             <button type="button" onClick={() => renderThis(active)}>Use This Asset</button>
             <button type="button" onClick={() => updateCandidate(active.id, {assetMatchStatus: "Choose another asset"})}>Choose Another</button>
-            <button type="button" onClick={() => updateCandidate(active.id, {assetMatchStatus: "Generate new scene"})}>Generate New</button>
+            <button type="button" onClick={() => requestGuardian(active)}>Repair Asset Link</button>
             <button type="button" onClick={refreshActiveRenderer}>Refresh Live Renderer</button>
           </div>
         </>}

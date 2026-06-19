@@ -256,6 +256,40 @@
   background: rgba(8,47,73,.32);
 }
 
+.dh-guardian-recovery {
+  display: grid;
+  gap: 7px;
+  padding: 10px;
+  border: 1px solid rgba(251,191,36,.55);
+  border-radius: 6px;
+  background: rgba(120,53,15,.22);
+}
+
+.dh-guardian-recovery b {
+  color: #fde68a;
+}
+
+.dh-guardian-recovery span {
+  color: #e2e8f0;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.dh-guardian-recovery button {
+  justify-self: start;
+  border: 1px solid rgba(253,224,71,.65);
+  border-radius: 5px;
+  padding: 7px 10px;
+  background: #facc15;
+  color: #111827;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.dh-guardian-mini.level-reload {
+  border-color: rgba(250,204,21,.75);
+}
+
 .dh-guardian-client span { grid-column: 1; }
 .dh-guardian-client b { grid-column: 1; font-size: 12px; }
 .dh-guardian-client button { grid-column: 2; grid-row: 1 / 3; }
