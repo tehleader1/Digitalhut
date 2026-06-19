@@ -204,7 +204,7 @@ export default function DefensiveGuardian({children}){
   function answerGuardian(kind){
     const replies = {
       experience: `I am checking your ${device} session, ${category} category, connection state, selected ${tier} tier, and whether the Guardian controls remain available. Tell me which screen, model, or action is not behaving correctly.`,
-      help: `I can help you open a category, inspect a model, explain the current system status, check the wallet connection, review privacy, open Vehicle Notes, or route you to support.`,
+      help: `I can help you open a category, inspect a model, explain the current system status, check the wallet connection, review privacy, open Session Notes, or route you to support.`,
       spending: walletConnected
         ? "Your wallet connection is detected. Before spending, verify the domain, wallet address, network, asset, amount, subscription terms, and approval request. DigitalHut will never ask for your seed phrase or private key."
         : "No wallet connection is detected. Connect only through the official DigitalHut wallet control, verify the domain and network, and never enter a seed phrase or private key into a website form.",

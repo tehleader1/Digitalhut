@@ -19,7 +19,7 @@ const mobilityModes = [
   {id: "Marine", query: "marine harbor coastal weather travel environment"},
   {id: "Rail", query: "rail station transit delay public feed environment"}
 ]
-const bridgeFlow = ["DigitalHut Presentation", "Mainstream Streaming", "Mobility", "Gamer", "Planetary", "Programmer", "Workforce", "Researcher", "Science", "History", "Businesses", "Real Estate", "Continent", "Political"]
+const bridgeFlow = ["DigitalHut Presentation", "Mainstream Streaming", "Mobility", "Orbital Compute", "Gamer", "Planetary", "Programmer", "Workforce", "Researcher", "Science", "History", "Businesses", "Real Estate", "Continent", "Political"]
 const liveFeedStorageKey = "digitalhut:liveGlbFeed"
 const directorChatStorageKey = "digitalhut:directorChatHistory"
 const digitalHutBrainMap = {
@@ -39,7 +39,8 @@ const digitalHutBrainMap = {
     Programmer: "Inspect research data, backend features, API logic, and up-to-date decentralized network ideas.",
     Researcher: "Rotate models, log details, shuffle evidence quickly, and verify information before saving claims.",
     "Mainstream Streaming": "Track 2026 trends, interesting topics, creator clips, funny videos, and stream hooks.",
-    Mobility: "Monitor public travel feeds, road and route conditions, vehicle environments, weather context, and maintenance-awareness sessions.",
+    Mobility: "Monitor aerospace-style public feeds, routes, orbital access, vehicle environments, weather context, and verified observatory sessions.",
+    "Orbital Compute": "Track public orbital compute, satellite internet, free-space optics, advanced solar materials, and source-verified observatory science.",
     Planetary: "Explore structures, environments, places around the world, and planetary-style observation sessions."
   },
   futureBranding: {
@@ -52,6 +53,7 @@ const digitalHutBrainMap = {
 const stockImages = {
   "Continent": ["photo-1500530855697-b586d89ba3ee", "photo-1486406146926-c627a92ad1ab", "photo-1518005020951-eccb494ad742", "photo-1493246507139-91e8fad9978e"],
   "Planetary": ["photo-1446776811953-b23d57bd21aa", "photo-1454789548928-9efd52dc4031", "photo-1462331940025-496dfbfc7564", "photo-1419242902214-272b3f66ee7a"],
+  "Orbital Compute": ["photo-1446776811953-b23d57bd21aa", "photo-1451187580459-43490279c0fa", "photo-1454789548928-9efd52dc4031", "photo-1517976547714-720226b864c1"],
   "Gamer": ["photo-1542751371-adc38448a05e", "photo-1511512578047-dfb367046420", "photo-1550745165-9bc0b252726f", "photo-1493711662062-fa541adb3fc8"],
   "Real Estate": ["photo-1560518883-ce09059eeffa", "photo-1600585154340-be6161a56a0c", "photo-1484154218962-a197022b5858", "photo-1600607687939-ce8a6c25118c"],
   "Workforce": ["photo-1504307651254-35680f356dfd", "photo-1517048676732-d65bc937f952", "photo-1521791136064-7986c2920216", "photo-1581092918056-0c4c3acd3789"],
@@ -257,9 +259,10 @@ function observatoryRecord({category, stage, sceneFeed, mode, tier, loading}){
 
 const categories = [
   ["DigitalHut Presentation", "DP", "#facc15", "default GLB editing workspace, presentation files, live model search, and advanced creator tools"],
-  ["Mobility", "MO", "#22d3ee", "public road, air, marine, and rail travel awareness with vehicle environments and maintenance context"],
+  ["Mobility", "AO", "#22d3ee", "aerospace-style public feeds, route awareness, orbital access, vehicle environments, and verified observatory context"],
   ["Continent", "CO", "#67e8f9", "global terrain, travel, culture, and education"],
   ["Planetary", "PL", "#a78bfa", "structures, environments, and places around the world or off-world"],
+  ["Orbital Compute", "OC", "#38bdf8", "orbital compute, laser links, satellite internet, space power, and verified observatory science technology"],
   ["Gamer", "GM", "#22c55e", "real-life game updates, new game visuals, level ideas, and play-session scouting"],
   ["Real Estate", "RE", "#2dd4bf", "international housing options, market pressure, property models, rental demand, travel access, and agent-ready scouting"],
   ["Workforce", "WF", "#fb7185", "jobsites, training, operations, and safety walkthroughs"],
@@ -277,6 +280,7 @@ const seedQueries = {
   "Mobility": ["live road travel conditions vehicle environment", "airport travel delay public feed 3d", "marine harbor travel conditions environment", "rail transit disruption public feed"],
   "Continent": ["japan urban environment read", "cape town coastal environment read", "amazon river environment read", "europe old city environment read"],
   "Planetary": ["international space station 3d model", "moon surface observatory 3d", "mars terrain 3d", "orbital city grid 3d"],
+  "Orbital Compute": ["starcloud orbital compute public tracker", "free space optical communications satellite laser", "perovskite solar cell space power observatory", "starlink satellite internet edge compute"],
   "Gamer": ["open world game environment read", "animated boss room environment read", "mission hub game environment read", "sci fi arena environment read"],
   "Real Estate": ["international coastal housing market 3d", "global smart apartment housing data 3d", "tourist city rental pressure map 3d", "middle class international housing options 3d"],
   "Workforce": ["construction jobsite structure 3d", "warehouse training safety 3d", "city infrastructure operations 3d", "coastal response emergency planning 3d"],
@@ -322,6 +326,12 @@ const featuredFeeds = {
     ["Green-season waterfall zone", "Waterfall environment view for a slow nature pass and seasonal color story.", "green season waterfall terrain 3d"],
     ["Mars ridge survey zone", "Terrain zone for rocks, route planning, and research hazards.", "mars ridge terrain 3d model"],
     ["Starlink mothership hub", "Planetary tech environment around a Starlink-style hub, orbit routes, launch context, and related aerospace preview.", "elon musk starlink mothership hub environment read"]
+  ],
+  "Orbital Compute": [
+    ["Starcloud orbital compute tracker", "Public-source orbital data-center lane: launch milestones, partner claims, energy plan, thermal risk, and confirmed/proposed/speculative status.", "starcloud orbital compute public tracker", "https://www.starcloud.com/", "public-source-tracker"],
+    ["Free-space optical laser internet", "Laser-link lane for fiber-to-free-space handoff, satellite-to-ground path, weather sensitivity, alignment, bandwidth, and latency.", "free space optical communications satellite laser", "https://www.transcelestial.com/", "public-source-tracker"],
+    ["Perovskite solar absorption lab", "Advanced materials lane for chemical ink, vacuum crystallization, absorption layers, stability, moisture protection, and space-power relevance.", "perovskite solar cell crystallized ink vacuum absorption", "", "research-tracker"],
+    ["Starlink orbital access", "Satellite internet context for DigitalHut: latency, upload reliability, weather, placement, and backend GLB workflow improvements.", "starlink satellite internet edge compute", "https://www.starlink.com/", "public-source-tracker"]
   ],
   "Workforce": [
     ["London bridge construction project", "Public construction and workforce training view with an attached GLB.", "london bridge construction project 3d"],
@@ -392,9 +402,10 @@ const featuredFeeds = {
 
 const guidedTours = {
   "DigitalHut Presentation": [["Select GLB", "GL", "Choose the editable model and keep it open in the main renderer."], ["Edit Files", "EF", "Add overlays, notes, audio cues, attachments, and special files for the presentation."], ["Feature Mode", "FM", "Stage the model as a polished live feature with backlink, sponsor line, and creator controls."], ["Publish", "PB", "Package the GLB presentation for sharing, saving, and future realtime feed posting."]],
-  "Mobility": [["Surroundings", "SR", "Read the public route, weather, access, congestion, and environment context around the current travel mode."], ["Vehicle Notes", "VN", "Keep maintenance observations, symptoms, service records, and questions organized without inventing sensor readings."], ["Travel Feed", "TF", "Present related public pictures, videos, reports, and GLB environments in a controlled sequence."], ["Assistance", "AS", "Pause the presentation, preserve the current record, and surface roadside, airside, marina, rail, or emergency contact options selected by the user."]],
+  "Mobility": [["Surroundings", "SR", "Read the public route, weather, access, congestion, and environment context around the current aerospace display."], ["Session Notes", "SN", "Keep visible observations, service records, source notes, and questions organized without inventing sensor readings."], ["Live Feed", "LF", "Present related public pictures, reports, podcasts, and GLB environments in a controlled sequence."], ["Assistance", "AS", "Pause the presentation, preserve the current record, and surface qualified support options selected by the user."]],
   "Continent": [["Terrain", "TR", "Read elevation, coastline, streets, routes, and what the region teaches."], ["Culture", "CU", "Explain landmarks, public memory, travel value, and culture."], ["Route", "RT", "Move through access points and nearby context."], ["Compare", "CP", "Compare this place against similar regions."]],
   "Planetary": [["Orbit", "OR", "Start from orbit, scale, lighting, and mission frame."], ["Surface", "SF", "Inspect terrain, hazards, and research targets."], ["Mission", "MS", "Narrate objectives and next observation."], ["Research", "RS", "Name evidence, uncertainty, and open questions."]],
+  "Orbital Compute": [["Orbit", "OR", "Read satellite and orbital infrastructure."], ["Signal", "SG", "Compare laser, fiber, radio, ground station, weather, and latency limits."], ["Power", "PW", "Track solar absorption, thermal load, and material stability."], ["Verify", "VF", "Label confirmed, proposed, speculative, and source-needed claims."]],
   "Gamer": [["Spawn", "SP", "Read spawn, sightlines, paths, and first player decision."], ["Mechanics", "MC", "Explain loops, hazards, rewards, and interaction zones."], ["Assets", "AS", "Inspect modular value and prototype readiness."], ["Quest", "QS", "Turn the scene into a playable quest route."]],
   "Real Estate": [["International", "IN", "Compare country, city, travel access, buyer path, and housing option type."], ["Market", "MK", "Read affordability, rental pressure, tourism pressure, demand signals, and comparable regions."], ["Risk", "RK", "Call out weather, insurance, title, liquidity, maintenance, and local verification questions."], ["Agent View", "AV", "Turn the scene into an agent-ready explanation for buyers, renters, or relocation clients."]],
   "Workforce": [["Safety", "SF", "Walk hazards, access, staging, and worker awareness."], ["Training", "TR", "Teach the scene as a new-worker module."], ["Ops", "OP", "Explain routing, resources, crew flow, and bottlenecks."], ["Audit", "AU", "Record what is live, what needs verification, and what changed."]],
@@ -594,7 +605,8 @@ function categoryFromCommand(text){
   const matches = [
     ["Mainstream Streaming", ["spongebob", "viral", "stream", "streaming", "trend", "funny video", "creator", "cat video", "youtube", "tiktok", "meme"]],
     ["Gamer", ["link", "zelda", "game", "gamer", "gaming", "level", "character", "avatar", "cool game", "boss", "quest"]],
-    ["Mobility", ["auto mechanic", "mechanic mode", "vehicle", "car", "truck", "motorcycle", "road trip", "traffic condition", "airport delay", "flight delay", "air travel", "boat", "marine", "harbor", "rail", "train", "transit"]],
+    ["Orbital Compute", ["orbital compute", "starcloud", "star cloud", "starlink", "satellite internet", "laser internet", "free space optical", "transcelestial", "perovskite", "space solar", "orbital data"]],
+    ["Mobility", ["aerospace", "aviation", "avionics", "auto mechanic", "mechanic mode", "vehicle", "car", "truck", "motorcycle", "road trip", "traffic condition", "airport delay", "flight delay", "air travel", "boat", "marine", "harbor", "rail", "train", "transit"]],
     ["Workforce", ["construction", "bridge", "london bridge", "state project", "government project", "workforce", "jobsite", "training", "public works", "road", "airport", "terminal"]],
     ["Science", ["science", "experiment", "voyage", "field study", "public health", "weather experiment", "environmental monitoring", "south america", "brazil"]],
     ["History", ["history", "historic", "ancient", "museum", "heritage", "old city", "archive", "timeline"]],
@@ -620,6 +632,10 @@ function queryFromCommand(text, fallback){
   if(value.includes("new germ") || value.includes("germ")) return "new germ microscope research discovery 3d model"
   if(value.includes("canada")) return "canada landscape city terrain 3d model"
   if(value.includes("saturn")) return "saturn planet rings 3d model"
+  if(value.includes("starcloud") || value.includes("orbital compute")) return "starcloud orbital compute public tracker"
+  if(value.includes("starlink")) return "starlink satellite internet edge compute"
+  if(value.includes("transcelestial") || value.includes("laser internet") || value.includes("free space optical")) return "free space optical communications satellite laser"
+  if(value.includes("perovskite")) return "perovskite solar cell crystallized ink vacuum absorption"
   if(value.includes("waterfall")) return "green season waterfall terrain 3d model"
   if(value.includes("game character")) return "2026 game world environment read"
   if(value.includes("north carolina")) return "north carolina middle class real estate housing 3d model"
@@ -647,7 +663,8 @@ function topicInsight({category, query, feed, stage}){
   if(category === "Programmer") return `${subject} fits Programmer mode. I am checking data shape, backend use, provider reliability, decentralized network relevance, and what can be logged or automated. Source status is ${source}.`
   if(category === "Researcher") return `${subject} fits Researcher mode. I am checking evidence, age or history clues, broken areas, visible details, and what still needs verification. Source status is ${source}.`
   if(category === "Mainstream Streaming") return `${subject} fits Mainstream Streaming. I am looking for the hook, what makes it funny or shareable, why it could trend in 2026, and what clip should come next. Source status is ${source}.`
-  if(category === "Mobility") return `${subject} fits Auto Mechanic Mode. I am reading public travel conditions, route context, visible vehicle or infrastructure details, weather, access, and maintenance notes. This is advisory information, not a vehicle instrument or control system. Source status is ${source}.`
+  if(category === "Orbital Compute") return `${subject} fits Orbital Compute. I am reading public orbital infrastructure, signal path, power requirements, weather limits, launch or deployment status, and what still needs source verification. Source status is ${source}.`
+  if(category === "Mobility") return `${subject} fits the Aerospace Display. I am reading public travel conditions, route context, visible infrastructure details, weather, access, and session notes. This is advisory media, not a certified instrument or control system. Source status is ${source}.`
   return `${subject} is loaded in ${category}. I am checking the current model, the stage ${stage.label}, and what related model should come next.`
 }
 
@@ -674,8 +691,9 @@ function feedbackPrompt({category, feed}){
   if(category === "Programmer") return "Should I inspect the backend/API relevance, or bridge this into researcher verification?"
   if(category === "Workforce") return "Should I turn this into training, safety, or project workflow notes?"
   if(category === "Planetary") return "Did you see the structure yet, or should I bridge from this view into developer and research mode?"
+  if(category === "Orbital Compute") return "Should I keep tracking orbital compute, compare signal paths, or bridge this into planetary research?"
   if(category === "Mainstream Streaming") return "Should I keep this moving like a stream and load the next trend?"
-  if(category === "Mobility") return "Should I hold this travel mode, open the next public feed, or save a maintenance note?"
+  if(category === "Mobility") return "Should I hold this aerospace display, open the next public feed, or save a session note?"
   return `Did you see the model yet, or should I open a related view?`
 }
 
@@ -701,6 +719,9 @@ function movieBeat({category, feed, stage}){
   if(category === "Planetary"){
     return `Now switching GLBs to Planetary. Take your time with ${title}; I will slow the camera and let the environment carry the scene.`
   }
+  if(category === "Orbital Compute"){
+    return `Orbital Compute reel is live. ${title} is being read as public space infrastructure: orbit path, signal route, power layer, thermal risk, and verification status.`
+  }
   if(category === "Programmer"){
     return `Next reel: Programmer. ${title} is the production-stack moment; I am checking the code, data, backend, and what makes it useful.`
   }
@@ -714,7 +735,7 @@ function movieBeat({category, feed, stage}){
     return `International Real Estate reel is live. ${title} is presented like an observatory housing report: location, market pressure, affordability, travel access, rental demand, and what buyers or agents should verify next.`
   }
   if(category === "Mobility"){
-    return `Auto Mechanic Mode is live. ${title} stays centered while I present public travel context, visible environment details, and service notes without inventing vehicle sensor readings.`
+    return `Aerospace Display is live. ${title} stays centered while I present public travel context, visible environment details, and source notes without inventing sensor readings.`
   }
   return `Next live reel: ${category}. ${title} is attached to an environment read so the show stays visual and grounded.`
 }
@@ -723,6 +744,23 @@ function shouldTreatAsSearch(text){
   const lower = text.toLowerCase()
   if(lower.includes("save") || lower.includes("download note") || lower.includes("guided") || lower.includes("tour") || lower.includes("rotate") || lower.includes("camera") || lower.includes("tell me more") || lower.includes("history") || lower.includes("facts") || lower.includes("preview next") || lower.includes("next model") || lower.includes("deep research") || lower.includes("new trend") || lower.includes("jump category") || lower.includes("bridge")) return false
   return true
+}
+
+function talentNodeFromCommand(text){
+  const value = String(text || "").toLowerCase()
+  const nodes = [
+    ["stellar", ["stellar", "interstellar", "cosmic"]],
+    ["researcher", ["pure researcher", "researcher", "research authority", "research"]],
+    ["avionics", ["amazing avionics", "avionics", "aerospace"]],
+    ["world-cup", ["world cup", "global event"]],
+    ["real-estate-genius", ["genius real estate", "real estate genius", "property node"]],
+    ["guru-360", ["360 guru", "360", "orbit node"]],
+    ["exotic-environment", ["exotic environment", "environment node", "mood reset"]],
+    ["audience-magnet", ["audience magnet", "views", "reactions"]],
+    ["backend-builder", ["backend builder", "backend node"]],
+    ["mainstream-pulse", ["mainstream pulse", "viral node"]]
+  ]
+  return nodes.find(([, aliases]) => aliases.some((alias) => value.includes(alias)))?.[0] || "stellar"
 }
 
 function isNoteCommand(text){
@@ -1237,7 +1275,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     {decorationActive && <div className="dh-stars">{stars.map((_, index) => <span key={index} style={{left: `${4 + (index * 43) % 91}%`, top: `${7 + (index * 31) % 78}%`}} />)}</div>}
     {decorationActive && <SceneObject feed={feed} />}
     {canShowContainment && !liveOpen && !rendererUnavailable && <button className={`dh-api-system-preview ${feed.thumbnail ? "api-preview-ready" : ""} ${modelOpen ? "is-resolving" : ""}`} style={feed.thumbnail ? {"--api-preview-url": `url("${feed.thumbnail}")`} : undefined} onClick={onOpenModel}>
-      <span>{modelOpen || loading ? "Preparing 3D preview" : "Renderer ready"}</span><b>{feed.title}</b><em className="dh-open-containment">{modelOpen || loading ? "Rendering" : "Play 3D Preview"}</em>
+      <span>{modelOpen || loading ? "Preparing renderer" : "Renderer ready"}</span><b>{feed.title}</b><em className="dh-open-containment">{modelOpen || loading ? "Rendering" : "Open Renderer"}</em>
     </button>}
     {liveOpen && hasEmbed && <iframe className="dh-api-frame" title={feed.title} src={pausedEmbedUrl(feed.embedUrl)} allow="fullscreen; xr-spatial-tracking" loading="lazy" allowFullScreen onLoad={() => onVisualReady?.(visualKey)} />}
     {liveOpen && !hasEmbed && hasModel && <div className="dh-model-shell">
@@ -1255,7 +1293,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     {canShowContainment && modelOpen && !guideDismissed && !liveOpen && !rendererUnavailable && <div className="dh-contained-guide">
       <button className="dh-guide-close" type="button" aria-label="Close presentation card" onClick={() => setGuideDismissed(true)}>X</button>
       <span>{guideText}</span>
-      <button type="button" onClick={() => {setGuideDismissed(true); onOpenModel?.()}}>Play 3D Preview</button>
+      <button type="button" onClick={() => {setGuideDismissed(true); onOpenModel?.()}}>Open Renderer</button>
       <button type="button" onClick={onNext}>Next</button>
       <button type="button" onClick={onPlayMore}>Play More</button>
     </div>}
@@ -1287,13 +1325,13 @@ export default function FullscreenObservatoryV2(){
   const [loading, setLoading] = useState(false)
   const [tier, setTier] = useState(() => readStorage("digitalhut:tier", "guest"))
   const [username, setUsername] = useState(() => readStorage("digitalhut:username", ""))
-  const [entryOpen, setEntryOpen] = useState(() => !hasFreshEntry())
+  const [entryOpen, setEntryOpen] = useState(false)
   const [entryLoading, setEntryLoading] = useState(false)
   const [awake, setAwake] = useState(true)
   const [playing, setPlaying] = useState(true)
   const [layer, setLayer] = useState("Base")
   const [layerOpen, setLayerOpen] = useState(false)
-  const [modelOpen, setModelOpen] = useState(false)
+  const [modelOpen, setModelOpen] = useState(true)
   const [guideDepth, setGuideDepth] = useState(0)
   const [aiOpen, setAiOpen] = useState(false)
   const [aiListening, setAiListening] = useState(false)
@@ -1319,7 +1357,7 @@ export default function FullscreenObservatoryV2(){
   const [directorStatus, setDirectorStatus] = useState({phase: "Finding model", detail: "Preparing DigitalHut renderer", status: "Idle"})
   const [directorChat, setDirectorChat] = useState(() => readDirectorChat())
   const [directorInput, setDirectorInput] = useState("")
-  const [mechanicMode, setMechanicMode] = useState(false)
+  const [mechanicMode, setMechanicMode] = useState(true)
   const [mobilityMode, setMobilityMode] = useState("Road")
   const [assistanceOpen, setAssistanceOpen] = useState(false)
   const [runtimeState, setRuntimeState] = useState(() => ({
@@ -1357,7 +1395,7 @@ export default function FullscreenObservatoryV2(){
   const stageDelay = Math.round((stage.kind === "stats" ? 26000 : 18000) / presentationSpeed)
   const autoDelay = Math.round(22000 / presentationSpeed)
   const assetLibraryStatus = firecudaLibraryStatus()
-  const runtimePaused = mechanicMode && (!runtimeState.online || !runtimeState.visible)
+  const runtimePaused = !runtimeState.online || !runtimeState.visible
   const mechanicRuntimeStatus = !runtimeState.online ? "Offline" : !runtimeState.visible ? "Paused" : loading ? "Loading" : autoPresent ? "Auto Play" : "Ready"
 
   function recordDirectorMessage(role, text, status = directorStatus.phase){
@@ -1441,7 +1479,7 @@ export default function FullscreenObservatoryV2(){
       ...toursFor(category).map((_, index) => stockUrl(category, index))
     ]
     preloadImages(urls)
-    preloadModels(seeds.map((item) => item.modelUrl), mechanicMode ? 1 : 3)
+    preloadModels(seeds.map((item) => item.modelUrl), 1)
   }, [category, mechanicMode])
 
   useEffect(() => {
@@ -1575,7 +1613,7 @@ export default function FullscreenObservatoryV2(){
 
   function handleObservatoryPointer(event){
     wake()
-    if(!mechanicMode || event.pointerType === "touch") return
+    if(event.pointerType === "touch") return
     const node = event.currentTarget
     const width = Math.max(node.clientWidth, 1)
     const height = Math.max(node.clientHeight, 1)
@@ -1609,10 +1647,10 @@ export default function FullscreenObservatoryV2(){
     const seeds = seedFeeds(nextCategory).map((item, index) => attachRendererModel(item, nextCategory, term, index))
     setLoading(true)
     setActive(0)
-    setModelOpen(false)
+    setModelOpen(Boolean(options.keepOpen))
     setGuideDepth(0)
     preloadImages(seeds.map((item) => item.thumbnail))
-    preloadModels(seeds.map((item) => item.modelUrl), mechanicMode ? 1 : 3)
+    preloadModels(seeds.map((item) => item.modelUrl), 1)
     if(requestRef.current !== id) return seeds
     setFeeds(seeds)
     const results = (await resolveApiFeeds(nextCategory, term)).map((item, index) => attachRendererModel(item, nextCategory, term, index))
@@ -1623,7 +1661,7 @@ export default function FullscreenObservatoryV2(){
     const fallbackResults = results.filter((item) => item.renderPriority < 70)
     const next = sortRendererFeeds([...seedModels, ...directResults, ...fallbackResults]).slice(0, 8)
     preloadImages(next.map((item) => item.thumbnail))
-    preloadModels(next.map((item) => item.modelUrl), mechanicMode ? 1 : 3)
+    preloadModels(next.map((item) => item.modelUrl), 1)
     if(requestRef.current !== id) return next
     window.requestAnimationFrame(() => {
       setFeeds(next)
@@ -1654,14 +1692,14 @@ export default function FullscreenObservatoryV2(){
     setStageIndex(0)
     setStatsFeeds([])
     setGuideDepth(0)
-    setModelOpen(false)
+    setModelOpen(true)
     setQuery(term)
     playSessionSound(targetCategory, "bridge")
     announceOpen3dModel({title: term})
     const next = await loadFeeds(targetCategory, term, {silent: true, keepOpen: true})
     const loaded = next[0] || seedFeeds(targetCategory)[0]
     setActive(0)
-    setModelOpen(false)
+    setModelOpen(true)
     speakAfterVisual(`${prefix}: ${targetCategory}. ${streamReadout({category: targetCategory, query: term, feed: loaded, stage: stages[0]})}`, visualKeyFor(loaded, stages[0]))
   }
 
@@ -1693,12 +1731,12 @@ export default function FullscreenObservatoryV2(){
     setTour(toursFor(nextCategory)[0].id)
     setStageIndex(0)
     setStatsFeeds([])
-    setModelOpen(false)
+    setModelOpen(true)
     setGuideDepth(0)
     const seed = seedFeeds(nextCategory)[0]
     setQuery(seed.query)
     loadFeeds(nextCategory, seed.query, {silent: true, keepOpen: true})
-    speak(`DigitalHut set to ${nextCategory}. Click Play 3D Preview to start the renderer.`)
+    speak(`DigitalHut set to ${nextCategory}. The aerospace renderer stays open while the next verified GLB prepares.`)
     wake()
   }
 
@@ -1777,9 +1815,9 @@ export default function FullscreenObservatoryV2(){
     if(index >= 0) setActive(index)
     setQuery(item.query || item.title)
     setStageIndex(0)
-    setModelOpen(false)
+    setModelOpen(true)
     setGuideDepth(0)
-    speakAfterVisual(`Loaded ${item.title}. Click Play 3D Preview to start the renderer for this asset.`, visualKeyFor(item, stages[0]), 600)
+    speakAfterVisual(`Loaded ${item.title}. The renderer stays live for this asset.`, visualKeyFor(item, stages[0]), 600)
     wake()
   }
 
@@ -1793,13 +1831,13 @@ export default function FullscreenObservatoryV2(){
     setPlaying(true)
     setStageIndex(0)
     setStatsFeeds([])
-    setModelOpen(false)
+    setModelOpen(true)
     setGuideDepth(0)
     setQuery(nextQuery)
     announceOpen3dModel({title: nextQuery, category: targetCategory})
     await loadFeeds(targetCategory, nextQuery, {keepOpen: true})
-    setModelOpen(false)
-    speak(`${mode === "premium" ? "Premium guide ready" : "Regular API feed ready"}. Press Play 3D Preview to start the renderer for this asset.`)
+    setModelOpen(true)
+    speak(`${mode === "premium" ? "Premium guide ready" : "Regular API feed ready"}. The aerospace renderer is live for this asset.`)
     wake()
   }
 
@@ -1817,9 +1855,9 @@ export default function FullscreenObservatoryV2(){
     const nextItem = feeds[(active - 1 + feeds.length) % feeds.length] || sceneFeed
     setActive((value) => (value - 1 + feeds.length) % feeds.length)
     setStageIndex(0)
-    setModelOpen(false)
+    setModelOpen(true)
     setGuideDepth(0)
-    speakAfterVisual(`Moving back to ${nextItem.title}. Click Play 3D Preview to start the renderer.`, visualKeyFor(nextItem, stages[0]))
+    speakAfterVisual(`Moving back to ${nextItem.title}. The renderer stays live while the asset changes.`, visualKeyFor(nextItem, stages[0]))
     wake()
   }
 
@@ -1828,9 +1866,9 @@ export default function FullscreenObservatoryV2(){
     const nextItem = feeds[(active + 1) % feeds.length] || sceneFeed
     setActive((value) => (value + 1) % feeds.length)
     setStageIndex(0)
-    setModelOpen(false)
+    setModelOpen(true)
     setGuideDepth(0)
-    speakAfterVisual(`Opening ${nextItem.title}. Click Play 3D Preview to start the renderer.`, visualKeyFor(nextItem, stages[0]))
+    speakAfterVisual(`Opening ${nextItem.title}. The renderer stays live while the asset changes.`, visualKeyFor(nextItem, stages[0]))
     wake()
   }
 
@@ -1915,6 +1953,14 @@ export default function FullscreenObservatoryV2(){
     const lower = text.toLowerCase()
     const nextCategory = categoryFromCommand(text)
     const nextQuery = queryFromCommand(text, query)
+    if(lower.includes("talent tree") || lower.includes("node progress") || lower.includes("stellar node")){
+      const node = talentNodeFromCommand(text)
+      window.localStorage.setItem("digitalhut:blinkPulse", node)
+      recordDirectorMessage("ai", `Opening the DigitalHut Backend Blink System and pulsing ${node.replace(/-/g, " ")} progress.`, "Talent tree")
+      speak(`Opening node progress. I am pulsing your ${node.replace(/-/g, " ")} progress so you can see what is completed, pending, and what grind unlocks next.`)
+      window.location.href = `/asset-lab?tab=blink&node=${encodeURIComponent(node)}`
+      return
+    }
     if(lower.includes("preview next") || lower.includes("next model") || lower.includes("show me next")){
       recordDirectorMessage("ai", "Opening the next model and waiting for the renderer before narration continues.", "Next model")
       nextFeed()
@@ -1941,7 +1987,7 @@ export default function FullscreenObservatoryV2(){
       return
     }
     if(lower.includes("new trend") || lower.includes("jump category") || lower.includes("bridge")){
-      recordDirectorMessage("ai", "Looking for the next category bridge and preparing the Play 3D Preview gate.", "Bridge")
+      recordDirectorMessage("ai", "Looking for the next category bridge and keeping the aerospace renderer live.", "Bridge")
       await bridgeNextCategory("I found a new trend")
       return
     }
@@ -2006,15 +2052,15 @@ export default function FullscreenObservatoryV2(){
       setStageIndex(0)
       setStatsFeeds([])
       setGuideDepth(0)
-      setModelOpen(false)
-      recordDirectorMessage("ai", `Searching ${nextQuery} in ${targetCategory}. I will prepare the asset first; press Play 3D Preview to start the renderer.`, "Search")
+      setModelOpen(true)
+      recordDirectorMessage("ai", `Searching ${nextQuery} in ${targetCategory}. I will prepare the asset while the renderer stays live.`, "Search")
       setQuery(nextQuery)
       announceOpen3dModel({title: nextQuery})
       await loadFeeds(targetCategory, nextQuery, {silent: true, keepOpen: true})
       setActive(0)
       setStageIndex(0)
-      setModelOpen(false)
-      speak(`Search ready in ${targetCategory}. Press Play 3D Preview when you want the GLB renderer to start.`)
+      setModelOpen(true)
+      speak(`Search ready in ${targetCategory}. The GLB renderer is active now.`)
     }
   }
 
@@ -2160,8 +2206,8 @@ export default function FullscreenObservatoryV2(){
       const seed = seedFeeds(returnCategory)[0]
       setQuery(seed.query)
       await loadFeeds(returnCategory, seed.query, {silent: true, keepOpen: true})
-      setModelOpen(false)
-      speak("Auto Mechanic Mode closed. Returning to the main DigitalHut observatory.")
+      setModelOpen(true)
+      speak("Aerospace display remains active. Returning to the main DigitalHut observatory.")
       return
     }
     preMechanicCategoryRef.current = category
@@ -2179,7 +2225,7 @@ export default function FullscreenObservatoryV2(){
     const loaded = next[0] || seedFeeds("Mobility")[0]
     setActive(0)
     setModelOpen(true)
-    speakAfterVisual(`Auto Mechanic Mode ready. ${loaded.title}. Public travel and maintenance awareness only.`, visualKeyFor(loaded, stages[0]))
+    speakAfterVisual(`Aerospace observatory display ready. ${loaded.title}. Public source and verified GLB awareness only.`, visualKeyFor(loaded, stages[0]))
   }
 
   async function chooseMobilityMode(item){
@@ -2254,23 +2300,18 @@ export default function FullscreenObservatoryV2(){
     wake()
   }
 
-  return <main className={`dh-observatory low-power ${loading ? "is-loading" : "is-ready"} ${entryOpen ? "entry-open" : "entry-complete"} ${mechanicMode ? "mechanic-mode" : ""}`} data-main-frame={digitalHutBrainMap.mainFrame} data-observatory-category={category} data-observatory-status={loading ? "verifying" : sceneFeed.apiStatus || "ready"} data-physical-assets="sensitive" onPointerMove={handleObservatoryPointer} onPointerLeave={centerCockpitMotion} onPointerDown={wake}>
+  return <main className={`dh-observatory low-power aerospace-display ${loading ? "is-loading" : "is-ready"} ${entryOpen ? "entry-open" : "entry-complete"} mechanic-mode`} data-main-frame={digitalHutBrainMap.mainFrame} data-observatory-category={category} data-observatory-status={loading ? "verifying" : sceneFeed.apiStatus || "ready"} data-physical-assets="sensitive" onPointerMove={handleObservatoryPointer} onPointerLeave={centerCockpitMotion} onPointerDown={wake}>
     <section className="dh-stage">
       <RendererVisual feed={sceneFeed} stage={stage} guided={guided} loading={loading} layer={layer} renderLive={!entryOpen} modelOpen={modelOpen} onOpenModel={openContainedModel} onNext={nextStage} onPlayMore={playMore} onVisualPending={markVisualPending} onVisualReady={markVisualReady} onDirectorUpdate={setDirectorStatus} guideText={currentGuideLine} followUps={currentFollowUps} />
       <div className="dh-vignette" />
       {layer === "Architect" && <div className="dh-architect"><b>Architect Layer</b><span>builders / developers / researchers / AIs / experimental</span></div>}
-      <button className={`dh-mechanic-toggle ${mechanicMode ? "active" : ""}`} type="button" onClick={toggleMechanicMode}>
-        <span>{mechanicMode ? mechanicRuntimeStatus : "Travel systems"}</span>
-        <b>{mechanicMode ? "Exit Auto Mechanic" : "Auto Mechanic Mode"}</b>
-      </button>
-
-      {mechanicMode && <>
-        <div className="dh-cockpit-frame" aria-hidden="true"><span>DigitalHut Travel Operations Deck</span><b>Advisory media / verified GLB / public feeds</b></div>
+      <>
+        <div className="dh-cockpit-frame" aria-hidden="true"><span>DigitalHut Aerospace Observatory</span><b>Verified GLB / public feeds / source status</b></div>
         <nav className="dh-mechanic-categories" aria-label="DigitalHut categories">
           {categories.map((item) => <button key={item.id} className={item.id === category ? "active" : ""} type="button" onClick={() => selectCategory(item.id)}><span>{item.icon}</span><b>{item.id}</b></button>)}
         </nav>
 
-        <aside className="dh-mechanic-controls" aria-label="Auto Mechanic playback controls">
+        <aside className="dh-mechanic-controls" aria-label="Aerospace observatory playback controls">
           <button className={`primary ${autoPresent ? "active" : ""}`} type="button" onClick={toggleMechanicAuto}><span>{autoPresent ? "Pause" : "Play"}</span><b>{autoPresent ? "Pause Feed" : "Auto Play Feed"}</b></button>
           <button type="button" onClick={previousFeed}><span>Previous</span><b>Previous Model</b></button>
           <button type="button" onClick={nextFeed}><span>Next</span><b>Next Model</b></button>
@@ -2279,10 +2320,10 @@ export default function FullscreenObservatoryV2(){
           </div>
         </aside>
 
-        <aside className="dh-mechanic-status" aria-label="Auto Mechanic advisory status">
-          <header><span>Auto Mechanic</span><b>{mechanicRuntimeStatus}</b></header>
+        <aside className="dh-mechanic-status" aria-label="Aerospace observatory status">
+          <header><span>Aerospace Display</span><b>{mechanicRuntimeStatus}</b></header>
           <div className="dh-mechanic-readouts">
-            <section><span>Travel mode</span><b>{mobilityMode}</b></section>
+            <section><span>View mode</span><b>{category}</b></section>
             <section><span>Network</span><b>{runtimeState.online ? `${runtimeState.connection}${runtimeState.saveData ? " / saver" : ""}` : "Offline"}</b></section>
             <section><span>Renderer</span><b>{sceneVisualKey === visualReadyKey ? "Ready" : loading ? "Loading" : "Standby"}</b></section>
             <section><span>Presentation</span><b>{runtimePaused ? "Paused" : autoPresent ? "Auto Play" : "Manual"}</b></section>
@@ -2292,32 +2333,32 @@ export default function FullscreenObservatoryV2(){
             <b>{sceneFeed.title}</b>
             <small>{sceneFeed.apiSource || sceneFeed.apiStatus || "DigitalHut feed"}</small>
           </div>
-          <p>Advisory public media and maintenance notes only. This mode does not read vehicle sensors or control any vehicle.</p>
+          <p>Single renderer. Public-source observatory display only. It does not control aircraft, vehicles, satellites, wallets, or physical systems.</p>
           <div className="dh-mechanic-status-actions">
-            <button type="button" onClick={() => setNotesOpen(true)}>Vehicle Notes</button>
+            <button type="button" onClick={() => setNotesOpen(true)}>Session Notes</button>
             <button type="button" onClick={refreshLiveRenderer}>Refresh Feed</button>
             <button type="button" onClick={openTravelAssistance}>Assistance</button>
           </div>
         </aside>
 
-        {assistanceOpen && <section className="dh-travel-assistance" aria-label="Travel assistance">
+        {assistanceOpen && <section className="dh-travel-assistance" aria-label="Aerospace assistance">
           <div>
-            <header><span>Travel Assistance</span><button type="button" onClick={() => setAssistanceOpen(false)}>Close</button></header>
+            <header><span>Aerospace Assistance</span><button type="button" onClick={() => setAssistanceOpen(false)}>Close</button></header>
             <h2>Presentation paused</h2>
-            <p>Move to a safe location when possible, follow the vehicle or operator instructions, and contact qualified roadside, airside, marina, rail, maintenance, or local emergency assistance as appropriate.</p>
+            <p>This is an advisory media display. Follow official operator instructions and contact qualified support before making real travel, vehicle, aviation, marine, rail, maintenance, or safety decisions.</p>
             <div className="dh-assistance-grid">
               <section><b>1</b><span>Stop the presentation and assess the real surroundings.</span></section>
               <section><b>2</b><span>Use the official vehicle manual, operator procedure, or trained staff.</span></section>
-              <section><b>3</b><span>Record visible symptoms and the current public feed in Vehicle Notes.</span></section>
+              <section><b>3</b><span>Record visible observations and the current public feed in Session Notes.</span></section>
               <section><b>4</b><span>Contact qualified assistance before resuming travel when safety is uncertain.</span></section>
             </div>
             <div className="dh-assistance-actions">
-              <button type="button" onClick={() => {setNotesOpen(true); setAssistanceOpen(false)}}>Open Vehicle Notes</button>
+              <button type="button" onClick={() => {setNotesOpen(true); setAssistanceOpen(false)}}>Open Session Notes</button>
               <button type="button" onClick={() => setAssistanceOpen(false)}>Return to Feed</button>
             </div>
           </div>
         </section>}
-      </>}
+      </>
       {modelOpen && !entryOpen && <PodcastMatchPanel feed={sceneFeed} compact={mechanicMode} />}
 
       <div className="dh-top" style={{opacity: awake ? 1 : 0.08}}>

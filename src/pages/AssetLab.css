@@ -517,19 +517,353 @@
   margin: 16px 0;
 }
 
+.dh-blink-system {
+  width: min(1440px, calc(100% - 28px));
+  margin: 0 auto 28px;
+  display: grid;
+  gap: 12px;
+}
+
+.dh-blink-reader,
+.dh-blink-layout,
+.dh-node-purchases,
+.dh-mood-support {
+  border: 1px solid rgba(125, 211, 252, .26);
+  border-radius: 8px;
+  background: rgba(2, 6, 23, .72);
+}
+
+.dh-blink-reader {
+  display: grid;
+  grid-template-columns: minmax(280px, 1.2fr) minmax(240px, .9fr) minmax(160px, .35fr);
+  gap: 12px;
+  align-items: center;
+  padding: 14px;
+}
+
+.dh-blink-reader h2,
+.dh-node-purchases h2,
+.dh-blink-detail h2 {
+  margin: 2px 0 6px;
+}
+
+.dh-blink-reader span,
+.dh-node-purchases header span,
+.dh-blink-detail header span,
+.dh-blink-triangle span,
+.dh-unlock-lens span,
+.dh-node-purchase-card span {
+  color: #67e8f9;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.dh-blink-reader p,
+.dh-node-purchases p,
+.dh-sensitive-rule,
+.dh-mood-support span {
+  margin: 0;
+  color: #b6c5d8;
+  line-height: 1.45;
+}
+
+.dh-blink-completed {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.dh-blink-completed span,
+.dh-blink-columns span,
+.dh-node-purchase-card small {
+  border: 1px solid rgba(148, 163, 184, .22);
+  border-radius: 6px;
+  padding: 7px 8px;
+  background: rgba(15, 23, 42, .72);
+  color: #dbeafe;
+}
+
+.dh-blink-pending {
+  text-align: right;
+}
+
+.dh-blink-pending b {
+  display: block;
+  color: #facc15;
+  font-size: clamp(36px, 7vw, 74px);
+  line-height: .9;
+}
+
+.dh-blink-layout {
+  display: grid;
+  grid-template-columns: minmax(380px, 1fr) minmax(300px, .65fr) minmax(280px, .75fr);
+  gap: 12px;
+  padding: 12px;
+}
+
+.dh-triangle-board {
+  position: relative;
+  min-height: 540px;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, .18);
+  border-radius: 8px;
+  background:
+    linear-gradient(120deg, rgba(14, 116, 144, .18), transparent 40%),
+    radial-gradient(circle at 48% 52%, rgba(250, 204, 21, .14), transparent 24%),
+    rgba(15, 23, 42, .52);
+}
+
+.dh-blink-triangle,
+.dh-triangle-core {
+  position: absolute;
+  display: grid;
+  gap: 6px;
+  place-items: center;
+  text-align: center;
+  color: #f8fafc;
+}
+
+.dh-blink-triangle {
+  width: 210px;
+  height: 176px;
+  border: 1px solid rgba(125, 211, 252, .36);
+  background: rgba(2, 6, 23, .68);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  padding: 46px 18px 16px;
+  cursor: pointer;
+}
+
+.dh-blink-triangle:nth-child(1) { left: 50%; top: 18px; transform: translateX(-50%); }
+.dh-blink-triangle:nth-child(2) { right: 28px; top: 182px; transform: rotate(90deg); }
+.dh-blink-triangle:nth-child(3) { left: 50%; bottom: 18px; transform: translateX(-50%) rotate(180deg); }
+.dh-blink-triangle:nth-child(4) { left: 28px; top: 182px; transform: rotate(-90deg); }
+
+.dh-blink-triangle b {
+  max-width: 150px;
+  color: #e0f2fe;
+  font-size: 11px;
+  line-height: 1.25;
+}
+
+.dh-blink-triangle i {
+  color: #facc15;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.dh-blink-triangle.active {
+  border-color: #facc15;
+  box-shadow: 0 0 28px rgba(250, 204, 21, .24);
+}
+
+.dh-blink-triangle.pulse {
+  animation: dh-node-pulse 1.8s ease-in-out infinite;
+}
+
+.dh-triangle-core {
+  inset: 50% auto auto 50%;
+  width: 220px;
+  min-height: 150px;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(250, 204, 21, .42);
+  border-radius: 8px;
+  background: rgba(3, 7, 18, .88);
+  padding: 14px;
+}
+
+.dh-triangle-core b {
+  font-size: 18px;
+}
+
+.dh-triangle-core small {
+  color: #94a3b8;
+}
+
+.dh-blink-detail,
+.dh-unlock-lenses {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  border: 1px solid rgba(148, 163, 184, .18);
+  border-radius: 8px;
+  padding: 12px;
+  background: rgba(15, 23, 42, .5);
+}
+
+.dh-blink-detail header,
+.dh-node-purchases header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: start;
+}
+
+.dh-blink-detail header button {
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(250, 204, 21, .55);
+  border-radius: 50%;
+  background: rgba(250, 204, 21, .14);
+  color: #fde68a;
+  font-weight: 900;
+  cursor: help;
+}
+
+.dh-blink-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.dh-blink-columns > div,
+.dh-node-purchase-card div {
+  display: grid;
+  gap: 7px;
+}
+
+.dh-blink-detail strong {
+  color: #bef264;
+}
+
+.dh-unlock-lens {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+  border: 1px solid rgba(125, 211, 252, .24);
+  border-radius: 999px 8px 999px 8px;
+  background: rgba(2, 6, 23, .7);
+  color: #f8fafc;
+  text-align: left;
+}
+
+.dh-unlock-lens b {
+  color: #facc15;
+  font-size: 24px;
+}
+
+.dh-unlock-lens small {
+  color: #cbd5e1;
+}
+
+.dh-node-purchases {
+  padding: 14px;
+}
+
+.dh-node-purchases code {
+  max-width: 420px;
+  overflow-wrap: anywhere;
+  border: 1px solid rgba(34, 197, 94, .32);
+  border-radius: 8px;
+  padding: 9px;
+  background: rgba(20, 83, 45, .2);
+  color: #bbf7d0;
+}
+
+.dh-node-purchase-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.dh-node-purchase-card {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  border: 1px solid rgba(148, 163, 184, .2);
+  border-radius: 8px;
+  padding: 12px;
+  background: rgba(15, 23, 42, .62);
+}
+
+.dh-node-purchase-card.active {
+  border-color: rgba(250, 204, 21, .72);
+  box-shadow: 0 0 24px rgba(250, 204, 21, .16);
+}
+
+.dh-node-purchase-card h3 {
+  margin: 0;
+}
+
+.dh-node-purchase-card b {
+  color: #bef264;
+  font-size: 24px;
+}
+
+.dh-node-purchase-card em {
+  color: #7dd3fc;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.dh-node-purchase-card button {
+  border: 1px solid rgba(56, 189, 248, .55);
+  border-radius: 7px;
+  background: #0e7490;
+  color: #f8fafc;
+  padding: 10px;
+  font-weight: 900;
+}
+
+.dh-mood-support {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+}
+
+.dh-mood-support b {
+  color: #facc15;
+  white-space: nowrap;
+}
+
+@keyframes dh-node-pulse {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.32); }
+}
+
 @media (max-width: 920px) {
   .dh-backend-header,
   .dh-backend-grid,
-  .dh-public-grid {
+  .dh-public-grid,
+  .dh-blink-reader,
+  .dh-blink-layout,
+  .dh-blink-columns {
     display: block;
   }
 
   .dh-backend-panel,
-  .dh-public-card {
+  .dh-public-card,
+  .dh-blink-detail,
+  .dh-unlock-lenses {
     margin-bottom: 12px;
   }
 
   .dh-compare-viewers {
     grid-template-columns: 1fr;
+  }
+
+  .dh-triangle-board {
+    min-height: 760px;
+  }
+
+  .dh-blink-triangle {
+    position: relative;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    width: 100%;
+    margin: 10px 0;
+    transform: none !important;
+  }
+
+  .dh-triangle-core {
+    position: relative;
+    inset: auto;
+    width: auto;
+    transform: none;
+    margin: 10px;
   }
 }

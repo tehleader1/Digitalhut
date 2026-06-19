@@ -157,7 +157,7 @@ export const firecudaLibraryAssets = [
     id: "firecuda-international-space-elevator",
     file: "international_space_elevator.glb",
     title: "International space elevator",
-    categories: ["Planetary", "Science", "Researcher", "Programmer", "Workforce", "Continent", "DigitalHut Presentation"],
+    categories: ["Planetary", "Orbital Compute", "Science", "Researcher", "Programmer", "Workforce", "Continent", "DigitalHut Presentation"],
     tags: ["space", "planetary", "science", "engineering", "research", "international", "observatory"],
     thumbnail: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=900&q=80",
     createdAt: "2026-06-15T20:17:56.000Z"
@@ -202,7 +202,7 @@ export const firecudaLibraryAssets = [
     id: "firecuda-earth",
     file: "earth.glb",
     title: "Earth",
-    categories: ["Planetary", "Science", "Researcher", "Continent"],
+    categories: ["Planetary", "Orbital Compute", "Science", "Researcher", "Continent"],
     tags: ["earth", "planet", "science", "global", "observatory", "research"],
     thumbnail: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=900&q=80",
     createdAt: "2026-06-16T00:47:17.000Z"
@@ -220,7 +220,7 @@ export const firecudaLibraryAssets = [
     id: "firecuda-international-space-station",
     file: "international_space_station.glb",
     title: "International Space Station",
-    categories: ["Planetary", "Science", "Researcher", "Programmer"],
+    categories: ["Planetary", "Orbital Compute", "Science", "Researcher", "Programmer"],
     tags: ["space station", "orbit", "science", "planetary", "research", "engineering"],
     thumbnail: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=900&q=80",
     createdAt: "2026-06-16T00:47:17.000Z"
@@ -238,7 +238,7 @@ export const firecudaLibraryAssets = [
     id: "firecuda-mars-one-base",
     file: "mars_one_mission_-_base.glb",
     title: "Mars One mission base",
-    categories: ["Planetary", "Science", "Researcher"],
+    categories: ["Planetary", "Orbital Compute", "Science", "Researcher"],
     tags: ["mars", "base", "planetary", "science", "research", "space"],
     thumbnail: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=900&q=80",
     createdAt: "2026-06-16T00:47:17.000Z"
@@ -310,7 +310,7 @@ export const firecudaLibraryAssets = [
     id: "firecuda-trappist-1-system",
     file: "the_planetary_system_of_trappist-1.glb",
     title: "The planetary system of TRAPPIST-1",
-    categories: ["Planetary", "Science", "Researcher"],
+    categories: ["Planetary", "Orbital Compute", "Science", "Researcher"],
     tags: ["trappist-1", "planetary system", "space", "science", "research"],
     thumbnail: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=900&q=80",
     createdAt: "2026-06-16T00:47:17.000Z"

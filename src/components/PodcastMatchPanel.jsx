@@ -5,6 +5,7 @@ const voiceLanes = {
   "Mainstream Streaming": ["Gary Vaynerchuk podcast", "MrBeast interview", "Joe Rogan podcast", "Asian Boss podcast", "TED Talks Daily", "Fat Trel interview", "El Alfa interview", "Chuck podcast"],
   Gamer: ["immersive VR MMO podcast", "Roblox creator podcast", "Zenith VR MMO", "Vendetta Online interview"],
   Planetary: ["Neil deGrasse Tyson podcast", "Elon Musk space interview", "Galileo astronomy history", "Isaac Newton science history"],
+  "Orbital Compute": ["Starlink podcast", "free space optical communications podcast", "space data center podcast", "perovskite solar cell podcast", "satellite internet podcast"],
   Science: ["Neil deGrasse Tyson podcast", "Donald Hoffman interview", "Lara Boyd neuroscience", "Tina Seelig Stanford podcast", "Nikola Tesla science history", "Albert Einstein science history"],
   Researcher: ["Professor Ravi Korisettar archaeology", "Stanford research podcast", "Harvard science podcast", "Donald Hoffman consciousness", "Lara Boyd brain"],
   Programmer: ["Jensen Huang podcast", "Bill Gates technology podcast", "John Ternus interview", "Elon Musk technology interview"],

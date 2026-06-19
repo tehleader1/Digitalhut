@@ -37,6 +37,180 @@ const languageLines = [
   ["Korean", "모델을 열고 천천히 회전하며 보이는 세부 정보를 읽고 관련 에셋을 준비합니다."]
 ]
 
+const blinkReader = {
+  completed: ["Renderer Proof", "Session Notes", "Voice Spark", "Source Check"],
+  pending: "75%",
+  headline: "DigitalHut Backend Blink System",
+  detail: "The top strip reads completed talent nodes, pending progress, and the next triangle feed needed before a major unlock."
+}
+
+const blinkTriangles = [
+  {
+    id: "stellar",
+    title: "Stellar",
+    center: "Orbital compute, cosmic color GLBs, satellite internet, and verified space feeds.",
+    progress: 75,
+    workingAssets: ["Starcloud tracker", "Starlink access", "TRAPPIST route", "ISS environment"],
+    requirements: ["5 active days minimum", "4+ hours/day", "15 renderer proofs", "6 voice reactions", "8 source notes", "3 backlinks"],
+    reward: "Permanent Stellar Auto Play Demo"
+  },
+  {
+    id: "researcher",
+    title: "Pure Researcher",
+    center: "Evidence lanes, careful notes, science reports, and source confidence before publishing.",
+    progress: 52,
+    workingAssets: ["Perovskite lab", "Field study", "Weather disruption", "Fossil pass"],
+    requirements: ["5 active days minimum", "10 verified notes", "4 published reports", "2 corrections accepted", "1 long-form source pack"],
+    reward: "Research Authority Node"
+  },
+  {
+    id: "avionics",
+    title: "Amazing Avionics",
+    center: "Aerospace-style public display, airport delay feeds, signal routes, and advisory source status.",
+    progress: 44,
+    workingAssets: ["Airport delay", "Free-space optics", "Route awareness", "Weather layer"],
+    requirements: ["5 active days minimum", "12 public-feed sessions", "5 assistance notes", "5 verified route contexts", "No unsupported instrument claims"],
+    reward: "Aerospace Observatory Demo"
+  },
+  {
+    id: "world-cup",
+    title: "World Cup",
+    center: "Global event environments, city routes, stadium context, travel pressure, and viral public reaction loops.",
+    progress: 36,
+    workingAssets: ["Host city", "Transit pressure", "Fan zone", "Sponsor lane"],
+    requirements: ["5 active days minimum", "10 mainstream sessions", "250 public reactions", "4 share links", "2 sponsor-ready reports"],
+    reward: "Global Event Auto Feed"
+  }
+]
+
+const blinkUnlockPods = [
+  ["Sizzle Scientist", "Turns science findings into vivid, source-checked 3D reports.", 61],
+  ["360 Guru", "Unlocks slow orbit, camera-memory, and always-available 360 demos.", 72],
+  ["Genius Real Estate", "Keeps high-end international property opportunity feeds ready.", 48],
+  ["Exotic Environment", "Saves beautiful environment sessions as mood-reset builds.", 58],
+  ["Interstellar Node", "Pins the best cosmic GLBs and orbital compute reports.", 75],
+  ["Audience Magnet", "Uses reactions, comments, backlinks, and shares to rank unlocks.", 39]
+]
+
+const nodePurchaseOffers = [
+  {
+    id: "stellar",
+    title: "Stellar Node",
+    priceYear: "$250/year",
+    priceMonth: "$20/month",
+    term: "1 year access window",
+    funding: "Funds fresh 2026 planetary, orbital compute, cosmic-color GLBs, public APIs, and saved Stellar Auto Play demos.",
+    includes: ["Fresh planetary GLB lanes", "Orbital compute tracker", "Best-found cosmic views", "Node progress memory", "Auto Play demo slot"]
+  },
+  {
+    id: "real-estate-genius",
+    title: "Genius Real Estate Node",
+    priceYear: "$250/year",
+    priceMonth: "$20/month",
+    term: "1 year access window",
+    funding: "Funds international property feeds, luxury and opportunity scouting, market context, and saved presentation routes.",
+    includes: ["Million/billion dollar opportunity feeds", "International housing context", "Property GLB matching", "Agent-ready presentation memory"]
+  },
+  {
+    id: "research-authority",
+    title: "Pure Researcher Node",
+    priceYear: "$250/year",
+    priceMonth: "$20/month",
+    term: "1 year access window",
+    funding: "Funds science reports, source verification, research GLB matching, and source-backed publishing workflows.",
+    includes: ["Research queue priority", "Source notes", "Science report packaging", "Verified GLB evidence lane"]
+  },
+  {
+    id: "sizzle-scientist",
+    title: "Sizzle Scientist Node",
+    priceYear: "$250/year",
+    priceMonth: "$20/month",
+    term: "1 year access window",
+    funding: "Funds vivid science storytelling, experiment visuals, and source-backed 3D report packaging.",
+    includes: ["Science story templates", "Experiment GLB matching", "Voice-ready scripts", "Publishable report lane"]
+  },
+  {
+    id: "guru-360",
+    title: "360 Guru Node",
+    priceYear: "$250/year",
+    priceMonth: "$20/month",
+    term: "1 year access window",
+    funding: "Funds 360-style orbit sessions, camera memory, scene pacing, and saved auto-tour demos.",
+    includes: ["Orbit camera presets", "Saved 360 demos", "Scene pacing memory", "Environment replay lane"]
+  },
+  {
+    id: "exotic-environment",
+    title: "Exotic Environment Node",
+    priceYear: "$250/year",
+    priceMonth: "$20/month",
+    term: "1 year access window",
+    funding: "Funds jungle, island, city, terrain, and rare environment discovery from verified feeds and owner storage.",
+    includes: ["Exotic feed priority", "Mood reset builds", "Saved environment vault", "Auto Play demo memory"]
+  },
+  {
+    id: "amazing-avionics",
+    title: "Amazing Avionics Node",
+    priceYear: "$250/year",
+    priceMonth: "$20/month",
+    term: "1 year access window",
+    funding: "Funds aerospace-style public displays, airport reports, route context, and non-instrument advisory feeds.",
+    includes: ["Airport delay views", "Signal route stories", "Weather context", "Aerospace display themes"]
+  },
+  {
+    id: "world-cup",
+    title: "World Cup Node",
+    priceYear: "$250/year",
+    priceMonth: "$20/month",
+    term: "1 year access window",
+    funding: "Funds global event feeds, city/stadium environments, sponsor lanes, and viral public reaction loops.",
+    includes: ["Host city GLBs", "Fan-zone reports", "Sponsor placements", "Global event auto feed"]
+  },
+  {
+    id: "audience-magnet",
+    title: "Audience Magnet Node",
+    priceYear: "$250/year",
+    priceMonth: "$20/month",
+    term: "1 year access window",
+    funding: "Funds backlinks, reaction tracking, share links, comment loops, and popularity-based demo ranking.",
+    includes: ["Reaction scoring", "Backlink memory", "Share prompts", "Popular demo boosts"]
+  },
+  {
+    id: "backend-builder",
+    title: "Backend Builder Node",
+    priceYear: "$250/year",
+    priceMonth: "$20/month",
+    term: "1 year access window",
+    funding: "Funds upload queues, metadata cleanup, conversion workflows, and protected owner demo tooling.",
+    includes: ["Queue priority", "Metadata tools", "Conversion status", "Owner demo staging"]
+  },
+  {
+    id: "mainstream-pulse",
+    title: "Mainstream Pulse Node",
+    priceYear: "$250/year",
+    priceMonth: "$20/month",
+    term: "1 year access window",
+    funding: "Funds viral public feeds, podcast matches, trend summaries, and entertainment environment pairings.",
+    includes: ["Trend lanes", "Podcast matching", "Viral environment pairing", "Auto stream pacing"]
+  }
+]
+
+const ownerPayoutWallet = "0x3121FbFB683B9147913f336b05eF419b875a7590"
+
+function blinkProgressForNode(id){
+  const triangle = blinkTriangles.find((item) => item.id === id)
+  if(triangle) return triangle
+  const offer = nodePurchaseOffers.find((item) => item.id === id) || nodePurchaseOffers[0]
+  return {
+    id: offer.id,
+    title: offer.title.replace(" Node", ""),
+    center: offer.funding,
+    progress: 25,
+    workingAssets: offer.includes,
+    requirements: ["5 active days minimum", "4+ hours/day", "Renderer proof", "Voice or note reactions", "Backend contribution", "Public reaction or backlink"],
+    reward: `${offer.title} access path`
+  }
+}
+
 function slugify(value){
   return value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "asset"
 }
@@ -99,9 +273,17 @@ export default function AssetLabPage(){
   const [ownerKey, setOwnerKey] = useState("")
   const [unlocked, setUnlocked] = useState(() => window.localStorage.getItem("digitalhut:assetLabOwner") === "yes")
   const [sponsor, setSponsor] = useState({name: "", link: "", placement: "Subtle sponsor tag", note: ""})
-  const [tab, setTab] = useState("studio")
+  const [tab, setTab] = useState(() => {
+    const params = new URLSearchParams(window.location.search)
+    return params.get("tab") === "blink" ? "blink" : "studio"
+  })
+  const [activeBlinkId, setActiveBlinkId] = useState(() => {
+    const params = new URLSearchParams(window.location.search)
+    return params.get("node") || window.localStorage.getItem("digitalhut:blinkPulse") || "stellar"
+  })
   const [editTools, setEditTools] = useState({stretch: 100, lighting: 55, layer: "Base", objects: "None", zoomRate: 1})
   const selected = assets.find((item) => item.id === selectedId) || assets[0]
+  const activeBlink = blinkProgressForNode(activeBlinkId)
   const shareUrl = selected ? `${window.location.origin}/${selected.slug}` : ""
   const orbit = ["25deg 62deg auto", "80deg 66deg auto", "-40deg 58deg auto", "18deg 44deg auto"][demoStep % 4]
   const fov = ["36deg", "28deg", "42deg", "30deg"][demoStep % 4]
@@ -216,14 +398,103 @@ export default function AssetLabPage(){
     </header>
 
     <div className="dh-backend-tabs">
+      <button className={tab === "blink" ? "active" : ""} type="button" onClick={() => setTab("blink")}>Blink System</button>
       <button className={tab === "studio" ? "active" : ""} type="button" onClick={() => setTab("studio")}>Backend Studio</button>
       <button className={tab === "queue" ? "active" : ""} type="button" onClick={() => setTab("queue")}>Upload Queue</button>
       <button className={tab === "profile" ? "active" : ""} type="button" onClick={() => setTab("profile")}>Profile / GLBs</button>
     </div>
 
     <section className="dh-system-map">
-      {["Website / DApp", "Wallet + tiers", "APIs", "Backend queue", "Profiles", "Comments", "Files", "360 recommendation", "Protected AI demo"].map((item) => <span key={item}>{item}</span>)}
+      {["Website / DApp", "Wallet + tiers", "APIs", "Backend queue", "Profiles", "Comments", "Files", "Blink talent tree", "360 recommendation", "Protected AI demo"].map((item) => <span key={item}>{item}</span>)}
     </section>
+
+    {tab === "blink" && <section className="dh-blink-system">
+      <div className="dh-blink-reader">
+        <div>
+          <span>Top reader</span>
+          <h2>{blinkReader.headline}</h2>
+          <p>{blinkReader.detail}</p>
+        </div>
+        <div className="dh-blink-completed">
+          {blinkReader.completed.map((item) => <span key={item}>{item}</span>)}
+        </div>
+        <div className="dh-blink-pending">
+          <b>{activeBlink.progress}%</b>
+          <span>pending to {activeBlink.title}</span>
+        </div>
+      </div>
+
+      <div className="dh-blink-layout">
+        <section className="dh-triangle-board" aria-label="Interactive triangle feed board">
+          {blinkTriangles.map((item) => <button key={item.id} className={`dh-blink-triangle ${item.id === activeBlink.id ? "active pulse" : ""}`} type="button" onClick={() => {setActiveBlinkId(item.id); window.localStorage.setItem("digitalhut:blinkPulse", item.id)}}>
+            <span>{item.title}</span>
+            <b>{item.center}</b>
+            <i>{item.progress}%</i>
+          </button>)}
+          <div className="dh-triangle-core">
+            <span>Feature talent tree</span>
+            <b>DigitalHut Backend Blink System</b>
+            <small>Working assets in the center. Current examples on the outside.</small>
+          </div>
+        </section>
+
+        <section className="dh-blink-detail">
+          <header>
+            <span>Active triangle</span>
+            <h2>{activeBlink.title}</h2>
+            <button type="button" title="Sensitive GLB account rule">?</button>
+          </header>
+          <p className="dh-sensitive-rule">DigitalHut does not register sensitive GLB power to accounts that have not earned it. Major nodes require at least 5 active days, 4+ hours per day, renderer proof, source notes, voice sessions, public reaction, backend contribution, backlinks, and safe publishing behavior.</p>
+          <div className="dh-progress"><span style={{width: `${activeBlink.progress}%`}} /></div>
+          <div className="dh-blink-columns">
+            <div>
+              <b>Working assets</b>
+              {activeBlink.workingAssets.map((item) => <span key={item}>{item}</span>)}
+            </div>
+            <div>
+              <b>Minimum grind</b>
+              {activeBlink.requirements.map((item) => <span key={item}>{item}</span>)}
+            </div>
+          </div>
+          <strong>{activeBlink.reward}</strong>
+        </section>
+
+        <section className="dh-unlock-lenses" aria-label="Contained unlock nodes">
+          {blinkUnlockPods.map(([name, detail, progress]) => <button key={name} className="dh-unlock-lens" type="button">
+            <span>{name}</span>
+            <b>{progress}%</b>
+            <small>{detail}</small>
+          </button>)}
+        </section>
+      </div>
+
+      <section className="dh-node-purchases">
+        <header>
+          <div>
+            <span>Node Purchases</span>
+            <h2>Fund the experience</h2>
+            <p>Each node purchase stages one year of access. Checkout integration must confirm chain, amount, wallet, and subscription status before any real entitlement is granted.</p>
+          </div>
+          <code>{ownerPayoutWallet}</code>
+        </header>
+        <div className="dh-node-purchase-grid">
+          {nodePurchaseOffers.map((offer) => <article key={offer.id} className={`dh-node-purchase-card ${offer.id === activeBlink.id ? "active" : ""}`}>
+            <span>{offer.term}</span>
+            <h3>{offer.title}</h3>
+            <b>{offer.priceYear}</b>
+            <em>{offer.priceMonth}</em>
+            <p>{offer.funding}</p>
+            <div>{offer.includes.map((item) => <small key={item}>{item}</small>)}</div>
+            <button type="button" onClick={() => {setActiveBlinkId(offer.id); window.localStorage.setItem("digitalhut:blinkPulse", offer.id)}}>Stage Purchase</button>
+          </article>)}
+        </div>
+      </section>
+
+      <div className="dh-mood-support">
+        <b>Reset builds</b>
+        <span>Users can save beautiful renderer sessions, notes, and voice reactions as creative reset builds. This is wellness support and entertainment, not medical treatment or crisis care.</span>
+      </div>
+    </section>}
 
     {tab === "studio" && <section className="dh-backend-grid studio">
       <div className="dh-backend-panel">

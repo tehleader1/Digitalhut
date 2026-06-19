@@ -22,6 +22,7 @@ const environmentPools = {
   "Mainstream Streaming": ["new_york_city.glb", "rio_de_janeiro_-_brazil.glb", "cape_town_-_south_africa.glb", "split_point_victoria_australia.glb", "museum_of_ice_cream_singapore_-_welcome.glb"],
   Mobility: ["new_york_city.glb", "cape_town_-_south_africa.glb", "morgantown_west_virginia_usa_x2.glb"],
   Planetary: ["the_planetary_system_of_trappist-1.glb", "mars_one_mission_-_base.glb", "earth.glb", "international_space_station.glb", "international_space_elevator.glb"],
+  "Orbital Compute": ["international_space_elevator.glb", "international_space_station.glb", "earth.glb", "the_planetary_system_of_trappist-1.glb", "mars_one_mission_-_base.glb"],
   "Real Estate": ["real_estate_demo.glb", "abandoned_farm_house_with_hay.glb", "morgantown_west_virginia_usa_x2.glb", "new_york_city.glb", "cape_town_-_south_africa.glb"],
   Science: ["earth.glb", "international_space_station.glb", "europe_with_4k_heightmap.glb", "mars_one_mission_-_base.glb"],
   Researcher: ["europe_with_4k_heightmap.glb", "earth.glb", "international_space_station.glb", "tourist_colonial_zone_dominican_republic.glb"],
