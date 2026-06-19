@@ -36,9 +36,28 @@ const environmentPools = {
   "DigitalHut Presentation": ["museum_of_ice_cream_singapore_-_welcome.glb", "international_space_elevator.glb", "low_poly_environments_01.glb"]
 }
 
+function isRejectedAssetBase(value){
+  const source = String(value || "").trim()
+  if(!source) return false
+  const lower = source.toLowerCase()
+  if(lower.includes("xxxxx") || lower.includes("your-store") || lower.includes("store-id")) return true
+  try {
+    const url = new URL(source)
+    const host = url.hostname.toLowerCase()
+    if(host === "public.blob.vercel-storage.com") return true
+    if(host.endsWith(".public.blob.vercel-storage.com")){
+      const storeId = host.replace(".public.blob.vercel-storage.com", "")
+      return storeId.length < 6
+    }
+  } catch {
+    return true
+  }
+  return false
+}
+
 function externalAssetBase(){
   const direct = process.env.SUPABASE_FIRECUDA_ASSET_BASE || process.env.VITE_SUPABASE_FIRECUDA_ASSET_BASE || process.env.FIRECUDA_ASSET_BASE || process.env.VITE_FIRECUDA_ASSET_BASE || ""
-  if(direct) return `${direct.replace(/\/+$/, "")}/`
+  if(direct && !isRejectedAssetBase(direct)) return `${direct.replace(/\/+$/, "")}/`
   const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || ""
   if(!supabaseUrl) return ""
   const bucket = process.env.SUPABASE_ASSET_BUCKET || process.env.VITE_SUPABASE_ASSET_BUCKET || process.env.SUPABASE_STORAGE_BUCKET || "digitalhut-assets"
@@ -50,9 +69,11 @@ function externalAssetBase(){
 function assetBaseDiagnostics(){
   const direct = process.env.SUPABASE_FIRECUDA_ASSET_BASE || process.env.VITE_SUPABASE_FIRECUDA_ASSET_BASE || process.env.FIRECUDA_ASSET_BASE || process.env.VITE_FIRECUDA_ASSET_BASE || ""
   const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || ""
+  const directRejected = Boolean(direct && isRejectedAssetBase(direct))
   return {
-    mode: direct ? "direct-base" : supabaseUrl ? "derived-supabase-storage-base" : "local-backup-only",
+    mode: direct && !directRejected ? "direct-base" : supabaseUrl ? "derived-supabase-storage-base" : "local-backup-only",
     hasDirectBase: Boolean(direct),
+    directBaseRejected: directRejected,
     hasSupabaseUrl: Boolean(supabaseUrl),
     bucket: process.env.SUPABASE_ASSET_BUCKET || process.env.VITE_SUPABASE_ASSET_BUCKET || process.env.SUPABASE_STORAGE_BUCKET || "digitalhut-assets",
     folder: process.env.SUPABASE_FIRECUDA_FOLDER || process.env.VITE_SUPABASE_FIRECUDA_FOLDER || "firecuda-library",
