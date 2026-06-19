@@ -2,6 +2,14 @@ function normalizeAssetBase(value){
   return value ? `${value.replace(/\/+$/, "")}/` : ""
 }
 
+function supabaseStorageAssetBase(){
+  const supabaseUrl = import.meta.env?.VITE_SUPABASE_URL || ""
+  if(!supabaseUrl) return ""
+  const bucket = import.meta.env?.VITE_SUPABASE_ASSET_BUCKET || import.meta.env?.VITE_SUPABASE_STORAGE_BUCKET || "digitalhut-assets"
+  const folder = import.meta.env?.VITE_SUPABASE_FIRECUDA_FOLDER || "firecuda-library"
+  return normalizeAssetBase(`${supabaseUrl.replace(/\/+$/, "")}/storage/v1/object/public/${bucket}/${folder}`)
+}
+
 function isRejectedAssetBase(value){
   const source = String(value || "").trim()
   if(!source) return false
@@ -24,7 +32,7 @@ function isRejectedAssetBase(value){
 }
 
 const firecudaBase = "/models/firecuda-library/"
-const configuredFirecudaExternalBase = normalizeAssetBase(import.meta.env?.VITE_SUPABASE_FIRECUDA_ASSET_BASE || import.meta.env?.VITE_FIRECUDA_ASSET_BASE || "")
+const configuredFirecudaExternalBase = normalizeAssetBase(import.meta.env?.VITE_SUPABASE_FIRECUDA_ASSET_BASE || import.meta.env?.VITE_FIRECUDA_ASSET_BASE || supabaseStorageAssetBase() || "")
 const firecudaExternalBase = isRejectedAssetBase(configuredFirecudaExternalBase) ? "" : configuredFirecudaExternalBase
 const localDeployableFirecudaFiles = new Set([
   "glaceons_christmas_miracle.glb",

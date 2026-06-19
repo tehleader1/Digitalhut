@@ -9,6 +9,7 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.
 const converterUrl = process.env.ASSET_CONVERTER_URL || ""
 const converterKey = process.env.ASSET_CONVERTER_API_KEY || ""
 const assetBucket = process.env.SUPABASE_ASSET_BUCKET || "digitalhut-assets"
+const firecudaFolder = process.env.SUPABASE_FIRECUDA_FOLDER || "firecuda-library"
 
 function json(res, status, body){
   res.statusCode = status
@@ -103,6 +104,7 @@ async function dispatchConverter(record){
       sourceUrl: record.originalFileUrl,
       sourceBucketPath: record.originalBucketPath,
       outputBucket: assetBucket,
+      outputFolder: firecudaFolder,
       outputSlug: record.slug,
       requiredOutput: "glb",
       optimize: true,
@@ -149,7 +151,21 @@ export default async function handler(req, res){
       ok: true,
       stored: saved.stored,
       storageBucket: assetBucket,
+      storageFolder: firecudaFolder,
+      storageConnected: Boolean(supabaseUrl && supabaseServiceKey),
       conversionWorkerConnected: Boolean(converterUrl),
+      productionReady: Boolean(supabaseUrl && supabaseServiceKey && converterUrl),
+      backendCreationPipeline: [
+        "accepted",
+        "stored_original",
+        "converter_dispatched",
+        "glb_converted",
+        "glb_optimized",
+        "thumbnail_generated",
+        "metadata_generated",
+        "ai_narration_generated",
+        "profile_library_ready"
+      ],
       record: saved.record,
       protectedDemo: record.protectedDemo
     })

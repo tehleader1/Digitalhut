@@ -37,7 +37,13 @@ const environmentPools = {
 }
 
 function externalAssetBase(){
-  const value = process.env.SUPABASE_FIRECUDA_ASSET_BASE || process.env.VITE_SUPABASE_FIRECUDA_ASSET_BASE || process.env.FIRECUDA_ASSET_BASE || ""
+  const direct = process.env.SUPABASE_FIRECUDA_ASSET_BASE || process.env.VITE_SUPABASE_FIRECUDA_ASSET_BASE || process.env.FIRECUDA_ASSET_BASE || process.env.VITE_FIRECUDA_ASSET_BASE || ""
+  if(direct) return `${direct.replace(/\/+$/, "")}/`
+  const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || ""
+  if(!supabaseUrl) return ""
+  const bucket = process.env.SUPABASE_ASSET_BUCKET || process.env.VITE_SUPABASE_ASSET_BUCKET || process.env.SUPABASE_STORAGE_BUCKET || "digitalhut-assets"
+  const folder = process.env.SUPABASE_FIRECUDA_FOLDER || process.env.VITE_SUPABASE_FIRECUDA_FOLDER || "firecuda-library"
+  const value = `${supabaseUrl.replace(/\/+$/, "")}/storage/v1/object/public/${bucket}/${folder}`
   return value ? `${value.replace(/\/+$/, "")}/` : ""
 }
 
@@ -53,7 +59,7 @@ export default function handler(req, res){
     description: `Verified DigitalHut owner-library environment for ${query}. All-access production lane with structure, terrain, routes, facilities, and surrounding context.`,
     modelUrl: base ? `${base}${encodeURIComponent(file)}` : `/models/firecuda-library/${encodeURIComponent(file)}`,
     viewerUrl: "",
-    apiSource: base ? "Supabase FireCuda Environment API" : "Vercel FireCuda Backup API",
+    apiSource: base ? "Supabase FireCuda Production Library" : "Vercel FireCuda Backup API",
     apiStatus: "verified-owner-library-glb",
     tags: [category, "environment", "structure", "mapping", "terrain", "scene", ...(assetCatalog[file]?.[1] || [])]
   }))
