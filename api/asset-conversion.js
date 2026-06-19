@@ -155,6 +155,8 @@ export default async function handler(req, res){
       storageConnected: Boolean(supabaseUrl && supabaseServiceKey),
       conversionWorkerConnected: Boolean(converterUrl),
       productionReady: Boolean(supabaseUrl && supabaseServiceKey && converterUrl),
+      vercelWorkerUrl: "/api/convert-asset",
+      heavyMeshConversionNote: "Vercel worker can pass through GLB and stage non-GLB jobs. True OBJ/FBX/STL/BLEND conversion still requires a heavy Blender/Assimp worker.",
       backendCreationPipeline: [
         "accepted",
         "stored_original",
