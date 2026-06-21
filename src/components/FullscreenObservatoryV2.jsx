@@ -88,6 +88,21 @@ function attachRendererModel(item, category, term, index){
     }
   }
   const sourceViewerUrl = item.viewerUrl || item.embedUrl || item.modelUrl || ""
+  const bridgeModelUrl = relatedGlb(category, index)
+  if(item.apiSource && bridgeModelUrl){
+    return {
+      ...item,
+      embedUrl: "",
+      modelUrl: bridgeModelUrl,
+      viewerUrl: sourceViewerUrl,
+      sourceModelUrl: item.modelUrl || "",
+      sourceEmbedUrl: item.embedUrl || "",
+      renderPriority: 72,
+      apiStatus: "live-api-spotlight-glb",
+      apiSource: `${item.apiSource} + DigitalHut verified GLB`,
+      note: `${item.note || `Live API result for ${term || category}.`} DigitalHut attached the closest verified environment GLB so the feed can render immediately while the exact source asset is checked.`
+    }
+  }
   return {
     ...item,
     embedUrl: "",
@@ -135,12 +150,75 @@ function isLikelyBrokenStorageUrl(value){
   return false
 }
 
+function bestRenderableModelUrl(feed = {}){
+  const candidates = [
+    feed.modelUrl,
+    feed.model_url,
+    feed.glbUrl,
+    feed.glb_url,
+    feed.gltfUrl,
+    feed.gltf_url,
+    feed.convertedGlbUrl,
+    feed.converted_glb_url,
+    feed.optimizedGlbUrl,
+    feed.optimized_glb_url,
+    feed.sourceModelUrl,
+    feed.statsModelUrl,
+    feed.downloadUrl,
+    feed.download_url,
+    relatedGlb(feed.category || "", 0)
+  ].map(cleanUrl).filter(Boolean)
+  return candidates.find((candidate) => isDirectRenderableModel(candidate) && !isLikelyBrokenStorageUrl(candidate)) || ""
+}
+
 function sortRendererFeeds(items){
   return [...items].sort((a, b) => {
     const scoreA = a.renderPriority ?? (isDirectRenderableModel(a.modelUrl) ? 70 : 10)
     const scoreB = b.renderPriority ?? (isDirectRenderableModel(b.modelUrl) ? 70 : 10)
     return scoreB - scoreA
   })
+}
+
+const apiSpotlightIdeas = {
+  "Mainstream Streaming": ["2026 launch culture watch", "global food market reel", "immersive city nightlife trend", "creator podcast stage", "public festival visual report"],
+  Planetary: ["orbital compute watch", "satellite internet relay", "solar absorption research", "space station sector", "planetary surface observatory"],
+  Gamer: ["open world 360 arena", "retro online world showcase", "VR fantasy hub", "metaverse city build", "game environment boss zone"],
+  "Real Estate": ["international waterfront property", "Japan compact apartment market", "Fiji bungalow study", "New York city housing view", "Brazil coastal real estate"],
+  Researcher: ["South America science field study", "Asia research environment", "weather visibility experiment", "museum science report", "lab-to-terrain observatory"],
+  Programmer: ["backend GLB conversion worker", "AI renderer command center", "developer observatory dashboard", "decentralized storage node", "API production monitor"],
+  Science: ["perovskite solar cell study", "free space optical internet", "climate visibility report", "bio-research safety observatory", "extreme environment experiment"],
+  Continent: ["Africa city terrain read", "Asia coastline environment", "Europe heightmap study", "South America research route", "Australia split point environment"],
+  History: ["ancient city reconstruction", "museum archive walk", "heritage structure scan", "historic market district", "old village environment"],
+  Businesses: ["global commerce district", "sponsor presentation lobby", "AI production company feed", "premium creator showcase", "international project monitor"]
+}
+
+function apiSpotlightSeeds(category, term = "", randomize = false){
+  const meta = metaFor(category)
+  const ideas = apiSpotlightIdeas[category] || apiSpotlightIdeas["Mainstream Streaming"]
+  const start = randomize ? Math.floor(Math.random() * ideas.length) : 0
+  return ideas.map((_, offset) => {
+    const index = (start + offset) % ideas.length
+    const idea = ideas[index]
+    const modelUrl = relatedGlb(category, index)
+    return {
+      id: `spotlight:${category}:${index}`,
+      title: idea.replace(/\b\w/g, (letter) => letter.toUpperCase()),
+      note: `Fresh DigitalHut API spotlight for ${term || category}. This lane is designed to attach live API context to a verified environment GLB so the renderer stays active while exact source assets are checked.`,
+      query: `${idea} ${term || category} 3d environment`,
+      category,
+      icon: meta.icon,
+      accent: meta.accent,
+      context: meta.context,
+      thumbnail: stockUrl(category, index),
+      modelUrl,
+      viewerUrl: "",
+      apiSource: "DigitalHut API spotlight + verified GLB",
+      apiStatus: modelUrl ? "live-api-spotlight-glb" : "api-spotlight-needs-glb",
+      renderPriority: modelUrl ? 74 : 12,
+      providerMix: ["DigitalHut API spotlight", "FireCuda/Supabase GLB bridge"],
+      tags: ["api-spotlight", "environment", category.toLowerCase()]
+    }
+  }).filter((item) => item.modelUrl)
 }
 
 function firecudaSeedFeeds(category){
@@ -274,6 +352,14 @@ const categories = [
   ["History", "HI", "#d6a85d", "historic districts, culture, timelines, ruins, archives, and public memory"],
   ["Businesses", "BU", "#22c55e", "business districts, storefronts, offices, market movement, and sponsor environments"]
 ].map(([id, icon, accent, context]) => ({id, icon, accent, context}))
+
+const blinkQuickNodes = [
+  {id: "stellar", title: "Stellar", category: "Planetary", minimumDays: 5, paid: "$250/year or $20/month", detail: "Cosmic, orbital compute, planetary GLB feeds"},
+  {id: "real-estate-genius", title: "Genius Real Estate", category: "Real Estate", minimumDays: 5, paid: "$250/year or $20/month", detail: "International housing and market presentation feeds"},
+  {id: "pro-gamer", title: "Pro Gamer", category: "Gamer", minimumDays: 5, paid: "$250/year or $20/month", detail: "Game-world, 360 visuals, and creator-safe feeds"}
+]
+
+const lobbyCategories = ["Mainstream Streaming", "Planetary", "Gamer", "Real Estate", "Researcher", "Programmer"]
 
 const seedQueries = {
   "DigitalHut Presentation": ["editable glb presentation stage", "custom glb feature file overlay", "digitalhut model editing workspace", "presentation feature mode 3d"],
@@ -1178,7 +1264,8 @@ function BabylonGlbStage({src, title, guided, stage, visualKey, onReady, onError
 }
 
 function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelOpen, onOpenModel, onNext, onPlayMore, onVisualPending, onVisualReady, onDirectorUpdate, guideText, followUps}){
-  const [renderModelUrl, setRenderModelUrl] = useState(feed.modelUrl || "")
+  const resolvedModelUrl = bestRenderableModelUrl(feed)
+  const [renderModelUrl, setRenderModelUrl] = useState(() => resolvedModelUrl)
   const hasEmbed = false
   const hasModel = Boolean(renderModelUrl)
   const isStats = stage.kind === "stats"
@@ -1201,8 +1288,8 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
   const canOpenModelLink = Boolean(renderModelUrl && !isLikelyBrokenStorageUrl(renderModelUrl))
 
   useEffect(() => {
-    setRenderModelUrl(feed.modelUrl || "")
-  }, [feed.modelUrl, visualKey])
+    setRenderModelUrl(resolvedModelUrl)
+  }, [resolvedModelUrl, visualKey])
 
   useEffect(() => {
     setModelReady(false)
@@ -1213,8 +1300,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     onDirectorUpdate?.({phase: "Loading Babylon GLB", detail: feed.title, status: "Waiting for renderer asset"})
     if(rendererUnavailable){
       const detail = {title: feed.title, reason: "No verified API, Vercel, or FireCuda environment GLB registered for this feed."}
-      onDirectorUpdate?.({phase: "Guardian reload required", detail: feed.title, status: detail.reason})
-      window.dispatchEvent(new CustomEvent("digitalhut:guardian-render-failure", {detail}))
+      onDirectorUpdate?.({phase: "Renderer asset missing", detail: feed.title, status: detail.reason})
       return undefined
     }
     if(!liveOpen || hasEmbed || !hasModel) return undefined
@@ -1258,7 +1344,6 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     setModelLoaded(true)
     setModelError(reason)
     onDirectorUpdate?.({phase: "Babylon GLB failed", detail: feed.title, status: isPersonalLibraryModel ? "Verify Supabase public URL, CORS, filename, and GLB content type" : reason})
-    window.dispatchEvent(new CustomEvent("digitalhut:guardian-render-failure", {detail: {title: feed.title, reason}}))
   }
 
   useEffect(() => {
@@ -1275,7 +1360,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     {decorationActive && <div className="dh-stars">{stars.map((_, index) => <span key={index} style={{left: `${4 + (index * 43) % 91}%`, top: `${7 + (index * 31) % 78}%`}} />)}</div>}
     {decorationActive && <SceneObject feed={feed} />}
     {canShowContainment && !liveOpen && !rendererUnavailable && <button className={`dh-api-system-preview ${feed.thumbnail ? "api-preview-ready" : ""} ${modelOpen ? "is-resolving" : ""}`} style={feed.thumbnail ? {"--api-preview-url": `url("${feed.thumbnail}")`} : undefined} onClick={onOpenModel}>
-      <span>{modelOpen || loading ? "Preparing renderer" : "Renderer ready"}</span><b>{feed.title}</b><em className="dh-open-containment">{modelOpen || loading ? "Rendering" : "Open Renderer"}</em>
+      <span>{modelOpen || loading ? "Preparing renderer" : "Renderer ready"}</span><b>{feed.title}</b><em className="dh-open-containment">{modelOpen || loading ? "Rendering" : "Play Preview"}</em>
     </button>}
     {liveOpen && hasEmbed && <iframe className="dh-api-frame" title={feed.title} src={pausedEmbedUrl(feed.embedUrl)} allow="fullscreen; xr-spatial-tracking" loading="lazy" allowFullScreen onLoad={() => onVisualReady?.(visualKey)} />}
     {liveOpen && !hasEmbed && hasModel && <div className="dh-model-shell">
@@ -1331,7 +1416,7 @@ export default function FullscreenObservatoryV2(){
   const [playing, setPlaying] = useState(true)
   const [layer, setLayer] = useState("Base")
   const [layerOpen, setLayerOpen] = useState(false)
-  const [modelOpen, setModelOpen] = useState(true)
+  const [modelOpen, setModelOpen] = useState(false)
   const [guideDepth, setGuideDepth] = useState(0)
   const [aiOpen, setAiOpen] = useState(false)
   const [aiListening, setAiListening] = useState(false)
@@ -1357,6 +1442,10 @@ export default function FullscreenObservatoryV2(){
   const [directorStatus, setDirectorStatus] = useState({phase: "Finding model", detail: "Preparing DigitalHut renderer", status: "Idle"})
   const [directorChat, setDirectorChat] = useState(() => readDirectorChat())
   const [directorInput, setDirectorInput] = useState("")
+  const [mainLobbyOpen, setMainLobbyOpen] = useState(true)
+  const [lobbyActiveIndex, setLobbyActiveIndex] = useState(0)
+  const [apiCategoryFeeds, setApiCategoryFeeds] = useState([])
+  const [interactionPulse, setInteractionPulse] = useState(false)
   const [mechanicMode, setMechanicMode] = useState(true)
   const [mobilityMode, setMobilityMode] = useState("Road")
   const [assistanceOpen, setAssistanceOpen] = useState(false)
@@ -1366,6 +1455,7 @@ export default function FullscreenObservatoryV2(){
     connection: typeof navigator === "undefined" ? "unknown" : navigator.connection?.effectiveType || "standard"
   }))
   const hideTimer = useRef(null)
+  const pulseTimer = useRef(null)
   const requestRef = useRef(0)
   const recognitionRef = useRef(null)
   const autoStartedRef = useRef(null)
@@ -1392,11 +1482,85 @@ export default function FullscreenObservatoryV2(){
   const aiDock = presentationFeatureOpen ? "notes" : notesOpen ? "notes" : aiOpen ? "command" : modelOpen ? `stage-${stage.kind}` : guided ? "guided" : "idle"
   const liveModelLink = sceneFeed.modelUrl || sceneFeed.viewerUrl || sceneFeed.embedUrl || window.location.href
   const sceneVisualKey = visualKeyFor(sceneFeed, stage)
+  const activeApiFeeds = apiCategoryFeeds.filter((item) => item.category === category)
+  const quickDisplayFeeds = sortRendererFeeds([...activeApiFeeds, ...feeds]).slice(0, 5)
+  const lobbyFeedPool = sortRendererFeeds([...apiCategoryFeeds, ...feeds])
+  const lobbyFeeds = lobbyCategories.map((item) => {
+    const existing = lobbyFeedPool.find((feedItem) => feedItem.category === item && bestRenderableModelUrl(feedItem))
+    return existing || apiSpotlightSeeds(item)[0] || seedFeeds(item).find((feedItem) => bestRenderableModelUrl(feedItem)) || seedFeeds(item)[0]
+  }).filter(Boolean)
+  const lobbyActiveFeed = lobbyFeeds[lobbyActiveIndex % Math.max(lobbyFeeds.length, 1)] || sceneFeed
+  const blinkNodesWithApi = blinkQuickNodes.map((item) => {
+    const nodeCategory = item.category
+    const apiFeed = apiCategoryFeeds.find((feedItem) => feedItem.category === nodeCategory)
+    const nodeFeeds = apiCategoryFeeds.filter((feedItem) => feedItem.category === nodeCategory)
+    const categorySessions = feeds.filter((feedItem) => feedItem.category === nodeCategory).length
+    const learnedSignals = Math.min(100, (nodeFeeds.length * 14) + (categorySessions * 6) + (category === nodeCategory ? 12 : 0))
+    const paidUnlock = tier === "premium" || tier === "pro"
+    const earnedUnlock = learnedSignals >= 100
+    const evidence = item.id === "real-estate-genius"
+      ? "Learns from 5+ days of real estate searches, Europe sector shuffles, million-dollar agency finds, Georgia/Michigan opportunities, notes, and quality feed reactions."
+      : item.id === "stellar"
+        ? "Learns from 5+ days of planetary searches, orbital compute feeds, saved space GLBs, notes, and autoplay reactions."
+        : "Learns from 5+ days of game-world searches, environment GLBs, creator-safe sources, notes, and viewer reactions."
+    const reward = item.id === "real-estate-genius"
+      ? "Unlocks smart global real estate autoplay with higher-quality international opportunities."
+      : item.id === "stellar"
+        ? "Unlocks advanced planetary autoplay with stronger cosmic, orbital, and observatory feeds."
+        : "Unlocks advanced gaming autoplay with stronger 360 game-world and creator-safe feeds."
+    const recommendation = item.id === "real-estate-genius"
+      ? `Genius Real Estate progress: ${Math.max(30, Math.min(85, learnedSignals))}%. Recent quality signals can include New Jersey millionaire feeds, Georgia/Michigan agencies, and Europe sector searches. Recommended next scan: New Mexico and fresh Sketchfab property uploads.`
+      : item.id === "stellar"
+        ? `Stellar progress: ${learnedSignals}%. Recommended next scan: orbital compute, StarCloud-style infrastructure, satellite laser links, and planetary power research.`
+        : `Pro Gamer progress: ${learnedSignals}%. Recommended next scan: immersive 360 game worlds, VR hub environments, and creator-safe game feeds.`
+    return {...item, apiFeed, learnedSignals, paidUnlock, earnedUnlock, locked: !paidUnlock && !earnedUnlock, evidence, reward, recommendation}
+  })
   const stageDelay = Math.round((stage.kind === "stats" ? 26000 : 18000) / presentationSpeed)
   const autoDelay = Math.round(22000 / presentationSpeed)
   const assetLibraryStatus = firecudaLibraryStatus()
   const runtimePaused = !runtimeState.online || !runtimeState.visible
   const mechanicRuntimeStatus = !runtimeState.online ? "Offline" : !runtimeState.visible ? "Paused" : loading ? "Loading" : autoPresent ? "Auto Play" : "Ready"
+
+  useEffect(() => {
+    if(!mainLobbyOpen || lobbyFeeds.length < 2) return undefined
+    const timer = window.setInterval(() => {
+      setLobbyActiveIndex((current) => (current + 1) % lobbyFeeds.length)
+    }, 9000)
+    return () => window.clearInterval(timer)
+  }, [mainLobbyOpen, lobbyFeeds.length])
+
+  useEffect(() => {
+    if(!mainLobbyOpen && !category) return undefined
+    let cancelled = false
+    async function hydrateCategoryApis(){
+      const targetCategories = Array.from(new Set([category, ...lobbyCategories]))
+      const batches = await Promise.all(targetCategories.map(async (nextCategory) => {
+        const seed = seedFeeds(nextCategory)[0]
+        const term = seed?.query || nextCategory
+        const apiResults = (await resolveApiFeeds(nextCategory, term))
+          .map((item, index) => attachRendererModel(item, nextCategory, term, index))
+        const spotlightResults = apiSpotlightSeeds(nextCategory, term, true)
+        return sortRendererFeeds([...apiResults, ...spotlightResults]).slice(0, 2)
+      }))
+      if(cancelled) return
+      const nextFeeds = sortRendererFeeds(batches.flat()).slice(0, 20)
+      setApiCategoryFeeds(nextFeeds)
+      try {
+        window.localStorage.setItem("digitalhut:nodeApiFeeds", JSON.stringify(nextFeeds.slice(0, 12).map((item) => ({
+          id: item.id,
+          title: item.title,
+          category: item.category,
+          apiSource: item.apiSource,
+          apiStatus: item.apiStatus,
+          thumbnail: item.thumbnail
+        }))))
+      } catch {}
+    }
+    hydrateCategoryApis()
+    return () => {
+      cancelled = true
+    }
+  }, [mainLobbyOpen, category])
 
   function recordDirectorMessage(role, text, status = directorStatus.phase){
     const message = {
@@ -1641,6 +1805,14 @@ export default function FullscreenObservatoryV2(){
     })
   }
 
+  function triggerSystemPulse(event){
+    const target = event.target
+    if(!target?.closest || !target.closest("button, .dh-mini-visual, .dh-model-shell, .dh-main-lobby-grid article")) return
+    window.clearTimeout(pulseTimer.current)
+    setInteractionPulse(true)
+    pulseTimer.current = window.setTimeout(() => setInteractionPulse(false), 720)
+  }
+
   async function loadFeeds(nextCategory, term, options = {}){
     const id = requestRef.current + 1
     requestRef.current = id
@@ -1659,7 +1831,8 @@ export default function FullscreenObservatoryV2(){
     const seedModels = seeds.filter((seed) => !seedTitles.has(seed.title))
     const directResults = results.filter((item) => item.renderPriority >= 70)
     const fallbackResults = results.filter((item) => item.renderPriority < 70)
-    const next = sortRendererFeeds([...seedModels, ...directResults, ...fallbackResults]).slice(0, 8)
+    const spotlightResults = apiSpotlightSeeds(nextCategory, term, true)
+    const next = sortRendererFeeds([...directResults, ...spotlightResults, ...seedModels, ...fallbackResults]).slice(0, 10)
     preloadImages(next.map((item) => item.thumbnail))
     preloadModels(next.map((item) => item.modelUrl), 1)
     if(requestRef.current !== id) return next
@@ -1821,6 +1994,25 @@ export default function FullscreenObservatoryV2(){
     wake()
   }
 
+  function openLobbyFeed(item){
+    const nextCategory = item.category || category
+    const categoryFeeds = seedFeeds(nextCategory)
+    const selectedIndex = categoryFeeds.findIndex((candidate) => candidate.id === item.id)
+    const lobbyIndex = lobbyFeeds.findIndex((candidate) => candidate.id === item.id)
+    if(lobbyIndex >= 0) setLobbyActiveIndex(lobbyIndex)
+    setMainLobbyOpen(false)
+    setCategory(nextCategory)
+    setTour(toursFor(nextCategory)[0].id)
+    setFeeds(categoryFeeds)
+    setActive(selectedIndex >= 0 ? selectedIndex : 0)
+    setQuery(item.query || item.title)
+    setStageIndex(0)
+    setGuideDepth(0)
+    setModelOpen(true)
+    speakAfterVisual(`Main Lobby loaded ${item.title}. DigitalHut will present the GLB and match a podcast voice when available.`, visualKeyFor(item, stages[0]), 700)
+    wake()
+  }
+
   async function runSearch(){
     const targetCategory = categoryFromCommand(query) || category
     const nextQuery = queryFromCommand(query, query)
@@ -1837,7 +2029,7 @@ export default function FullscreenObservatoryV2(){
     announceOpen3dModel({title: nextQuery, category: targetCategory})
     await loadFeeds(targetCategory, nextQuery, {keepOpen: true})
     setModelOpen(true)
-    speak(`${mode === "premium" ? "Premium guide ready" : "Regular API feed ready"}. The aerospace renderer is live for this asset.`)
+    speak(`${mode === "premium" ? "Premium guide ready" : "Regular API feed ready"}. The DigitalHut renderer is live for this asset.`)
     wake()
   }
 
@@ -1953,17 +2145,74 @@ export default function FullscreenObservatoryV2(){
     const lower = text.toLowerCase()
     const nextCategory = categoryFromCommand(text)
     const nextQuery = queryFromCommand(text, query)
+    if(lower.includes("open main lobby") || lower.includes("main lobby") || lower.includes("show lobby")){
+      setMainLobbyOpen(true)
+      setModelOpen(false)
+      recordDirectorMessage("ai", "Opening Main Lobby with GLB and podcast combination feeds.", "Main Lobby")
+      speak("Opening Main Lobby. Pick a feed lane and I will load the matching GLB presentation.")
+      return
+    }
+    if(lower.includes("close main lobby") || lower.includes("close lobby")){
+      setMainLobbyOpen(false)
+      recordDirectorMessage("ai", "Closing Main Lobby and returning to the current renderer.", "Main Lobby")
+      return
+    }
+    if(lower.includes("show quick options") || lower.includes("quick options") || lower.includes("quick displays")){
+      setMainLobbyOpen(false)
+      recordDirectorMessage("ai", `Quick displays are active for ${category}. Choose any panel item to switch GLBs.`, "Quick displays")
+      speak(`Quick displays are active for ${category}. Choose any panel item to switch the GLB presentation.`)
+      return
+    }
+    if(lower.includes("open backend editor") || lower.includes("backend editor") || lower.includes("open asset lab") || lower.includes("unlock owner backend")){
+      recordDirectorMessage("ai", "Opening the protected backend editor for asset conversion, GLB records, and Blink System work.", "Backend editor")
+      speak("Opening backend editor.")
+      window.location.href = "/asset-lab"
+      return
+    }
+    if(lower.includes("custom feed") || lower.includes("custom node") || lower.includes("personalized feed") || lower.includes("stellar feed") || lower.includes("genius real estate") || lower.includes("pro gamer")){
+      recordDirectorMessage("ai", "Opening the Backend Blink preview for coming soon personalized feed nodes.", "Custom feed nodes")
+      speak("Opening custom feed nodes. Search and presentations stay active now. Personalized Stellar, Genius Real Estate, Pro Gamer, Pure Researcher, and Mainstream Pulse feeds are staged as coming soon.")
+      window.location.href = "/asset-lab?tab=blink"
+      return
+    }
+    if(lower.includes("open library") || lower.includes("asset library") || lower.includes("show library")){
+      setAiOpen(true)
+      setModelOpen(true)
+      recordDirectorMessage("ai", `${assetLibraryStatus.mode === "uploaded-personal-library" ? "Supabase library connected" : "Local render library"}: ${assetLibraryStatus.availableCount} of ${assetLibraryStatus.totalCount} GLBs available.`, "Library")
+      speak(`Opening library status. ${assetLibraryStatus.availableCount} of ${assetLibraryStatus.totalCount} GLBs are available for this renderer lane.`)
+      return
+    }
+    if(lower.includes("previous display") || lower.includes("previous model") || lower.includes("back display")){
+      recordDirectorMessage("ai", "Moving to the previous display and keeping Play Preview attached.", "Previous display")
+      previousFeed()
+      return
+    }
+    if(lower.includes("next display") || lower.includes("next model") || lower.includes("preview next") || lower.includes("show me next")){
+      recordDirectorMessage("ai", "Opening the next display and waiting for the renderer before narration continues.", "Next display")
+      nextFeed()
+      return
+    }
+    if(lower.includes("open 3d") || lower.includes("open renderer") || lower.includes("play preview") || lower.includes("open current display")){
+      setModelOpen(true)
+      recordDirectorMessage("ai", `Opening Play Preview for ${sceneFeed.title}.`, "Play Preview")
+      speak(`Open 3D model view. Loading ${sceneFeed.title}.`)
+      return
+    }
+    if(lower.includes("download current 3d display") || lower.includes("download current display") || lower.includes("download current 3d")){
+      const target = bestRenderableModelUrl(sceneFeed) || sceneFeed.viewerUrl || sceneFeed.embedUrl || ""
+      setNotesOpen(true)
+      await saveSmartNote()
+      recordDirectorMessage("ai", target ? "Saved the current display note and opened the current 3D display link." : "Saved the current display note; no direct GLB URL is exposed.", "Download display")
+      if(target) window.open(target, "_blank")
+      else speak("I saved the current display note. This feed does not expose a direct GLB link yet.")
+      return
+    }
     if(lower.includes("talent tree") || lower.includes("node progress") || lower.includes("stellar node")){
       const node = talentNodeFromCommand(text)
       window.localStorage.setItem("digitalhut:blinkPulse", node)
       recordDirectorMessage("ai", `Opening the DigitalHut Backend Blink System and pulsing ${node.replace(/-/g, " ")} progress.`, "Talent tree")
       speak(`Opening node progress. I am pulsing your ${node.replace(/-/g, " ")} progress so you can see what is completed, pending, and what grind unlocks next.`)
       window.location.href = `/asset-lab?tab=blink&node=${encodeURIComponent(node)}`
-      return
-    }
-    if(lower.includes("preview next") || lower.includes("next model") || lower.includes("show me next")){
-      recordDirectorMessage("ai", "Opening the next model and waiting for the renderer before narration continues.", "Next model")
-      nextFeed()
       return
     }
     if(lower.includes("stop")){
@@ -2300,28 +2549,33 @@ export default function FullscreenObservatoryV2(){
     wake()
   }
 
-  return <main className={`dh-observatory low-power aerospace-display ${loading ? "is-loading" : "is-ready"} ${entryOpen ? "entry-open" : "entry-complete"} mechanic-mode`} data-main-frame={digitalHutBrainMap.mainFrame} data-observatory-category={category} data-observatory-status={loading ? "verifying" : sceneFeed.apiStatus || "ready"} data-physical-assets="sensitive" onPointerMove={handleObservatoryPointer} onPointerLeave={centerCockpitMotion} onPointerDown={wake}>
+  return <main className={`dh-observatory low-power aerospace-display ${loading ? "is-loading" : "is-ready"} ${interactionPulse ? "system-pulse" : ""} ${entryOpen ? "entry-open" : "entry-complete"} mechanic-mode`} data-main-frame={digitalHutBrainMap.mainFrame} data-observatory-category={category} data-observatory-status={loading ? "verifying" : sceneFeed.apiStatus || "ready"} data-physical-assets="sensitive" onPointerMove={handleObservatoryPointer} onPointerLeave={centerCockpitMotion} onPointerDown={(event) => {wake(); triggerSystemPulse(event)}} onClickCapture={triggerSystemPulse}>
     <section className="dh-stage">
       <RendererVisual feed={sceneFeed} stage={stage} guided={guided} loading={loading} layer={layer} renderLive={!entryOpen} modelOpen={modelOpen} onOpenModel={openContainedModel} onNext={nextStage} onPlayMore={playMore} onVisualPending={markVisualPending} onVisualReady={markVisualReady} onDirectorUpdate={setDirectorStatus} guideText={currentGuideLine} followUps={currentFollowUps} />
       <div className="dh-vignette" />
       {layer === "Architect" && <div className="dh-architect"><b>Architect Layer</b><span>builders / developers / researchers / AIs / experimental</span></div>}
       <>
-        <div className="dh-cockpit-frame" aria-hidden="true"><span>DigitalHut Aerospace Observatory</span><b>Verified GLB / public feeds / source status</b></div>
+        <div className="dh-cockpit-frame" aria-hidden="true"><span>DigitalHut Observatory</span><b>Verified GLB / public feeds / source status</b></div>
         <nav className="dh-mechanic-categories" aria-label="DigitalHut categories">
           {categories.map((item) => <button key={item.id} className={item.id === category ? "active" : ""} type="button" onClick={() => selectCategory(item.id)}><span>{item.icon}</span><b>{item.id}</b></button>)}
         </nav>
 
-        <aside className="dh-mechanic-controls" aria-label="Aerospace observatory playback controls">
+        <form className="dh-mechanic-search" onSubmit={(event) => {event.preventDefault(); runSearch()}}>
+          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search any GLB, feed, place, game, research, house project..." />
+          <button type="submit">Search</button>
+          <button type="button" onClick={() => setMainLobbyOpen(true)}>Main Lobby</button>
+        </form>
+
+        <aside className="dh-mechanic-controls" aria-label="DigitalHut observatory playback controls">
           <button className={`primary ${autoPresent ? "active" : ""}`} type="button" onClick={toggleMechanicAuto}><span>{autoPresent ? "Pause" : "Play"}</span><b>{autoPresent ? "Pause Feed" : "Auto Play Feed"}</b></button>
           <button type="button" onClick={previousFeed}><span>Previous</span><b>Previous Model</b></button>
           <button type="button" onClick={nextFeed}><span>Next</span><b>Next Model</b></button>
-          <div className="dh-mechanic-mode-list">
-            {mobilityModes.map((item) => <button key={item.id} className={item.id === mobilityMode && category === "Mobility" ? "active" : ""} type="button" onClick={() => chooseMobilityMode(item)}><span>{item.id.slice(0, 2).toUpperCase()}</span><b>{item.id}</b></button>)}
-          </div>
+          <button type="button" onClick={openContainedModel}><span>Preview</span><b>Play 3D Preview</b></button>
+          <button type="button" onClick={() => setMainLobbyOpen(true)}><span>Lobby</span><b>Main Lobby</b></button>
         </aside>
 
-        <aside className="dh-mechanic-status" aria-label="Aerospace observatory status">
-          <header><span>Aerospace Display</span><b>{mechanicRuntimeStatus}</b></header>
+        <aside className="dh-mechanic-status" aria-label="DigitalHut observatory status">
+          <header><span>DigitalHut Display</span><b>{mechanicRuntimeStatus}</b></header>
           <div className="dh-mechanic-readouts">
             <section><span>View mode</span><b>{category}</b></section>
             <section><span>Network</span><b>{runtimeState.online ? `${runtimeState.connection}${runtimeState.saveData ? " / saver" : ""}` : "Offline"}</b></section>
@@ -2333,22 +2587,48 @@ export default function FullscreenObservatoryV2(){
             <b>{sceneFeed.title}</b>
             <small>{sceneFeed.apiSource || sceneFeed.apiStatus || "DigitalHut feed"}</small>
           </div>
-          <p>Single renderer. Public-source observatory display only. It does not control aircraft, vehicles, satellites, wallets, or physical systems.</p>
+          <p>Single renderer. DigitalHut detects the device context automatically and keeps the experience focused on searchable GLB presentations, podcasts, feeds, and backend-ready assets.</p>
+          <div className="dh-mechanic-quick-panel">
+            <div className="dh-mechanic-panel-head"><span>Quick Displays</span><b>{loading ? "API" : "Ready"}</b></div>
+            {quickDisplayFeeds.map((item) => <button key={item.id} className={item.id === feed.id ? "active" : ""} type="button" onClick={() => {chooseFeed(item); setModelOpen(true)}}>
+              <MiniVisual feed={item} active={item.id === feed.id} />
+              <span><b>{item.title}</b><small>{item.apiSource || item.apiStatus || item.category}</small></span>
+            </button>)}
+          </div>
+          <div className="dh-blink-mini-panel">
+            <div className="dh-mechanic-panel-head"><span>Blink Nodes</span><b>Preview</b></div>
+            {blinkNodesWithApi.map((item) => <button key={item.id} className={item.locked ? "locked" : "unlocked"} type="button" onClick={() => {
+              window.localStorage.setItem("digitalhut:blinkPulse", item.id)
+              window.localStorage.setItem("digitalhut:blinkNodeStatus", JSON.stringify({id: item.id, title: item.title, locked: item.locked, learnedSignals: item.learnedSignals, paidUnlock: item.paidUnlock, earnedUnlock: item.earnedUnlock, apiFeed: item.apiFeed?.title || ""}))
+              if(item.locked){
+                window.location.href = `/asset-lab?tab=blink&node=${encodeURIComponent(item.id)}`
+                return
+              }
+              selectCategory(item.category)
+              setAutoPresent(true)
+              setPlaying(true)
+              setModelOpen(true)
+              speak(`Starting ${item.title} Blink autoplay. DigitalHut is using learned ${item.category} feeds and API signals for a stronger presentation lane.`)
+            }}>
+              <b>{item.title}</b><small>{item.locked ? `Locked. ${item.recommendation}` : `Unlocked. ${item.reward}`}</small>
+            </button>)}
+          </div>
           <div className="dh-mechanic-status-actions">
             <button type="button" onClick={() => setNotesOpen(true)}>Session Notes</button>
             <button type="button" onClick={refreshLiveRenderer}>Refresh Feed</button>
-            <button type="button" onClick={openTravelAssistance}>Assistance</button>
+            <button type="button" onClick={() => window.location.href = "/asset-lab?tab=blink"}>Custom Nodes</button>
+            <button type="button" onClick={() => window.location.href = "/asset-lab"}>Backend</button>
           </div>
         </aside>
 
-        {assistanceOpen && <section className="dh-travel-assistance" aria-label="Aerospace assistance">
+        {assistanceOpen && <section className="dh-travel-assistance" aria-label="DigitalHut assistance">
           <div>
-            <header><span>Aerospace Assistance</span><button type="button" onClick={() => setAssistanceOpen(false)}>Close</button></header>
+            <header><span>DigitalHut Assistance</span><button type="button" onClick={() => setAssistanceOpen(false)}>Close</button></header>
             <h2>Presentation paused</h2>
-            <p>This is an advisory media display. Follow official operator instructions and contact qualified support before making real travel, vehicle, aviation, marine, rail, maintenance, or safety decisions.</p>
+            <p>This is a media and research display. Use official sources and qualified support before making real-world operational or safety decisions.</p>
             <div className="dh-assistance-grid">
               <section><b>1</b><span>Stop the presentation and assess the real surroundings.</span></section>
-              <section><b>2</b><span>Use the official vehicle manual, operator procedure, or trained staff.</span></section>
+              <section><b>2</b><span>Use official procedures, public-source records, or trained staff when a real-world decision matters.</span></section>
               <section><b>3</b><span>Record visible observations and the current public feed in Session Notes.</span></section>
               <section><b>4</b><span>Contact qualified assistance before resuming travel when safety is uncertain.</span></section>
             </div>
@@ -2359,6 +2639,39 @@ export default function FullscreenObservatoryV2(){
           </div>
         </section>}
       </>
+      {mainLobbyOpen && <section className="dh-main-lobby" aria-label="DigitalHut Main Lobby">
+        <div>
+          <header>
+            <div><span>Main Lobby</span><h2>DigitalHut Observatory Showcase</h2></div>
+            <button type="button" onClick={() => setMainLobbyOpen(false)}>Enter Renderer</button>
+          </header>
+          <section className="dh-main-lobby-stage">
+            <div className="dh-main-lobby-screen">
+              <MiniVisual feed={lobbyActiveFeed} active />
+              <div className="dh-main-lobby-scanline" />
+            </div>
+            <div className="dh-main-lobby-copy">
+              <span>{lobbyActiveFeed.category || "DigitalHut"}</span>
+              <h3>{lobbyActiveFeed.title}</h3>
+              <small className="dh-main-lobby-source">{lobbyActiveFeed.apiSource || lobbyActiveFeed.apiStatus || "DigitalHut feed"}</small>
+              <p>Welcome to DigitalHut. Explore categories, System Nodes, AutoPlay Showcase, and search any observatory experience. You can run commands such as open planetary category, next model, open backend, or start autoplay.</p>
+              <div>
+                <button type="button" onClick={() => openLobbyFeed(lobbyActiveFeed)}>Play Highlighted GLB</button>
+                <button type="button" onClick={() => {window.location.href = "/asset-lab?tab=blink"}}>System Nodes</button>
+                <button type="button" onClick={() => {setMainLobbyOpen(false); setAutoPresent(true); setPlaying(true); setModelOpen(true)}}>Auto Play</button>
+              </div>
+            </div>
+          </section>
+          <div className="dh-main-lobby-grid">
+            {lobbyFeeds.map((item, index) => <article key={item.id} className={item.id === lobbyActiveFeed.id ? "active" : ""}>
+              <MiniVisual feed={item} active={item.id === sceneFeed.id} />
+              <div><span>{item.category}</span><b>{item.title}</b><small>{item.apiSource || item.apiStatus || "DigitalHut feed"}</small></div>
+              <button type="button" onClick={() => setLobbyActiveIndex(index)}>Highlight</button>
+              <button type="button" onClick={() => openLobbyFeed(item)}>Play Preview</button>
+            </article>)}
+          </div>
+        </div>
+      </section>}
       {modelOpen && !entryOpen && <PodcastMatchPanel feed={sceneFeed} compact={mechanicMode} />}
 
       <div className="dh-top" style={{opacity: awake ? 1 : 0.08}}>

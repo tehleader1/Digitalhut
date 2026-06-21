@@ -194,6 +194,49 @@ const nodePurchaseOffers = [
   }
 ]
 
+const customFeedComingSoon = [
+  {
+    id: "stellar-feed",
+    title: "Stellar Feed",
+    status: "Coming soon",
+    purpose: "Randomized planetary, orbital compute, satellite internet, cosmic-color GLB, and space research presentations.",
+    inputs: ["Planetary searches", "Saved cosmic GLBs", "Orbital compute reports", "Voice reactions"],
+    unlock: "Unlocks after renderer proof, source notes, public reactions, and sustained Stellar node activity."
+  },
+  {
+    id: "genius-real-estate",
+    title: "Genius Real Estate",
+    status: "Coming soon",
+    purpose: "International housing, luxury property, middle-class opportunity, relocation, and market-stat presentation feeds.",
+    inputs: ["Property GLBs", "Location searches", "Housing statistics", "Saved buyer notes"],
+    unlock: "Unlocks after real estate sessions prove location, market context, and usable presentation history."
+  },
+  {
+    id: "pro-gamer",
+    title: "Pro Gamer",
+    status: "Coming soon",
+    purpose: "Game-world environments, 360 gaming visuals, creator-safe official links, and playable presentation concepts.",
+    inputs: ["Game searches", "Environment GLBs", "Creator-safe sources", "Viewer reactions"],
+    unlock: "Unlocks after repeated game presentations, saved notes, and strong reaction signals."
+  },
+  {
+    id: "pure-researcher",
+    title: "Pure Researcher",
+    status: "Coming soon",
+    purpose: "Science, field-study, lab, evidence, and source-confidence feeds for careful 3D research reports.",
+    inputs: ["Research notes", "Source links", "Science GLBs", "Correction history"],
+    unlock: "Unlocks after verified notes, source packs, report drafts, and safe publishing behavior."
+  },
+  {
+    id: "mainstream-pulse",
+    title: "Mainstream Pulse",
+    status: "Coming soon",
+    purpose: "Viral public feeds, creator trends, funny moments, music/culture lanes, and fast GLB-backed presentations.",
+    inputs: ["Trend searches", "Podcast matches", "Share links", "Audience reactions"],
+    unlock: "Unlocks after posts, reactions, backlinks, and strong mainstream session history."
+  }
+]
+
 const ownerPayoutWallet = "0x3121FbFB683B9147913f336b05eF419b875a7590"
 
 function blinkProgressForNode(id){
@@ -281,9 +324,20 @@ export default function AssetLabPage(){
     const params = new URLSearchParams(window.location.search)
     return params.get("node") || window.localStorage.getItem("digitalhut:blinkPulse") || "stellar"
   })
+  const [nodeApiFeeds] = useState(() => {
+    try {
+      return JSON.parse(window.localStorage.getItem("digitalhut:nodeApiFeeds") || "[]")
+    } catch {
+      return []
+    }
+  })
   const [editTools, setEditTools] = useState({stretch: 100, lighting: 55, layer: "Base", objects: "None", zoomRate: 1})
   const selected = assets.find((item) => item.id === selectedId) || assets[0]
   const activeBlink = blinkProgressForNode(activeBlinkId)
+  const nodeApiFeedFor = (item) => {
+    const category = item.id.includes("stellar") ? "Planetary" : item.id.includes("real-estate") ? "Real Estate" : item.id.includes("gamer") ? "Gamer" : item.id.includes("research") ? "Researcher" : "Mainstream Streaming"
+    return nodeApiFeeds.find((feed) => feed.category === category)
+  }
   const shareUrl = selected ? `${window.location.origin}/${selected.slug}` : ""
   const orbit = ["25deg 62deg auto", "80deg 66deg auto", "-40deg 58deg auto", "18deg 44deg auto"][demoStep % 4]
   const fov = ["36deg", "28deg", "42deg", "30deg"][demoStep % 4]
@@ -467,6 +521,30 @@ export default function AssetLabPage(){
           </button>)}
         </section>
       </div>
+
+      <section className="dh-custom-feed-preview">
+        <header>
+          <div>
+            <span>Custom Feed Nodes</span>
+            <h2>Coming soon personalized feeds</h2>
+            <p>Search and presentations stay as the main product. These nodes are staged as future personalized feeds that learn from saved GLBs, notes, voice reactions, backlinks, source checks, and public interest.</p>
+          </div>
+          <button type="button" onClick={() => setTab("studio")}>Build Presentation First</button>
+        </header>
+        <div className="dh-custom-feed-grid">
+          {customFeedComingSoon.map((item) => {
+            const apiFeed = nodeApiFeedFor(item)
+            return <article key={item.id} className={item.id.includes(activeBlink.id) ? "active" : ""}>
+              <span>{item.status}</span>
+              <h3>{item.title}</h3>
+              <p>{item.purpose}</p>
+              {apiFeed && <p className="dh-node-api-feed">Current API signal: {apiFeed.title} / {apiFeed.apiSource || apiFeed.apiStatus}</p>}
+              <div>{item.inputs.map((input) => <small key={input}>{input}</small>)}</div>
+              <b>{item.unlock}</b>
+            </article>
+          })}
+        </div>
+      </section>
 
       <section className="dh-node-purchases">
         <header>

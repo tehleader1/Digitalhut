@@ -59,7 +59,7 @@
 
 .dh-cockpit-frame {
   position: absolute;
-  top: 84px;
+  top: 132px;
   right: 296px;
   bottom: 14px;
   left: 194px;
@@ -162,19 +162,57 @@
 
 .dh-mechanic-controls {
   position: absolute;
-  top: 84px;
+  top: 132px;
   bottom: 14px;
   left: 14px;
   z-index: 38;
   width: 164px;
   display: grid;
-  grid-template-rows: auto auto auto minmax(0,1fr);
+  grid-template-rows: repeat(5, auto) minmax(0,1fr);
   gap: 7px;
   padding: 8px;
   overflow: hidden;
   border: 1px solid rgba(125,211,252,.32);
   border-radius: 6px;
   background: rgba(2,10,20,.9);
+}
+
+.dh-mechanic-search {
+  position: absolute;
+  top: 78px;
+  left: 194px;
+  right: 296px;
+  z-index: 39;
+  height: 42px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 7px;
+  padding: 6px;
+  border: 1px solid rgba(125,211,252,.32);
+  border-radius: 6px;
+  background: rgba(2,10,20,.92);
+}
+
+.dh-mechanic-search input,
+.dh-mechanic-search button {
+  min-width: 0;
+  border: 1px solid rgba(148,163,184,.24);
+  border-radius: 5px;
+  background: rgba(15,23,42,.86);
+  color: #e2e8f0;
+}
+
+.dh-mechanic-search input {
+  padding: 0 10px;
+  outline: none;
+}
+
+.dh-mechanic-search button {
+  padding: 0 12px;
+  color: #cffafe;
+  font-size: 10px;
+  font-weight: 900;
+  cursor: pointer;
 }
 
 .dh-mechanic-controls > button,
@@ -210,7 +248,7 @@
 
 .dh-mechanic-status {
   position: absolute;
-  top: 84px;
+  top: 132px;
   right: 14px;
   bottom: 14px;
   z-index: 38;
@@ -281,7 +319,295 @@
 
 .dh-mechanic-status-actions {
   display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 7px;
+}
+
+.dh-mechanic-panel-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+}
+
+.dh-mechanic-panel-head span {
+  color: #67e8f9;
+  font-size: 9px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.dh-mechanic-panel-head b {
+  color: #fde68a;
+  font-size: 9px;
+  text-transform: uppercase;
+}
+
+.dh-mechanic-quick-panel,
+.dh-blink-mini-panel {
+  display: grid;
+  gap: 7px;
+  padding: 8px;
+  border: 1px solid rgba(148,163,184,.18);
+  border-radius: 6px;
+  background: rgba(15,23,42,.54);
+}
+
+.dh-mechanic-quick-panel button,
+.dh-blink-mini-panel button {
+  min-width: 0;
+  display: grid;
+  gap: 7px;
+  align-items: center;
+  border: 1px solid rgba(148,163,184,.2);
+  border-radius: 5px;
+  background: rgba(2,6,23,.72);
+  color: #f8fafc;
+  cursor: pointer;
+  text-align: left;
+}
+
+.dh-mechanic-quick-panel button {
+  grid-template-columns: 72px minmax(0, 1fr);
+  padding: 6px;
+}
+
+.dh-mechanic-quick-panel button.active {
+  border-color: rgba(103,232,249,.62);
+  background: rgba(8,145,178,.22);
+}
+
+.dh-mechanic-quick-panel button > span,
+.dh-blink-mini-panel button {
+  min-width: 0;
+}
+
+.dh-mechanic-quick-panel b,
+.dh-blink-mini-panel b {
+  overflow: hidden;
+  display: block;
+  color: #e0f2fe;
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dh-mechanic-quick-panel small,
+.dh-blink-mini-panel small {
+  display: block;
+  overflow: hidden;
+  color: #94a3b8;
+  font-size: 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dh-blink-mini-panel button {
+  padding: 8px;
+}
+
+.dh-blink-mini-panel button:first-of-type {
+  border-color: rgba(250,204,21,.45);
+  background: rgba(250,204,21,.12);
+}
+
+.dh-blink-mini-panel button.locked {
+  border-color: rgba(148,163,184,.25);
+  background: rgba(15,23,42,.62);
+  opacity: .82;
+}
+
+.dh-blink-mini-panel button.unlocked {
+  border-color: rgba(34,197,94,.55);
+  background: rgba(20,83,45,.28);
+  box-shadow: 0 0 0 1px rgba(34,197,94,.14), 0 0 26px rgba(34,197,94,.16);
+}
+
+.dh-main-lobby {
+  position: absolute;
+  top: 132px;
+  right: 296px;
+  bottom: 14px;
+  left: 194px;
+  z-index: 41;
+  display: grid;
+  padding: 0;
+  background: transparent;
+}
+
+.dh-main-lobby > div {
+  width: 100%;
+  max-height: 100%;
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  overflow: auto;
+  border: 1px solid rgba(103,232,249,.48);
+  border-radius: 8px;
+  background: #07111f;
+  color: #e2e8f0;
+}
+
+.dh-main-lobby header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: start;
+}
+
+.dh-main-lobby h2,
+.dh-main-lobby h3,
+.dh-main-lobby p {
+  margin: 0;
+}
+
+.dh-main-lobby header span,
+.dh-main-lobby-grid span,
+.dh-main-lobby-copy span {
+  color: #67e8f9;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.dh-main-lobby header button,
+.dh-main-lobby-grid button,
+.dh-main-lobby-copy button {
+  border: 1px solid rgba(103,232,249,.34);
+  border-radius: 5px;
+  background: rgba(8,145,178,.2);
+  color: #ecfeff;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.dh-main-lobby header button {
+  padding: 9px 12px;
+}
+
+.dh-main-lobby-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(280px, .75fr);
+  gap: 14px;
+  min-height: min(42vh, 390px);
+  padding: 12px;
+  border: 1px solid rgba(103,232,249,.3);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(14,165,233,.13), transparent 48%),
+    radial-gradient(circle at 25% 15%, rgba(103,232,249,.2), transparent 32%),
+    rgba(2,6,23,.72);
+}
+
+.dh-main-lobby-screen {
+  position: relative;
+  min-height: min(38vh, 360px);
+  overflow: hidden;
+  border: 1px solid rgba(148,163,184,.28);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(8,47,73,.42), rgba(2,6,23,.9)),
+    repeating-linear-gradient(90deg, rgba(103,232,249,.08) 0 1px, transparent 1px 68px);
+}
+
+.dh-main-lobby-screen .dh-mini-visual {
+  width: 100%;
+  height: 100%;
+  min-height: min(38vh, 360px);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.dh-main-lobby-screen .dh-scene-object {
+  transform: scale(1.55);
+}
+
+.dh-main-lobby-scanline {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgba(103,232,249,.18), transparent);
+  animation: dhLobbyScan 4.8s linear infinite;
+  opacity: .58;
+}
+
+.dh-main-lobby-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.dh-main-lobby-copy h3 {
+  color: #f8fafc;
+  font-size: clamp(22px, 3.2vw, 40px);
+  line-height: 1;
+}
+
+.dh-main-lobby-copy p {
+  color: #cbd5e1;
+  line-height: 1.45;
+}
+
+.dh-main-lobby-source {
+  width: fit-content;
+  padding: 5px 8px;
+  border: 1px solid rgba(103,232,249,.32);
+  border-radius: 999px;
+  background: rgba(8,145,178,.16);
+  color: #a5f3fc;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.dh-main-lobby-copy div {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.dh-main-lobby-copy button {
+  min-height: 40px;
+  padding: 8px;
+}
+
+.dh-main-lobby-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.dh-main-lobby-grid article {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid rgba(148,163,184,.2);
+  border-radius: 7px;
+  background: rgba(15,23,42,.68);
+}
+
+.dh-main-lobby-grid article.active {
+  border-color: rgba(250,204,21,.58);
+  box-shadow: 0 0 0 1px rgba(250,204,21,.12), 0 18px 50px rgba(250,204,21,.08);
+}
+
+.dh-main-lobby-grid b {
+  color: #f8fafc;
+}
+
+.dh-main-lobby-grid small {
+  color: #94a3b8;
+}
+
+.dh-main-lobby-grid button {
+  min-height: 34px;
+}
+
+@keyframes dhLobbyScan {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(100%); }
 }
 
 .dh-mechanic-status-actions button,
@@ -443,5 +769,94 @@
   .dh-mechanic-current {
     transform: none !important;
     transition: none !important;
+  }
+}
+
+.dh-observatory.mechanic-mode button,
+.dh-observatory.mechanic-mode .dh-main-lobby-grid article,
+.dh-observatory.mechanic-mode .dh-mini-visual {
+  transition:
+    border-color 140ms ease,
+    background 140ms ease,
+    box-shadow 140ms ease,
+    filter 140ms ease,
+    transform 140ms ease;
+}
+
+.dh-observatory.mechanic-mode button:hover,
+.dh-observatory.mechanic-mode .dh-main-lobby-grid article:hover,
+.dh-observatory.mechanic-mode .dh-mini-visual:hover {
+  border-color: rgba(103,232,249,.82) !important;
+  box-shadow: 0 0 0 1px rgba(103,232,249,.18), 0 0 24px rgba(34,211,238,.24);
+  filter: brightness(1.12);
+}
+
+.dh-observatory.mechanic-mode button:active {
+  transform: scale(.985);
+  box-shadow: 0 0 0 2px rgba(250,204,21,.24), 0 0 32px rgba(250,204,21,.24);
+}
+
+.dh-observatory.mechanic-mode .dh-mechanic-categories button.active,
+.dh-observatory.mechanic-mode .dh-mechanic-controls button.active,
+.dh-observatory.mechanic-mode .dh-mechanic-quick-panel button.active,
+.dh-observatory.mechanic-mode .dh-main-lobby-grid article.active {
+  box-shadow: 0 0 0 1px rgba(103,232,249,.18), 0 0 30px rgba(34,211,238,.18);
+}
+
+.dh-observatory.mechanic-mode.system-pulse .dh-mechanic-categories,
+.dh-observatory.mechanic-mode.system-pulse .dh-mechanic-controls,
+.dh-observatory.mechanic-mode.system-pulse .dh-mechanic-status,
+.dh-observatory.mechanic-mode.system-pulse .dh-mechanic-search,
+.dh-observatory.mechanic-mode.system-pulse .dh-model-shell,
+.dh-observatory.mechanic-mode.system-pulse .dh-main-lobby-stage {
+  animation: dhSystemPulse .72s ease-out 1;
+}
+
+.dh-observatory.mechanic-mode.is-loading .dh-model-shell,
+.dh-observatory.mechanic-mode.is-loading .dh-mechanic-current,
+.dh-observatory.mechanic-mode.is-loading .dh-main-lobby-stage {
+  animation: dhSystemPulse 1.5s ease-in-out infinite;
+}
+
+.dh-observatory.mechanic-mode .dh-model-shell::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  pointer-events: none;
+  border-radius: inherit;
+  border: 1px solid rgba(103,232,249,.34);
+  opacity: 0;
+  box-shadow: inset 0 0 42px rgba(34,211,238,.08), 0 0 30px rgba(34,211,238,.12);
+  transition: opacity 160ms ease;
+}
+
+.dh-observatory.mechanic-mode.system-pulse .dh-model-shell::after,
+.dh-observatory.mechanic-mode.is-loading .dh-model-shell::after {
+  opacity: .64;
+}
+
+@keyframes dhSystemPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(103,232,249,0), 0 0 0 rgba(34,211,238,0);
+  }
+  45% {
+    box-shadow: 0 0 0 1px rgba(103,232,249,.28), 0 0 34px rgba(34,211,238,.22);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(103,232,249,0), 0 0 0 rgba(34,211,238,0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dh-observatory.mechanic-mode.system-pulse .dh-mechanic-categories,
+  .dh-observatory.mechanic-mode.system-pulse .dh-mechanic-controls,
+  .dh-observatory.mechanic-mode.system-pulse .dh-mechanic-status,
+  .dh-observatory.mechanic-mode.system-pulse .dh-mechanic-search,
+  .dh-observatory.mechanic-mode.system-pulse .dh-model-shell,
+  .dh-observatory.mechanic-mode.system-pulse .dh-main-lobby-stage,
+  .dh-observatory.mechanic-mode.is-loading .dh-model-shell,
+  .dh-observatory.mechanic-mode.is-loading .dh-mechanic-current,
+  .dh-observatory.mechanic-mode.is-loading .dh-main-lobby-stage {
+    animation: none !important;
   }
 }

@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "devCommand": "npm run dev -- --host 127.0.0.1 --port $PORT",
   "buildCommand": "npm run build",
   "installCommand": "npm ci --legacy-peer-deps",
   "outputDirectory": "dist",
