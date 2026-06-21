@@ -99,6 +99,14 @@
   will-change: transform;
 }
 
+.dh-observatory.mechanic-mode.main-lobby-active .dh-renderer,
+.dh-observatory.mechanic-mode.main-lobby-active .dh-model-shell,
+.dh-observatory.mechanic-mode.main-lobby-active .dh-api-system-preview,
+.dh-observatory.mechanic-mode.main-lobby-active .dh-contained-guide {
+  opacity: 0;
+  pointer-events: none;
+}
+
 .dh-mechanic-categories {
   position: absolute;
   top: 14px;
@@ -426,7 +434,7 @@
 .dh-main-lobby {
   position: absolute;
   top: 132px;
-  right: 296px;
+  right: 14px;
   bottom: 14px;
   left: 194px;
   z-index: 41;

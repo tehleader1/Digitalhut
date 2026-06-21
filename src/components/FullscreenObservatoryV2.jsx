@@ -664,7 +664,7 @@ async function resolveApiFeeds(category, term){
       return {...item, matchScore: directScore + sourceScore + tokenScore}
     })
     .sort((a, b) => b.matchScore - a.matchScore)
-  return items.slice(0, 8)
+  return items.slice(0, 16)
 }
 
 function speak(text){
@@ -1445,6 +1445,7 @@ export default function FullscreenObservatoryV2(){
   const [mainLobbyOpen, setMainLobbyOpen] = useState(true)
   const [lobbyActiveIndex, setLobbyActiveIndex] = useState(0)
   const [apiCategoryFeeds, setApiCategoryFeeds] = useState([])
+  const [showcaseAuto, setShowcaseAuto] = useState(false)
   const [interactionPulse, setInteractionPulse] = useState(false)
   const [mechanicMode, setMechanicMode] = useState(true)
   const [mobilityMode, setMobilityMode] = useState("Road")
@@ -1489,7 +1490,10 @@ export default function FullscreenObservatoryV2(){
     const existing = lobbyFeedPool.find((feedItem) => feedItem.category === item && bestRenderableModelUrl(feedItem))
     return existing || apiSpotlightSeeds(item)[0] || seedFeeds(item).find((feedItem) => bestRenderableModelUrl(feedItem)) || seedFeeds(item)[0]
   }).filter(Boolean)
-  const lobbyActiveFeed = lobbyFeeds[lobbyActiveIndex % Math.max(lobbyFeeds.length, 1)] || sceneFeed
+  const lobbyDisplayFeeds = sortRendererFeeds([...lobbyFeedPool, ...lobbyFeeds])
+    .filter((item, index, list) => item && list.findIndex((candidate) => candidate.id === item.id || candidate.title === item.title) === index)
+    .slice(0, 14)
+  const lobbyActiveFeed = lobbyDisplayFeeds[lobbyActiveIndex % Math.max(lobbyDisplayFeeds.length, 1)] || lobbyFeeds[0] || sceneFeed
   const blinkNodesWithApi = blinkQuickNodes.map((item) => {
     const nodeCategory = item.category
     const apiFeed = apiCategoryFeeds.find((feedItem) => feedItem.category === nodeCategory)
@@ -1522,12 +1526,12 @@ export default function FullscreenObservatoryV2(){
   const mechanicRuntimeStatus = !runtimeState.online ? "Offline" : !runtimeState.visible ? "Paused" : loading ? "Loading" : autoPresent ? "Auto Play" : "Ready"
 
   useEffect(() => {
-    if(!mainLobbyOpen || lobbyFeeds.length < 2) return undefined
+    if(!mainLobbyOpen || lobbyDisplayFeeds.length < 2) return undefined
     const timer = window.setInterval(() => {
-      setLobbyActiveIndex((current) => (current + 1) % lobbyFeeds.length)
+      setLobbyActiveIndex((current) => (current + 1) % lobbyDisplayFeeds.length)
     }, 9000)
     return () => window.clearInterval(timer)
-  }, [mainLobbyOpen, lobbyFeeds.length])
+  }, [mainLobbyOpen, lobbyDisplayFeeds.length])
 
   useEffect(() => {
     if(!mainLobbyOpen && !category) return undefined
@@ -1540,10 +1544,10 @@ export default function FullscreenObservatoryV2(){
         const apiResults = (await resolveApiFeeds(nextCategory, term))
           .map((item, index) => attachRendererModel(item, nextCategory, term, index))
         const spotlightResults = apiSpotlightSeeds(nextCategory, term, true)
-        return sortRendererFeeds([...apiResults, ...spotlightResults]).slice(0, 2)
+        return sortRendererFeeds([...apiResults, ...spotlightResults]).slice(0, 5)
       }))
       if(cancelled) return
-      const nextFeeds = sortRendererFeeds(batches.flat()).slice(0, 20)
+      const nextFeeds = sortRendererFeeds(batches.flat()).slice(0, 36)
       setApiCategoryFeeds(nextFeeds)
       try {
         window.localStorage.setItem("digitalhut:nodeApiFeeds", JSON.stringify(nextFeeds.slice(0, 12).map((item) => ({
@@ -1672,7 +1676,7 @@ export default function FullscreenObservatoryV2(){
 
   useEffect(() => {
     if(!autoPresent || runtimePaused) return
-    const limit = AI_TIER_LIMITS[tier] ?? AI_TIER_LIMITS.guest
+    const limit = showcaseAuto ? Infinity : AI_TIER_LIMITS[tier] ?? AI_TIER_LIMITS.guest
     if(limit !== Infinity && aiUsage.usedMs >= limit){
       setAutoPresent(false)
       setPlaying(false)
@@ -1729,7 +1733,7 @@ export default function FullscreenObservatoryV2(){
       }
       autoStartedRef.current = null
     }
-  }, [autoPresent, runtimePaused, demoMode, tier, category, active, stageIndex, sceneFeed.id, sceneFeed.title, sceneVisualKey, visualReadyKey, feeds, autoDelay])
+  }, [autoPresent, runtimePaused, demoMode, tier, category, active, stageIndex, sceneFeed.id, sceneFeed.title, sceneVisualKey, visualReadyKey, feeds, autoDelay, showcaseAuto])
 
   useEffect(() => {
     const pending = pendingSpeechRef.current
@@ -1924,6 +1928,7 @@ export default function FullscreenObservatoryV2(){
     const isSameActive = autoPresent && demoMode === kind
     if(isSameActive){
       setAutoPresent(false)
+      setShowcaseAuto(false)
       setDemoMode("")
       setPlaying(false)
       playSessionSound(category, "stop")
@@ -1931,6 +1936,7 @@ export default function FullscreenObservatoryV2(){
       return
     }
     autoStepRef.current = 0
+    setShowcaseAuto(false)
     setDemoMode(kind)
     setAutoPresent(true)
     setMode("premium")
@@ -1998,7 +2004,7 @@ export default function FullscreenObservatoryV2(){
     const nextCategory = item.category || category
     const categoryFeeds = seedFeeds(nextCategory)
     const selectedIndex = categoryFeeds.findIndex((candidate) => candidate.id === item.id)
-    const lobbyIndex = lobbyFeeds.findIndex((candidate) => candidate.id === item.id)
+    const lobbyIndex = lobbyDisplayFeeds.findIndex((candidate) => candidate.id === item.id)
     if(lobbyIndex >= 0) setLobbyActiveIndex(lobbyIndex)
     setMainLobbyOpen(false)
     setCategory(nextCategory)
@@ -2073,6 +2079,7 @@ export default function FullscreenObservatoryV2(){
       return
     }
     const next = !autoPresent
+    setShowcaseAuto(false)
     setAutoPresent(next)
     setDemoMode(next ? "all" : "")
     setMode("premium")
@@ -2549,7 +2556,7 @@ export default function FullscreenObservatoryV2(){
     wake()
   }
 
-  return <main className={`dh-observatory low-power aerospace-display ${loading ? "is-loading" : "is-ready"} ${interactionPulse ? "system-pulse" : ""} ${entryOpen ? "entry-open" : "entry-complete"} mechanic-mode`} data-main-frame={digitalHutBrainMap.mainFrame} data-observatory-category={category} data-observatory-status={loading ? "verifying" : sceneFeed.apiStatus || "ready"} data-physical-assets="sensitive" onPointerMove={handleObservatoryPointer} onPointerLeave={centerCockpitMotion} onPointerDown={(event) => {wake(); triggerSystemPulse(event)}} onClickCapture={triggerSystemPulse}>
+  return <main className={`dh-observatory low-power aerospace-display ${loading ? "is-loading" : "is-ready"} ${interactionPulse ? "system-pulse" : ""} ${mainLobbyOpen ? "main-lobby-active" : ""} ${entryOpen ? "entry-open" : "entry-complete"} mechanic-mode`} data-main-frame={digitalHutBrainMap.mainFrame} data-observatory-category={category} data-observatory-status={loading ? "verifying" : sceneFeed.apiStatus || "ready"} data-physical-assets="sensitive" onPointerMove={handleObservatoryPointer} onPointerLeave={centerCockpitMotion} onPointerDown={(event) => {wake(); triggerSystemPulse(event)}} onClickCapture={triggerSystemPulse}>
     <section className="dh-stage">
       <RendererVisual feed={sceneFeed} stage={stage} guided={guided} loading={loading} layer={layer} renderLive={!entryOpen} modelOpen={modelOpen} onOpenModel={openContainedModel} onNext={nextStage} onPlayMore={playMore} onVisualPending={markVisualPending} onVisualReady={markVisualReady} onDirectorUpdate={setDirectorStatus} guideText={currentGuideLine} followUps={currentFollowUps} />
       <div className="dh-vignette" />
@@ -2574,7 +2581,7 @@ export default function FullscreenObservatoryV2(){
           <button type="button" onClick={() => setMainLobbyOpen(true)}><span>Lobby</span><b>Main Lobby</b></button>
         </aside>
 
-        <aside className="dh-mechanic-status" aria-label="DigitalHut observatory status">
+        {!mainLobbyOpen && <aside className="dh-mechanic-status" aria-label="DigitalHut observatory status">
           <header><span>DigitalHut Display</span><b>{mechanicRuntimeStatus}</b></header>
           <div className="dh-mechanic-readouts">
             <section><span>View mode</span><b>{category}</b></section>
@@ -2619,7 +2626,7 @@ export default function FullscreenObservatoryV2(){
             <button type="button" onClick={() => window.location.href = "/asset-lab?tab=blink"}>Custom Nodes</button>
             <button type="button" onClick={() => window.location.href = "/asset-lab"}>Backend</button>
           </div>
-        </aside>
+        </aside>}
 
         {assistanceOpen && <section className="dh-travel-assistance" aria-label="DigitalHut assistance">
           <div>
@@ -2658,12 +2665,12 @@ export default function FullscreenObservatoryV2(){
               <div>
                 <button type="button" onClick={() => openLobbyFeed(lobbyActiveFeed)}>Play Highlighted GLB</button>
                 <button type="button" onClick={() => {window.location.href = "/asset-lab?tab=blink"}}>System Nodes</button>
-                <button type="button" onClick={() => {setMainLobbyOpen(false); setAutoPresent(true); setPlaying(true); setModelOpen(true)}}>Auto Play</button>
+                <button type="button" onClick={() => {setMainLobbyOpen(false); setShowcaseAuto(true); setDemoMode("all"); setAutoPresent(true); setPlaying(true); setModelOpen(true); speak("Welcome to DigitalHut. Explore the categories, nodes, autoplay showcase, and search any observatory experience. Have fun. You can run commands like open planetary category or next model.")}}>Auto Play</button>
               </div>
             </div>
           </section>
           <div className="dh-main-lobby-grid">
-            {lobbyFeeds.map((item, index) => <article key={item.id} className={item.id === lobbyActiveFeed.id ? "active" : ""}>
+            {lobbyDisplayFeeds.map((item, index) => <article key={item.id} className={item.id === lobbyActiveFeed.id ? "active" : ""}>
               <MiniVisual feed={item} active={item.id === sceneFeed.id} />
               <div><span>{item.category}</span><b>{item.title}</b><small>{item.apiSource || item.apiStatus || "DigitalHut feed"}</small></div>
               <button type="button" onClick={() => setLobbyActiveIndex(index)}>Highlight</button>
