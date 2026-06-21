@@ -79,27 +79,44 @@ function relatedGlb(category, index = 0){
   return pool.length ? pool[index % pool.length] : ""
 }
 
+function isStorageLibrarySource(item = {}){
+  const source = `${item.apiSource || ""} ${item.apiStatus || ""} ${item.modelUrl || ""} ${item.viewerUrl || ""}`.toLowerCase()
+  return source.includes("firecuda") || source.includes("supabase") || source.includes("owner-library") || source.includes("storage")
+}
+
 function attachRendererModel(item, category, term, index){
-  if(isDirectRenderableModel(item.modelUrl) && isEnvironmentFeed(item)){
-    return {
-      ...item,
-      renderPriority: item.apiSource === "FireCuda personal GLB library" ? 62 : 125,
-      apiStatus: item.apiStatus || "direct-api-model"
-    }
-  }
-  const sourceViewerUrl = item.viewerUrl || item.embedUrl || item.modelUrl || ""
   if(item.embedUrl && item.apiSource){
     return {
       ...item,
       modelUrl: "",
-      viewerUrl: sourceViewerUrl,
+      viewerUrl: item.viewerUrl || item.embedUrl || item.modelUrl || "",
       sourceModelUrl: item.modelUrl || "",
       sourceEmbedUrl: item.embedUrl || "",
-      renderPriority: 118,
+      renderPriority: 130,
       apiStatus: item.apiStatus || "api-embed-renderer",
       note: `${item.note || `Live API result for ${term || category}.`} DigitalHut is rendering the provider viewer first so fresh API feeds surface before owner-library storage backups.`
     }
   }
+  if(isDirectRenderableModel(item.modelUrl) && isStorageLibrarySource(item)){
+    return {
+      ...item,
+      modelUrl: "",
+      viewerUrl: item.viewerUrl || item.modelUrl || "",
+      sourceModelUrl: item.modelUrl || "",
+      sourceEmbedUrl: item.embedUrl || "",
+      renderPriority: 34,
+      apiStatus: item.apiStatus || "storage-glb-needs-verification",
+      note: `${item.note || `Owner-library result for ${term || category}.`} This storage GLB is held behind verification so a broken Supabase/Vercel object cannot block live API results.`
+    }
+  }
+  if(isDirectRenderableModel(item.modelUrl) && isEnvironmentFeed(item)){
+    return {
+      ...item,
+      renderPriority: item.apiSource === "FireCuda personal GLB library" ? 62 : 128,
+      apiStatus: item.apiStatus || "direct-api-model"
+    }
+  }
+  const sourceViewerUrl = item.viewerUrl || item.embedUrl || item.modelUrl || ""
   const bridgeModelUrl = relatedGlb(category, index)
   if(item.apiSource && bridgeModelUrl){
     return {
@@ -647,9 +664,9 @@ async function resolveApiFeeds(category, term){
   const query = encodeURIComponent(term || category)
   const encodedCategory = encodeURIComponent(category)
   const endpoints = [
-    [`observatory-feed`, `/api/observatory-feed?category=${encodedCategory}&query=${query}`],
     [`sketchfab`, `/api/sketchfab?category=${encodedCategory}&query=${query}`],
-    [`observatory`, `/api/observatory?category=${encodedCategory}&query=${query}`]
+    [`observatory`, `/api/observatory?category=${encodedCategory}&query=${query}`],
+    [`observatory-feed`, `/api/observatory-feed?category=${encodedCategory}&query=${query}`]
   ]
 
   const attempts = await Promise.allSettled(endpoints.map(async ([source, endpoint]) => {
@@ -672,8 +689,9 @@ async function resolveApiFeeds(category, term){
     .map((item) => {
       const haystack = `${item.title || ""} ${item.note || ""} ${item.query || ""} ${item.apiSource || ""}`.toLowerCase()
       const tokenScore = termTokens.reduce((score, token) => score + (haystack.includes(token) ? 4 : 0), 0)
-      const directScore = item.modelUrl ? 60 : item.embedUrl ? 45 : item.viewerUrl ? 18 : 0
-      const sourceScore = item.apiSource === "sketchfab" ? 8 : item.apiSource === "observatory-feed" ? 6 : 3
+      const source = String(item.apiSource || "").toLowerCase()
+      const directScore = item.embedUrl ? 76 : item.viewerUrl ? 34 : item.modelUrl ? (isStorageLibrarySource(item) ? 4 : 68) : 0
+      const sourceScore = source.includes("sketchfab") ? 44 : source.includes("observatory") ? 18 : source.includes("firecuda") || source.includes("supabase") ? -24 : 6
       return {...item, matchScore: directScore + sourceScore + tokenScore}
     })
     .sort((a, b) => b.matchScore - a.matchScore)
@@ -1558,7 +1576,7 @@ export default function FullscreenObservatoryV2(){
         const apiResults = (await resolveApiFeeds(nextCategory, term))
           .map((item, index) => attachRendererModel(item, nextCategory, term, index))
         const spotlightResults = apiSpotlightSeeds(nextCategory, term, true)
-        return sortRendererFeeds([...apiResults, ...spotlightResults]).slice(0, 5)
+        return sortRendererFeeds([...apiResults, ...spotlightResults]).slice(0, 8)
       }))
       if(cancelled) return
       const nextFeeds = sortRendererFeeds(batches.flat()).slice(0, 36)
@@ -1850,7 +1868,7 @@ export default function FullscreenObservatoryV2(){
     const directResults = results.filter((item) => item.renderPriority >= 70)
     const fallbackResults = results.filter((item) => item.renderPriority < 70)
     const spotlightResults = apiSpotlightSeeds(nextCategory, term, true)
-    const next = sortRendererFeeds([...directResults, ...spotlightResults, ...seedModels, ...fallbackResults]).slice(0, 10)
+    const next = sortRendererFeeds([...directResults, ...spotlightResults, ...seedModels, ...fallbackResults]).slice(0, 14)
     preloadImages(next.map((item) => item.thumbnail))
     preloadModels(next.map((item) => item.modelUrl), 1)
     if(requestRef.current !== id) return next
@@ -2016,7 +2034,9 @@ export default function FullscreenObservatoryV2(){
 
   function openLobbyFeed(item){
     const nextCategory = item.category || category
-    const categoryFeeds = seedFeeds(nextCategory)
+    const categoryFeeds = sortRendererFeeds([item, ...apiCategoryFeeds.filter((candidate) => candidate.category === nextCategory), ...seedFeeds(nextCategory)])
+      .filter((candidate, index, list) => candidate && list.findIndex((entry) => entry.id === candidate.id || entry.title === candidate.title) === index)
+      .slice(0, 14)
     const selectedIndex = categoryFeeds.findIndex((candidate) => candidate.id === item.id)
     const lobbyIndex = lobbyDisplayFeeds.findIndex((candidate) => candidate.id === item.id)
     if(lobbyIndex >= 0) setLobbyActiveIndex(lobbyIndex)
@@ -2030,6 +2050,17 @@ export default function FullscreenObservatoryV2(){
     setGuideDepth(0)
     setModelOpen(true)
     speakAfterVisual(`Main Lobby loaded ${item.title}. DigitalHut will present the GLB and match a podcast voice when available.`, visualKeyFor(item, stages[0]), 700)
+    wake()
+  }
+
+  function previewLobbyFeed(item){
+    const lobbyIndex = lobbyDisplayFeeds.findIndex((candidate) => candidate.id === item.id)
+    if(lobbyIndex >= 0) setLobbyActiveIndex(lobbyIndex)
+    setQuery(item.query || item.title)
+    setStageIndex(0)
+    setGuideDepth(0)
+    recordDirectorMessage("ai", `Main Lobby previewing ${item.title}. Use Enter Renderer when you want to open the full 3D display.`, "Main Lobby")
+    speakAfterVisual(`Main Lobby preview. ${item.title}. Explore the category, nodes, autoplay showcase, or enter the renderer when ready.`, visualKeyFor(item, stages[0]), 500)
     wake()
   }
 
@@ -2518,6 +2549,17 @@ export default function FullscreenObservatoryV2(){
       speak(runtimeState.online ? "Auto Play is paused while this page is in the background." : "Auto Play is paused because the system is offline.")
       return
     }
+    if(mainLobbyOpen){
+      const next = !autoPresent
+      setShowcaseAuto(next)
+      setAutoPresent(next)
+      setPlaying(next)
+      setDemoMode(next ? "lobby" : "")
+      recordDirectorMessage("ai", next ? "Main Lobby showcase autoplay started." : "Main Lobby showcase autoplay paused.", "Main Lobby")
+      speak(next ? "Main Lobby autoplay started. I will rotate fresh category and API highlights without opening the full renderer." : "Main Lobby autoplay paused.")
+      wake()
+      return
+    }
     startDemoMode("current")
   }
 
@@ -2664,7 +2706,7 @@ export default function FullscreenObservatoryV2(){
         <div>
           <header>
             <div><span>Main Lobby</span><h2>DigitalHut Observatory Showcase</h2></div>
-            <button type="button" onClick={() => setMainLobbyOpen(false)}>Enter Renderer</button>
+            <button type="button" onClick={() => openLobbyFeed(lobbyActiveFeed)}>Enter Renderer</button>
           </header>
           <section className="dh-main-lobby-stage">
             <div className="dh-main-lobby-screen">
@@ -2677,9 +2719,9 @@ export default function FullscreenObservatoryV2(){
               <small className="dh-main-lobby-source">{lobbyActiveFeed.apiSource || lobbyActiveFeed.apiStatus || "DigitalHut feed"}</small>
               <p>Welcome to DigitalHut. Explore categories, System Nodes, AutoPlay Showcase, and search any observatory experience. You can run commands such as open planetary category, next model, open backend, or start autoplay.</p>
               <div>
-                <button type="button" onClick={() => openLobbyFeed(lobbyActiveFeed)}>Play Highlighted GLB</button>
+                <button type="button" onClick={() => previewLobbyFeed(lobbyActiveFeed)}>Preview Highlight</button>
                 <button type="button" onClick={() => {window.location.href = "/asset-lab?tab=blink"}}>System Nodes</button>
-                <button type="button" onClick={() => {setMainLobbyOpen(false); setShowcaseAuto(true); setDemoMode("all"); setAutoPresent(true); setPlaying(true); setModelOpen(true); speak("Welcome to DigitalHut. Explore the categories, nodes, autoplay showcase, and search any observatory experience. Have fun. You can run commands like open planetary category or next model.")}}>Auto Play</button>
+                <button type="button" onClick={() => {setShowcaseAuto(true); setDemoMode("lobby"); setAutoPresent(true); setPlaying(true); setModelOpen(false); speak("Welcome to DigitalHut. Explore the categories, nodes, autoplay showcase, and search any observatory experience. Have fun. You can run commands like open planetary category or next model.")}}>Auto Play</button>
               </div>
             </div>
           </section>
@@ -2688,7 +2730,7 @@ export default function FullscreenObservatoryV2(){
               <MiniVisual feed={item} active={item.id === sceneFeed.id} />
               <div><span>{item.category}</span><b>{item.title}</b><small>{item.apiSource || item.apiStatus || "DigitalHut feed"}</small></div>
               <button type="button" onClick={() => setLobbyActiveIndex(index)}>Highlight</button>
-              <button type="button" onClick={() => openLobbyFeed(item)}>Play Preview</button>
+              <button type="button" onClick={() => previewLobbyFeed(item)}>Play Preview</button>
             </article>)}
           </div>
         </div>
