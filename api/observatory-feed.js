@@ -77,11 +77,18 @@ function assetBaseDiagnostics(){
     hasSupabaseUrl: Boolean(supabaseUrl),
     bucket: process.env.SUPABASE_ASSET_BUCKET || process.env.VITE_SUPABASE_ASSET_BUCKET || process.env.SUPABASE_STORAGE_BUCKET || "digitalhut-assets",
     folder: process.env.SUPABASE_FIRECUDA_FOLDER || process.env.VITE_SUPABASE_FIRECUDA_FOLDER || "firecuda-library",
+    allowedFilesConfigured: allowedStorageFiles().size,
     requiredForFullProduction: [
       "SUPABASE_FIRECUDA_ASSET_BASE or VITE_SUPABASE_FIRECUDA_ASSET_BASE",
+      "SUPABASE_FIRECUDA_AVAILABLE_FILES for verified storage object names",
       "or SUPABASE_URL/VITE_SUPABASE_URL plus SUPABASE_ASSET_BUCKET and SUPABASE_FIRECUDA_FOLDER"
     ]
   }
+}
+
+function allowedStorageFiles(){
+  const raw = process.env.SUPABASE_FIRECUDA_AVAILABLE_FILES || process.env.VITE_SUPABASE_FIRECUDA_AVAILABLE_FILES || process.env.FIRECUDA_AVAILABLE_FILES || ""
+  return new Set(raw.split(",").map((item) => item.trim()).filter(Boolean))
 }
 
 export default function handler(req, res){
@@ -90,16 +97,23 @@ export default function handler(req, res){
   const pool = environmentPools[category] || environmentPools["Mainstream Streaming"]
   const base = externalAssetBase()
   const localFiles = new Set(["museum_of_ice_cream_singapore_-_welcome.glb", "international_space_elevator.glb"])
-  const assets = pool.filter((file) => base || localFiles.has(file)).map((file, index) => ({
-    id: `digitalhut-environment-${category}-${index}`,
-    title: assetCatalog[file]?.[0] || file,
-    description: `Verified DigitalHut owner-library environment for ${query}. All-access production lane with structure, terrain, routes, facilities, and surrounding context.`,
-    modelUrl: base ? `${base}${encodeURIComponent(file)}` : `/models/firecuda-library/${encodeURIComponent(file)}`,
-    viewerUrl: "",
-    apiSource: base ? "Supabase FireCuda Production Library" : "Vercel FireCuda Backup API",
-    apiStatus: "verified-owner-library-glb",
-    tags: [category, "environment", "structure", "mapping", "terrain", "scene", ...(assetCatalog[file]?.[1] || [])]
-  }))
+  const verifiedStorageFiles = allowedStorageFiles()
+  const canUseExternal = Boolean(base && verifiedStorageFiles.size)
+  const assets = pool
+    .filter((file) => localFiles.has(file) || (canUseExternal && verifiedStorageFiles.has(file)))
+    .map((file, index) => {
+      const external = canUseExternal && verifiedStorageFiles.has(file)
+      return {
+        id: `digitalhut-environment-${category}-${index}`,
+        title: assetCatalog[file]?.[0] || file,
+        description: `Verified DigitalHut owner-library environment for ${query}. All-access production lane with structure, terrain, routes, facilities, and surrounding context.`,
+        modelUrl: external ? `${base}${encodeURIComponent(file)}` : `/models/firecuda-library/${encodeURIComponent(file)}`,
+        viewerUrl: "",
+        apiSource: external ? "Supabase FireCuda Verified Library" : "Vercel FireCuda Backup API",
+        apiStatus: external ? "verified-supabase-glb" : "verified-local-backup-glb",
+        tags: [category, "environment", "structure", "mapping", "terrain", "scene", ...(assetCatalog[file]?.[1] || [])]
+      }
+    })
   res.setHeader("Cache-Control", "public, s-maxage=300, stale-while-revalidate=900")
   return res.status(200).json({
     category,
