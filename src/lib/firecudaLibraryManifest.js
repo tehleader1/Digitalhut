@@ -35,25 +35,9 @@ const firecudaBase = "/models/firecuda-library/"
 const configuredFirecudaExternalBase = normalizeAssetBase(import.meta.env?.VITE_SUPABASE_FIRECUDA_ASSET_BASE || import.meta.env?.VITE_FIRECUDA_ASSET_BASE || supabaseStorageAssetBase() || "")
 const firecudaExternalBase = isRejectedAssetBase(configuredFirecudaExternalBase) ? "" : configuredFirecudaExternalBase
 const localDeployableFirecudaFiles = new Set([
-  "abandoned_farm_house_with_hay.glb",
-  "cape_town_-_south_africa.glb",
-  "earth.glb",
-  "europe_with_4k_heightmap.glb",
   "glaceons_christmas_miracle.glb",
   "international_space_elevator.glb",
-  "international_space_station.glb",
-  "low_poly_environments_01.glb",
-  "mars_one_mission_-_base.glb",
-  "morgantown_west_virginia_usa_x2.glb",
   "museum_of_ice_cream_singapore_-_welcome.glb",
-  "new_york_city.glb",
-  "puertas_verdes.glb",
-  "real_estate_demo.glb",
-  "rio_de_janeiro_-_brazil.glb",
-  "snowy_village__ps1_environment.glb",
-  "split_point_victoria_australia.glb",
-  "the_planetary_system_of_trappist-1.glb",
-  "tourist_colonial_zone_dominican_republic.glb",
   "transformers_prime_game_bumblebee.glb"
 ])
 const defaultBlockedSingleObjectFiles = new Set([

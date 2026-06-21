@@ -83,11 +83,23 @@ function attachRendererModel(item, category, term, index){
   if(isDirectRenderableModel(item.modelUrl) && isEnvironmentFeed(item)){
     return {
       ...item,
-      renderPriority: item.apiSource === "FireCuda personal GLB library" ? 100 : 80,
+      renderPriority: item.apiSource === "FireCuda personal GLB library" ? 62 : 125,
       apiStatus: item.apiStatus || "direct-api-model"
     }
   }
   const sourceViewerUrl = item.viewerUrl || item.embedUrl || item.modelUrl || ""
+  if(item.embedUrl && item.apiSource){
+    return {
+      ...item,
+      modelUrl: "",
+      viewerUrl: sourceViewerUrl,
+      sourceModelUrl: item.modelUrl || "",
+      sourceEmbedUrl: item.embedUrl || "",
+      renderPriority: 118,
+      apiStatus: item.apiStatus || "api-embed-renderer",
+      note: `${item.note || `Live API result for ${term || category}.`} DigitalHut is rendering the provider viewer first so fresh API feeds surface before owner-library storage backups.`
+    }
+  }
   const bridgeModelUrl = relatedGlb(category, index)
   if(item.apiSource && bridgeModelUrl){
     return {
@@ -97,7 +109,7 @@ function attachRendererModel(item, category, term, index){
       viewerUrl: sourceViewerUrl,
       sourceModelUrl: item.modelUrl || "",
       sourceEmbedUrl: item.embedUrl || "",
-      renderPriority: 72,
+      renderPriority: 88,
       apiStatus: "live-api-spotlight-glb",
       apiSource: `${item.apiSource} + DigitalHut verified GLB`,
       note: `${item.note || `Live API result for ${term || category}.`} DigitalHut attached the closest verified environment GLB so the feed can render immediately while the exact source asset is checked.`
@@ -214,7 +226,7 @@ function apiSpotlightSeeds(category, term = "", randomize = false){
       viewerUrl: "",
       apiSource: "DigitalHut API spotlight + verified GLB",
       apiStatus: modelUrl ? "live-api-spotlight-glb" : "api-spotlight-needs-glb",
-      renderPriority: modelUrl ? 74 : 12,
+      renderPriority: modelUrl ? 92 : 12,
       providerMix: ["DigitalHut API spotlight", "FireCuda/Supabase GLB bridge"],
       tags: ["api-spotlight", "environment", category.toLowerCase()]
     }
@@ -237,6 +249,7 @@ function firecudaSeedFeeds(category){
     viewerUrl: "",
     apiSource: "FireCuda personal GLB library",
     apiStatus: "preloaded-firecuda-model",
+    renderPriority: 62,
     providerMix: ["FireCuda", "DigitalHut library"],
     tags: asset.tags
   }))
@@ -1442,6 +1455,7 @@ export default function FullscreenObservatoryV2(){
   const [directorStatus, setDirectorStatus] = useState({phase: "Finding model", detail: "Preparing DigitalHut renderer", status: "Idle"})
   const [directorChat, setDirectorChat] = useState(() => readDirectorChat())
   const [directorInput, setDirectorInput] = useState("")
+  const [faqOpen, setFaqOpen] = useState(false)
   const [mainLobbyOpen, setMainLobbyOpen] = useState(true)
   const [lobbyActiveIndex, setLobbyActiveIndex] = useState(0)
   const [apiCategoryFeeds, setApiCategoryFeeds] = useState([])
@@ -2858,6 +2872,24 @@ export default function FullscreenObservatoryV2(){
         </div>
       </div>}
     </section>
+
+    <button className="dh-system-faq-button" type="button" onClick={() => setFaqOpen((value) => !value)} aria-expanded={faqOpen} aria-label="Open DigitalHut system FAQ">?</button>
+    {faqOpen && <aside className="dh-system-faq-panel" aria-label="DigitalHut quick FAQ">
+      <header><span>DigitalHut FAQ</span><button type="button" onClick={() => setFaqOpen(false)}>Close</button></header>
+      <section><b>Backend Editor</b><p>Upload or register GLBs, edit names/descriptions, review conversion status, attach metadata, prepare sponsor lanes, and later build protected presentation edits.</p></section>
+      <section><b>Blink Nodes</b><p>Nodes are learned specialty algorithms. Paid access or 5+ days of real activity can unlock stronger autoplay lanes built from searches, notes, reactions, API discoveries, and saved GLBs.</p></section>
+      <section><b>AutoPlay Showcase</b><p>AutoPlay opens the renderer, waits for assets, speaks in stages, rotates through related feeds, and can bridge categories while keeping the presentation moving.</p></section>
+      <section><b>Growing In The System</b><p>Search real topics, play GLBs, save notes, react with voice/text, publish useful links, and add verified models to storage. Better history plus higher tier plus unlocked nodes improves feed quality.</p></section>
+      <a href="/faq">Open full FAQ</a>
+    </aside>}
+
+    <nav className="dh-system-footer" aria-label="Important DigitalHut pages">
+      <a href="/about">About Us</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/contact">Contact</a>
+      <a href="/guardian">Guardian</a>
+      <a href="/faq">FAQ</a>
+    </nav>
 
     {entryOpen && <section className="dh-entry"><div className="dh-entry-panel">{entryLoading ? <><div className="dh-logo">DigitalHut</div><div className="dh-load"><span /></div><p>Loading your observatory system</p></> : <><p className="dh-eyebrow">Choose profile</p><h2 className="dh-welcome">Welcome!</h2><input className="dh-entry-input" value={username} onChange={(event) => setUsername(event.target.value)} placeholder="Username Account" /><div className="dh-account-grid">{accounts.map((item) => <button key={item} className={`dh-btn ${tier === item ? "active" : ""}`} onClick={() => enter(item)}>{item.toUpperCase()}</button>)}</div><div className="dh-wallet"><ConnectButton /></div><p className="dh-entry-small">Premium starts guided model sequences. Regular users can still search and inspect API feeds.</p></>}</div></section>}
   </main>

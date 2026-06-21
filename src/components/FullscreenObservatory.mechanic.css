@@ -613,6 +613,124 @@
   min-height: 34px;
 }
 
+.dh-system-faq-button {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  z-index: 92;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(103,232,249,.62);
+  border-radius: 8px;
+  background: rgba(8,145,178,.24);
+  color: #ecfeff;
+  font-size: 22px;
+  font-weight: 950;
+  cursor: pointer;
+  box-shadow: 0 0 0 1px rgba(103,232,249,.14), 0 0 24px rgba(34,211,238,.16);
+}
+
+.dh-system-faq-panel {
+  position: absolute;
+  right: 18px;
+  bottom: 68px;
+  z-index: 92;
+  width: min(380px, calc(100vw - 36px));
+  max-height: min(560px, calc(100vh - 96px));
+  display: grid;
+  gap: 10px;
+  padding: 13px;
+  overflow-y: auto;
+  border: 1px solid rgba(103,232,249,.46);
+  border-radius: 8px;
+  background: rgba(2,10,20,.96);
+  color: #e2e8f0;
+}
+
+.dh-system-faq-panel header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.dh-system-faq-panel header span {
+  color: #67e8f9;
+  font-size: 11px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.dh-system-faq-panel header button,
+.dh-system-faq-panel a {
+  border: 1px solid rgba(103,232,249,.34);
+  border-radius: 6px;
+  background: rgba(8,145,178,.2);
+  color: #ecfeff;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.dh-system-faq-panel header button {
+  padding: 7px 9px;
+  cursor: pointer;
+}
+
+.dh-system-faq-panel a {
+  padding: 9px;
+  text-align: center;
+}
+
+.dh-system-faq-panel section {
+  display: grid;
+  gap: 4px;
+  padding: 9px;
+  border: 1px solid rgba(148,163,184,.18);
+  border-radius: 6px;
+  background: rgba(15,23,42,.68);
+}
+
+.dh-system-faq-panel b {
+  color: #f8fafc;
+}
+
+.dh-system-faq-panel p {
+  margin: 0;
+  color: #cbd5e1;
+  font-size: 12px;
+  line-height: 1.42;
+}
+
+.dh-system-footer {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  z-index: 91;
+  display: flex;
+  gap: 6px;
+  padding: 6px;
+  border: 1px solid rgba(125,211,252,.28);
+  border-radius: 8px;
+  background: rgba(2,10,20,.86);
+  transform: translateX(-50%);
+}
+
+.dh-system-footer a {
+  padding: 7px 9px;
+  border: 1px solid rgba(148,163,184,.18);
+  border-radius: 6px;
+  color: #cffafe;
+  font-size: 10px;
+  font-weight: 900;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.dh-system-footer a:hover {
+  border-color: rgba(103,232,249,.7);
+  box-shadow: 0 0 18px rgba(34,211,238,.2);
+}
+
 @keyframes dhLobbyScan {
   from { transform: translateY(-100%); }
   to { transform: translateY(100%); }
