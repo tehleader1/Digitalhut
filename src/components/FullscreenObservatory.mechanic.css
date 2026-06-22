@@ -85,6 +85,111 @@
 .dh-cockpit-frame span { left: 8px; }
 .dh-cockpit-frame b { right: 8px; color: #94a3b8; }
 
+.dh-wallet-package {
+  position: absolute;
+  top: 76px;
+  right: 14px;
+  z-index: 47;
+  width: min(360px, calc(100vw - 32px));
+  color: #e0f2fe;
+}
+
+.dh-wallet-package-toggle,
+.dh-wallet-prepare {
+  width: 100%;
+  display: grid;
+  gap: 3px;
+  padding: 10px 12px;
+  border: 1px solid rgba(250,204,21,.52);
+  border-radius: 7px;
+  background: rgba(3,14,24,.94);
+  color: #fef3c7;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: 0 0 26px rgba(250,204,21,.14);
+}
+
+.dh-wallet-package-toggle span {
+  color: #67e8f9;
+  font-size: 9px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.dh-wallet-package-toggle b {
+  overflow: hidden;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dh-wallet-package-menu {
+  display: grid;
+  gap: 9px;
+  margin-top: 8px;
+  padding: 10px;
+  border: 1px solid rgba(103,232,249,.32);
+  border-radius: 8px;
+  background: rgba(2,6,23,.94);
+  box-shadow: 0 22px 60px rgba(0,0,0,.36);
+}
+
+.dh-wallet-connect-row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.dh-wallet-package-menu code {
+  overflow: hidden;
+  display: block;
+  padding: 7px;
+  border: 1px solid rgba(148,163,184,.2);
+  border-radius: 5px;
+  color: #bef264;
+  font-size: 10px;
+  text-overflow: ellipsis;
+}
+
+.dh-wallet-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.dh-wallet-options button {
+  display: grid;
+  gap: 3px;
+  padding: 8px;
+  border: 1px solid rgba(148,163,184,.22);
+  border-radius: 6px;
+  background: rgba(15,23,42,.74);
+  color: #e2e8f0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.dh-wallet-options button.selected {
+  border-color: rgba(250,204,21,.68);
+  background: rgba(113,63,18,.42);
+  box-shadow: 0 0 24px rgba(250,204,21,.12);
+}
+
+.dh-wallet-options span,
+.dh-wallet-options small {
+  color: #67e8f9;
+  font-size: 8px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.dh-wallet-options b,
+.dh-wallet-options em {
+  overflow: hidden;
+  font-size: 10px;
+  font-style: normal;
+  text-overflow: ellipsis;
+}
+
 .dh-observatory.mechanic-mode .dh-renderer.has-api.live-open .dh-model-shell {
   left: 50%;
   top: 54%;
@@ -408,6 +513,110 @@
   font-size: 8px;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.dh-glb-review-panel {
+  display: grid;
+  gap: 7px;
+  padding: 8px;
+  border: 1px solid rgba(250,204,21,.24);
+  border-radius: 6px;
+  background: rgba(15,23,42,.58);
+}
+
+.dh-star-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+}
+
+.dh-star-row button {
+  min-height: 30px;
+  border: 1px solid rgba(148,163,184,.22);
+  border-radius: 5px;
+  background: rgba(2,6,23,.72);
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.dh-star-row button.filled {
+  border-color: rgba(250,204,21,.72);
+  color: #facc15;
+  box-shadow: 0 0 18px rgba(250,204,21,.18);
+}
+
+.dh-glb-review-panel textarea {
+  width: 100%;
+  min-height: 54px;
+  resize: vertical;
+  padding: 7px;
+  border: 1px solid rgba(148,163,184,.22);
+  border-radius: 5px;
+  background: rgba(2,6,23,.72);
+  color: #e2e8f0;
+  font-size: 10px;
+}
+
+.dh-review-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.dh-review-actions button {
+  min-width: 0;
+  padding: 7px;
+  border: 1px solid rgba(103,232,249,.32);
+  border-radius: 5px;
+  background: rgba(8,145,178,.18);
+  color: #e0f2fe;
+  cursor: pointer;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.dh-glb-review-panel > small {
+  overflow: hidden;
+  color: #bef264;
+  font-size: 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dh-ai-operator-readout {
+  display: grid;
+  gap: 3px;
+  padding: 8px;
+  border: 1px solid rgba(103,232,249,.24);
+  border-radius: 6px;
+  background: rgba(2,6,23,.62);
+  box-shadow: inset 0 0 22px rgba(34,211,238,.06);
+}
+
+.dh-ai-operator-readout span {
+  color: #67e8f9;
+  font-size: 9px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.dh-ai-operator-readout b,
+.dh-ai-operator-readout small {
+  overflow: hidden;
+  display: block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dh-ai-operator-readout b {
+  color: #f8fafc;
+  font-size: 10px;
+}
+
+.dh-ai-operator-readout small {
+  color: #94a3b8;
+  font-size: 8px;
 }
 
 .dh-blink-mini-panel button {
@@ -934,7 +1143,11 @@
 .dh-observatory.mechanic-mode.system-pulse .dh-mechanic-status,
 .dh-observatory.mechanic-mode.system-pulse .dh-mechanic-search,
 .dh-observatory.mechanic-mode.system-pulse .dh-model-shell,
-.dh-observatory.mechanic-mode.system-pulse .dh-main-lobby-stage {
+.dh-observatory.mechanic-mode.system-pulse .dh-main-lobby-stage,
+.dh-observatory.mechanic-mode.ai-operating .dh-mechanic-controls,
+.dh-observatory.mechanic-mode.ai-operating .dh-mechanic-quick-panel,
+.dh-observatory.mechanic-mode.ai-operating .dh-glb-review-panel,
+.dh-observatory.mechanic-mode.ai-operating .dh-wallet-package-toggle {
   animation: dhSystemPulse .72s ease-out 1;
 }
 
