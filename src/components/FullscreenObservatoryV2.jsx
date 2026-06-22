@@ -1119,7 +1119,7 @@ function TourVisual({item, active, accent, image}){
 }
 
 function visualKeyFor(feed, stage){
-  return `${feed?.id || feed?.title || "feed"}:${stage?.id || stage?.label || "stage"}`
+  return `${feed?.id || feed?.title || "feed"}:${feed?.embedUrl || feed?.viewerUrl || feed?.modelUrl || ""}:${stage?.id || stage?.label || "stage"}`
 }
 
 function splitModelUrl(src){
@@ -1297,7 +1297,7 @@ function BabylonGlbStage({src, title, guided, stage, visualKey, onReady, onError
 function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelOpen, onOpenModel, onNext, onPlayMore, onVisualPending, onVisualReady, onDirectorUpdate, guideText, followUps}){
   const resolvedModelUrl = bestRenderableModelUrl(feed)
   const [renderModelUrl, setRenderModelUrl] = useState(() => resolvedModelUrl)
-  const hasEmbed = false
+  const hasEmbed = Boolean(feed.embedUrl)
   const hasModel = Boolean(renderModelUrl)
   const isStats = stage.kind === "stats"
   const [modelReady, setModelReady] = useState(false)
@@ -1328,7 +1328,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
     setModelError("")
     if(!rendererOpen || isStats) return
     onVisualPending?.(visualKey)
-    onDirectorUpdate?.({phase: "Loading Babylon GLB", detail: feed.title, status: "Waiting for renderer asset"})
+    onDirectorUpdate?.({phase: hasEmbed ? "Loading API preview" : "Loading Babylon GLB", detail: feed.title, status: hasEmbed ? "Opening original provider Play Preview" : "Waiting for renderer asset"})
     if(rendererUnavailable){
       const detail = {title: feed.title, reason: "No verified API, Vercel, or FireCuda environment GLB registered for this feed."}
       onDirectorUpdate?.({phase: "Renderer asset missing", detail: feed.title, status: detail.reason})
