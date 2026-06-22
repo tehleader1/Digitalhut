@@ -32,6 +32,7 @@ function isRejectedAssetBase(value){
 }
 
 const firecudaBase = "/models/firecuda-library/"
+const firecudaDisabled = true
 const configuredFirecudaExternalBase = normalizeAssetBase(import.meta.env?.VITE_SUPABASE_FIRECUDA_ASSET_BASE || import.meta.env?.VITE_FIRECUDA_ASSET_BASE || supabaseStorageAssetBase() || "")
 const firecudaExternalBase = isRejectedAssetBase(configuredFirecudaExternalBase) ? "" : configuredFirecudaExternalBase
 const localDeployableFirecudaFiles = new Set([
@@ -344,11 +345,13 @@ export const firecudaLibraryAssets = [
 ]
 
 export function firecudaUrl(file){
+  if(firecudaDisabled) return ""
   if(localDeployableFirecudaFiles.has(file)) return `${firecudaBase}${file}`
   return `${firecudaExternalBase || firecudaBase}${file}`
 }
 
 export function firecudaLocalFallbackUrl(value){
+  if(firecudaDisabled) return ""
   const source = String(value || "")
   const file = source.split("?")[0].split("#")[0].split("/").pop()
   if(file && localDeployableFirecudaFiles.has(file)) return `${firecudaBase}${file}`
@@ -356,6 +359,7 @@ export function firecudaLocalFallbackUrl(value){
 }
 
 function isFirecudaAssetAvailable(asset){
+  if(firecudaDisabled) return false
   return Boolean(firecudaExternalBase) || localDeployableFirecudaFiles.has(asset.file)
 }
 
@@ -366,16 +370,19 @@ export function isEnvironmentAsset(asset){
 }
 
 export function firecudaModelPool(category){
+  if(firecudaDisabled) return []
   return firecudaLibraryAssets
     .filter((asset) => asset.categories.includes(category) && isFirecudaAssetAvailable(asset) && isEnvironmentAsset(asset))
     .map((asset) => firecudaUrl(asset.file))
 }
 
 export function firecudaAssetsForCategory(category){
+  if(firecudaDisabled) return []
   return firecudaLibraryAssets.filter((asset) => asset.categories.includes(category) && isFirecudaAssetAvailable(asset) && isEnvironmentAsset(asset))
 }
 
 export function firecudaDiscoveryAssets(){
+  if(firecudaDisabled) return []
   return firecudaLibraryAssets.filter(isFirecudaAssetAvailable).map((asset) => ({
     id: asset.id,
     name: `FireCuda library - ${asset.title}`,
@@ -391,6 +398,16 @@ export function firecudaDiscoveryAssets(){
 }
 
 export function firecudaLibraryStatus(){
+  if(firecudaDisabled) {
+    return {
+      mode: "disabled-api-first",
+      baseUrl: "",
+      externalBaseRejected: false,
+      availableCount: 0,
+      defaultEnvironmentCount: 0,
+      totalCount: firecudaLibraryAssets.length
+    }
+  }
   const available = firecudaLibraryAssets.filter(isFirecudaAssetAvailable)
   const defaultEnvironments = available.filter(isEnvironmentAsset)
   return {

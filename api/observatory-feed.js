@@ -94,6 +94,17 @@ function allowedStorageFiles(){
 export default function handler(req, res){
   const category = String(req.query?.category || "Mainstream Streaming")
   const query = String(req.query?.query || category).replace(/\s+/g, " ").trim().slice(0, 160)
+  const firecudaDisabled = process.env.ENABLE_FIRECUDA_ASSETS !== "true"
+  if(firecudaDisabled){
+    res.setHeader("Cache-Control", "public, s-maxage=120, stale-while-revalidate=300")
+    return res.status(200).json({
+      category,
+      query,
+      policy: "FireCuda owner-library assets are temporarily disabled so live API feeds can surface without broken storage GLB URLs.",
+      assetBase: {...assetBaseDiagnostics(), disabled: true},
+      assets: []
+    })
+  }
   const pool = environmentPools[category] || environmentPools["Mainstream Streaming"]
   const base = externalAssetBase()
   const localFiles = new Set(["museum_of_ice_cream_singapore_-_welcome.glb", "international_space_elevator.glb"])
