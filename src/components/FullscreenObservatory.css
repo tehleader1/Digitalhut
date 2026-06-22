@@ -52,6 +52,54 @@
   opacity: .58;
 }
 
+.dh-ai-load-indicator {
+  position: absolute;
+  right: 18px;
+  top: 18px;
+  z-index: 8;
+  min-width: 190px;
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  border: 1px solid rgba(103,232,249,.46);
+  border-radius: 8px;
+  background: rgba(2,6,23,.76);
+  color: #e0f2fe;
+  box-shadow: 0 0 28px rgba(34,211,238,.16);
+  backdrop-filter: blur(10px);
+}
+
+.dh-ai-load-indicator span {
+  width: 100%;
+  height: 3px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(148,163,184,.18);
+}
+
+.dh-ai-load-indicator span::after {
+  content: "";
+  display: block;
+  width: 44%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #22d3ee, #facc15);
+  animation: dhLoad 1.05s ease-in-out infinite;
+}
+
+.dh-ai-load-indicator b {
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.dh-ai-load-indicator small {
+  overflow: hidden;
+  color: #93c5fd;
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .dh-renderer.model-mode .dh-renderer-stock.is-ready {
   opacity: .16;
   filter: saturate(.72) contrast(.86);

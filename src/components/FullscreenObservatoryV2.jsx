@@ -11,7 +11,11 @@ import "./FullscreenObservatory.mechanic.css"
 const INACTIVITY_MS = 8 * 60 * 1000
 const AI_WINDOW_MS = 12 * 60 * 60 * 1000
 const DEMO_WELCOME_RESET_MS = 90 * 60 * 1000
+const PRESENTATION_IDLE_MS = 14000
+const PREVIEW_COMMENTARY_MS = 10000
 const demoWelcomeStorageKey = "digitalhut:lastAutoDemoWelcomeAt"
+const assetReviewStorageKey = "digitalhut:assetReviews"
+const DIGITALHUT_MAIN_WALLET = "0x3121FbFB683B9147913f336b05eF419b875a7590"
 const AI_TIER_LIMITS = {guest: Infinity, standard: Infinity, premium: Infinity, pro: Infinity}
 const STORAGE_TIER_LIMITS = {guest: 12, standard: 50, premium: 500, pro: Infinity}
 const accounts = ["guest", "standard", "premium", "pro"]
@@ -317,6 +321,52 @@ function readStorage(key, fallback = ""){
   return window.localStorage.getItem(key) || fallback
 }
 
+function writeStorage(key, value){
+  if(typeof window === "undefined") return
+  window.localStorage.setItem(key, value)
+}
+
+function safeAssetSlug(value){
+  return String(value || "digitalhut-asset")
+    .toLowerCase()
+    .replace(/https?:\/\/\S+/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 72) || "digitalhut-asset"
+}
+
+function assetReviewKey(feed){
+  return safeAssetSlug(feed?.id || feed?.title || feed?.modelUrl || feed?.viewerUrl || feed?.embedUrl)
+}
+
+function readAssetReviews(){
+  if(typeof window === "undefined") return {}
+  try {
+    return JSON.parse(window.localStorage.getItem(assetReviewStorageKey) || "{}")
+  } catch {
+    return {}
+  }
+}
+
+function writeAssetReviews(reviews){
+  if(typeof window === "undefined") return
+  window.localStorage.setItem(assetReviewStorageKey, JSON.stringify(reviews))
+}
+
+function backlinkForFeed(feed){
+  const origin = typeof window === "undefined" ? "https://www.digitalhut.app" : window.location.origin
+  return `${origin}/asset/${assetReviewKey(feed)}`
+}
+
+function cleanSpeechText(text){
+  return String(text || "")
+    .replace(/https?:\/\/\S+/g, "source link attached")
+    .replace(/[A-Z]:\\[^\s]+/g, "local asset path")
+    .replace(/\/[\w./-]+\.(glb|bin|jpg|png|webp|mp4)/gi, "asset file")
+    .replace(/\s+/g, " ")
+    .trim()
+}
+
 function hasFreshEntry(){
   if(typeof window === "undefined") return false
   const last = Number(readStorage("digitalhut:lastAccountEntry", "0"))
@@ -390,6 +440,20 @@ const blinkQuickNodes = [
   {id: "stellar", title: "Stellar", category: "Planetary", minimumDays: 5, paid: "$250/year or $20/month", detail: "Cosmic, orbital compute, planetary GLB feeds"},
   {id: "real-estate-genius", title: "Genius Real Estate", category: "Real Estate", minimumDays: 5, paid: "$250/year or $20/month", detail: "International housing and market presentation feeds"},
   {id: "pro-gamer", title: "Pro Gamer", category: "Gamer", minimumDays: 5, paid: "$250/year or $20/month", detail: "Game-world, 360 visuals, and creator-safe feeds"}
+]
+
+const purchaseOptionsBase = [
+  {id: "tier-standard", type: "tier", title: "Standard", price: "$12/month", unlock: "Longer saved history, core AI Director controls, category growth tracking"},
+  {id: "tier-premium", type: "tier", title: "Premium", price: "$25/month", unlock: "Premium AI detail, stronger session memory, node progress visibility"},
+  {id: "tier-pro", type: "tier", title: "Pro", price: "$60/month", unlock: "Deep research, expanded backend controls, unlimited AI presentation power"},
+  ...blinkQuickNodes.map((item) => ({
+    id: `node-${item.id}`,
+    type: "node",
+    title: item.title,
+    price: item.paid,
+    unlock: item.detail,
+    category: item.category
+  }))
 ]
 
 const lobbyCategories = ["Mainstream Streaming", "Planetary", "Gamer", "Real Estate", "Researcher", "Programmer"]
@@ -704,7 +768,7 @@ async function resolveApiFeeds(category, term){
 function speak(text){
   if(typeof window === "undefined" || !("speechSynthesis" in window)) return
   window.speechSynthesis.cancel()
-  const utter = new SpeechSynthesisUtterance(text)
+  const utter = new SpeechSynthesisUtterance(cleanSpeechText(text))
   utter.rate = 0.94
   utter.pitch = 0.92
   window.speechSynthesis.speak(utter)
@@ -804,6 +868,12 @@ function modelDataReadout({feed, category, stage}){
       modelLink ? "A verified environment model or viewer link is attached to this record." : "The provider did not expose a direct environment GLB yet, so I am rendering the environment read from the scene data."
     ]
   }
+}
+
+function concisePresentationLine({feed, category, stage}){
+  const source = feed.apiSource || feed.apiStatus || "DigitalHut source"
+  const stageLine = stage?.label ? `I am using the ${stage.label} view.` : "I am holding the main view."
+  return `${feed.title} is active in ${category}. ${stageLine} Source status is ${source}. I will keep this moving if the renderer idles.`
 }
 
 function feedbackPrompt({category, feed}){
@@ -1390,6 +1460,7 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
 
   return <div className={`dh-renderer ${guided ? "guided" : ""} ${canShowContainment ? "has-api" : ""} ${rendererOpen ? "model-mode" : ""} ${liveOpen ? "live-open" : ""} ${rendererUnavailable ? "renderer-unavailable" : ""} stage-${stage.kind}`} style={{"--accent": feed.accent}}>
     {feed.thumbnail && <img className={`dh-renderer-stock ${imageReady ? "is-ready" : ""}`} src={feed.thumbnail} alt="" loading="lazy" decoding="async" onLoad={() => setImageReady(true)} />}
+    {(loading || (rendererOpen && !modelLoaded && !hasEmbed)) && <div className="dh-ai-load-indicator" aria-live="polite"><span /><b>AI searching renderer</b><small>{feed.title}</small></div>}
     {decorationActive && <div className="dh-motion-sky" />}
     {decorationActive && <div className="dh-stars">{stars.map((_, index) => <span key={index} style={{left: `${4 + (index * 43) % 91}%`, top: `${7 + (index * 31) % 78}%`}} />)}</div>}
     {decorationActive && <SceneObject feed={feed} />}
@@ -1482,6 +1553,10 @@ export default function FullscreenObservatoryV2(){
   const [apiCategoryFeeds, setApiCategoryFeeds] = useState([])
   const [showcaseAuto, setShowcaseAuto] = useState(false)
   const [interactionPulse, setInteractionPulse] = useState(false)
+  const [reviewDraft, setReviewDraft] = useState("")
+  const [reviewNonce, setReviewNonce] = useState(0)
+  const [purchaseOpen, setPurchaseOpen] = useState(false)
+  const [selectedPurchaseIds, setSelectedPurchaseIds] = useState(["tier-premium"])
   const [mechanicMode, setMechanicMode] = useState(true)
   const [mobilityMode, setMobilityMode] = useState("Road")
   const [assistanceOpen, setAssistanceOpen] = useState(false)
@@ -1499,6 +1574,8 @@ export default function FullscreenObservatoryV2(){
   const autoStepRef = useRef(0)
   const pendingSpeechRef = useRef(null)
   const pendingSpeechTimer = useRef(null)
+  const presentationIdleTimer = useRef(null)
+  const previewCommentaryTimer = useRef(null)
   const preMechanicCategoryRef = useRef("Mainstream Streaming")
   const mechanicMotionFrameRef = useRef(null)
 
@@ -1559,6 +1636,12 @@ export default function FullscreenObservatoryV2(){
   const assetLibraryStatus = firecudaLibraryStatus()
   const runtimePaused = !runtimeState.online || !runtimeState.visible
   const mechanicRuntimeStatus = !runtimeState.online ? "Offline" : !runtimeState.visible ? "Paused" : loading ? "Loading" : autoPresent ? "Auto Play" : "Ready"
+  const directorBusy = /finding|loading|waiting|preparing|searching|advancing|idle/i.test(directorStatus.phase)
+  const assetReviews = readAssetReviews()
+  const currentReviewKey = assetReviewKey(sceneFeed)
+  const currentReview = assetReviews[currentReviewKey] || {rating: 0, review: "", backlink: backlinkForFeed(sceneFeed), count: 0}
+  const selectedPurchaseOptions = purchaseOptionsBase.filter((item) => selectedPurchaseIds.includes(item.id))
+  const selectedPurchaseLabel = selectedPurchaseOptions.map((item) => item.title).join(" + ") || "Choose package"
 
   useEffect(() => {
     if(!mainLobbyOpen || lobbyDisplayFeeds.length < 2) return undefined
@@ -1737,7 +1820,7 @@ export default function FullscreenObservatoryV2(){
       setModelOpen(true)
       setPlaying(true)
       if(sceneVisualKey !== visualReadyKey){
-        setDirectorStatus({phase: "Waiting for GLB", detail: sceneFeed.title, status: "Auto demo paused until current model is ready"})
+        setDirectorStatus({phase: "Waiting for GLB", detail: sceneFeed.title, status: "Auto demo is watching the renderer. If it idles, I will advance to the next usable feed."})
         return
       }
       autoStepRef.current += 1
@@ -1771,6 +1854,35 @@ export default function FullscreenObservatoryV2(){
   }, [autoPresent, runtimePaused, demoMode, tier, category, active, stageIndex, sceneFeed.id, sceneFeed.title, sceneVisualKey, visualReadyKey, feeds, autoDelay, showcaseAuto])
 
   useEffect(() => {
+    window.clearTimeout(presentationIdleTimer.current)
+    if(!autoPresent || runtimePaused || !modelOpen || sceneVisualKey === visualReadyKey) return undefined
+    presentationIdleTimer.current = window.setTimeout(() => {
+      const nextIndex = feeds.length > 1 ? (active + 1) % feeds.length : active
+      const nextItem = feeds[nextIndex] || sceneFeed
+      setDirectorStatus({phase: "Advancing idle renderer", detail: nextItem.title, status: "Preview stayed idle too long. DigitalHut is moving the presentation forward."})
+      recordDirectorMessage("ai", `Renderer stayed idle, so I am advancing to ${nextItem.title} and keeping the presentation moving.`, "Auto recovery")
+      setInteractionPulse(true)
+      window.clearTimeout(pulseTimer.current)
+      pulseTimer.current = window.setTimeout(() => setInteractionPulse(false), 900)
+      if(feeds.length > 1){
+        setActive(nextIndex)
+        setStageIndex(0)
+        setGuideDepth(0)
+        setModelOpen(true)
+        speakAfterVisual(`Renderer idle recovery. ${concisePresentationLine({feed: nextItem, category: nextItem.category || category, stage: stages[0]})}`, visualKeyFor(nextItem, stages[0]), 700)
+        return
+      }
+      loadFeeds(category, sceneFeed.query || query, {silent: true, keepOpen: true}).then((next) => {
+        const loaded = next[0] || sceneFeed
+        setActive(0)
+        setModelOpen(true)
+        speakAfterVisual(`Renderer idle recovery. I found a fresh option. ${concisePresentationLine({feed: loaded, category, stage: stages[0]})}`, visualKeyFor(loaded, stages[0]), 700)
+      })
+    }, PRESENTATION_IDLE_MS)
+    return () => window.clearTimeout(presentationIdleTimer.current)
+  }, [autoPresent, runtimePaused, modelOpen, sceneVisualKey, visualReadyKey, active, feeds, sceneFeed, category, query])
+
+  useEffect(() => {
     const pending = pendingSpeechRef.current
     if(!pending || pending.key !== visualReadyKey) return
     window.clearTimeout(pendingSpeechTimer.current)
@@ -1779,6 +1891,10 @@ export default function FullscreenObservatoryV2(){
       pendingSpeechRef.current = null
     }, pending.delay)
   }, [visualReadyKey])
+
+  useEffect(() => {
+    setReviewDraft(currentReview.review || "")
+  }, [currentReviewKey])
 
   function markVisualPending(key){
     setVisualReadyKey((current) => current === key ? "" : current)
@@ -1812,6 +1928,70 @@ export default function FullscreenObservatoryV2(){
     setAwake(true)
     window.clearTimeout(hideTimer.current)
     hideTimer.current = window.setTimeout(() => setAwake(false), 2800)
+  }
+
+  function saveAssetReview(rating){
+    const reviews = readAssetReviews()
+    const backlink = backlinkForFeed(sceneFeed)
+    const previous = reviews[currentReviewKey] || {}
+    const nextReview = {
+      ...previous,
+      rating,
+      review: reviewDraft.trim(),
+      title: sceneFeed.title,
+      category,
+      backlink,
+      source: sceneFeed.apiSource || sceneFeed.apiStatus || "DigitalHut",
+      updatedAt: new Date().toISOString(),
+      count: (previous.count || 0) + 1
+    }
+    const nextReviews = {...reviews, [currentReviewKey]: nextReview}
+    writeAssetReviews(nextReviews)
+    setReviewNonce((value) => value + 1)
+    recordDirectorMessage("user", `${rating}/5 stars for ${sceneFeed.title}${reviewDraft.trim() ? `: ${reviewDraft.trim()}` : ""}`, "GLB review")
+    recordDirectorMessage("ai", `Review saved. This improves ${category} category quality signals and creates a DigitalHut backlink for this asset.`, "SEO signal")
+    setDirectorStatus({phase: "Review saved", detail: sceneFeed.title, status: "Category popularity, SEO credibility, and backlink signal updated locally."})
+    setInteractionPulse(true)
+    window.clearTimeout(pulseTimer.current)
+    pulseTimer.current = window.setTimeout(() => setInteractionPulse(false), 900)
+  }
+
+  async function copyAssetBacklink(){
+    const link = currentReview.backlink || backlinkForFeed(sceneFeed)
+    await navigator.clipboard?.writeText(link).catch(() => null)
+    recordDirectorMessage("ai", `Backlink ready for ${sceneFeed.title}.`, "Backlink")
+    setDirectorStatus({phase: "Backlink ready", detail: sceneFeed.title, status: link})
+    setInteractionPulse(true)
+    window.clearTimeout(pulseTimer.current)
+    pulseTimer.current = window.setTimeout(() => setInteractionPulse(false), 900)
+  }
+
+  function togglePurchaseOption(id){
+    setSelectedPurchaseIds((current) => {
+      if(current.includes(id)) return current.filter((item) => item !== id)
+      const option = purchaseOptionsBase.find((item) => item.id === id)
+      if(option?.type === "tier"){
+        return [...current.filter((item) => !item.startsWith("tier-")), id]
+      }
+      return [...current, id]
+    })
+  }
+
+  async function prepareWalletPurchase(){
+    const payload = {
+      wallet: DIGITALHUT_MAIN_WALLET,
+      selected: selectedPurchaseOptions,
+      category,
+      currentAsset: sceneFeed.title,
+      createdAt: new Date().toISOString()
+    }
+    writeStorage("digitalhut:pendingPurchase", JSON.stringify(payload))
+    await navigator.clipboard?.writeText(`${selectedPurchaseLabel}\nDigitalHut wallet: ${DIGITALHUT_MAIN_WALLET}`).catch(() => null)
+    recordDirectorMessage("ai", `Purchase package prepared: ${selectedPurchaseLabel}. Wallet destination copied for checkout verification.`, "Wallet package")
+    setDirectorStatus({phase: "Wallet package ready", detail: selectedPurchaseLabel, status: `Destination: ${DIGITALHUT_MAIN_WALLET}`})
+    setInteractionPulse(true)
+    window.clearTimeout(pulseTimer.current)
+    pulseTimer.current = window.setTimeout(() => setInteractionPulse(false), 900)
   }
 
   function handleObservatoryPointer(event){
@@ -2050,15 +2230,24 @@ export default function FullscreenObservatoryV2(){
   async function openContainedModel(){
     announceOpen3dModel(sceneFeed)
     setModelOpen(true)
+    setDirectorStatus({phase: "Preparing preview", detail: sceneFeed.title, status: "Opening renderer and waiting 10 seconds before commentary."})
+    setInteractionPulse(true)
+    window.clearTimeout(pulseTimer.current)
+    pulseTimer.current = window.setTimeout(() => setInteractionPulse(false), 900)
+    window.clearTimeout(previewCommentaryTimer.current)
+    previewCommentaryTimer.current = window.setTimeout(() => {
+      recordDirectorMessage("ai", concisePresentationLine({feed: sceneFeed, category, stage}), "Preview commentary")
+      speakAfterVisual(concisePresentationLine({feed: sceneFeed, category, stage}), sceneVisualKey, 250)
+    }, PREVIEW_COMMENTARY_MS)
     wake()
     if(sceneFeed.embedUrl || sceneFeed.modelUrl || loading){
-      speakModelReadout(sceneFeed, category, stage)
+      recordDirectorMessage("ai", `Preview opened for ${sceneFeed.title}. I am waiting briefly so the visual can load before I explain it.`, "Play Preview")
       return
     }
     const next = await loadFeeds(category, sceneFeed.query || query, {silent: true, keepOpen: true})
     const loaded = next[0] || sceneFeed
     setModelOpen(true)
-    speakModelReadout(loaded, category, stage)
+    recordDirectorMessage("ai", `Preview opened for ${loaded.title}. I am waiting briefly so the visual can load before I explain it.`, "Play Preview")
   }
 
   async function refreshLiveRenderer(){
@@ -2682,12 +2871,28 @@ export default function FullscreenObservatoryV2(){
     wake()
   }
 
-  return <main className={`dh-observatory low-power aerospace-display ${loading ? "is-loading" : "is-ready"} ${interactionPulse ? "system-pulse" : ""} ${mainLobbyOpen ? "main-lobby-active" : ""} ${entryOpen ? "entry-open" : "entry-complete"} mechanic-mode`} data-main-frame={digitalHutBrainMap.mainFrame} data-observatory-category={category} data-observatory-status={loading ? "verifying" : sceneFeed.apiStatus || "ready"} data-physical-assets="sensitive" onPointerMove={handleObservatoryPointer} onPointerLeave={centerCockpitMotion} onPointerDown={(event) => {wake(); triggerSystemPulse(event)}} onClickCapture={triggerSystemPulse}>
+  return <main className={`dh-observatory low-power aerospace-display ${loading ? "is-loading" : "is-ready"} ${interactionPulse ? "system-pulse" : ""} ${directorBusy ? "ai-operating" : ""} ${mainLobbyOpen ? "main-lobby-active" : ""} ${entryOpen ? "entry-open" : "entry-complete"} mechanic-mode`} data-main-frame={digitalHutBrainMap.mainFrame} data-observatory-category={category} data-observatory-status={loading ? "verifying" : sceneFeed.apiStatus || "ready"} data-physical-assets="sensitive" onPointerMove={handleObservatoryPointer} onPointerLeave={centerCockpitMotion} onPointerDown={(event) => {wake(); triggerSystemPulse(event)}} onClickCapture={triggerSystemPulse}>
     <section className="dh-stage">
       <RendererVisual feed={sceneFeed} stage={stage} guided={guided} loading={loading} layer={layer} renderLive={!entryOpen} modelOpen={modelOpen} onOpenModel={openContainedModel} onNext={nextStage} onPlayMore={playMore} onVisualPending={markVisualPending} onVisualReady={markVisualReady} onDirectorUpdate={setDirectorStatus} guideText={currentGuideLine} followUps={currentFollowUps} />
       <div className="dh-vignette" />
       {layer === "Architect" && <div className="dh-architect"><b>Architect Layer</b><span>builders / developers / researchers / AIs / experimental</span></div>}
       <>
+        <aside className={`dh-wallet-package ${purchaseOpen ? "open" : ""}`} aria-label="DigitalHut wallet purchase package">
+          <button className="dh-wallet-package-toggle" type="button" onClick={() => setPurchaseOpen((value) => !value)}>
+            <span>Wallet / Packages</span><b>{selectedPurchaseLabel}</b>
+          </button>
+          {purchaseOpen && <div className="dh-wallet-package-menu">
+            <div className="dh-wallet-connect-row"><ConnectButton /></div>
+            <small>Main wallet</small>
+            <code>{DIGITALHUT_MAIN_WALLET}</code>
+            <div className="dh-wallet-options">
+              {purchaseOptionsBase.map((item) => <button key={item.id} type="button" className={selectedPurchaseIds.includes(item.id) ? "selected" : ""} onClick={() => togglePurchaseOption(item.id)}>
+                <span>{item.type}</span><b>{item.title}</b><small>{item.price}</small><em>{item.unlock}</em>
+              </button>)}
+            </div>
+            <button className="dh-wallet-prepare" type="button" onClick={prepareWalletPurchase}>Prepare Package</button>
+          </div>}
+        </aside>
         <div className="dh-cockpit-frame" aria-hidden="true"><span>DigitalHut Observatory</span><b>Verified GLB / public feeds / source status</b></div>
         <nav className="dh-mechanic-categories" aria-label="DigitalHut categories">
           {categories.map((item) => <button key={item.id} className={item.id === category ? "active" : ""} type="button" onClick={() => selectCategory(item.id)}><span>{item.icon}</span><b>{item.id}</b></button>)}
@@ -2715,10 +2920,27 @@ export default function FullscreenObservatoryV2(){
             <section><span>Renderer</span><b>{sceneVisualKey === visualReadyKey ? "Ready" : loading ? "Loading" : "Standby"}</b></section>
             <section><span>Presentation</span><b>{runtimePaused ? "Paused" : autoPresent ? "Auto Play" : "Manual"}</b></section>
           </div>
+          <div className="dh-ai-operator-readout">
+            <span>{directorStatus.phase}</span>
+            <b>{directorStatus.detail}</b>
+            <small>{directorStatus.status}</small>
+          </div>
           <div className="dh-mechanic-current">
             <span>Current public feed</span>
             <b>{sceneFeed.title}</b>
             <small>{sceneFeed.apiSource || sceneFeed.apiStatus || "DigitalHut feed"}</small>
+          </div>
+          <div className="dh-glb-review-panel">
+            <div className="dh-mechanic-panel-head"><span>GLB Rating</span><b>{currentReview.rating ? `${currentReview.rating}/5` : "New"}</b></div>
+            <div className="dh-star-row" aria-label="Rate current GLB">
+              {[1,2,3,4,5].map((rating) => <button key={rating} type="button" className={rating <= (currentReview.rating || 0) ? "filled" : ""} onClick={() => saveAssetReview(rating)}>{rating <= (currentReview.rating || 0) ? "★" : "☆"}</button>)}
+            </div>
+            <textarea value={reviewDraft} onChange={(event) => setReviewDraft(event.target.value)} placeholder="Leave a short review. What made this GLB worth watching?" />
+            <div className="dh-review-actions">
+              <button type="button" onClick={() => saveAssetReview(currentReview.rating || 5)}>Save Review</button>
+              <button type="button" onClick={copyAssetBacklink}>Copy Backlink</button>
+            </div>
+            <small>{currentReview.backlink || backlinkForFeed(sceneFeed)}</small>
           </div>
           <p>Single renderer. DigitalHut detects the device context automatically and keeps the experience focused on searchable GLB presentations, podcasts, feeds, and backend-ready assets.</p>
           <div className="dh-mechanic-quick-panel">
