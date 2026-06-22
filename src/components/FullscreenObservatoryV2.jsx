@@ -10,7 +10,8 @@ import "./FullscreenObservatory.mechanic.css"
 
 const INACTIVITY_MS = 8 * 60 * 1000
 const AI_WINDOW_MS = 12 * 60 * 60 * 1000
-const AI_TIER_LIMITS = {guest: 0, standard: 2 * 60 * 60 * 1000, premium: 4 * 60 * 60 * 1000, pro: Infinity}
+const AI_TIER_LIMITS = {guest: Infinity, standard: Infinity, premium: Infinity, pro: Infinity}
+const STORAGE_TIER_LIMITS = {guest: 12, standard: 50, premium: 500, pro: Infinity}
 const accounts = ["guest", "standard", "premium", "pro"]
 const layers = ["Base", "Architect", "Lighting", "Props", "Grid", "Coordinates"]
 const mobilityModes = [
@@ -2597,9 +2598,10 @@ export default function FullscreenObservatoryV2(){
         dialogue: [`Open 3D model view. ${sceneFeed.title} is ready.`, currentGuideLine],
         createdAt: new Date().toISOString()
       }
-      const nextAssets = [assetRecord, ...currentAssets.filter((item) => item.slug !== slug)].slice(0, 40)
+      const storageLimit = STORAGE_TIER_LIMITS[tier] ?? STORAGE_TIER_LIMITS.guest
+      const nextAssets = [assetRecord, ...currentAssets.filter((item) => item.slug !== slug)].slice(0, storageLimit === Infinity ? undefined : storageLimit)
       window.localStorage.setItem("digitalhut:assetLab", JSON.stringify(nextAssets))
-      speak(`${sceneFeed.title} saved into the protected backend GLB library.`)
+      speak(`${sceneFeed.title} saved. ${storageLimit === Infinity ? "Your tier has unlimited saved asset history." : `Your ${tier} tier keeps the latest ${storageLimit} saved assets.`}`)
     }
     if(label === "Share" && navigator.share) navigator.share({title: viralShareTitle(sceneFeed), text: viralShareText({feed: sceneFeed, hostLine, contestPrompt}), url: sceneFeed.viewerUrl || window.location.href}).catch(() => null)
     if(label === "Embed" && navigator.clipboard) navigator.clipboard.writeText(sceneFeed.embedUrl ? `<iframe src="${sceneFeed.embedUrl}"></iframe>` : window.location.href).catch(() => null)
@@ -2791,7 +2793,7 @@ export default function FullscreenObservatoryV2(){
         <button className="dh-btn" onClick={nextFeed}>Next Model</button>
         <button className="dh-btn" onClick={nextStage}>Rotate</button>
         <label className="dh-speed-control"><span>Speed</span><select value={presentationSpeed} onChange={(event) => setPresentationSpeed(Number(event.target.value))}><option value="0.75">Slow</option><option value="1">Normal</option><option value="1.35">Fast</option><option value="1.75">Sprint</option></select></label>
-        <button className="dh-btn" onClick={() => speak(aiLimit === Infinity ? "Pro AI research is unlimited." : `${Math.round(aiRemainingMs / 60000)} AI minutes remain in this 12 hour window.`)}>{aiLimit === Infinity ? "Pro Unlimited" : `${Math.round(aiRemainingMs / 60000)}m left`}</button>
+        <button className="dh-btn" onClick={() => speak(tier === "pro" ? "Pro research, backend control, and long history are unlimited." : "Free AutoPlay viewing is unlimited. Higher tiers expand saved history, backend controls, node power, and deep research.")}>{tier === "pro" ? "Pro Unlimited" : "Free AutoPlay"}</button>
       </div>
 
       <div className="dh-utility" style={{opacity: awake ? 1 : 0.1}}>{["Save", "Share", "Live", "Embed", "Download", "Related", "Refresh", "FAQ"].map((label) => <button key={label} className="dh-btn" onClick={() => action(label)}>{label}</button>)}</div>
@@ -2933,6 +2935,6 @@ export default function FullscreenObservatoryV2(){
       <a href="/faq">FAQ</a>
     </nav>
 
-    {entryOpen && <section className="dh-entry"><div className="dh-entry-panel">{entryLoading ? <><div className="dh-logo">DigitalHut</div><div className="dh-load"><span /></div><p>Loading your observatory system</p></> : <><p className="dh-eyebrow">Choose profile</p><h2 className="dh-welcome">Welcome!</h2><input className="dh-entry-input" value={username} onChange={(event) => setUsername(event.target.value)} placeholder="Username Account" /><div className="dh-account-grid">{accounts.map((item) => <button key={item} className={`dh-btn ${tier === item ? "active" : ""}`} onClick={() => enter(item)}>{item.toUpperCase()}</button>)}</div><div className="dh-wallet"><ConnectButton /></div><p className="dh-entry-small">Premium starts guided model sequences. Regular users can still search and inspect API feeds.</p></>}</div></section>}
+    {entryOpen && <section className="dh-entry"><div className="dh-entry-panel">{entryLoading ? <><div className="dh-logo">DigitalHut</div><div className="dh-load"><span /></div><p>Loading your observatory system</p></> : <><p className="dh-eyebrow">Choose profile</p><h2 className="dh-welcome">Welcome!</h2><input className="dh-entry-input" value={username} onChange={(event) => setUsername(event.target.value)} placeholder="Username Account" /><div className="dh-account-grid">{accounts.map((item) => <button key={item} className={`dh-btn ${tier === item ? "active" : ""}`} onClick={() => enter(item)}>{item.toUpperCase()}</button>)}</div><div className="dh-wallet"><ConnectButton /></div><p className="dh-entry-small">Guest and wallet-connected users get unlimited viewing and AutoPlay. Paid tiers expand saved history, storage, backend controls, nodes, and deep research.</p></>}</div></section>}
   </main>
 }
