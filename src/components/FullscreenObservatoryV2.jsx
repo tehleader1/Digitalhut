@@ -10,6 +10,8 @@ import "./FullscreenObservatory.mechanic.css"
 
 const INACTIVITY_MS = 8 * 60 * 1000
 const AI_WINDOW_MS = 12 * 60 * 60 * 1000
+const DEMO_WELCOME_RESET_MS = 90 * 60 * 1000
+const demoWelcomeStorageKey = "digitalhut:lastAutoDemoWelcomeAt"
 const AI_TIER_LIMITS = {guest: Infinity, standard: Infinity, premium: Infinity, pro: Infinity}
 const STORAGE_TIER_LIMITS = {guest: 12, standard: 50, premium: 500, pro: Infinity}
 const accounts = ["guest", "standard", "premium", "pro"]
@@ -1950,6 +1952,79 @@ export default function FullscreenObservatoryV2(){
     wake()
   }
 
+  function shouldUseFullDemoWelcome(){
+    if(typeof window === "undefined") return true
+    const last = Number(window.localStorage.getItem(demoWelcomeStorageKey) || 0)
+    const now = Date.now()
+    if(!last || now - last > DEMO_WELCOME_RESET_MS){
+      window.localStorage.setItem(demoWelcomeStorageKey, String(now))
+      return true
+    }
+    return false
+  }
+
+  function nodeSearchTerm(item){
+    if(item?.id === "real-estate-genius") return "middle class international real estate housing opportunities booming market 3d environment"
+    if(item?.id === "stellar") return "stellar planetary orbital compute cosmic observatory space station 3d environment"
+    if(item?.id === "pro-gamer") return "immersive game world 360 vr environment creator safe 3d"
+    return `${item?.title || category} ${item?.category || category} 3d environment`
+  }
+
+  function presentationIntro({kind, node, targetCategory, targetFeed, fullWelcome}){
+    if(node){
+      if(node.id === "real-estate-genius"){
+        return fullWelcome
+          ? `Welcome to ${node.title} Node. Today in real estate housing we will be looking at middle class options that have been booming, then I will attach related 3D environments and keep searching for stronger real estate GLB presentations. First option: ${targetFeed.title}.`
+          : `Resuming ${node.title} Node. I am continuing the real estate housing presentation with ${targetFeed.title}, then I will look for related property and market environments.`
+      }
+      if(node.id === "stellar"){
+        return fullWelcome
+          ? `Welcome to ${node.title} Node. Today we are looking at planetary, orbital compute, and cosmic observatory feeds. I will open ${targetFeed.title}, then rotate into related space and science environments.`
+          : `Resuming ${node.title} Node with ${targetFeed.title}. I will keep the planetary presentation moving through related orbital environments.`
+      }
+      if(node.id === "pro-gamer"){
+        return fullWelcome
+          ? `Welcome to ${node.title} Node. Today we are looking at immersive game-world environments and creator-safe 360 feeds. First I will present ${targetFeed.title}, then search for related playable worlds.`
+          : `Resuming ${node.title} Node with ${targetFeed.title}. I will continue looking for related game environments.`
+      }
+      return fullWelcome ? `Welcome to ${node.title} Node. I will present ${targetFeed.title} and search related GLB environments.` : `Resuming ${node.title} Node with ${targetFeed.title}.`
+    }
+    return fullWelcome
+      ? `Welcome to DigitalHut. First we will be presenting from ${targetCategory}: ${targetFeed.title}. I will present the current option, rotate between categories, and give you a full presentation with related GLBs and API previews.`
+      : kind === "all"
+        ? `Resuming All Category Auto Demo with ${targetFeed.title}. I will continue rotating through categories without restarting the welcome.`
+        : `Resuming Current Category Auto Demo in ${targetCategory} with ${targetFeed.title}. I will stay on topic and continue the presentation.`
+  }
+
+  async function launchPresentationDemo({kind = "current", node = null} = {}){
+    const targetCategory = node?.category || category
+    const seed = seedFeeds(targetCategory)[0]
+    const term = node ? nodeSearchTerm(node) : (sceneFeed.query || query || seed?.query || `${targetCategory} 3d environment`)
+    autoStepRef.current = 0
+    setShowcaseAuto(false)
+    setDemoMode(node ? `node:${node.id}` : kind)
+    setAutoPresent(true)
+    setMode("premium")
+    setPlaying(true)
+    setModelOpen(true)
+    setCategory(targetCategory)
+    setTour(toursFor(targetCategory)[0].id)
+    setStageIndex(0)
+    setStatsFeeds([])
+    setGuideDepth(0)
+    setQuery(term)
+    playSessionSound(targetCategory, node ? "bridge" : "open")
+    const next = await loadFeeds(targetCategory, term, {silent: true, keepOpen: true})
+    const loaded = next[0] || seed || sceneFeed
+    setActive(0)
+    setModelOpen(true)
+    const fullWelcome = shouldUseFullDemoWelcome()
+    const line = presentationIntro({kind, node, targetCategory, targetFeed: loaded, fullWelcome})
+    recordDirectorMessage("ai", line, node ? `${node.title} Node` : "Auto Demo")
+    speakAfterVisual(line, visualKeyFor(loaded, stages[0]), 500)
+    wake()
+  }
+
   function startDemoMode(kind){
     const limit = AI_TIER_LIMITS[tier] ?? AI_TIER_LIMITS.guest
     const usage = readAiUsage(tier)
@@ -1969,14 +2044,7 @@ export default function FullscreenObservatoryV2(){
       return
     }
     autoStepRef.current = 0
-    setShowcaseAuto(false)
-    setDemoMode(kind)
-    setAutoPresent(true)
-    setMode("premium")
-    setPlaying(true)
-    setModelOpen(true)
-    playSessionSound(category, "open")
-    speak(kind === "all" ? "All Category Auto Demo is on. I will move through every category like a full presentation." : `Current Category Auto Demo is on. I will stay inside ${category} and keep the topic focused.`)
+    launchPresentationDemo({kind})
   }
 
   async function openContainedModel(){
@@ -2665,15 +2733,7 @@ export default function FullscreenObservatoryV2(){
             {blinkNodesWithApi.map((item) => <button key={item.id} className={item.locked ? "locked" : "unlocked"} type="button" onClick={() => {
               window.localStorage.setItem("digitalhut:blinkPulse", item.id)
               window.localStorage.setItem("digitalhut:blinkNodeStatus", JSON.stringify({id: item.id, title: item.title, locked: item.locked, learnedSignals: item.learnedSignals, paidUnlock: item.paidUnlock, earnedUnlock: item.earnedUnlock, apiFeed: item.apiFeed?.title || ""}))
-              if(item.locked){
-                window.location.href = `/asset-lab?tab=blink&node=${encodeURIComponent(item.id)}`
-                return
-              }
-              selectCategory(item.category)
-              setAutoPresent(true)
-              setPlaying(true)
-              setModelOpen(true)
-              speak(`Starting ${item.title} Blink autoplay. DigitalHut is using learned ${item.category} feeds and API signals for a stronger presentation lane.`)
+              launchPresentationDemo({kind: "current", node: item})
             }}>
               <b>{item.title}</b><small>{item.locked ? `Locked. ${item.recommendation}` : `Unlocked. ${item.reward}`}</small>
             </button>)}
