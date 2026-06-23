@@ -7,6 +7,9 @@
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
+    "preserve": "node tools/preserve-digitalhut.mjs",
+    "preserve:local": "node tools/preserve-digitalhut.mjs --base=http://127.0.0.1:4173",
+    "preserve:live": "node tools/preserve-digitalhut.mjs --base=https://www.digitalhut.app",
     "backend": "node server.js",
     "start": "node server.js",
     "dev:full": "concurrently \"npm run backend\" \"npm run dev -- --host\""
