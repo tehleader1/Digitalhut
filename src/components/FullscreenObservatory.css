@@ -1613,6 +1613,28 @@
   animation: dhLoad 1.05s ease-in-out infinite;
 }
 
+.dh-research-note-brief {
+  display: grid;
+  gap: 5px;
+  padding: 10px;
+  border: 1px solid rgba(192,132,252,.34);
+  border-radius: 8px;
+  background: rgba(30, 27, 75, .44);
+  color: #ede9fe;
+}
+
+.dh-research-note-brief b {
+  color: #f5d0fe;
+  font-size: 12px;
+}
+
+.dh-research-note-brief span,
+.dh-research-note-brief small {
+  color: #ddd6fe;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
 .dh-welcome {
   margin: 0;
   font-size: clamp(36px, 7vw, 60px);

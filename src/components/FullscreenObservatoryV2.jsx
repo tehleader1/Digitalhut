@@ -876,6 +876,35 @@ function concisePresentationLine({feed, category, stage}){
   return `${feed.title} is active in ${category}. ${stageLine} Source status is ${source}. I will keep this moving if the renderer idles.`
 }
 
+function tierAssetDescription({feed, category, stage, tier = "guest", nodeTitle = ""}){
+  const source = feed.apiSource || feed.apiStatus || "DigitalHut source"
+  const available = feed.modelUrl || feed.viewerUrl || feed.embedUrl ? "available for preview" : "waiting for a verified renderer link"
+  const worldHint = feed.location || feed.region || feed.country || (category === "Real Estate" ? "the selected housing market" : category === "Planetary" ? "the observatory sector" : "this category lane")
+  const nodeLine = nodeTitle || (category === "Gamer" ? "Pro Gamer Node" : category === "Real Estate" ? "Genius Real Estate Node" : category === "Planetary" || category === "Orbital Compute" ? "Stellar Node" : "DigitalHut category progress")
+  if(category === "Researcher"){
+    if(tier === "pro") return `Researcher Pro read: ${feed.title} is ${available}. I am checking visible structure, source status, evidence clues, and angle details. Tell me what details you need and I will format them into the Researcher note panel.`
+    if(tier === "premium") return `Researcher Premium read: ${feed.title} is ${available}. I am identifying what the researcher may be looking at: shape, surface clues, environment context, and source confidence. What detail should I focus on?`
+    return `Researcher Standard read: this is ${feed.title}. It exists in the feed so you can inspect the asset, ask what it represents, and save basic notes.`
+  }
+  if(tier === "pro"){
+    return `Pro read: ${feed.title} is ${available}. I am reading close detail in ${stage.label}, checking download and preview value, and this session can earn stronger points toward ${nodeLine} if viewers rate, review, save, or backlink the asset. Source: ${source}.`
+  }
+  if(tier === "premium"){
+    return `Premium read: ${feed.title} is ${available} in ${worldHint}. It connects to ${nodeLine}, so strong viewing, notes, ratings, and category shuffling can improve that node path. Source: ${source}.`
+  }
+  return `Standard read: this is ${feed.title}. It exists because DigitalHut found it as a playable observatory asset for ${category}. Source: ${source}.`
+}
+
+function assetIdentificationWorkflow({feed, category, tier}){
+  const proLine = tier === "pro"
+    ? "Your Pro lane can save a deeper research note, prepare database metadata, track download status, and score the asset toward the matching node."
+    : "Upgrade to Pro when you want database-ready metadata, download checks, source verification, and higher node scoring."
+  const premiumLine = tier === "premium" || tier === "pro"
+    ? "Premium identification is active: I can describe the asset, category, likely world context, node connection, and researcher questions."
+    : "Premium is the first tier for stronger identification: asset description, world context, node connection, and guided questions."
+  return `Best workflow for ${feed.title}: first identify what the asset represents, then tag category ${category}, source, preview type, download availability, location or world context, and node relevance. ${premiumLine} ${proLine}`
+}
+
 function feedbackPrompt({category, feed}){
   if(category === "Researcher") return `Did you see the details on ${feed.title} clearly, or should I rotate and compare another source?`
   if(category === "Programmer") return "Should I inspect the backend/API relevance, or bridge this into researcher verification?"
@@ -2236,8 +2265,19 @@ export default function FullscreenObservatoryV2(){
     pulseTimer.current = window.setTimeout(() => setInteractionPulse(false), 900)
     window.clearTimeout(previewCommentaryTimer.current)
     previewCommentaryTimer.current = window.setTimeout(() => {
-      recordDirectorMessage("ai", concisePresentationLine({feed: sceneFeed, category, stage}), "Preview commentary")
-      speakAfterVisual(concisePresentationLine({feed: sceneFeed, category, stage}), sceneVisualKey, 250)
+      const angleStage = stages[1]
+      setStageIndex(1)
+      setDirectorStatus({phase: "Angle pass", detail: sceneFeed.title, status: "Rotating camera and reading asset detail before continuing."})
+      const line = tierAssetDescription({feed: sceneFeed, category, stage: angleStage, tier})
+      recordDirectorMessage("ai", line, "Preview angle pass")
+      speakAfterVisual(line, visualKeyFor(sceneFeed, angleStage), 250)
+      window.setTimeout(() => {
+        if(autoPresent) return
+        const next = stages[2]
+        setStageIndex(2)
+        recordDirectorMessage("ai", `Angle pass complete. Moving to the related asset lane for ${sceneFeed.title}.`, "Preview progression")
+        speakAfterVisual(`Angle pass complete. I am moving to the related asset lane so the presentation continues normally.`, visualKeyFor(sceneFeed, next), 300)
+      }, Math.max(5200, Math.round(7200 / presentationSpeed)))
     }, PREVIEW_COMMENTARY_MS)
     wake()
     if(sceneFeed.embedUrl || sceneFeed.modelUrl || loading){
@@ -2503,9 +2543,16 @@ export default function FullscreenObservatoryV2(){
       return
     }
     if(lower.includes("open 3d") || lower.includes("open renderer") || lower.includes("play preview") || lower.includes("open current display")){
-      setModelOpen(true)
+      openContainedModel()
       recordDirectorMessage("ai", `Opening Play Preview for ${sceneFeed.title}.`, "Play Preview")
-      speak(`Open 3D model view. Loading ${sceneFeed.title}.`)
+      return
+    }
+    if(lower.includes("identify") || lower.includes("upload to database") || lower.includes("database upload") || lower.includes("what should i purchase") || lower.includes("what do i have to purchase")){
+      setModelOpen(true)
+      setNotesOpen(category === "Researcher" || lower.includes("researcher") || lower.includes("database"))
+      const line = assetIdentificationWorkflow({feed: sceneFeed, category, tier})
+      recordDirectorMessage("ai", line, "Asset identification")
+      speak(line)
       return
     }
     if(lower.includes("download current 3d display") || lower.includes("download current display") || lower.includes("download current 3d")){
@@ -2551,8 +2598,9 @@ export default function FullscreenObservatoryV2(){
       return
     }
     if(lower.includes("read data") || lower.includes("what do you see") || lower.includes("did you see the model") || lower.includes("current model")){
-      recordDirectorMessage("ai", `Reading the current model: ${sceneFeed.title}.`, "Model readout")
-      speakModelReadout()
+      const line = tierAssetDescription({feed: sceneFeed, category, stage, tier})
+      recordDirectorMessage("ai", line, "Model readout")
+      speak(line)
       return
     }
     if(lower.includes("deep research")){
@@ -3181,12 +3229,18 @@ export default function FullscreenObservatoryV2(){
 
       {notesOpen && <div className="dh-smart-notes">
         <div><b>Smart Note / Chat Record</b><button type="button" onClick={() => setNotesOpen(false)}>Close</button></div>
+        {category === "Researcher" && <section className="dh-research-note-brief">
+          <b>Researcher Identification Panel</b>
+          <span>{tierAssetDescription({feed: sceneFeed, category, stage, tier})}</span>
+          <small>Use this panel to identify visible details, source confidence, questions, and database metadata before saving.</small>
+        </section>}
         <div className="dh-note-tools">
           <select value={noteFormat.font} onChange={(event) => setNoteFormat((current) => ({...current, font: event.target.value}))}><option>Arial</option><option>Georgia</option><option>Courier New</option></select>
           <select value={noteFormat.size} onChange={(event) => setNoteFormat((current) => ({...current, size: event.target.value}))}><option value="13">13</option><option value="14">14</option><option value="16">16</option><option value="18">18</option></select>
           <select value={noteFormat.spacing} onChange={(event) => setNoteFormat((current) => ({...current, spacing: event.target.value}))}><option value="1.25">Tight</option><option value="1.45">Normal</option><option value="1.7">Open</option></select>
           <input type="color" value={noteFormat.color} onChange={(event) => setNoteFormat((current) => ({...current, color: event.target.value}))} />
           <button type="button" onClick={() => setSmartNote((current) => `${current}\n- `)}>Bullets</button>
+          {category === "Researcher" && <button type="button" onClick={() => setSmartNote((current) => `${current}\n\nResearcher Asset ID\nAsset: ${sceneFeed.title}\nCategory: ${category}\nTier: ${tier}\nVisible details:\n- \nSource confidence:\n- ${sceneFeed.apiSource || sceneFeed.apiStatus || "DigitalHut source"}\nQuestions:\n- What exact detail needs verification?\nDatabase tags:\n- \nDownload/backlink:\n- ${backlinkForFeed(sceneFeed)}\n`)}>Research Format</button>}
         </div>
         <textarea style={{fontFamily: noteFormat.font, fontSize: `${noteFormat.size}px`, lineHeight: noteFormat.spacing, color: noteFormat.color}} value={smartNote} onChange={(event) => setSmartNote(event.target.value)} placeholder="Your research notes stay here until you explicitly save or download them." />
         <div className="dh-note-attachment"><b>Attached Model</b><span>{sceneFeed.title}</span><small>{sceneFeed.modelUrl || sceneFeed.viewerUrl || sceneFeed.embedUrl || "Provider model link not exposed yet"}</small></div>
