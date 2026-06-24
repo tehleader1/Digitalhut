@@ -36,6 +36,71 @@ function summarizeLocalSignals(){
   }
 }
 
+const fallbackInsightMap = {
+  generatedAt: new Date().toISOString(),
+  status: {
+    app: "DigitalHut 2026 3D renderer observatory AI system",
+    deployment: "local-fallback",
+    rendererMode: "browser-fallback",
+    firecuda: "not verified by API",
+    supabase: "not verified by API",
+    sketchfab: "not verified by API",
+    payments: "not verified by API"
+  },
+  stack: {
+    configuredCount: 0,
+    totalProviders: 11,
+    liveScore: 0,
+    providers: [
+      {id: "vercel", role: "deployment-runtime", configured: false, configuredKeys: []},
+      {id: "supabase", role: "asset-storage-database", configured: false, configuredKeys: []},
+      {id: "firecuda-storage", role: "verified-glb-storage", configured: false, configuredKeys: []},
+      {id: "sketchfab", role: "3d-model-search", configured: false, configuredKeys: []},
+      {id: "cesium", role: "maps-terrain-3d", configured: false, configuredKeys: []},
+      {id: "alchemy", role: "chain-rpc-verification", configured: false, configuredKeys: []},
+      {id: "reown", role: "wallet-connect", configured: false, configuredKeys: []},
+      {id: "alpha-vantage", role: "market-statistics", configured: false, configuredKeys: []},
+      {id: "fmp", role: "market-statistics", configured: false, configuredKeys: []},
+      {id: "polygon", role: "market-statistics", configured: false, configuredKeys: []},
+      {id: "alpaca", role: "market-statistics", configured: false, configuredKeys: []}
+    ]
+  },
+  runnerDiscoveries: [
+    {
+      id: "insight-api-missing",
+      title: "Insight API Not Serving JSON",
+      status: "needs deploy",
+      detail: "The browser received HTML instead of JSON from /api/insight-map. Push api/insight-map.js and redeploy to activate live stack checks."
+    },
+    {
+      id: "browser-local-signals",
+      title: "Browser Local Signals Still Available",
+      status: "active",
+      detail: "Ratings, saved reviews, backlinks, node feed counts, payment staging, and local browser history can still render from localStorage."
+    }
+  ],
+  seoOpportunities: [
+    "2026 3D renderer observatory AI system",
+    "automatic GLB autoplay presentation",
+    "DigitalHut insight map",
+    "3D observatory SEO dashboard",
+    "GLB ratings reviews backlinks"
+  ],
+  scorecard: {
+    stackPower: 0,
+    rendererPower: 35,
+    seoPower: 45,
+    communityPower: 0,
+    paymentPower: 0
+  },
+  nextMeasurements: [
+    "deploy api/insight-map.js",
+    "verify Supabase environment variables",
+    "verify Reown and Alchemy environment variables",
+    "record GLB render-complete events"
+  ]
+}
+
 export default function InsightsPage(){
   const [insight, setInsight] = useState(null)
   const [error, setError] = useState("")
@@ -45,12 +110,22 @@ export default function InsightsPage(){
   useEffect(() => {
     let cancelled = false
     fetch("/api/insight-map")
-      .then((response) => response.json())
+      .then(async (response) => {
+        const text = await response.text()
+        const contentType = response.headers.get("content-type") || ""
+        if(!response.ok || !contentType.includes("application/json") || text.trim().startsWith("<")){
+          throw new Error("Insight API is not deployed yet; showing local/browser signals.")
+        }
+        return JSON.parse(text)
+      })
       .then((payload) => {
         if(!cancelled) setInsight(payload)
       })
       .catch((nextError) => {
-        if(!cancelled) setError(nextError.message || "Unable to load insight map")
+        if(!cancelled){
+          setInsight(fallbackInsightMap)
+          setError(nextError.message || "Unable to load insight map")
+        }
       })
     return () => {
       cancelled = true

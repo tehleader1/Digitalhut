@@ -12,11 +12,13 @@ import {
 import {
   WagmiProvider,
   cookieStorage,
-  createStorage
+  createStorage,
+  http
 } from "wagmi"
 
 import {
   base,
+  mainnet,
   polygon
 } from "wagmi/chains"
 
@@ -28,6 +30,28 @@ import {
 const queryClient =
   new QueryClient()
 
+const walletConnectProjectId =
+  import.meta.env?.VITE_WALLETCONNECT_PROJECT_ID ||
+  import.meta.env?.VITE_REOWN_PROJECT_ID ||
+  "e3d34ce770bdb06243b15ae92a11cc17"
+
+const alchemyKey =
+  import.meta.env?.VITE_ALCHEMY_API_KEY ||
+  import.meta.env?.VITE_ALCHEMY_KEY ||
+  ""
+
+const alchemyBaseUrl =
+  import.meta.env?.VITE_ALCHEMY_BASE_RPC_URL ||
+  (alchemyKey ? `https://base-mainnet.g.alchemy.com/v2/${alchemyKey}` : undefined)
+
+const alchemyPolygonUrl =
+  import.meta.env?.VITE_ALCHEMY_POLYGON_RPC_URL ||
+  (alchemyKey ? `https://polygon-mainnet.g.alchemy.com/v2/${alchemyKey}` : undefined)
+
+const alchemyEthereumUrl =
+  import.meta.env?.VITE_ALCHEMY_ETHEREUM_RPC_URL ||
+  (alchemyKey ? `https://eth-mainnet.g.alchemy.com/v2/${alchemyKey}` : undefined)
+
 export const config =
   getDefaultConfig({
 
@@ -35,12 +59,19 @@ export const config =
       "DigitalHut Observatory",
 
     projectId:
-      "e3d34ce770bdb06243b15ae92a11cc17",
+      walletConnectProjectId,
 
     chains:[
       base,
-      polygon
+      polygon,
+      mainnet
     ],
+
+    transports:{
+      [base.id]: http(alchemyBaseUrl),
+      [polygon.id]: http(alchemyPolygonUrl),
+      [mainnet.id]: http(alchemyEthereumUrl)
+    },
 
     ssr:false,
 

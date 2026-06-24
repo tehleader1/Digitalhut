@@ -33,12 +33,17 @@ const requiredFiles = [
   "src/lib/assetVectorMath.js",
   "src/lib/dailySituationDiscovery.js",
   "api/observatory-feed.js",
+  "api/insight-map.js",
   "api/sketchfab.js",
   "api/provider-status.js",
   "api/asset-conversion.js",
+  "api/digitalhut-capture.js",
+  "api/market-flow.js",
+  "api/options-flow.js",
   "supabase/migrations/202606190001_digitalhut_assets_and_feed.sql",
   "docs/current-api-renderer-map.md",
-  "docs/supabase-firecuda-production.md"
+  "docs/supabase-firecuda-production.md",
+  "docs/digitalhut-external-runner-map.md"
 ]
 
 function record(name, ok, detail = ""){
@@ -137,6 +142,12 @@ async function runEndpointChecks(){
   const sketchfab = await fetchJson(`${baseUrl}/api/sketchfab?category=Planetary&query=planetary%20environment`)
   const results = sketchfab.payload?.results || []
   record("sketchfab environment feed", sketchfab.ok, `${sketchfab.status}; results=${results.length}; authenticated=${Boolean(sketchfab.payload?.authenticated)}`)
+
+  const insight = await fetchJson(`${baseUrl}/api/insight-map`)
+  record("insight map endpoint", insight.ok && Boolean(insight.payload?.status), `${insight.status}; score=${insight.payload?.scorecard?.stackPower ?? "n/a"}`)
+
+  const capture = await fetchJson(`${baseUrl}/api/digitalhut-capture`)
+  record("api discovery capture endpoint", capture.ok && typeof capture.payload?.ready === "boolean", `${capture.status}; ready=${capture.payload?.ready ?? "n/a"}`)
 }
 
 const results = []

@@ -1,7 +1,10 @@
 import React, {useEffect, useRef, useState} from "react"
 import {ConnectButton} from "../wallet"
+import {useAccount, useSendTransaction, useWaitForTransactionReceipt} from "wagmi"
+import {parseEther} from "viem"
 import {inferCategoryByVector} from "../lib/assetVectorMath"
 import {firecudaAssetsForCategory, firecudaLibraryStatus, firecudaLocalFallbackUrl, firecudaModelPool, firecudaUrl} from "../lib/firecudaLibraryManifest"
+import {seoBacklinkBrief, seoNarrationLine} from "../lib/seoContentEngine"
 import PodcastMatchPanel from "./PodcastMatchPanel"
 import "./FullscreenObservatory.css"
 import "./FullscreenObservatory.api.css"
@@ -16,6 +19,9 @@ const PREVIEW_COMMENTARY_MS = 10000
 const demoWelcomeStorageKey = "digitalhut:lastAutoDemoWelcomeAt"
 const assetReviewStorageKey = "digitalhut:assetReviews"
 const DIGITALHUT_MAIN_WALLET = "0x3121FbFB683B9147913f336b05eF419b875a7590"
+const DIGITALHUT_BASE_ETH_RECEIVER = import.meta.env?.VITE_DIGITALHUT_ETH_BASE_RECEIVER || import.meta.env?.VITE_DIGITALHUT_PAYMENT_RECEIVER || DIGITALHUT_MAIN_WALLET
+const DIGITALHUT_BASE_USDC_RECEIVER = import.meta.env?.VITE_DIGITALHUT_USDC_BASE_RECEIVER || ""
+const DIGITALHUT_BASE_ETH_AMOUNT = import.meta.env?.VITE_DIGITALHUT_PAYMENT_ETH_AMOUNT || ""
 const AI_TIER_LIMITS = {guest: Infinity, standard: Infinity, premium: Infinity, pro: Infinity}
 const STORAGE_TIER_LIMITS = {guest: 12, standard: 50, premium: 500, pro: Infinity}
 const accounts = ["guest", "standard", "premium", "pro"]
@@ -679,6 +685,17 @@ function payloadItems(payload){
   return []
 }
 
+function tickerFromSearch(text){
+  const value = String(text || "").trim().toUpperCase()
+  const cleaned = value.replace(/^\$|NYSE:|NASDAQ:|S&P500:|SP500:/gi, "").trim()
+  const direct = cleaned.match(/^[A-Z]{1,5}$/)
+  if(direct) return direct[0]
+  const tagged = value.match(/\b(?:NYSE|NASDAQ|S&P500|SP500|TICKER|STOCK)\s*[: ]\s*([A-Z]{1,5})\b/)
+  if(tagged) return tagged[1]
+  const dollar = value.match(/\$([A-Z]{1,5})\b/)
+  return dollar ? dollar[1] : ""
+}
+
 function firstThumbnail(item){
   const images = item?.thumbnails?.images || item?.thumbnail?.images || item?.images || []
   if(Array.isArray(images) && images.length){
@@ -765,6 +782,80 @@ async function resolveApiFeeds(category, term){
   return items.slice(0, 16)
 }
 
+function marketFlowFeed(payload, optionsPayload = null){
+  const symbol = payload?.symbol || "MARKET"
+  const latest = [...(payload?.windows || [])].reverse().find((item) => item.tradeCount > 0) || payload?.windows?.[0]
+  const largest = latest?.largestPrints?.[0]
+  const biggestBuy = latest?.biggestInferredBuys?.[0]
+  const biggestSell = latest?.biggestInferredSells?.[0]
+  const latestOptions = [...(optionsPayload?.windows || [])].reverse().find((item) => item.printCount > 0) || optionsPayload?.windows?.[0]
+  const optionCandidate = latestOptions?.largestPrints?.[0] || latestOptions?.randomBigBuys?.[0] || latestOptions?.randomBigSells?.[0] || null
+  const pressure = latest?.pressure || "market-flow-pending"
+  const notional = latest?.totalNotional ? `$${Math.round(latest.totalNotional).toLocaleString()}` : "notional pending"
+  return {
+    id: `market-flow:${symbol}:${payload?.checkedAt || Date.now()}`,
+    title: `${symbol} Market Flow Insight`,
+    note: payload?.configured === false
+      ? payload.message
+      : `${payload?.summary || `${symbol} market-flow window loaded.`} ${optionsPayload?.summary || ""} Largest print: ${largest ? `${largest.size.toLocaleString()} shares at $${largest.price}` : "pending"}. Biggest inferred buy: ${biggestBuy ? `${biggestBuy.size.toLocaleString()} shares` : "pending"}. Biggest inferred sell: ${biggestSell ? `${biggestSell.size.toLocaleString()} shares` : "pending"}.`,
+    query: symbol,
+    category: "Businesses",
+    icon: "MF",
+    accent: "#22c55e",
+    context: "NYSE, Nasdaq, S&P 500 ticker trade-flow intelligence",
+    thumbnail: stockUrl("Businesses", 1),
+    embedUrl: "",
+    modelUrl: relatedGlb("Businesses", 0),
+    viewerUrl: "",
+    apiSource: payload?.source || "Alpaca Market Data API",
+    apiStatus: payload?.configured === false ? "alpaca-not-configured" : "trade-flow-insight",
+    market: {
+      symbol,
+      summary: payload?.summary || "",
+      pressure,
+      notional,
+      windows: payload?.windows || [],
+      optionsWindows: optionsPayload?.windows || [],
+      optionsSummary: optionsPayload?.summary || "",
+      optionCandidate,
+      selectedContract: optionsPayload?.selectedContract || optionCandidate?.contract || "",
+      disclaimer: payload?.disclaimer || "Buy/sell pressure is inferred. Public data does not identify individual traders."
+    },
+    providerMix: ["Alpaca", "DigitalHut market-flow"],
+    tags: ["stock", "ticker", "NYSE", "Nasdaq", "S&P500", "market flow", symbol]
+  }
+}
+
+function optionCandidateFromFeed(feed = {}){
+  const windows = feed.market?.optionsWindows || []
+  const candidates = windows.flatMap((item) => [
+    ...(item.largestPrints || []),
+    ...(item.randomBigBuys || []),
+    ...(item.randomBigSells || [])
+  ]).filter((item) => item?.contract)
+  return candidates.sort((a, b) => (b.premium || 0) - (a.premium || 0))[0] || feed.market?.optionCandidate || null
+}
+
+async function resolveMarketFlow(symbol){
+  const [stockResult, optionsResult] = await Promise.allSettled([
+    fetchWithTimeout(`/api/market-flow?symbol=${encodeURIComponent(symbol)}`, {headers: {Accept: "application/json"}}, 7000),
+    fetchWithTimeout(`/api/options-flow?symbol=${encodeURIComponent(symbol)}`, {headers: {Accept: "application/json"}}, 9000)
+  ])
+  if(stockResult.status !== "fulfilled" || !stockResult.value.ok) throw new Error(`Market flow returned ${stockResult.status === "fulfilled" ? stockResult.value.status : "network-error"}`)
+  const payload = await stockResult.value.json()
+  let optionsPayload = null
+  if(optionsResult.status === "fulfilled" && optionsResult.value.ok){
+    optionsPayload = await optionsResult.value.json()
+  }
+  return {payload, optionsPayload, feed: marketFlowFeed(payload, optionsPayload)}
+}
+
+async function resolveOptionContractFlow(symbol, contract){
+  const response = await fetchWithTimeout(`/api/options-flow?symbol=${encodeURIComponent(symbol)}&contract=${encodeURIComponent(contract)}`, {headers: {Accept: "application/json"}}, 9000)
+  if(!response.ok) throw new Error(`Options contract flow returned ${response.status}`)
+  return await response.json()
+}
+
 function speak(text){
   if(typeof window === "undefined" || !("speechSynthesis" in window)) return
   window.speechSynthesis.cancel()
@@ -786,6 +877,7 @@ function speechEngine(){
 
 function categoryFromCommand(text){
   const value = text.toLowerCase()
+  if(tickerFromSearch(text)) return "Businesses"
   const matches = [
     ["Mainstream Streaming", ["spongebob", "viral", "stream", "streaming", "trend", "funny video", "creator", "cat video", "youtube", "tiktok", "meme"]],
     ["Gamer", ["link", "zelda", "game", "gamer", "gaming", "level", "character", "avatar", "cool game", "boss", "quest"]],
@@ -810,6 +902,8 @@ function categoryFromCommand(text){
 
 function queryFromCommand(text, fallback){
   const value = text.toLowerCase()
+  const ticker = tickerFromSearch(text)
+  if(ticker) return ticker
   if(value.includes("spongebob")) return "spongebob style underwater environment viral 3d preview"
   if(value.includes("link")) return "link fantasy adventure game environment 3d preview"
   if(value.includes("london bridge")) return "london bridge construction workforce project 3d model"
@@ -1066,7 +1160,7 @@ async function publishLiveFeedPost(post){
 }
 
 function guideLine({category, stage, feed, tour, expanded = false}){
-  const base = `${stage.label}. ${feed.title}.`
+  const base = seoNarrationLine({category, feed, stageLabel: stage.label})
   const session = metaFor(category).context
   if(stage.kind === "current") return expanded ? `${base} I am staying with the contained model for this ${session} session and checking the main shape, source, and viewing angle.` : `${base} First I hold on the model for the ${category} session.`
   if(stage.kind === "angle") return expanded ? `${base} Now I rotate the view slowly and look for layout, access, scale, and visible risk.` : `${base} Next angle, slow pass.`
@@ -1396,7 +1490,7 @@ function BabylonGlbStage({src, title, guided, stage, visualKey, onReady, onError
   return <canvas ref={canvasRef} className="dh-model dh-babylon-canvas" aria-label={`3D renderer for ${title}`} />
 }
 
-function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelOpen, onOpenModel, onNext, onPlayMore, onVisualPending, onVisualReady, onDirectorUpdate, guideText, followUps}){
+function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelOpen, onOpenModel, onNext, onPlayMore, onVisualPending, onVisualReady, onDirectorUpdate, onMarketOptionSelect, guideText, followUps}){
   const resolvedModelUrl = bestRenderableModelUrl(feed)
   const [renderModelUrl, setRenderModelUrl] = useState(() => resolvedModelUrl)
   const hasEmbed = Boolean(feed.embedUrl)
@@ -1520,7 +1614,44 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
       <div><b>Suggested Follow-Up</b></div>
       {followUps.map((item) => <span key={item}>{item}</span>)}
     </div>}
-    {isStats && <div className="dh-stat-model"><b>{feed.title}</b><span>{feed.market?.symbol || feed.providerMix?.join(" + ") || "data"}</span><p>{feed.note}</p></div>}
+    {isStats && <div className="dh-stat-model"><b>{feed.title}</b><span>{feed.market?.symbol || feed.providerMix?.join(" + ") || "data"}</span><p>{feed.note}</p>
+      {Array.isArray(feed.market?.windows) && feed.market.windows.length > 0 && <div className="dh-market-flow-grid">
+        {feed.market.windows.map((windowItem) => {
+          const topBuy = windowItem.biggestInferredBuys?.[0]
+          const topSell = windowItem.biggestInferredSells?.[0]
+          const topPrint = windowItem.largestPrints?.[0]
+          return <section key={windowItem.id}>
+            <strong>{windowItem.id}</strong>
+            <small>{windowItem.pressure}</small>
+            <span>{windowItem.tradeCount.toLocaleString()} prints / {windowItem.totalVolume.toLocaleString()} shares</span>
+            <span>{`Total ${Math.round(windowItem.totalNotional).toLocaleString()} USD`}</span>
+            <em>{topPrint ? `Largest: ${topPrint.size.toLocaleString()} @ $${topPrint.price}` : "Largest: pending"}</em>
+            <em>{topBuy ? `Buy pressure: ${topBuy.size.toLocaleString()} @ $${topBuy.price}` : "Buy pressure: pending"}</em>
+            <em>{topSell ? `Sell pressure: ${topSell.size.toLocaleString()} @ $${topSell.price}` : "Sell pressure: pending"}</em>
+          </section>
+        })}
+      </div>}
+      {Array.isArray(feed.market?.optionsWindows) && feed.market.optionsWindows.length > 0 && <div className="dh-options-print-feed">
+        <header><strong>Options Market Print Feed</strong><small>{feed.market.optionsSummary || "Random large buy/sell pressure candidates"}</small></header>
+        <div className="dh-market-flow-grid">
+          {feed.market.optionsWindows.map((windowItem) => {
+            const randomBuy = windowItem.randomBigBuys?.[0]
+            const randomSell = windowItem.randomBigSells?.[0]
+            const largest = windowItem.largestPrints?.[0]
+            return <section key={`options-${windowItem.id}`}>
+              <strong>{windowItem.id} options</strong>
+              <small>{windowItem.pressure}</small>
+              <span>{windowItem.printCount.toLocaleString()} prints / ${Math.round(windowItem.totalPremium).toLocaleString()} premium</span>
+              <em>{largest ? `Largest: ${largest.contract} ${largest.size.toLocaleString()} @ $${largest.price}` : "Largest: pending"}</em>
+              <em>{randomBuy ? `Random big buy: ${randomBuy.contract} $${Math.round(randomBuy.premium).toLocaleString()} ${randomBuy.directionalPressure}` : "Random big buy: pending"}</em>
+              <em>{randomSell ? `Random big sell: ${randomSell.contract} $${Math.round(randomSell.premium).toLocaleString()} ${randomSell.directionalPressure}` : "Random big sell: pending"}</em>
+              {largest?.contract && <button type="button" onClick={() => onMarketOptionSelect?.(largest)}>Run Option</button>}
+            </section>
+          })}
+        </div>
+      </div>}
+      {feed.market?.disclaimer && <small className="dh-market-flow-disclaimer">{feed.market.disclaimer}</small>}
+    </div>}
     {decorationActive && <div className="dh-orbit" />}
     {decorationActive && <div className="dh-orbit-two" />}
     {decorationActive && <div className="dh-sweep" />}
@@ -1585,6 +1716,8 @@ export default function FullscreenObservatoryV2(){
   const [reviewDraft, setReviewDraft] = useState("")
   const [reviewNonce, setReviewNonce] = useState(0)
   const [purchaseOpen, setPurchaseOpen] = useState(false)
+  const [displayCollapsed, setDisplayCollapsed] = useState(false)
+  const [selectedOptionPrint, setSelectedOptionPrint] = useState(null)
   const [selectedPurchaseIds, setSelectedPurchaseIds] = useState(["tier-premium"])
   const [mechanicMode, setMechanicMode] = useState(true)
   const [mobilityMode, setMobilityMode] = useState("Road")
@@ -1607,6 +1740,9 @@ export default function FullscreenObservatoryV2(){
   const previewCommentaryTimer = useRef(null)
   const preMechanicCategoryRef = useRef("Mainstream Streaming")
   const mechanicMotionFrameRef = useRef(null)
+  const {address: connectedWallet, isConnected} = useAccount()
+  const {sendTransaction, data: paymentHash, isPending: paymentPending, error: paymentError} = useSendTransaction()
+  const {isSuccess: paymentConfirmed} = useWaitForTransactionReceipt({hash: paymentHash})
 
   const activeTours = toursFor(category)
   const activeTour = activeTours.find((item) => item.id === tour) || activeTours[0]
@@ -1671,6 +1807,36 @@ export default function FullscreenObservatoryV2(){
   const currentReview = assetReviews[currentReviewKey] || {rating: 0, review: "", backlink: backlinkForFeed(sceneFeed), count: 0}
   const selectedPurchaseOptions = purchaseOptionsBase.filter((item) => selectedPurchaseIds.includes(item.id))
   const selectedPurchaseLabel = selectedPurchaseOptions.map((item) => item.title).join(" + ") || "Choose package"
+
+  useEffect(() => {
+    if(typeof window === "undefined") return undefined
+    const media = window.matchMedia("(max-width: 760px)")
+    const syncDisplay = () => setDisplayCollapsed(media.matches)
+    syncDisplay()
+    media.addEventListener?.("change", syncDisplay)
+    return () => media.removeEventListener?.("change", syncDisplay)
+  }, [])
+
+  useEffect(() => {
+    if(typeof window === "undefined") return undefined
+    if(window.innerWidth <= 760 && (modelOpen || sceneVisualKey === visualReadyKey)) setDisplayCollapsed(true)
+  }, [modelOpen, sceneVisualKey, visualReadyKey])
+
+  useEffect(() => {
+    if(!paymentConfirmed || !paymentHash) return
+    const entitlement = {
+      wallet: connectedWallet,
+      receiver: DIGITALHUT_BASE_ETH_RECEIVER,
+      txHash: paymentHash,
+      selected: selectedPurchaseOptions,
+      status: "confirmed-local",
+      chain: "base",
+      createdAt: new Date().toISOString()
+    }
+    writeStorage("digitalhut:paymentEntitlement", JSON.stringify(entitlement))
+    recordDirectorMessage("ai", `Wallet payment confirmed. DigitalHut recorded ${selectedPurchaseLabel} with transaction ${paymentHash.slice(0, 10)}...`, "Wallet checkout")
+    setDirectorStatus({phase: "Payment confirmed", detail: selectedPurchaseLabel, status: "Local entitlement recorded. Backend verification should mirror this to Supabase."})
+  }, [paymentConfirmed, paymentHash])
 
   useEffect(() => {
     if(!mainLobbyOpen || lobbyDisplayFeeds.length < 2) return undefined
@@ -1978,8 +2144,8 @@ export default function FullscreenObservatoryV2(){
     writeAssetReviews(nextReviews)
     setReviewNonce((value) => value + 1)
     recordDirectorMessage("user", `${rating}/5 stars for ${sceneFeed.title}${reviewDraft.trim() ? `: ${reviewDraft.trim()}` : ""}`, "GLB review")
-    recordDirectorMessage("ai", `Review saved. This improves ${category} category quality signals and creates a DigitalHut backlink for this asset.`, "SEO signal")
-    setDirectorStatus({phase: "Review saved", detail: sceneFeed.title, status: "Category popularity, SEO credibility, and backlink signal updated locally."})
+    recordDirectorMessage("ai", `Review saved. ${seoBacklinkBrief({category, feed: sceneFeed})}`, "SEO signal")
+    setDirectorStatus({phase: "Review saved", detail: sceneFeed.title, status: "Category popularity, SEO credibility, backlink quality, and renderer signal updated locally."})
     setInteractionPulse(true)
     window.clearTimeout(pulseTimer.current)
     pulseTimer.current = window.setTimeout(() => setInteractionPulse(false), 900)
@@ -2009,6 +2175,9 @@ export default function FullscreenObservatoryV2(){
   async function prepareWalletPurchase(){
     const payload = {
       wallet: DIGITALHUT_MAIN_WALLET,
+      baseEthReceiver: DIGITALHUT_BASE_ETH_RECEIVER,
+      baseUsdcReceiver: DIGITALHUT_BASE_USDC_RECEIVER,
+      baseEthAmount: DIGITALHUT_BASE_ETH_AMOUNT,
       selected: selectedPurchaseOptions,
       category,
       currentAsset: sceneFeed.title,
@@ -2021,6 +2190,26 @@ export default function FullscreenObservatoryV2(){
     setInteractionPulse(true)
     window.clearTimeout(pulseTimer.current)
     pulseTimer.current = window.setTimeout(() => setInteractionPulse(false), 900)
+  }
+
+  function startBaseEthCheckout(){
+    if(!isConnected){
+      setPurchaseOpen(true)
+      recordDirectorMessage("ai", "Connect wallet first, then DigitalHut can open the Base ETH checkout request.", "Wallet checkout")
+      setDirectorStatus({phase: "Wallet required", detail: selectedPurchaseLabel, status: "Connect wallet before sending a transaction."})
+      return
+    }
+    if(!DIGITALHUT_BASE_ETH_AMOUNT){
+      recordDirectorMessage("ai", "Base ETH checkout is staged, but VITE_DIGITALHUT_PAYMENT_ETH_AMOUNT is not configured yet.", "Wallet checkout")
+      setDirectorStatus({phase: "Checkout staged", detail: selectedPurchaseLabel, status: "Set VITE_DIGITALHUT_PAYMENT_ETH_AMOUNT before live payment requests."})
+      return
+    }
+    sendTransaction({
+      to: DIGITALHUT_BASE_ETH_RECEIVER,
+      value: parseEther(DIGITALHUT_BASE_ETH_AMOUNT)
+    })
+    recordDirectorMessage("ai", `Wallet checkout requested for ${selectedPurchaseLabel}. Confirm only if the domain, chain, receiver, and amount are correct.`, "Wallet checkout")
+    setDirectorStatus({phase: "Wallet confirmation", detail: selectedPurchaseLabel, status: `Receiver: ${DIGITALHUT_BASE_ETH_RECEIVER}`})
   }
 
   function handleObservatoryPointer(event){
@@ -2199,7 +2388,7 @@ export default function FullscreenObservatoryV2(){
       return fullWelcome ? `Welcome to ${node.title} Node. I will present ${targetFeed.title} and search related GLB environments.` : `Resuming ${node.title} Node with ${targetFeed.title}.`
     }
     return fullWelcome
-      ? `Welcome to DigitalHut. First we will be presenting from ${targetCategory}: ${targetFeed.title}. I will present the current option, rotate between categories, and give you a full presentation with related GLBs and API previews.`
+      ? `Welcome to DigitalHut. This automatic 3D autoplay system is opening ${targetFeed.title} from ${targetCategory}. I will present the GLB renderer, 3D asset source, public feed signal, and related observatory API previews.`
       : kind === "all"
         ? `Resuming All Category Auto Demo with ${targetFeed.title}. I will continue rotating through categories without restarting the welcome.`
         : `Resuming Current Category Auto Demo in ${targetCategory} with ${targetFeed.title}. I will stay on topic and continue the presentation.`
@@ -2363,6 +2552,40 @@ export default function FullscreenObservatoryV2(){
   }
 
   async function runSearch(){
+    const ticker = tickerFromSearch(query)
+    if(ticker){
+      setLoading(true)
+      setCategory("Businesses")
+      setTour(toursFor("Businesses")[0].id)
+      setPlaying(true)
+      setStageIndex(stages.findIndex((item) => item.kind === "stats"))
+      setStatsFeeds([])
+      setModelOpen(true)
+      setGuideDepth(0)
+      setQuery(ticker)
+      setDirectorStatus({phase: "Market flow", detail: ticker, status: "Loading Alpaca trade windows: 12h, 6h, 3h, 1h"})
+      recordDirectorMessage("user", `Search ticker ${ticker}`, "Market flow")
+      try {
+        const {payload, feed: marketFeed} = await resolveMarketFlow(ticker)
+        const nextFeeds = sortRendererFeeds([marketFeed, ...apiCategoryFeeds.filter((item) => item.category === "Businesses"), ...seedFeeds("Businesses")]).slice(0, 12)
+        setFeeds(nextFeeds)
+        setStatsFeeds([marketFeed])
+        setActive(0)
+        setLoading(false)
+        const status = payload.configured === false ? payload.message : payload.summary
+        setDirectorStatus({phase: "Market flow ready", detail: ticker, status})
+        recordDirectorMessage("ai", status, "Alpaca market flow")
+        speak(`Market flow ready for ${ticker}. ${status}`)
+      } catch (error) {
+        const message = error?.message || "Unable to load market flow"
+        setLoading(false)
+        setDirectorStatus({phase: "Market flow unavailable", detail: ticker, status: message})
+        recordDirectorMessage("ai", `Market flow unavailable for ${ticker}. ${message}`, "Alpaca market flow")
+        speak(`Market flow unavailable for ${ticker}. Check Alpaca API keys and market data permissions.`)
+      }
+      wake()
+      return
+    }
     const targetCategory = categoryFromCommand(query) || category
     const nextQuery = queryFromCommand(query, query)
     if(targetCategory !== category){
@@ -2380,6 +2603,55 @@ export default function FullscreenObservatoryV2(){
     setModelOpen(true)
     speak(`${mode === "premium" ? "Premium guide ready" : "Regular API feed ready"}. The DigitalHut renderer is live for this asset.`)
     wake()
+  }
+
+  async function runSelectedOptionPrint(print = null){
+    const candidate = print || optionCandidateFromFeed(sceneFeed)
+    const symbol = sceneFeed.market?.symbol || tickerFromSearch(query)
+    if(!candidate?.contract || !symbol){
+      recordDirectorMessage("ai", "I do not have a highlighted option print yet. Search a ticker first, then say there it is when the unusual print is visible.", "Options Market Print Feed")
+      speak("I do not have a highlighted option print yet. Search a ticker first, then say there it is when the unusual option print is visible.")
+      return
+    }
+    setSelectedOptionPrint(candidate)
+    setLoading(true)
+    setStageIndex(stages.findIndex((item) => item.kind === "stats"))
+    setModelOpen(true)
+    setDirectorStatus({phase: "Running selected option", detail: candidate.contract, status: "Loading focused Alpaca option contract prints"})
+    recordDirectorMessage("user", `There it is: ${candidate.contract}`, "Options Market Print Feed")
+    try {
+      const optionsPayload = await resolveOptionContractFlow(symbol, candidate.contract)
+      const baseMarket = sceneFeed.market || {}
+      const focusedFeed = {
+        ...sceneFeed,
+        id: `selected-option:${candidate.contract}:${Date.now()}`,
+        title: `${symbol} Selected Option Print`,
+        note: `${optionsPayload.summary || `Focused option flow loaded for ${candidate.contract}.`} Selected print premium was about $${Math.round(candidate.premium || 0).toLocaleString()} with ${candidate.directionalPressure || candidate.side || "pressure pending"}.`,
+        apiStatus: "selected-options-print-flow",
+        market: {
+          ...baseMarket,
+          symbol,
+          optionsWindows: optionsPayload.windows || [],
+          optionsSummary: optionsPayload.summary || "",
+          selectedContract: candidate.contract,
+          optionCandidate: candidate,
+          disclaimer: optionsPayload.disclaimer || baseMarket.disclaimer
+        }
+      }
+      setFeeds((current) => sortRendererFeeds([focusedFeed, ...current]).slice(0, 12))
+      setStatsFeeds([focusedFeed])
+      setActive(0)
+      setLoading(false)
+      setDirectorStatus({phase: "Selected option ready", detail: candidate.contract, status: optionsPayload.summary || "Focused contract flow loaded"})
+      recordDirectorMessage("ai", focusedFeed.note, "Selected option")
+      speak(`Selected option ready. ${focusedFeed.note}`)
+    } catch (error) {
+      const message = error?.message || "Unable to run selected option"
+      setLoading(false)
+      setDirectorStatus({phase: "Selected option unavailable", detail: candidate.contract, status: message})
+      recordDirectorMessage("ai", `Selected option unavailable for ${candidate.contract}. ${message}`, "Selected option")
+      speak(`Selected option unavailable. Check Alpaca options market data permissions.`)
+    }
   }
 
   function nextStage(){
@@ -2493,6 +2765,10 @@ export default function FullscreenObservatoryV2(){
     wake()
     recordDirectorMessage("user", text, "Command")
     const lower = text.toLowerCase()
+    if(lower.includes("there it is") || lower.includes("run the stock option") || lower.includes("run option") || lower.includes("lock option")){
+      runSelectedOptionPrint()
+      return
+    }
     const nextCategory = categoryFromCommand(text)
     const nextQuery = queryFromCommand(text, query)
     if(lower.includes("open main lobby") || lower.includes("main lobby") || lower.includes("show lobby")){
@@ -2921,7 +3197,7 @@ export default function FullscreenObservatoryV2(){
 
   return <main className={`dh-observatory low-power aerospace-display ${loading ? "is-loading" : "is-ready"} ${interactionPulse ? "system-pulse" : ""} ${directorBusy ? "ai-operating" : ""} ${mainLobbyOpen ? "main-lobby-active" : ""} ${entryOpen ? "entry-open" : "entry-complete"} mechanic-mode`} data-main-frame={digitalHutBrainMap.mainFrame} data-observatory-category={category} data-observatory-status={loading ? "verifying" : sceneFeed.apiStatus || "ready"} data-physical-assets="sensitive" onPointerMove={handleObservatoryPointer} onPointerLeave={centerCockpitMotion} onPointerDown={(event) => {wake(); triggerSystemPulse(event)}} onClickCapture={triggerSystemPulse}>
     <section className="dh-stage">
-      <RendererVisual feed={sceneFeed} stage={stage} guided={guided} loading={loading} layer={layer} renderLive={!entryOpen} modelOpen={modelOpen} onOpenModel={openContainedModel} onNext={nextStage} onPlayMore={playMore} onVisualPending={markVisualPending} onVisualReady={markVisualReady} onDirectorUpdate={setDirectorStatus} guideText={currentGuideLine} followUps={currentFollowUps} />
+      <RendererVisual feed={sceneFeed} stage={stage} guided={guided} loading={loading} layer={layer} renderLive={!entryOpen} modelOpen={modelOpen} onOpenModel={openContainedModel} onNext={nextStage} onPlayMore={playMore} onVisualPending={markVisualPending} onVisualReady={markVisualReady} onDirectorUpdate={setDirectorStatus} onMarketOptionSelect={runSelectedOptionPrint} guideText={currentGuideLine} followUps={currentFollowUps} />
       <div className="dh-vignette" />
       {layer === "Architect" && <div className="dh-architect"><b>Architect Layer</b><span>builders / developers / researchers / AIs / experimental</span></div>}
       <>
@@ -2939,6 +3215,11 @@ export default function FullscreenObservatoryV2(){
               </button>)}
             </div>
             <button className="dh-wallet-prepare" type="button" onClick={prepareWalletPurchase}>Prepare Package</button>
+            <button className="dh-wallet-prepare" type="button" onClick={startBaseEthCheckout} disabled={paymentPending}>{paymentPending ? "Waiting For Wallet" : "Pay With Base ETH"}</button>
+            <small>{DIGITALHUT_BASE_ETH_AMOUNT ? `Base ETH amount: ${DIGITALHUT_BASE_ETH_AMOUNT}` : "Base ETH amount env not set. Package preparation is active; live payment request is staged."}</small>
+            {DIGITALHUT_BASE_USDC_RECEIVER && <small>USDC Base receiver staged. Token checkout verification comes next.</small>}
+            {paymentHash && <small>Tx: {paymentHash}</small>}
+            {paymentError && <small>Wallet error: {paymentError.message}</small>}
           </div>}
         </aside>
         <div className="dh-cockpit-frame" aria-hidden="true"><span>DigitalHut Observatory</span><b>Verified GLB / public feeds / source status</b></div>
@@ -2960,8 +3241,13 @@ export default function FullscreenObservatoryV2(){
           <button type="button" onClick={() => setMainLobbyOpen(true)}><span>Lobby</span><b>Main Lobby</b></button>
         </aside>
 
-        {!mainLobbyOpen && <aside className="dh-mechanic-status" aria-label="DigitalHut observatory status">
-          <header><span>DigitalHut Display</span><b>{mechanicRuntimeStatus}</b></header>
+        {!mainLobbyOpen && <aside className={`dh-mechanic-status ${displayCollapsed ? "collapsed" : ""}`} aria-label="DigitalHut observatory status">
+          <header>
+            <span>DigitalHut Display</span>
+            <b>{mechanicRuntimeStatus}</b>
+            <button className="dh-display-collapse" type="button" onClick={() => setDisplayCollapsed((value) => !value)}>{displayCollapsed ? "Open" : "Collapse"}</button>
+          </header>
+          <div className="dh-display-body">
           <div className="dh-mechanic-readouts">
             <section><span>View mode</span><b>{category}</b></section>
             <section><span>Network</span><b>{runtimeState.online ? `${runtimeState.connection}${runtimeState.saveData ? " / saver" : ""}` : "Offline"}</b></section>
@@ -3013,6 +3299,7 @@ export default function FullscreenObservatoryV2(){
             <button type="button" onClick={refreshLiveRenderer}>Refresh Feed</button>
             <button type="button" onClick={() => window.location.href = "/asset-lab?tab=blink"}>Custom Nodes</button>
             <button type="button" onClick={() => window.location.href = "/asset-lab"}>Backend</button>
+          </div>
           </div>
         </aside>}
 
@@ -3265,6 +3552,7 @@ export default function FullscreenObservatoryV2(){
 
     <nav className="dh-system-footer" aria-label="Important DigitalHut pages">
       <a href="/about">About Us</a>
+      <a href="/blog">Blog</a>
       <a href="/privacy">Privacy</a>
       <a href="/contact">Contact</a>
       <a href="/guardian">Guardian</a>

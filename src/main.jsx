@@ -23,6 +23,7 @@ const UpgradePage = React.lazy(() => import("./pages/UpgradePage"))
 const InsightsPage = React.lazy(() => import("./pages/InsightsPage"))
 const FaqPage = React.lazy(() => import("./pages/FaqPage"))
 const TrustPage = React.lazy(() => import("./pages/TrustPage"))
+const BlogPage = React.lazy(() => import("./pages/BlogPage"))
 const ObservatoryScanner = React.lazy(() => import("./components/ObservatoryScanner"))
 
 ReactDOM.createRoot(
@@ -92,6 +93,8 @@ ReactDOM.createRoot(
           element={<FaqPage />}
         />
 
+        <Route path="/blog" element={<BlogPage />} />
+        <Route path="/blog/:slug" element={<BlogPage />} />
         <Route path="/about" element={<TrustPage type="about" />} />
         <Route path="/contact" element={<TrustPage type="contact" />} />
         <Route path="/privacy" element={<TrustPage type="privacy" />} />

@@ -45,6 +45,49 @@ function environmentScore(item){
   return blocked ? -1 : envScore
 }
 
+async function captureApiResults(category, query, results){
+  const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || ""
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.DIGITALHUT_SUPABASE_SERVICE_ROLE_KEY || ""
+  if(!supabaseUrl || !serviceKey || !results.length) return {enabled: false, saved: 0}
+
+  const endpoint = `${supabaseUrl.replace(/\/+$/, "")}/rest/v1/digitalhut_live_feed`
+  const rows = results.map((item) => ({
+    category: category || "Mainstream Streaming",
+    title: item.title || "DigitalHut API 3D result",
+    description: item.description || "",
+    prompt: query,
+    source_url: item.viewerUrl || item.embedUrl || "",
+    glb_url: item.modelUrl || null,
+    thumbnail_url: item.thumbnail?.images?.[0]?.url || item.thumbnail?.images?.[1]?.url || null,
+    share_url: item.viewerUrl || item.embedUrl || "",
+    metrics: {apiSource: item.apiSource, apiStatus: item.apiStatus},
+    metadata: {
+      uid: item.uid,
+      embedUrl: item.embedUrl,
+      tags: item.tags || [],
+      capture: "api-discovery",
+      note: "Captured from API discovery feed. A direct downloadable GLB is only attached when the provider exposes one."
+    },
+    ai_message: `DigitalHut captured this ${category || "3D"} API result for review, ratings, backlinks, and later GLB conversion.`
+  }))
+
+  try {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        apikey: serviceKey,
+        Authorization: `Bearer ${serviceKey}`,
+        "Content-Type": "application/json",
+        Prefer: "return=minimal"
+      },
+      body: JSON.stringify(rows)
+    })
+    return {enabled: true, saved: response.ok ? rows.length : 0, status: response.status}
+  } catch (error) {
+    return {enabled: true, saved: 0, error: error?.message || "capture failed"}
+  }
+}
+
 export default async function handler(req, res){
   const category = String(req.query?.category || "")
   const query = String(req.query?.query || category || "3d environment").replace(/\s+/g, " ").trim().slice(0, 140)
@@ -79,8 +122,9 @@ export default async function handler(req, res){
       apiStatus: "environment-viewer-result",
       tags: (item.tags || []).map((tag) => tag.name || tag)
     }))
+    const capture = await captureApiResults(category, query, results)
     res.setHeader("Cache-Control", "public, s-maxage=600, stale-while-revalidate=1800")
-    return res.status(200).json({category, query, searches, authenticated: Boolean(sketchfabToken), results})
+    return res.status(200).json({category, query, searches, authenticated: Boolean(sketchfabToken), capture, results})
   } catch (error) {
     return res.status(200).json({category, query, results: [], error: error?.message || "Sketchfab unavailable"})
   }

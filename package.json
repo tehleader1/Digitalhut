@@ -10,6 +10,7 @@
     "preserve": "node tools/preserve-digitalhut.mjs",
     "preserve:local": "node tools/preserve-digitalhut.mjs --base=http://127.0.0.1:4173",
     "preserve:live": "node tools/preserve-digitalhut.mjs --base=https://www.digitalhut.app",
+    "preserve:progression": "node tools/progression-runners.mjs",
     "backend": "node server.js",
     "start": "node server.js",
     "dev:full": "concurrently \"npm run backend\" \"npm run dev -- --host\""

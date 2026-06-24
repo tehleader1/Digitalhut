@@ -4,7 +4,7 @@ const providers = [
   ["alpha-vantage", ["ALPHA_VANTAGE_API_KEY", "VITE_ALPHA_VANTAGE_API_KEY"], "market-statistics"],
   ["fmp", ["FMP_API_KEY", "VITE_FMP_API_KEY"], "market-statistics"],
   ["polygon", ["POLYGON_API_KEY", "VITE_POLYGON_API_KEY"], "market-statistics"],
-  ["alpaca", ["ALPACA_API_KEY", "ALPACA_SECRET_KEY"], "market-statistics"],
+  ["alpaca", ["ALPACA_API_KEY", "ALPACA_SECRET_KEY"], "stock-and-options-print-flow"],
   ["supabase", ["SUPABASE_URL", "VITE_SUPABASE_URL", "SUPABASE_ANON_KEY", "VITE_SUPABASE_ANON_KEY"], "asset-storage"],
   ["firecuda-storage", ["SUPABASE_FIRECUDA_ASSET_BASE", "VITE_SUPABASE_FIRECUDA_ASSET_BASE", "SUPABASE_FIRECUDA_AVAILABLE_FILES"], "verified-glb-storage"]
 ]
