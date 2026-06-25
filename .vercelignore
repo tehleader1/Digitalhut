@@ -1,0 +1,26 @@
+node_modules/
+dist/
+.git/
+.env*
+
+# Local FireCuda staging files. These are intentionally not committed and should
+# not be uploaded by direct Vercel CLI deploys.
+public/models/firecuda-library/abandoned_farm_house_with_hay.glb
+public/models/firecuda-library/cape_town_-_south_africa.glb
+public/models/firecuda-library/earth.glb
+public/models/firecuda-library/europe_with_4k_heightmap.glb
+public/models/firecuda-library/international_space_station.glb
+public/models/firecuda-library/low_poly_environments_01.glb
+public/models/firecuda-library/mars_one_mission_-_base.glb
+public/models/firecuda-library/morgantown_west_virginia_usa_x2.glb
+public/models/firecuda-library/new_york_city.glb
+public/models/firecuda-library/puertas_verdes.glb
+public/models/firecuda-library/real_estate_demo.glb
+public/models/firecuda-library/rio_de_janeiro_-_brazil.glb
+public/models/firecuda-library/snowy_village__ps1_environment.glb
+public/models/firecuda-library/split_point_victoria_australia.glb
+public/models/firecuda-library/the_planetary_system_of_trappist-1.glb
+public/models/firecuda-library/tourist_colonial_zone_dominican_republic.glb
+public/models/firecuda-library/zed_-_league_of_legends.glb
+
+tools/local-static-preview.mjs
