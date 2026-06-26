@@ -141,6 +141,7 @@ export default function InsightsPage(){
       <Link to="/">DigitalHut</Link>
       <nav>
         <Link to="/insights">Insights</Link>
+        <Link to="/markets">Markets</Link>
         <Link to="/blog">Blog</Link>
         <Link to="/daily-situations">Daily Situations</Link>
         <Link to="/asset-lab">Backend</Link>
@@ -225,6 +226,7 @@ export default function InsightsPage(){
 
     <section className="dh-insight-actions">
       <Link to="/">Open Observatory</Link>
+      <Link to="/markets">Open Markets</Link>
       <Link to="/blog">Open SEO Blog</Link>
       <Link to="/asset-lab">Open Backend</Link>
     </section>

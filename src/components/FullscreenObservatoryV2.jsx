@@ -3553,6 +3553,7 @@ export default function FullscreenObservatoryV2(){
     <nav className="dh-system-footer" aria-label="Important DigitalHut pages">
       <a href="/about">About Us</a>
       <a href="/blog">Blog</a>
+      <a href="/markets">Markets</a>
       <a href="/privacy">Privacy</a>
       <a href="/contact">Contact</a>
       <a href="/guardian">Guardian</a>
