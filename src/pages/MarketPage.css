@@ -1,8 +1,29 @@
 .dh-market-page {
+  min-height: 100vh;
+  height: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 96px;
+  overscroll-behavior-y: contain;
   background:
     radial-gradient(circle at 18% 12%, rgba(34,211,238,.18), transparent 30%),
     radial-gradient(circle at 80% 18%, rgba(34,197,94,.16), transparent 26%),
     #020617;
+}
+
+html:has(.dh-market-page),
+body:has(.dh-market-page),
+#root:has(.dh-market-page) {
+  height: auto;
+  min-height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+html,
+body,
+#root {
+  overflow-y: auto;
 }
 
 .dh-market-control {
@@ -74,10 +95,11 @@
 
 .dh-market-grid {
   max-width: 1180px;
-  margin: 0 auto;
+  margin: 0 auto 48px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
+  padding-bottom: 48px;
 }
 
 .dh-market-card {
