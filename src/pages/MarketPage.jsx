@@ -229,6 +229,7 @@ export default function MarketPage(){
       <Link to="/">DigitalHut</Link>
       <nav>
         <Link to="/markets">Markets</Link>
+        <Link to="/experiments">Experiments</Link>
         <Link to="/insights">Insights</Link>
         <Link to="/blog">Blog</Link>
         <Link to="/asset-lab">Backend</Link>

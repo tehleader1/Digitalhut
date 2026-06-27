@@ -1,0 +1,194 @@
+.dh-experiment-page {
+  min-height: 100vh;
+  height: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 80px;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(34,211,238,.18), transparent 30%),
+    radial-gradient(circle at 82% 16%, rgba(168,85,247,.16), transparent 26%),
+    radial-gradient(circle at 52% 88%, rgba(34,197,94,.12), transparent 26%),
+    #020617;
+}
+
+.dh-experiment-hero h1 {
+  max-width: 920px;
+}
+
+.dh-experiment-winner,
+.dh-experiment-controls,
+.dh-experiment-grid,
+.dh-experiment-policy {
+  width: min(1180px, calc(100% - 36px));
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dh-experiment-winner {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: center;
+  padding: 18px;
+  border: 1px solid rgba(103,232,249,.32);
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(14,165,233,.18), rgba(15,23,42,.84));
+  box-shadow: 0 22px 60px rgba(0,0,0,.28);
+}
+
+.dh-experiment-winner span,
+.dh-experiment-card header span {
+  color: #67e8f9;
+  font-size: 11px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.dh-experiment-winner h2,
+.dh-experiment-card h2,
+.dh-experiment-policy h2 {
+  margin: 6px 0;
+  color: #f8fafc;
+}
+
+.dh-experiment-winner p,
+.dh-experiment-card p,
+.dh-experiment-card dd,
+.dh-experiment-policy p {
+  color: rgba(226,232,240,.78);
+  line-height: 1.5;
+}
+
+.dh-experiment-winner strong {
+  min-width: 112px;
+  text-align: center;
+  color: #020617;
+  background: #67e8f9;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 28px;
+}
+
+.dh-experiment-controls {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.dh-experiment-controls label {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid rgba(148,163,184,.2);
+  border-radius: 8px;
+  background: rgba(2,6,23,.66);
+}
+
+.dh-experiment-controls span {
+  color: #bae6fd;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.dh-experiment-controls input {
+  width: 100%;
+}
+
+.dh-experiment-controls b {
+  color: #f8fafc;
+}
+
+.dh-experiment-grid {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.dh-experiment-card {
+  padding: 16px;
+  border: 1px solid rgba(103,232,249,.18);
+  border-radius: 10px;
+  background: rgba(2,6,23,.74);
+}
+
+.dh-experiment-card.risk-high {
+  border-color: rgba(248,113,113,.38);
+}
+
+.dh-experiment-card.risk-medium {
+  border-color: rgba(251,191,36,.34);
+}
+
+.dh-experiment-card header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.dh-experiment-card header strong {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border: 1px solid rgba(103,232,249,.34);
+  border-radius: 50%;
+  color: #e0f2fe;
+  background: rgba(15,23,42,.84);
+}
+
+.dh-experiment-card dl {
+  display: grid;
+  gap: 6px;
+  margin: 12px 0;
+}
+
+.dh-experiment-card dt {
+  color: #67e8f9;
+  font-size: 10px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.dh-experiment-card dd {
+  margin: 0;
+  font-size: 13px;
+}
+
+.dh-experiment-card footer {
+  display: inline-flex;
+  padding: 7px 9px;
+  border: 1px solid rgba(34,197,94,.32);
+  border-radius: 999px;
+  color: #bbf7d0;
+  font-size: 11px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.dh-experiment-policy {
+  margin-top: 14px;
+  padding: 16px;
+  border: 1px solid rgba(248,113,113,.32);
+  border-radius: 10px;
+  background: rgba(127,29,29,.18);
+}
+
+@media (max-width: 920px) {
+  .dh-experiment-winner,
+  .dh-experiment-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dh-experiment-winner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dh-experiment-controls {
+    grid-template-columns: 1fr;
+  }
+}
+

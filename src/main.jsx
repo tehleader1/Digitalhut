@@ -25,6 +25,7 @@ const FaqPage = React.lazy(() => import("./pages/FaqPage"))
 const TrustPage = React.lazy(() => import("./pages/TrustPage"))
 const BlogPage = React.lazy(() => import("./pages/BlogPage"))
 const MarketPage = React.lazy(() => import("./pages/MarketPage"))
+const ExperimentsPage = React.lazy(() => import("./pages/ExperimentsPage"))
 const ObservatoryScanner = React.lazy(() => import("./components/ObservatoryScanner"))
 
 ReactDOM.createRoot(
@@ -92,6 +93,11 @@ ReactDOM.createRoot(
         <Route
           path="/markets"
           element={<MarketPage />}
+        />
+
+        <Route
+          path="/experiments"
+          element={<ExperimentsPage />}
         />
 
         <Route
