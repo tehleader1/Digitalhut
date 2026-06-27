@@ -122,6 +122,79 @@
   background: #fde68a;
 }
 
+.dh-market-sector {
+  margin: 8px 0 0;
+  color: rgba(186,230,253,.82);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.dh-market-hot-strip {
+  max-width: 1180px;
+  margin: 0 auto 14px;
+  padding: 12px;
+  border: 1px solid rgba(34,211,238,.24);
+  border-radius: 10px;
+  background: rgba(2,6,23,.66);
+}
+
+.dh-market-hot-strip header {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  color: #f8fafc;
+  margin-bottom: 10px;
+}
+
+.dh-market-hot-strip header span {
+  color: #67e8f9;
+  font-size: 11px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.dh-market-hot-strip header b {
+  font-size: 12px;
+  color: rgba(226,232,240,.78);
+}
+
+.dh-market-hot-strip div {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.dh-market-hot-strip button {
+  display: grid;
+  gap: 3px;
+  text-align: left;
+  border: 1px solid rgba(103,232,249,.28);
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(14,165,233,.18), rgba(15,23,42,.82));
+  color: #e0f2fe;
+  padding: 9px;
+  cursor: pointer;
+}
+
+.dh-market-hot-strip button:hover,
+.dh-market-control button:hover,
+.dh-market-card footer a:hover {
+  border-color: rgba(34,211,238,.86);
+  box-shadow: 0 0 18px rgba(34,211,238,.18);
+}
+
+.dh-market-hot-strip strong {
+  font-size: 16px;
+}
+
+.dh-market-hot-strip span,
+.dh-market-hot-strip em {
+  font-size: 11px;
+  color: rgba(226,232,240,.78);
+  font-style: normal;
+}
+
 .dh-market-card-body {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -179,7 +252,8 @@
 
 @media (max-width: 920px) {
   .dh-market-control,
-  .dh-market-grid {
+  .dh-market-grid,
+  .dh-market-hot-strip div {
     grid-template-columns: 1fr;
   }
 }
