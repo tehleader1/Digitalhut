@@ -239,7 +239,7 @@ export default function MarketPage(){
     <section className="dh-trust-intro dh-market-intro">
       <span>DigitalHut Market Intelligence</span>
       <h1>Preloaded Market Print Feed</h1>
-      <p>DigitalHut opens with a live preloaded watchlist across indexes, mega-cap technology, AI chips, autos, retail, banking, energy, healthcare, aerospace, streaming, and platform stocks. Search is optional; the feed should already be working when people arrive.</p>
+      <p>DigitalHut opens with a live preloaded watchlist across indexes, mega-cap technology, AI chips, autos, retail, banking, energy, healthcare, aerospace, streaming, and platform stocks. The main read now includes a Thursday-to-now window for stock and options prints, while 1h/3h/6h/12h remain available for short-term timing.</p>
     </section>
 
     <section className="dh-market-control">
@@ -250,7 +250,7 @@ export default function MarketPage(){
       <div>
         <button type="button" onClick={() => runScan(symbols)} disabled={loading || !symbols.length}>{loading ? "Loading Live Feed" : "Refresh / Narrow Feed"}</button>
         <button type="button" onClick={reloadPressureFeed} disabled={loading}>{loading ? "Reading Pressure" : "Reload Pressure Feed"}</button>
-        <small>{symbols.length} selected. Default feed preloads {defaultSymbols.length} symbols so users do not need to search first.</small>
+        <small>{symbols.length} selected. Default feed preloads {defaultSymbols.length} symbols and reads prints from Thursday through now.</small>
       </div>
     </section>
 
@@ -259,7 +259,7 @@ export default function MarketPage(){
     <section className="dh-market-hot-strip" aria-label="Highest pressure market prints">
       <header>
         <span>Pressure Reload</span>
-        <b>Largest prints ranked by amount and chart timing</b>
+        <b>Largest prints ranked by amount, Thursday-to-now context, and chart timing</b>
       </header>
       <div>
         {(hotRows.length ? hotRows : rows.slice(0, 8)).map((row) => (

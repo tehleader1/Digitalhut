@@ -1,8 +1,9 @@
 const windows = [
-  {id: "12h", hours: 12},
-  {id: "6h", hours: 6},
+  {id: "1h", hours: 1},
   {id: "3h", hours: 3},
-  {id: "1h", hours: 1}
+  {id: "6h", hours: 6},
+  {id: "12h", hours: 12},
+  {id: "since-thursday", since: "thursday"}
 ]
 
 function cleanSymbol(value){
@@ -38,6 +39,20 @@ function isoAgo(hours){
   return new Date(Date.now() - hours * 60 * 60 * 1000).toISOString()
 }
 
+function recentThursdayStartIso(){
+  const date = new Date()
+  const day = date.getUTCDay()
+  const daysSinceThursday = (day + 7 - 4) % 7
+  date.setUTCDate(date.getUTCDate() - daysSinceThursday)
+  date.setUTCHours(0, 0, 0, 0)
+  return date.toISOString()
+}
+
+function windowStart(windowDef){
+  if(windowDef?.since === "thursday") return recentThursdayStartIso()
+  return isoAgo(windowDef.hours || 12)
+}
+
 function alpacaHeaders(){
   return {
     "APCA-API-KEY-ID": process.env.ALPACA_API_KEY || process.env.VITE_ALPACA_API_KEY || "",
@@ -66,11 +81,11 @@ async function fetchOptionContracts(symbol){
   return payload.option_contracts || payload.contracts || []
 }
 
-async function fetchOptionTrades(symbols, hours){
+async function fetchOptionTrades(symbols, windowDef){
   if(!symbols.length) return []
   const params = new URLSearchParams({
     symbols: symbols.slice(0, 80).join(","),
-    start: isoAgo(hours),
+    start: windowStart(windowDef),
     end: new Date().toISOString(),
     limit: "10000",
     sort: "asc"
@@ -192,7 +207,7 @@ export default async function handler(req, res){
   const resultWindows = []
   for(const item of windows){
     try {
-      const trades = await fetchOptionTrades(contractSymbols, item.hours)
+      const trades = await fetchOptionTrades(contractSymbols, item)
       resultWindows.push(summarize(symbol, item.id, trades, contracts))
     } catch (error) {
       errors.push({window: item.id, error: error?.message || "option trades failed"})

@@ -1,8 +1,9 @@
 const marketWindows = [
-  {id: "12h", hours: 12},
-  {id: "6h", hours: 6},
+  {id: "1h", hours: 1},
   {id: "3h", hours: 3},
-  {id: "1h", hours: 1}
+  {id: "6h", hours: 6},
+  {id: "12h", hours: 12},
+  {id: "since-thursday", since: "thursday"}
 ]
 
 const knownTickerHints = new Set([
@@ -16,6 +17,20 @@ function cleanSymbol(value){
 
 function isoAgo(hours){
   return new Date(Date.now() - hours * 60 * 60 * 1000).toISOString()
+}
+
+function recentThursdayStartIso(){
+  const date = new Date()
+  const day = date.getUTCDay()
+  const daysSinceThursday = (day + 7 - 4) % 7
+  date.setUTCDate(date.getUTCDate() - daysSinceThursday)
+  date.setUTCHours(0, 0, 0, 0)
+  return date.toISOString()
+}
+
+function windowStart(windowDef){
+  if(windowDef?.since === "thursday") return recentThursdayStartIso()
+  return isoAgo(windowDef.hours || 12)
 }
 
 function alpacaHeaders(){
@@ -32,9 +47,9 @@ function hasAlpaca(){
   return Boolean((process.env.ALPACA_API_KEY || process.env.VITE_ALPACA_API_KEY) && (process.env.ALPACA_SECRET_KEY || process.env.VITE_ALPACA_SECRET_KEY))
 }
 
-async function fetchTrades(symbol, hours){
+async function fetchTrades(symbol, windowDef){
   const params = new URLSearchParams({
-    start: isoAgo(hours),
+    start: windowStart(windowDef),
     end: new Date().toISOString(),
     limit: "10000",
     sort: "asc",
@@ -49,9 +64,9 @@ async function fetchTrades(symbol, hours){
   return payload.trades || []
 }
 
-async function fetchBars(symbol, hours){
+async function fetchBars(symbol, windowDef){
   const params = new URLSearchParams({
-    start: isoAgo(Math.max(hours, 24)),
+    start: windowDef?.since === "thursday" ? recentThursdayStartIso() : isoAgo(Math.max(windowDef.hours || 12, 24)),
     end: new Date().toISOString(),
     timeframe: "5Min",
     limit: "1000",
@@ -203,8 +218,8 @@ export default async function handler(req, res){
   for(const windowDef of marketWindows){
     try {
       const [trades, bars] = await Promise.all([
-        fetchTrades(symbol, windowDef.hours),
-        fetchBars(symbol, windowDef.hours)
+        fetchTrades(symbol, windowDef),
+        fetchBars(symbol, windowDef)
       ])
       windows.push(summarizeWindow(symbol, windowDef.id, trades, bars))
     } catch (error) {

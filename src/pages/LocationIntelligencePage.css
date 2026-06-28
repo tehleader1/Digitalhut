@@ -1,0 +1,179 @@
+.dh-location-page {
+  min-height: 100vh;
+  height: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 88px;
+  background:
+    radial-gradient(circle at 15% 14%, rgba(34,211,238,.16), transparent 31%),
+    radial-gradient(circle at 82% 20%, rgba(34,197,94,.15), transparent 27%),
+    radial-gradient(circle at 50% 92%, rgba(250,204,21,.1), transparent 28%),
+    #020617;
+}
+
+html:has(.dh-location-page),
+body:has(.dh-location-page),
+#root:has(.dh-location-page) {
+  height: auto;
+  min-height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+html,
+body,
+#root {
+  overflow-y: auto;
+}
+
+.dh-location-control,
+.dh-location-grid,
+.dh-capture-strip,
+.dh-location-policy {
+  width: min(1180px, calc(100% - 36px));
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dh-location-control {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, .42fr);
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid rgba(103,232,249,.24);
+  border-radius: 10px;
+  background: rgba(2,6,23,.72);
+}
+
+.dh-location-control label,
+.dh-location-control div {
+  display: grid;
+  gap: 8px;
+  align-content: center;
+}
+
+.dh-location-control label {
+  color: #67e8f9;
+  font-size: 11px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.dh-location-control input {
+  border: 1px solid rgba(103,232,249,.32);
+  border-radius: 8px;
+  background: rgba(15,23,42,.9);
+  color: #f8fafc;
+  padding: 12px;
+  font-size: 15px;
+}
+
+.dh-location-control b {
+  color: #f8fafc;
+}
+
+.dh-location-control span,
+.dh-location-panel span,
+.dh-location-panel p,
+.dh-location-policy p {
+  color: rgba(226,232,240,.78);
+  line-height: 1.45;
+}
+
+.dh-location-grid {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.dh-location-panel,
+.dh-capture-strip,
+.dh-location-policy {
+  border: 1px solid rgba(103,232,249,.2);
+  border-radius: 10px;
+  background: rgba(2,6,23,.74);
+  padding: 16px;
+}
+
+.dh-location-panel h2,
+.dh-location-policy h2 {
+  margin: 0 0 12px;
+  color: #f8fafc;
+}
+
+.dh-location-panel section {
+  display: grid;
+  gap: 4px;
+  padding: 11px;
+  border: 1px solid rgba(148,163,184,.16);
+  border-radius: 8px;
+  background: rgba(15,23,42,.72);
+}
+
+.dh-location-panel section + section {
+  margin-top: 9px;
+}
+
+.dh-location-panel b {
+  color: #e0f2fe;
+}
+
+.dh-location-panel em {
+  color: #bae6fd;
+  font-size: 11px;
+  font-style: normal;
+}
+
+.dh-capture-strip {
+  margin-top: 14px;
+}
+
+.dh-capture-strip header {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.dh-capture-strip header span {
+  color: #67e8f9;
+  font-size: 11px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.dh-capture-strip header b {
+  color: #f8fafc;
+}
+
+.dh-capture-strip div {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.dh-capture-strip button {
+  border: 1px solid rgba(34,211,238,.3);
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(14,165,233,.18), rgba(34,197,94,.12));
+  color: #e0f2fe;
+  padding: 10px;
+  font-weight: 900;
+  text-transform: capitalize;
+}
+
+.dh-location-policy {
+  margin-top: 14px;
+  border-color: rgba(251,191,36,.26);
+  background: rgba(113,63,18,.16);
+}
+
+@media (max-width: 920px) {
+  .dh-location-control,
+  .dh-location-grid,
+  .dh-capture-strip div {
+    grid-template-columns: 1fr;
+  }
+}
+

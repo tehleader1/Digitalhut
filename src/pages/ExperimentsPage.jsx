@@ -144,6 +144,7 @@ export default function ExperimentsPage(){
       <Link to="/">DigitalHut</Link>
       <nav>
         <Link to="/experiments">Experiments</Link>
+        <Link to="/locations">Locations</Link>
         <Link to="/markets">Markets</Link>
         <Link to="/insights">Insights</Link>
         <Link to="/blog">Blog</Link>
@@ -205,4 +206,3 @@ export default function ExperimentsPage(){
     </section>
   </main>
 }
-
