@@ -110,31 +110,40 @@ function supabaseConfig(){
 }
 
 async function saveReport(report){
-  const {url, key} = supabaseConfig()
-  if(!url || !key){
-    return {saved: false, reason: "missing-supabase-service-config"}
-  }
-  const response = await fetch(`${url}/rest/v1/digitalhut_runner_reports`, {
-    method: "POST",
-    headers: {
-      apikey: key,
-      authorization: `Bearer ${key}`,
-      "content-type": "application/json",
-      prefer: "return=representation"
-    },
-    body: JSON.stringify({
-      runner_id: report.runner,
-      report_type: "overnight",
-      score: report.score,
-      summary: report.summary,
-      payload: report
+  try {
+    const {url, key} = supabaseConfig()
+    if(!url || !key){
+      return {saved: false, reason: "missing-supabase-service-config", hasUrl: Boolean(url), hasServiceKey: Boolean(key)}
+    }
+    const response = await fetch(`${url}/rest/v1/digitalhut_runner_reports`, {
+      method: "POST",
+      headers: {
+        apikey: key,
+        authorization: `Bearer ${key}`,
+        "content-type": "application/json",
+        prefer: "return=representation"
+      },
+      body: JSON.stringify({
+        runner_id: report.runner,
+        report_type: "overnight",
+        score: report.score,
+        summary: report.summary,
+        payload: report
+      })
     })
-  })
-  const text = await response.text()
-  if(!response.ok){
-    return {saved: false, reason: "supabase-write-failed", status: response.status, detail: text.slice(0, 500)}
+    const text = await response.text()
+    if(!response.ok){
+      return {saved: false, reason: "supabase-write-failed", status: response.status, detail: text.slice(0, 500)}
+    }
+    try {
+      const parsed = text ? JSON.parse(text) : null
+      return {saved: true, record: Array.isArray(parsed) ? parsed[0] : parsed}
+    } catch (error) {
+      return {saved: true, record: null, parseWarning: error.message, raw: text.slice(0, 500)}
+    }
+  } catch (error) {
+    return {saved: false, reason: "runner-save-exception", detail: error?.message || String(error)}
   }
-  return {saved: true, record: text ? JSON.parse(text)[0] : null}
 }
 
 function isAuthorized(req){
@@ -147,17 +156,27 @@ function isAuthorized(req){
 }
 
 export default async function handler(req, res){
-  res.setHeader("Cache-Control", "no-store")
-  if(!isAuthorized(req)){
-    return res.status(401).json({ok: false, error: "unauthorized-runner"})
+  try {
+    res.setHeader("Cache-Control", "no-store")
+    if(!isAuthorized(req)){
+      return res.status(401).json({ok: false, error: "unauthorized-runner"})
+    }
+    const report = buildReport()
+    const persistence = await saveReport(report)
+    return res.status(200).json({
+      ok: true,
+      reportCreated: true,
+      savedToSupabase: persistence.saved,
+      persistence,
+      report
+    })
+  } catch (error) {
+    return res.status(200).json({
+      ok: false,
+      reportCreated: false,
+      savedToSupabase: false,
+      error: "runner-handler-exception",
+      detail: error?.message || String(error)
+    })
   }
-  const report = buildReport()
-  const persistence = await saveReport(report)
-  return res.status(200).json({
-    ok: true,
-    reportCreated: true,
-    savedToSupabase: persistence.saved,
-    persistence,
-    report
-  })
 }
