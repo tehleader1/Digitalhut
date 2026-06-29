@@ -149,6 +149,94 @@ async function saveSearchPixelEvent(req, payload){
   return {saved: true}
 }
 
+function emptyPixelSummary(reason = ""){
+  return {
+    ready: false,
+    reason,
+    totalEvents: 0,
+    totalPageViews: 0,
+    totalBlogViews: 0,
+    totalGlbPreviewPlays: 0,
+    totalSearchRuns: 0,
+    totalWalletClicks: 0,
+    totalTierClicks: 0,
+    totalNodeClicks: 0,
+    uniqueVisitors: 0,
+    last48Hours: [],
+    topPages: [],
+    topBlogs: [],
+    topKeywordHints: [],
+    latestEvents: []
+  }
+}
+
+function topCounts(items, key, limit = 8){
+  const counts = new Map()
+  for(const item of items){
+    const value = item[key]
+    if(!value) continue
+    counts.set(value, (counts.get(value) || 0) + 1)
+  }
+  return [...counts.entries()]
+    .map(([value, count]) => ({value, count}))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, limit)
+}
+
+function eventCounts(items, limit = 12){
+  const counts = new Map()
+  for(const item of items){
+    counts.set(item.event_name, (counts.get(item.event_name) || 0) + 1)
+  }
+  return [...counts.entries()]
+    .map(([eventName, count]) => ({eventName, count}))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, limit)
+}
+
+async function pixelSummary(){
+  const url = (process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || "").replace(/\/+$/, "")
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.DIGITALHUT_SUPABASE_SERVICE_ROLE_KEY || ""
+  if(!url || !key) return emptyPixelSummary("missing-supabase-service-config")
+  const response = await fetch(`${url}/rest/v1/digitalhut_search_pixel_events?select=event_name,visitor_id,path,blog_slug,keyword_hint,created_at&order=created_at.desc&limit=5000`, {
+    headers: {
+      apikey: key,
+      authorization: `Bearer ${key}`
+    }
+  })
+  const text = await response.text()
+  if(!response.ok){
+    return emptyPixelSummary(`supabase-pixel-read-failed-${response.status}`)
+  }
+  let events = []
+  try {
+    events = text ? JSON.parse(text) : []
+  } catch {
+    return emptyPixelSummary("pixel-json-parse-failed")
+  }
+  const cutoff = Date.now() - 48 * 60 * 60 * 1000
+  const recent = events.filter((event) => new Date(event.created_at).getTime() >= cutoff)
+  const pageViews = events.filter((event) => ["page_view", "blog_view"].includes(event.event_name))
+  return {
+    ready: true,
+    reason: "",
+    totalEvents: events.length,
+    totalPageViews: pageViews.length,
+    totalBlogViews: events.filter((event) => event.event_name === "blog_view").length,
+    totalGlbPreviewPlays: events.filter((event) => event.event_name === "glb_preview_play").length,
+    totalSearchRuns: events.filter((event) => event.event_name === "search_run").length,
+    totalWalletClicks: events.filter((event) => event.event_name === "wallet_connect_click").length,
+    totalTierClicks: events.filter((event) => event.event_name === "tier_click").length,
+    totalNodeClicks: events.filter((event) => event.event_name === "node_click").length,
+    uniqueVisitors: new Set(events.map((event) => event.visitor_id).filter(Boolean)).size,
+    last48Hours: eventCounts(recent),
+    topPages: topCounts(pageViews, "path"),
+    topBlogs: topCounts(events.filter((event) => event.blog_slug), "blog_slug"),
+    topKeywordHints: topCounts(events.filter((event) => event.keyword_hint), "keyword_hint"),
+    latestEvents: events.slice(0, 10)
+  }
+}
+
 export default async function handler(req, res){
   if(req.method === "POST"){
     res.setHeader("Cache-Control", "no-store")
@@ -158,10 +246,12 @@ export default async function handler(req, res){
   }
 
   const stack = stackStatus()
+  const pixel = await pixelSummary()
   const payload = {
     generatedAt: new Date().toISOString(),
     status: currentMode(),
     stack,
+    pixel,
     runnerDiscoveries,
     seoOpportunities,
     scorecard: {

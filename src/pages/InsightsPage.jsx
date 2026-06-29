@@ -135,6 +135,7 @@ export default function InsightsPage(){
   const scorecard = insight?.scorecard || {}
   const stack = insight?.stack || {providers: []}
   const status = insight?.status || {}
+  const pixel = insight?.pixel || {}
 
   return <main className="dh-trust-page dh-insights-page">
     <header className="dh-trust-nav">
@@ -155,6 +156,57 @@ export default function InsightsPage(){
     </section>
 
     {error && <section className="dh-insight-alert">Insight map error: {error}</section>}
+
+    <section className="dh-insight-pixel">
+      <div>
+        <span>Search Pixel</span>
+        <h2>Total Page Views And Live Activity</h2>
+        <p>{pixel.ready ? "DigitalHut first-party pixel is recording real behavior from blogs, renderer actions, searches, wallet clicks, tiers, and node interest." : `Pixel summary waiting: ${pixel.reason || "loading"}`}</p>
+      </div>
+      <div className="dh-insight-pixel-grid">
+        {[
+          ["Total events", pixel.totalEvents ?? 0],
+          ["Page views", pixel.totalPageViews ?? 0],
+          ["Unique visitors", pixel.uniqueVisitors ?? 0],
+          ["Blog views", pixel.totalBlogViews ?? 0],
+          ["GLB plays", pixel.totalGlbPreviewPlays ?? 0],
+          ["Searches", pixel.totalSearchRuns ?? 0],
+          ["Wallet clicks", pixel.totalWalletClicks ?? 0],
+          ["Tier clicks", pixel.totalTierClicks ?? 0],
+          ["Node clicks", pixel.totalNodeClicks ?? 0]
+        ].map(([label, value]) => <article key={label}>
+          <span>{label}</span>
+          <b>{value}</b>
+        </article>)}
+      </div>
+    </section>
+
+    <section className="dh-insight-pixel-lists">
+      <article>
+        <h2>48 Hour Activity</h2>
+        {(pixel.last48Hours || []).length ? (pixel.last48Hours || []).map((item) => <div className="dh-insight-kv" key={item.eventName}>
+          <span>{item.eventName}</span><b>{item.count}</b>
+        </div>) : <p>No 48-hour events yet.</p>}
+      </article>
+      <article>
+        <h2>Top Pages</h2>
+        {(pixel.topPages || []).length ? (pixel.topPages || []).map((item) => <div className="dh-insight-kv" key={item.value}>
+          <span>{item.value}</span><b>{item.count}</b>
+        </div>) : <p>No page views yet.</p>}
+      </article>
+      <article>
+        <h2>Top Blogs</h2>
+        {(pixel.topBlogs || []).length ? (pixel.topBlogs || []).map((item) => <div className="dh-insight-kv" key={item.value}>
+          <span>{item.value}</span><b>{item.count}</b>
+        </div>) : <p>No blog activity yet.</p>}
+      </article>
+      <article>
+        <h2>Keyword Hints</h2>
+        {(pixel.topKeywordHints || []).length ? (pixel.topKeywordHints || []).map((item) => <div className="dh-insight-kv" key={item.value}>
+          <span>{item.value}</span><b>{item.count}</b>
+        </div>) : <p>No keyword hints yet.</p>}
+      </article>
+    </section>
 
     <section className="dh-insight-scoregrid">
       {[
