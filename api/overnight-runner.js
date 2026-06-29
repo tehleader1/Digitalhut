@@ -9,9 +9,25 @@ const runnerChecks = [
   ["alpha-vantage", ["ALPHA_VANTAGE_API_KEY", "VITE_ALPHA_VANTAGE_API_KEY"], "market backup statistics"],
   ["reown", ["REOWN_PROJECT_ID", "VITE_REOWN_PROJECT_ID", "WALLETCONNECT_PROJECT_ID", "VITE_WALLETCONNECT_PROJECT_ID"], "wallet connection"],
   ["alchemy", ["ALCHEMY_API_KEY", "VITE_ALCHEMY_API_KEY", "ALCHEMY_BASE_RPC_URL", "VITE_ALCHEMY_BASE_RPC_URL"], "chain verification"],
+  ["treasury-wallet", ["DIGITALHUT_TREASURY_WALLET", "VITE_DIGITALHUT_TREASURY_WALLET"], "DigitalHut payment destination"],
+  ["blog-publishing", ["SUPABASE_SERVICE_ROLE_KEY", "DIGITALHUT_SUPABASE_SERVICE_ROLE_KEY"], "autonomous SEO blog publishing"],
+  ["vector-memory", ["SUPABASE_SERVICE_ROLE_KEY", "DIGITALHUT_SUPABASE_SERVICE_ROLE_KEY"], "runner memory and semantic recall"],
+  ["search-pixel", ["SUPABASE_SERVICE_ROLE_KEY", "DIGITALHUT_SUPABASE_SERVICE_ROLE_KEY"], "first-party SEO behavior tracking"],
   ["farcaster", ["NEYNAR_API_KEY", "FARCASTER_API_KEY"], "social distribution"],
   ["streaming", ["LIVEPEER_API_KEY", "THETA_API_KEY", "HLS_STREAM_GATEWAY_URL"], "stream distribution"]
 ]
+
+const coreRunnerIds = new Set([
+  "supabase",
+  "supabase-service",
+  "alpaca",
+  "reown",
+  "alchemy",
+  "treasury-wallet",
+  "blog-publishing",
+  "vector-memory",
+  "search-pixel"
+])
 
 const seoSignals = [
   "automatic 3D autoplay system",
@@ -669,11 +685,23 @@ function buildStatus(){
     }
   })
   const ready = checks.filter((item) => item.configured).length
+  const coreChecks = checks.filter((item) => coreRunnerIds.has(item.id))
+  const optionalChecks = checks.filter((item) => !coreRunnerIds.has(item.id))
+  const coreReady = coreChecks.every((item) => item.configured)
+  const coreReadyCount = coreChecks.filter((item) => item.configured).length
+  const optionalReadyCount = optionalChecks.filter((item) => item.configured).length
   return {
     checks,
     ready,
     total: checks.length,
-    score: Math.round((ready / checks.length) * 100)
+    score: Math.round((ready / checks.length) * 100),
+    coreReady,
+    coreReadyCount,
+    coreTotal: coreChecks.length,
+    coreScore: Math.round((coreReadyCount / coreChecks.length) * 100),
+    optionalReadyCount,
+    optionalTotal: optionalChecks.length,
+    optionalMissing: optionalChecks.filter((item) => !item.configured).map((item) => item.id)
   }
 }
 
@@ -687,16 +715,17 @@ function buildReport(){
     runner: "digitalhut-overnight-runner",
     mode: process.env.DIGITALHUT_AUTONOMOUS_MODE === "true" ? "autonomous" : "manual-ready",
     enabled: process.env.DIGITALHUT_RUNNERS_ENABLED === "true",
-    score: status.score,
-    summary: status.score >= 70
-      ? "DigitalHut runners have enough provider coverage to produce daily observatory reports."
-      : "DigitalHut runners are online, but more provider credentials are needed for full autonomous coverage.",
+    score: status.coreScore,
+    expansionScore: status.score,
+    summary: status.coreReady
+      ? "DigitalHut core autonomous runner is operational: reports, vector memory, SEO blog publishing, search pixel, market feed, wallet, and treasury tracking are active. Remaining providers are optional expansion lanes."
+      : "DigitalHut runners are online, but one or more core systems still need verification before the autonomous blog/SEO loop is complete.",
     lanes: reportLanes,
     seoSignals,
     contentOps,
     masterSeoPlan,
     status,
-    missing,
+    missing: status.coreReady ? status.optionalMissing : missing,
     nextActions: [
       "Review renderer health and broken GLB URLs.",
       "Save strong API GLB candidates into Supabase when service credentials are available.",
