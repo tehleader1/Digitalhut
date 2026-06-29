@@ -311,6 +311,65 @@ async function saveReport(report){
   }
 }
 
+async function saveMemoryRecord(report){
+  try {
+    const {url, key} = supabaseConfig()
+    if(!url || !key){
+      return {saved: false, reason: "missing-supabase-service-config", hasUrl: Boolean(url), hasServiceKey: Boolean(key)}
+    }
+    const contentOps = report.contentOps || {}
+    const response = await fetch(`${url}/rest/v1/digitalhut_memory_vectors`, {
+      method: "POST",
+      headers: {
+        apikey: key,
+        authorization: `Bearer ${key}`,
+        "content-type": "application/json",
+        prefer: "return=representation"
+      },
+      body: JSON.stringify({
+        memory_type: "runner_report",
+        source_system: "digitalhut-overnight-runner",
+        source_id: report.generatedAt,
+        title: "DigitalHut AFK Runner Report",
+        content: [
+          report.summary,
+          contentOps.operatingStatement,
+          contentOps.ownerNarrative,
+          contentOps.nextBlogMove?.recommendation,
+          contentOps.nextBlogMove?.reason
+        ].filter(Boolean).join("\n\n"),
+        seo_keywords: report.seoSignals || [],
+        category: "DigitalHut Observatory",
+        node_key: "content-ops",
+        firecuda_path: "D:\\DigitalHutAgent\\reports",
+        wallet_tier: "all",
+        visibility: "owner",
+        metadata: {
+          generatedAt: report.generatedAt,
+          score: report.score,
+          mode: report.mode,
+          enabled: report.enabled,
+          missing: report.missing,
+          nextActions: report.nextActions,
+          contentOps
+        }
+      })
+    })
+    const text = await response.text()
+    if(!response.ok){
+      return {saved: false, reason: "supabase-memory-write-failed", status: response.status, detail: text.slice(0, 500)}
+    }
+    try {
+      const parsed = text ? JSON.parse(text) : null
+      return {saved: true, record: Array.isArray(parsed) ? parsed[0] : parsed}
+    } catch (error) {
+      return {saved: true, record: null, parseWarning: error.message, raw: text.slice(0, 500)}
+    }
+  } catch (error) {
+    return {saved: false, reason: "runner-memory-exception", detail: error?.message || String(error)}
+  }
+}
+
 function isAuthorized(req){
   const secret = process.env.DIGITALHUT_RUNNER_CRON_SECRET || ""
   if(!secret) return true
@@ -328,11 +387,14 @@ export default async function handler(req, res){
     }
     const report = buildReport()
     const persistence = await saveReport(report)
+    const memory = await saveMemoryRecord(report)
     return res.status(200).json({
       ok: true,
       reportCreated: true,
       savedToSupabase: persistence.saved,
+      savedToVectorMemory: memory.saved,
       persistence,
+      memory,
       report
     })
   } catch (error) {
