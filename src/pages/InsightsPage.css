@@ -1,11 +1,15 @@
 .dh-insights-page {
   --insight-line: rgba(103,232,249,.22);
   --insight-panel: rgba(15,23,42,.88);
+  position: fixed;
+  inset: 0;
   height: 100vh;
+  height: 100dvh;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: scroll;
   overscroll-behavior: contain;
   scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
 }
 
 .dh-insights-intro h1 {

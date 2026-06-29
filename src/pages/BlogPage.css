@@ -1,10 +1,14 @@
 .dh-blog-page {
   --blog-line: rgba(103,232,249,.22);
+  position: fixed;
+  inset: 0;
   height: 100vh;
+  height: 100dvh;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: scroll;
   overscroll-behavior: contain;
   scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
 }
 
 .dh-blog-intro h1 {
