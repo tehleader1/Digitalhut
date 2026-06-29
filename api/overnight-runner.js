@@ -17,6 +17,8 @@ const runnerChecks = [
   ["streaming", ["LIVEPEER_API_KEY", "THETA_API_KEY", "HLS_STREAM_GATEWAY_URL"], "stream distribution"]
 ]
 
+const runnerVersion = "core-ready-status-2026-06-29"
+
 const coreRunnerIds = new Set([
   "supabase",
   "supabase-service",
@@ -713,6 +715,7 @@ function buildReport(){
   return {
     generatedAt: new Date().toISOString(),
     runner: "digitalhut-overnight-runner",
+    runnerVersion,
     mode: process.env.DIGITALHUT_AUTONOMOUS_MODE === "true" ? "autonomous" : "manual-ready",
     enabled: process.env.DIGITALHUT_RUNNERS_ENABLED === "true",
     score: status.coreScore,
