@@ -724,13 +724,25 @@ function topCounts(map, limit = 5){
     .map(([value, count]) => ({value, count}))
 }
 
+function flattenLongTailKeywords(items, limit = 8){
+  return (items || [])
+    .flatMap((item) => {
+      if(!item) return []
+      if(typeof item === "string") return [item]
+      if(Array.isArray(item.phrases)) return item.phrases
+      return [item.keyword, item.phrase, item.title, item.root].filter(Boolean)
+    })
+    .filter(Boolean)
+    .slice(0, limit)
+}
+
 async function fetchPixelSnapshot(){
   try {
     const {url, key} = supabaseConfig()
     if(!url || !key){
       return {ready: false, reason: "missing-supabase-service-config"}
     }
-    const response = await fetch(`${url}/rest/v1/digitalhut_search_pixel_events?select=event_name,path,blog_slug,keyword_hint,category,asset_id,node_key,tier_key,metadata,created_at&order=created_at.desc&limit=200`, {
+    const response = await fetch(`${url}/rest/v1/digitalhut_search_pixel_events?select=event_name,visitor_id,path,blog_slug,keyword_hint,category,asset_id,node_key,tier_key,metadata,created_at&order=created_at.desc&limit=200`, {
       headers: {
         apikey: key,
         authorization: `Bearer ${key}`
@@ -814,7 +826,7 @@ function buildAnthonyBrief({status, contentOps, masterSeoPlan, pixelSnapshot, re
     "family observatory",
     "premium observatory"
   ]
-  const longTailTargets = masterSeoPlan?.longTailKeywords?.slice(0, 8) || []
+  const longTailTargets = flattenLongTailKeywords(masterSeoPlan?.longTailKeywords, 8)
   const pixelLine = pixelSnapshot?.ready
     ? `I compared ${pixelSnapshot.sampleSize} recent pixel events: ${totals.pageViews || 0} page views, ${totals.blogViews || 0} blog views, ${totals.glbPlays || 0} GLB preview plays, ${totals.searches || 0} searches, ${totals.uniqueVisitors || 0} unique visitors, ${totals.walletClicks || 0} wallet clicks, ${totals.tierClicks || 0} tier clicks, and ${totals.nodeClicks || 0} node clicks.`
     : `I tried to read the DigitalHut pixel stream, but the current pixel snapshot is not ready: ${pixelSnapshot?.reason || "unknown"}.`
@@ -1159,19 +1171,45 @@ function buildRunnerReply(report, userMessage = ""){
   const totals = stats.pixelTotals || {}
   const topBlog = stats.topBlogs?.[0]
   const topPage = stats.topPages?.[0]
+  const topTimezone = stats.timezones?.[0]
   const keywords = brief.seoWordsImproving || []
-  const longTail = brief.longTailTargets || []
-  const messageFocus = userMessage ? `You asked: "${userMessage.slice(0, 240)}". ` : ""
-  return [
-    `Anthony, ${messageFocus}here is the live runner read.`,
-    `Core systems are online: Supabase reports, vector memory, SEO blog publishing, search pixel, market feed, wallet, treasury tracking, Vercel, GitHub, and FireCuda archive planning.`,
-    `I compared the current pixel stream against blog and GLB behavior: ${totals.pageViews || 0} page views, ${totals.blogViews || 0} blog views, ${totals.glbPlays || 0} GLB preview plays, ${totals.searches || 0} searches, ${totals.uniqueVisitors || 0} unique visitors, ${totals.walletClicks || 0} wallet clicks, ${totals.tierClicks || 0} tier clicks, and ${totals.nodeClicks || 0} node clicks.`,
-    topBlog ? `The strongest blog signal is ${topBlog.value} with ${topBlog.count} tracked events. The strongest page signal is ${topPage?.value || "unknown"} with ${topPage?.count || 0} tracked events.` : `The blog system is publishing, but it needs more reads before I can rank a true winner.`,
-    `The SEO structure I am tightening now is: ${keywords.join(", ")}.`,
-    longTail.length ? `The next long-tail push should test: ${longTail.slice(0, 5).join("; ")}.` : `The next long-tail push should stay around AI-guided GLB presentations, 3D environments, and DigitalHut observatory intent.`,
-    `FireCuda should keep mapping original captures, optimized GLBs, thumbnails, blog evidence, runner reports, and asset-performance notes so the next blog round is based on evidence, not filler.`,
-    `Next action: publish or refine one focused blog cluster, watch the pixel for reads and GLB plays, then adjust the master SEO list from actual behavior.`
-  ].join(" ")
+  const longTail = flattenLongTailKeywords(brief.longTailTargets || report.masterSeoPlan?.longTailKeywords, 8)
+  const text = String(userMessage || "").toLowerCase()
+  const askedSeo = /seo|keyword|rank|google|blog|traffic|search/.test(text)
+  const askedFirecuda = /firecuda|archive|8tb|storage|map/.test(text)
+  const askedMoney = /wallet|tier|node|purchase|payment|subscription|money/.test(text)
+  const askedGlb = /glb|renderer|model|asset|3d|preview/.test(text)
+  const askedWhatNext = /next|do now|should i|gameplan|plan/.test(text)
+
+  const opener = userMessage
+    ? `Anthony, I understand the question. You are asking about "${userMessage.slice(0, 160)}".`
+    : "Anthony, I am reading the DigitalHut system state now."
+
+  const read = `Right now I am comparing the live pixel stream, published blog records, GLB preview plays, wallet/tier/node clicks, runner reports, vector memory, and the FireCuda archive plan. The current sample shows ${totals.pageViews || 0} page views, ${totals.blogViews || 0} blog views, ${totals.glbPlays || 0} GLB plays, ${totals.searches || 0} searches, ${totals.uniqueVisitors || 0} unique visitors, ${totals.walletClicks || 0} wallet clicks, ${totals.tierClicks || 0} tier clicks, and ${totals.nodeClicks || 0} node clicks.`
+
+  const interpretation = topBlog
+    ? `My interpretation: the audience is touching the blog layer before the wallet or node layer. The strongest tracked blog is "${topBlog.value}" with ${topBlog.count} events, and the strongest page is "${topPage?.value || "unknown"}" with ${topPage?.count || 0} events. That suggests the first growth lane is not checkout yet; it is proving that DigitalHut is a useful AI-guided 3D observatory.`
+    : "My interpretation: the system is online, but I need more blog reads and GLB plays before I can call a winning content lane."
+
+  const timezoneLine = topTimezone
+    ? `The strongest timezone signal appears to be ${topTimezone.value}. I am treating that as behavior context only, not confirmed identity, but it supports testing California, Los Angeles, Hollywood Hills, Griffith Observatory, travel visualization, and family observatory language.`
+    : "I do not have enough timezone signal to infer a regional content angle yet."
+
+  const seoLine = `For SEO, I would tighten around ${keywords.slice(0, 5).join(", ")}. The next long-tail phrases I would test are: ${longTail.slice(0, 4).join("; ")}.`
+  const glbLine = `For the renderer, I am watching whether people actually press Play Preview. Four GLB plays is enough to prove the button is being found, but not enough yet to know which category wins. The next useful test is one strong environment asset tied to one strong blog, then measure if GLB plays rise from that blog.`
+  const firecudaLine = `For FireCuda, I would map the next folder pass as original captures, optimized GLBs, thumbnails, blog evidence, SEO decisions, runner reports, and failed-render notes. That turns the 8TB drive into the evidence room for the runner instead of just storage.`
+  const moneyLine = `For wallet and nodes, I would not push payment language harder until we see wallet, tier, or node clicks. The data currently says people are reading and previewing, so the commercial layer should stay visible but secondary: subscription packages, node unlocks, and wallet checkout need to appear after the user understands the 3D presentation value.`
+  const nextLine = `My next move would be: publish one blog around "AI guided 3D presentation" plus "3D environments", attach one working GLB environment, add a clear Play Preview call-to-action, then compare instant, 6-hour, and 12-hour blog views against GLB plays.`
+
+  const sections = [opener, read, interpretation]
+  if(askedSeo) sections.push(seoLine, timezoneLine)
+  if(askedGlb) sections.push(glbLine)
+  if(askedFirecuda) sections.push(firecudaLine)
+  if(askedMoney) sections.push(moneyLine)
+  if(askedWhatNext || (!askedSeo && !askedGlb && !askedFirecuda && !askedMoney)) sections.push(seoLine, glbLine, firecudaLine, moneyLine, nextLine)
+  if(!sections.includes(nextLine)) sections.push(nextLine)
+
+  return sections.join(" ")
 }
 
 function isAuthorized(req){
