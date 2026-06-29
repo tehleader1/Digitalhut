@@ -14,5 +14,11 @@
       "source": "/(.*)",
       "destination": "/index.html"
     }
+  ],
+  "crons": [
+    {
+      "path": "/api/overnight-runner",
+      "schedule": "0 9 * * *"
+    }
   ]
 }
