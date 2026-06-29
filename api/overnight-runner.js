@@ -707,11 +707,178 @@ function buildStatus(){
   }
 }
 
-function buildReport(){
+function normalizeEventValue(value){
+  if(value === null || value === undefined || value === "") return "unknown"
+  return String(value)
+}
+
+function incrementCount(map, value){
+  const key = normalizeEventValue(value)
+  map.set(key, (map.get(key) || 0) + 1)
+}
+
+function topCounts(map, limit = 5){
+  return Array.from(map.entries())
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, limit)
+    .map(([value, count]) => ({value, count}))
+}
+
+async function fetchPixelSnapshot(){
+  try {
+    const {url, key} = supabaseConfig()
+    if(!url || !key){
+      return {ready: false, reason: "missing-supabase-service-config"}
+    }
+    const response = await fetch(`${url}/rest/v1/digitalhut_search_pixel_events?select=event_name,path,blog_slug,keyword_hint,category,asset_id,node_key,tier_key,metadata,created_at&order=created_at.desc&limit=200`, {
+      headers: {
+        apikey: key,
+        authorization: `Bearer ${key}`
+      }
+    })
+    const text = await response.text()
+    if(!response.ok){
+      return {ready: false, reason: "pixel-read-failed", status: response.status, detail: text.slice(0, 300)}
+    }
+    const events = text ? JSON.parse(text) : []
+    const eventCounts = new Map()
+    const topPages = new Map()
+    const topBlogs = new Map()
+    const keywordHints = new Map()
+    const categories = new Map()
+    const timezones = new Map()
+    const visitors = new Set()
+    let glbPlays = 0
+    let blogViews = 0
+    let pageViews = 0
+    let searches = 0
+    let walletClicks = 0
+    let tierClicks = 0
+    let nodeClicks = 0
+
+    events.forEach((event) => {
+      incrementCount(eventCounts, event.event_name)
+      incrementCount(topPages, event.path)
+      if(event.blog_slug) incrementCount(topBlogs, event.blog_slug)
+      if(event.keyword_hint) incrementCount(keywordHints, event.keyword_hint)
+      if(event.category) incrementCount(categories, event.category)
+      if(event.visitor_id) visitors.add(event.visitor_id)
+      if(event.metadata?.timezone) incrementCount(timezones, event.metadata.timezone)
+      if(event.event_name === "glb_preview_play") glbPlays += 1
+      if(event.event_name === "blog_view") blogViews += 1
+      if(event.event_name === "page_view") pageViews += 1
+      if(event.event_name === "search_run") searches += 1
+      if(event.event_name === "wallet_connect_click") walletClicks += 1
+      if(event.event_name === "tier_click") tierClicks += 1
+      if(event.event_name === "node_click") nodeClicks += 1
+    })
+
+    return {
+      ready: true,
+      sampleSize: events.length,
+      totals: {
+        pageViews,
+        blogViews,
+        glbPlays,
+        searches,
+        walletClicks,
+        tierClicks,
+        nodeClicks,
+        uniqueVisitors: visitors.size
+      },
+      topEvents: topCounts(eventCounts, 8),
+      topPages: topCounts(topPages, 6),
+      topBlogs: topCounts(topBlogs, 6),
+      keywordHints: topCounts(keywordHints, 8),
+      categories: topCounts(categories, 8),
+      timezones: topCounts(timezones, 5),
+      newestEventAt: events[0]?.created_at || null
+    }
+  } catch (error) {
+    return {ready: false, reason: "pixel-snapshot-exception", detail: error?.message || String(error)}
+  }
+}
+
+function buildAnthonyBrief({status, contentOps, masterSeoPlan, pixelSnapshot, requestedMessage}){
+  const totals = pixelSnapshot?.totals || {}
+  const topBlog = pixelSnapshot?.topBlogs?.[0]
+  const topPage = pixelSnapshot?.topPages?.[0]
+  const timezone = pixelSnapshot?.timezones?.[0]
+  const activeKeywords = [
+    "automatic 3D autoplay system",
+    "AI guided 3D presentation",
+    "3D observatory dapp",
+    "GLB renderer",
+    "real world 3D visualization",
+    "3D environments",
+    "family observatory",
+    "premium observatory"
+  ]
+  const longTailTargets = masterSeoPlan?.longTailKeywords?.slice(0, 8) || []
+  const pixelLine = pixelSnapshot?.ready
+    ? `I compared ${pixelSnapshot.sampleSize} recent pixel events: ${totals.pageViews || 0} page views, ${totals.blogViews || 0} blog views, ${totals.glbPlays || 0} GLB preview plays, ${totals.searches || 0} searches, ${totals.uniqueVisitors || 0} unique visitors, ${totals.walletClicks || 0} wallet clicks, ${totals.tierClicks || 0} tier clicks, and ${totals.nodeClicks || 0} node clicks.`
+    : `I tried to read the DigitalHut pixel stream, but the current pixel snapshot is not ready: ${pixelSnapshot?.reason || "unknown"}.`
+  const audienceLine = timezone
+    ? `The strongest timezone signal currently appears to be ${timezone.value}, so California/Pacific content angles are possible, but I am treating that as behavior data, not confirmed visitor identity.`
+    : "I do not have a confirmed visitor-location signal yet, so I am not pretending to know exact audience geography."
+  const blogLine = topBlog
+    ? `The strongest blog signal is ${topBlog.value} with ${topBlog.count} tracked events, and the strongest page signal is ${topPage?.value || "unknown"} with ${topPage?.count || 0} events.`
+    : "The blog layer is online, but it needs more tracked reads before I can rank winners with confidence."
+  const seoLine = `I am improving the SEO structure around ${activeKeywords.join(", ")}. The next long-tail test set should include ${longTailTargets.join("; ")}.`
+  const architectureLine = `Architecturally, the core system is online: Supabase reports, vector memory, SEO blog publishing, search pixel, market feed, wallet, treasury tracking, GitHub/Vercel deploys, and FireCuda as Anthony's private 8TB archive room.`
+  const firecudaLine = "FireCuda should archive the next round by source: original captures, optimized GLBs, thumbnails, blog evidence, SEO keyword decisions, runner reports, and asset-performance notes. That gives the runner a real evidence trail instead of guessing."
+  const nextMoveLine = `My next move is to push one focused blog cluster around ${contentOps?.nextBlogMove?.recommendation || "DigitalHut as an AI-guided 3D observatory"}, then wait for pixel events and tighten the keywords based on actual blog reads, GLB plays, searches, wallet clicks, tier clicks, and node interest.`
+  return {
+    title: "Anthony Brief",
+    directSummary: [
+      "Anthony, here is the real system read.",
+      architectureLine,
+      pixelLine,
+      audienceLine,
+      blogLine,
+      seoLine,
+      firecudaLine,
+      nextMoveLine
+    ].join(" "),
+    whatIAmLookingAt: [
+      "Supabase runner reports",
+      "Supabase vector memory",
+      "DigitalHut search pixel events",
+      "published blog records",
+      "GLB preview play events",
+      "wallet/tier/node click signals",
+      "FireCuda archive role",
+      "API/provider readiness"
+    ],
+    statisticsCompared: {
+      pixelTotals: totals,
+      topPages: pixelSnapshot?.topPages || [],
+      topBlogs: pixelSnapshot?.topBlogs || [],
+      topEvents: pixelSnapshot?.topEvents || [],
+      keywordHints: pixelSnapshot?.keywordHints || [],
+      categories: pixelSnapshot?.categories || [],
+      timezones: pixelSnapshot?.timezones || []
+    },
+    seoWordsImproving: activeKeywords,
+    longTailTargets,
+    firecudaNextMap: [
+      "D:\\DigitalHutAgent\\original-captures",
+      "D:\\DigitalHutAgent\\optimized-glbs",
+      "D:\\DigitalHutAgent\\seo-evidence",
+      "D:\\DigitalHutAgent\\runner-reports",
+      "D:\\DigitalHutAgent\\blog-performance"
+    ],
+    requestedMessage: requestedMessage || ""
+  }
+}
+
+async function buildReport(requestedMessage = ""){
   const status = buildStatus()
   const missing = status.checks.filter((item) => !item.configured).map((item) => item.id)
   const contentOps = contentOpsReport(status)
   const masterSeoPlan = buildMasterSeoPlan(status)
+  const pixelSnapshot = await fetchPixelSnapshot()
+  const anthonyBrief = buildAnthonyBrief({status, contentOps, masterSeoPlan, pixelSnapshot, requestedMessage})
   return {
     generatedAt: new Date().toISOString(),
     runner: "digitalhut-overnight-runner",
@@ -725,6 +892,8 @@ function buildReport(){
       : "DigitalHut runners are online, but one or more core systems still need verification before the autonomous blog/SEO loop is complete.",
     lanes: reportLanes,
     seoSignals,
+    anthonyBrief,
+    pixelSnapshot,
     contentOps,
     masterSeoPlan,
     status,
@@ -806,6 +975,7 @@ async function saveMemoryRecord(report){
         title: "DigitalHut AFK Runner Report",
         content: [
           report.summary,
+          report.anthonyBrief?.directSummary,
           contentOps.operatingStatement,
           contentOps.ownerNarrative,
           contentOps.nextBlogMove?.recommendation,
@@ -824,6 +994,8 @@ async function saveMemoryRecord(report){
           enabled: report.enabled,
           missing: report.missing,
           nextActions: report.nextActions,
+          anthonyBrief: report.anthonyBrief,
+          pixelSnapshot: report.pixelSnapshot,
           contentOps
         }
       })
@@ -880,6 +1052,128 @@ async function saveBlogDrafts(report){
   }
 }
 
+async function fetchRunnerMessages(limit = 24){
+  try {
+    const {url, key} = supabaseConfig()
+    if(!url || !key){
+      return {saved: false, messages: [], reason: "missing-supabase-service-config"}
+    }
+    const response = await fetch(`${url}/rest/v1/digitalhut_runner_messages?select=id,role,message,message_type,payload,created_at&order=created_at.desc&limit=${limit}`, {
+      headers: {
+        apikey: key,
+        authorization: `Bearer ${key}`
+      }
+    })
+    const text = await response.text()
+    if(!response.ok){
+      return {saved: false, messages: [], reason: "runner-chat-read-failed", status: response.status, detail: text.slice(0, 300)}
+    }
+    return {saved: true, messages: text ? JSON.parse(text) : []}
+  } catch (error) {
+    return {saved: false, messages: [], reason: "runner-chat-read-exception", detail: error?.message || String(error)}
+  }
+}
+
+async function saveRunnerMessage({role, message, messageType = "chat", payload = {}}){
+  try {
+    const {url, key} = supabaseConfig()
+    if(!url || !key){
+      return {saved: false, reason: "missing-supabase-service-config"}
+    }
+    const response = await fetch(`${url}/rest/v1/digitalhut_runner_messages`, {
+      method: "POST",
+      headers: {
+        apikey: key,
+        authorization: `Bearer ${key}`,
+        "content-type": "application/json",
+        prefer: "return=representation"
+      },
+      body: JSON.stringify({
+        role,
+        message,
+        message_type: messageType,
+        payload
+      })
+    })
+    const text = await response.text()
+    if(!response.ok){
+      return {saved: false, reason: "runner-chat-write-failed", status: response.status, detail: text.slice(0, 300)}
+    }
+    return {saved: true, record: text ? JSON.parse(text)?.[0] : null}
+  } catch (error) {
+    return {saved: false, reason: "runner-chat-write-exception", detail: error?.message || String(error)}
+  }
+}
+
+async function callReasoningBridge({report, userMessage, fallbackReply}){
+  const endpoint = process.env.DIGITALHUT_REASONING_ENDPOINT || ""
+  const apiKey = process.env.DIGITALHUT_REASONING_API_KEY || process.env.OPENAI_API_KEY || ""
+  const model = process.env.DIGITALHUT_REASONING_MODEL || ""
+  if(!endpoint || !apiKey){
+    return {used: false, reason: "missing-reasoning-bridge", reply: fallbackReply}
+  }
+  try {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        model,
+        purpose: "digitalhut-runner-chat",
+        instruction: "Answer like a senior observatory systems analyst. Stay factual. Do not invent traffic locations. Compare statistics and explain what to do next.",
+        userMessage,
+        reportContext: {
+          generatedAt: report.generatedAt,
+          summary: report.summary,
+          anthonyBrief: report.anthonyBrief,
+          pixelSnapshot: report.pixelSnapshot,
+          contentOps: report.contentOps,
+          masterSeoPlan: report.masterSeoPlan,
+          status: report.status,
+          missing: report.missing
+        }
+      })
+    })
+    const text = await response.text()
+    if(!response.ok){
+      return {used: false, reason: "reasoning-bridge-failed", status: response.status, detail: text.slice(0, 300), reply: fallbackReply}
+    }
+    let parsed = null
+    try {
+      parsed = text ? JSON.parse(text) : null
+    } catch {
+      parsed = {reply: text}
+    }
+    const reply = parsed?.reply || parsed?.message || parsed?.output_text || fallbackReply
+    return {used: true, model, reply}
+  } catch (error) {
+    return {used: false, reason: "reasoning-bridge-exception", detail: error?.message || String(error), reply: fallbackReply}
+  }
+}
+
+function buildRunnerReply(report, userMessage = ""){
+  const brief = report.anthonyBrief || {}
+  const stats = brief.statisticsCompared || {}
+  const totals = stats.pixelTotals || {}
+  const topBlog = stats.topBlogs?.[0]
+  const topPage = stats.topPages?.[0]
+  const keywords = brief.seoWordsImproving || []
+  const longTail = brief.longTailTargets || []
+  const messageFocus = userMessage ? `You asked: "${userMessage.slice(0, 240)}". ` : ""
+  return [
+    `Anthony, ${messageFocus}here is the live runner read.`,
+    `Core systems are online: Supabase reports, vector memory, SEO blog publishing, search pixel, market feed, wallet, treasury tracking, Vercel, GitHub, and FireCuda archive planning.`,
+    `I compared the current pixel stream against blog and GLB behavior: ${totals.pageViews || 0} page views, ${totals.blogViews || 0} blog views, ${totals.glbPlays || 0} GLB preview plays, ${totals.searches || 0} searches, ${totals.uniqueVisitors || 0} unique visitors, ${totals.walletClicks || 0} wallet clicks, ${totals.tierClicks || 0} tier clicks, and ${totals.nodeClicks || 0} node clicks.`,
+    topBlog ? `The strongest blog signal is ${topBlog.value} with ${topBlog.count} tracked events. The strongest page signal is ${topPage?.value || "unknown"} with ${topPage?.count || 0} tracked events.` : `The blog system is publishing, but it needs more reads before I can rank a true winner.`,
+    `The SEO structure I am tightening now is: ${keywords.join(", ")}.`,
+    longTail.length ? `The next long-tail push should test: ${longTail.slice(0, 5).join("; ")}.` : `The next long-tail push should stay around AI-guided GLB presentations, 3D environments, and DigitalHut observatory intent.`,
+    `FireCuda should keep mapping original captures, optimized GLBs, thumbnails, blog evidence, runner reports, and asset-performance notes so the next blog round is based on evidence, not filler.`,
+    `Next action: publish or refine one focused blog cluster, watch the pixel for reads and GLB plays, then adjust the master SEO list from actual behavior.`
+  ].join(" ")
+}
+
 function isAuthorized(req){
   const secret = process.env.DIGITALHUT_RUNNER_CRON_SECRET || ""
   if(!secret) return true
@@ -895,10 +1189,42 @@ export default async function handler(req, res){
     if(!isAuthorized(req)){
       return res.status(401).json({ok: false, error: "unauthorized-runner"})
     }
-    const report = buildReport()
+    const action = typeof req.query?.action === "string" ? req.query.action : "run"
+    const requestedMessage = typeof req.query?.message === "string" ? req.query.message.slice(0, 2000) : ""
+    const report = await buildReport(requestedMessage)
     const persistence = await saveReport(report)
     const memory = await saveMemoryRecord(report)
     const blogs = await saveBlogDrafts(report)
+    let runnerChat = null
+    if(action === "chat"){
+      const inbound = requestedMessage || "Give me a runner update."
+      const anthonyMessage = await saveRunnerMessage({
+        role: "anthony",
+        message: inbound,
+        messageType: "chat",
+        payload: {receivedAt: new Date().toISOString()}
+      })
+      const fallbackReply = buildRunnerReply(report, inbound)
+      const reasoning = await callReasoningBridge({report, userMessage: inbound, fallbackReply})
+      const replyText = reasoning.reply
+      const runnerMessage = await saveRunnerMessage({
+        role: "runner",
+        message: replyText,
+        messageType: "chat",
+        payload: {
+          generatedAt: report.generatedAt,
+          anthonyBrief: report.anthonyBrief,
+          reasoning,
+          score: report.score,
+          expansionScore: report.expansionScore
+        }
+      })
+      const history = await fetchRunnerMessages(30)
+      runnerChat = {anthonyMessage, runnerMessage, reasoning, reply: replyText, history}
+    } else if(action === "status"){
+      const history = await fetchRunnerMessages(30)
+      runnerChat = {reply: report.anthonyBrief?.directSummary || report.summary, history}
+    }
     return res.status(200).json({
       ok: true,
       reportCreated: true,
@@ -908,6 +1234,7 @@ export default async function handler(req, res){
       persistence,
       memory,
       blogs,
+      runnerChat,
       report
     })
   } catch (error) {

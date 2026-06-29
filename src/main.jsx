@@ -28,6 +28,7 @@ const BlogPage = React.lazy(() => import("./pages/BlogPage"))
 const MarketPage = React.lazy(() => import("./pages/MarketPage"))
 const ExperimentsPage = React.lazy(() => import("./pages/ExperimentsPage"))
 const LocationIntelligencePage = React.lazy(() => import("./pages/LocationIntelligencePage"))
+const RunnerChatPage = React.lazy(() => import("./pages/RunnerChatPage"))
 const ObservatoryScanner = React.lazy(() => import("./components/ObservatoryScanner"))
 
 installDigitalHutSearchPixel()
@@ -107,6 +108,11 @@ ReactDOM.createRoot(
         <Route
           path="/locations"
           element={<LocationIntelligencePage />}
+        />
+
+        <Route
+          path="/runner"
+          element={<RunnerChatPage />}
         />
 
         <Route
