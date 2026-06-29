@@ -140,6 +140,31 @@ const seoKeywordClusters = [
 
 const masterSeoKeywords = [
   {
+    keyword: "3D experience",
+    intent: "original broad search",
+    use: "Baseline keyword for early public users searching for interactive 3D, visual exploration, and DigitalHut's general presentation feel."
+  },
+  {
+    keyword: "3D images",
+    intent: "original broad search",
+    use: "Use when explaining how DigitalHut turns ordinary visuals, captures, and environment references into richer 3D presentation context."
+  },
+  {
+    keyword: "3D environments",
+    intent: "original broad search",
+    use: "Use for city, jungle, island, real estate, game world, science, travel, and camera/drone-created environment posts."
+  },
+  {
+    keyword: "3D presentation",
+    intent: "original broad search",
+    use: "Use for every autoplay, guided demo, category showcase, and blog post that explains a 3D asset instead of only listing it."
+  },
+  {
+    keyword: "real world visualization",
+    intent: "original practical search",
+    use: "Use when DigitalHut connects 3D scenes to real locations, travel, research, weather, property, infrastructure, or live reports."
+  },
+  {
     keyword: "AI 3D observatory",
     intent: "primary brand category",
     use: "Homepage, main lobby, renderer descriptions, and every flagship blog."
@@ -175,6 +200,146 @@ const masterSeoKeywords = [
     use: "Property, housing, international real estate, and local market explainers."
   },
   {
+    keyword: "real estate house model",
+    intent: "real estate search",
+    use: "Use for broad property model posts, listing-style explainers, and house walkthrough pages."
+  },
+  {
+    keyword: "2 bedroom house model",
+    intent: "real estate search",
+    use: "Use when presenting smaller home models, middle-class housing, rental units, and starter property walkthroughs."
+  },
+  {
+    keyword: "1 bedroom house model",
+    intent: "real estate search",
+    use: "Use for apartment, condo, studio, and compact housing 3D presentations."
+  },
+  {
+    keyword: "3 bedroom house model",
+    intent: "real estate search",
+    use: "Use for family housing, suburban property, and normal home walkthrough searches."
+  },
+  {
+    keyword: "2 story house model",
+    intent: "real estate search",
+    use: "Use when the 3D walkthrough needs floor-to-floor structure, stairs, room layout, and interior presentation."
+  },
+  {
+    keyword: "real estate data",
+    intent: "commercial data search",
+    use: "Use when combining house models with local market, property, neighborhood, pricing, or housing trend context."
+  },
+  {
+    keyword: "gamer 3D model",
+    intent: "gaming search",
+    use: "Use for gamer-facing environment assets, 360 game world previews, and game-style DigitalHut presentations."
+  },
+  {
+    keyword: "3D game model",
+    intent: "gaming search",
+    use: "Use for game environments, level previews, virtual worlds, and model discovery blogs."
+  },
+  {
+    keyword: "research data presentation",
+    intent: "research search",
+    use: "Use when a blog turns raw research, science, environment, or public data into an explainable presentation."
+  },
+  {
+    keyword: "3D research data presentation",
+    intent: "research search",
+    use: "Use when the research explanation includes GLB scenes, environment views, model rotation, and observation notes."
+  },
+  {
+    keyword: "new AI systems 2026",
+    intent: "trend search",
+    use: "Use for cutting-edge AI, automation, observatory, runner, and presentation-system blogs."
+  },
+  {
+    keyword: "AI system 2026",
+    intent: "trend search",
+    use: "Use for DigitalHut as a current AI system, not just a static 3D model website."
+  },
+  {
+    keyword: "AI presentation system",
+    intent: "product search",
+    use: "Use when explaining the AI Director, autoplay narration, category switching, and guided 3D demos."
+  },
+  {
+    keyword: "AI response system",
+    intent: "product search",
+    use: "Use when the AI reacts to search, voice commands, notes, user intent, wallet tier, or current model context."
+  },
+  {
+    keyword: "AI 3D model presentation",
+    intent: "product search",
+    use: "Use for posts where the system explains, rotates, summarizes, and connects a 3D model to related content."
+  },
+  {
+    keyword: "3D model subscription",
+    intent: "monetization search",
+    use: "Use for Standard, Premium, Pro, node purchases, and paid DigitalHut access explanations."
+  },
+  {
+    keyword: "premium 3D models",
+    intent: "monetization search",
+    use: "Use for premium environment libraries, exclusive DigitalHut captures, and upgraded access posts."
+  },
+  {
+    keyword: "premium AI presentation",
+    intent: "monetization search",
+    use: "Use for tier-based AI description depth, longer history, better node behavior, and guided demos."
+  },
+  {
+    keyword: "premium observatory",
+    intent: "monetization search",
+    use: "Use for paid observatory experiences, better feeds, saved history, and upgraded presentation controls."
+  },
+  {
+    keyword: "real digital observatory",
+    intent: "brand trust search",
+    use: "Use when proving DigitalHut has real runner logs, 3D assets, Supabase memory, FireCuda archive, and live app behavior."
+  },
+  {
+    keyword: "digital decentralized observatory",
+    intent: "dapp search",
+    use: "Use for wallet-connected, API-fed, node-progressive, decentralized presentation-system positioning."
+  },
+  {
+    keyword: "3D replica observatory",
+    intent: "visualization search",
+    use: "Use when DigitalHut represents a real place, asset, property, world, or environment as a 3D explanatory scene."
+  },
+  {
+    keyword: "observatory experience",
+    intent: "experience search",
+    use: "Use for public-facing language around relaxing, watching, learning, and exploring through the renderer."
+  },
+  {
+    keyword: "family observatory",
+    intent: "family search",
+    use: "Use for safe public education, home viewing, family presentations, travel planning, and kid-friendly observatory demos."
+  },
+  {
+    keyword: "observatory for kids",
+    intent: "family education search",
+    use: "Use for family-safe, educational, narrated 3D scenes where children can learn from visual models."
+  },
+  {
+    keyword: "home observatory",
+    intent: "home search",
+    use: "Use when positioning DigitalHut as a living-room, laptop, phone, or personal research-center observatory."
+  },
+  {
+    keyword: "3D dapp",
+    intent: "web3 search",
+    use: "Use for wallet connection, Base/USDC checkout, Reown, Alchemy, and decentralized access posts."
+  },
+  {
+    keyword: "3D observatory dapp",
+    intent: "web3 product search",
+    use: "Use as a high-intent combined phrase for DigitalHut's renderer, wallet, blog, nodes, and autoplay system."
+  },
+  {
     keyword: "GLB asset discovery",
     intent: "asset library growth",
     use: "Sketchfab/API discovery, FireCuda archive, Supabase asset records, and upload guides."
@@ -188,6 +353,99 @@ const masterSeoKeywords = [
     keyword: "DigitalHut node progression",
     intent: "retention mechanic",
     use: "Stellar, Genius Real Estate, Pro Gamer, Researcher, Developer, and future node blogs."
+  }
+]
+
+const longTailSeoKeywords = [
+  {
+    root: "3D experience",
+    phrases: [
+      "interactive 3D experience for learning real world environments",
+      "AI guided 3D experience with autoplay presentation",
+      "3D experience website for exploring models without scrolling lists",
+      "family friendly 3D experience for home learning and discovery"
+    ]
+  },
+  {
+    root: "3D environments",
+    phrases: [
+      "3D environments for real world travel and research presentations",
+      "beautiful 3D environments for AI guided observatory demos",
+      "drone captured 3D environments for websites and blogs",
+      "3D environment viewer for cities islands jungles and real estate"
+    ]
+  },
+  {
+    root: "3D presentation",
+    phrases: [
+      "automatic 3D presentation system for GLB files",
+      "AI narrated 3D presentation for real world assets",
+      "3D presentation website that explains models while they rotate",
+      "how to turn a GLB model into a guided 3D presentation"
+    ]
+  },
+  {
+    root: "real estate house model",
+    phrases: [
+      "AI 3D real estate house model walkthrough for buyers",
+      "2 bedroom house model 3D walkthrough with local market data",
+      "3 bedroom house model presentation for family home research",
+      "2 story house model viewer with room by room AI explanation"
+    ]
+  },
+  {
+    root: "gamer 3D model",
+    phrases: [
+      "AI guided gamer 3D model presentation for virtual worlds",
+      "3D game model viewer for environment discovery and previews",
+      "best 3D game environments to explore in an autoplay presentation",
+      "gaming 3D model observatory for new 2026 virtual worlds"
+    ]
+  },
+  {
+    root: "research data presentation",
+    phrases: [
+      "3D research data presentation for science and environment studies",
+      "AI research data presentation with 3D model evidence",
+      "3D research visualization for weather terrain and observatory reports",
+      "how researchers can use GLB models to explain real world data"
+    ]
+  },
+  {
+    root: "AI system 2026",
+    phrases: [
+      "new AI system 2026 for automatic 3D model presentations",
+      "AI presentation system 2026 for GLB files and research reports",
+      "AI response system that explains 3D models and changes categories",
+      "AI 3D model presentation system for websites and digital observatories"
+    ]
+  },
+  {
+    root: "3D model subscription",
+    phrases: [
+      "3D model subscription with premium AI guided presentations",
+      "premium 3D models with autoplay observatory experience",
+      "premium AI presentation for GLB models and digital research",
+      "wallet connected 3D model subscription for a decentralized observatory"
+    ]
+  },
+  {
+    root: "observatory experience",
+    phrases: [
+      "real digital observatory experience for 3D models and environments",
+      "home observatory experience for families students and researchers",
+      "observatory for kids with safe AI guided 3D presentations",
+      "digital decentralized observatory for 3D assets and live content"
+    ]
+  },
+  {
+    root: "3D dapp",
+    phrases: [
+      "3D dapp with wallet connected AI presentations",
+      "3D observatory dapp for GLB models blogs and node progression",
+      "decentralized 3D renderer dapp with premium model access",
+      "wallet connected 3D platform for AI guided observatory content"
+    ]
   }
 ]
 
@@ -209,9 +467,10 @@ function buildMasterSeoPlan(status){
     strategy: "Use a tight master keyword list, attach each blog to a real 3D presentation or FireCuda/API evidence item, measure instant/6h/12h traffic, then tighten the next keyword cycle.",
     antiSpamRule: "Publish from real signals and useful evidence. Avoid duplicate filler, keyword stuffing, fake reviews, and mass posting.",
     keywords: masterSeoKeywords,
+    longTailKeywords: longTailSeoKeywords,
     currentPriority: apiFreshness === "api-feed-ready"
-      ? ["AI 3D observatory", "automatic GLB presentation", "GLB asset discovery", "exotic 3D environment"]
-      : ["AI 3D observatory", "automatic GLB presentation", "exotic 3D environment", "DigitalHut node progression"],
+      ? ["3D experience", "AI 3D observatory", "automatic GLB presentation", "GLB asset discovery", "exotic 3D environment"]
+      : ["3D experience", "3D environments", "AI 3D observatory", "automatic GLB presentation", "exotic 3D environment", "DigitalHut node progression"],
     walletKeywordReady: walletReady,
     evidenceLoop: [
       "runner creates keyword plan",
@@ -236,7 +495,20 @@ function buildBlogDrafts(report){
       slug: `${generatedDay}-digitalhut-ai-3d-observatory-real-world-environments`,
       category: "DigitalHut Observatory",
       primary_keyword: "AI 3D observatory",
-      seo_keywords: ["AI 3D observatory", "automatic GLB presentation", "exotic 3D environment", "AI guided 3D model viewer"],
+      seo_keywords: [
+        "3D experience",
+        "3D environments",
+        "AI 3D observatory",
+        "automatic GLB presentation",
+        "exotic 3D environment",
+        "AI guided 3D model viewer",
+        "real world visualization",
+        "home observatory",
+        "interactive 3D experience for learning real world environments",
+        "AI guided 3D experience with autoplay presentation",
+        "3D environment viewer for cities islands jungles and real estate",
+        "real digital observatory experience for 3D models and environments"
+      ],
       summary: "Introduce DigitalHut as a self-produced 3D observatory where AI-guided GLB presentations, FireCuda archives, Supabase memory, and Vercel deployment work together to turn real environments into searchable presentation content.",
       publish_window: "next-editorial-window",
       firecuda_path: `${firecudaBase}\\ai-3d-observatory`,
@@ -251,7 +523,20 @@ function buildBlogDrafts(report){
       slug: `${generatedDay}-automatic-glb-presentations-3d-assets`,
       category: "Developer",
       primary_keyword: "automatic GLB presentation",
-      seo_keywords: ["automatic GLB presentation", "3D renderer dapp", "GLB asset discovery", "AI guided 3D model viewer"],
+      seo_keywords: [
+        "3D presentation",
+        "automatic GLB presentation",
+        "3D renderer dapp",
+        "GLB asset discovery",
+        "AI guided 3D model viewer",
+        "AI presentation system",
+        "AI 3D model presentation",
+        "3D observatory dapp",
+        "automatic 3D presentation system for GLB files",
+        "AI narrated 3D presentation for real world assets",
+        "how to turn a GLB model into a guided 3D presentation",
+        "AI 3D model presentation system for websites and digital observatories"
+      ],
       summary: "Explain how DigitalHut moves past static model cards by connecting play preview, guided narration, autoplay, related assets, SEO descriptions, and backend memory.",
       publish_window: "after-renderer-test",
       firecuda_path: `${firecudaBase}\\automatic-glb-presentations`,
@@ -266,7 +551,20 @@ function buildBlogDrafts(report){
       slug: `${generatedDay}-firecuda-8tb-exotic-3d-environment-pipeline`,
       category: "Exotic Environments",
       primary_keyword: "exotic 3D environment",
-      seo_keywords: ["exotic 3D environment", "drone captured GLB", "real world 3D scan", "immersive travel renderer"],
+      seo_keywords: [
+        "3D images",
+        "3D environments",
+        "exotic 3D environment",
+        "drone captured GLB",
+        "real world 3D scan",
+        "immersive travel renderer",
+        "real digital observatory",
+        "digital decentralized observatory",
+        "drone captured 3D environments for websites and blogs",
+        "beautiful 3D environments for AI guided observatory demos",
+        "3D environments for real world travel and research presentations",
+        "home observatory experience for families students and researchers"
+      ],
       summary: "Show the production plan for original camera and drone environments: capture locally, preserve raw files on FireCuda, publish optimized GLBs through Supabase/Vercel, and measure blog/viewer performance.",
       publish_window: "when-owner-capture-is-ready",
       firecuda_path: `${firecudaBase}\\firecuda-exotic-environments`,
