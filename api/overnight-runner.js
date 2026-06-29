@@ -57,7 +57,7 @@ const reportLanes = [
 const contentSystemStack = [
   {
     id: "supabase",
-    role: "Stores runner reports, blog performance, ratings, reviews, tier signals, wallet events, and future node progress."
+    role: "Stores runner reports, blog performance, ratings, reviews, tier signals, wallet events, node progress, and Vector DB memory."
   },
   {
     id: "github",
@@ -73,7 +73,7 @@ const contentSystemStack = [
   },
   {
     id: "firecuda",
-    role: "Acts as the 8TB owner archive for exclusive GLBs, original camera/drone captures, thumbnails, drafts, logs, and raw production material."
+    role: "Acts as the 8TB owner archive for exclusive GLBs, original camera/drone captures, thumbnails, drafts, logs, raw production material, and local agent working memory."
   },
   {
     id: "apis",
@@ -81,7 +81,11 @@ const contentSystemStack = [
   },
   {
     id: "node",
-    role: "Runs the JavaScript backend layer that coordinates API checks, report creation, wallet verification, anti-lag logic, and content timing."
+    role: "Runs the JavaScript backend layer that coordinates API checks, report creation, wallet verification, vector memory writes, anti-lag logic, and content timing."
+  },
+  {
+    id: "vector-db",
+    role: "Indexes DigitalHut blogs, GLBs, SEO keywords, runner reports, FireCuda paths, and node/tier signals for semantic recall."
   },
   {
     id: "wallet",
@@ -200,6 +204,7 @@ function contentOpsReport(status){
       trafficCaptureReady,
       freshFeedReady,
       marketReady,
+      vectorMemoryReady: trafficCaptureReady,
       firecudaRole: "local-master-archive",
       publicStorageRole: "Supabase/Vercel-hosted assets are required for live website access because Vercel cannot read D: directly."
     },
