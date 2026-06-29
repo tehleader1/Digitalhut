@@ -11,6 +11,7 @@ import {
   WalletProvider
 } from "./wallet"
 
+import {installDigitalHutSearchPixel} from "./lib/digitalhutSearchPixel"
 import HomePage from "./pages/HomePage"
 import DefensiveGuardian from "./components/DefensiveGuardian"
 
@@ -28,6 +29,8 @@ const MarketPage = React.lazy(() => import("./pages/MarketPage"))
 const ExperimentsPage = React.lazy(() => import("./pages/ExperimentsPage"))
 const LocationIntelligencePage = React.lazy(() => import("./pages/LocationIntelligencePage"))
 const ObservatoryScanner = React.lazy(() => import("./components/ObservatoryScanner"))
+
+installDigitalHutSearchPixel()
 
 ReactDOM.createRoot(
   document.getElementById("root")

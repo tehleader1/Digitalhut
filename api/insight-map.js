@@ -77,7 +77,86 @@ function currentMode(){
   }
 }
 
-export default function handler(req, res){
+async function readJsonBody(req){
+  if(req.body && typeof req.body === "object") return req.body
+  if(typeof req.body === "string"){
+    try {
+      return JSON.parse(req.body)
+    } catch {
+      return {}
+    }
+  }
+  return new Promise((resolve) => {
+    let raw = ""
+    req.on("data", (chunk) => {
+      raw += chunk
+      if(raw.length > 32000) req.destroy()
+    })
+    req.on("end", () => {
+      try {
+        resolve(raw ? JSON.parse(raw) : {})
+      } catch {
+        resolve({})
+      }
+    })
+    req.on("error", () => resolve({}))
+  })
+}
+
+function pickString(value, max = 500){
+  return String(value || "").slice(0, max)
+}
+
+async function saveSearchPixelEvent(req, payload){
+  const url = (process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || "").replace(/\/+$/, "")
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.DIGITALHUT_SUPABASE_SERVICE_ROLE_KEY || ""
+  if(!url || !key){
+    return {saved: false, reason: "missing-supabase-service-config", hasUrl: Boolean(url), hasServiceKey: Boolean(key)}
+  }
+  const row = {
+    event_name: pickString(payload.eventName || payload.event_name || "event", 80),
+    session_id: pickString(payload.sessionId || payload.session_id || "anonymous", 160),
+    visitor_id: pickString(payload.visitorId || payload.visitor_id || "", 160) || null,
+    path: pickString(payload.path || "", 700),
+    referrer: pickString(payload.referrer || "", 700) || null,
+    title: pickString(payload.title || "", 300) || null,
+    search: pickString(payload.search || "", 700) || null,
+    source: "digitalhut-search-pixel",
+    keyword_hint: pickString(payload.keywordHint || payload.keyword_hint || "", 300) || null,
+    category: pickString(payload.category || "", 160) || null,
+    asset_id: pickString(payload.assetId || payload.asset_id || "", 200) || null,
+    blog_slug: pickString(payload.blogSlug || payload.blog_slug || "", 200) || null,
+    wallet_address: pickString(payload.walletAddress || payload.wallet_address || "", 100) || null,
+    node_key: pickString(payload.nodeKey || payload.node_key || "", 120) || null,
+    tier_key: pickString(payload.tierKey || payload.tier_key || "", 120) || null,
+    metadata: payload.metadata && typeof payload.metadata === "object" ? payload.metadata : {},
+    user_agent: pickString(req.headers["user-agent"] || "", 500) || null
+  }
+  const response = await fetch(`${url}/rest/v1/digitalhut_search_pixel_events`, {
+    method: "POST",
+    headers: {
+      apikey: key,
+      authorization: `Bearer ${key}`,
+      "content-type": "application/json",
+      prefer: "return=minimal"
+    },
+    body: JSON.stringify(row)
+  })
+  const text = await response.text()
+  if(!response.ok){
+    return {saved: false, reason: "supabase-pixel-write-failed", status: response.status, detail: text.slice(0, 500)}
+  }
+  return {saved: true}
+}
+
+export default async function handler(req, res){
+  if(req.method === "POST"){
+    res.setHeader("Cache-Control", "no-store")
+    const payload = await readJsonBody(req)
+    const result = await saveSearchPixelEvent(req, payload)
+    return res.status(200).json({ok: true, pixel: result})
+  }
+
   const stack = stackStatus()
   const payload = {
     generatedAt: new Date().toISOString(),
