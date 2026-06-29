@@ -1,9 +1,37 @@
+import {useEffect, useState} from "react"
 import {Link} from "react-router-dom"
 import {seoBlogPosts, seoKeywordClusters, seoTrendSignals} from "../lib/seoContentEngine"
 import "./TrustPage.css"
 import "./BlogPage.css"
 
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+
 export default function BlogPage(){
+  const [runnerPosts, setRunnerPosts] = useState([])
+
+  useEffect(() => {
+    if(!supabaseUrl || !supabaseAnonKey) return
+    let cancelled = false
+    const url = `${supabaseUrl.replace(/\/+$/, "")}/rest/v1/digitalhut_blog_drafts?status=eq.published&select=id,title,slug,category,primary_keyword,seo_keywords,summary,evidence,created_at&order=created_at.desc&limit=12`
+    fetch(url, {
+      headers: {
+        apikey: supabaseAnonKey,
+        authorization: `Bearer ${supabaseAnonKey}`
+      }
+    })
+      .then((response) => response.ok ? response.json() : [])
+      .then((posts) => {
+        if(!cancelled && Array.isArray(posts)) setRunnerPosts(posts)
+      })
+      .catch(() => {
+        if(!cancelled) setRunnerPosts([])
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
   return <main className="dh-trust-page dh-blog-page">
     <header className="dh-trust-nav">
       <Link to="/">DigitalHut</Link>
@@ -27,6 +55,16 @@ export default function BlogPage(){
         <p>{terms.join(" / ")}</p>
       </article>)}
     </section>
+
+    {runnerPosts.length > 0 && <section className="dh-blog-grid" aria-label="DigitalHut autonomous runner blog posts">
+      {runnerPosts.map((post) => <article key={post.id || post.slug} id={post.slug}>
+        <span>{post.category}</span>
+        <h2>{post.title}</h2>
+        <p>{post.summary}</p>
+        <div>{(post.seo_keywords || []).map((keyword) => <b key={keyword}>{keyword}</b>)}</div>
+        <Link to={`/blog/${post.slug}`}>Read report</Link>
+      </article>)}
+    </section>}
 
     <section className="dh-blog-grid" aria-label="DigitalHut blog posts">
       {seoBlogPosts.map((post) => <article key={post.slug} id={post.slug}>

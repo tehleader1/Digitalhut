@@ -138,6 +138,147 @@ const seoKeywordClusters = [
   }
 ]
 
+const masterSeoKeywords = [
+  {
+    keyword: "AI 3D observatory",
+    intent: "primary brand category",
+    use: "Homepage, main lobby, renderer descriptions, and every flagship blog."
+  },
+  {
+    keyword: "automatic GLB presentation",
+    intent: "product function",
+    use: "Autoplay, guided demos, renderer play-preview, and node unlock content."
+  },
+  {
+    keyword: "3D renderer dapp",
+    intent: "technical positioning",
+    use: "Developer, wallet, decentralized app, and performance content."
+  },
+  {
+    keyword: "exotic 3D environment",
+    intent: "visual discovery",
+    use: "Camera/drone captures, travel scenes, city scans, jungle, island, dock, and terrain posts."
+  },
+  {
+    keyword: "AI guided 3D model viewer",
+    intent: "search + explanation",
+    use: "Blog titles and descriptions where the AI explains what the viewer is seeing."
+  },
+  {
+    keyword: "3D research visualization",
+    intent: "researcher audience",
+    use: "Science, observatory, terrain, weather, orbital, and evidence-based posts."
+  },
+  {
+    keyword: "3D real estate walkthrough",
+    intent: "commercial audience",
+    use: "Property, housing, international real estate, and local market explainers."
+  },
+  {
+    keyword: "GLB asset discovery",
+    intent: "asset library growth",
+    use: "Sketchfab/API discovery, FireCuda archive, Supabase asset records, and upload guides."
+  },
+  {
+    keyword: "wallet connected 3D platform",
+    intent: "dapp monetization",
+    use: "Standard, Premium, Pro, node purchase, and wallet checkout content."
+  },
+  {
+    keyword: "DigitalHut node progression",
+    intent: "retention mechanic",
+    use: "Stellar, Genius Real Estate, Pro Gamer, Researcher, Developer, and future node blogs."
+  }
+]
+
+function slugify(value){
+  return String(value || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 80)
+}
+
+function buildMasterSeoPlan(status){
+  const configuredIds = new Set(status.checks.filter((item) => item.configured).map((item) => item.id))
+  const apiFreshness = configuredIds.has("sketchfab") || configuredIds.has("cesium") ? "api-feed-ready" : "owner-archive-first"
+  const walletReady = configuredIds.has("reown") && configuredIds.has("alchemy")
+  return {
+    title: "DigitalHut Master SEO Keyword List",
+    cycle: new Date().toISOString().slice(0, 10),
+    strategy: "Use a tight master keyword list, attach each blog to a real 3D presentation or FireCuda/API evidence item, measure instant/6h/12h traffic, then tighten the next keyword cycle.",
+    antiSpamRule: "Publish from real signals and useful evidence. Avoid duplicate filler, keyword stuffing, fake reviews, and mass posting.",
+    keywords: masterSeoKeywords,
+    currentPriority: apiFreshness === "api-feed-ready"
+      ? ["AI 3D observatory", "automatic GLB presentation", "GLB asset discovery", "exotic 3D environment"]
+      : ["AI 3D observatory", "automatic GLB presentation", "exotic 3D environment", "DigitalHut node progression"],
+    walletKeywordReady: walletReady,
+    evidenceLoop: [
+      "runner creates keyword plan",
+      "runner creates draft blog candidates",
+      "Anthony adds FireCuda/API/YouTube/drone evidence",
+      "blog publishes with related 3D presentation",
+      "runner records instant views",
+      "runner records 6-hour views",
+      "runner records 12-hour views",
+      "runner updates master keyword list",
+      "next blog gets tighter"
+    ]
+  }
+}
+
+function buildBlogDrafts(report){
+  const generatedDay = report.generatedAt.slice(0, 10)
+  const firecudaBase = "D:\\DigitalHutAgent\\blogs"
+  return [
+    {
+      title: "DigitalHut Is Building an AI 3D Observatory for Real World Environments",
+      slug: `${generatedDay}-digitalhut-ai-3d-observatory-real-world-environments`,
+      category: "DigitalHut Observatory",
+      primary_keyword: "AI 3D observatory",
+      seo_keywords: ["AI 3D observatory", "automatic GLB presentation", "exotic 3D environment", "AI guided 3D model viewer"],
+      summary: "Introduce DigitalHut as a self-produced 3D observatory where AI-guided GLB presentations, FireCuda archives, Supabase memory, and Vercel deployment work together to turn real environments into searchable presentation content.",
+      publish_window: "next-editorial-window",
+      firecuda_path: `${firecudaBase}\\ai-3d-observatory`,
+      evidence: {
+        source: "runner-master-seo",
+        requiredEvidence: ["working renderer", "runner report", "vector memory record", "FireCuda GLB/archive reference"],
+        measurementWindows: blogPerformanceWindows
+      }
+    },
+    {
+      title: "How Automatic GLB Presentations Can Make 3D Assets Easier to Understand",
+      slug: `${generatedDay}-automatic-glb-presentations-3d-assets`,
+      category: "Developer",
+      primary_keyword: "automatic GLB presentation",
+      seo_keywords: ["automatic GLB presentation", "3D renderer dapp", "GLB asset discovery", "AI guided 3D model viewer"],
+      summary: "Explain how DigitalHut moves past static model cards by connecting play preview, guided narration, autoplay, related assets, SEO descriptions, and backend memory.",
+      publish_window: "after-renderer-test",
+      firecuda_path: `${firecudaBase}\\automatic-glb-presentations`,
+      evidence: {
+        source: "runner-master-seo",
+        requiredEvidence: ["play-preview test", "asset metadata", "runner contentOps summary", "Supabase report id"],
+        measurementWindows: blogPerformanceWindows
+      }
+    },
+    {
+      title: "The FireCuda 8TB Archive Behind DigitalHut's Exotic 3D Environment Pipeline",
+      slug: `${generatedDay}-firecuda-8tb-exotic-3d-environment-pipeline`,
+      category: "Exotic Environments",
+      primary_keyword: "exotic 3D environment",
+      seo_keywords: ["exotic 3D environment", "drone captured GLB", "real world 3D scan", "immersive travel renderer"],
+      summary: "Show the production plan for original camera and drone environments: capture locally, preserve raw files on FireCuda, publish optimized GLBs through Supabase/Vercel, and measure blog/viewer performance.",
+      publish_window: "when-owner-capture-is-ready",
+      firecuda_path: `${firecudaBase}\\firecuda-exotic-environments`,
+      evidence: {
+        source: "runner-master-seo",
+        requiredEvidence: ["FireCuda folder", "original capture", "optimized GLB", "thumbnail", "public presentation link"],
+        measurementWindows: blogPerformanceWindows
+      }
+    }
+  ]
+}
+
 function contentOpsReport(status){
   const configuredIds = new Set(status.checks.filter((item) => item.configured).map((item) => item.id))
   const trafficCaptureReady = configuredIds.has("supabase") && configuredIds.has("supabase-service")
@@ -242,6 +383,7 @@ function buildReport(){
   const status = buildStatus()
   const missing = status.checks.filter((item) => !item.configured).map((item) => item.id)
   const contentOps = contentOpsReport(status)
+  const masterSeoPlan = buildMasterSeoPlan(status)
   return {
     generatedAt: new Date().toISOString(),
     runner: "digitalhut-overnight-runner",
@@ -254,6 +396,7 @@ function buildReport(){
     lanes: reportLanes,
     seoSignals,
     contentOps,
+    masterSeoPlan,
     status,
     missing,
     nextActions: [
@@ -370,6 +513,43 @@ async function saveMemoryRecord(report){
   }
 }
 
+async function saveBlogDrafts(report){
+  try {
+    const {url, key} = supabaseConfig()
+    if(!url || !key){
+      return {saved: false, reason: "missing-supabase-service-config", hasUrl: Boolean(url), hasServiceKey: Boolean(key)}
+    }
+    const drafts = buildBlogDrafts(report)
+    const rows = drafts.map((draft) => ({
+      ...draft,
+      status: "published",
+      source_runner_id: report.runner,
+      source_report_generated_at: report.generatedAt
+    }))
+    const response = await fetch(`${url}/rest/v1/digitalhut_blog_drafts?on_conflict=slug`, {
+      method: "POST",
+      headers: {
+        apikey: key,
+        authorization: `Bearer ${key}`,
+        "content-type": "application/json",
+        prefer: "resolution=merge-duplicates,return=representation"
+      },
+      body: JSON.stringify(rows)
+    })
+    const text = await response.text()
+    if(!response.ok){
+      return {saved: false, reason: "supabase-blog-draft-write-failed", status: response.status, detail: text.slice(0, 500), drafts}
+    }
+    try {
+      return {saved: true, drafts, records: text ? JSON.parse(text) : []}
+    } catch (error) {
+      return {saved: true, drafts, records: [], parseWarning: error.message, raw: text.slice(0, 500)}
+    }
+  } catch (error) {
+    return {saved: false, reason: "runner-blog-draft-exception", detail: error?.message || String(error)}
+  }
+}
+
 function isAuthorized(req){
   const secret = process.env.DIGITALHUT_RUNNER_CRON_SECRET || ""
   if(!secret) return true
@@ -388,13 +568,16 @@ export default async function handler(req, res){
     const report = buildReport()
     const persistence = await saveReport(report)
     const memory = await saveMemoryRecord(report)
+    const blogs = await saveBlogDrafts(report)
     return res.status(200).json({
       ok: true,
       reportCreated: true,
       savedToSupabase: persistence.saved,
       savedToVectorMemory: memory.saved,
+      savedBlogDrafts: blogs.saved,
       persistence,
       memory,
+      blogs,
       report
     })
   } catch (error) {
