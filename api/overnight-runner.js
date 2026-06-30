@@ -1216,9 +1216,10 @@ function isAuthorized(req){
   const secret = process.env.DIGITALHUT_RUNNER_CRON_SECRET || ""
   if(!secret) return true
   const querySecret = req.query?.secret || ""
+  const bodySecret = req.body?.secret || ""
   const headerSecret = req.headers["x-digitalhut-runner-secret"] || ""
   const cronHeader = req.headers["x-vercel-cron"]
-  return querySecret === secret || headerSecret === secret || Boolean(cronHeader)
+  return querySecret === secret || bodySecret === secret || headerSecret === secret || Boolean(cronHeader)
 }
 
 export default async function handler(req, res){
@@ -1227,8 +1228,10 @@ export default async function handler(req, res){
     if(!isAuthorized(req)){
       return res.status(401).json({ok: false, error: "unauthorized-runner"})
     }
-    const action = typeof req.query?.action === "string" ? req.query.action : "run"
-    const requestedMessage = typeof req.query?.message === "string" ? req.query.message.slice(0, 2000) : ""
+    const actionSource = req.body?.action || req.query?.action
+    const messageSource = req.body?.message || req.query?.message
+    const action = typeof actionSource === "string" ? actionSource : "run"
+    const requestedMessage = typeof messageSource === "string" ? messageSource.slice(0, 8000) : ""
     const report = await buildReport(requestedMessage)
     const persistence = await saveReport(report)
     const memory = await saveMemoryRecord(report)

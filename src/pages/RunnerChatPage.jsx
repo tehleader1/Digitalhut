@@ -45,13 +45,18 @@ export default function RunnerChatPage(){
     setBusy(true)
     setStatus(`Runner ${action} running...`)
     try {
-      const params = new URLSearchParams({
-        action,
-        secret: secret.trim()
-      })
-      if(nextMessage) params.set("message", nextMessage)
-      const response = await fetch(`/api/overnight-runner?${params.toString()}`, {
-        headers: {"accept": "application/json"}
+      const response = await fetch("/api/overnight-runner", {
+        method: "POST",
+        headers: {
+          "accept": "application/json",
+          "content-type": "application/json",
+          "x-digitalhut-runner-secret": secret.trim()
+        },
+        body: JSON.stringify({
+          action,
+          secret: secret.trim(),
+          message: nextMessage
+        })
       })
       const data = await response.json()
       if(!response.ok || !data.ok){

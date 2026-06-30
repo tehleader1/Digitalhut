@@ -19,13 +19,18 @@ function requireSecret(){
 }
 
 async function askRunner({baseUrl, secret, message}){
-  const params = new URLSearchParams({
-    action: "chat",
-    secret,
-    message
-  })
-  const response = await fetch(`${baseUrl.replace(/\/+$/, "")}/api/overnight-runner?${params.toString()}`, {
-    headers: {accept: "application/json"}
+  const response = await fetch(`${baseUrl.replace(/\/+$/, "")}/api/overnight-runner`, {
+    method: "POST",
+    headers: {
+      accept: "application/json",
+      "content-type": "application/json",
+      "x-digitalhut-runner-secret": secret
+    },
+    body: JSON.stringify({
+      action: "chat",
+      secret,
+      message
+    })
   })
   const data = await response.json().catch(() => ({}))
   if(!response.ok || !data.ok){
@@ -36,6 +41,23 @@ async function askRunner({baseUrl, secret, message}){
     report: data.report,
     reasoning: data.runnerChat?.reasoning
   }
+}
+
+function printWrapped(label, text, width = 96){
+  const words = String(text || "").split(/\s+/).filter(Boolean)
+  const lines = []
+  let current = ""
+  words.forEach((word) => {
+    if(`${current} ${word}`.trim().length > width){
+      lines.push(current)
+      current = word
+    } else {
+      current = `${current} ${word}`.trim()
+    }
+  })
+  if(current) lines.push(current)
+  console.log(`${label} ${lines.shift() || ""}`)
+  lines.forEach((line) => console.log(`${" ".repeat(label.length + 1)}${line}`))
 }
 
 function printHeader(baseUrl){
@@ -65,11 +87,7 @@ async function main(){
       try {
         const result = await askRunner({baseUrl, secret, message})
         console.log("")
-        console.log(`Runner > ${result.reply}`)
-        if(result.reasoning && result.reasoning.used === false){
-          console.log("")
-          console.log(`Reasoning bridge: ${result.reasoning.reason}. Using built-in DigitalHut runner analysis.`)
-        }
+        printWrapped("Runner >", result.reply)
         console.log("")
       } catch (error) {
         console.error("")
