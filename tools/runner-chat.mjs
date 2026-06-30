@@ -88,6 +88,10 @@ async function main(){
         const result = await askRunner({baseUrl, secret, message})
         console.log("")
         printWrapped("Runner >", result.reply)
+        if(result.reasoning && result.reasoning.used === false && result.reasoning.reason !== "missing-reasoning-bridge"){
+          const detail = result.reasoning.status ? `${result.reasoning.reason} (${result.reasoning.status})` : result.reasoning.reason
+          printWrapped("Bridge >", `Reasoning model unavailable: ${detail}. I am using the built-in runner fallback for this answer.`)
+        }
         console.log("")
       } catch (error) {
         console.error("")

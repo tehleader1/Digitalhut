@@ -1236,6 +1236,33 @@ function buildRunnerReply(report, userMessage = ""){
   const askedGlb = /glb|renderer|model|asset|3d|preview/.test(text)
   const askedMetrics = /metric|number|stat|technical|debug|detail|exact|show me/.test(text)
   const askedGreeting = /^(hi|hello|yo|hey|sup|whats up|what's up)\b/.test(text.trim())
+  const orderedMarkers = ["first", "second", "third", "fourth", "fifth", "next", "then", "after that", "finally", "rinse and repeat"]
+  const hasOrderedPlan = orderedMarkers.filter((marker) => text.includes(marker)).length >= 2
+  const asksToReadAgain = /read again|i told|repeat.*order|in order|follow.*direction|what we will do/.test(text)
+  const asksToCheckSite = /check digitalhut|go check|working environment|website works|site works|digitalhut\.app/.test(text)
+
+  if(hasOrderedPlan || asksToReadAgain){
+    return [
+      "Anthony, understood. I should not override that plan.",
+      "Here is the order I am taking from you:",
+      "First: build the SEO foundation from long-tail keywords and general search phrases so DigitalHut has original search roots.",
+      "Next: expand the keyword and content map into off-tier markets: China, Europe, the Middle East, Africa, and other non-obvious global lanes.",
+      "Next: make the visual path real: picture thumbnail, click, then actual 3D render on DigitalHut. No dead card loop.",
+      "Next: run at least one full week of blogs at those settings so the pixel can collect enough behavior to compare.",
+      "Next: backtest backlinks, blog reads, GLB plays, search terms, and category movement.",
+      "Next: map FireCuda as the growth archive: captures, GLBs, thumbnails, SEO evidence, blog history, backlink notes, failed renders, and winning assets.",
+      "Then: rinse and repeat with tighter keywords and better assets.",
+      "My job is to help execute that sequence, not replace it with a smaller idea."
+    ].join(" ")
+  }
+
+  if(asksToCheckSite){
+    return [
+      "Anthony, I accept that correction: DigitalHut already has working environments.",
+      "The job is not to prove the site exists anymore. The job is to connect the working environment to the growth loop: thumbnail to 3D render, render to blog, blog to pixel behavior, pixel behavior to better keywords, and keywords back into the next asset.",
+      "So the next serious task is to make every published story point to a real working 3D preview and record whether people actually play it."
+    ].join(" ")
+  }
 
   const pageViews = totals.pageViews || 0
   const blogViews = totals.blogViews || 0
