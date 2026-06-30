@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-label="DigitalHut automatic 3D autoplay system thumbnail">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#031525"/>
+      <stop offset=".48" stop-color="#0b3140"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="scan" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#67e8f9" stop-opacity=".12"/>
+      <stop offset=".5" stop-color="#bef264" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#38bdf8" stop-opacity=".12"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <path d="M76 570C250 425 360 510 520 360S840 140 1208 238" fill="none" stroke="#67e8f9" stroke-width="3" opacity=".55"/>
+  <rect x="120" y="106" width="675" height="390" rx="20" fill="#020617" opacity=".72" stroke="#67e8f9" stroke-width="3"/>
+  <rect x="155" y="142" width="605" height="305" rx="14" fill="#0f172a" stroke="#1e3a8a"/>
+  <path d="M240 380h400l-80-92-82 72-58-102z" fill="#164e63"/>
+  <circle cx="560" cy="215" r="54" fill="#facc15" opacity=".85"/>
+  <path d="M176 462h560" stroke="url(#scan)" stroke-width="16"/>
+  <rect x="850" y="142" width="310" height="74" rx="14" fill="#083344" stroke="#bef264" stroke-width="2"/>
+  <rect x="850" y="242" width="230" height="54" rx="12" fill="#0f172a" stroke="#67e8f9"/>
+  <rect x="850" y="322" width="270" height="54" rx="12" fill="#0f172a" stroke="#67e8f9"/>
+  <text x="120" y="604" fill="#e0f2fe" font-family="Arial, sans-serif" font-size="56" font-weight="800">Automatic 3D Autoplay</text>
+  <text x="124" y="652" fill="#bef264" font-family="Arial, sans-serif" font-size="28" font-weight="700">AI Director + GLB Renderer + Observatory Feed</text>
+</svg>

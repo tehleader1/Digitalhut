@@ -6,6 +6,63 @@ import "./BlogPage.css"
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+const blogThumbnailBySlug = {
+  "automatic-3d-autoplay-system": "/seo-thumbnails/automatic-3d-autoplay-system.svg",
+  "3d-imagery-helping-research-communities": "/seo-thumbnails/researcher-3d-imagery.svg",
+  "mainstream-feed-to-3d-assets": "/seo-thumbnails/mainstream-3d-feed.svg",
+  "planetary-views-and-orbital-compute": "/seo-thumbnails/planetary-orbital-compute.svg",
+  "gamer-programmer-renderer-hubs": "/seo-thumbnails/gamer-programmer-renderer.svg"
+}
+const categoryThumbnailMap = [
+  ["planet", "/seo-thumbnails/planetary-orbital-compute.svg"],
+  ["orbital", "/seo-thumbnails/planetary-orbital-compute.svg"],
+  ["research", "/seo-thumbnails/researcher-3d-imagery.svg"],
+  ["science", "/seo-thumbnails/researcher-3d-imagery.svg"],
+  ["gamer", "/seo-thumbnails/gamer-programmer-renderer.svg"],
+  ["programmer", "/seo-thumbnails/gamer-programmer-renderer.svg"],
+  ["mainstream", "/seo-thumbnails/mainstream-3d-feed.svg"]
+]
+
+function thumbnailForPost(post){
+  const slug = post?.slug || ""
+  if(blogThumbnailBySlug[slug]) return blogThumbnailBySlug[slug]
+  const category = String(post?.category || "").toLowerCase()
+  return categoryThumbnailMap.find(([key]) => category.includes(key))?.[1] || blogThumbnailBySlug["automatic-3d-autoplay-system"]
+}
+
+function altForPost(post){
+  const keyword = post?.primary_keyword || post?.keywords?.[0] || post?.seo_keywords?.[0] || "3D observatory"
+  return `${post?.title || "DigitalHut report"} thumbnail for ${keyword} and real 3D render preview`
+}
+
+function BlogCard({post, runner = false}){
+  const slug = post.slug || post.id
+  const keywords = post.keywords || post.seo_keywords || []
+  const description = post.description || post.summary || ""
+  const category = post.category || "DigitalHut Report"
+  return <article id={slug}>
+    <Link
+      className="dh-blog-thumb-link"
+      to={`/blog/${slug}`}
+      aria-label={`Open ${post.title} report and 3D render preview`}
+      data-dh-thumbnail-render={runner ? "runner-blog-thumbnail-to-report" : "blog-thumbnail-to-report"}
+      data-dh-category={category}
+      data-dh-asset-id={slug}
+    >
+      <img
+        src={thumbnailForPost(post)}
+        alt={altForPost(post)}
+        loading="lazy"
+        decoding="async"
+      />
+    </Link>
+    <span>{category}</span>
+    <h2>{post.title}</h2>
+    <p>{description}</p>
+    <div>{keywords.map((keyword) => <b key={keyword}>{keyword}</b>)}</div>
+    <Link to={`/blog/${slug}`}>Read report</Link>
+  </article>
+}
 
 export default function BlogPage(){
   const [runnerPosts, setRunnerPosts] = useState([])
@@ -57,23 +114,11 @@ export default function BlogPage(){
     </section>
 
     {runnerPosts.length > 0 && <section className="dh-blog-grid" aria-label="DigitalHut autonomous runner blog posts">
-      {runnerPosts.map((post) => <article key={post.id || post.slug} id={post.slug}>
-        <span>{post.category}</span>
-        <h2>{post.title}</h2>
-        <p>{post.summary}</p>
-        <div>{(post.seo_keywords || []).map((keyword) => <b key={keyword}>{keyword}</b>)}</div>
-        <Link to={`/blog/${post.slug}`}>Read report</Link>
-      </article>)}
+      {runnerPosts.map((post) => <BlogCard key={post.id || post.slug} post={post} runner />)}
     </section>}
 
     <section className="dh-blog-grid" aria-label="DigitalHut blog posts">
-      {seoBlogPosts.map((post) => <article key={post.slug} id={post.slug}>
-        <span>{post.category}</span>
-        <h2>{post.title}</h2>
-        <p>{post.description}</p>
-        <div>{post.keywords.map((keyword) => <b key={keyword}>{keyword}</b>)}</div>
-        <Link to={`/blog/${post.slug}`}>Read report</Link>
-      </article>)}
+      {seoBlogPosts.map((post) => <BlogCard key={post.slug} post={post} />)}
     </section>
 
     <section className="dh-blog-trends">

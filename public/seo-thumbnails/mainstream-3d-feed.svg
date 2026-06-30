@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-label="DigitalHut mainstream 3D feed thumbnail">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#111827"/>
+      <stop offset=".5" stop-color="#172554"/>
+      <stop offset="1" stop-color="#052e16"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <rect x="86" y="92" width="1098" height="520" rx="24" fill="#020617" opacity=".68" stroke="#67e8f9" stroke-width="3"/>
+  <rect x="142" y="146" width="260" height="346" rx="18" fill="#0f172a" stroke="#bef264"/>
+  <rect x="448" y="112" width="360" height="412" rx="18" fill="#082f49" stroke="#67e8f9"/>
+  <rect x="854" y="174" width="260" height="300" rx="18" fill="#0f172a" stroke="#38bdf8"/>
+  <path d="M190 422l84-160 92 160zM508 442l120-220 122 220zM894 418l92-144 82 144z" fill="#164e63"/>
+  <circle cx="290" cy="212" r="35" fill="#f97316"/>
+  <circle cx="685" cy="176" r="46" fill="#facc15"/>
+  <circle cx="1012" cy="246" r="32" fill="#bef264"/>
+  <text x="120" y="604" fill="#e0f2fe" font-family="Arial, sans-serif" font-size="56" font-weight="800">Mainstream 3D Feed</text>
+  <text x="124" y="652" fill="#bef264" font-family="Arial, sans-serif" font-size="28" font-weight="700">Viral Topics + Public Scenes + Rendered Asset Presentations</text>
+</svg>

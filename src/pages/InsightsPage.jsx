@@ -170,6 +170,7 @@ export default function InsightsPage(){
           ["Unique visitors", pixel.uniqueVisitors ?? 0],
           ["Blog views", pixel.totalBlogViews ?? 0],
           ["GLB plays", pixel.totalGlbPreviewPlays ?? 0],
+          ["Thumbnail renders", pixel.totalThumbnailRenderClicks ?? 0],
           ["Searches", pixel.totalSearchRuns ?? 0],
           ["Wallet clicks", pixel.totalWalletClicks ?? 0],
           ["Tier clicks", pixel.totalTierClicks ?? 0],
@@ -205,6 +206,18 @@ export default function InsightsPage(){
         {(pixel.topKeywordHints || []).length ? (pixel.topKeywordHints || []).map((item) => <div className="dh-insight-kv" key={item.value}>
           <span>{item.value}</span><b>{item.count}</b>
         </div>) : <p>No keyword hints yet.</p>}
+      </article>
+      <article>
+        <h2>Render Categories</h2>
+        {(pixel.topRenderCategories || []).length ? (pixel.topRenderCategories || []).map((item) => <div className="dh-insight-kv" key={item.value}>
+          <span>{item.value}</span><b>{item.count}</b>
+        </div>) : <p>No thumbnail-to-render category data yet.</p>}
+      </article>
+      <article>
+        <h2>Render Assets</h2>
+        {(pixel.topRenderAssets || []).length ? (pixel.topRenderAssets || []).map((item) => <div className="dh-insight-kv" key={item.value}>
+          <span>{item.value}</span><b>{item.count}</b>
+        </div>) : <p>No thumbnail-to-render asset data yet.</p>}
       </article>
     </section>
 

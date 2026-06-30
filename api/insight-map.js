@@ -198,7 +198,7 @@ async function pixelSummary(){
   const url = (process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || "").replace(/\/+$/, "")
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.DIGITALHUT_SUPABASE_SERVICE_ROLE_KEY || ""
   if(!url || !key) return emptyPixelSummary("missing-supabase-service-config")
-  const response = await fetch(`${url}/rest/v1/digitalhut_search_pixel_events?select=event_name,visitor_id,path,blog_slug,keyword_hint,created_at&order=created_at.desc&limit=5000`, {
+  const response = await fetch(`${url}/rest/v1/digitalhut_search_pixel_events?select=event_name,visitor_id,path,blog_slug,keyword_hint,category,asset_id,created_at&order=created_at.desc&limit=5000`, {
     headers: {
       apikey: key,
       authorization: `Bearer ${key}`
@@ -224,6 +224,7 @@ async function pixelSummary(){
     totalPageViews: pageViews.length,
     totalBlogViews: events.filter((event) => event.event_name === "blog_view").length,
     totalGlbPreviewPlays: events.filter((event) => event.event_name === "glb_preview_play").length,
+    totalThumbnailRenderClicks: events.filter((event) => event.event_name === "thumbnail_render_click").length,
     totalSearchRuns: events.filter((event) => event.event_name === "search_run").length,
     totalWalletClicks: events.filter((event) => event.event_name === "wallet_connect_click").length,
     totalTierClicks: events.filter((event) => event.event_name === "tier_click").length,
@@ -233,6 +234,8 @@ async function pixelSummary(){
     topPages: topCounts(pageViews, "path"),
     topBlogs: topCounts(events.filter((event) => event.blog_slug), "blog_slug"),
     topKeywordHints: topCounts(events.filter((event) => event.keyword_hint), "keyword_hint"),
+    topRenderCategories: topCounts(events.filter((event) => event.category), "category"),
+    topRenderAssets: topCounts(events.filter((event) => event.asset_id), "asset_id"),
     latestEvents: events.slice(0, 10)
   }
 }

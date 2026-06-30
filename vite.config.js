@@ -2,6 +2,8 @@ import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react"
 import { VitePWA } from "vite-plugin-pwa"
 
+const enablePwa = process.env.ENABLE_PWA === "true" || process.env.VITE_ENABLE_PWA === "true"
+
 export default defineConfig({
 
   build:{
@@ -16,7 +18,26 @@ export default defineConfig({
 
     VitePWA({
 
+      disable:!enablePwa,
+
       registerType:"autoUpdate",
+
+      workbox:{
+
+        globPatterns:["**/*.{js,css,html,ico,png,svg,webmanifest}"],
+
+        globIgnores:[
+          "**/*.glb",
+          "**/*.gltf",
+          "**/*.bin",
+          "**/models/**/*",
+          "**/firecuda-library/**/*",
+          "**/release/**/*"
+        ],
+
+        maximumFileSizeToCacheInBytes:2 * 1024 * 1024
+
+      },
 
       manifest:{
 

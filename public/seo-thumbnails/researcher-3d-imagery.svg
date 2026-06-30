@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-label="DigitalHut researcher 3D imagery thumbnail">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#08111f"/>
+      <stop offset=".55" stop-color="#123026"/>
+      <stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <rect x="92" y="86" width="1096" height="548" rx="22" fill="#020617" opacity=".72" stroke="#67e8f9" stroke-width="3"/>
+  <path d="M158 504c132-154 282-80 390-176 120-108 246-208 572-82" fill="none" stroke="#bef264" stroke-width="5" opacity=".62"/>
+  <circle cx="346" cy="286" r="82" fill="#0e7490" opacity=".72"/>
+  <circle cx="620" cy="240" r="38" fill="#67e8f9" opacity=".82"/>
+  <circle cx="835" cy="360" r="58" fill="#84cc16" opacity=".68"/>
+  <path d="M296 286h548M346 204v164M620 202v78M835 302v116" stroke="#e0f2fe" stroke-width="2" opacity=".48"/>
+  <rect x="170" y="452" width="920" height="74" rx="12" fill="#0f172a" stroke="#334155"/>
+  <text x="120" y="604" fill="#e0f2fe" font-family="Arial, sans-serif" font-size="56" font-weight="800">Researcher 3D Imagery</text>
+  <text x="124" y="652" fill="#bef264" font-family="Arial, sans-serif" font-size="28" font-weight="700">Evidence Notes + Environment Scans + Scientific Visualization</text>
+</svg>

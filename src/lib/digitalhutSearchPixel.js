@@ -88,15 +88,20 @@ function classifyClick(target){
   if(!element) return null
   const label = (element.getAttribute("aria-label") || element.textContent || element.value || "").replace(/\s+/g, " ").trim().slice(0, 160)
   const href = element.href || element.getAttribute("href") || ""
+  const thumbnailIntent = element.dataset?.dhThumbnailRender || element.closest?.("[data-dh-thumbnail-render]")?.dataset?.dhThumbnailRender
+  const category = element.dataset?.dhCategory || element.closest?.("[data-dh-category]")?.dataset?.dhCategory || ""
+  const assetId = element.dataset?.dhAssetId || element.closest?.("[data-dh-asset-id]")?.dataset?.dhAssetId || ""
   const lower = `${label} ${href}`.toLowerCase()
   let eventName = "ui_click"
+  if(thumbnailIntent) eventName = "thumbnail_render_click"
   if(lower.includes("play") || lower.includes("preview")) eventName = "glb_preview_play"
   if(lower.includes("download")) eventName = "download_click"
   if(lower.includes("share")) eventName = "share_click"
   if(lower.includes("wallet") || lower.includes("connect")) eventName = "wallet_connect_click"
   if(lower.includes("standard") || lower.includes("premium") || lower.includes("pro")) eventName = "tier_click"
   if(lower.includes("node") || lower.includes("stellar") || lower.includes("genius")) eventName = "node_click"
-  return {eventName, label, href}
+  if(thumbnailIntent && (lower.includes("play") || lower.includes("preview"))) eventName = "thumbnail_render_click"
+  return {eventName, label, href, thumbnailIntent, category, assetId}
 }
 
 function installClickTracking(){
@@ -104,7 +109,9 @@ function installClickTracking(){
     const click = classifyClick(event.target)
     if(!click) return
     sendPixel(click.eventName, {
-      metadata: {label: click.label, href: click.href}
+      category: click.category,
+      assetId: click.assetId,
+      metadata: {label: click.label, href: click.href, thumbnailIntent: click.thumbnailIntent || ""}
     })
   }, {capture: true})
 }

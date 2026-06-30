@@ -1300,8 +1300,8 @@ function SceneObject({feed, compact = false}){
 }
 
 function MiniVisual({feed, active}){
-  return <div className={`dh-mini-visual ${feed.thumbnail ? "has-thumb" : ""} ${active ? "active" : ""}`} style={{"--accent": feed.accent, borderColor: active ? feed.accent : undefined}}>
-    {feed.thumbnail && <img className="dh-mini-thumb" src={feed.thumbnail} alt="" loading="lazy" />}
+  return <div className={`dh-mini-visual ${feed.thumbnail ? "has-thumb" : ""} ${active ? "active" : ""}`} style={{"--accent": feed.accent, borderColor: active ? feed.accent : undefined}} data-dh-thumbnail-render="quick-feed-thumbnail" data-dh-category={feed.category || feed.type || ""} data-dh-asset-id={feed.id || feed.title || ""}>
+    {feed.thumbnail && <img className="dh-mini-thumb" src={feed.thumbnail} alt={`${feed.title || "DigitalHut"} thumbnail preview for a 3D render`} loading="lazy" />}
     <SceneObject feed={feed} compact />
     <div className="dh-mini-scan" />
   </div>
@@ -1582,12 +1582,12 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
   }, [visualKey])
 
   return <div className={`dh-renderer ${guided ? "guided" : ""} ${canShowContainment ? "has-api" : ""} ${rendererOpen ? "model-mode" : ""} ${liveOpen ? "live-open" : ""} ${rendererUnavailable ? "renderer-unavailable" : ""} stage-${stage.kind}`} style={{"--accent": feed.accent}}>
-    {feed.thumbnail && <img className={`dh-renderer-stock ${imageReady ? "is-ready" : ""}`} src={feed.thumbnail} alt="" loading="lazy" decoding="async" onLoad={() => setImageReady(true)} />}
+    {feed.thumbnail && <img className={`dh-renderer-stock ${imageReady ? "is-ready" : ""}`} src={feed.thumbnail} alt={`${feed.title} thumbnail preview for DigitalHut 3D render`} loading="lazy" decoding="async" onLoad={() => setImageReady(true)} data-dh-thumbnail-render="main-renderer-thumbnail" data-dh-category={feed.category || feed.type || ""} data-dh-asset-id={feed.id || feed.title || ""} />}
     {(loading || (rendererOpen && !modelLoaded && !hasEmbed)) && <div className="dh-ai-load-indicator" aria-live="polite"><span /><b>AI searching renderer</b><small>{feed.title}</small></div>}
     {decorationActive && <div className="dh-motion-sky" />}
     {decorationActive && <div className="dh-stars">{stars.map((_, index) => <span key={index} style={{left: `${4 + (index * 43) % 91}%`, top: `${7 + (index * 31) % 78}%`}} />)}</div>}
     {decorationActive && <SceneObject feed={feed} />}
-    {canShowContainment && !liveOpen && !rendererUnavailable && <button className={`dh-api-system-preview ${feed.thumbnail ? "api-preview-ready" : ""} ${modelOpen ? "is-resolving" : ""}`} style={feed.thumbnail ? {"--api-preview-url": `url("${feed.thumbnail}")`} : undefined} onClick={onOpenModel}>
+    {canShowContainment && !liveOpen && !rendererUnavailable && <button className={`dh-api-system-preview ${feed.thumbnail ? "api-preview-ready" : ""} ${modelOpen ? "is-resolving" : ""}`} style={feed.thumbnail ? {"--api-preview-url": `url("${feed.thumbnail}")`} : undefined} onClick={onOpenModel} data-dh-thumbnail-render="play-preview-thumbnail-to-render" data-dh-category={feed.category || feed.type || ""} data-dh-asset-id={feed.id || feed.title || ""} aria-label={`Play Preview: open ${feed.title} 3D render from thumbnail`}>
       <span>{modelOpen || loading ? "Preparing renderer" : "Renderer ready"}</span><b>{feed.title}</b><em className="dh-open-containment">{modelOpen || loading ? "Rendering" : "Play Preview"}</em>
     </button>}
     {liveOpen && hasEmbed && <iframe className="dh-api-frame" title={feed.title} src={pausedEmbedUrl(feed.embedUrl)} allow="fullscreen; xr-spatial-tracking" loading="lazy" allowFullScreen onLoad={() => onVisualReady?.(visualKey)} />}
