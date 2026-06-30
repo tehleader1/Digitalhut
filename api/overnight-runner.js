@@ -1120,11 +1120,67 @@ async function saveRunnerMessage({role, message, messageType = "chat", payload =
 async function callReasoningBridge({report, userMessage, fallbackReply}){
   const endpoint = process.env.DIGITALHUT_REASONING_ENDPOINT || ""
   const apiKey = process.env.DIGITALHUT_REASONING_API_KEY || process.env.OPENAI_API_KEY || ""
-  const model = process.env.DIGITALHUT_REASONING_MODEL || ""
-  if(!endpoint || !apiKey){
+  const model = process.env.DIGITALHUT_REASONING_MODEL || process.env.OPENAI_REASONING_MODEL || "gpt-5.4-mini"
+  if(!apiKey){
     return {used: false, reason: "missing-reasoning-bridge", reply: fallbackReply}
   }
   try {
+    if(!endpoint){
+      const response = await fetch("https://api.openai.com/v1/responses", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+          model,
+          reasoning: {
+            effort: process.env.DIGITALHUT_REASONING_EFFORT || "high"
+          },
+          instructions: [
+            "You are DigitalHut Runner, Anthony's in-house observatory teammate.",
+            "You are not a sterile metrics bot. Speak like a friendly but useful operator sitting beside Anthony.",
+            "Use the provided DigitalHut context to reason about the site, SEO, blogs, GLB plays, FireCuda, wallet, nodes, and next steps.",
+            "Do not dump every metric unless Anthony asks for metrics.",
+            "Do not fake visitor identity or exact locations. Use appears, suggests, or possible for inferences.",
+            "Give direct practical advice. If Anthony is brainstorming, brainstorm with him. If he asks what to do next, pick one next move.",
+            "Keep replies conversational and readable: normally 2-5 short paragraphs."
+          ].join(" "),
+          input: [
+            {
+              role: "user",
+              content: [
+                {
+                  type: "input_text",
+                  text: JSON.stringify({
+                    anthonyMessage: userMessage,
+                    digitalhutContext: {
+                      generatedAt: report.generatedAt,
+                      summary: report.summary,
+                      anthonyBrief: report.anthonyBrief,
+                      pixelSnapshot: report.pixelSnapshot,
+                      contentOps: report.contentOps,
+                      masterSeoPlan: report.masterSeoPlan,
+                      status: report.status,
+                      missing: report.missing
+                    }
+                  })
+                }
+              ]
+            }
+          ]
+        })
+      })
+      const text = await response.text()
+      if(!response.ok){
+        return {used: false, reason: "openai-responses-failed", status: response.status, detail: text.slice(0, 500), reply: fallbackReply}
+      }
+      const parsed = text ? JSON.parse(text) : null
+      const reply = parsed?.output_text
+        || parsed?.output?.flatMap((item) => item.content || []).map((item) => item.text).filter(Boolean).join("\n")
+        || fallbackReply
+      return {used: true, provider: "openai-responses", model, reply}
+    }
     const response = await fetch(endpoint, {
       method: "POST",
       headers: {
