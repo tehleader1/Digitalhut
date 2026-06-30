@@ -256,3 +256,61 @@ Next cycle:
 3. Publish one focused blog cluster.
 4. Watch `/insights` for thumbnail render clicks, blog reads, and GLB plays.
 5. Backtest which thumbnail and keyword pairing actually moves users toward the renderer.
+
+## Google Search Console Evidence 001
+
+Date checked: 2026-06-30
+
+External proof:
+
+- Google Search Console processed `sitemap.xml` successfully.
+- Discovered pages: 17.
+- Discovered videos: 0.
+
+Runner interpretation:
+
+This is the first external crawl proof for the current DigitalHut SEO loop. The sitemap is no longer only a local file or deploy artifact; Google has accepted it and discovered crawlable URLs from it.
+
+Next proof target:
+
+1. Use URL Inspection on `https://www.digitalhut.app/`.
+2. Use URL Inspection on `https://www.digitalhut.app/blog`.
+3. Use URL Inspection on `https://www.digitalhut.app/blog/automatic-3d-autoplay-system`.
+4. Record whether Google reports each URL as indexable, crawl allowed, indexing allowed, and canonicalized correctly.
+5. Compare Search Console impressions and queries against `/insights` events for blog reads, thumbnail clicks, and GLB plays.
+
+## Search Pixel Health Evidence 001
+
+Date checked: 2026-06-30
+
+Live endpoint checked:
+
+- `POST https://www.digitalhut.app/api/insight-map`
+- `GET https://www.digitalhut.app/api/insight-map`
+
+Health-check result:
+
+- Manual event `manual_pixel_health_check` returned `saved=True`.
+- Latest event readback showed the same health-check event from `/codex-pixel-health-check`.
+
+Live pixel totals at check time:
+
+- Total events: 60.
+- Total page/blog views: 45.
+- Blog views: 13.
+- GLB preview plays: 5.
+- Thumbnail render clicks: 0.
+- Search runs: 0.
+- Unique visitors: 6.
+
+Runner interpretation:
+
+The Search Pixel pipeline is still writing and reading through the live API. The current weak point is not total tracking failure; the weak point is interaction depth. DigitalHut is recording page/blog activity and some GLB preview plays, but it has not yet produced measurable thumbnail-to-render clicks or search runs in the current dataset.
+
+Next proof target:
+
+1. Click a blog thumbnail or Play Preview path that has `data-dh-thumbnail-render`.
+2. Confirm `/api/insight-map` increments `totalThumbnailRenderClicks`.
+3. Use the search input on the live site.
+4. Confirm `/api/insight-map` increments `totalSearchRuns`.
+5. If either stays at zero after real interaction, inspect the frontend event selector and button attributes.
