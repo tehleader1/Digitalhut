@@ -1170,7 +1170,6 @@ function buildRunnerReply(report, userMessage = ""){
   const stats = brief.statisticsCompared || {}
   const totals = stats.pixelTotals || {}
   const topBlog = stats.topBlogs?.[0]
-  const topPage = stats.topPages?.[0]
   const topTimezone = stats.timezones?.[0]
   const keywords = brief.seoWordsImproving || []
   const longTail = flattenLongTailKeywords(brief.longTailTargets || report.masterSeoPlan?.longTailKeywords, 8)
@@ -1179,37 +1178,44 @@ function buildRunnerReply(report, userMessage = ""){
   const askedFirecuda = /firecuda|archive|8tb|storage|map/.test(text)
   const askedMoney = /wallet|tier|node|purchase|payment|subscription|money/.test(text)
   const askedGlb = /glb|renderer|model|asset|3d|preview/.test(text)
-  const askedWhatNext = /next|do now|should i|gameplan|plan/.test(text)
+  const askedMetrics = /metric|number|stat|technical|debug|detail|exact|show me/.test(text)
+  const askedGreeting = /^(hi|hello|yo|hey|sup|whats up|what's up)\b/.test(text.trim())
 
-  const opener = userMessage
-    ? `Anthony, I understand the question. You are asking about "${userMessage.slice(0, 160)}".`
-    : "Anthony, I am reading the DigitalHut system state now."
+  const pageViews = totals.pageViews || 0
+  const blogViews = totals.blogViews || 0
+  const glbPlays = totals.glbPlays || 0
+  const walletClicks = totals.walletClicks || 0
+  const nodeClicks = totals.nodeClicks || 0
+  const blogName = topBlog?.value || "the main DigitalHut blog"
+  const regionHint = topTimezone?.value === "America/Los_Angeles"
+    ? "I am seeing a Pacific-time pattern, so California and Los Angeles style wording is worth testing. I am not treating that as confirmed location."
+    : "I do not have enough location-style signal yet, so I am staying general."
 
-  const read = `Right now I am comparing the live pixel stream, published blog records, GLB preview plays, wallet/tier/node clicks, runner reports, vector memory, and the FireCuda archive plan. The current sample shows ${totals.pageViews || 0} page views, ${totals.blogViews || 0} blog views, ${totals.glbPlays || 0} GLB plays, ${totals.searches || 0} searches, ${totals.uniqueVisitors || 0} unique visitors, ${totals.walletClicks || 0} wallet clicks, ${totals.tierClicks || 0} tier clicks, and ${totals.nodeClicks || 0} node clicks.`
+  if(askedGreeting){
+    return "Anthony, I am here with you. DigitalHut is awake, the blog is getting the clearest early attention, and I am staying close to the system so we can keep shaping it without rushing. Talk to me normally. If you want ideas, I will think with you. If you want numbers, I will pull the numbers. If you want the next move, I will keep it simple and practical."
+  }
 
-  const interpretation = topBlog
-    ? `My interpretation: the audience is touching the blog layer before the wallet or node layer. The strongest tracked blog is "${topBlog.value}" with ${topBlog.count} events, and the strongest page is "${topPage?.value || "unknown"}" with ${topPage?.count || 0} events. That suggests the first growth lane is not checkout yet; it is proving that DigitalHut is a useful AI-guided 3D observatory.`
-    : "My interpretation: the system is online, but I need more blog reads and GLB plays before I can call a winning content lane."
+  if(askedSeo){
+    return `Anthony, I think the SEO lane is starting to show itself. The strongest story is not "buy this" yet; it is "come see this new kind of 3D observatory." People are touching the blog first, especially ${blogName}. I would keep the language around "${keywords.slice(0, 3).join('", "')}" and test "${longTail.slice(0, 2).join('" plus "')}". ${regionHint} My move: one clean blog, one working GLB, one clear Play Preview path.`
+  }
 
-  const timezoneLine = topTimezone
-    ? `The strongest timezone signal appears to be ${topTimezone.value}. I am treating that as behavior context only, not confirmed identity, but it supports testing California, Los Angeles, Hollywood Hills, Griffith Observatory, travel visualization, and family observatory language.`
-    : "I do not have enough timezone signal to infer a regional content angle yet."
+  if(askedGlb){
+    return `Anthony, the renderer story is close. I can feel the shape of it: people need to land, understand the scene fast, then press Play Preview because it feels natural. I see ${glbPlays} GLB plays, so the path exists. Now we make it smoother: one reliable environment GLB, one clean story, one obvious preview button. If that rises, we know the system is speaking to people.`
+  }
 
-  const seoLine = `For SEO, I would tighten around ${keywords.slice(0, 5).join(", ")}. The next long-tail phrases I would test are: ${longTail.slice(0, 4).join("; ")}.`
-  const glbLine = `For the renderer, I am watching whether people actually press Play Preview. Four GLB plays is enough to prove the button is being found, but not enough yet to know which category wins. The next useful test is one strong environment asset tied to one strong blog, then measure if GLB plays rise from that blog.`
-  const firecudaLine = `For FireCuda, I would map the next folder pass as original captures, optimized GLBs, thumbnails, blog evidence, SEO decisions, runner reports, and failed-render notes. That turns the 8TB drive into the evidence room for the runner instead of just storage.`
-  const moneyLine = `For wallet and nodes, I would not push payment language harder until we see wallet, tier, or node clicks. The data currently says people are reading and previewing, so the commercial layer should stay visible but secondary: subscription packages, node unlocks, and wallet checkout need to appear after the user understands the 3D presentation value.`
-  const nextLine = `My next move would be: publish one blog around "AI guided 3D presentation" plus "3D environments", attach one working GLB environment, add a clear Play Preview call-to-action, then compare instant, 6-hour, and 12-hour blog views against GLB plays.`
+  if(askedFirecuda){
+    return "Anthony, FireCuda is the private workroom. I would treat it like the place where DigitalHut grows up: original captures, optimized GLBs, thumbnails, blog evidence, SEO decisions, runner reports, and broken-render notes. That way every real-world asset you capture becomes part of the story, not just a file sitting on a drive."
+  }
 
-  const sections = [opener, read, interpretation]
-  if(askedSeo) sections.push(seoLine, timezoneLine)
-  if(askedGlb) sections.push(glbLine)
-  if(askedFirecuda) sections.push(firecudaLine)
-  if(askedMoney) sections.push(moneyLine)
-  if(askedWhatNext || (!askedSeo && !askedGlb && !askedFirecuda && !askedMoney)) sections.push(seoLine, glbLine, firecudaLine, moneyLine, nextLine)
-  if(!sections.includes(nextLine)) sections.push(nextLine)
+  if(askedMoney){
+    return `Anthony, I would keep wallet and node purchases present, but calm. I see ${walletClicks} wallet clicks and ${nodeClicks} node clicks, so people are not at the money moment yet. First they need to feel the system: blog opens, GLB plays, AI explains, then nodes and subscriptions make sense. Trust first, payment second.`
+  }
 
-  return sections.join(" ")
+  if(askedMetrics){
+    return `Anthony, clean numbers: ${pageViews} page views, ${blogViews} blog views, ${glbPlays} GLB plays, ${walletClicks} wallet clicks, and ${nodeClicks} node clicks. The strongest blog signal is ${blogName}. My read: discovery is ahead of monetization. That is normal. The next test is one blog connected directly to one working GLB preview.`
+  }
+
+  return `Anthony, I am with you. My honest read is that DigitalHut is past the "is this even a system" stage. Now it needs rhythm. We do not need to throw every idea at people at once. We need one strong experience at a time: a clean story, a working 3D environment, and an AI presentation that feels useful. The next move I would make is simple: pick one strong GLB, make one strong blog around it, and watch whether people move from reading to pressing Play Preview.`
 }
 
 function isAuthorized(req){
