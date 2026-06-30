@@ -29,10 +29,20 @@ const modelTracks = [
     label: "Subscription Access",
     status: "active",
     risk: "low",
-    summary: "Standard, Premium, and Pro access for history, AI detail depth, backend tools, nodes, and downloads.",
+    summary: "Standard, Premium, and Pro access for history, AI detail depth, backend tools, nodes, and downloads. This is one route, not the whole business model.",
     revenue: "monthly/yearly paid tiers",
     signals: ["wallet connects", "tier clicks", "checkout starts", "confirmed receipts"],
     nextAction: "Test wallet flow with low-value transactions and store verified subscription records."
+  },
+  {
+    id: "treasury-support",
+    label: "Treasury Support",
+    status: "active",
+    risk: "low",
+    summary: "Lets supporters fund renderer uptime, SEO tests, FireCuda mapping, and asset verification without buying a fixed subscription package.",
+    revenue: "open support, grants, patron-style funding, ecosystem support",
+    signals: ["support clicks", "wallet package preparation", "confirmed receipts", "follow-up messages"],
+    nextAction: "Measure whether people want to support the operating system directly after seeing working renders and blogs."
   },
   {
     id: "commission-assets",
@@ -53,6 +63,26 @@ const modelTracks = [
     revenue: "sponsor placements, featured category campaigns, local business showcases",
     signals: ["sponsor interest", "clicks", "asset views", "lead forms", "category retention"],
     nextAction: "Offer sponsor attachment on verified high-quality assets only."
+  },
+  {
+    id: "paid-reports",
+    label: "Paid Observatory Reports",
+    status: "active",
+    risk: "medium",
+    summary: "Custom 3D reports for real estate, science, travel, market intelligence, tourism, public situations, or local business demonstrations.",
+    revenue: "one-off reports, recurring research packages, local business presentations",
+    signals: ["report requests", "topic quality", "render success", "client feedback", "repeat orders"],
+    nextAction: "Only sell reports where the GLB/render path and source notes can be verified."
+  },
+  {
+    id: "asset-licenses",
+    label: "Asset Licenses",
+    status: "active",
+    risk: "medium",
+    summary: "Allows a verified DigitalHut GLB, thumbnail set, blog backlink package, or presentation page to become a licensable asset.",
+    revenue: "asset licenses, backlink packages, sponsored embeds, creator revenue share",
+    signals: ["asset views", "download intent", "license requests", "rating quality", "source-rights clarity"],
+    nextAction: "Require source-rights notes and render verification before licensing."
   },
   {
     id: "database-intelligence",
@@ -154,7 +184,7 @@ export default function ExperimentsPage(){
     <section className="dh-trust-intro dh-experiment-hero">
       <span>DigitalHut Model Observatory</span>
       <h1>Run Every Business Model As A Measured Track</h1>
-      <p>DigitalHut should define itself through the observatory experience. This page compares SEO, redlining assistance, subscriptions, commissioned GLB assets, sponsor lanes, database intelligence, cloud rendering, and mining research without forcing the company into one bottleneck too early.</p>
+      <p>DigitalHut should define itself through the observatory experience. This page compares SEO, redlining assistance, subscriptions, treasury support, commissioned GLB assets, sponsor lanes, paid reports, asset licenses, database intelligence, cloud rendering, and mining research without forcing the company into one bottleneck too early.</p>
     </section>
 
     <section className="dh-experiment-winner">
@@ -201,6 +231,8 @@ export default function ExperimentsPage(){
     </section>
 
     <section className="dh-experiment-policy">
+      <h2>Treasury Boundary</h2>
+      <p>Every money path should route through a verified package before touching the treasury wallet: subscriptions, nodes, sponsor lanes, commissioned assets, conversion credits, paid reports, licenses, and open support. DigitalHut should let real client behavior surface the best model instead of forcing one subscription-only path.</p>
       <h2>Mining Boundary</h2>
       <p>DigitalHut must not silently mine through visitor browsers or devices. Any compute or mining-adjacent experiment must be explicit opt-in, disclosed, rate-limited, legally reviewed, and separated from the public renderer so the site remains fast and trustworthy.</p>
     </section>

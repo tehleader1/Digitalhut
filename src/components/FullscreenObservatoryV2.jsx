@@ -452,6 +452,12 @@ const purchaseOptionsBase = [
   {id: "tier-standard", type: "tier", title: "Standard", price: "$12/month", unlock: "Longer saved history, core AI Director controls, category growth tracking"},
   {id: "tier-premium", type: "tier", title: "Premium", price: "$25/month", unlock: "Premium AI detail, stronger session memory, node progress visibility"},
   {id: "tier-pro", type: "tier", title: "Pro", price: "$60/month", unlock: "Deep research, expanded backend controls, unlimited AI presentation power"},
+  {id: "treasury-support", type: "support", title: "Support DigitalHut", price: "open amount", unlock: "General treasury support for renderer uptime, SEO tests, and FireCuda asset work"},
+  {id: "sponsor-lane", type: "sponsor", title: "Sponsor Lane", price: "quoted", unlock: "Attach a subtle sponsor line, backlink, contest prompt, or category feature to a verified presentation"},
+  {id: "asset-commission", type: "commission", title: "Commission 3D Asset", price: "quoted", unlock: "Fund a real-world environment capture, GLB cleanup, thumbnail, and DigitalHut asset page"},
+  {id: "conversion-credit", type: "conversion", title: "Conversion Credit", price: "quoted", unlock: "Backend conversion, optimization, thumbnail generation, and metadata preparation"},
+  {id: "research-report", type: "report", title: "Paid Observatory Report", price: "quoted", unlock: "Custom 3D report lane for real estate, science, travel, market, or public-situation research"},
+  {id: "asset-license", type: "license", title: "Asset License", price: "quoted", unlock: "License or promote a verified DigitalHut GLB, thumbnail, backlink, or presentation package"},
   ...blinkQuickNodes.map((item) => ({
     id: `node-${item.id}`,
     type: "node",
@@ -3203,12 +3209,13 @@ export default function FullscreenObservatoryV2(){
       <>
         <aside className={`dh-wallet-package ${purchaseOpen ? "open" : ""}`} aria-label="DigitalHut wallet purchase package">
           <button className="dh-wallet-package-toggle" type="button" onClick={() => setPurchaseOpen((value) => !value)}>
-            <span>Wallet / Packages</span><b>{selectedPurchaseLabel}</b>
+            <span>Treasury / Packages</span><b>{selectedPurchaseLabel}</b>
           </button>
           {purchaseOpen && <div className="dh-wallet-package-menu">
             <div className="dh-wallet-connect-row"><ConnectButton /></div>
             <small>Main wallet</small>
             <code>{DIGITALHUT_MAIN_WALLET}</code>
+            <small>Subscriptions are one route only. Sponsors, commissions, reports, conversion credits, licenses, support, tiers, and nodes can all prepare a verified treasury package.</small>
             <div className="dh-wallet-options">
               {purchaseOptionsBase.map((item) => <button key={item.id} type="button" className={selectedPurchaseIds.includes(item.id) ? "selected" : ""} onClick={() => togglePurchaseOption(item.id)}>
                 <span>{item.type}</span><b>{item.title}</b><small>{item.price}</small><em>{item.unlock}</em>

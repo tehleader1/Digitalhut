@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://www.digitalhut.app/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>
   <url><loc>https://www.digitalhut.app/blog</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.digitalhut.app/blog/automatic-3d-autoplay-system</loc><changefreq>weekly</changefreq><priority>0.86</priority></url>
+  <url><loc>https://www.digitalhut.app/blog/3d-imagery-helping-research-communities</loc><changefreq>weekly</changefreq><priority>0.84</priority></url>
+  <url><loc>https://www.digitalhut.app/blog/mainstream-feed-to-3d-assets</loc><changefreq>weekly</changefreq><priority>0.84</priority></url>
+  <url><loc>https://www.digitalhut.app/blog/planetary-views-and-orbital-compute</loc><changefreq>weekly</changefreq><priority>0.84</priority></url>
+  <url><loc>https://www.digitalhut.app/blog/gamer-programmer-renderer-hubs</loc><changefreq>weekly</changefreq><priority>0.82</priority></url>
   <url><loc>https://www.digitalhut.app/insights</loc><changefreq>daily</changefreq><priority>0.88</priority></url>
   <url><loc>https://www.digitalhut.app/markets</loc><changefreq>daily</changefreq><priority>0.88</priority></url>
   <url><loc>https://www.digitalhut.app/experiments</loc><changefreq>daily</changefreq><priority>0.86</priority></url>
