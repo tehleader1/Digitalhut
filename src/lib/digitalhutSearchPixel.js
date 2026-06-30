@@ -79,6 +79,34 @@ function sendPixel(eventName, data = {}){
   }).catch(() => {})
 }
 
+const searchEventCache = new Map()
+
+function isSearchInput(input){
+  if(!input || !["INPUT", "TEXTAREA", "SELECT"].includes(input.tagName)) return false
+  const label = String([
+    input.name,
+    input.id,
+    input.placeholder,
+    input.getAttribute("aria-label"),
+    input.closest("form")?.getAttribute("aria-label")
+  ].filter(Boolean).join(" ")).toLowerCase()
+  return input.type === "search" || label.includes("search") || label.includes("query") || label.includes("command")
+}
+
+function trackSearchInput(input, reason){
+  if(!isSearchInput(input)) return
+  const value = String(input.value || "").trim()
+  if(value.length < 2) return
+  const key = `${location.pathname}|${reason}|${value.toLowerCase()}`
+  const now = Date.now()
+  if(now - (searchEventCache.get(key) || 0) < 8000) return
+  searchEventCache.set(key, now)
+  sendPixel("search_run", {
+    keywordHint: inferKeywordHint(value),
+    metadata: {queryLength: value.length, reason}
+  })
+}
+
 function trackPageView(reason = "route"){
   sendPixel(location.pathname.startsWith("/blog") ? "blog_view" : "page_view", {metadata: {reason}})
 }
@@ -119,16 +147,16 @@ function installClickTracking(){
 function installSearchTracking(){
   document.addEventListener("change", (event) => {
     const input = event.target
-    if(!input || !["INPUT", "TEXTAREA", "SELECT"].includes(input.tagName)) return
-    const value = String(input.value || "").trim()
-    const label = String(input.name || input.id || input.placeholder || "").toLowerCase()
-    if(value.length < 2) return
-    if(label.includes("search") || label.includes("query") || input.type === "search"){
-      sendPixel("search_run", {
-        keywordHint: inferKeywordHint(value),
-        metadata: {queryLength: value.length}
-      })
-    }
+    trackSearchInput(input, "change")
+  }, {capture: true})
+  document.addEventListener("keydown", (event) => {
+    if(event.key !== "Enter") return
+    trackSearchInput(event.target, "enter")
+  }, {capture: true})
+  document.addEventListener("submit", (event) => {
+    const form = event.target
+    const input = form?.querySelector?.("input,textarea,select")
+    trackSearchInput(input, "submit")
   }, {capture: true})
 }
 

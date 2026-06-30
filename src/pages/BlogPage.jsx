@@ -60,7 +60,14 @@ function BlogCard({post, runner = false}){
     <h2>{post.title}</h2>
     <p>{description}</p>
     <div>{keywords.map((keyword) => <b key={keyword}>{keyword}</b>)}</div>
-    <Link to={`/blog/${slug}`}>Read report</Link>
+    <Link
+      to={`/blog/${slug}`}
+      data-dh-thumbnail-render={runner ? "runner-blog-read-report-to-render" : "blog-read-report-to-render"}
+      data-dh-category={category}
+      data-dh-asset-id={slug}
+    >
+      Read report
+    </Link>
   </article>
 }
 
