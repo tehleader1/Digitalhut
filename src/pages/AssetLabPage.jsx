@@ -92,6 +92,85 @@ const blinkUnlockPods = [
   ["Audience Magnet", "Uses reactions, comments, backlinks, and shares to rank unlocks.", 39]
 ]
 
+const runnerCapacityTiers = [
+  {
+    id: "guest",
+    label: "Guest / Standard",
+    scope: "Visitor experience",
+    depth: "Open episode, preview GLBs, basic narration, public pages.",
+    proof: "Working route, visible renderer, click path into a model."
+  },
+  {
+    id: "premium",
+    label: "Premium",
+    scope: "Deeper DigitalHut session",
+    depth: "Longer narration, saved notes, category context, node interest, stronger presentation controls.",
+    proof: "Saved interaction, category movement, better source readout."
+  },
+  {
+    id: "pro",
+    label: "Pro",
+    scope: "Deep DigitalHut operation",
+    depth: "Research depth, backend editing paths, node progress, downloads, and report packaging.",
+    proof: "Source-backed note, report draft, renderer proof, verified asset path."
+  },
+  {
+    id: "codex-capacity",
+    label: "Codex Operating Capacity",
+    scope: "Builder runner capacity",
+    depth: "SEO framework, competitor checks, FireCuda mapping, code patches, deploy verification, and cycle reports.",
+    proof: "One code/doc/content change, one evidence record, one verification command, one next measurement."
+  }
+]
+
+const runnerProcessingLayers = [
+  ["Intake", "Collect pixel activity, blog reads, thumbnail clicks, GLB plays, search terms, node interest, failed renders, and FireCuda evidence."],
+  ["Research", "Compare long-tail phrases against GLB marketplaces, image search behavior, presentation platforms, and observatory references."],
+  ["Mapping", "Attach each market lane to thumbnail naming, blog title, backlink, category, GLB environment, and expected user action."],
+  ["Build", "Patch pages, metadata, thumbnails, blog cards, insight map metrics, runner docs, and renderer paths without heavy asset churn."],
+  ["Verification", "Run build checks and confirm blog, insight, renderer, and pixel paths cover the current requirement."],
+  ["Repeat", "Promote winners, mark weak phrases as pending or retired, preserve evidence, and start the next measured cycle."]
+]
+
+const runnerLanes = [
+  {
+    id: "farcaster",
+    name: "Farcaster decentralized social",
+    required: "NEYNAR_API_KEY or FARCASTER_API_KEY",
+    output: "Cast-ready DigitalHut 3D report cards with asset URL, title, backlink, and preview."
+  },
+  {
+    id: "developer-cloud",
+    name: "Developer cloud infrastructure",
+    required: "VERCEL_ENV, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY",
+    output: "Backend pages, asset records, proposal records, and API capture."
+  },
+  {
+    id: "decentralized-streaming",
+    name: "Decentralized streaming networks",
+    required: "LIVEPEER_API_KEY or THETA_API_KEY or HLS_STREAM_GATEWAY_URL",
+    output: "Streamable observatory, podcast, and GLB presentation segments."
+  },
+  {
+    id: "smart-contract-liquidity",
+    name: "Smart contract liquidity",
+    required: "DIGITALHUT_TREASURY_WALLET, DIGITALHUT_LIQUIDITY_CONTRACT, BASE_LIQUIDITY_POOL_ADDRESS",
+    output: "Reviewed route for subscriptions, nodes, and liquidity reporting."
+  },
+  {
+    id: "wiki-style-edits",
+    name: "Wiki-style developer edits",
+    required: "SUPABASE_SERVICE_ROLE_KEY, DIGITALHUT_CONTENT_REVIEW_KEY",
+    output: "Editable proposals while production copy remains protected."
+  },
+  {
+    id: "api-glb-capture",
+    name: "API GLB discovery capture",
+    required: "SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY",
+    output: "Saved API discoveries for SEO, ratings, backlinks, review, and later conversion."
+  }
+]
+
 const nodePurchaseOffers = [
   {
     id: "stellar",
@@ -318,7 +397,8 @@ export default function AssetLabPage(){
   const [sponsor, setSponsor] = useState({name: "", link: "", placement: "Subtle sponsor tag", note: ""})
   const [tab, setTab] = useState(() => {
     const params = new URLSearchParams(window.location.search)
-    return params.get("tab") === "blink" ? "blink" : "studio"
+    const requested = params.get("tab")
+    return ["blink", "runner", "queue", "profile", "studio"].includes(requested) ? requested : "studio"
   })
   const [activeBlinkId, setActiveBlinkId] = useState(() => {
     const params = new URLSearchParams(window.location.search)
@@ -453,6 +533,7 @@ export default function AssetLabPage(){
 
     <div className="dh-backend-tabs">
       <button className={tab === "blink" ? "active" : ""} type="button" onClick={() => setTab("blink")}>Blink System</button>
+      <button className={tab === "runner" ? "active" : ""} type="button" onClick={() => setTab("runner")}>Runner Tiers</button>
       <button className={tab === "studio" ? "active" : ""} type="button" onClick={() => setTab("studio")}>Backend Studio</button>
       <button className={tab === "queue" ? "active" : ""} type="button" onClick={() => setTab("queue")}>Upload Queue</button>
       <button className={tab === "profile" ? "active" : ""} type="button" onClick={() => setTab("profile")}>Profile / GLBs</button>
@@ -571,6 +652,63 @@ export default function AssetLabPage(){
       <div className="dh-mood-support">
         <b>Reset builds</b>
         <span>Users can save beautiful renderer sessions, notes, and voice reactions as creative reset builds. This is wellness support and entertainment, not medical treatment or crisis care.</span>
+      </div>
+    </section>}
+
+    {tab === "runner" && <section className="dh-runner-capacity">
+      <div className="dh-runner-hero">
+        <div>
+          <span>Manual Runner Capacity</span>
+          <h2>Tier processing without fake automation</h2>
+          <p>DigitalHut customer tiers control the visitor experience. Codex operating capacity controls how deeply the builder can research, patch, verify, preserve evidence, and repeat the SEO/render loop.</p>
+        </div>
+        <aside>
+          <b>Current rule</b>
+          <span>Manual runner only. Automated runner stays disabled until the reasoning bridge, credentials, and verification gates are real.</span>
+        </aside>
+      </div>
+
+      <div className="dh-runner-tier-grid">
+        {runnerCapacityTiers.map((item) => <article key={item.id} className={item.id === "codex-capacity" ? "operator" : ""}>
+          <span>{item.scope}</span>
+          <h3>{item.label}</h3>
+          <p>{item.depth}</p>
+          <b>{item.proof}</b>
+        </article>)}
+      </div>
+
+      <div className="dh-runner-processing">
+        <section>
+          <span>Processing Stack</span>
+          <h2>Deep runner passes are staged work, not one-click magic</h2>
+          <div className="dh-runner-layer-list">
+            {runnerProcessingLayers.map(([name, detail], index) => <article key={name}>
+              <i>{index + 1}</i>
+              <div><b>{name}</b><p>{detail}</p></div>
+            </article>)}
+          </div>
+        </section>
+
+        <section>
+          <span>External Lanes</span>
+          <h2>Credential-gated runner outputs</h2>
+          <div className="dh-runner-lanes">
+            {runnerLanes.map((lane) => <article key={lane.id}>
+              <span>Staged</span>
+              <h3>{lane.name}</h3>
+              <p>{lane.output}</p>
+              <small>Required: {lane.required}</small>
+            </article>)}
+          </div>
+        </section>
+      </div>
+
+      <div className="dh-runner-cycle">
+        <b>Every serious runner pass must leave evidence:</b>
+        <span>one code/doc/content change</span>
+        <span>one evidence record</span>
+        <span>one verification command or reason it was not run</span>
+        <span>one next measurement</span>
       </div>
     </section>}
 

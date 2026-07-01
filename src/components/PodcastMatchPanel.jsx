@@ -26,13 +26,14 @@ function podcastQuery(feed){
   return [voice, feed?.title, feed?.query].filter(Boolean).join(" ").slice(0, 220)
 }
 
-export default function PodcastMatchPanel({feed, compact = false}){
+export default function PodcastMatchPanel({feed, compact = false, autoPlay = false}){
   const [episodes, setEpisodes] = useState([])
   const [status, setStatus] = useState("idle")
   const [activeId, setActiveId] = useState("")
   const [playbackStatus, setPlaybackStatus] = useState("")
   const audioRef = useRef(null)
   const clipTimer = useRef(null)
+  const autoPlayedRef = useRef("")
 
   useEffect(() => {
     const controller = new AbortController()
@@ -54,6 +55,14 @@ export default function PodcastMatchPanel({feed, compact = false}){
       audioRef.current?.pause()
     }
   }, [feed?.id, feed?.title, feed?.category, feed?.query])
+
+  useEffect(() => {
+    if(!autoPlay || status !== "ready" || !episodes.length) return
+    const playable = episodes.find((episode) => episode.audioUrl)
+    if(!playable || autoPlayedRef.current === playable.id) return
+    autoPlayedRef.current = playable.id
+    playClip(playable)
+  }, [autoPlay, status, episodes])
 
   function playClip(episode){
     window.clearTimeout(clipTimer.current)
@@ -97,8 +106,8 @@ export default function PodcastMatchPanel({feed, compact = false}){
   if(status === "idle" || status === "loading") return <aside className={`dh-podcast-panel ${compact ? "compact" : ""}`}><span>Matching an intelligent podcast voice to this 3D environment...</span></aside>
   if(!episodes.length) return null
 
-  return <aside className={`dh-podcast-panel ${compact ? "compact" : ""}`}>
-    <header><span>Matched Podcast Voices</span><b>3D remains primary</b></header>
+  return <aside className={`dh-podcast-panel ${compact ? "compact" : ""} ${autoPlay ? "episode-active" : ""}`}>
+    <header><span>Matched Real Human Voices</span><b>{autoPlay ? "Episode audio layer" : "3D remains primary"}</b></header>
     {playbackStatus && <div className="dh-podcast-status" role="status">{playbackStatus}</div>}
     <div className="dh-podcast-list">
       {episodes.map((episode) => <article key={episode.id} className={activeId === episode.id ? "playing" : ""}>

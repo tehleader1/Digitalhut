@@ -104,19 +104,20 @@ function timelineChapterFor(progress){
 
 function documentaryTitle(category, tier = "guest"){
   const titleMap = {
-    Gamer: "3D MMO RPG Gamer Presentation",
-    Planetary: "Exotic Environment Observatory Documentary",
-    "Orbital Compute": "Orbital Internet And Space Infrastructure Feature",
-    Researcher: "Researcher Evidence And Environment Presentation",
-    Science: "Science Field Study 3D Documentary",
-    Programmer: "Developer Renderer And API Systems Presentation",
-    "Real Estate": "Real Estate 3D Opportunity Walkthrough",
-    "Mainstream Streaming": "Mainstream 3D Culture Feed Episode",
-    Businesses: "Business District 3D Market Feature",
-    History: "Historical Environment 3D Documentary"
+    Gamer: "3D MMO RPG Gamer",
+    Planetary: "Exotic Environments",
+    "Orbital Compute": "Orbital Internet And Space Infrastructure",
+    Researcher: "Researcher Evidence And Environment",
+    Science: "Science Field Study",
+    Programmer: "Developer Renderer And API Systems",
+    "Real Estate": "Real Estate 3D Opportunity",
+    "Mainstream Streaming": "Mainstream 3D Culture Feed",
+    Businesses: "Business District 3D Market",
+    History: "Historical Environment"
   }
-  const base = titleMap[category] || `${category} DigitalHut Presentation`
-  return tier === "pro" ? `${base} - Pro Source Cut` : tier === "premium" ? `${base} - Premium Cut` : base
+  const base = titleMap[category] || `${category} Observatory`
+  const suffix = tier === "pro" ? " / Pro Source Cut" : tier === "premium" ? " / Premium Cut" : ""
+  return `Episode: ${base} - ${category}${suffix}`
 }
 
 function chapterCaption({chapter, category, feed, tier, source}){
@@ -134,6 +135,101 @@ function chapterCaption({chapter, category, feed, tier, source}){
   if(chapter.id === "podcast") return `Podcast bridge: short clips, artwork, and sound effects add context while the GLB remains the main visual.`
   if(chapter.id === "video") return `Video bridge: source video or external media supports the next scene instead of replacing the renderer.`
   return `Next model: closing this chapter and moving the series toward another related GLB.`
+}
+
+function episodeMediaMode(chapter){
+  if(chapter?.id === "podcast") return "podcast"
+  if(chapter?.id === "opening" || chapter?.id === "video" || chapter?.id === "source") return "video"
+  return "glb"
+}
+
+function episodeVideoQuery({category, feed, query}){
+  return [category, feed?.title, feed?.query || query, "real world interview documentary clip"].filter(Boolean).join(" ").slice(0, 220)
+}
+
+const youtubeEmbedParams = "autoplay=0&rel=0&playsinline=1&modestbranding=1&controls=0&enablejsapi=1&iv_load_policy=3&disablekb=1"
+
+function youtubeEmbedUrl(id){
+  return `https://www.youtube-nocookie.com/embed/${id}?${youtubeEmbedParams}`
+}
+
+function controlledEpisodeVideoUrl(url, autoplay = false){
+  if(!url) return ""
+  try {
+    const next = new URL(url)
+    next.searchParams.set("autoplay", autoplay ? "1" : "0")
+    next.searchParams.set("rel", "0")
+    next.searchParams.set("playsinline", "1")
+    next.searchParams.set("modestbranding", "1")
+    next.searchParams.set("controls", "0")
+    next.searchParams.set("enablejsapi", "1")
+    next.searchParams.set("iv_load_policy", "3")
+    next.searchParams.set("disablekb", "1")
+    if(typeof window !== "undefined" && window.location?.origin) next.searchParams.set("origin", window.location.origin)
+    return next.toString()
+  } catch {
+    return url
+  }
+}
+
+const curatedEpisodeVideos = {
+  Planetary: {
+    id: "OZvDAAI_JM0",
+    title: "NASA Artemis I mission video",
+    description: "NASA Artemis mission footage used as the real-world video layer while the DigitalHut GLB renderer stays docked.",
+    embedUrl: youtubeEmbedUrl("OZvDAAI_JM0"),
+    attribution: "NASA / YouTube"
+  },
+  "Orbital Compute": {
+    id: "OZvDAAI_JM0",
+    title: "NASA Artemis I mission video",
+    description: "Real-world lunar infrastructure footage for the episode video layer.",
+    embedUrl: youtubeEmbedUrl("OZvDAAI_JM0"),
+    attribution: "NASA / YouTube"
+  },
+  "Mainstream Streaming": {
+    id: "OZvDAAI_JM0",
+    title: "NASA Artemis I mission video",
+    description: "A real-world source video fallback for the observatory episode frame.",
+    embedUrl: youtubeEmbedUrl("OZvDAAI_JM0"),
+    attribution: "NASA / YouTube"
+  },
+  Researcher: {
+    id: "OZvDAAI_JM0",
+    title: "NASA Artemis I mission video",
+    description: "Real-world research footage paired with the live GLB preview.",
+    embedUrl: youtubeEmbedUrl("OZvDAAI_JM0"),
+    attribution: "NASA / YouTube"
+  }
+}
+
+function fallbackEpisodeVideo(category, feed){
+  const fallback = curatedEpisodeVideos[category] || curatedEpisodeVideos.Planetary
+  return {
+    ...fallback,
+    source: "Curated episode embed",
+    pageUrl: `https://www.youtube.com/watch?v=${fallback.id}`,
+    thumbnail: feed?.thumbnail || "",
+    description: fallback.description || `Real-world video source for ${feed?.title || category}.`
+  }
+}
+
+function createEpisodeState({category, tier, feed, node = null, mode = "category"}){
+  return {
+    id: `dh-episode-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+    mode,
+    nodeId: node?.id || "",
+    nodeTitle: node?.title || "",
+    category,
+    tier,
+    startedAt: new Date().toISOString(),
+    chapterId: "opening",
+    chapterIndex: 0,
+    progress: 0,
+    assetId: feed?.id || "",
+    assetTitle: feed?.title || "",
+    media: documentaryTimeline[0]?.media || "DigitalHut intro sound"
+  }
 }
 
 function relatedGlb(category, index = 0){
@@ -1720,24 +1816,24 @@ function RendererVisual({feed, stage, guided, loading, layer, renderLive, modelO
 }
 
 export default function FullscreenObservatoryV2(){
-  const [category, setCategory] = useState("Mainstream Streaming")
-  const [feeds, setFeeds] = useState(() => seedFeeds("Mainstream Streaming"))
+  const [category, setCategory] = useState("Planetary")
+  const [feeds, setFeeds] = useState(() => seedFeeds("Planetary"))
   const [statsFeeds, setStatsFeeds] = useState([])
   const [active, setActive] = useState(0)
-  const [query, setQuery] = useState("2026 viral 3d streaming feed")
-  const [mode, setMode] = useState("regular")
-  const [tour, setTour] = useState(toursFor("Mainstream Streaming")[0].id)
-  const [stageIndex, setStageIndex] = useState(0)
+  const [query, setQuery] = useState("moon surface observatory 3d")
+  const [mode, setMode] = useState("premium")
+  const [tour, setTour] = useState(toursFor("Planetary")[0].id)
+  const [stageIndex, setStageIndex] = useState(1)
   const [loading, setLoading] = useState(false)
   const [tier, setTier] = useState(() => readStorage("digitalhut:tier", "guest"))
   const [username, setUsername] = useState(() => readStorage("digitalhut:username", ""))
   const [entryOpen, setEntryOpen] = useState(false)
   const [entryLoading, setEntryLoading] = useState(false)
   const [awake, setAwake] = useState(true)
-  const [playing, setPlaying] = useState(true)
+  const [playing, setPlaying] = useState(false)
   const [layer, setLayer] = useState("Base")
   const [layerOpen, setLayerOpen] = useState(false)
-  const [modelOpen, setModelOpen] = useState(false)
+  const [modelOpen, setModelOpen] = useState(true)
   const [guideDepth, setGuideDepth] = useState(0)
   const [aiOpen, setAiOpen] = useState(false)
   const [aiListening, setAiListening] = useState(false)
@@ -1747,7 +1843,7 @@ export default function FullscreenObservatoryV2(){
   const [downloadUrl, setDownloadUrl] = useState("")
   const [noteFormat, setNoteFormat] = useState({font: "Arial", size: "14", spacing: "1.45", color: "#0f172a"})
   const [autoPresent, setAutoPresent] = useState(false)
-  const [demoMode, setDemoMode] = useState("")
+  const [demoMode, setDemoMode] = useState("video")
   const [aiUsage, setAiUsage] = useState(() => readAiUsage(readStorage("digitalhut:tier", "guest")))
   const [liveStageOpen, setLiveStageOpen] = useState(false)
   const [hostLine, setHostLine] = useState("Hey live 3D GLB presentation, what's up. Featuring DigitalHut. Give me some likes and find a new layer in my GLB.")
@@ -1759,13 +1855,19 @@ export default function FullscreenObservatoryV2(){
   const [presentationFileNote, setPresentationFileNote] = useState("")
   const [presentationEdits, setPresentationEdits] = useState([])
   const [presentationSpeed, setPresentationSpeed] = useState(1)
-  const [presentationProgress, setPresentationProgress] = useState(0)
+  const [presentationProgress, setPresentationProgress] = useState(82)
+  const [episodeState, setEpisodeState] = useState(() => createEpisodeState({category: "Planetary", tier: "guest", feed: seedFeeds("Planetary")[0]}))
+  const [glbMaximized, setGlbMaximized] = useState(false)
+  const [episodeVideos, setEpisodeVideos] = useState([])
+  const [episodeVideoStatus, setEpisodeVideoStatus] = useState("idle")
+  const [episodeVideoPlaying, setEpisodeVideoPlaying] = useState(false)
+  const [episodeIntroActive, setEpisodeIntroActive] = useState(false)
   const [visualReadyKey, setVisualReadyKey] = useState("")
   const [directorStatus, setDirectorStatus] = useState({phase: "Finding model", detail: "Preparing DigitalHut renderer", status: "Idle"})
   const [directorChat, setDirectorChat] = useState(() => readDirectorChat())
   const [directorInput, setDirectorInput] = useState("")
   const [faqOpen, setFaqOpen] = useState(false)
-  const [mainLobbyOpen, setMainLobbyOpen] = useState(true)
+  const [mainLobbyOpen, setMainLobbyOpen] = useState(false)
   const [lobbyActiveIndex, setLobbyActiveIndex] = useState(0)
   const [apiCategoryFeeds, setApiCategoryFeeds] = useState([])
   const [showcaseAuto, setShowcaseAuto] = useState(false)
@@ -1795,6 +1897,8 @@ export default function FullscreenObservatoryV2(){
   const pendingSpeechTimer = useRef(null)
   const presentationIdleTimer = useRef(null)
   const previewCommentaryTimer = useRef(null)
+  const youtubeFrameRef = useRef(null)
+  const episodeIntroTimer = useRef(null)
   const preMechanicCategoryRef = useRef("Mainstream Streaming")
   const mechanicMotionFrameRef = useRef(null)
   const {address: connectedWallet, isConnected} = useAccount()
@@ -1866,6 +1970,14 @@ export default function FullscreenObservatoryV2(){
   const currentReview = assetReviews[currentReviewKey] || {rating: 0, review: "", backlink: backlinkForFeed(sceneFeed), count: 0}
   const selectedPurchaseOptions = purchaseOptionsBase.filter((item) => selectedPurchaseIds.includes(item.id))
   const selectedPurchaseLabel = selectedPurchaseOptions.map((item) => item.title).join(" + ") || "Choose package"
+  const episodeModeActive = !mainLobbyOpen && !entryOpen && (autoPresent || presentationProgress > 0 || demoMode?.startsWith("node:"))
+  const episodeMedia = episodeMediaMode(presentationChapter)
+  const videoFeedActive = episodeModeActive && episodeMedia === "video"
+  const episodeAccessLabel = episodeState.mode === "node" ? "Paid node episode" : "Free category episode"
+  const activeEpisodeVideo = episodeVideos[0] || fallbackEpisodeVideo(category, sceneFeed)
+  const episodeVideoEmbedUrl = controlledEpisodeVideoUrl(activeEpisodeVideo?.embedUrl || "", episodeVideoPlaying || episodeIntroActive)
+  const episodePresentationLive = episodeModeActive && (episodeIntroActive || episodeVideoPlaying || autoPresent)
+  const episodePlaybackLabel = episodeIntroActive ? "Intro" : episodeVideoPlaying ? "Video live" : autoPresent ? "Auto play" : "Ready"
 
   useEffect(() => {
     if(typeof window === "undefined") return undefined
@@ -1875,6 +1987,38 @@ export default function FullscreenObservatoryV2(){
     media.addEventListener?.("change", syncDisplay)
     return () => media.removeEventListener?.("change", syncDisplay)
   }, [])
+
+  useEffect(() => () => {
+    if(episodeIntroTimer.current) window.clearTimeout(episodeIntroTimer.current)
+  }, [])
+
+  useEffect(() => {
+    setEpisodeVideoPlaying(false)
+    setEpisodeIntroActive(false)
+    if(episodeIntroTimer.current) window.clearTimeout(episodeIntroTimer.current)
+  }, [episodeVideoEmbedUrl, presentationChapter.id])
+
+  useEffect(() => {
+    if(typeof window === "undefined") return undefined
+    if(!episodeModeActive){
+      setEpisodeVideoStatus("idle")
+      return undefined
+    }
+    const controller = new AbortController()
+    const term = episodeVideoQuery({category, feed: sceneFeed, query})
+    setEpisodeVideoStatus("loading")
+    fetch(`/api/video-search?query=${encodeURIComponent(term)}`, {signal: controller.signal})
+      .then((response) => response.json())
+      .then((payload) => {
+        const videos = Array.isArray(payload?.videos) ? payload.videos : []
+        setEpisodeVideos(videos)
+        setEpisodeVideoStatus(videos.length ? "ready" : payload?.configured === false ? "not-configured" : "empty")
+      })
+      .catch((error) => {
+        if(error?.name !== "AbortError") setEpisodeVideoStatus("empty")
+      })
+    return () => controller.abort()
+  }, [episodeModeActive, category, sceneFeed.id, sceneFeed.title, sceneFeed.query, query])
 
   useEffect(() => {
     if(typeof window === "undefined") return undefined
@@ -1954,6 +2098,47 @@ export default function FullscreenObservatoryV2(){
       return next
     })
     return message
+  }
+
+  function recordEpisodeTransition({chapter, feed: targetFeed = sceneFeed, targetCategory = category, reason = "timeline", modeOverride = ""}){
+    const chapterIndex = documentaryTimeline.findIndex((item) => item.id === chapter.id)
+    const nextEpisode = {
+      ...episodeState,
+      mode: modeOverride || episodeState.mode || (demoMode?.startsWith("node:") ? "node" : "category"),
+      category: targetCategory,
+      tier,
+      chapterId: chapter.id,
+      chapterIndex: Math.max(0, chapterIndex),
+      progress: chapter.at,
+      assetId: targetFeed?.id || "",
+      assetTitle: targetFeed?.title || "",
+      media: chapter.media,
+      updatedAt: new Date().toISOString()
+    }
+    setEpisodeState(nextEpisode)
+    try {
+      const history = JSON.parse(window.localStorage.getItem("digitalhut:episodeHistory") || "[]")
+      window.localStorage.setItem("digitalhut:episodeHistory", JSON.stringify([nextEpisode, ...history].slice(0, 60)))
+      window.digitalhutPixel?.track?.("episode_chapter", {
+        category: targetCategory,
+        assetId: targetFeed?.id || "",
+        nodeKey: nextEpisode.nodeId,
+        tierKey: tier,
+        keywordHint: `${targetCategory} ${chapter.label} ${chapter.media} GLB presentation`,
+        metadata: {
+          episodeId: nextEpisode.id,
+          episodeMode: nextEpisode.mode,
+          chapterId: chapter.id,
+          chapterLabel: chapter.label,
+          progress: chapter.at,
+          media: chapter.media,
+          source: targetFeed?.apiSource || targetFeed?.apiStatus || "",
+          title: targetFeed?.title || "",
+          reason
+        }
+      })
+    } catch {}
+    return nextEpisode
   }
 
   function clearDirectorChat(){
@@ -2078,6 +2263,7 @@ export default function FullscreenObservatoryV2(){
       const caption = chapterCaption({chapter: nextChapter, category, feed: nextFeed, tier, source: nextFeed.apiSource || nextFeed.apiStatus})
       setDirectorStatus({phase: nextChapter.label, detail: nextFeed.title, status: `${nextChapter.media}. ${caption}`})
       recordDirectorMessage("ai", `${nextChapter.media}: ${caption}`, "Episode progression")
+      recordEpisodeTransition({chapter: nextChapter, feed: nextFeed, targetCategory: category, reason: "autoplay", modeOverride: demoMode?.startsWith("node:") ? "node" : "category"})
     }, autoDelay)
     return () => {
       window.clearInterval(timer)
@@ -2461,10 +2647,12 @@ export default function FullscreenObservatoryV2(){
     const loaded = next[0] || seed || sceneFeed
     setActive(0)
     setModelOpen(true)
+    setEpisodeState(createEpisodeState({category: targetCategory, tier, feed: loaded, node, mode: node ? "node" : "category"}))
     const fullWelcome = shouldUseFullDemoWelcome()
     const line = presentationIntro({kind, node, targetCategory, targetFeed: loaded, fullWelcome})
     recordDirectorMessage("ai", line, node ? `${node.title} Node` : "Auto Demo")
     setDirectorStatus({phase: node ? `${node.title} episode` : "Category episode", detail: loaded.title, status: node ? "Paid node episode started. GLBs, podcast clips, video bridges, and sound effects will build the episode." : "Free category episode started. GLBs, podcast clips, video bridges, and sound effects will build the episode."})
+    recordEpisodeTransition({chapter: documentaryTimeline[0], feed: loaded, targetCategory, reason: node ? "node_launch" : "category_launch", modeOverride: node ? "node" : "category"})
     speakAfterVisual(line, visualKeyFor(loaded, stages[0]), 500)
     wake()
   }
@@ -2576,7 +2764,16 @@ export default function FullscreenObservatoryV2(){
     setStageIndex(0)
     setGuideDepth(0)
     setModelOpen(true)
-    speakAfterVisual(`Main Lobby loaded ${item.title}. DigitalHut will present the GLB and match a podcast voice when available.`, visualKeyFor(item, stages[0]), 700)
+    setMode("premium")
+    setPlaying(false)
+    setAutoPresent(false)
+    setDemoMode("video")
+    setPresentationProgress(82)
+    setEpisodeState(createEpisodeState({category: nextCategory, tier, feed: item, mode: "category"}))
+    playSessionSound(nextCategory, "open")
+    recordEpisodeTransition({chapter: timelineChapterFor(82), feed: item, targetCategory: nextCategory, reason: "video_feed_enter", modeOverride: "category"})
+    setDirectorStatus({phase: "Episode ready", detail: item.title, status: "The live observatory episode is staged with a real-world video source, podcast/audio bridge, sound effects, and the docked GLB preview. Press Resume Episode to start autoplay."})
+    speakAfterVisual(`Main Lobby loaded ${item.title}. DigitalHut staged ${documentaryTitle(nextCategory, tier)} with the GLB docked and official media source pulling active.`, visualKeyFor(item, stages[0]), 700)
     wake()
   }
 
@@ -2745,6 +2942,7 @@ export default function FullscreenObservatoryV2(){
     const caption = chapterCaption({chapter, category, feed: targetFeed, tier, source: targetFeed.apiSource || targetFeed.apiStatus})
     setDirectorStatus({phase: chapter.label, detail: targetFeed.title, status: caption})
     recordDirectorMessage("ai", caption, "Timeline presentation")
+    recordEpisodeTransition({chapter, feed: targetFeed, targetCategory: category, reason: "scrub", modeOverride: demoMode?.startsWith("node:") ? "node" : "category"})
     wake()
   }
 
@@ -2752,7 +2950,65 @@ export default function FullscreenObservatoryV2(){
     scrubPresentation(presentationProgress + delta)
   }
 
+  function postYoutubeCommand(func){
+    const frame = youtubeFrameRef.current
+    if(!frame?.contentWindow) return
+    frame.contentWindow.postMessage(JSON.stringify({event: "command", func, args: []}), "*")
+  }
+
+  function pauseEpisodeVideo(){
+    if(episodeIntroTimer.current) window.clearTimeout(episodeIntroTimer.current)
+    postYoutubeCommand("pauseVideo")
+    setEpisodeIntroActive(false)
+    setEpisodeVideoPlaying(false)
+    setAutoPresent(false)
+    setShowcaseAuto(false)
+    setPlaying(false)
+    playSessionSound(category, "stop")
+    setDirectorStatus({phase: "Episode video paused", detail: sceneFeed.title, status: "Video feed paused behind the DigitalHut pause screen. Press Resume Episode to continue the selected source."})
+  }
+
+  function playEpisodeVideo(){
+    if(!episodeVideoEmbedUrl) return
+    if(episodeIntroTimer.current) window.clearTimeout(episodeIntroTimer.current)
+    setAutoPresent(false)
+    setShowcaseAuto(false)
+    setDemoMode("video")
+    setModelOpen(true)
+    setPlaying(true)
+    setEpisodeVideoPlaying(true)
+    setEpisodeIntroActive(true)
+    playSessionSound(category, "open")
+    postYoutubeCommand("playVideo")
+    window.setTimeout(() => postYoutubeCommand("playVideo"), 300)
+    window.setTimeout(() => postYoutubeCommand("playVideo"), 1200)
+    setDirectorStatus({phase: "DigitalHut Presents", detail: activeEpisodeVideo?.title || sceneFeed.title, status: "Cinematic intro is playing before the selected video source starts."})
+    episodeIntroTimer.current = window.setTimeout(() => {
+      setEpisodeIntroActive(false)
+      postYoutubeCommand("playVideo")
+      setDirectorStatus({phase: "Episode video playing", detail: activeEpisodeVideo?.title || sceneFeed.title, status: "DigitalHut controls are driving the embedded video while the GLB renderer stays docked."})
+    }, 1250)
+  }
+
+  function focusDockedGlb(){
+    setModelOpen(true)
+    setGlbMaximized((value) => !value)
+    playSessionSound(category, "bridge")
+    setDirectorStatus({
+      phase: glbMaximized ? "GLB docked" : "GLB touch demo",
+      detail: sceneFeed.title,
+      status: glbMaximized
+        ? "GLB preview returned to the corner while the episode video remains the main presentation."
+        : "GLB preview expanded for a quick touch demonstration without leaving the episode."
+    })
+  }
+
   function toggleMoviePlayback(){
+    if(videoFeedActive && episodeVideoEmbedUrl){
+      if(episodeVideoPlaying || episodeIntroActive) pauseEpisodeVideo()
+      else playEpisodeVideo()
+      return
+    }
     if(autoPresent){
       setAutoPresent(false)
       setShowcaseAuto(false)
@@ -3215,6 +3471,10 @@ export default function FullscreenObservatoryV2(){
       wake()
       return
     }
+    if(videoFeedActive && episodeVideoEmbedUrl){
+      toggleMoviePlayback()
+      return
+    }
     startDemoMode("current")
   }
 
@@ -3268,10 +3528,54 @@ export default function FullscreenObservatoryV2(){
     wake()
   }
 
-  return <main className={`dh-observatory low-power aerospace-display ${loading ? "is-loading" : "is-ready"} ${interactionPulse ? "system-pulse" : ""} ${directorBusy ? "ai-operating" : ""} ${mainLobbyOpen ? "main-lobby-active" : ""} ${entryOpen ? "entry-open" : "entry-complete"} mechanic-mode`} data-main-frame={digitalHutBrainMap.mainFrame} data-observatory-category={category} data-observatory-status={loading ? "verifying" : sceneFeed.apiStatus || "ready"} data-physical-assets="sensitive" onPointerMove={handleObservatoryPointer} onPointerLeave={centerCockpitMotion} onPointerDown={(event) => {wake(); triggerSystemPulse(event)}} onClickCapture={triggerSystemPulse}>
+  return <main className={`dh-observatory low-power aerospace-display ${loading ? "is-loading" : "is-ready"} ${interactionPulse ? "system-pulse" : ""} ${directorBusy ? "ai-operating" : ""} ${mainLobbyOpen ? "main-lobby-active" : ""} ${entryOpen ? "entry-open" : "entry-complete"} ${episodeModeActive ? "episode-mode" : ""} ${episodeModeActive && !glbMaximized ? "glb-docked" : ""} ${episodePresentationLive ? "presentation-live" : ""} mechanic-mode`} data-main-frame={digitalHutBrainMap.mainFrame} data-observatory-category={category} data-observatory-status={loading ? "verifying" : sceneFeed.apiStatus || "ready"} data-physical-assets="sensitive" onPointerMove={handleObservatoryPointer} onPointerLeave={centerCockpitMotion} onPointerDown={(event) => {wake(); triggerSystemPulse(event)}} onClickCapture={triggerSystemPulse}>
     <section className="dh-stage">
       <RendererVisual feed={sceneFeed} stage={stage} guided={guided} loading={loading} layer={layer} renderLive={!entryOpen} modelOpen={modelOpen} onOpenModel={openContainedModel} onNext={nextStage} onPlayMore={playMore} onVisualPending={markVisualPending} onVisualReady={markVisualReady} onDirectorUpdate={setDirectorStatus} onMarketOptionSelect={runSelectedOptionPrint} guideText={currentGuideLine} followUps={currentFollowUps} />
       <div className="dh-vignette" />
+      {episodeModeActive && <section className={`dh-episode-screen media-${episodeMedia} ${episodePresentationLive ? "presentation-live" : ""}`} aria-label="DigitalHut streaming episode screen">
+        <img src={sceneFeed.thumbnail || stockUrl(category, active)} alt="" loading="lazy" />
+        <div className="dh-episode-screen-shade" />
+        <div className="dh-presentation-chrome" aria-label="DigitalHut presentation status">
+          <span>DigitalHut Presents</span>
+          <b>{episodePlaybackLabel}</b>
+          <small>{episodeIntroActive ? "Cinematic sound intro" : episodeVideoPlaying ? "Video / narration / GLB package" : "Press play for full presentation"}</small>
+        </div>
+        {episodeMedia === "podcast" ? <div className="dh-speaker-visual" aria-label="Human voice podcast clip visual">
+          <span /><span /><span />
+          <b>Human Voice Clip</b>
+          <small>Podcast bridge / story source</small>
+        </div> : <div className={`dh-video-frame ${episodeVideoEmbedUrl && episodeMedia === "video" ? "has-embed" : ""}`} aria-label="Human video clip visual">
+          {episodeVideoEmbedUrl && episodeMedia === "video" ? <>
+            <iframe ref={youtubeFrameRef} src={episodeVideoEmbedUrl} title={activeEpisodeVideo.title || "DigitalHut episode video"} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
+            {(!episodeVideoPlaying || episodeIntroActive) && <button className={`dh-video-pause-cover ${episodeIntroActive ? "intro" : ""}`} type="button" onClick={toggleMoviePlayback}>
+              <span>{episodeIntroActive ? "DigitalHut Presents" : "DigitalHut Episode Paused"}</span>
+              <b>{episodeIntroActive ? documentaryTitle(category, tier) : activeEpisodeVideo.title || presentationChapter.label}</b>
+              <small>{episodeIntroActive ? "Cinematic intro / sound effects" : "Resume Episode"}</small>
+            </button>}
+          </> : <>
+          <span>{episodeVideoStatus === "loading" ? "Loading Video Source" : episodeMedia === "video" ? "Real World Video" : "3D Story Beat"}</span>
+            <b>{presentationChapter.label}</b>
+            <small>{episodeVideoStatus === "not-configured" ? "Set YOUTUBE_API_KEY for official embeds" : activeEpisodeVideo?.title || presentationChapter.media}</small>
+          </>}
+        </div>}
+        {episodeMedia === "video" && <div className="dh-narration-pulse" aria-label="Podcast narration visualizer">
+          <span /><span /><span />
+          <b>Podcast Narration</b>
+          <small>{episodeIntroActive ? "Intro" : episodeVideoPlaying ? "Speaking" : "Ready"}</small>
+        </div>}
+        <div className="dh-episode-copy">
+          <span>{episodeAccessLabel} / Live observatory experience</span>
+          <h2>{documentaryTitle(category, tier)}</h2>
+          <p>{videoFeedActive && activeEpisodeVideo ? `${activeEpisodeVideo.title}. ${activeEpisodeVideo.description || presentationCaption}` : videoFeedActive ? `Pulling an official video embed for this episode topic while the GLB stays live in the corner. ${presentationCaption}` : presentationCaption}</p>
+          <small>{sceneFeed.title} / {activeEpisodeVideo?.attribution || sceneFeed.apiSource || sceneFeed.apiStatus || "DigitalHut source"}</small>
+        </div>
+        <div className="dh-presentation-meter" aria-hidden="true"><span /><span /><span /><span /><span /></div>
+        <button className="dh-glb-touch-demo" type="button" onClick={focusDockedGlb}>
+          <span>{glbMaximized ? "Dock GLB" : "Touch GLB"}</span>
+          <b>{glbMaximized ? "Return preview" : "Tap loaded model"}</b>
+        </button>
+        <button className="dh-glb-maximize" type="button" onClick={focusDockedGlb}>{glbMaximized ? "Dock GLB" : "Maximize GLB"}</button>
+      </section>}
       {layer === "Architect" && <div className="dh-architect"><b>Architect Layer</b><span>builders / developers / researchers / AIs / experimental</span></div>}
       <>
         <aside className={`dh-wallet-package ${purchaseOpen ? "open" : ""}`} aria-label="DigitalHut wallet purchase package">
@@ -3307,13 +3611,13 @@ export default function FullscreenObservatoryV2(){
           <button type="button" onClick={() => setMainLobbyOpen(true)}>Main Lobby</button>
         </form>
 
-        <aside className="dh-mechanic-controls" aria-label="DigitalHut observatory playback controls">
-          <button className={`primary ${autoPresent ? "active" : ""}`} type="button" onClick={toggleMechanicAuto}><span>{autoPresent ? "Pause" : "Play"}</span><b>{autoPresent ? "Pause Feed" : "Auto Play Feed"}</b></button>
+        {episodeModeActive && <aside className="dh-mechanic-controls" aria-label="DigitalHut observatory playback controls">
+          <button className={`primary ${autoPresent || episodeVideoPlaying || episodeIntroActive ? "active" : ""}`} type="button" onClick={toggleMechanicAuto}><span>{autoPresent || episodeVideoPlaying || episodeIntroActive ? "Pause" : "Play"}</span><b>{videoFeedActive ? episodeVideoPlaying || episodeIntroActive ? "Pause Video" : "Play Episode" : autoPresent ? "Pause Episode" : "Auto Play Episode"}</b></button>
           <button type="button" onClick={previousFeed}><span>Previous</span><b>Previous Model</b></button>
           <button type="button" onClick={nextFeed}><span>Next</span><b>Next Model</b></button>
           <button type="button" onClick={openContainedModel}><span>Preview</span><b>Play 3D Preview</b></button>
           <button type="button" onClick={() => setMainLobbyOpen(true)}><span>Lobby</span><b>Main Lobby</b></button>
-        </aside>
+        </aside>}
 
         {!mainLobbyOpen && <aside className={`dh-mechanic-status ${displayCollapsed ? "collapsed" : ""}`} aria-label="DigitalHut observatory status">
           <header>
@@ -3326,7 +3630,7 @@ export default function FullscreenObservatoryV2(){
             <section><span>View mode</span><b>{category}</b></section>
             <section><span>Network</span><b>{runtimeState.online ? `${runtimeState.connection}${runtimeState.saveData ? " / saver" : ""}` : "Offline"}</b></section>
             <section><span>Renderer</span><b>{sceneVisualKey === visualReadyKey ? "Ready" : loading ? "Loading" : "Standby"}</b></section>
-            <section><span>Presentation</span><b>{runtimePaused ? "Paused" : autoPresent ? "Auto Play" : "Manual"}</b></section>
+            <section><span>Presentation</span><b>{runtimePaused ? "Paused" : episodeIntroActive ? "Intro" : episodeVideoPlaying ? "Video" : autoPresent ? "Auto Play" : "Manual"}</b></section>
           </div>
           <div className="dh-ai-operator-readout">
             <span>{directorStatus.phase}</span>
@@ -3428,7 +3732,7 @@ export default function FullscreenObservatoryV2(){
           </div>
         </div>
       </section>}
-      {modelOpen && !entryOpen && <PodcastMatchPanel feed={sceneFeed} compact={mechanicMode} />}
+      {episodeModeActive && episodeMedia === "podcast" && modelOpen && !entryOpen && !mainLobbyOpen && <PodcastMatchPanel feed={sceneFeed} compact={mechanicMode} autoPlay />}
 
       <div className="dh-top" style={{opacity: awake ? 1 : 0.08}}>
         <div className="dh-search">
@@ -3477,21 +3781,22 @@ export default function FullscreenObservatoryV2(){
         <div className="dh-state-badges"><span>{category}</span><span>{mode}</span><span>{sceneFeed.apiStatus || "api"}</span><span>{activeTour.icon}</span></div>
       </div>
 
-      <div className="dh-media dh-movie-controls" style={{opacity: awake ? 1 : 0.12}}>
+      {episodeModeActive && <div className="dh-media dh-movie-controls" style={{opacity: awake ? 1 : 0.12}}>
         <div className="dh-movie-head">
           <span>{documentaryTitle(category, tier)}</span>
-          <b>{presentationChapter.label}</b>
+          <b>{episodePlaybackLabel} / {presentationChapter.label}</b>
         </div>
         <div className="dh-movie-buttons">
-          <button className="dh-btn" onClick={previousFeed}>Previous GLB</button>
-          <button className={`dh-btn ${autoPresent ? "active" : ""}`} onClick={toggleMoviePlayback}>{autoPresent ? "Pause Episode" : "Play Episode"}</button>
-          <button className="dh-btn" onClick={nextFeed}>Next GLB</button>
+          <button className="dh-btn" onClick={previousFeed}>Previous Model</button>
+          <button className={`dh-btn ${episodeVideoPlaying || episodeIntroActive || autoPresent ? "active" : ""}`} onClick={toggleMoviePlayback}>{episodeVideoPlaying || episodeIntroActive || autoPresent ? "Stop Episode" : "Resume Episode"}</button>
+          <button className="dh-btn" onClick={nextFeed}>Next Model</button>
           <button className="dh-btn" onClick={() => skipPresentation(-16)}>Back 15s</button>
           <button className="dh-btn" onClick={() => skipPresentation(18)}>Skip 15s</button>
-          <button className="dh-btn" onClick={() => scrubPresentation(64)}>Podcast Clip</button>
-          <button className={`dh-btn ${demoMode === "all" ? "active" : ""}`} onClick={() => startDemoMode("all")}>Shuffle Series</button>
+          {episodeMedia !== "video" && <button className="dh-btn" onClick={() => scrubPresentation(64)}>Podcast Clip</button>}
+          {episodeMedia !== "video" && <button className={`dh-btn ${demoMode === "all" ? "active" : ""}`} onClick={() => startDemoMode("all")}>Shuffle Series</button>}
         </div>
         <label className="dh-movie-slider" aria-label="DigitalHut episode timeline">
+          <b>Episode Timeline</b>
           <input type="range" min="0" max="100" step="1" value={presentationProgress} onChange={(event) => scrubPresentation(event.target.value)} />
           <span>{Math.round(presentationProgress)}%</span>
         </label>
@@ -3499,7 +3804,7 @@ export default function FullscreenObservatoryV2(){
           {documentaryTimeline.map((item) => <button key={item.id} type="button" className={presentationChapter.id === item.id ? "active" : ""} onClick={() => scrubPresentation(item.at)}>{item.label}</button>)}
         </div>
         <p className="dh-movie-caption">{presentationChapter.media}: {presentationCaption}</p>
-      </div>
+      </div>}
 
       <div className="dh-utility" style={{opacity: awake ? 1 : 0.1}}>{["Save", "Share", "Live", "Embed", "Download", "Related", "Refresh", "FAQ"].map((label) => <button key={label} className="dh-btn" onClick={() => action(label)}>{label}</button>)}</div>
 

@@ -524,14 +524,197 @@
   gap: 12px;
 }
 
+.dh-runner-capacity {
+  width: min(1440px, calc(100% - 28px));
+  margin: 0 auto 28px;
+  display: grid;
+  gap: 12px;
+}
+
 .dh-blink-reader,
 .dh-blink-layout,
 .dh-custom-feed-preview,
 .dh-node-purchases,
-.dh-mood-support {
+.dh-mood-support,
+.dh-runner-hero,
+.dh-runner-tier-grid,
+.dh-runner-processing,
+.dh-runner-cycle {
   border: 1px solid rgba(125, 211, 252, .26);
   border-radius: 8px;
   background: rgba(2, 6, 23, .72);
+}
+
+.dh-runner-hero {
+  display: grid;
+  grid-template-columns: minmax(320px, 1fr) minmax(280px, .42fr);
+  gap: 12px;
+  padding: 16px;
+  background:
+    linear-gradient(120deg, rgba(14, 116, 144, .18), transparent 44%),
+    radial-gradient(circle at 86% 16%, rgba(250, 204, 21, .14), transparent 28%),
+    rgba(2, 6, 23, .72);
+}
+
+.dh-runner-hero h2,
+.dh-runner-processing h2 {
+  margin: 2px 0 8px;
+}
+
+.dh-runner-hero span,
+.dh-runner-tier-grid article span,
+.dh-runner-processing > section > span,
+.dh-runner-lanes article > span {
+  color: #67e8f9;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.dh-runner-hero p,
+.dh-runner-hero aside span,
+.dh-runner-tier-grid p,
+.dh-runner-layer-list p,
+.dh-runner-lanes p,
+.dh-runner-lanes small {
+  color: #b6c5d8;
+  line-height: 1.45;
+}
+
+.dh-runner-hero aside {
+  display: grid;
+  gap: 8px;
+  align-content: center;
+  padding: 12px;
+  border: 1px solid rgba(250, 204, 21, .26);
+  border-radius: 8px;
+  background: rgba(24, 24, 27, .48);
+}
+
+.dh-runner-hero aside b {
+  color: #fde68a;
+}
+
+.dh-runner-tier-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  padding: 12px;
+}
+
+.dh-runner-tier-grid article,
+.dh-runner-lanes article,
+.dh-runner-layer-list article {
+  border: 1px solid rgba(148, 163, 184, .2);
+  border-radius: 8px;
+  background: rgba(15, 23, 42, .62);
+}
+
+.dh-runner-tier-grid article {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  padding: 12px;
+}
+
+.dh-runner-tier-grid article.operator {
+  border-color: rgba(250, 204, 21, .58);
+  box-shadow: 0 0 26px rgba(250, 204, 21, .12);
+}
+
+.dh-runner-tier-grid h3,
+.dh-runner-lanes h3 {
+  margin: 0;
+}
+
+.dh-runner-tier-grid b {
+  color: #bef264;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.dh-runner-processing {
+  display: grid;
+  grid-template-columns: minmax(360px, .9fr) minmax(420px, 1.1fr);
+  gap: 12px;
+  padding: 12px;
+}
+
+.dh-runner-processing > section {
+  min-width: 0;
+}
+
+.dh-runner-layer-list,
+.dh-runner-lanes {
+  display: grid;
+  gap: 8px;
+}
+
+.dh-runner-layer-list article {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 10px;
+  padding: 10px;
+}
+
+.dh-runner-layer-list i {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(14, 116, 144, .74);
+  color: #cffafe;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.dh-runner-layer-list b {
+  color: #f8fafc;
+}
+
+.dh-runner-layer-list p {
+  margin: 4px 0 0;
+}
+
+.dh-runner-lanes {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.dh-runner-lanes article {
+  display: grid;
+  gap: 7px;
+  padding: 10px;
+}
+
+.dh-runner-lanes small {
+  padding: 7px;
+  border: 1px solid rgba(125, 211, 252, .18);
+  border-radius: 6px;
+  background: rgba(8, 145, 178, .12);
+  overflow-wrap: anywhere;
+}
+
+.dh-runner-cycle {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  padding: 12px;
+}
+
+.dh-runner-cycle b {
+  color: #fde68a;
+}
+
+.dh-runner-cycle span {
+  border: 1px solid rgba(34, 197, 94, .28);
+  border-radius: 999px;
+  padding: 7px 9px;
+  background: rgba(20, 83, 45, .2);
+  color: #bbf7d0;
+  font-size: 12px;
+  font-weight: 900;
 }
 
 .dh-blink-reader {
@@ -916,18 +1099,24 @@
   .dh-public-grid,
   .dh-blink-reader,
   .dh-blink-layout,
-  .dh-blink-columns {
+  .dh-blink-columns,
+  .dh-runner-hero,
+  .dh-runner-processing {
     display: block;
   }
 
-  .dh-custom-feed-grid {
+  .dh-custom-feed-grid,
+  .dh-runner-tier-grid,
+  .dh-runner-lanes {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .dh-backend-panel,
   .dh-public-card,
   .dh-blink-detail,
-  .dh-unlock-lenses {
+  .dh-unlock-lenses,
+  .dh-runner-hero aside,
+  .dh-runner-processing > section {
     margin-bottom: 12px;
   }
 
@@ -965,6 +1154,11 @@
   }
 
   .dh-custom-feed-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dh-runner-tier-grid,
+  .dh-runner-lanes {
     grid-template-columns: 1fr;
   }
 }
