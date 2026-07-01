@@ -24,6 +24,7 @@ const DIGITALHUT_BASE_USDC_RECEIVER = import.meta.env?.VITE_DIGITALHUT_USDC_BASE
 const DIGITALHUT_BASE_ETH_AMOUNT = import.meta.env?.VITE_DIGITALHUT_PAYMENT_ETH_AMOUNT || ""
 const AI_TIER_LIMITS = {guest: Infinity, standard: Infinity, premium: Infinity, pro: Infinity}
 const STORAGE_TIER_LIMITS = {guest: 12, standard: 50, premium: 500, pro: Infinity}
+const PRESENTATION_NARRATOR_ENABLED = false
 const accounts = ["guest", "standard", "premium", "pro"]
 const layers = ["Base", "Architect", "Lighting", "Props", "Grid", "Coordinates"]
 const mobilityModes = [
@@ -31,6 +32,15 @@ const mobilityModes = [
   {id: "Air Travel", query: "airport delay visibility diversion public travel environment"},
   {id: "Marine", query: "marine harbor coastal weather travel environment"},
   {id: "Rail", query: "rail station transit delay public feed environment"}
+]
+const documentaryTimeline = [
+  {at: 0, id: "opening", label: "Opening", stage: 0, feedOffset: 0, cue: "open", media: "DigitalHut intro sound"},
+  {at: 14, id: "preview", label: "GLB Preview", stage: 0, feedOffset: 0, cue: "rotate", media: "Renderer preview play"},
+  {at: 30, id: "source", label: "Source Pull", stage: 1, feedOffset: 0, cue: "bridge", media: "Thumbnail and source cross-reference"},
+  {at: 46, id: "detail", label: "Angle Detail", stage: 2, feedOffset: 0, cue: "rotate", media: "Camera angle and environment pass"},
+  {at: 64, id: "podcast", label: "Podcast Clip", stage: 3, feedOffset: 0, cue: "bridge", media: "Podcast/audio bridge"},
+  {at: 82, id: "video", label: "Video Bridge", stage: 1, feedOffset: 1, cue: "open", media: "Video/source media bridge"},
+  {at: 100, id: "next", label: "Next Model", stage: 0, feedOffset: 1, cue: "open", media: "Next GLB chapter"}
 ]
 const bridgeFlow = ["DigitalHut Presentation", "Mainstream Streaming", "Mobility", "Orbital Compute", "Gamer", "Planetary", "Programmer", "Workforce", "Researcher", "Science", "History", "Businesses", "Real Estate", "Continent", "Political"]
 const liveFeedStorageKey = "digitalhut:liveGlbFeed"
@@ -85,6 +95,45 @@ function stockUrl(category, index = 0){
   const pool = stockImages[category] || stockImages.Continent
   const id = pool[index % pool.length]
   return `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1200&q=82`
+}
+
+function timelineChapterFor(progress){
+  const value = Number(progress) || 0
+  return [...documentaryTimeline].reverse().find((chapter) => value >= chapter.at) || documentaryTimeline[0]
+}
+
+function documentaryTitle(category, tier = "guest"){
+  const titleMap = {
+    Gamer: "3D MMO RPG Gamer Presentation",
+    Planetary: "Exotic Environment Observatory Documentary",
+    "Orbital Compute": "Orbital Internet And Space Infrastructure Feature",
+    Researcher: "Researcher Evidence And Environment Presentation",
+    Science: "Science Field Study 3D Documentary",
+    Programmer: "Developer Renderer And API Systems Presentation",
+    "Real Estate": "Real Estate 3D Opportunity Walkthrough",
+    "Mainstream Streaming": "Mainstream 3D Culture Feed Episode",
+    Businesses: "Business District 3D Market Feature",
+    History: "Historical Environment 3D Documentary"
+  }
+  const base = titleMap[category] || `${category} DigitalHut Presentation`
+  return tier === "pro" ? `${base} - Pro Source Cut` : tier === "premium" ? `${base} - Premium Cut` : base
+}
+
+function chapterCaption({chapter, category, feed, tier, source}){
+  const title = feed?.title || "current 3D asset"
+  const provider = source || feed?.apiSource || feed?.apiStatus || "DigitalHut source stack"
+  const detail = tier === "pro"
+    ? "Pro view tracks source quality, download path, backlink value, and node progress."
+    : tier === "premium"
+      ? "Premium view compares category context, source confidence, and related node value."
+      : "Free view keeps the visual sequence open and easy to follow."
+  if(chapter.id === "opening") return `DigitalHut episode opens with an original intro sound and ${title} as the first rendered scene.`
+  if(chapter.id === "preview") return `GLB preview play: ${title} becomes the active renderer scene while the soundtrack and UI pulse confirm playback.`
+  if(chapter.id === "source") return `Source pull: ${provider}. The episode cross-references thumbnail, category, model source, and public feed context.`
+  if(chapter.id === "detail") return `Angle detail: checking camera movement, scale, surface, category fit, and presentation value. ${detail}`
+  if(chapter.id === "podcast") return `Podcast bridge: short clips, artwork, and sound effects add context while the GLB remains the main visual.`
+  if(chapter.id === "video") return `Video bridge: source video or external media supports the next scene instead of replacing the renderer.`
+  return `Next model: closing this chapter and moving the series toward another related GLB.`
 }
 
 function relatedGlb(category, index = 0){
@@ -863,6 +912,7 @@ async function resolveOptionContractFlow(symbol, contract){
 }
 
 function speak(text){
+  if(!PRESENTATION_NARRATOR_ENABLED) return
   if(typeof window === "undefined" || !("speechSynthesis" in window)) return
   window.speechSynthesis.cancel()
   const utter = new SpeechSynthesisUtterance(cleanSpeechText(text))
@@ -1709,6 +1759,7 @@ export default function FullscreenObservatoryV2(){
   const [presentationFileNote, setPresentationFileNote] = useState("")
   const [presentationEdits, setPresentationEdits] = useState([])
   const [presentationSpeed, setPresentationSpeed] = useState(1)
+  const [presentationProgress, setPresentationProgress] = useState(0)
   const [visualReadyKey, setVisualReadyKey] = useState("")
   const [directorStatus, setDirectorStatus] = useState({phase: "Finding model", detail: "Preparing DigitalHut renderer", status: "Idle"})
   const [directorChat, setDirectorChat] = useState(() => readDirectorChat())
@@ -1763,6 +1814,8 @@ export default function FullscreenObservatoryV2(){
   const aiRemainingMs = aiLimit === Infinity ? Infinity : Math.max(0, aiLimit - aiUsage.usedMs)
   const currentGuideLine = guideDepth > 0 ? extendedGuideLine({category, stage, feed: sceneFeed, tour: activeTour, depth: guideDepth - 1}) : guideLine({category, stage, feed: sceneFeed, tour: activeTour})
   const currentFollowUps = followUpNotes({category, stage, feed: sceneFeed, tour: activeTour})
+  const presentationChapter = timelineChapterFor(presentationProgress)
+  const presentationCaption = chapterCaption({chapter: presentationChapter, category, feed: sceneFeed, tier, source: sceneFeed.apiSource || sceneFeed.apiStatus})
   const aiDock = presentationFeatureOpen ? "notes" : notesOpen ? "notes" : aiOpen ? "command" : modelOpen ? `stage-${stage.kind}` : guided ? "guided" : "idle"
   const liveModelLink = sceneFeed.modelUrl || sceneFeed.viewerUrl || sceneFeed.embedUrl || window.location.href
   const sceneVisualKey = visualKeyFor(sceneFeed, stage)
@@ -1995,29 +2048,8 @@ export default function FullscreenObservatoryV2(){
 
   useEffect(() => {
     if(!autoPresent || runtimePaused) return
-    const limit = showcaseAuto ? Infinity : AI_TIER_LIMITS[tier] ?? AI_TIER_LIMITS.guest
-    if(limit !== Infinity && aiUsage.usedMs >= limit){
-      setAutoPresent(false)
-      setPlaying(false)
-      speak("AI presentation time is used for this 12 hour window. Upgrade tier or wait for the next window.")
-      return
-    }
     autoStartedRef.current = Date.now()
     const timer = window.setInterval(() => {
-      if(limit !== Infinity){
-        const usage = readAiUsage(tier)
-        const delta = Date.now() - (autoStartedRef.current || Date.now())
-        autoStartedRef.current = Date.now()
-        const nextUsage = {...usage, usedMs: usage.usedMs + delta}
-        writeAiUsage(tier, nextUsage)
-        setAiUsage(nextUsage)
-        if(nextUsage.usedMs >= limit){
-          setAutoPresent(false)
-          setPlaying(false)
-          speak("AI presentation limit reached for this 12 hour window.")
-          return
-        }
-      }
       setModelOpen(true)
       setPlaying(true)
       if(sceneVisualKey !== visualReadyKey){
@@ -2025,34 +2057,33 @@ export default function FullscreenObservatoryV2(){
         return
       }
       autoStepRef.current += 1
-      const nextStageIndex = (stageIndex + 1) % stages.length
-      const nextStage = stages[nextStageIndex]
-      const completedModelCycle = nextStageIndex === 0
-      if(demoMode === "all" && completedModelCycle && autoStepRef.current % (stages.length * 2) === 0){
+      const chapterIndex = documentaryTimeline.findIndex((item) => item.id === presentationChapter.id)
+      const nextChapter = documentaryTimeline[(chapterIndex + 1) % documentaryTimeline.length] || documentaryTimeline[0]
+      const completedModelCycle = nextChapter.id === "opening"
+      if(demoMode === "all" && completedModelCycle && autoStepRef.current % (documentaryTimeline.length * 2) === 0){
         playSessionSound(category, "bridge")
         recordDirectorMessage("ai", "Completed the current model cycle. Bridging to the next category with the renderer open.", "Auto bridge")
         bridgeNextCategory("I found a new trend bridge")
         return
       }
-      const nextActive = completedModelCycle ? (active + 1) % Math.max(feeds.length, 1) : active
+      const shouldShiftFeed = completedModelCycle || nextChapter.feedOffset > presentationChapter.feedOffset
+      const nextActive = shouldShiftFeed && feeds.length > 1 ? (active + 1) % feeds.length : active
       const nextFeed = feeds[nextActive] || sceneFeed
-      playSessionSound(category, nextStage.kind === "angle" ? "rotate" : "open")
+      const nextStageIndex = Math.min(nextChapter.stage, stages.length - 1)
+      const nextStage = stages[nextStageIndex]
+      playSessionSound(category, nextChapter.cue)
+      setPresentationProgress(nextChapter.at)
       setStageIndex(nextStageIndex)
-      if(completedModelCycle && feeds.length > 1) setActive(nextActive)
-      recordDirectorMessage("ai", completedModelCycle ? `Finished this model sequence. Opening ${nextFeed.title}.` : `Continuing ${sceneFeed.title}: ${nextStage.label}.`, "Auto progression")
-      speakAfterVisual(`${guideLine({category, stage: nextStage, feed: nextFeed, tour: activeTour, expanded: true})} ${feedbackPrompt({category, feed: nextFeed})}`, visualKeyFor(nextFeed, nextStage))
+      if(nextActive !== active) setActive(nextActive)
+      const caption = chapterCaption({chapter: nextChapter, category, feed: nextFeed, tier, source: nextFeed.apiSource || nextFeed.apiStatus})
+      setDirectorStatus({phase: nextChapter.label, detail: nextFeed.title, status: `${nextChapter.media}. ${caption}`})
+      recordDirectorMessage("ai", `${nextChapter.media}: ${caption}`, "Episode progression")
     }, autoDelay)
     return () => {
       window.clearInterval(timer)
-      if(limit !== Infinity && autoStartedRef.current){
-        const usage = readAiUsage(tier)
-        const nextUsage = {...usage, usedMs: usage.usedMs + (Date.now() - autoStartedRef.current)}
-        writeAiUsage(tier, nextUsage)
-        setAiUsage(nextUsage)
-      }
       autoStartedRef.current = null
     }
-  }, [autoPresent, runtimePaused, demoMode, tier, category, active, stageIndex, sceneFeed.id, sceneFeed.title, sceneVisualKey, visualReadyKey, feeds, autoDelay, showcaseAuto])
+  }, [autoPresent, runtimePaused, demoMode, tier, category, active, sceneFeed.id, sceneFeed.title, sceneVisualKey, visualReadyKey, feeds, autoDelay, presentationChapter.id, presentationChapter.feedOffset, activeTour])
 
   useEffect(() => {
     window.clearTimeout(presentationIdleTimer.current)
@@ -2401,6 +2432,13 @@ export default function FullscreenObservatoryV2(){
   }
 
   async function launchPresentationDemo({kind = "current", node = null} = {}){
+    if(node?.locked){
+      setEntryOpen(true)
+      setDirectorStatus({phase: "Node episode locked", detail: node.title, status: "Category episodes are free. Paid or earned Blink Nodes unlock specialized episodes."})
+      recordDirectorMessage("ai", `${node.title} is a paid or earned node episode. Category episodes remain free.`, "Node access")
+      playSessionSound(category, "stop")
+      return
+    }
     const targetCategory = node?.category || category
     const seed = seedFeeds(targetCategory)[0]
     const term = node ? nodeSearchTerm(node) : (sceneFeed.query || query || seed?.query || `${targetCategory} 3d environment`)
@@ -2414,6 +2452,7 @@ export default function FullscreenObservatoryV2(){
     setCategory(targetCategory)
     setTour(toursFor(targetCategory)[0].id)
     setStageIndex(0)
+    setPresentationProgress(0)
     setStatsFeeds([])
     setGuideDepth(0)
     setQuery(term)
@@ -2425,18 +2464,12 @@ export default function FullscreenObservatoryV2(){
     const fullWelcome = shouldUseFullDemoWelcome()
     const line = presentationIntro({kind, node, targetCategory, targetFeed: loaded, fullWelcome})
     recordDirectorMessage("ai", line, node ? `${node.title} Node` : "Auto Demo")
+    setDirectorStatus({phase: node ? `${node.title} episode` : "Category episode", detail: loaded.title, status: node ? "Paid node episode started. GLBs, podcast clips, video bridges, and sound effects will build the episode." : "Free category episode started. GLBs, podcast clips, video bridges, and sound effects will build the episode."})
     speakAfterVisual(line, visualKeyFor(loaded, stages[0]), 500)
     wake()
   }
 
   function startDemoMode(kind){
-    const limit = AI_TIER_LIMITS[tier] ?? AI_TIER_LIMITS.guest
-    const usage = readAiUsage(tier)
-    if(limit !== Infinity && usage.usedMs >= limit){
-      setAiUsage(usage)
-      speak("This tier has used its AI presentation time for the 12 hour window.")
-      return
-    }
     const isSameActive = autoPresent && demoMode === kind
     if(isSameActive){
       setAutoPresent(false)
@@ -2444,7 +2477,7 @@ export default function FullscreenObservatoryV2(){
       setDemoMode("")
       setPlaying(false)
       playSessionSound(category, "stop")
-      speak("Auto demo stopped.")
+      setDirectorStatus({phase: "Episode paused", detail: sceneFeed.title, status: "Category episodes are free to replay. Paid nodes unlock specialized episode lanes."})
       return
     }
     autoStepRef.current = 0
@@ -2454,7 +2487,7 @@ export default function FullscreenObservatoryV2(){
   async function openContainedModel(){
     announceOpen3dModel(sceneFeed)
     setModelOpen(true)
-    setDirectorStatus({phase: "Preparing preview", detail: sceneFeed.title, status: "Opening renderer and waiting 10 seconds before commentary."})
+    setDirectorStatus({phase: "Preparing preview", detail: sceneFeed.title, status: "Opening renderer, intro sound, and media timeline cue."})
     setInteractionPulse(true)
     window.clearTimeout(pulseTimer.current)
     pulseTimer.current = window.setTimeout(() => setInteractionPulse(false), 900)
@@ -2462,7 +2495,8 @@ export default function FullscreenObservatoryV2(){
     previewCommentaryTimer.current = window.setTimeout(() => {
       const angleStage = stages[1]
       setStageIndex(1)
-      setDirectorStatus({phase: "Angle pass", detail: sceneFeed.title, status: "Rotating camera and reading asset detail before continuing."})
+      setPresentationProgress(46)
+      setDirectorStatus({phase: "Angle pass", detail: sceneFeed.title, status: "Rotating camera and syncing this asset into the episode timeline."})
       const line = tierAssetDescription({feed: sceneFeed, category, stage: angleStage, tier})
       recordDirectorMessage("ai", line, "Preview angle pass")
       speakAfterVisual(line, visualKeyFor(sceneFeed, angleStage), 250)
@@ -2476,13 +2510,13 @@ export default function FullscreenObservatoryV2(){
     }, PREVIEW_COMMENTARY_MS)
     wake()
     if(sceneFeed.embedUrl || sceneFeed.modelUrl || loading){
-      recordDirectorMessage("ai", `Preview opened for ${sceneFeed.title}. I am waiting briefly so the visual can load before I explain it.`, "Play Preview")
+      recordDirectorMessage("ai", `Preview opened for ${sceneFeed.title}. DigitalHut is waiting for the visual cue before moving to angle detail, podcast bridge, or next model.`, "Play Preview")
       return
     }
     const next = await loadFeeds(category, sceneFeed.query || query, {silent: true, keepOpen: true})
     const loaded = next[0] || sceneFeed
     setModelOpen(true)
-    recordDirectorMessage("ai", `Preview opened for ${loaded.title}. I am waiting briefly so the visual can load before I explain it.`, "Play Preview")
+    recordDirectorMessage("ai", `Preview opened for ${loaded.title}. DigitalHut is waiting for the visual cue before moving to angle detail, podcast bridge, or next model.`, "Play Preview")
   }
 
   async function refreshLiveRenderer(){
@@ -2662,9 +2696,11 @@ export default function FullscreenObservatoryV2(){
 
   function nextStage(){
     playSessionSound(category, "rotate")
-    setStageIndex((current) => (current + 1) % stages.length)
+    const nextIndex = (stageIndex + 1) % stages.length
+    setStageIndex(nextIndex)
+    setPresentationProgress((current) => Math.min(100, current + 16))
     setGuideDepth(0)
-    const next = stages[(stageIndex + 1) % stages.length]
+    const next = stages[nextIndex]
     speakAfterVisual(`${guideLine({category, stage: next, feed: sceneFeed, tour: activeTour})} ${feedbackPrompt({category, feed: sceneFeed})}`, visualKeyFor(sceneFeed, next), Math.round(1400 / presentationSpeed))
     wake()
   }
@@ -2674,6 +2710,7 @@ export default function FullscreenObservatoryV2(){
     const nextItem = feeds[(active - 1 + feeds.length) % feeds.length] || sceneFeed
     setActive((value) => (value - 1 + feeds.length) % feeds.length)
     setStageIndex(0)
+    setPresentationProgress(0)
     setModelOpen(true)
     setGuideDepth(0)
     speakAfterVisual(`Moving back to ${nextItem.title}. The renderer stays live while the asset changes.`, visualKeyFor(nextItem, stages[0]))
@@ -2685,20 +2722,50 @@ export default function FullscreenObservatoryV2(){
     const nextItem = feeds[(active + 1) % feeds.length] || sceneFeed
     setActive((value) => (value + 1) % feeds.length)
     setStageIndex(0)
+    setPresentationProgress(0)
     setModelOpen(true)
     setGuideDepth(0)
     speakAfterVisual(`Opening ${nextItem.title}. The renderer stays live while the asset changes.`, visualKeyFor(nextItem, stages[0]))
     wake()
   }
 
-  function toggleAutoPresent(){
-    const limit = AI_TIER_LIMITS[tier] ?? AI_TIER_LIMITS.guest
-    const usage = readAiUsage(tier)
-    if(limit !== Infinity && usage.usedMs >= limit){
-      setAiUsage(usage)
-      speak("This tier has used its AI presentation time for the 12 hour window.")
+  function scrubPresentation(value){
+    const progress = Math.max(0, Math.min(100, Number(value) || 0))
+    const chapter = timelineChapterFor(progress)
+    const targetStage = Math.min(chapter.stage, stages.length - 1)
+    const targetFeedIndex = feeds.length > 1 && chapter.feedOffset ? (active + chapter.feedOffset) % feeds.length : active
+    const targetFeed = feeds[targetFeedIndex] || sceneFeed
+    setPresentationProgress(progress)
+    setStageIndex(targetStage)
+    if(targetFeedIndex !== active) setActive(targetFeedIndex)
+    setModelOpen(true)
+    setPlaying(true)
+    setGuideDepth(0)
+    playSessionSound(category, chapter.cue)
+    const caption = chapterCaption({chapter, category, feed: targetFeed, tier, source: targetFeed.apiSource || targetFeed.apiStatus})
+    setDirectorStatus({phase: chapter.label, detail: targetFeed.title, status: caption})
+    recordDirectorMessage("ai", caption, "Timeline presentation")
+    wake()
+  }
+
+  function skipPresentation(delta){
+    scrubPresentation(presentationProgress + delta)
+  }
+
+  function toggleMoviePlayback(){
+    if(autoPresent){
+      setAutoPresent(false)
+      setShowcaseAuto(false)
+      setDemoMode("")
+      setPlaying(false)
+      playSessionSound(category, "stop")
+      setDirectorStatus({phase: "Episode paused", detail: sceneFeed.title, status: "Timeline paused. Scrub, skip, or press play to continue the media sequence."})
       return
     }
+    startDemoMode("current")
+  }
+
+  function toggleAutoPresent(){
     const next = !autoPresent
     setShowcaseAuto(false)
     setAutoPresent(next)
@@ -2708,7 +2775,7 @@ export default function FullscreenObservatoryV2(){
     setModelOpen(next || modelOpen)
     if(next) autoStepRef.current = 0
     playSessionSound(category, next ? "open" : "stop")
-    speak(next ? "Auto presentation is on. I will keep presenting, ask for feedback, and bridge into related categories until you tell me to stop." : "Auto presentation stopped.")
+    setDirectorStatus({phase: next ? "Episode autoplay" : "Episode paused", detail: sceneFeed.title, status: next ? "Category episode is free. The timeline will rotate GLBs, media bridges, podcast clips, and sound effects." : "Episode stopped."})
   }
 
   function playMore(){
@@ -3410,14 +3477,28 @@ export default function FullscreenObservatoryV2(){
         <div className="dh-state-badges"><span>{category}</span><span>{mode}</span><span>{sceneFeed.apiStatus || "api"}</span><span>{activeTour.icon}</span></div>
       </div>
 
-      <div className="dh-media" style={{opacity: awake ? 1 : 0.12}}>
-        <button className={`dh-btn ${demoMode === "all" ? "active" : ""}`} onClick={() => startDemoMode("all")}>{demoMode === "all" ? "Stop All Demo" : "All Category Demo"}</button>
-        <button className={`dh-btn ${demoMode === "current" ? "active" : ""}`} onClick={() => startDemoMode("current")}>{demoMode === "current" ? "Stop Current Demo" : "Current Category Demo"}</button>
-        <button className="dh-btn" onClick={previousFeed}>Back Model</button>
-        <button className="dh-btn" onClick={nextFeed}>Next Model</button>
-        <button className="dh-btn" onClick={nextStage}>Rotate</button>
-        <label className="dh-speed-control"><span>Speed</span><select value={presentationSpeed} onChange={(event) => setPresentationSpeed(Number(event.target.value))}><option value="0.75">Slow</option><option value="1">Normal</option><option value="1.35">Fast</option><option value="1.75">Sprint</option></select></label>
-        <button className="dh-btn" onClick={() => speak(tier === "pro" ? "Pro research, backend control, and long history are unlimited." : "Free AutoPlay viewing is unlimited. Higher tiers expand saved history, backend controls, node power, and deep research.")}>{tier === "pro" ? "Pro Unlimited" : "Free AutoPlay"}</button>
+      <div className="dh-media dh-movie-controls" style={{opacity: awake ? 1 : 0.12}}>
+        <div className="dh-movie-head">
+          <span>{documentaryTitle(category, tier)}</span>
+          <b>{presentationChapter.label}</b>
+        </div>
+        <div className="dh-movie-buttons">
+          <button className="dh-btn" onClick={previousFeed}>Previous GLB</button>
+          <button className={`dh-btn ${autoPresent ? "active" : ""}`} onClick={toggleMoviePlayback}>{autoPresent ? "Pause Episode" : "Play Episode"}</button>
+          <button className="dh-btn" onClick={nextFeed}>Next GLB</button>
+          <button className="dh-btn" onClick={() => skipPresentation(-16)}>Back 15s</button>
+          <button className="dh-btn" onClick={() => skipPresentation(18)}>Skip 15s</button>
+          <button className="dh-btn" onClick={() => scrubPresentation(64)}>Podcast Clip</button>
+          <button className={`dh-btn ${demoMode === "all" ? "active" : ""}`} onClick={() => startDemoMode("all")}>Shuffle Series</button>
+        </div>
+        <label className="dh-movie-slider" aria-label="DigitalHut episode timeline">
+          <input type="range" min="0" max="100" step="1" value={presentationProgress} onChange={(event) => scrubPresentation(event.target.value)} />
+          <span>{Math.round(presentationProgress)}%</span>
+        </label>
+        <div className="dh-movie-ticks">
+          {documentaryTimeline.map((item) => <button key={item.id} type="button" className={presentationChapter.id === item.id ? "active" : ""} onClick={() => scrubPresentation(item.at)}>{item.label}</button>)}
+        </div>
+        <p className="dh-movie-caption">{presentationChapter.media}: {presentationCaption}</p>
       </div>
 
       <div className="dh-utility" style={{opacity: awake ? 1 : 0.1}}>{["Save", "Share", "Live", "Embed", "Download", "Related", "Refresh", "FAQ"].map((label) => <button key={label} className="dh-btn" onClick={() => action(label)}>{label}</button>)}</div>

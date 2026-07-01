@@ -2,6 +2,9 @@ node_modules/
 dist/
 .git/
 .env*
+release/
+electron/
+electron-builder.json
 
 # Local FireCuda staging files. These are intentionally not committed and should
 # not be uploaded by direct Vercel CLI deploys.
