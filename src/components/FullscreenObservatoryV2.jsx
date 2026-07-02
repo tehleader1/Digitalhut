@@ -147,10 +147,62 @@ function episodeVideoQuery({category, feed, query}){
   return [category, feed?.title, feed?.query || query, "real world interview documentary clip"].filter(Boolean).join(" ").slice(0, 220)
 }
 
+function episodeCutScene({category, chapter, progress}){
+  if(category === "Planetary" && progress >= 44 && progress < 72){
+    return {
+      label: "Planetary Exotic Mid Cut Scene",
+      detail: "DigitalHut pauses the evidence feed to connect the moon mission, exotic environments, guest context, and the next GLB scene.",
+      conclusion: "Question: if humans colonize the moon, what environment becomes the next real observatory?"
+    }
+  }
+  if(chapter?.id === "podcast"){
+    return {
+      label: "Guest Speaker Break",
+      detail: "Speaker context explains why this scene matters before the episode returns to video evidence.",
+      conclusion: "Listen for the claim, then compare it against the rendered environment."
+    }
+  }
+  if(chapter?.id === "detail"){
+    return {
+      label: "GLB Scene Reveal",
+      detail: "The 3D renderer becomes the evidence table: scale, surface, atmosphere, and object placement are inspected.",
+      conclusion: "The model is not decoration; it is the visual argument."
+    }
+  }
+  if(progress >= 88){
+    return {
+      label: "DigitalHut Conclusion Cut",
+      detail: "The episode closes by tying video evidence, speaker context, and the GLB preview into one next-step question.",
+      conclusion: "Conclusion: keep the renderer open, compare the source, and move to the next environment."
+    }
+  }
+  return {
+    label: "DigitalHut Presents",
+    detail: "DigitalHut cutscene keeps the episode organized between video, speaker, and 3D renderer moments.",
+    conclusion: "The next cut should add meaning, not just switch media."
+  }
+}
+
 const youtubeEmbedParams = "autoplay=0&rel=0&playsinline=1&modestbranding=1&controls=0&enablejsapi=1&iv_load_policy=3&disablekb=1"
+const EPISODE_TARGET_SECONDS = 240
+const EPISODE_PROGRESS_PER_SECOND = 100 / EPISODE_TARGET_SECONDS
 
 function youtubeEmbedUrl(id){
   return `https://www.youtube-nocookie.com/embed/${id}?${youtubeEmbedParams}`
+}
+
+function insightSourceFor(category){
+  const normalized = String(category || "").toLowerCase()
+  if(normalized.includes("planetary") || normalized.includes("orbital") || normalized.includes("science")){
+    return {label: "NASA insight", url: "https://www.nasa.gov/", topic: "space environment context"}
+  }
+  if(normalized.includes("real estate")){
+    return {label: "HUD insight", url: "https://www.hud.gov/", topic: "property and housing context"}
+  }
+  if(normalized.includes("mobility")){
+    return {label: "FAA insight", url: "https://www.faa.gov/", topic: "mobility and aerospace context"}
+  }
+  return {label: "DigitalHut source", url: "https://digitalhut.ai/", topic: "episode context"}
 }
 
 function controlledEpisodeVideoUrl(url, autoplay = false){
@@ -1860,8 +1912,14 @@ export default function FullscreenObservatoryV2(){
   const [glbMaximized, setGlbMaximized] = useState(false)
   const [episodeVideos, setEpisodeVideos] = useState([])
   const [episodeVideoStatus, setEpisodeVideoStatus] = useState("idle")
+  const [videoMirrorQuery, setVideoMirrorQuery] = useState("")
+  const [videoMirrorResults, setVideoMirrorResults] = useState([])
+  const [videoMirrorStatus, setVideoMirrorStatus] = useState("idle")
+  const [videoMirrorOpen, setVideoMirrorOpen] = useState(false)
   const [episodeVideoPlaying, setEpisodeVideoPlaying] = useState(false)
   const [episodeIntroActive, setEpisodeIntroActive] = useState(false)
+  const [episodeMetricPulse, setEpisodeMetricPulse] = useState(0)
+  const [youtubeBreakSignal, setYoutubeBreakSignal] = useState(false)
   const [visualReadyKey, setVisualReadyKey] = useState("")
   const [directorStatus, setDirectorStatus] = useState({phase: "Finding model", detail: "Preparing DigitalHut renderer", status: "Idle"})
   const [directorChat, setDirectorChat] = useState(() => readDirectorChat())
@@ -1898,6 +1956,8 @@ export default function FullscreenObservatoryV2(){
   const presentationIdleTimer = useRef(null)
   const previewCommentaryTimer = useRef(null)
   const youtubeFrameRef = useRef(null)
+  const youtubeClockRef = useRef({time: 0, wall: 0, state: null, stallStartedAt: 0, breakStartedAt: 0})
+  const youtubeBreakTimer = useRef(null)
   const episodeIntroTimer = useRef(null)
   const preMechanicCategoryRef = useRef("Mainstream Streaming")
   const mechanicMotionFrameRef = useRef(null)
@@ -1975,9 +2035,74 @@ export default function FullscreenObservatoryV2(){
   const videoFeedActive = episodeModeActive && episodeMedia === "video"
   const episodeAccessLabel = episodeState.mode === "node" ? "Paid node episode" : "Free category episode"
   const activeEpisodeVideo = episodeVideos[0] || fallbackEpisodeVideo(category, sceneFeed)
-  const episodeVideoEmbedUrl = controlledEpisodeVideoUrl(activeEpisodeVideo?.embedUrl || "", episodeVideoPlaying || episodeIntroActive)
+  const episodeVideoKey = activeEpisodeVideo?.id || activeEpisodeVideo?.embedUrl || ""
+  const episodeVideoEmbedUrl = controlledEpisodeVideoUrl(activeEpisodeVideo?.embedUrl || "")
   const episodePresentationLive = episodeModeActive && (episodeIntroActive || episodeVideoPlaying || autoPresent)
   const episodePlaybackLabel = episodeIntroActive ? "Intro" : episodeVideoPlaying ? "Video live" : autoPresent ? "Auto play" : "Ready"
+  const activeCutScene = episodeCutScene({category, chapter: presentationChapter, progress: presentationProgress})
+  const progressPercent = Math.round(presentationProgress)
+  const firstBreakResetActive = episodeVideoPlaying && youtubeBreakSignal
+  const finalConclusionActive = episodeVideoPlaying && presentationProgress >= 88
+  const cutsceneWindowActive = episodeIntroActive || (episodeVideoPlaying && (
+    firstBreakResetActive ||
+    (category === "Planetary" && presentationProgress >= 44 && presentationProgress < 49) ||
+    (presentationChapter.id === "podcast" && presentationProgress < 68) ||
+    (presentationChapter.id === "detail" && presentationProgress < 50) ||
+    (finalConclusionActive && presentationProgress < 93)
+  ))
+  const analyticsPhase = episodeIntroActive
+    ? "intro"
+    : firstBreakResetActive
+      ? "first-break-reset"
+      : finalConclusionActive
+        ? "conclusion"
+        : cutsceneWindowActive
+          ? "cutscene-reload"
+          : episodeVideoPlaying
+            ? "live-acquisition"
+            : "standby"
+  const glbProviderLabel = sceneFeed.embedUrl ? "Play Sketchfab" : sceneFeed.modelUrl ? "Play GLB" : sceneFeed.viewerUrl ? "Open Provider" : "Find GLB"
+  const glbProviderStatus = sceneFeed.embedUrl ? "Provider embed ready" : sceneFeed.modelUrl ? "Direct GLB ready" : sceneFeed.viewerUrl ? "Provider preview ready" : "Searching source"
+  const liveMetricSeed = (episodeMetricPulse + progressPercent + active) % 100
+  const livePageViews = 1180 + (active * 137) + progressPercent * 9 + (episodeMetricPulse % 17)
+  const insightSource = insightSourceFor(category)
+  const currentMeaningCapture = cutsceneWindowActive
+    ? activeCutScene.conclusion
+    : episodeVideoPlaying
+      ? `${activeEpisodeVideo?.title || documentaryTitle(category, tier)} is being mapped to ${sceneFeed.title}, ${presentationChapter.label}, and ${insightSource.topic}.`
+      : `Ready to capture meaning from ${documentaryTitle(category, tier)}.`
+  const liveFeedTracker = {
+    views: livePageViews,
+    phase: analyticsPhase,
+    phaseLabel: analyticsPhase === "first-break-reset" ? "First break reset" : analyticsPhase === "conclusion" ? "Conclusion pass" : analyticsPhase === "cutscene-reload" ? "Cutscene reload" : analyticsPhase === "live-acquisition" ? "Live acquisition" : analyticsPhase === "intro" ? "Intro sync" : "Standby",
+    glb: modelOpen ? `${glbProviderStatus}; ${sceneFeed.title} moving in renderer lane` : `${glbProviderStatus}; preview waiting`,
+    podcast: presentationChapter.id === "podcast" ? "Interesting moment capture active" : episodeVideoPlaying ? "Listening for serious moment cue" : "Capture armed",
+    meaning: currentMeaningCapture,
+    source: insightSource,
+    project: `${category} project lab`,
+    viewerInsight: firstBreakResetActive
+      ? `Detected break reset: DigitalHut clears the live counters, keeps the video source running, and reloads the project evidence lanes.`
+      : finalConclusionActive
+        ? `Conclusion pass: DigitalHut compresses the video, source, GLB, and captured human moment into the next project move.`
+        : cutsceneWindowActive
+      ? `Use this cut to decide what the project should prove next: ${activeCutScene.conclusion}`
+      : episodeVideoPlaying
+        ? `This feed is building a usable ${category} research packet: source video, renderer evidence, and the next question to investigate.`
+        : `Start the episode and DigitalHut will turn the feed into a project lab instead of a passive video.`
+  }
+  const aiVisualDescription = episodeIntroActive
+    ? `${activeCutScene.label}: system frozen while DigitalHut reloads the next evidence beat.`
+    : cutsceneWindowActive
+      ? `${activeCutScene.label}: video is held on the cut screen while analytics reload the next speaker, GLB, and evidence lane.`
+    : episodeVideoPlaying
+      ? `AI track ${progressPercent}%: video source, ${sceneFeed.title} GLB lane, speaker cue, and analytics are moving as one presentation.`
+      : "Ready: press play to connect video, speaker context, GLB preview, and cutscene analytics."
+  const liveMetrics = {
+    video: cutsceneWindowActive ? "Held cut" : episodeVideoPlaying ? `${progressPercent}% track` : "Ready",
+    speaker: presentationChapter.id === "podcast" ? "On mic" : episodeVideoPlaying ? `Cue ${liveMetricSeed % 10}` : "Standby",
+    glb: modelOpen ? `${glbMaximized ? "Expanded" : "Docked"} / ${42 + (liveMetricSeed % 48)} motion` : glbProviderStatus,
+    analytics: firstBreakResetActive ? "Resetting" : finalConclusionActive ? "Concluding" : cutsceneWindowActive ? "Reloading" : episodeVideoPlaying ? `${52 + (liveMetricSeed % 39)} live` : "Idle"
+  }
 
   useEffect(() => {
     if(typeof window === "undefined") return undefined
@@ -1996,7 +2121,75 @@ export default function FullscreenObservatoryV2(){
     setEpisodeVideoPlaying(false)
     setEpisodeIntroActive(false)
     if(episodeIntroTimer.current) window.clearTimeout(episodeIntroTimer.current)
-  }, [episodeVideoEmbedUrl, presentationChapter.id])
+  }, [episodeVideoKey])
+
+  useEffect(() => {
+    if(!episodeVideoPlaying || episodeIntroActive) return undefined
+    const timer = window.setInterval(() => {
+      setEpisodeMetricPulse((value) => (value + 1) % 400)
+      setPresentationProgress((current) => current >= 100 ? 0 : Math.min(100, current + (EPISODE_PROGRESS_PER_SECOND / 4)))
+    }, 250)
+    return () => window.clearInterval(timer)
+  }, [episodeVideoPlaying, episodeIntroActive])
+
+  useEffect(() => {
+    if(typeof window === "undefined") return undefined
+    function parseYoutubeData(data){
+      if(!data) return null
+      if(typeof data === "string"){
+        try{
+          return JSON.parse(data)
+        }catch{
+          return null
+        }
+      }
+      return typeof data === "object" ? data : null
+    }
+    function triggerBreakSignal(){
+      if(presentationProgress < 8 || youtubeClockRef.current.breakStartedAt) return
+      youtubeClockRef.current.breakStartedAt = Date.now()
+      setYoutubeBreakSignal(true)
+      setEpisodeMetricPulse(0)
+      setDirectorStatus({phase: "Detected break reset", detail: activeEpisodeVideo?.title || "YouTube source", status: "Video clock paused or buffered; analytics are reloading the project lab."})
+      window.clearTimeout(youtubeBreakTimer.current)
+      youtubeBreakTimer.current = window.setTimeout(() => {
+        youtubeClockRef.current.breakStartedAt = 0
+        setYoutubeBreakSignal(false)
+      }, 9000)
+    }
+    function onYoutubeMessage(event){
+      const origin = String(event.origin || "")
+      if(!origin.includes("youtube.com")) return
+      const payload = parseYoutubeData(event.data)
+      const info = payload?.info || payload?.data?.info
+      if(!info) return
+      const now = Date.now()
+      const state = typeof info.playerState === "number" ? info.playerState : youtubeClockRef.current.state
+      const currentTime = typeof info.currentTime === "number" ? info.currentTime : youtubeClockRef.current.time
+      const previous = youtubeClockRef.current
+      const timeMoved = Math.abs(currentTime - previous.time) > 0.15
+      const stallStartedAt = episodeVideoPlaying && !episodeIntroActive && state === 1 && !timeMoved ? (previous.stallStartedAt || now) : 0
+      const stalledFor = stallStartedAt ? now - stallStartedAt : 0
+      if(episodeVideoPlaying && !episodeIntroActive && presentationProgress > 8 && (state === 3 || stalledFor > 4200)){
+        triggerBreakSignal()
+      }
+      youtubeClockRef.current = {...previous, time: currentTime, wall: now, state, stallStartedAt}
+    }
+    window.addEventListener("message", onYoutubeMessage)
+    return () => {
+      window.removeEventListener("message", onYoutubeMessage)
+      window.clearTimeout(youtubeBreakTimer.current)
+    }
+  }, [episodeVideoPlaying, episodeIntroActive, presentationProgress, activeEpisodeVideo?.title])
+
+  useEffect(() => {
+    if(!episodeVideoPlaying || episodeIntroActive) return undefined
+    const timer = window.setInterval(() => {
+      postYoutubeCommand("getCurrentTime")
+      postYoutubeCommand("getPlayerState")
+    }, 1500)
+    return () => window.clearInterval(timer)
+  }, [episodeVideoPlaying, episodeIntroActive])
 
   useEffect(() => {
     if(typeof window === "undefined") return undefined
@@ -2019,6 +2212,43 @@ export default function FullscreenObservatoryV2(){
       })
     return () => controller.abort()
   }, [episodeModeActive, category, sceneFeed.id, sceneFeed.title, sceneFeed.query, query])
+
+  async function searchVideoMirror(event){
+    event?.preventDefault?.()
+    const term = (videoMirrorQuery || episodeVideoQuery({category, feed: sceneFeed, query})).trim()
+    if(!term) return
+    setVideoMirrorOpen(true)
+    setVideoMirrorStatus("searching")
+    try {
+      const response = await fetch(`/api/video-search?query=${encodeURIComponent(term)}`)
+      const payload = await response.json()
+      const videos = Array.isArray(payload?.videos) ? payload.videos : []
+      setVideoMirrorResults(videos)
+      setVideoMirrorStatus(videos.length ? "ready" : payload?.configured === false ? "not-configured" : "empty")
+      if(payload?.configured === false){
+        setDirectorStatus({phase: "Video mirror needs API key", detail: "YOUTUBE_API_KEY", status: "Add the key to return official embeddable YouTube results."})
+      }
+    } catch (error) {
+      setVideoMirrorStatus("empty")
+      setDirectorStatus({phase: "Video mirror unavailable", detail: term, status: error?.message || "YouTube search failed"})
+    }
+  }
+
+  function mirrorEpisodeVideo(video){
+    if(!video?.embedUrl) return
+    postYoutubeCommand("pauseVideo")
+    setEpisodeVideoPlaying(false)
+    setEpisodeIntroActive(false)
+    setYoutubeBreakSignal(false)
+    setEpisodeMetricPulse(0)
+    setPresentationProgress(0)
+    setEpisodeVideos([video, ...videoMirrorResults.filter((item) => item.id !== video.id)])
+    setEpisodeVideoStatus("ready")
+    setVideoMirrorOpen(true)
+    setDirectorStatus({phase: "Video mirror locked", detail: video.title, status: "DigitalHut is mirroring this YouTube source through the episode player, GLB lane, podcast capture, and backend observatory lab."})
+    recordDirectorMessage("ai", `Video mirror locked: ${video.title}. I am routing it into the DigitalHut episode system so the GLB, podcast capture, and project lab track the source together.`, "Video mirror")
+    wake()
+  }
 
   useEffect(() => {
     if(typeof window === "undefined") return undefined
@@ -2675,7 +2905,9 @@ export default function FullscreenObservatoryV2(){
   async function openContainedModel(){
     announceOpen3dModel(sceneFeed)
     setModelOpen(true)
-    setDirectorStatus({phase: "Preparing preview", detail: sceneFeed.title, status: "Opening renderer, intro sound, and media timeline cue."})
+    setPresentationProgress(14)
+    setStageIndex(0)
+    setDirectorStatus({phase: glbProviderLabel, detail: sceneFeed.title, status: `${glbProviderStatus}. Opening renderer, intro sound, and media timeline cue.`})
     setInteractionPulse(true)
     window.clearTimeout(pulseTimer.current)
     pulseTimer.current = window.setTimeout(() => setInteractionPulse(false), 900)
@@ -2698,13 +2930,13 @@ export default function FullscreenObservatoryV2(){
     }, PREVIEW_COMMENTARY_MS)
     wake()
     if(sceneFeed.embedUrl || sceneFeed.modelUrl || loading){
-      recordDirectorMessage("ai", `Preview opened for ${sceneFeed.title}. DigitalHut is waiting for the visual cue before moving to angle detail, podcast bridge, or next model.`, "Play Preview")
+      recordDirectorMessage("ai", `${glbProviderLabel} opened for ${sceneFeed.title}. DigitalHut is syncing the provider preview into the master cut before moving to angle detail, podcast bridge, or next model.`, "Play Preview")
       return
     }
     const next = await loadFeeds(category, sceneFeed.query || query, {silent: true, keepOpen: true})
     const loaded = next[0] || sceneFeed
     setModelOpen(true)
-    recordDirectorMessage("ai", `Preview opened for ${loaded.title}. DigitalHut is waiting for the visual cue before moving to angle detail, podcast bridge, or next model.`, "Play Preview")
+    recordDirectorMessage("ai", `${glbProviderLabel} opened for ${loaded.title}. DigitalHut is syncing the provider preview into the master cut before moving to angle detail, podcast bridge, or next model.`, "Play Preview")
   }
 
   async function refreshLiveRenderer(){
@@ -2968,6 +3200,39 @@ export default function FullscreenObservatoryV2(){
     setDirectorStatus({phase: "Episode video paused", detail: sceneFeed.title, status: "Video feed paused behind the DigitalHut pause screen. Press Resume Episode to continue the selected source."})
   }
 
+  function playDigitalHutIntroSound(){
+    try {
+      const ctx = audioContext()
+      if(!ctx) return
+      const now = ctx.currentTime
+      const master = ctx.createGain()
+      master.gain.setValueAtTime(.0001, now)
+      master.gain.exponentialRampToValueAtTime(.16, now + .06)
+      master.gain.exponentialRampToValueAtTime(.0001, now + 2.25)
+      master.connect(ctx.destination)
+      const tones = [
+        {frequency: 110, start: 0, stop: 1.8, type: "sawtooth"},
+        {frequency: 220, start: .18, stop: 1.55, type: "triangle"},
+        {frequency: 440, start: .92, stop: 2.15, type: "sine"}
+      ]
+      tones.forEach((tone) => {
+        const osc = ctx.createOscillator()
+        const gain = ctx.createGain()
+        osc.type = tone.type
+        osc.frequency.setValueAtTime(tone.frequency, now + tone.start)
+        gain.gain.setValueAtTime(.0001, now + tone.start)
+        gain.gain.exponentialRampToValueAtTime(.32, now + tone.start + .08)
+        gain.gain.exponentialRampToValueAtTime(.0001, now + tone.stop)
+        osc.connect(gain)
+        gain.connect(master)
+        osc.start(now + tone.start)
+        osc.stop(now + tone.stop + .05)
+      })
+    } catch {
+      // Browser audio policies can block synthetic intro sound until the first trusted click.
+    }
+  }
+
   function playEpisodeVideo(){
     if(!episodeVideoEmbedUrl) return
     if(episodeIntroTimer.current) window.clearTimeout(episodeIntroTimer.current)
@@ -2979,15 +3244,17 @@ export default function FullscreenObservatoryV2(){
     setEpisodeVideoPlaying(true)
     setEpisodeIntroActive(true)
     playSessionSound(category, "open")
+    playDigitalHutIntroSound()
     postYoutubeCommand("playVideo")
     window.setTimeout(() => postYoutubeCommand("playVideo"), 300)
     window.setTimeout(() => postYoutubeCommand("playVideo"), 1200)
-    setDirectorStatus({phase: "DigitalHut Presents", detail: activeEpisodeVideo?.title || sceneFeed.title, status: "Cinematic intro is playing before the selected video source starts."})
+    setEpisodeMetricPulse(0)
+    setDirectorStatus({phase: "DigitalHut Presents", detail: activeEpisodeVideo?.title || sceneFeed.title, status: "DigitalHut bumper is opening the episode while the video, speaker lane, and GLB analytics lock into the same presentation track."})
     episodeIntroTimer.current = window.setTimeout(() => {
       setEpisodeIntroActive(false)
       postYoutubeCommand("playVideo")
       setDirectorStatus({phase: "Episode video playing", detail: activeEpisodeVideo?.title || sceneFeed.title, status: "DigitalHut controls are driving the embedded video while the GLB renderer stays docked."})
-    }, 1250)
+    }, 2600)
   }
 
   function focusDockedGlb(){
@@ -3536,9 +3803,9 @@ export default function FullscreenObservatoryV2(){
         <img src={sceneFeed.thumbnail || stockUrl(category, active)} alt="" loading="lazy" />
         <div className="dh-episode-screen-shade" />
         <div className="dh-presentation-chrome" aria-label="DigitalHut presentation status">
-          <span>DigitalHut Presents</span>
+          <span>{activeCutScene.label}</span>
           <b>{episodePlaybackLabel}</b>
-          <small>{episodeIntroActive ? "Cinematic sound intro" : episodeVideoPlaying ? "Video / narration / GLB package" : "Press play for full presentation"}</small>
+          <small>{episodeIntroActive ? "Cinematic sound intro" : activeCutScene.conclusion}</small>
         </div>
         {episodeMedia === "podcast" ? <div className="dh-speaker-visual" aria-label="Human voice podcast clip visual">
           <span /><span /><span />
@@ -3547,10 +3814,11 @@ export default function FullscreenObservatoryV2(){
         </div> : <div className={`dh-video-frame ${episodeVideoEmbedUrl && episodeMedia === "video" ? "has-embed" : ""}`} aria-label="Human video clip visual">
           {episodeVideoEmbedUrl && episodeMedia === "video" ? <>
             <iframe ref={youtubeFrameRef} src={episodeVideoEmbedUrl} title={activeEpisodeVideo.title || "DigitalHut episode video"} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
-            {(!episodeVideoPlaying || episodeIntroActive) && <button className={`dh-video-pause-cover ${episodeIntroActive ? "intro" : ""}`} type="button" onClick={toggleMoviePlayback}>
-              <span>{episodeIntroActive ? "DigitalHut Presents" : "DigitalHut Episode Paused"}</span>
-              <b>{episodeIntroActive ? documentaryTitle(category, tier) : activeEpisodeVideo.title || presentationChapter.label}</b>
-              <small>{episodeIntroActive ? "Cinematic intro / sound effects" : "Resume Episode"}</small>
+            {(!episodeVideoPlaying || cutsceneWindowActive) && <button className={`dh-video-pause-cover ${cutsceneWindowActive ? "intro" : ""}`} type="button" onClick={toggleMoviePlayback}>
+              <span>{cutsceneWindowActive ? "DigitalHut Cutscene" : "DigitalHut Hold"}</span>
+              <b>{cutsceneWindowActive ? activeCutScene.label : "Paused"}</b>
+              <small>{cutsceneWindowActive ? "Analytics reload / speaker cue / GLB sync" : "Press DigitalHut play to resume the full track."}</small>
+              {cutsceneWindowActive && <em className="dh-case-cut-ticker"><i />{progressPercent}% master cut</em>}
             </button>}
           </> : <>
           <span>{episodeVideoStatus === "loading" ? "Loading Video Source" : episodeMedia === "video" ? "Real World Video" : "3D Story Beat"}</span>
@@ -3573,6 +3841,10 @@ export default function FullscreenObservatoryV2(){
         <button className="dh-glb-touch-demo" type="button" onClick={focusDockedGlb}>
           <span>{glbMaximized ? "Dock GLB" : "Touch GLB"}</span>
           <b>{glbMaximized ? "Return preview" : "Tap loaded model"}</b>
+        </button>
+        <button className="dh-glb-preview-action" type="button" onClick={openContainedModel}>
+          <span>3D Scene</span>
+          <b>{glbProviderLabel}</b>
         </button>
         <button className="dh-glb-maximize" type="button" onClick={focusDockedGlb}>{glbMaximized ? "Dock GLB" : "Maximize GLB"}</button>
       </section>}
@@ -3786,6 +4058,69 @@ export default function FullscreenObservatoryV2(){
           <span>{documentaryTitle(category, tier)}</span>
           <b>{episodePlaybackLabel} / {presentationChapter.label}</b>
         </div>
+        <label className="dh-movie-slider dh-master-cut-slider" aria-label="DigitalHut master presentation cut slider">
+          <b>Master Cut Slider</b>
+          <input type="range" min="0" max="100" step="1" value={presentationProgress} onChange={(event) => scrubPresentation(event.target.value)} />
+          <span>{Math.round(presentationProgress)}%</span>
+        </label>
+        <div className="dh-ai-command-center" aria-label="DigitalHut AI presentation command center">
+          <section className={episodeVideoPlaying && !cutsceneWindowActive ? "live" : cutsceneWindowActive ? "cue" : ""}><span>Video</span><b>{liveMetrics.video}</b><small>{activeEpisodeVideo?.title || "Source video"}</small></section>
+          <section className={presentationChapter.id === "podcast" ? "live" : episodeVideoPlaying ? "cue" : ""}><span>Speaker</span><b>{liveMetrics.speaker}</b><small>{activeCutScene.label}</small></section>
+          <section className={modelOpen ? "live" : ""}><span>GLB</span><b>{liveMetrics.glb}</b><small>{sceneFeed.title}</small></section>
+          <section className={cutsceneWindowActive ? "reload" : "cue"}><span>Analytics</span><b>{liveMetrics.analytics}</b><small>{activeCutScene.conclusion}</small></section>
+        </div>
+        <p className="dh-ai-live-description">{aiVisualDescription}</p>
+        <div className="dh-live-feed-tracker" aria-label="DigitalHut backend observatory lab">
+          <header>
+            <span>Backend Observatory Lab</span>
+            <b>{liveFeedTracker.project}</b>
+            <small>{liveFeedTracker.viewerInsight}</small>
+          </header>
+          <section>
+            <span>Audience Signal</span>
+            <b>{liveFeedTracker.views.toLocaleString()}</b>
+            <small>Current page views feeding project priority</small>
+          </section>
+          <section>
+            <span>3D Evidence Lane</span>
+            <b>{modelOpen ? "Rendering" : "Queued"}</b>
+            <small>{liveFeedTracker.glb}</small>
+          </section>
+          <section>
+            <span>Human Moment Capture</span>
+            <b>{presentationChapter.id === "podcast" ? "Moment Live" : "Scanning"}</b>
+            <small>{liveFeedTracker.podcast}</small>
+          </section>
+          <section className="meaning">
+            <span>Project Meaning Capture</span>
+            <b>{presentationChapter.label}</b>
+            <small>{liveFeedTracker.meaning}</small>
+          </section>
+          <a className="dh-insight-capture-card" href={liveFeedTracker.source.url} target="_blank" rel="noreferrer">
+            <span>Source For Your Project</span>
+            <b>{liveFeedTracker.source.label}</b>
+            <small>{liveFeedTracker.source.topic}</small>
+          </a>
+        </div>
+        <form className={`dh-video-mirror-panel ${videoMirrorOpen ? "open" : ""}`} onSubmit={searchVideoMirror} aria-label="DigitalHut YouTube mirror search">
+          <div className="dh-video-mirror-head">
+            <span>YouTube Mirror</span>
+            <b>{activeEpisodeVideo?.title || "Search any video"}</b>
+            <button type="button" onClick={() => setVideoMirrorOpen((value) => !value)}>{videoMirrorOpen ? "Hide" : "Open"}</button>
+          </div>
+          <div className="dh-video-mirror-search">
+            <input value={videoMirrorQuery} onChange={(event) => setVideoMirrorQuery(event.target.value)} placeholder="Search a topic or paste a YouTube title" />
+            <button type="submit">{videoMirrorStatus === "searching" ? "Searching" : "Mirror Search"}</button>
+          </div>
+          {videoMirrorOpen && <div className="dh-video-mirror-results">
+            {videoMirrorStatus === "not-configured" && <p>Set YOUTUBE_API_KEY to pull official embeddable YouTube candidates.</p>}
+            {videoMirrorStatus === "empty" && <p>No embeddable video candidates returned for this search.</p>}
+            {(videoMirrorResults.length ? videoMirrorResults : episodeVideos).slice(0, 4).map((video) => <button key={video.id || video.embedUrl} type="button" className={activeEpisodeVideo?.id === video.id ? "active" : ""} onClick={() => mirrorEpisodeVideo(video)}>
+              {video.thumbnail && <img src={video.thumbnail} alt="" loading="lazy" decoding="async" />}
+              <span><b>{video.title}</b><small>{video.channel || video.attribution || "YouTube source"}</small></span>
+            </button>)}
+          </div>}
+        </form>
         <div className="dh-movie-buttons">
           <button className="dh-btn" onClick={previousFeed}>Previous Model</button>
           <button className={`dh-btn ${episodeVideoPlaying || episodeIntroActive || autoPresent ? "active" : ""}`} onClick={toggleMoviePlayback}>{episodeVideoPlaying || episodeIntroActive || autoPresent ? "Stop Episode" : "Resume Episode"}</button>
@@ -3795,11 +4130,14 @@ export default function FullscreenObservatoryV2(){
           {episodeMedia !== "video" && <button className="dh-btn" onClick={() => scrubPresentation(64)}>Podcast Clip</button>}
           {episodeMedia !== "video" && <button className={`dh-btn ${demoMode === "all" ? "active" : ""}`} onClick={() => startDemoMode("all")}>Shuffle Series</button>}
         </div>
-        <label className="dh-movie-slider" aria-label="DigitalHut episode timeline">
-          <b>Episode Timeline</b>
-          <input type="range" min="0" max="100" step="1" value={presentationProgress} onChange={(event) => scrubPresentation(event.target.value)} />
-          <span>{Math.round(presentationProgress)}%</span>
-        </label>
+        <div className="dh-cinematic-cuts" aria-label="Episode cut structure">
+          <span>Video evidence</span>
+          <span>Guest speaker</span>
+          <span>Anonymous voice</span>
+          <span>GLB scene reveal</span>
+          <span>{activeCutScene.label}</span>
+        </div>
+        <p className="dh-cutscene-guidance">{activeCutScene.detail} {activeCutScene.conclusion}</p>
         <div className="dh-movie-ticks">
           {documentaryTimeline.map((item) => <button key={item.id} type="button" className={presentationChapter.id === item.id ? "active" : ""} onClick={() => scrubPresentation(item.at)}>{item.label}</button>)}
         </div>

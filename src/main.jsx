@@ -15,6 +15,10 @@ import {installDigitalHutSearchPixel} from "./lib/digitalhutSearchPixel"
 import HomePage from "./pages/HomePage"
 import DefensiveGuardian from "./components/DefensiveGuardian"
 
+function DigitalHutLoadingFallback(){
+  return <HomePage />
+}
+
 const AssetLabPage = React.lazy(() => import("./pages/AssetLabPage"))
 const AssetPublicPage = React.lazy(() => import("./pages/AssetPublicPage"))
 const DailySituationQueuePage = React.lazy(() => import("./pages/DailySituationQueuePage"))
@@ -41,7 +45,7 @@ ReactDOM.createRoot(
     <BrowserRouter>
 
       <DefensiveGuardian>
-      <React.Suspense fallback={<div style={{minHeight:"100vh",display:"grid",placeItems:"center",background:"#020617",color:"#e0f2fe",fontFamily:"Arial,sans-serif"}}>Loading DigitalHut view</div>}>
+      <React.Suspense fallback={<DigitalHutLoadingFallback />}>
       <Routes>
 
         <Route
