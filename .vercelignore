@@ -27,3 +27,4 @@ public/models/firecuda-library/tourist_colonial_zone_dominican_republic.glb
 public/models/firecuda-library/zed_-_league_of_legends.glb
 
 tools/local-static-preview.mjs
+api/tester-alert.js
