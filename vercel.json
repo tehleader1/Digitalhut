@@ -5,6 +5,44 @@
   "buildCommand": "node tools/verify-metric-contract.mjs && node tools/generate-search-console-row-sitemaps.mjs && vite build",
   "installCommand": "npm ci --legacy-peer-deps",
   "outputDirectory": "dist",
+  "headers": [
+    {
+      "source": "/sitemap.xml",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=300, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/sitemap-routes.xml",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=300, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/digitalhut-search-console-row-push.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=300, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/robots.txt",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=300, must-revalidate"
+        }
+      ]
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/observatory",
