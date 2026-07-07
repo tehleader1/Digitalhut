@@ -1,0 +1,23 @@
+{
+  "generatedAt": "2026-07-07T21:13:09.454Z",
+  "status": "search-console-row-sitemap-produced",
+  "site": "https://www.digitalhut.app",
+  "sitemapUrl": "https://www.digitalhut.app/sitemap.xml",
+  "producedUrlRows": 145,
+  "verifiedMasterKeywordUniverse": 200572944,
+  "rowGoal": "Produce Search Console query/page rows by giving Google crawlable HTML proof routes connected to the 200M master keyword universe.",
+  "guardrail": "These are crawl/index rows, not guaranteed Google impression rows. Search Console rows appear only after Google indexes and serves pages in search.",
+  "rowSources": ["backend-seo-system","blog-index","blog-proof","category-proof","category-web-cast","claim-artifact","glb-lab","home","library","market-observatory","master-lane-category","master-list-artifact","metrics","rank-artifact","row-push-artifact","status-artifact","system-proof","watch-proof","web-cast-artifact"],
+  "topRows": [
+    {"loc":"https://www.digitalhut.app/","source":"home","priority":"1.00"},
+    {"loc":"https://www.digitalhut.app/system-proof","source":"system-proof","priority":"0.95"},
+    {"loc":"https://www.digitalhut.app/blog","source":"blog-index","priority":"0.92"},
+    {"loc":"https://www.digitalhut.app/watch/full-view-episode-alternative","source":"watch-proof","priority":"0.88"},
+    {"loc":"https://www.digitalhut.app/watch/gaming-3d-environment-viewer","source":"watch-proof","priority":"0.88"},
+    {"loc":"https://www.digitalhut.app/watch/ai-video-podcast-source-explainer","source":"watch-proof","priority":"0.88"},
+    {"loc":"https://www.digitalhut.app/watch/home-project-3d-visual-planner","source":"watch-proof","priority":"0.88"},
+    {"loc":"https://www.digitalhut.app/category/mainstream-streaming","source":"category-proof","priority":"0.82"},
+    {"loc":"https://www.digitalhut.app/blog/automatic-3d-autoplay-system","source":"blog-proof","priority":"0.84"},
+    {"loc":"https://www.digitalhut.app/digitalhut-search-console-row-push.json","source":"row-push-artifact","priority":"0.72"}
+  ]
+}
