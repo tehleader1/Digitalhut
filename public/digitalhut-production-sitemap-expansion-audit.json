@@ -1,0 +1,56 @@
+{
+  "generatedAt": "2026-07-07T17:15:00.000Z",
+  "mode": "DigitalHut Production Sitemap Expansion Audit",
+  "status": "focused-production-surface-expanded",
+  "previousProductionSitemapUrls": 17,
+  "newProductionSitemapUrls": 70,
+  "watchProofRoutes": 29,
+  "blogProofRoutes": 18,
+  "categoryProofRoutes": 13,
+  "primaryFullSystemAnchor": "video watching + 3D Model View + podcast/source moments + live analytics in one 2026 dapp observatory",
+  "priorityAudiencePulls": [
+    "YouTube session/watch-tool audiences",
+    "3D model viewer and gaming environment communities",
+    "AI video and podcast source explainer audiences",
+    "research-summary and source-map users",
+    "spatial/virtual experience users",
+    "everyday off-time searchers: lunch, rideshare, flights, wiki, shopping"
+  ],
+  "priorityRoutes": [
+    "/watch/full-view-episode-alternative",
+    "/watch/watch-video-with-3d-model-proof",
+    "/watch/youtube-video-content-radar",
+    "/watch/podcast-source-moment-for-viral-video",
+    "/watch/glb-research-assistant",
+    "/watch/gaming-3d-environment-viewer",
+    "/watch/current-market-video-observatory",
+    "/watch/looking-for-lunch-visual-observatory",
+    "/category/what-am-i-watching-observatory",
+    "/category/3d-model-view",
+    "/category/podcast-moment-analysis"
+  ],
+  "measurementGate": {
+    "currentFloorBeforeExpansion": {
+      "pageViews": 299,
+      "uniqueVisitors": 107,
+      "totalEvents": 516,
+      "glbPreviewPlays": 83,
+      "podcastInterrupts": 13,
+      "autoplayStarts": 5,
+      "searches": 2,
+      "marketOpens": 5,
+      "proofRouteOpens": 0,
+      "sourceBacklinkOpens": 0
+    },
+    "nextHitMarkers": [
+      "proofRouteOpens above 0",
+      "sourceBacklinkOpens above 0",
+      "pageViews above 299",
+      "uniqueVisitors above 107",
+      "GLB preview plays above 83",
+      "podcast interrupts above 13",
+      "searches above 2"
+    ]
+  },
+  "honestyGuardrail": "This is a production-focused crawl expansion, not a Google ranking movement claim. Ranking movement requires Search Console rows, impressions, clicks, or average position data."
+}
