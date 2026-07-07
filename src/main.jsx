@@ -12,6 +12,7 @@ import {
 } from "./wallet"
 
 import {installDigitalHutSearchPixel} from "./lib/digitalhutSearchPixel"
+import {applySystemPerformanceProfile, forceFirecudaMaxProfile, getSystemPerformanceProfile} from "./lib/systemPerformanceProfile"
 import HomePage from "./pages/HomePage"
 import DefensiveGuardian from "./components/DefensiveGuardian"
 
@@ -25,12 +26,18 @@ const InsightsPage = React.lazy(() => import("./pages/InsightsPage"))
 const FaqPage = React.lazy(() => import("./pages/FaqPage"))
 const TrustPage = React.lazy(() => import("./pages/TrustPage"))
 const BlogPage = React.lazy(() => import("./pages/BlogPage"))
+const WatchProofPage = React.lazy(() => import("./pages/WatchProofPage"))
+const CategoryProofPage = React.lazy(() => import("./pages/CategoryProofPage"))
 const MarketPage = React.lazy(() => import("./pages/MarketPage"))
 const ExperimentsPage = React.lazy(() => import("./pages/ExperimentsPage"))
 const LocationIntelligencePage = React.lazy(() => import("./pages/LocationIntelligencePage"))
+const StandbyRunnerPage = React.lazy(() => import("./pages/StandbyRunnerPage"))
+const SystemProofPage = React.lazy(() => import("./pages/SystemProofPage"))
 const ObservatoryScanner = React.lazy(() => import("./components/ObservatoryScanner"))
 
 installDigitalHutSearchPixel()
+forceFirecudaMaxProfile()
+applySystemPerformanceProfile(getSystemPerformanceProfile())
 
 ReactDOM.createRoot(
   document.getElementById("root")
@@ -95,6 +102,11 @@ ReactDOM.createRoot(
         />
 
         <Route
+          path="/standby"
+          element={<StandbyRunnerPage />}
+        />
+
+        <Route
           path="/markets"
           element={<MarketPage />}
         />
@@ -116,6 +128,9 @@ ReactDOM.createRoot(
 
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/blog/:slug" element={<BlogPage />} />
+        <Route path="/watch/:slug" element={<WatchProofPage />} />
+        <Route path="/category/:slug" element={<CategoryProofPage />} />
+        <Route path="/system-proof" element={<SystemProofPage />} />
         <Route path="/about" element={<TrustPage type="about" />} />
         <Route path="/contact" element={<TrustPage type="contact" />} />
         <Route path="/privacy" element={<TrustPage type="privacy" />} />
