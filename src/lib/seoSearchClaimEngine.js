@@ -153,6 +153,133 @@ export function seoSearchClaimForQuery(query = "", context = {}){
   }
 }
 
+function regeneratedBacklinkPlanForClaim(claim, query = ""){
+  const anchor = query || `${claim.lane} DigitalHut observatory`
+  const ownedUrl = `${claim.canonicalDomain}${claim.rankUrl}`
+  const proofUrl = `${claim.canonicalDomain}${claim.canonicalRoute}`
+  return {
+    anchorText: anchor,
+    ownedReturnPath: ownedUrl,
+    placements: [
+      {type: "watch-proof", label: `${anchor} watch proof`, url: proofUrl},
+      {type: "blog-proof", label: `${anchor} blog proof`, url: `${claim.canonicalDomain}/blog?dh_lane=${encodeURIComponent(claim.laneId)}`},
+      {type: "category-proof", label: `${claim.lane} category proof`, url: `${claim.canonicalDomain}/category/${encodeURIComponent(claim.laneId)}`},
+      {type: "source-backlink-target", label: `${anchor} source trail`, url: ownedUrl},
+      {type: "crawler-receipt", label: "DigitalHut SEO claim coverage", url: `${claim.canonicalDomain}/digitalhut-seo-claim-coverage.json`},
+      {type: "operator-receipt", label: "DigitalHut operator search trail", url: `${claim.canonicalDomain}/digitalhut-operator-search-trail-latest.json`}
+    ],
+    externalCandidateRules: [
+      "Only place a backlink where the answer is useful and human-readable.",
+      "Do not spam comments, profiles, or irrelevant directories.",
+      "Prefer source pages, community discussions, docs, creator pages, podcast pages, and GLB/source references that match the lane."
+    ]
+  }
+}
+
+export function seoOperatorSearchTrailForRun(input = {}){
+  const query = String(input.query || input.search || input.keyword || "").replace(/\s+/g, " ").trim()
+  const claim = seoSearchClaimForQuery(query, {category: input.audience || input.category || "operator-search-run"})
+  const runId = String(input.runId || `dh_search_run_${deterministicSeoHash(`${query}:${input.audience || ""}:${input.source || ""}`)}`)
+  const movement = input.movement && typeof input.movement === "object" ? input.movement : {}
+  const decision = String(input.decision || "watch-for-receipts")
+  const status = decision.includes("promote") || Number(movement.pageViewsDelta || 0) > 0 || Number(movement.uniqueVisitorsDelta || 0) > 0
+    ? "movement-candidate"
+    : decision.includes("dry") || decision.includes("skip")
+      ? "dry-pool"
+      : "trail-planted"
+  return {
+    runId,
+    createdAt: input.createdAt || new Date().toISOString(),
+    operator: "DigitalHut Codex Overseer",
+    runType: "operator-search-and-backlink-trail",
+    query,
+    audience: input.audience || "full entertainment observatory",
+    source: input.source || "codex-search-cycle",
+    status,
+    decision,
+    claim: {
+      lane: claim.lane,
+      laneId: claim.laneId,
+      mode: claim.rankOwnershipMode,
+      globalRankNumber: claim.globalRankNumber,
+      totalIndividualRanks: claim.totalIndividualRanks,
+      canonicalRoute: claim.canonicalRoute,
+      rankUrl: claim.rankUrl,
+      ownedReturnPath: `${claim.canonicalDomain}${claim.rankUrl}`
+    },
+    trail: {
+      searchPhrase: query,
+      proofRoute: `${claim.canonicalDomain}${claim.canonicalRoute}`,
+      ownedReturnPath: `${claim.canonicalDomain}${claim.rankUrl}`,
+      backlinkTargets: claim.backlinkTargets,
+      regeneratedBacklinks: regeneratedBacklinkPlanForClaim(claim, query),
+      measurementSignals: claim.measurementSignals,
+      supabaseSignals: claim.supabaseSignals,
+      sitemap: `${claim.canonicalDomain}/sitemap.xml`,
+      publicReceipt: `${claim.canonicalDomain}/digitalhut-operator-search-trail-latest.json`
+    },
+    movement,
+    nextAction: input.nextAction || claim.nextAction
+  }
+}
+
+export function seoEntryTrailForEvent(eventName = "", input = {}){
+  const path = String(input.path || input.routePath || "").split(/[?#]/)[0]
+  const routeSlug = String(input.routeSlug || path.split("/").filter(Boolean).pop() || "")
+  const label = String(input.label || input.title || input.category || "")
+  const referrer = String(input.referrer || "")
+  const sourceText = String(input.search || input.query || input.keywordHint || routeSlug || label || path || referrer || "")
+  const routeType = path.startsWith("/watch/")
+    ? "watch-proof-route"
+    : path.startsWith("/blog/")
+      ? "blog-proof-route"
+      : path.startsWith("/category/")
+        ? "category-proof-route"
+        : path === "/" || path === ""
+          ? "homepage-entry"
+          : "system-route"
+  const sourceType = eventName === "search_run"
+    ? "typed-search"
+    : eventName.includes("source") || eventName.includes("backlink")
+      ? "source-backlink"
+      : eventName.includes("glb")
+        ? "3d-model-view"
+        : eventName.includes("podcast")
+          ? "podcast-source-moment"
+          : eventName.includes("proof") || eventName.includes("route")
+            ? routeType
+            : "interaction"
+  const claim = seoSearchClaimForQuery(sourceText, {category: input.category || routeType})
+  return {
+    sourceType,
+    routeType,
+    sourceText,
+    referrerHost: hostFromUrl(referrer),
+    ownedReturnPath: `${claim.canonicalDomain}${claim.rankUrl}`,
+    trailTargets: [
+      `${claim.canonicalDomain}${claim.canonicalRoute}`,
+      `${claim.canonicalDomain}/blog`,
+      `${claim.canonicalDomain}/digitalhut-seo-claim-coverage.json`,
+      `${claim.canonicalDomain}/sitemap.xml`
+    ],
+    backlinkTrail: {
+      lane: claim.lane,
+      mode: claim.rankOwnershipMode,
+      rankUrl: claim.rankUrl,
+      measurementSignals: claim.measurementSignals,
+      backlinkTargets: claim.backlinkTargets
+    }
+  }
+}
+
+function hostFromUrl(value = ""){
+  try {
+    return value ? new URL(value).host : ""
+  } catch {
+    return ""
+  }
+}
+
 export const seoSearchClaimSummary = {
   owner: seoRankOwnership.owner,
   canonicalDomain: seoRankOwnership.canonicalDomain,
