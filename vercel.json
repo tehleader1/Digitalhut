@@ -8,31 +8,31 @@
   "rewrites": [
     {
       "source": "/digitalhut-ai-search-discovery-packet.json",
-      "destination": "/api/proof-artifact?name=ai-search-discovery"
+      "destination": "/api/digitalhut-ai-search-discovery-packet"
     },
     {
       "source": "/digitalhut-route-metadata-manifest.json",
-      "destination": "/api/proof-artifact?name=route-metadata-manifest"
+      "destination": "/api/digitalhut-route-metadata-manifest"
     },
     {
       "source": "/digitalhut-unified-proof-route-promotion-board.json",
-      "destination": "/api/proof-artifact?name=unified-proof-route-promotion-board"
+      "destination": "/api/digitalhut-unified-proof-route-promotion-board"
     },
     {
       "source": "/digitalhut-deploy-proof-batch-packet.json",
-      "destination": "/api/proof-artifact?name=deploy-proof-batch-packet"
+      "destination": "/api/digitalhut-deploy-proof-batch-packet"
     },
     {
       "source": "/digitalhut-supabase-measurement-contract.json",
-      "destination": "/api/proof-artifact?name=supabase-measurement-contract"
+      "destination": "/api/digitalhut-supabase-measurement-contract"
     },
     {
       "source": "/digitalhut-production-sitemap-expansion-audit.json",
-      "destination": "/api/proof-artifact?name=production-sitemap-expansion-audit"
+      "destination": "/api/digitalhut-production-sitemap-expansion-audit"
     },
     {
       "source": "/digitalhut-search-console-sitemap-submit-20260707.json",
-      "destination": "/api/proof-artifact?name=search-console-sitemap-submit-20260707"
+      "destination": "/api/digitalhut-search-console-sitemap-submit-20260707"
     },
     {
       "source": "/api/observatory",
