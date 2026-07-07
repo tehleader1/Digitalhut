@@ -1,3 +1,4 @@
+import {seoSearchClaimForQuery} from "./seoSearchClaimEngine"
 const pixelEndpoint = "/api/insight-map"
 const sessionKey = "digitalhut_pixel_session_id"
 const visitorKey = "digitalhut_pixel_visitor_id"
@@ -55,14 +56,20 @@ function inferKeywordHint(text){
 }
 
 function sendPixel(eventName, data = {}){
+  const searchClaimText = data.search || data.query || data.keywordHint || data.label || ""
+  const seoClaim = eventName === "search_run"
+    ? seoSearchClaimForQuery(searchClaimText, {category: data.category || "", path: location.pathname})
+    : null
   const body = {
     eventName,
     ...currentContext(data),
     keywordHint: data.keywordHint || inferKeywordHint(`${data.label || ""} ${data.path || ""} ${data.category || ""}`),
+    seoClaim,
     metadata: {
       viewport: `${innerWidth}x${innerHeight}`,
       language: navigator.language || "",
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "",
+      seoClaim,
       ...data.metadata
     }
   }
@@ -102,7 +109,8 @@ function trackSearchInput(input, reason){
   if(now - (searchEventCache.get(key) || 0) < 8000) return
   searchEventCache.set(key, now)
   sendPixel("search_run", {
-    keywordHint: inferKeywordHint(value),
+    search: value,
+    keywordHint: value,
     metadata: {queryLength: value.length, reason}
   })
 }
