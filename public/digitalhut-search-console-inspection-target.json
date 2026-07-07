@@ -1,0 +1,13 @@
+{
+  "status": "ready-for-manual-search-console-inspection",
+  "owner": "Digitalhut.app",
+  "canonicalDomain": "https://www.digitalhut.app",
+  "sitemapIndex": "https://www.digitalhut.app/sitemap.xml",
+  "masterKeywordOwnershipSitemap": "https://www.digitalhut.app/sitemap-master-keyword-ownership.xml",
+  "proofArtifactSitemap": "https://www.digitalhut.app/sitemap-proof-artifacts.xml",
+  "verifiedMasterKeywordUniverse": 200572944,
+  "searchConsoleInspectionUrl": "https://search.google.com/search-console/inspect?resource_id=sc-domain%3Adigitalhut.app&id=HKjKDhOFb66_8BJUzhCBJw",
+  "inspectionTargetMeaning": "Use this Search Console inspection link to validate the deployed DigitalHut URL after the sitemap index and ownership proof artifacts are live.",
+  "currentRule": "The sitemap exposes real DigitalHut routes and proof artifacts. The 200,572,944 longtail universe is represented as verified ownership coverage, not as 200M duplicate sitemap URLs.",
+  "updatedAt": "2026-07-07"
+}
