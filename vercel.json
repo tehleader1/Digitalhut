@@ -7,6 +7,10 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
+      "source": "/digitalhut-search-console-sitemap-submit-20260707.json",
+      "destination": "/api/search-console-sitemap-submit-20260707"
+    },
+    {
       "source": "/api/observatory",
       "destination": "/api/observatory-feed"
     },
