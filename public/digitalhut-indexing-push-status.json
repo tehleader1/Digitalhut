@@ -1,0 +1,64 @@
+{
+  "generatedAt": "2026-07-07T20:57:06.4857549Z",
+  "status": "system-proof-indexing-push-prepared",
+  "owner": "Digitalhut.app",
+  "verifiedMasterKeywordUniverse": 200572944,
+  "objective": "make Google understand DigitalHut as a full 2026 dapp entertainment observatory, not a generic video/blog site, and produce Search Console rows through crawlable HTML proof routes",
+  "rowProducingHtmlRoutes": [
+    "https://www.digitalhut.app/system-proof",
+    "https://www.digitalhut.app/watch/full-view-episode-alternative",
+    "https://www.digitalhut.app/watch/home-project-3d-visual-planner",
+    "https://www.digitalhut.app/watch/gaming-3d-environment-viewer",
+    "https://www.digitalhut.app/watch/ai-video-podcast-source-explainer",
+    "https://www.digitalhut.app/category/mainstream-streaming",
+    "https://www.digitalhut.app/blog/automatic-3d-autoplay-system",
+    "https://www.digitalhut.app/blog/home-project-3d-visual-planner"
+  ],
+  "googleCurrent": {
+    "sitemapLastSubmitted": "2026-07-07T20:22:50.418Z",
+    "sitemapLastDownloaded": "2026-07-07T20:22:51.621Z",
+    "sitemapWarnings": "0",
+    "sitemapErrors": "0",
+    "searchRows": 0,
+    "clicks": 0,
+    "impressions": 0,
+    "homepage": "Submitted and indexed",
+    "discoveredWatchRoute": "Discovered - currently not indexed",
+    "discoveredCategoryRoute": "Discovered - currently not indexed"
+  },
+  "systemFunctionality": [
+    "video watching",
+    "3D Model View",
+    "GLB renderer",
+    "podcast/source moments",
+    "live analytics",
+    "search intent routing",
+    "watch proof routes",
+    "category proof lanes",
+    "Supabase event capture",
+    "Google Search Console diagnostics",
+    "Vercel deployment",
+    "GitHub source proof",
+    "FireCuda SEO mapping",
+    "Codex reasoning oversight"
+  ],
+  "trafficBaseline": {
+    "pageViews": 299,
+    "uniqueVisitors": 107,
+    "totalEvents": 516,
+    "blogViews": 28,
+    "glbPreviewPlays": 83,
+    "podcastInterrupts": 13,
+    "autoplayStarts": 5,
+    "searches": 2,
+    "proofRouteOpens": 0,
+    "sourceBacklinkOpens": 0
+  },
+  "rowProductionPlan": [
+    "Deploy and resubmit sitemap containing /system-proof plus exact discovered URLs.",
+    "Use /system-proof as the crawlable explanation page for DigitalHut uniqueness and infrastructure capacity.",
+    "Use watch/category/blog pages as row-producing landing pages for the 200M master keyword clusters.",
+    "Watch Search Console for impressions and average position before claiming public rank movement.",
+    "Promote lanes with impressions, clicks, GLB plays, podcast interrupts, proof opens, or source opens; demote quiet filler lanes."
+  ]
+}
