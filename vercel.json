@@ -2,10 +2,18 @@
   "version": 2,
   "framework": "vite",
   "devCommand": "npm run dev -- --host 127.0.0.1 --port $PORT",
-  "buildCommand": "npm run build",
+  "buildCommand": "node tools/verify-metric-contract.mjs && vite build",
   "installCommand": "npm ci --legacy-peer-deps",
   "outputDirectory": "dist",
   "rewrites": [
+    {
+      "source": "/api/observatory",
+      "destination": "/api/observatory-feed"
+    },
+    {
+      "source": "/api/convert-asset",
+      "destination": "/api/asset-conversion"
+    },
     {
       "source": "/api/(.*)",
       "destination": "/api/$1"
