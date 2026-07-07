@@ -1,0 +1,160 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Supabase Measurement Contract",
+  "purpose": "Make every tracked human interaction readable by the SEO system, even when the product emits one name and the analytics reader uses a legacy alias.",
+  "table": "public.digitalhut_search_pixel_events",
+  "requiredColumns": [
+    "event_name",
+    "session_id",
+    "visitor_id",
+    "path",
+    "search",
+    "keyword_hint",
+    "category",
+    "asset_id",
+    "blog_slug",
+    "metadata",
+    "created_at"
+  ],
+  "status": "measurement-ready",
+  "statusCounts": {
+    "closed-loop": 10
+  },
+  "eventCount": 10,
+  "events": [
+    {
+      "canonicalEvent": "page_view",
+      "aliases": ["blog_view"],
+      "feature": "Page and proof-route visibility",
+      "humanRole": "everyday viewer",
+      "requiredFields": ["session_id", "visitor_id", "path", "title", "category"],
+      "seoDecision": "Decides whether a route deserves more internal links, better title copy, or FireCuda hold.",
+      "emittedNames": ["page_view", "blog_view"],
+      "apiReadNames": ["page_view", "blog_view"],
+      "coverageStatus": "closed-loop",
+      "seoSubmissionTie": "measurement-only"
+    },
+    {
+      "canonicalEvent": "search_run",
+      "aliases": ["youtube_search_submit"],
+      "feature": "Search intent",
+      "humanRole": "researcher",
+      "requiredFields": ["session_id", "visitor_id", "search", "keyword_hint", "category"],
+      "seoDecision": "Promotes exact typed phrases from FireCuda into watch/blog/category proof.",
+      "emittedNames": ["search_run"],
+      "apiReadNames": ["search_run", "youtube_search_submit"],
+      "coverageStatus": "closed-loop",
+      "seoSubmissionTie": "attached-to-submission-queue"
+    },
+    {
+      "canonicalEvent": "search_intent_chip_select",
+      "aliases": ["quick_panel_select", "category_lane_select"],
+      "feature": "Suggested intent selection",
+      "humanRole": "digital nomad",
+      "requiredFields": ["session_id", "visitor_id", "keyword_hint", "category", "metadata"],
+      "seoDecision": "Separates phrases visitors choose from phrases that only look good in the master list.",
+      "emittedNames": ["search_intent_chip_select", "category_lane_select"],
+      "apiReadNames": ["search_intent_chip_select", "quick_panel_select", "category_lane_select"],
+      "coverageStatus": "closed-loop",
+      "seoSubmissionTie": "measurement-only"
+    },
+    {
+      "canonicalEvent": "glb_preview_play",
+      "aliases": ["glb_preview_open", "glb_replica_play", "viral_glb_proof_play"],
+      "feature": "3D/GLB proof",
+      "humanRole": "developer",
+      "requiredFields": ["session_id", "visitor_id", "asset_id", "category", "metadata"],
+      "seoDecision": "Turns renderer interest into GLB source/backlink proof and 3D route priority.",
+      "emittedNames": ["glb_preview_play", "glb_replica_play"],
+      "apiReadNames": ["glb_preview_play", "glb_preview_open", "glb_replica_play", "viral_glb_proof_play"],
+      "coverageStatus": "closed-loop",
+      "seoSubmissionTie": "attached-to-submission-queue"
+    },
+    {
+      "canonicalEvent": "podcast_interrupt_play",
+      "aliases": ["podcast_interrupt_start", "podcast_interrupt_end", "podcast_source_open", "viral_podcast_source_start"],
+      "feature": "Podcast/source moment",
+      "humanRole": "creator",
+      "requiredFields": ["session_id", "visitor_id", "keyword_hint", "category", "metadata"],
+      "seoDecision": "Decides whether podcast/source moments deserve featured support copy or stay secondary.",
+      "emittedNames": ["podcast_interrupt_play", "podcast_interrupt_end", "podcast_source_open"],
+      "apiReadNames": ["podcast_interrupt_play", "podcast_interrupt_start", "podcast_interrupt_end", "podcast_source_open", "viral_podcast_source_start"],
+      "coverageStatus": "closed-loop",
+      "seoSubmissionTie": "measurement-only"
+    },
+    {
+      "canonicalEvent": "market_view_open",
+      "aliases": ["market_panel_open", "ticker_search"],
+      "feature": "Market feed",
+      "humanRole": "market watcher",
+      "requiredFields": ["session_id", "visitor_id", "search", "keyword_hint", "category", "metadata"],
+      "seoDecision": "Decides when market keywords should route into market view instead of the regular feed.",
+      "emittedNames": ["market_view_open", "ticker_search"],
+      "apiReadNames": ["market_view_open", "market_panel_open", "ticker_search"],
+      "coverageStatus": "closed-loop",
+      "seoSubmissionTie": "measurement-only"
+    },
+    {
+      "canonicalEvent": "proof_route_open",
+      "aliases": ["watch_route_open", "blog_route_open", "category_proof_open", "viral_watch_route_open", "viral_source_route_open"],
+      "feature": "Watch/blog/category proof",
+      "humanRole": "researcher",
+      "requiredFields": ["session_id", "visitor_id", "path", "keyword_hint", "blog_slug", "metadata"],
+      "seoDecision": "Moves crawlable proof pages between launch-primary, support, rewrite, and FireCuda hold.",
+      "emittedNames": ["proof_route_open", "category_proof_open"],
+      "apiReadNames": ["proof_route_open", "watch_route_open", "blog_route_open", "category_proof_open", "viral_watch_route_open", "viral_source_route_open"],
+      "coverageStatus": "closed-loop",
+      "seoSubmissionTie": "attached-to-submission-queue"
+    },
+    {
+      "canonicalEvent": "backlink_source_open",
+      "aliases": ["glb_source_click", "podcast_source_open", "viral_source_backlink_open"],
+      "feature": "Source and backlink trust",
+      "humanRole": "developer",
+      "requiredFields": ["session_id", "visitor_id", "path", "keyword_hint", "source", "metadata"],
+      "seoDecision": "Identifies which source links help the observatory look useful instead of decorative.",
+      "emittedNames": ["backlink_source_open", "podcast_source_open"],
+      "apiReadNames": ["backlink_source_open", "glb_source_click", "podcast_source_open", "viral_source_backlink_open"],
+      "coverageStatus": "closed-loop",
+      "seoSubmissionTie": "measurement-only"
+    },
+    {
+      "canonicalEvent": "autoplay_start",
+      "aliases": ["episode_preview_autoplay_start", "autoplay_pause", "autoplay_episode_shift"],
+      "feature": "Presentation control",
+      "humanRole": "everyday viewer",
+      "requiredFields": ["session_id", "visitor_id", "category", "asset_id", "metadata"],
+      "seoDecision": "Shows whether people let the observatory presentation run or bounce back to passive video.",
+      "emittedNames": ["autoplay_start", "episode_preview_autoplay_start", "autoplay_pause", "autoplay_episode_shift"],
+      "apiReadNames": ["autoplay_start", "episode_preview_autoplay_start", "autoplay_pause", "autoplay_episode_shift"],
+      "coverageStatus": "closed-loop",
+      "seoSubmissionTie": "measurement-only"
+    },
+    {
+      "canonicalEvent": "timeline_scrub",
+      "aliases": ["platform_cadence_read"],
+      "feature": "Timeline and system reading",
+      "humanRole": "researcher",
+      "requiredFields": ["session_id", "visitor_id", "keyword_hint", "category", "metadata"],
+      "seoDecision": "Proves whether the analytics timeline is useful enough to support deeper proof-page language.",
+      "emittedNames": ["timeline_scrub", "platform_cadence_read"],
+      "apiReadNames": ["timeline_scrub", "platform_cadence_read"],
+      "coverageStatus": "closed-loop",
+      "seoSubmissionTie": "attached-to-submission-queue"
+    }
+  ],
+  "immediateGaps": [],
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  }
+}
