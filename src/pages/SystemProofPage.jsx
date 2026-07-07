@@ -1,69 +1,46 @@
 import {useEffect} from "react"
 import {Link} from "react-router-dom"
-import {seoMasterListSummary} from "../lib/seoContentEngine"
 import "./TrustPage.css"
 import "./BlogPage.css"
+
+const totalSearchRoutes = 200572944
 
 const proofLanes = [
   {
     lane: "Full Entertainment Dapp Alternative",
     route: "/watch/full-view-episode-alternative",
-    purpose: "Video watching, 3D Model View, podcast/source moments, autoplay, and live analytics in one observatory session.",
-    searches: [
-      "youtube alternative with 3d model view",
-      "video app with podcast source moments",
-      "2026 entertainment observatory dapp"
-    ]
+    purpose: "Video watching, 3D Model View, podcast/source moments, autoplay, next episode flow, and live analytics in one observatory session.",
+    searches: ["youtube alternative with 3d model view", "video app with podcast source moments", "2026 entertainment observatory dapp"]
   },
   {
     lane: "Home Project DIY Visual",
     route: "/watch/home-project-3d-visual-planner",
     purpose: "Everyday home planning searches routed into visual proof, 3D context, and useful watch-page behavior.",
-    searches: [
-      "home project 3d visual planner",
-      "room remodel visual walkthrough",
-      "diy home project 3d preview"
-    ]
+    searches: ["home project 3d visual planner", "room remodel visual walkthrough", "diy home project 3d preview"]
   },
   {
     lane: "Gaming 3D World Observatory",
     route: "/watch/gaming-3d-environment-viewer",
     purpose: "Game worlds, GLB previews, video topics, and source-backed 3D assets in a single viewer lane.",
-    searches: [
-      "gaming 3d environment viewer",
-      "game world glb presentation",
-      "horror corridor vr room walkthrough"
-    ]
+    searches: ["gaming 3d environment viewer", "game world glb presentation", "horror corridor vr room walkthrough"]
   },
   {
     lane: "AI Video Podcast Source Explainer",
     route: "/watch/ai-video-podcast-source-explainer",
     purpose: "Video and podcast moments explained through source context, not filler text.",
-    searches: [
-      "what is this video talking about",
-      "ai video podcast source explainer",
-      "video research observatory podcast source backed 3d renderer"
-    ]
+    searches: ["what is this video talking about", "ai video podcast source explainer", "video research observatory podcast source backed 3d renderer"]
   },
   {
     lane: "Education Study Visual Research",
     route: "/watch/university-research-3d-experience",
     purpose: "Study and research queries connected to visual context, source trails, and watch proof.",
-    searches: [
-      "university research 3d experience",
-      "visual research hub for study topics",
-      "source backed 3d research explainer"
-    ]
+    searches: ["university research 3d experience", "visual research hub for study topics", "source backed 3d research explainer"]
   },
   {
     lane: "Mainstream Streaming",
     route: "/category/mainstream-streaming",
     purpose: "Daily entertainment searches mapped into an alternative media session with video, GLB, podcast, and analytics.",
-    searches: [
-      "alternative to watching youtube",
-      "mainstream video with live analytics",
-      "funny video explained with sources"
-    ]
+    searches: ["alternative to watching youtube", "mainstream video with live analytics", "funny video explained with sources"]
   }
 ]
 
@@ -119,14 +96,8 @@ export default function SystemProofPage(){
       headline: title,
       description,
       url: canonical.href,
-      author: {
-        "@type": "Organization",
-        name: "DigitalHut"
-      },
-      publisher: {
-        "@type": "Organization",
-        name: "DigitalHut"
-      },
+      author: {"@type": "Organization", name: "DigitalHut"},
+      publisher: {"@type": "Organization", name: "DigitalHut"},
       about: [
         "200,572,944 verified internal longtail search-route variations",
         "video watching with 3D Model View",
@@ -165,7 +136,7 @@ export default function SystemProofPage(){
       <div>
         <span>System Proof</span>
         <h1>DigitalHut 2026 Dapp Entertainment Observatory</h1>
-        <p>DigitalHut represents {seoMasterListSummary.totalIndividualRanks.toLocaleString()} verified internal longtail search-route variations through crawlable watch, blog, category, source, GLB, podcast, and analytics proof lanes.</p>
+        <p>DigitalHut represents {totalSearchRoutes.toLocaleString()} verified internal longtail search-route variations through crawlable watch, blog, category, source, GLB, podcast, and analytics proof lanes.</p>
         <div className="dh-watch-proof-actions">
           <Link to="/watch/full-view-episode-alternative">Open full-system proof</Link>
           <Link to="/blog/automatic-3d-autoplay-system">Read autoplay proof</Link>
@@ -176,26 +147,10 @@ export default function SystemProofPage(){
     </section>
 
     <section className="dh-watch-proof-grid" aria-label="DigitalHut row producing system proof">
-      <article>
-        <span>Why This Is Not A Plain Platform</span>
-        <h2>One Session, Four Proof Systems</h2>
-        <p>The page experience combines video watching, 3D Model View, podcast/source moments, and live analytics. Search Console should see these as connected HTML proof routes, not isolated keywords.</p>
-      </article>
-      <article>
-        <span>Master Keyword Ownership</span>
-        <h2>{seoMasterListSummary.totalIndividualRanks.toLocaleString()} Search-Route Variations</h2>
-        <p>The internal map groups everyday life, entertainment, research, gaming, real estate, travel, social reels, and developer intent into useful DigitalHut lanes. Public rank still requires Google impressions and rows.</p>
-      </article>
-      <article>
-        <span>Rows We Are Producing Toward</span>
-        <h2>Indexed Pages First, Search Rows Second</h2>
-        <p>The sitemap now prioritizes row-producing HTML routes. Once Google indexes them and tests them in search, Search Console can return impressions, clicks, and average position.</p>
-      </article>
-      <article>
-        <span>Human Standard</span>
-        <h2>Useful, Genuine, Welcoming</h2>
-        <p>Every lane must answer what moved, why it matters, where the source is, what visual proves it, and what the viewer can do next.</p>
-      </article>
+      <article><span>Why This Is Not A Plain Platform</span><h2>One Session, Four Proof Systems</h2><p>The page experience combines video watching, 3D Model View, podcast/source moments, and live analytics. Search Console should see these as connected HTML proof routes, not isolated keywords.</p></article>
+      <article><span>Master Keyword Ownership</span><h2>{totalSearchRoutes.toLocaleString()} Search-Route Variations</h2><p>The internal map groups everyday life, entertainment, research, gaming, real estate, travel, social reels, and developer intent into useful DigitalHut lanes. Public rank still requires Google impressions and rows.</p></article>
+      <article><span>Rows We Are Producing Toward</span><h2>Indexed Pages First, Search Rows Second</h2><p>The sitemap now prioritizes row-producing HTML routes. Once Google indexes them and tests them in search, Search Console can return impressions, clicks, and average position.</p></article>
+      <article><span>Human Standard</span><h2>Useful, Genuine, Welcoming</h2><p>Every lane must answer what moved, why it matters, where the source is, what visual proves it, and what the viewer can do next.</p></article>
     </section>
 
     <section className="dh-category-proof-grid" aria-label="DigitalHut search lane proof">
@@ -203,17 +158,12 @@ export default function SystemProofPage(){
         <span>{lane.lane}</span>
         <h2>{lane.purpose}</h2>
         <div>{lane.searches.map((keyword) => <b key={keyword}>{keyword}</b>)}</div>
-        <footer>
-          <Link to={lane.route}>Open row-producing route</Link>
-        </footer>
+        <footer><Link to={lane.route}>Open row-producing route</Link></footer>
       </article>)}
     </section>
 
     <section className="dh-watch-usefulness-radar" aria-label="DigitalHut infrastructure proof">
-      {infrastructureProof.map(([name, detail]) => <article key={name}>
-        <span>{name}</span>
-        <h2>{detail}</h2>
-      </article>)}
+      {infrastructureProof.map(([name, detail]) => <article key={name}><span>{name}</span><h2>{detail}</h2></article>)}
     </section>
   </main>
 }
