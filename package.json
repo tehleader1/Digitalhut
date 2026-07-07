@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
-    "build": "vite build",
+    "build": "node tools/generate-search-console-row-sitemaps.mjs && vite build",
     "preview": "vite preview --host 0.0.0.0",
     "desktop": "electron electron/main.cjs",
     "desktop:local": "cross-env DIGITALHUT_DESKTOP_LOCAL=1 electron electron/main.cjs",
@@ -17,8 +17,8 @@
     "preserve:live": "node tools/preserve-digitalhut.mjs --base=https://www.digitalhut.app",
     "preserve:progression": "node tools/progression-runners.mjs",
     "verify:metrics": "node tools/verify-metric-contract.mjs",
-    "verify:predeploy": "node tools/verify-metric-contract.mjs && vite build",
-    "verify:release": "node tools/verify-metric-contract.mjs && node tools/digitalhut-release-readiness.mjs",
+    "verify:predeploy": "node tools/verify-metric-contract.mjs && node tools/generate-search-console-row-sitemaps.mjs && vite build",
+    "verify:release": "node tools/verify-metric-contract.mjs && node tools/generate-search-console-row-sitemaps.mjs && node tools/digitalhut-release-readiness.mjs",
     "backend": "node server.js",
     "start": "node server.js",
     "dev:full": "concurrently \"npm run backend\" \"npm run dev -- --host\""
