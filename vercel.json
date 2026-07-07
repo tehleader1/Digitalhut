@@ -7,8 +7,32 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
+      "source": "/digitalhut-ai-search-discovery-packet.json",
+      "destination": "/api/proof-artifact?name=ai-search-discovery"
+    },
+    {
+      "source": "/digitalhut-route-metadata-manifest.json",
+      "destination": "/api/proof-artifact?name=route-metadata-manifest"
+    },
+    {
+      "source": "/digitalhut-unified-proof-route-promotion-board.json",
+      "destination": "/api/proof-artifact?name=unified-proof-route-promotion-board"
+    },
+    {
+      "source": "/digitalhut-deploy-proof-batch-packet.json",
+      "destination": "/api/proof-artifact?name=deploy-proof-batch-packet"
+    },
+    {
+      "source": "/digitalhut-supabase-measurement-contract.json",
+      "destination": "/api/proof-artifact?name=supabase-measurement-contract"
+    },
+    {
+      "source": "/digitalhut-production-sitemap-expansion-audit.json",
+      "destination": "/api/proof-artifact?name=production-sitemap-expansion-audit"
+    },
+    {
       "source": "/digitalhut-search-console-sitemap-submit-20260707.json",
-      "destination": "/api/search-console-sitemap-submit-20260707"
+      "destination": "/api/proof-artifact?name=search-console-sitemap-submit-20260707"
     },
     {
       "source": "/api/observatory",
