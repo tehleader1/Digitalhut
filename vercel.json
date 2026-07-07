@@ -2,7 +2,7 @@
   "version": 2,
   "framework": "vite",
   "devCommand": "npm run dev -- --host 127.0.0.1 --port $PORT",
-  "buildCommand": "node tools/verify-metric-contract.mjs && vite build",
+  "buildCommand": "node tools/verify-metric-contract.mjs && node tools/generate-search-console-row-sitemaps.mjs && vite build",
   "installCommand": "npm ci --legacy-peer-deps",
   "outputDirectory": "dist",
   "rewrites": [
