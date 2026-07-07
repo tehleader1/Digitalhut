@@ -1,0 +1,51 @@
+{
+  "generatedAt": "2026-07-07T20:39:10.5519992Z",
+  "status": "custom-build-live-traffic-pull-active",
+  "owner": "Digitalhut.app",
+  "strategy": "surface verified internal ownership coverage into public rank through route usage, proof pages, source/backlink trails, and user behavior",
+  "verifiedMasterKeywordUniverse": 200572944,
+  "sitemap": {
+    "url": "https://www.digitalhut.app/sitemap.xml",
+    "liveStatusCode": 200,
+    "liveUrlCount": 72,
+    "liveIsSitemapIndex": false,
+    "liveHasSeoProofUrl": false,
+    "liveHasGameWorldLane": false,
+    "vercelCache": "HIT",
+    "age": "8056",
+    "submitStatus": 204,
+    "submitOk": true
+  },
+  "searchConsole": {
+    "finalRows": 0,
+    "finalClicks": 0,
+    "finalImpressions": 0,
+    "freshRows": 0,
+    "homepageCoverage": "Submitted and indexed",
+    "sitemapCoverage": "URL is unknown to Google",
+    "watchHomeProjectCoverage": "Discovered - currently not indexed",
+    "mainstreamCategoryCoverage": "Discovered - currently not indexed"
+  },
+  "traffic": {
+    "pageViews": 299,
+    "uniqueVisitors": 107,
+    "totalEvents": 516,
+    "blogViews": 28,
+    "searches": 2,
+    "autoplayStarts": 5,
+    "glbPreviewPlays": 83,
+    "podcastInterrupts": 13,
+    "proofRouteOpens": 0,
+    "sourceBacklinkOpens": 0,
+    "topPages": ["/", "/markets", "/insights", "/blog/automatic-3d-autoplay-system", "/blog/home-project-3d-visual-planner"],
+    "topBlogs": ["automatic-3d-autoplay-system", "blog-index", "home-project-3d-visual-planner", "university-research-3d-experience", "full-view-episode-alternative"],
+    "topKeywordHints": ["Medieval City Pack Demo", "Horror Corridor VR room [Baked]", "video research observatory podcast source backed 3d renderer", "gaming 3d environment viewer horror corridor vr room walkthrough", "youtube alternative autoplay 3d model podcast analytics"],
+    "topRenderCategories": ["Mainstream Streaming", "Businesses", "Research Podcast Viewer", "Gaming GLB Viewer", "After Work Relax Viewer"]
+  },
+  "laneDecision": {
+    "keep": ["Full Entertainment Dapp Alternative", "Home Project DIY Visual", "Education Study Visual Research", "Gaming 3D World Observatory", "AI Video Podcast Source Explainer"],
+    "promoteNow": ["full-view-episode-alternative", "home-project-3d-visual-planner", "automatic-3d-autoplay-system", "university-research-3d-experience", "gaming-3d-environment-viewer"],
+    "holdUntilMovement": ["proof-route-open expansion", "source-backlink expansion", "mass backlink promotion"],
+    "nextAction": "keep custom traffic pull running; promote lanes with blog and GLB behavior; wait for Search Console rows before claiming public rank movement"
+  }
+}
