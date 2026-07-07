@@ -107,8 +107,45 @@ function trackSearchInput(input, reason){
   })
 }
 
+function routeProofEventForPath(pathname){
+  if(/^\/watch\/[^/]+/.test(pathname)) return "watch_route_open"
+  if(/^\/category\/[^/]+/.test(pathname)) return "category_proof_open"
+  if(/^\/blog\/[^/]+/.test(pathname)) return "blog_route_open"
+  return ""
+}
+
+function routeSlugForPath(pathname){
+  const match = pathname.match(/^\/(?:watch|category|blog)\/([^/]+)/)
+  return match ? decodeURIComponent(match[1]) : ""
+}
+
+function linkContext(href){
+  if(!href) return {path: "", isExternal: false}
+  try {
+    const url = new URL(href, location.origin)
+    return {
+      path: url.pathname,
+      isExternal: url.origin !== location.origin
+    }
+  } catch {
+    return {path: "", isExternal: false}
+  }
+}
+
 function trackPageView(reason = "route"){
-  sendPixel(location.pathname.startsWith("/blog") ? "blog_view" : "page_view", {metadata: {reason}})
+  const pathname = location.pathname
+  sendPixel(pathname.startsWith("/blog") ? "blog_view" : "page_view", {metadata: {reason}})
+  const proofEvent = routeProofEventForPath(pathname)
+  if(proofEvent){
+    sendPixel(proofEvent, {
+      keywordHint: inferKeywordHint(routeSlugForPath(pathname)),
+      metadata: {
+        reason,
+        routeSlug: routeSlugForPath(pathname),
+        routePath: pathname
+      }
+    })
+  }
 }
 
 function classifyClick(target){
@@ -119,15 +156,26 @@ function classifyClick(target){
   const thumbnailIntent = element.dataset?.dhThumbnailRender || element.closest?.("[data-dh-thumbnail-render]")?.dataset?.dhThumbnailRender
   const category = element.dataset?.dhCategory || element.closest?.("[data-dh-category]")?.dataset?.dhCategory || ""
   const assetId = element.dataset?.dhAssetId || element.closest?.("[data-dh-asset-id]")?.dataset?.dhAssetId || ""
+  const isPodcastControl = Boolean(element.closest?.(".dh-podcast-panel"))
+  const link = linkContext(href)
   const lower = `${label} ${href}`.toLowerCase()
+  const proofEvent = routeProofEventForPath(link.path)
+  const sourceIntent = link.isExternal || lower.includes("source") || lower.includes("backlink") || lower.includes("citation")
+  const glbSourceIntent = lower.includes("sketchfab") || lower.includes(".glb") || lower.includes("3d model source")
+  const genericPreviewIntent = lower.includes("play") || lower.includes("preview")
   let eventName = "ui_click"
   if(thumbnailIntent) eventName = "thumbnail_render_click"
-  if(lower.includes("play") || lower.includes("preview")) eventName = "glb_preview_play"
-  if(lower.includes("download")) eventName = "download_click"
-  if(lower.includes("share")) eventName = "share_click"
-  if(lower.includes("wallet") || lower.includes("connect")) eventName = "wallet_connect_click"
-  if(lower.includes("standard") || lower.includes("premium") || lower.includes("pro")) eventName = "tier_click"
-  if(lower.includes("node") || lower.includes("stellar") || lower.includes("genius")) eventName = "node_click"
+  if(genericPreviewIntent && !isPodcastControl && !proofEvent && !sourceIntent) eventName = "glb_preview_play"
+  if(lower.includes("download") && !sourceIntent) eventName = "download_click"
+  if(lower.includes("share") && !sourceIntent) eventName = "share_click"
+  if(proofEvent) eventName = proofEvent
+  if(sourceIntent) eventName = "backlink_source_open"
+  if(lower.includes("podcast") && sourceIntent) eventName = "podcast_source_open"
+  if(glbSourceIntent) eventName = "glb_source_click"
+  if(isPodcastControl && (lower.includes("play") || lower.includes("stop") || lower.includes("special moment"))) eventName = "podcast_interrupt_start"
+  if(!sourceIntent && !proofEvent && (lower.includes("wallet") || lower.includes("connect"))) eventName = "wallet_connect_click"
+  if(!sourceIntent && !proofEvent && (lower.includes("standard") || lower.includes("premium") || lower.includes("pro"))) eventName = "tier_click"
+  if(!sourceIntent && !proofEvent && (lower.includes("node") || lower.includes("stellar") || lower.includes("genius"))) eventName = "node_click"
   if(thumbnailIntent && (lower.includes("play") || lower.includes("preview"))) eventName = "thumbnail_render_click"
   return {eventName, label, href, thumbnailIntent, category, assetId}
 }
