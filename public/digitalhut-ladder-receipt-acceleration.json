@@ -1,0 +1,166 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Ladder Receipt Acceleration",
+  "status": "ladder-receipt-acceleration-ready",
+  "purpose": "Turn held ladder matches into exact receipt queues so DigitalHut can reach 77%+ win ratios without broad filler SEO.",
+  "targetWinRatio": 77,
+  "passedMatches": 1,
+  "heldMatches": 4,
+  "fireCudaMapAuthorityScore": 69,
+  "accelerationRows": [
+    {
+      "rung": 2,
+      "competitorClass": "3D gallery or portfolio page",
+      "currentWinRatio": 74,
+      "targetWinRatio": 77,
+      "gapToPass": 3,
+      "status": "near-pass-accelerate-now",
+      "primaryReceipts": [
+        "glb_rotated_or_zoomed",
+        "glb_source_opened",
+        "same_topic_model_reopened"
+      ],
+      "exactAction": "Prioritize this rung in the next measurement cycle because one strong receipt class can push it over 77%.",
+      "seoUseWhenPassed": "Attack Matterport-style tours, Sketchfab-adjacent creator pages, and niche 3D model explainers."
+    },
+    {
+      "rung": 3,
+      "competitorClass": "single-medium video explainer",
+      "currentWinRatio": 68,
+      "targetWinRatio": 77,
+      "gapToPass": 9,
+      "status": "needs-receipt-buildout",
+      "primaryReceipts": [
+        "source_backlink_click",
+        "watch_to_blog_continuation",
+        "podcast_source_completed"
+      ],
+      "exactAction": "Hold broad SEO push and build the missing interaction/source receipts first.",
+      "seoUseWhenPassed": "Attack YouTube-result support pages and creator explainer blogs."
+    },
+    {
+      "rung": 4,
+      "competitorClass": "static research or wiki-style page",
+      "currentWinRatio": 65,
+      "targetWinRatio": 77,
+      "gapToPass": 12,
+      "status": "needs-receipt-buildout",
+      "primaryReceipts": [
+        "proof_route_opened",
+        "source_backlink_click",
+        "observatory_search_used"
+      ],
+      "exactAction": "Hold broad SEO push and build the missing interaction/source receipts first.",
+      "seoUseWhenPassed": "Attack niche research blogs and university-adjacent explainers."
+    },
+    {
+      "rung": 5,
+      "competitorClass": "market dashboard or finance result",
+      "currentWinRatio": 48,
+      "targetWinRatio": 77,
+      "gapToPass": 29,
+      "status": "needs-receipt-buildout",
+      "primaryReceipts": [
+        "market_view_open",
+        "ticker_search",
+        "market_source_click"
+      ],
+      "exactAction": "Hold broad SEO push and build the missing interaction/source receipts first.",
+      "seoUseWhenPassed": "Attack small finance blogs first, not enterprise finance portals."
+    }
+  ],
+  "receiptQueues": [
+    {
+      "queue": "GLB manipulation receipts",
+      "targetEvents": [
+        "glb_rotated_or_zoomed",
+        "glb_zoomed",
+        "glb_orbit_duration_10s",
+        "glb_model_source_opened"
+      ],
+      "unlocks": "Push 3D gallery/portfolio rung above 77%.",
+      "currentRead": "62 GLB opens, but rotate/zoom receipts are not present in the last-known local snapshot."
+    },
+    {
+      "queue": "Source and backlink receipts",
+      "targetEvents": [
+        "source_backlink_click",
+        "external_referrer_captured",
+        "watch_to_blog_continuation",
+        "blog_to_watch_return"
+      ],
+      "unlocks": "Push video explainer and static research rungs toward 77%.",
+      "currentRead": "14 blog proof views and 2 podcast/source moments need source-click confirmation."
+    },
+    {
+      "queue": "Search and category receipts",
+      "targetEvents": [
+        "observatory_search_used",
+        "category_lane_selected",
+        "next_episode_same_category",
+        "category_to_proof_route"
+      ],
+      "unlocks": "Proves DigitalHut is being used as an observatory system, not just watched.",
+      "currentRead": "0 search events and no local category-hop count in the last-known packet."
+    },
+    {
+      "queue": "Market receipts",
+      "targetEvents": [
+        "market_view_open",
+        "ticker_search",
+        "market_video_connected",
+        "market_glb_opened"
+      ],
+      "unlocks": "Only then should the market dashboard rung enter real competition.",
+      "currentRead": "0 market opens; market remains held."
+    }
+  ],
+  "priority": [
+    {
+      "rung": 2,
+      "competitorClass": "3D gallery or portfolio page",
+      "currentWinRatio": 74,
+      "targetWinRatio": 77,
+      "gapToPass": 3,
+      "status": "near-pass-accelerate-now",
+      "primaryReceipts": [
+        "glb_rotated_or_zoomed",
+        "glb_source_opened",
+        "same_topic_model_reopened"
+      ],
+      "exactAction": "Prioritize this rung in the next measurement cycle because one strong receipt class can push it over 77%.",
+      "seoUseWhenPassed": "Attack Matterport-style tours, Sketchfab-adjacent creator pages, and niche 3D model explainers."
+    },
+    {
+      "rung": 3,
+      "competitorClass": "single-medium video explainer",
+      "currentWinRatio": 68,
+      "targetWinRatio": 77,
+      "gapToPass": 9,
+      "status": "needs-receipt-buildout",
+      "primaryReceipts": [
+        "source_backlink_click",
+        "watch_to_blog_continuation",
+        "podcast_source_completed"
+      ],
+      "exactAction": "Hold broad SEO push and build the missing interaction/source receipts first.",
+      "seoUseWhenPassed": "Attack YouTube-result support pages and creator explainer blogs."
+    },
+    {
+      "rung": 4,
+      "competitorClass": "static research or wiki-style page",
+      "currentWinRatio": 65,
+      "targetWinRatio": 77,
+      "gapToPass": 12,
+      "status": "needs-receipt-buildout",
+      "primaryReceipts": [
+        "proof_route_opened",
+        "source_backlink_click",
+        "observatory_search_used"
+      ],
+      "exactAction": "Hold broad SEO push and build the missing interaction/source receipts first.",
+      "seoUseWhenPassed": "Attack niche research blogs and university-adjacent explainers."
+    }
+  ],
+  "nextSystemMove": "Attack the near-pass 3D gallery/portfolio rung first by capturing GLB rotate/zoom and source-open receipts, then use source/backlink continuation to lift video and research rungs."
+}

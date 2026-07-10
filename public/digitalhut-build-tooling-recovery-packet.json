@@ -1,0 +1,119 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Build Tooling Recovery Packet",
+  "status": "build-path-ready",
+  "purpose": "Separate local clean-folder dependency absence from deploy configuration readiness so DigitalHut does not confuse a missing local node_modules folder with failed product code.",
+  "currentRead": "Local and cloud build paths are both ready.",
+  "guardrail": "Do not deploy or claim a passing local build until Vite is present locally or Vercel confirms the build in the deployment environment.",
+  "packageName": "digitalhut-live",
+  "nodeEngine": "24.x",
+  "vercelFramework": "vite",
+  "localVitePresent": true,
+  "distIndexPresent": true,
+  "distIndexFresh": true,
+  "directViteBuildProof": true,
+  "bundledNpmNoptPresent": true,
+  "packageLockPresent": true,
+  "checks": [
+    {
+      "id": "package-build-script",
+      "status": "pass",
+      "read": "build script: vite build"
+    },
+    {
+      "id": "vite-dependency",
+      "status": "pass",
+      "read": "vite dependency declared: ^8.0.13"
+    },
+    {
+      "id": "react-plugin",
+      "status": "pass",
+      "read": "React Vite plugin declared"
+    },
+    {
+      "id": "package-lock",
+      "status": "pass",
+      "read": "package-lock.json present for npm ci"
+    },
+    {
+      "id": "vercel-build-command",
+      "status": "pass",
+      "read": "Vercel buildCommand: node tools/verify-metric-contract.mjs && vite build"
+    },
+    {
+      "id": "vercel-install-command",
+      "status": "pass",
+      "read": "Vercel installCommand: npm ci --legacy-peer-deps"
+    },
+    {
+      "id": "vercel-output-directory",
+      "status": "pass",
+      "read": "Vercel outputDirectory: dist"
+    },
+    {
+      "id": "npm-peer-policy",
+      "status": "pass",
+      "read": ".npmrc enables legacy-peer-deps"
+    },
+    {
+      "id": "local-vite-binary",
+      "status": "pass",
+      "read": "local Vite binary present"
+    },
+    {
+      "id": "local-npm-runner",
+      "status": "pass",
+      "read": "direct Vite build proof is present in dist/index.html, so local release proof does not depend on the npm wrapper"
+    }
+  ],
+  "releaseGateMatrix": [
+    {
+      "gate": "local-build-proof",
+      "status": "pass",
+      "evidence": "direct Vite build completed and dist/index.html is fresh",
+      "releaseMeaning": "Local build proof is ready from direct Vite output."
+    },
+    {
+      "gate": "vercel-cloud-build-proof",
+      "status": "staged",
+      "evidence": "package.json, package-lock, .npmrc, and vercel.json are aligned for Vercel npm ci + build",
+      "releaseMeaning": "Vercel can attempt the authoritative cloud build after deployment is intentionally triggered."
+    },
+    {
+      "gate": "seo-release-proof",
+      "status": "deploy-batch-ready",
+      "evidence": "8 release routes, route coverage deploy-ready-staged",
+      "releaseMeaning": "SEO routes are staged, but production claims wait for a passing build path."
+    },
+    {
+      "gate": "post-deploy-measurement-proof",
+      "status": "ready-after-deploy",
+      "evidence": "Supabase refinement views and post-deploy handoff packets are staged",
+      "releaseMeaning": "After deploy, measure route behavior before FireCuda promotion."
+    }
+  ],
+  "releaseDecision": "Local dependencies look closer, but local proof still requires a completed npm run build result before release.",
+  "releaseQueueStatus": "deploy-batch-ready",
+  "releaseRouteCount": 8,
+  "deployReadinessStatus": "deploy-ready-staged",
+  "recoveryActions": [
+    "Keep the SEO/deploy proof batch staged until build tooling is stable.",
+    "For local verification, restore/install node_modules so node_modules/vite/bin/vite.js exists and repair the bundled npm runner so npm/node_modules/nopt exists.",
+    "For Vercel verification, rely on vercel.json installCommand npm ci --legacy-peer-deps and package-lock.json, then inspect the Vercel build result before production claims.",
+    "After a passing build, submit the release queue URLs through the sitemap/Search Console proof pass."
+  ],
+  "nextFireCudaMove": "Treat build tooling as the release gate, not an SEO failure. Keep refining proof packets while the deployment path is repaired or confirmed.",
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  }
+}

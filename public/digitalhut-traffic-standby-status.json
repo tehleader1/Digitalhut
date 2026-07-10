@@ -1,0 +1,69 @@
+{
+  "generatedAt": "2026-07-07T05:19:24-04:00",
+  "mode": "DigitalHut Traffic Standby",
+  "status": "locked-for-post-submit-traffic-watch",
+  "domain": "https://www.digitalhut.app",
+  "searchConsole": {
+    "homepageIndexed": true,
+    "sitemapSubmitted": true,
+    "sitemapPending": true,
+    "sitemapLastSubmitted": "2026-07-07T09:19:02.087Z",
+    "sitemapLastDownloaded": "2026-07-07T09:06:22.869Z",
+    "lastKnownSearchRows": 0,
+    "lastKnownClicks": 0,
+    "lastKnownImpressions": 0,
+    "rankMovementClaim": "not-yet-available"
+  },
+  "urlInspection": [
+    {
+      "url": "https://www.digitalhut.app/",
+      "coverageState": "Submitted and indexed"
+    },
+    {
+      "url": "https://www.digitalhut.app/watch/home-project-3d-visual-planner",
+      "coverageState": "Discovered - currently not indexed"
+    },
+    {
+      "url": "https://www.digitalhut.app/category/mainstream-streaming",
+      "coverageState": "Discovered - currently not indexed"
+    },
+    {
+      "url": "https://www.digitalhut.app/digitalhut-longtail-web-cast.json",
+      "coverageState": "URL is unknown to Google"
+    }
+  ],
+  "trafficWatch": {
+    "primaryWindow": "30 minutes",
+    "firstRealGoogleSignal": "impressions, clicks, query rows, average position, or URL inspection changes",
+    "dryTrafficDecision": "shift competition SEO long-tail categories and traffic lanes",
+    "activeTrafficDecision": "promote the route cluster receiving behavior"
+  },
+  "productionCapture": {
+    "ready": true,
+    "target": "digitalhut_live_feed",
+    "supabaseConfigured": true,
+    "supabaseBackendConfigured": true,
+    "localSupabaseDnsReadable": false
+  },
+  "routePriority": [
+    "/watch/home-project-3d-visual-planner",
+    "/watch/university-research-3d-experience",
+    "/watch/gaming-3d-environment-viewer",
+    "/watch/real-estate-3d-house-walkthrough",
+    "/watch/funny-mainstream-video-explained",
+    "/watch/developer-dapp-3d-experience"
+  ],
+  "watchSignals": [
+    "page_view",
+    "proof_route_open",
+    "search_run",
+    "search_intent_chip_select",
+    "autoplay_start",
+    "glb_preview_play",
+    "podcast_interrupt_play",
+    "market_view_open",
+    "backlink_source_open",
+    "blog_view"
+  ],
+  "nextSystemMove": "Traffic is still dry in Search Console, but proof routes are discovered. Shift competition SEO long-tail categories toward home/remodel, research/3D evidence, GLB/gaming assets, and real estate while waiting for indexing."
+}

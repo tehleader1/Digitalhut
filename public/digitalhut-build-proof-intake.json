@@ -1,0 +1,181 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Build Proof Intake",
+  "status": "build-proof-intake-ready",
+  "purpose": "Define exactly how DigitalHut absorbs local or Vercel build evidence before SEO submission, Search Console inspection, and Supabase refinement advance.",
+  "guardrail": "This packet does not deploy, does not run browser verification, and does not change UI. It waits for evidence and routes it into the backend command system.",
+  "buildGate": "build-path-ready",
+  "runtimeCompatibility": "runtime-compatibility-local-ready-cloud-confirmation-needed",
+  "fallbackStatus": "runtime-fallback-staged",
+  "releaseCommandCenter": "release-command-center-ready",
+  "postDeployMeasurementProof": "measurement-proof-ready",
+  "evidenceTypes": [
+    {
+      "id": "local-build-proof",
+      "status": "ready-to-accept",
+      "acceptedEvidence": [
+        "node_modules/vite/bin/vite.js or node_modules/.bin/vite present",
+        "npm runner responds and completed npm run build result is captured",
+        "dist output written for the current package/vercel config"
+      ],
+      "routesTo": [
+        "build-tooling-recovery",
+        "deployment-runtime-compatibility",
+        "release-command-center"
+      ],
+      "promotedResult": "Mark local build proof as usable and allow release proof batch to move from held to ready."
+    },
+    {
+      "id": "vercel-build-proof",
+      "status": "ready-to-accept",
+      "acceptedEvidence": [
+        "Vercel deployment build success for the current commit/config",
+        "framework vite, build command npm run build, output dist",
+        "production or preview URL serving the same route set"
+      ],
+      "routesTo": [
+        "deployment-runtime-compatibility",
+        "release-command-center",
+        "post-deploy-measurement-proof"
+      ],
+      "promotedResult": "Confirm cloud runtime path and start ordered watch/blog inspection sequence."
+    },
+    {
+      "id": "vercel-runtime-rejection",
+      "status": "ready-to-accept",
+      "acceptedEvidence": [
+        "Vercel log names unsupported Node engine or runtime mismatch",
+        "build failure is tied to runtime rather than app code",
+        "same config still has lockfile and Vite build command intact"
+      ],
+      "routesTo": [
+        "deployment-runtime-fallback",
+        "deployment-runtime-compatibility"
+      ],
+      "promotedResult": "Apply the narrow runtime fallback only after concrete cloud rejection evidence."
+    },
+    {
+      "id": "dependency-restore-proof",
+      "status": "already-present",
+      "acceptedEvidence": [
+        "npm ci completed from package-lock",
+        "Vite binary appears locally",
+        "npm runner proof is not stuck, timed out, or missing its own internal dependencies",
+        "dependency restore did not change SEO/UI source files"
+      ],
+      "routesTo": [
+        "build-tooling-recovery",
+        "local-build-proof"
+      ],
+      "promotedResult": "Unlock local build proof without changing DigitalHut product surface."
+    }
+  ],
+  "acceptanceChecklist": [
+    {
+      "id": "local-proof-chain",
+      "state": "candidate",
+      "requiredEvidence": [
+        "dependency restore proof",
+        "local npm runner responsiveness",
+        "completed npm run build",
+        "dist output"
+      ],
+      "currentRead": "Local Vite exists, but the build command still needs proof before release."
+    },
+    {
+      "id": "cloud-proof-chain",
+      "state": "ready-to-accept",
+      "requiredEvidence": [
+        "Vercel install log",
+        "Vercel build log",
+        "served preview or production URL",
+        "same route set as staged sitemap"
+      ],
+      "currentRead": "Cloud proof can unlock the release sequence without local browser verification."
+    },
+    {
+      "id": "measurement-proof-chain",
+      "state": "ready-after-build-proof",
+      "requiredEvidence": [
+        "watch route inspection",
+        "blog route inspection",
+        "Supabase second-action signal",
+        "FireCuda promote/rewrite/hold decision"
+      ],
+      "currentRead": "Measurement proof is prepared, but cannot claim ranking movement until build proof lands."
+    }
+  ],
+  "intakeFlow": [
+    {
+      "order": 1,
+      "system": "FireCuda",
+      "action": "Keep SEO and route packets staged while build proof is missing.",
+      "output": "No rank claims advance past release-command-center until build evidence lands."
+    },
+    {
+      "order": 2,
+      "system": "GitHub",
+      "action": "Treat the current commit/config as the evidence boundary.",
+      "output": "Every accepted proof must map back to the same generated packets and route set."
+    },
+    {
+      "order": 3,
+      "system": "Vercel",
+      "action": "Use cloud build success or rejection as the runtime authority.",
+      "output": "Cloud pass starts inspection; cloud runtime rejection triggers fallback only."
+    },
+    {
+      "order": 4,
+      "system": "Supabase",
+      "action": "After deployment proof, collect page/search/autoplay/GLB/podcast/market/blog behavior.",
+      "output": "Refinement views decide promote, rewrite, or hold."
+    },
+    {
+      "order": 5,
+      "system": "Google Cloud/Search",
+      "action": "Submit only the release pair routes after build proof.",
+      "output": "Watch routes first, blog proof second, then compare behavior."
+    }
+  ],
+  "affectedPackets": [
+    {
+      "packet": "digitalhut-build-tooling-recovery-packet",
+      "currentStatus": "build-path-ready",
+      "updateWhenEvidenceArrives": "local build proof or Vercel build proof changes build gate from held to ready."
+    },
+    {
+      "packet": "digitalhut-deployment-runtime-compatibility",
+      "currentStatus": "runtime-compatibility-local-ready-cloud-confirmation-needed",
+      "updateWhenEvidenceArrives": "cloud build pass confirms runtime; runtime rejection keeps fallback controlled."
+    },
+    {
+      "packet": "digitalhut-deployment-runtime-fallback",
+      "currentStatus": "runtime-fallback-staged",
+      "updateWhenEvidenceArrives": "fallback stays staged unless Vercel rejects the declared runtime."
+    },
+    {
+      "packet": "digitalhut-release-command-center",
+      "currentStatus": "release-command-center-ready",
+      "updateWhenEvidenceArrives": "moves from build-held command center into ordered deploy/inspection command center."
+    },
+    {
+      "packet": "digitalhut-post-deploy-measurement-proof",
+      "currentStatus": "measurement-proof-ready",
+      "updateWhenEvidenceArrives": "starts measuring the selected watch/blog route pairs after deployment proof."
+    }
+  ],
+  "nextAction": "Use accepted build proof to begin ordered watch/blog inspection and Supabase compare/refine measurement.",
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  }
+}

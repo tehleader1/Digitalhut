@@ -1,0 +1,2184 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut AI And Search Discovery Packet",
+  "productName": "DigitalHut Presents",
+  "canonicalDomain": "https://www.digitalhut.app",
+  "oneLineRead": "A 2026 dapp entertainment observatory that connects YouTube-style video topics, 3D/GLB context, podcast/source moments, market panels, watch proof, blog proof, and long-tail search routes.",
+  "crawlGuidance": {
+    "sitemap": "https://www.digitalhut.app/sitemap.xml",
+    "robots": "https://www.digitalhut.app/robots.txt",
+    "routeCoverageStatus": "pass",
+    "deployReadinessStatus": "review",
+    "frontendLock": "Backend SEO/system proof only unless measured client behavior requires visual change."
+  },
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  },
+  "systemCapabilities": {
+    "productReady": 15,
+    "productTotal": 15,
+    "sitemapUrls": 137,
+    "readyAlerts": 9,
+    "refinementActions": 9
+  },
+  "rankOwnership": {
+    "owner": "Digitalhut.app",
+    "totalIndividualRanks": 2572944,
+    "globalRange": "1-2572944",
+    "policy": "Every variation is individually assigned to Digitalhut.app by deterministic global rank, cluster rank, canonical proof route, metadata rule, and promotion gate. Full materialization belongs on FireCuda or a database table, while the repo keeps deploy-safe formulas and proof gates."
+  },
+  "rankedLanes": [
+    {
+      "lane": "Lunch And Local Food",
+      "stage": "launch-primary",
+      "score": 83,
+      "demandClass": "very-high local commercial intent",
+      "firstDeployTargets": [
+        "restaurants near me visual guide",
+        "food near me video map",
+        "lunch near me source-backed review",
+        "best restaurants near me 3D preview",
+        "menu near me visual observatory",
+        "food open now watch route"
+      ],
+      "professionalAngle": "DigitalHut adds video context, local source/backlink proof, GLB place context, and a watch route instead of another plain restaurant list.",
+      "routeTargets": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/looking-for-lunch-visual-observatory",
+        "blog": "/blog/looking-for-lunch-visual-observatory"
+      }
+    },
+    {
+      "lane": "Flight And Travel Booking",
+      "stage": "launch-primary",
+      "score": 83,
+      "demandClass": "very-high travel purchase intent",
+      "firstDeployTargets": [
+        "cheap flights visual guide",
+        "flight tickets source map",
+        "flight status visual observatory",
+        "airport delays 3D map guide",
+        "Google Flights alternative visual guide",
+        "flight layover watch route"
+      ],
+      "professionalAngle": "DigitalHut can connect price/search intent to video, timeline, source links, GLB airport context, and podcast/source notes before a travel decision.",
+      "routeTargets": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/booking-flight-ticket-visual-guide",
+        "blog": "/blog/booking-flight-ticket-visual-guide"
+      }
+    },
+    {
+      "lane": "Funny Mainstream Video",
+      "stage": "launch-primary",
+      "score": 83,
+      "demandClass": "very-high entertainment discovery intent",
+      "firstDeployTargets": [
+        "funny videos explained with sources",
+        "viral videos source map",
+        "YouTube funny video observatory",
+        "TikTok funny video source proof",
+        "meme video timeline explained",
+        "Reddit funny video visual guide"
+      ],
+      "professionalAngle": "DigitalHut makes entertainment search useful by attaching source proof, podcast/source moments, timeline context, GLB scene context, and watch/blog backlinks.",
+      "routeTargets": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/funny-mainstream-video-explained",
+        "blog": "/blog/funny-mainstream-video-explained"
+      }
+    },
+    {
+      "lane": "Errands And Review Before Buying",
+      "stage": "launch-primary",
+      "score": 83,
+      "demandClass": "very-high shopping/review intent",
+      "firstDeployTargets": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "best deals near me visual guide",
+        "grocery near me source proof",
+        "pharmacy near me visual guide",
+        "should I buy this product video proof"
+      ],
+      "professionalAngle": "DigitalHut connects review and errand searches to source links, product/place context, GLB proof, blog/watch proof, and behavior feedback.",
+      "routeTargets": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/search-intent-radar-visual-experience",
+        "blog": "/blog/search-intent-radar-visual-experience"
+      }
+    },
+    {
+      "lane": "Rideshare And Commute",
+      "stage": "launch-primary",
+      "score": 76,
+      "demandClass": "high local travel/transport intent",
+      "firstDeployTargets": [
+        "Uber pickup visual guide",
+        "airport Uber pickup source map",
+        "rideshare pickup location explained",
+        "ride to airport visual route",
+        "taxi near me 3D pickup view",
+        "rideshare price spike explained"
+      ],
+      "professionalAngle": "DigitalHut turns ride intent into route context, pickup-source proof, safety/location notes, and a timeline instead of a dead single-action search.",
+      "routeTargets": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/calling-an-uber-visual-trip-guide",
+        "blog": "/blog/calling-an-uber-visual-trip-guide"
+      }
+    },
+    {
+      "lane": "Wiki And Quick Research",
+      "stage": "launch-primary",
+      "score": 76,
+      "demandClass": "high informational intent",
+      "firstDeployTargets": [
+        "Wikipedia visual research hub",
+        "wiki lookup source map",
+        "what is this topic explained with sources",
+        "meaning of topic visual guide",
+        "history of topic timeline",
+        "facts about topic 3D observatory"
+      ],
+      "professionalAngle": "DigitalHut makes quick research useful with source maps, timeline summaries, watch proof, and GLB context for subjects that need visual understanding.",
+      "routeTargets": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/wiki-lookup-visual-research-hub",
+        "blog": "/blog/wiki-lookup-visual-research-hub"
+      }
+    }
+  ],
+  "launchRoutes": [
+    {
+      "route": "/blog/grocery-shopping-3d-experience",
+      "type": "blog-proof",
+      "title": "product reviews visual summary | DigitalHut Proof",
+      "keywords": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "best deals near me visual guide",
+        "grocery near me source proof",
+        "pharmacy near me visual guide",
+        "should I buy this product video proof",
+        "grocery shopping 3D experience",
+        "funny grocery reel"
+      ],
+      "relatedRoutes": [
+        "/watch/grocery-shopping-3d-experience",
+        "/category/mainstream-streaming"
+      ]
+    },
+    {
+      "route": "/watch/grocery-shopping-3d-experience",
+      "type": "watch-proof",
+      "title": "product reviews visual summary | DigitalHut Watch Proof",
+      "keywords": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "best deals near me visual guide",
+        "grocery near me source proof",
+        "pharmacy near me visual guide",
+        "should I buy this product video proof",
+        "grocery shopping 3D experience",
+        "funny grocery reel"
+      ],
+      "relatedRoutes": [
+        "/blog/grocery-shopping-3d-experience",
+        "/category/mainstream-streaming"
+      ]
+    },
+    {
+      "route": "/blog/traffic-study-3d-experience",
+      "type": "blog-proof",
+      "title": "Traffic Study 3D Experience: DigitalHut Observatory Proof | DigitalHut Proof",
+      "keywords": [
+        "traffic study 3D experience",
+        "traffic data visual experience",
+        "city planning 3D visual analysis",
+        "airport Uber pickup visual guide",
+        "rideshare pickup location explained",
+        "traffic delay visual observatory",
+        "Uber pickup guide DigitalHut",
+        "Uber pickup guide Mobility"
+      ],
+      "relatedRoutes": [
+        "/watch/traffic-study-3d-experience",
+        "/category/mobility"
+      ]
+    },
+    {
+      "route": "/watch/traffic-study-3d-experience",
+      "type": "watch-proof",
+      "title": "Traffic Study 3D Experience: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "keywords": [
+        "traffic study 3D experience",
+        "traffic data visual experience",
+        "city planning 3D visual analysis",
+        "airport Uber pickup visual guide",
+        "rideshare pickup location explained",
+        "traffic delay visual observatory",
+        "Uber pickup guide DigitalHut",
+        "Uber pickup guide Mobility"
+      ],
+      "relatedRoutes": [
+        "/blog/traffic-study-3d-experience",
+        "/category/mobility"
+      ]
+    },
+    {
+      "route": "/blog/grocery-shopping-visual-expercience",
+      "type": "blog-proof",
+      "title": "product reviews visual summary | DigitalHut Proof",
+      "keywords": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "best deals near me visual guide",
+        "grocery near me source proof",
+        "pharmacy near me visual guide",
+        "should I buy this product video proof",
+        "grocery shopping visual expercience",
+        "grocery shopping visual experience"
+      ],
+      "relatedRoutes": [
+        "/watch/grocery-shopping-visual-expercience",
+        "/category/mainstream-streaming"
+      ]
+    },
+    {
+      "route": "/watch/grocery-shopping-visual-expercience",
+      "type": "watch-proof",
+      "title": "product reviews visual summary | DigitalHut Watch Proof",
+      "keywords": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "best deals near me visual guide",
+        "grocery near me source proof",
+        "pharmacy near me visual guide",
+        "should I buy this product video proof",
+        "grocery shopping visual expercience",
+        "grocery shopping visual experience"
+      ],
+      "relatedRoutes": [
+        "/blog/grocery-shopping-visual-expercience",
+        "/category/mainstream-streaming"
+      ]
+    },
+    {
+      "route": "/blog/grocery-shopping-visual-experience",
+      "type": "blog-proof",
+      "title": "product reviews visual summary | DigitalHut Proof",
+      "keywords": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "best deals near me visual guide",
+        "grocery near me source proof",
+        "pharmacy near me visual guide",
+        "should I buy this product video proof",
+        "grocery shopping visual experience",
+        "grocery shopping 3D experience"
+      ],
+      "relatedRoutes": [
+        "/watch/grocery-shopping-visual-experience",
+        "/category/mainstream-streaming"
+      ]
+    },
+    {
+      "route": "/watch/grocery-shopping-visual-experience",
+      "type": "watch-proof",
+      "title": "product reviews visual summary | DigitalHut Watch Proof",
+      "keywords": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "best deals near me visual guide",
+        "grocery near me source proof",
+        "pharmacy near me visual guide",
+        "should I buy this product video proof",
+        "grocery shopping visual experience",
+        "grocery shopping 3D experience"
+      ],
+      "relatedRoutes": [
+        "/blog/grocery-shopping-visual-experience",
+        "/category/mainstream-streaming"
+      ]
+    },
+    {
+      "route": "/blog/smiley-face-filter-reaction-reel",
+      "type": "blog-proof",
+      "title": "funny videos explained with sources | DigitalHut Proof",
+      "keywords": [
+        "funny videos explained with sources",
+        "viral videos source map",
+        "YouTube funny video observatory",
+        "TikTok funny video source proof",
+        "meme video timeline explained",
+        "Reddit funny video visual guide",
+        "smiley face filter reaction reel",
+        "funny smiley face edit"
+      ],
+      "relatedRoutes": [
+        "/watch/smiley-face-filter-reaction-reel",
+        "/category/mainstream-streaming"
+      ]
+    },
+    {
+      "route": "/watch/smiley-face-filter-reaction-reel",
+      "type": "watch-proof",
+      "title": "funny videos explained with sources | DigitalHut Watch Proof",
+      "keywords": [
+        "funny videos explained with sources",
+        "viral videos source map",
+        "YouTube funny video observatory",
+        "TikTok funny video source proof",
+        "meme video timeline explained",
+        "Reddit funny video visual guide",
+        "smiley face filter reaction reel",
+        "funny smiley face edit"
+      ],
+      "relatedRoutes": [
+        "/blog/smiley-face-filter-reaction-reel",
+        "/category/mainstream-streaming"
+      ]
+    },
+    {
+      "route": "/blog/ai-microdrama-visual-observatory",
+      "type": "blog-proof",
+      "title": "funny videos explained with sources | DigitalHut Proof",
+      "keywords": [
+        "funny videos explained with sources",
+        "viral videos source map",
+        "YouTube funny video observatory",
+        "TikTok funny video source proof",
+        "meme video timeline explained",
+        "Reddit funny video visual guide",
+        "AI microdrama visual observatory",
+        "AI generated short series analysis"
+      ],
+      "relatedRoutes": [
+        "/watch/ai-microdrama-visual-observatory",
+        "/category/mainstream-streaming"
+      ]
+    },
+    {
+      "route": "/watch/ai-microdrama-visual-observatory",
+      "type": "watch-proof",
+      "title": "funny videos explained with sources | DigitalHut Watch Proof",
+      "keywords": [
+        "funny videos explained with sources",
+        "viral videos source map",
+        "YouTube funny video observatory",
+        "TikTok funny video source proof",
+        "meme video timeline explained",
+        "Reddit funny video visual guide",
+        "AI microdrama visual observatory",
+        "AI generated short series analysis"
+      ],
+      "relatedRoutes": [
+        "/blog/ai-microdrama-visual-observatory",
+        "/category/mainstream-streaming"
+      ]
+    },
+    {
+      "route": "/blog/local-business-reel-transformation-map",
+      "type": "blog-proof",
+      "title": "restaurants near me visual guide | DigitalHut Proof",
+      "keywords": [
+        "restaurants near me visual guide",
+        "food near me video map",
+        "lunch near me source-backed review",
+        "best restaurants near me 3D preview",
+        "menu near me visual observatory",
+        "food open now watch route",
+        "local business reel transformation map",
+        "barber shop social media reel"
+      ],
+      "relatedRoutes": [
+        "/watch/local-business-reel-transformation-map",
+        "/category/businesses"
+      ]
+    },
+    {
+      "route": "/watch/local-business-reel-transformation-map",
+      "type": "watch-proof",
+      "title": "restaurants near me visual guide | DigitalHut Watch Proof",
+      "keywords": [
+        "restaurants near me visual guide",
+        "food near me video map",
+        "lunch near me source-backed review",
+        "best restaurants near me 3D preview",
+        "menu near me visual observatory",
+        "food open now watch route",
+        "local business reel transformation map",
+        "barber shop social media reel"
+      ],
+      "relatedRoutes": [
+        "/blog/local-business-reel-transformation-map",
+        "/category/businesses"
+      ]
+    },
+    {
+      "route": "/blog/what-am-i-watching-viral-video-explained",
+      "type": "blog-proof",
+      "title": "funny videos explained with sources | DigitalHut Proof",
+      "keywords": [
+        "funny videos explained with sources",
+        "viral videos source map",
+        "YouTube funny video observatory",
+        "TikTok funny video source proof",
+        "meme video timeline explained",
+        "Reddit funny video visual guide",
+        "what am I watching viral video explained",
+        "viral video source map visual experience"
+      ],
+      "relatedRoutes": [
+        "/watch/what-am-i-watching-viral-video-explained",
+        "/category/what-am-i-watching-observatory"
+      ]
+    },
+    {
+      "route": "/watch/what-am-i-watching-viral-video-explained",
+      "type": "watch-proof",
+      "title": "funny videos explained with sources | DigitalHut Watch Proof",
+      "keywords": [
+        "funny videos explained with sources",
+        "viral videos source map",
+        "YouTube funny video observatory",
+        "TikTok funny video source proof",
+        "meme video timeline explained",
+        "Reddit funny video visual guide",
+        "what am I watching viral video explained",
+        "viral video source map visual experience"
+      ],
+      "relatedRoutes": [
+        "/blog/what-am-i-watching-viral-video-explained",
+        "/category/what-am-i-watching-observatory"
+      ]
+    },
+    {
+      "route": "/blog/watch-video-with-3d-model-proof",
+      "type": "blog-proof",
+      "title": "funny videos explained with sources | DigitalHut Proof",
+      "keywords": [
+        "funny videos explained with sources",
+        "viral videos source map",
+        "YouTube funny video observatory",
+        "TikTok funny video source proof",
+        "meme video timeline explained",
+        "Reddit funny video visual guide",
+        "watch video with 3D model proof",
+        "video with GLB renderer proof"
+      ],
+      "relatedRoutes": [
+        "/watch/watch-video-with-3d-model-proof",
+        "/category/what-am-i-watching-observatory"
+      ]
+    },
+    {
+      "route": "/watch/watch-video-with-3d-model-proof",
+      "type": "watch-proof",
+      "title": "funny videos explained with sources | DigitalHut Watch Proof",
+      "keywords": [
+        "funny videos explained with sources",
+        "viral videos source map",
+        "YouTube funny video observatory",
+        "TikTok funny video source proof",
+        "meme video timeline explained",
+        "Reddit funny video visual guide",
+        "watch video with 3D model proof",
+        "video with GLB renderer proof"
+      ],
+      "relatedRoutes": [
+        "/blog/watch-video-with-3d-model-proof",
+        "/category/what-am-i-watching-observatory"
+      ]
+    },
+    {
+      "route": "/blog/podcast-source-moment-for-viral-video",
+      "type": "blog-proof",
+      "title": "funny videos explained with sources | DigitalHut Proof",
+      "keywords": [
+        "funny videos explained with sources",
+        "viral videos source map",
+        "YouTube funny video observatory",
+        "TikTok funny video source proof",
+        "meme video timeline explained",
+        "Reddit funny video visual guide",
+        "podcast source moment for viral video",
+        "Apple podcast clip with video analysis"
+      ],
+      "relatedRoutes": [
+        "/watch/podcast-source-moment-for-viral-video",
+        "/category/what-am-i-watching-observatory"
+      ]
+    },
+    {
+      "route": "/watch/podcast-source-moment-for-viral-video",
+      "type": "watch-proof",
+      "title": "funny videos explained with sources | DigitalHut Watch Proof",
+      "keywords": [
+        "funny videos explained with sources",
+        "viral videos source map",
+        "YouTube funny video observatory",
+        "TikTok funny video source proof",
+        "meme video timeline explained",
+        "Reddit funny video visual guide",
+        "podcast source moment for viral video",
+        "Apple podcast clip with video analysis"
+      ],
+      "relatedRoutes": [
+        "/blog/podcast-source-moment-for-viral-video",
+        "/category/what-am-i-watching-observatory"
+      ]
+    },
+    {
+      "route": "/blog/looking-for-lunch-visual-observatory",
+      "type": "blog-proof",
+      "title": "restaurants near me visual guide | DigitalHut Proof",
+      "keywords": [
+        "restaurants near me visual guide",
+        "food near me video map",
+        "lunch near me source-backed review",
+        "best restaurants near me 3D preview",
+        "menu near me visual observatory",
+        "food open now watch route",
+        "looking for lunch near me visual guide",
+        "what should I eat today visual experience"
+      ],
+      "relatedRoutes": [
+        "/watch/looking-for-lunch-visual-observatory",
+        "/category/mundane-off-time-experience"
+      ]
+    },
+    {
+      "route": "/watch/looking-for-lunch-visual-observatory",
+      "type": "watch-proof",
+      "title": "restaurants near me visual guide | DigitalHut Watch Proof",
+      "keywords": [
+        "restaurants near me visual guide",
+        "food near me video map",
+        "lunch near me source-backed review",
+        "best restaurants near me 3D preview",
+        "menu near me visual observatory",
+        "food open now watch route",
+        "looking for lunch near me visual guide",
+        "what should I eat today visual experience"
+      ],
+      "relatedRoutes": [
+        "/blog/looking-for-lunch-visual-observatory",
+        "/category/mundane-off-time-experience"
+      ]
+    },
+    {
+      "route": "/blog/calling-an-uber-visual-trip-guide",
+      "type": "blog-proof",
+      "title": "Uber pickup visual guide | DigitalHut Proof",
+      "keywords": [
+        "Uber pickup visual guide",
+        "airport Uber pickup source map",
+        "rideshare pickup location explained",
+        "ride to airport visual route",
+        "taxi near me 3D pickup view",
+        "rideshare price spike explained",
+        "calling an Uber visual trip guide",
+        "airport Uber pickup visual guide"
+      ],
+      "relatedRoutes": [
+        "/watch/calling-an-uber-visual-trip-guide",
+        "/category/mundane-off-time-experience"
+      ]
+    },
+    {
+      "route": "/watch/calling-an-uber-visual-trip-guide",
+      "type": "watch-proof",
+      "title": "Uber pickup visual guide | DigitalHut Watch Proof",
+      "keywords": [
+        "Uber pickup visual guide",
+        "airport Uber pickup source map",
+        "rideshare pickup location explained",
+        "ride to airport visual route",
+        "taxi near me 3D pickup view",
+        "rideshare price spike explained",
+        "calling an Uber visual trip guide",
+        "airport Uber pickup visual guide"
+      ],
+      "relatedRoutes": [
+        "/blog/calling-an-uber-visual-trip-guide",
+        "/category/mundane-off-time-experience"
+      ]
+    }
+  ],
+  "discoveryRoutes": [
+    {
+      "route": "/blog/full-view-episode-alternative",
+      "canonical": "https://www.digitalhut.app/blog/full-view-episode-alternative",
+      "type": "blog-proof",
+      "title": "Full-View Episode Alternative: DigitalHut Entertainment Observatory Proof | DigitalHut Proof",
+      "description": "A public proof page for the full DigitalHut watch session: video search, sound, autoplay, next episode, previous episode, 3D Model View, podcast/source moments, and live analytics in one dapp interface.",
+      "keywords": [
+        "YouTube alternative full-view episode",
+        "full-view episode with 3D model view",
+        "video app with podcast moments and live analytics",
+        "dapp entertainment observatory episode",
+        "compact video 3D podcast interface",
+        "YouTube alternative full-view episode with 3D model view",
+        "full-view episode with podcast moments and live analytics",
+        "DigitalHut observatory experience",
+        "YouTube content radar with GLB proof",
+        "automatic 3D autoplay system",
+        "YouTube alternative full-view episode DigitalHut",
+        "YouTube alternative full-view episode DigitalHut Presentation"
+      ],
+      "proofAngle": "video search, sound, autoplay, next/previous episode, 3D Model View, podcast/source moment, analytics, source proof, and backlink path",
+      "relatedRoutes": [
+        "/watch/full-view-episode-alternative",
+        "/category/digitalhut-presentation"
+      ]
+    },
+    {
+      "route": "/watch/full-view-episode-alternative",
+      "canonical": "https://www.digitalhut.app/watch/full-view-episode-alternative",
+      "type": "watch-proof",
+      "title": "Full-View Episode Alternative: DigitalHut Entertainment Observatory Proof | DigitalHut Watch Proof",
+      "description": "A public proof page for the full DigitalHut watch session: video search, sound, autoplay, next episode, previous episode, 3D Model View, podcast/source moments, and live analytics in one dapp interface.",
+      "keywords": [
+        "YouTube alternative full-view episode",
+        "full-view episode with 3D model view",
+        "video app with podcast moments and live analytics",
+        "dapp entertainment observatory episode",
+        "compact video 3D podcast interface",
+        "YouTube alternative full-view episode with 3D model view",
+        "full-view episode with podcast moments and live analytics",
+        "DigitalHut observatory experience",
+        "YouTube content radar with GLB proof",
+        "automatic 3D autoplay system",
+        "YouTube alternative full-view episode DigitalHut",
+        "YouTube alternative full-view episode DigitalHut Presentation"
+      ],
+      "proofAngle": "video search, sound, autoplay, next/previous episode, 3D Model View, podcast/source moment, analytics, source proof, and backlink path",
+      "relatedRoutes": [
+        "/blog/full-view-episode-alternative",
+        "/category/digitalhut-presentation"
+      ]
+    },
+    {
+      "route": "/blog/home-project-3d-visual-planner",
+      "canonical": "https://www.digitalhut.app/blog/home-project-3d-visual-planner",
+      "type": "blog-proof",
+      "title": "Home Project 3D Visual Planner: DigitalHut Observatory Proof | DigitalHut Proof",
+      "description": "A public proof page for turning a home project search into a video-aware 3D planning view with GLB preview, source links, timeline context, and shareable backlinks.",
+      "keywords": [
+        "home project 3D visual planner",
+        "home remodel 3D visualization",
+        "AI guided 3D room presentation",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar",
+        "funny video explained DigitalHut",
+        "funny video explained Mainstream Streaming",
+        "viral clip source map DigitalHut",
+        "viral clip source map Mainstream Streaming",
+        "TikTok reel context DigitalHut",
+        "TikTok reel context Mainstream Streaming"
+      ],
+      "proofAngle": "video radar, GLB proof dock, timeline, podcast/source moment, and shareable backlink",
+      "relatedRoutes": [
+        "/watch/home-project-3d-visual-planner",
+        "/category/mainstream-streaming"
+      ]
+    },
+    {
+      "route": "/watch/home-project-3d-visual-planner",
+      "canonical": "https://www.digitalhut.app/watch/home-project-3d-visual-planner",
+      "type": "watch-proof",
+      "title": "Home Project 3D Visual Planner: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "description": "A public proof page for turning a home project search into a video-aware 3D planning view with GLB preview, source links, timeline context, and shareable backlinks.",
+      "keywords": [
+        "home project 3D visual planner",
+        "home remodel 3D visualization",
+        "AI guided 3D room presentation",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar",
+        "funny video explained DigitalHut",
+        "funny video explained Mainstream Streaming",
+        "viral clip source map DigitalHut",
+        "viral clip source map Mainstream Streaming",
+        "TikTok reel context DigitalHut",
+        "TikTok reel context Mainstream Streaming"
+      ],
+      "proofAngle": "video radar, GLB proof dock, timeline, podcast/source moment, and shareable backlink",
+      "relatedRoutes": [
+        "/blog/home-project-3d-visual-planner",
+        "/category/mainstream-streaming"
+      ]
+    },
+    {
+      "route": "/blog/university-research-3d-experience",
+      "canonical": "https://www.digitalhut.app/blog/university-research-3d-experience",
+      "type": "blog-proof",
+      "title": "University Research 3D Experience: DigitalHut Observatory Proof | DigitalHut Proof",
+      "description": "A ranked research proof page showing how DigitalHut can turn university research metadata into a bubble map, timeline, GLB research preview, and source evidence lane.",
+      "keywords": [
+        "university research 3D experience",
+        "research engine for 3D evidence",
+        "AI research engine with visual analysis",
+        "what is this topic explained with sources",
+        "public information source map",
+        "research before buying visual guide",
+        "wiki lookup visual hub DigitalHut",
+        "wiki lookup visual hub Researcher",
+        "what is this topic DigitalHut",
+        "what is this topic Researcher",
+        "source-backed summary DigitalHut",
+        "source-backed summary Researcher"
+      ],
+      "proofAngle": "source evidence, study summary, bubble map, timeline, and GLB research preview",
+      "relatedRoutes": [
+        "/watch/university-research-3d-experience",
+        "/category/researcher"
+      ]
+    },
+    {
+      "route": "/watch/university-research-3d-experience",
+      "canonical": "https://www.digitalhut.app/watch/university-research-3d-experience",
+      "type": "watch-proof",
+      "title": "University Research 3D Experience: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "description": "A ranked research proof page showing how DigitalHut can turn university research metadata into a bubble map, timeline, GLB research preview, and source evidence lane.",
+      "keywords": [
+        "university research 3D experience",
+        "research engine for 3D evidence",
+        "AI research engine with visual analysis",
+        "what is this topic explained with sources",
+        "public information source map",
+        "research before buying visual guide",
+        "wiki lookup visual hub DigitalHut",
+        "wiki lookup visual hub Researcher",
+        "what is this topic DigitalHut",
+        "what is this topic Researcher",
+        "source-backed summary DigitalHut",
+        "source-backed summary Researcher"
+      ],
+      "proofAngle": "source evidence, study summary, bubble map, timeline, and GLB research preview",
+      "relatedRoutes": [
+        "/blog/university-research-3d-experience",
+        "/category/researcher"
+      ]
+    },
+    {
+      "route": "/blog/home-remodel-3d-visualization",
+      "canonical": "https://www.digitalhut.app/blog/home-remodel-3d-visualization",
+      "type": "blog-proof",
+      "title": "Home Remodel 3D Visualization: DigitalHut Observatory Proof | DigitalHut Proof",
+      "description": "A useful proof page for remodel searches, before-and-after planning, GLB room previews, source cards, and episode analytics that explain the visual build.",
+      "keywords": [
+        "home remodel 3D visualization",
+        "home project 3D visual planner",
+        "AI guided 3D room presentation",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar",
+        "funny video explained DigitalHut",
+        "funny video explained Mainstream Streaming",
+        "viral clip source map DigitalHut",
+        "viral clip source map Mainstream Streaming",
+        "TikTok reel context DigitalHut",
+        "TikTok reel context Mainstream Streaming"
+      ],
+      "proofAngle": "video radar, GLB proof dock, timeline, podcast/source moment, and shareable backlink",
+      "relatedRoutes": [
+        "/watch/home-remodel-3d-visualization",
+        "/category/mainstream-streaming"
+      ]
+    },
+    {
+      "route": "/watch/home-remodel-3d-visualization",
+      "canonical": "https://www.digitalhut.app/watch/home-remodel-3d-visualization",
+      "type": "watch-proof",
+      "title": "Home Remodel 3D Visualization: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "description": "A useful proof page for remodel searches, before-and-after planning, GLB room previews, source cards, and episode analytics that explain the visual build.",
+      "keywords": [
+        "home remodel 3D visualization",
+        "home project 3D visual planner",
+        "AI guided 3D room presentation",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar",
+        "funny video explained DigitalHut",
+        "funny video explained Mainstream Streaming",
+        "viral clip source map DigitalHut",
+        "viral clip source map Mainstream Streaming",
+        "TikTok reel context DigitalHut",
+        "TikTok reel context Mainstream Streaming"
+      ],
+      "proofAngle": "video radar, GLB proof dock, timeline, podcast/source moment, and shareable backlink",
+      "relatedRoutes": [
+        "/blog/home-remodel-3d-visualization",
+        "/category/mainstream-streaming"
+      ]
+    },
+    {
+      "route": "/blog/university-research-visual-expercience",
+      "canonical": "https://www.digitalhut.app/blog/university-research-visual-expercience",
+      "type": "blog-proof",
+      "title": "University Research Visual Expercience: DigitalHut Observatory Proof | DigitalHut Proof",
+      "description": "A spelling-variant long-tail proof page for people searching research visual experiences before they know DigitalHut, GLB, or observatory language.",
+      "keywords": [
+        "university research visual expercience",
+        "university research visual experience",
+        "research engine for 3D evidence",
+        "what is this topic explained with sources",
+        "public information source map",
+        "research before buying visual guide",
+        "wiki lookup visual hub DigitalHut",
+        "wiki lookup visual hub Researcher",
+        "what is this topic DigitalHut",
+        "what is this topic Researcher",
+        "source-backed summary DigitalHut",
+        "source-backed summary Researcher"
+      ],
+      "proofAngle": "source evidence, study summary, bubble map, timeline, and GLB research preview",
+      "relatedRoutes": [
+        "/watch/university-research-visual-expercience",
+        "/category/researcher"
+      ]
+    },
+    {
+      "route": "/watch/university-research-visual-expercience",
+      "canonical": "https://www.digitalhut.app/watch/university-research-visual-expercience",
+      "type": "watch-proof",
+      "title": "University Research Visual Expercience: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "description": "A spelling-variant long-tail proof page for people searching research visual experiences before they know DigitalHut, GLB, or observatory language.",
+      "keywords": [
+        "university research visual expercience",
+        "university research visual experience",
+        "research engine for 3D evidence",
+        "what is this topic explained with sources",
+        "public information source map",
+        "research before buying visual guide",
+        "wiki lookup visual hub DigitalHut",
+        "wiki lookup visual hub Researcher",
+        "what is this topic DigitalHut",
+        "what is this topic Researcher",
+        "source-backed summary DigitalHut",
+        "source-backed summary Researcher"
+      ],
+      "proofAngle": "source evidence, study summary, bubble map, timeline, and GLB research preview",
+      "relatedRoutes": [
+        "/blog/university-research-visual-expercience",
+        "/category/researcher"
+      ]
+    },
+    {
+      "route": "/blog/university-research-visual-experience",
+      "canonical": "https://www.digitalhut.app/blog/university-research-visual-experience",
+      "type": "blog-proof",
+      "title": "University Research Visual Experience: DigitalHut Observatory Proof | DigitalHut Proof",
+      "description": "A clean research proof article for source-backed study summaries, GLB previews, evidence tables, and timeline notes.",
+      "keywords": [
+        "university research visual experience",
+        "university research 3D experience",
+        "AI research engine with visual analysis",
+        "what is this topic explained with sources",
+        "public information source map",
+        "research before buying visual guide",
+        "wiki lookup visual hub DigitalHut",
+        "wiki lookup visual hub Researcher",
+        "what is this topic DigitalHut",
+        "what is this topic Researcher",
+        "source-backed summary DigitalHut",
+        "source-backed summary Researcher"
+      ],
+      "proofAngle": "source evidence, study summary, bubble map, timeline, and GLB research preview",
+      "relatedRoutes": [
+        "/watch/university-research-visual-experience",
+        "/category/researcher"
+      ]
+    },
+    {
+      "route": "/watch/university-research-visual-experience",
+      "canonical": "https://www.digitalhut.app/watch/university-research-visual-experience",
+      "type": "watch-proof",
+      "title": "University Research Visual Experience: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "description": "A clean research proof article for source-backed study summaries, GLB previews, evidence tables, and timeline notes.",
+      "keywords": [
+        "university research visual experience",
+        "university research 3D experience",
+        "AI research engine with visual analysis",
+        "what is this topic explained with sources",
+        "public information source map",
+        "research before buying visual guide",
+        "wiki lookup visual hub DigitalHut",
+        "wiki lookup visual hub Researcher",
+        "what is this topic DigitalHut",
+        "what is this topic Researcher",
+        "source-backed summary DigitalHut",
+        "source-backed summary Researcher"
+      ],
+      "proofAngle": "source evidence, study summary, bubble map, timeline, and GLB research preview",
+      "relatedRoutes": [
+        "/blog/university-research-visual-experience",
+        "/category/researcher"
+      ]
+    },
+    {
+      "route": "/blog/grocery-shopping-3d-experience",
+      "canonical": "https://www.digitalhut.app/blog/grocery-shopping-3d-experience",
+      "type": "blog-proof",
+      "title": "product reviews visual summary | DigitalHut Proof",
+      "description": "product reviews visual summary on DigitalHut: review source links, product/place context, GLB proof, blog proof, and behavior signals for very-high shopping/review intent.",
+      "keywords": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "best deals near me visual guide",
+        "grocery near me source proof",
+        "pharmacy near me visual guide",
+        "should I buy this product video proof",
+        "grocery shopping 3D experience",
+        "funny grocery reel",
+        "TikTok grocery shopping reel",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar"
+      ],
+      "proofAngle": "review source links, product/place context, GLB proof, blog proof, and behavior signals",
+      "relatedRoutes": [
+        "/watch/grocery-shopping-3d-experience",
+        "/category/mainstream-streaming"
+      ]
+    },
+    {
+      "route": "/watch/grocery-shopping-3d-experience",
+      "canonical": "https://www.digitalhut.app/watch/grocery-shopping-3d-experience",
+      "type": "watch-proof",
+      "title": "product reviews visual summary | DigitalHut Watch Proof",
+      "description": "product reviews visual summary on DigitalHut: review source links, product/place context, GLB proof, blog proof, and behavior signals for very-high shopping/review intent.",
+      "keywords": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "best deals near me visual guide",
+        "grocery near me source proof",
+        "pharmacy near me visual guide",
+        "should I buy this product video proof",
+        "grocery shopping 3D experience",
+        "funny grocery reel",
+        "TikTok grocery shopping reel",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar"
+      ],
+      "proofAngle": "review source links, product/place context, GLB proof, blog proof, and behavior signals",
+      "relatedRoutes": [
+        "/blog/grocery-shopping-3d-experience",
+        "/category/mainstream-streaming"
+      ]
+    },
+    {
+      "route": "/blog/planetary-research-3d-experience",
+      "canonical": "https://www.digitalhut.app/blog/planetary-research-3d-experience",
+      "type": "blog-proof",
+      "title": "Planetary Research 3D Experience: DigitalHut Observatory Proof | DigitalHut Proof",
+      "description": "A planetary research proof article using a 3D observatory page, source-backed context, episode timeline, and GLB visual evidence.",
+      "keywords": [
+        "planetary research 3D experience",
+        "planetary research data 3D observatory",
+        "orbital compute 3D explainer",
+        "orbital compute visual guide",
+        "satellite infrastructure video context",
+        "planetary research 3D DigitalHut",
+        "planetary research 3D Planetary",
+        "orbital visual guide DigitalHut",
+        "orbital visual guide Planetary",
+        "climate data observatory DigitalHut",
+        "climate data observatory Planetary",
+        "space video explanation DigitalHut"
+      ],
+      "proofAngle": "source evidence, study summary, bubble map, timeline, and GLB research preview",
+      "relatedRoutes": [
+        "/watch/planetary-research-3d-experience",
+        "/category/planetary"
+      ]
+    },
+    {
+      "route": "/watch/planetary-research-3d-experience",
+      "canonical": "https://www.digitalhut.app/watch/planetary-research-3d-experience",
+      "type": "watch-proof",
+      "title": "Planetary Research 3D Experience: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "description": "A planetary research proof article using a 3D observatory page, source-backed context, episode timeline, and GLB visual evidence.",
+      "keywords": [
+        "planetary research 3D experience",
+        "planetary research data 3D observatory",
+        "orbital compute 3D explainer",
+        "orbital compute visual guide",
+        "satellite infrastructure video context",
+        "planetary research 3D DigitalHut",
+        "planetary research 3D Planetary",
+        "orbital visual guide DigitalHut",
+        "orbital visual guide Planetary",
+        "climate data observatory DigitalHut",
+        "climate data observatory Planetary",
+        "space video explanation DigitalHut"
+      ],
+      "proofAngle": "source evidence, study summary, bubble map, timeline, and GLB research preview",
+      "relatedRoutes": [
+        "/blog/planetary-research-3d-experience",
+        "/category/planetary"
+      ]
+    },
+    {
+      "route": "/blog/research-engine-for-3d-evidence",
+      "canonical": "https://www.digitalhut.app/blog/research-engine-for-3d-evidence",
+      "type": "blog-proof",
+      "title": "Research Engine For 3D Evidence: DigitalHut Observatory Proof | DigitalHut Proof",
+      "description": "A researcher-facing proof page for confirmed metadata, inferred context, source links, GLB evidence, and next questions.",
+      "keywords": [
+        "research engine for 3D evidence",
+        "GLB research assistant",
+        "AI research engine with visual analysis",
+        "what is this topic explained with sources",
+        "public information source map",
+        "research before buying visual guide",
+        "wiki lookup visual hub DigitalHut",
+        "wiki lookup visual hub Researcher",
+        "what is this topic DigitalHut",
+        "what is this topic Researcher",
+        "source-backed summary DigitalHut",
+        "source-backed summary Researcher"
+      ],
+      "proofAngle": "source evidence, study summary, bubble map, timeline, and GLB research preview",
+      "relatedRoutes": [
+        "/watch/research-engine-for-3d-evidence",
+        "/category/researcher"
+      ]
+    },
+    {
+      "route": "/watch/research-engine-for-3d-evidence",
+      "canonical": "https://www.digitalhut.app/watch/research-engine-for-3d-evidence",
+      "type": "watch-proof",
+      "title": "Research Engine For 3D Evidence: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "description": "A researcher-facing proof page for confirmed metadata, inferred context, source links, GLB evidence, and next questions.",
+      "keywords": [
+        "research engine for 3D evidence",
+        "GLB research assistant",
+        "AI research engine with visual analysis",
+        "what is this topic explained with sources",
+        "public information source map",
+        "research before buying visual guide",
+        "wiki lookup visual hub DigitalHut",
+        "wiki lookup visual hub Researcher",
+        "what is this topic DigitalHut",
+        "what is this topic Researcher",
+        "source-backed summary DigitalHut",
+        "source-backed summary Researcher"
+      ],
+      "proofAngle": "source evidence, study summary, bubble map, timeline, and GLB research preview",
+      "relatedRoutes": [
+        "/blog/research-engine-for-3d-evidence",
+        "/category/researcher"
+      ]
+    },
+    {
+      "route": "/blog/traffic-study-3d-experience",
+      "canonical": "https://www.digitalhut.app/blog/traffic-study-3d-experience",
+      "type": "blog-proof",
+      "title": "Traffic Study 3D Experience: DigitalHut Observatory Proof | DigitalHut Proof",
+      "description": "A public proof post for traffic study searches that connects video, city planning context, timeline findings, source links, and 3D visual analysis.",
+      "keywords": [
+        "traffic study 3D experience",
+        "traffic data visual experience",
+        "city planning 3D visual analysis",
+        "airport Uber pickup visual guide",
+        "rideshare pickup location explained",
+        "traffic delay visual observatory",
+        "Uber pickup guide DigitalHut",
+        "Uber pickup guide Mobility",
+        "airport rideshare source map DigitalHut",
+        "airport rideshare source map Mobility",
+        "traffic visual study DigitalHut",
+        "traffic visual study Mobility"
+      ],
+      "proofAngle": "source evidence, study summary, bubble map, timeline, and GLB research preview",
+      "relatedRoutes": [
+        "/watch/traffic-study-3d-experience",
+        "/category/mobility"
+      ]
+    },
+    {
+      "route": "/watch/traffic-study-3d-experience",
+      "canonical": "https://www.digitalhut.app/watch/traffic-study-3d-experience",
+      "type": "watch-proof",
+      "title": "Traffic Study 3D Experience: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "description": "A public proof post for traffic study searches that connects video, city planning context, timeline findings, source links, and 3D visual analysis.",
+      "keywords": [
+        "traffic study 3D experience",
+        "traffic data visual experience",
+        "city planning 3D visual analysis",
+        "airport Uber pickup visual guide",
+        "rideshare pickup location explained",
+        "traffic delay visual observatory",
+        "Uber pickup guide DigitalHut",
+        "Uber pickup guide Mobility",
+        "airport rideshare source map DigitalHut",
+        "airport rideshare source map Mobility",
+        "traffic visual study DigitalHut",
+        "traffic visual study Mobility"
+      ],
+      "proofAngle": "source evidence, study summary, bubble map, timeline, and GLB research preview",
+      "relatedRoutes": [
+        "/blog/traffic-study-3d-experience",
+        "/category/mobility"
+      ]
+    },
+    {
+      "route": "/blog/grocery-shopping-visual-expercience",
+      "canonical": "https://www.digitalhut.app/blog/grocery-shopping-visual-expercience",
+      "type": "blog-proof",
+      "title": "product reviews visual summary | DigitalHut Proof",
+      "description": "product reviews visual summary on DigitalHut: review source links, product/place context, GLB proof, blog proof, and behavior signals for very-high shopping/review intent.",
+      "keywords": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "best deals near me visual guide",
+        "grocery near me source proof",
+        "pharmacy near me visual guide",
+        "should I buy this product video proof",
+        "grocery shopping visual expercience",
+        "grocery shopping visual experience",
+        "funny grocery reel",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar"
+      ],
+      "proofAngle": "review source links, product/place context, GLB proof, blog proof, and behavior signals",
+      "relatedRoutes": [
+        "/watch/grocery-shopping-visual-expercience",
+        "/category/mainstream-streaming"
+      ]
+    },
+    {
+      "route": "/watch/grocery-shopping-visual-expercience",
+      "canonical": "https://www.digitalhut.app/watch/grocery-shopping-visual-expercience",
+      "type": "watch-proof",
+      "title": "product reviews visual summary | DigitalHut Watch Proof",
+      "description": "product reviews visual summary on DigitalHut: review source links, product/place context, GLB proof, blog proof, and behavior signals for very-high shopping/review intent.",
+      "keywords": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "best deals near me visual guide",
+        "grocery near me source proof",
+        "pharmacy near me visual guide",
+        "should I buy this product video proof",
+        "grocery shopping visual expercience",
+        "grocery shopping visual experience",
+        "funny grocery reel",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar"
+      ],
+      "proofAngle": "review source links, product/place context, GLB proof, blog proof, and behavior signals",
+      "relatedRoutes": [
+        "/blog/grocery-shopping-visual-expercience",
+        "/category/mainstream-streaming"
+      ]
+    },
+    {
+      "route": "/blog/grocery-shopping-visual-experience",
+      "canonical": "https://www.digitalhut.app/blog/grocery-shopping-visual-experience",
+      "type": "blog-proof",
+      "title": "product reviews visual summary | DigitalHut Proof",
+      "description": "product reviews visual summary on DigitalHut: review source links, product/place context, GLB proof, blog proof, and behavior signals for very-high shopping/review intent.",
+      "keywords": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "best deals near me visual guide",
+        "grocery near me source proof",
+        "pharmacy near me visual guide",
+        "should I buy this product video proof",
+        "grocery shopping visual experience",
+        "grocery shopping 3D experience",
+        "Instagram grocery reel",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar"
+      ],
+      "proofAngle": "review source links, product/place context, GLB proof, blog proof, and behavior signals",
+      "relatedRoutes": [
+        "/watch/grocery-shopping-visual-experience",
+        "/category/mainstream-streaming"
+      ]
+    },
+    {
+      "route": "/watch/grocery-shopping-visual-experience",
+      "canonical": "https://www.digitalhut.app/watch/grocery-shopping-visual-experience",
+      "type": "watch-proof",
+      "title": "product reviews visual summary | DigitalHut Watch Proof",
+      "description": "product reviews visual summary on DigitalHut: review source links, product/place context, GLB proof, blog proof, and behavior signals for very-high shopping/review intent.",
+      "keywords": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "best deals near me visual guide",
+        "grocery near me source proof",
+        "pharmacy near me visual guide",
+        "should I buy this product video proof",
+        "grocery shopping visual experience",
+        "grocery shopping 3D experience",
+        "Instagram grocery reel",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar"
+      ],
+      "proofAngle": "review source links, product/place context, GLB proof, blog proof, and behavior signals",
+      "relatedRoutes": [
+        "/blog/grocery-shopping-visual-experience",
+        "/category/mainstream-streaming"
+      ]
+    },
+    {
+      "route": "/blog/ai-research-engine-with-visual-analysis",
+      "canonical": "https://www.digitalhut.app/blog/ai-research-engine-with-visual-analysis",
+      "type": "blog-proof",
+      "title": "AI Research Engine With Visual Analysis: DigitalHut Observatory Proof | DigitalHut Proof",
+      "description": "A developer and researcher proof page showing how DigitalHut turns metadata, source context, GLB preview, and backlink routes into useful visual research.",
+      "keywords": [
+        "AI research engine with visual analysis",
+        "research engine for 3D evidence",
+        "visual evidence notes for research studies",
+        "what is this topic explained with sources",
+        "public information source map",
+        "research before buying visual guide",
+        "wiki lookup visual hub DigitalHut",
+        "wiki lookup visual hub Researcher",
+        "what is this topic DigitalHut",
+        "what is this topic Researcher",
+        "source-backed summary DigitalHut",
+        "source-backed summary Researcher"
+      ],
+      "proofAngle": "source evidence, study summary, bubble map, timeline, and GLB research preview",
+      "relatedRoutes": [
+        "/watch/ai-research-engine-with-visual-analysis",
+        "/category/researcher"
+      ]
+    },
+    {
+      "route": "/watch/ai-research-engine-with-visual-analysis",
+      "canonical": "https://www.digitalhut.app/watch/ai-research-engine-with-visual-analysis",
+      "type": "watch-proof",
+      "title": "AI Research Engine With Visual Analysis: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "description": "A developer and researcher proof page showing how DigitalHut turns metadata, source context, GLB preview, and backlink routes into useful visual research.",
+      "keywords": [
+        "AI research engine with visual analysis",
+        "research engine for 3D evidence",
+        "visual evidence notes for research studies",
+        "what is this topic explained with sources",
+        "public information source map",
+        "research before buying visual guide",
+        "wiki lookup visual hub DigitalHut",
+        "wiki lookup visual hub Researcher",
+        "what is this topic DigitalHut",
+        "what is this topic Researcher",
+        "source-backed summary DigitalHut",
+        "source-backed summary Researcher"
+      ],
+      "proofAngle": "source evidence, study summary, bubble map, timeline, and GLB research preview",
+      "relatedRoutes": [
+        "/blog/ai-research-engine-with-visual-analysis",
+        "/category/researcher"
+      ]
+    },
+    {
+      "route": "/blog/animal-extinction-3d-experience",
+      "canonical": "https://www.digitalhut.app/blog/animal-extinction-3d-experience",
+      "type": "blog-proof",
+      "title": "Animal Extinction 3D Experience: DigitalHut Observatory Proof | DigitalHut Proof",
+      "description": "A research proof page for extinction study topics, source evidence, 3D context, timeline highlights, and careful next-question prompts.",
+      "keywords": [
+        "animal extinction 3D experience",
+        "animal extinction visual experience",
+        "AI guided visual research",
+        "what is this topic explained with sources",
+        "public information source map",
+        "research before buying visual guide",
+        "wiki lookup visual hub DigitalHut",
+        "wiki lookup visual hub Researcher",
+        "what is this topic DigitalHut",
+        "what is this topic Researcher",
+        "source-backed summary DigitalHut",
+        "source-backed summary Researcher"
+      ],
+      "proofAngle": "source evidence, study summary, bubble map, timeline, and GLB research preview",
+      "relatedRoutes": [
+        "/watch/animal-extinction-3d-experience",
+        "/category/researcher"
+      ]
+    },
+    {
+      "route": "/watch/animal-extinction-3d-experience",
+      "canonical": "https://www.digitalhut.app/watch/animal-extinction-3d-experience",
+      "type": "watch-proof",
+      "title": "Animal Extinction 3D Experience: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "description": "A research proof page for extinction study topics, source evidence, 3D context, timeline highlights, and careful next-question prompts.",
+      "keywords": [
+        "animal extinction 3D experience",
+        "animal extinction visual experience",
+        "AI guided visual research",
+        "what is this topic explained with sources",
+        "public information source map",
+        "research before buying visual guide",
+        "wiki lookup visual hub DigitalHut",
+        "wiki lookup visual hub Researcher",
+        "what is this topic DigitalHut",
+        "what is this topic Researcher",
+        "source-backed summary DigitalHut",
+        "source-backed summary Researcher"
+      ],
+      "proofAngle": "source evidence, study summary, bubble map, timeline, and GLB research preview",
+      "relatedRoutes": [
+        "/blog/animal-extinction-3d-experience",
+        "/category/researcher"
+      ]
+    },
+    {
+      "route": "/blog/coding-episode-3d-experience",
+      "canonical": "https://www.digitalhut.app/blog/coding-episode-3d-experience",
+      "type": "blog-proof",
+      "title": "Coding Episode 3D Experience: DigitalHut Observatory Proof | DigitalHut Proof",
+      "description": "A programmer proof page for turning coding videos into system maps, API context, renderer state, and 3D visual proof.",
+      "keywords": [
+        "coding episode 3D experience",
+        "developer 3D observatory system",
+        "API powered 3D renderer dapp",
+        "Google Cloud API dapp setup visual guide",
+        "Supabase Vercel dapp observatory",
+        "developer dapp 3D experience",
+        "developer dapp 3D DigitalHut",
+        "developer dapp 3D Programmer",
+        "coding episode visual guide DigitalHut",
+        "coding episode visual guide Programmer",
+        "Google Cloud API setup DigitalHut",
+        "Google Cloud API setup Programmer"
+      ],
+      "proofAngle": "video radar, GLB proof dock, timeline, podcast/source moment, and shareable backlink",
+      "relatedRoutes": [
+        "/watch/coding-episode-3d-experience",
+        "/category/programmer"
+      ]
+    },
+    {
+      "route": "/watch/coding-episode-3d-experience",
+      "canonical": "https://www.digitalhut.app/watch/coding-episode-3d-experience",
+      "type": "watch-proof",
+      "title": "Coding Episode 3D Experience: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "description": "A programmer proof page for turning coding videos into system maps, API context, renderer state, and 3D visual proof.",
+      "keywords": [
+        "coding episode 3D experience",
+        "developer 3D observatory system",
+        "API powered 3D renderer dapp",
+        "Google Cloud API dapp setup visual guide",
+        "Supabase Vercel dapp observatory",
+        "developer dapp 3D experience",
+        "developer dapp 3D DigitalHut",
+        "developer dapp 3D Programmer",
+        "coding episode visual guide DigitalHut",
+        "coding episode visual guide Programmer",
+        "Google Cloud API setup DigitalHut",
+        "Google Cloud API setup Programmer"
+      ],
+      "proofAngle": "video radar, GLB proof dock, timeline, podcast/source moment, and shareable backlink",
+      "relatedRoutes": [
+        "/blog/coding-episode-3d-experience",
+        "/category/programmer"
+      ]
+    },
+    {
+      "route": "/blog/developer-dapp-3d-experience",
+      "canonical": "https://www.digitalhut.app/blog/developer-dapp-3d-experience",
+      "type": "blog-proof",
+      "title": "Developer DApp 3D Experience: DigitalHut Observatory Proof | DigitalHut Proof",
+      "description": "A developer architecture proof article for the DApp structure, API source status, GLB renderer proof, and backend route.",
+      "keywords": [
+        "developer dapp 3D experience",
+        "3D observatory dapp structure",
+        "backend analytics for 3D dapp structure",
+        "Google Cloud API dapp setup visual guide",
+        "Supabase Vercel dapp observatory",
+        "developer dapp 3D DigitalHut",
+        "developer dapp 3D Programmer",
+        "coding episode visual guide DigitalHut",
+        "coding episode visual guide Programmer",
+        "Google Cloud API setup DigitalHut",
+        "Google Cloud API setup Programmer",
+        "Supabase Vercel dapp DigitalHut"
+      ],
+      "proofAngle": "developer architecture, API/source status, GLB renderer proof, and backend route",
+      "relatedRoutes": [
+        "/watch/developer-dapp-3d-experience",
+        "/category/programmer"
+      ]
+    },
+    {
+      "route": "/watch/developer-dapp-3d-experience",
+      "canonical": "https://www.digitalhut.app/watch/developer-dapp-3d-experience",
+      "type": "watch-proof",
+      "title": "Developer DApp 3D Experience: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "description": "A developer architecture proof article for the DApp structure, API source status, GLB renderer proof, and backend route.",
+      "keywords": [
+        "developer dapp 3D experience",
+        "3D observatory dapp structure",
+        "backend analytics for 3D dapp structure",
+        "Google Cloud API dapp setup visual guide",
+        "Supabase Vercel dapp observatory",
+        "developer dapp 3D DigitalHut",
+        "developer dapp 3D Programmer",
+        "coding episode visual guide DigitalHut",
+        "coding episode visual guide Programmer",
+        "Google Cloud API setup DigitalHut",
+        "Google Cloud API setup Programmer",
+        "Supabase Vercel dapp DigitalHut"
+      ],
+      "proofAngle": "developer architecture, API/source status, GLB renderer proof, and backend route",
+      "relatedRoutes": [
+        "/blog/developer-dapp-3d-experience",
+        "/category/programmer"
+      ]
+    },
+    {
+      "route": "/blog/google-cloud-speech-3d-experience",
+      "canonical": "https://www.digitalhut.app/blog/google-cloud-speech-3d-experience",
+      "type": "blog-proof",
+      "title": "Google Cloud Speech 3D Experience: DigitalHut Observatory Proof | DigitalHut Proof",
+      "description": "A proof page for Google Cloud speech analysis feeding visual summaries, GLB lanes, podcast moments, and source-aware episode data.",
+      "keywords": [
+        "Google Cloud speech 3D experience",
+        "speech analyzer visual summary",
+        "developer 3D observatory system",
+        "Google Cloud API dapp setup visual guide",
+        "Supabase Vercel dapp observatory",
+        "developer dapp 3D experience",
+        "developer dapp 3D DigitalHut",
+        "developer dapp 3D Programmer",
+        "coding episode visual guide DigitalHut",
+        "coding episode visual guide Programmer",
+        "Google Cloud API setup DigitalHut",
+        "Google Cloud API setup Programmer"
+      ],
+      "proofAngle": "video radar, GLB proof dock, timeline, podcast/source moment, and shareable backlink",
+      "relatedRoutes": [
+        "/watch/google-cloud-speech-3d-experience",
+        "/category/programmer"
+      ]
+    },
+    {
+      "route": "/watch/google-cloud-speech-3d-experience",
+      "canonical": "https://www.digitalhut.app/watch/google-cloud-speech-3d-experience",
+      "type": "watch-proof",
+      "title": "Google Cloud Speech 3D Experience: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "description": "A proof page for Google Cloud speech analysis feeding visual summaries, GLB lanes, podcast moments, and source-aware episode data.",
+      "keywords": [
+        "Google Cloud speech 3D experience",
+        "speech analyzer visual summary",
+        "developer 3D observatory system",
+        "Google Cloud API dapp setup visual guide",
+        "Supabase Vercel dapp observatory",
+        "developer dapp 3D experience",
+        "developer dapp 3D DigitalHut",
+        "developer dapp 3D Programmer",
+        "coding episode visual guide DigitalHut",
+        "coding episode visual guide Programmer",
+        "Google Cloud API setup DigitalHut",
+        "Google Cloud API setup Programmer"
+      ],
+      "proofAngle": "video radar, GLB proof dock, timeline, podcast/source moment, and shareable backlink",
+      "relatedRoutes": [
+        "/blog/google-cloud-speech-3d-experience",
+        "/category/programmer"
+      ]
+    },
+    {
+      "route": "/blog/international-real-estate-3d-visualization",
+      "canonical": "https://www.digitalhut.app/blog/international-real-estate-3d-visualization",
+      "type": "blog-proof",
+      "title": "International Real Estate 3D Visualization: DigitalHut Observatory Proof | DigitalHut Proof",
+      "description": "A client-ready real estate proof page for 3D property previews, neighborhood context, source cards, and saved episode proof.",
+      "keywords": [
+        "international real estate 3D visualization",
+        "real estate 3D house walkthrough",
+        "3D neighborhood viewer",
+        "housing model 3D experience real estate agency",
+        "home remodel visual decision guide",
+        "vacation rental 3D preview before booking",
+        "home remodel 3D DigitalHut",
+        "home remodel 3D Real Estate",
+        "real estate walkthrough DigitalHut",
+        "real estate walkthrough Real Estate",
+        "resort 3D preview DigitalHut",
+        "resort 3D preview Real Estate"
+      ],
+      "proofAngle": "client-ready 3D preview, property/source card, backlink route, and saved episode proof",
+      "relatedRoutes": [
+        "/watch/international-real-estate-3d-visualization",
+        "/category/real-estate"
+      ]
+    },
+    {
+      "route": "/watch/international-real-estate-3d-visualization",
+      "canonical": "https://www.digitalhut.app/watch/international-real-estate-3d-visualization",
+      "type": "watch-proof",
+      "title": "International Real Estate 3D Visualization: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "description": "A client-ready real estate proof page for 3D property previews, neighborhood context, source cards, and saved episode proof.",
+      "keywords": [
+        "international real estate 3D visualization",
+        "real estate 3D house walkthrough",
+        "3D neighborhood viewer",
+        "housing model 3D experience real estate agency",
+        "home remodel visual decision guide",
+        "vacation rental 3D preview before booking",
+        "home remodel 3D DigitalHut",
+        "home remodel 3D Real Estate",
+        "real estate walkthrough DigitalHut",
+        "real estate walkthrough Real Estate",
+        "resort 3D preview DigitalHut",
+        "resort 3D preview Real Estate"
+      ],
+      "proofAngle": "client-ready 3D preview, property/source card, backlink route, and saved episode proof",
+      "relatedRoutes": [
+        "/blog/international-real-estate-3d-visualization",
+        "/category/real-estate"
+      ]
+    },
+    {
+      "route": "/blog/planetary-research-visual-expercience",
+      "canonical": "https://www.digitalhut.app/blog/planetary-research-visual-expercience",
+      "type": "blog-proof",
+      "title": "Planetary Research Visual Expercience: DigitalHut Observatory Proof | DigitalHut Proof",
+      "description": "A spelling-variant planetary proof page for research visual search, GLB preview, source evidence, and observatory timeline context.",
+      "keywords": [
+        "planetary research visual expercience",
+        "planetary research visual experience",
+        "planetary research 3D experience",
+        "planetary research data 3D observatory",
+        "orbital compute visual guide",
+        "satellite infrastructure video context",
+        "planetary research 3D DigitalHut",
+        "planetary research 3D Planetary",
+        "orbital visual guide DigitalHut",
+        "orbital visual guide Planetary",
+        "climate data observatory DigitalHut",
+        "climate data observatory Planetary"
+      ],
+      "proofAngle": "source evidence, study summary, bubble map, timeline, and GLB research preview",
+      "relatedRoutes": [
+        "/watch/planetary-research-visual-expercience",
+        "/category/planetary"
+      ]
+    },
+    {
+      "route": "/watch/planetary-research-visual-expercience",
+      "canonical": "https://www.digitalhut.app/watch/planetary-research-visual-expercience",
+      "type": "watch-proof",
+      "title": "Planetary Research Visual Expercience: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "description": "A spelling-variant planetary proof page for research visual search, GLB preview, source evidence, and observatory timeline context.",
+      "keywords": [
+        "planetary research visual expercience",
+        "planetary research visual experience",
+        "planetary research 3D experience",
+        "planetary research data 3D observatory",
+        "orbital compute visual guide",
+        "satellite infrastructure video context",
+        "planetary research 3D DigitalHut",
+        "planetary research 3D Planetary",
+        "orbital visual guide DigitalHut",
+        "orbital visual guide Planetary",
+        "climate data observatory DigitalHut",
+        "climate data observatory Planetary"
+      ],
+      "proofAngle": "source evidence, study summary, bubble map, timeline, and GLB research preview",
+      "relatedRoutes": [
+        "/blog/planetary-research-visual-expercience",
+        "/category/planetary"
+      ]
+    },
+    {
+      "route": "/blog/gaming-3d-environment-viewer",
+      "canonical": "https://www.digitalhut.app/blog/gaming-3d-environment-viewer",
+      "type": "blog-proof",
+      "title": "Gaming 3D Environment Viewer: DigitalHut Observatory Proof | DigitalHut Proof",
+      "description": "A gamer-facing proof page for turning server builds, map tours, creator-safe worlds, and video episodes into a 3D environment viewer with GLB proof and source links.",
+      "keywords": [
+        "gaming 3D environment viewer",
+        "game world GLB presentation",
+        "creator safe 360 game world assets",
+        "top gaming server builds visual experience",
+        "top server builds DigitalHut",
+        "top server builds Gamer",
+        "gaming 3D environment DigitalHut",
+        "gaming 3D environment Gamer",
+        "GLB game asset DigitalHut",
+        "GLB game asset Gamer",
+        "creator-safe world assets DigitalHut"
+      ],
+      "proofAngle": "game build video radar, GLB environment proof, creator asset notes, and backlink route",
+      "relatedRoutes": [
+        "/watch/gaming-3d-environment-viewer",
+        "/category/gamer"
+      ]
+    },
+    {
+      "route": "/watch/gaming-3d-environment-viewer",
+      "canonical": "https://www.digitalhut.app/watch/gaming-3d-environment-viewer",
+      "type": "watch-proof",
+      "title": "Gaming 3D Environment Viewer: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "description": "A gamer-facing proof page for turning server builds, map tours, creator-safe worlds, and video episodes into a 3D environment viewer with GLB proof and source links.",
+      "keywords": [
+        "gaming 3D environment viewer",
+        "game world GLB presentation",
+        "creator safe 360 game world assets",
+        "top gaming server builds visual experience",
+        "top server builds DigitalHut",
+        "top server builds Gamer",
+        "gaming 3D environment DigitalHut",
+        "gaming 3D environment Gamer",
+        "GLB game asset DigitalHut",
+        "GLB game asset Gamer",
+        "creator-safe world assets DigitalHut"
+      ],
+      "proofAngle": "game build video radar, GLB environment proof, creator asset notes, and backlink route",
+      "relatedRoutes": [
+        "/blog/gaming-3d-environment-viewer",
+        "/category/gamer"
+      ]
+    },
+    {
+      "route": "/blog/creator-safe-360-game-world-assets",
+      "canonical": "https://www.digitalhut.app/blog/creator-safe-360-game-world-assets",
+      "type": "blog-proof",
+      "title": "Creator Safe 360 Game World Assets: DigitalHut Observatory Proof | DigitalHut Proof",
+      "description": "A proof page for creators searching for safe 360 game-world assets, GLB previews, episode context, ratings, and shareable asset evidence.",
+      "keywords": [
+        "creator safe 360 game world assets",
+        "gaming 3D environment viewer",
+        "game world GLB presentation",
+        "top gaming server builds visual experience",
+        "top server builds DigitalHut",
+        "top server builds Gamer",
+        "gaming 3D environment DigitalHut",
+        "gaming 3D environment Gamer",
+        "GLB game asset DigitalHut",
+        "GLB game asset Gamer",
+        "creator-safe world assets DigitalHut"
+      ],
+      "proofAngle": "creator-safe asset preview, GLB proof dock, game-world source path, and useful watch route",
+      "relatedRoutes": [
+        "/watch/creator-safe-360-game-world-assets",
+        "/category/gamer"
+      ]
+    },
+    {
+      "route": "/watch/creator-safe-360-game-world-assets",
+      "canonical": "https://www.digitalhut.app/watch/creator-safe-360-game-world-assets",
+      "type": "watch-proof",
+      "title": "Creator Safe 360 Game World Assets: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "description": "A proof page for creators searching for safe 360 game-world assets, GLB previews, episode context, ratings, and shareable asset evidence.",
+      "keywords": [
+        "creator safe 360 game world assets",
+        "gaming 3D environment viewer",
+        "game world GLB presentation",
+        "top gaming server builds visual experience",
+        "top server builds DigitalHut",
+        "top server builds Gamer",
+        "gaming 3D environment DigitalHut",
+        "gaming 3D environment Gamer",
+        "GLB game asset DigitalHut",
+        "GLB game asset Gamer",
+        "creator-safe world assets DigitalHut"
+      ],
+      "proofAngle": "creator-safe asset preview, GLB proof dock, game-world source path, and useful watch route",
+      "relatedRoutes": [
+        "/blog/creator-safe-360-game-world-assets",
+        "/category/gamer"
+      ]
+    },
+    {
+      "route": "/blog/real-estate-3d-house-walkthrough",
+      "canonical": "https://www.digitalhut.app/blog/real-estate-3d-house-walkthrough",
+      "type": "blog-proof",
+      "title": "Real Estate 3D House Walkthrough: DigitalHut Observatory Proof | DigitalHut Proof",
+      "description": "A real estate proof route for home buyers, agents, and property clients who need a video-aware 3D house walkthrough with neighborhood context and saved source proof.",
+      "keywords": [
+        "real estate 3D house walkthrough",
+        "international real estate 3D visualization",
+        "3D neighborhood viewer",
+        "housing model 3D experience real estate agency",
+        "home remodel visual decision guide",
+        "vacation rental 3D preview before booking",
+        "home remodel 3D DigitalHut",
+        "home remodel 3D Real Estate",
+        "real estate walkthrough DigitalHut",
+        "real estate walkthrough Real Estate",
+        "resort 3D preview DigitalHut",
+        "resort 3D preview Real Estate"
+      ],
+      "proofAngle": "property GLB preview, neighborhood context, source card, backlink route, and client-ready watch proof",
+      "relatedRoutes": [
+        "/watch/real-estate-3d-house-walkthrough",
+        "/category/real-estate"
+      ]
+    },
+    {
+      "route": "/watch/real-estate-3d-house-walkthrough",
+      "canonical": "https://www.digitalhut.app/watch/real-estate-3d-house-walkthrough",
+      "type": "watch-proof",
+      "title": "Real Estate 3D House Walkthrough: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "description": "A real estate proof route for home buyers, agents, and property clients who need a video-aware 3D house walkthrough with neighborhood context and saved source proof.",
+      "keywords": [
+        "real estate 3D house walkthrough",
+        "international real estate 3D visualization",
+        "3D neighborhood viewer",
+        "housing model 3D experience real estate agency",
+        "home remodel visual decision guide",
+        "vacation rental 3D preview before booking",
+        "home remodel 3D DigitalHut",
+        "home remodel 3D Real Estate",
+        "real estate walkthrough DigitalHut",
+        "real estate walkthrough Real Estate",
+        "resort 3D preview DigitalHut",
+        "resort 3D preview Real Estate"
+      ],
+      "proofAngle": "property GLB preview, neighborhood context, source card, backlink route, and client-ready watch proof",
+      "relatedRoutes": [
+        "/blog/real-estate-3d-house-walkthrough",
+        "/category/real-estate"
+      ]
+    },
+    {
+      "route": "/blog/ai-tour-guide-for-3d-places",
+      "canonical": "https://www.digitalhut.app/blog/ai-tour-guide-for-3d-places",
+      "type": "blog-proof",
+      "title": "AI Tour Guide For 3D Places: DigitalHut Observatory Proof | DigitalHut Proof",
+      "description": "A travel and tourism proof page for turning destination videos into an AI-guided 3D tour with map context, place evidence, and GLB environment proof.",
+      "keywords": [
+        "AI tour guide for 3D places",
+        "3D travel planning visualization",
+        "virtual tour guide with 3D map",
+        "vacation resort 3D preview",
+        "international city visual guide",
+        "travel context source map",
+        "international city guide DigitalHut",
+        "international city guide Continent",
+        "vacation route map DigitalHut",
+        "vacation route map Continent",
+        "cultural place 3D DigitalHut",
+        "cultural place 3D Continent"
+      ],
+      "proofAngle": "tour video radar, destination map timeline, GLB place preview, and travel backlink lane",
+      "relatedRoutes": [
+        "/watch/ai-tour-guide-for-3d-places",
+        "/category/continent"
+      ]
+    },
+    {
+      "route": "/watch/ai-tour-guide-for-3d-places",
+      "canonical": "https://www.digitalhut.app/watch/ai-tour-guide-for-3d-places",
+      "type": "watch-proof",
+      "title": "AI Tour Guide For 3D Places: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "description": "A travel and tourism proof page for turning destination videos into an AI-guided 3D tour with map context, place evidence, and GLB environment proof.",
+      "keywords": [
+        "AI tour guide for 3D places",
+        "3D travel planning visualization",
+        "virtual tour guide with 3D map",
+        "vacation resort 3D preview",
+        "international city visual guide",
+        "travel context source map",
+        "international city guide DigitalHut",
+        "international city guide Continent",
+        "vacation route map DigitalHut",
+        "vacation route map Continent",
+        "cultural place 3D DigitalHut",
+        "cultural place 3D Continent"
+      ],
+      "proofAngle": "tour video radar, destination map timeline, GLB place preview, and travel backlink lane",
+      "relatedRoutes": [
+        "/blog/ai-tour-guide-for-3d-places",
+        "/category/continent"
+      ]
+    },
+    {
+      "route": "/blog/glb-research-assistant",
+      "canonical": "https://www.digitalhut.app/blog/glb-research-assistant",
+      "type": "blog-proof",
+      "title": "GLB Research Assistant: DigitalHut Observatory Proof | DigitalHut Proof",
+      "description": "A researcher proof route for using GLB objects as evidence anchors beside source summaries, bubble maps, timelines, and next-question prompts.",
+      "keywords": [
+        "GLB research assistant",
+        "research engine for 3D evidence",
+        "AI research engine with visual analysis",
+        "what is this topic explained with sources",
+        "public information source map",
+        "research before buying visual guide",
+        "wiki lookup visual hub DigitalHut",
+        "wiki lookup visual hub Researcher",
+        "what is this topic DigitalHut",
+        "what is this topic Researcher",
+        "source-backed summary DigitalHut",
+        "source-backed summary Researcher"
+      ],
+      "proofAngle": "GLB evidence anchor, source summary, timeline, bubble map, and research backlink route",
+      "relatedRoutes": [
+        "/watch/glb-research-assistant",
+        "/category/researcher"
+      ]
+    },
+    {
+      "route": "/watch/glb-research-assistant",
+      "canonical": "https://www.digitalhut.app/watch/glb-research-assistant",
+      "type": "watch-proof",
+      "title": "GLB Research Assistant: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "description": "A researcher proof route for using GLB objects as evidence anchors beside source summaries, bubble maps, timelines, and next-question prompts.",
+      "keywords": [
+        "GLB research assistant",
+        "research engine for 3D evidence",
+        "AI research engine with visual analysis",
+        "what is this topic explained with sources",
+        "public information source map",
+        "research before buying visual guide",
+        "wiki lookup visual hub DigitalHut",
+        "wiki lookup visual hub Researcher",
+        "what is this topic DigitalHut",
+        "what is this topic Researcher",
+        "source-backed summary DigitalHut",
+        "source-backed summary Researcher"
+      ],
+      "proofAngle": "GLB evidence anchor, source summary, timeline, bubble map, and research backlink route",
+      "relatedRoutes": [
+        "/blog/glb-research-assistant",
+        "/category/researcher"
+      ]
+    },
+    {
+      "route": "/blog/interactive-3d-experience",
+      "canonical": "https://www.digitalhut.app/blog/interactive-3d-experience",
+      "type": "blog-proof",
+      "title": "Interactive 3D Experience: DigitalHut Observatory Proof | DigitalHut Proof",
+      "description": "A broad proof page for people searching interactive 3D experiences, AI guided visual explanations, and usable observatory pages before they know DigitalHut by name.",
+      "keywords": [
+        "interactive 3D experience",
+        "AI guided visual experience",
+        "visual expercience",
+        "coral reef study 2026 3D visual experience",
+        "animal extinction visual research engine",
+        "climate control data 3D visual report",
+        "coral reef study 2026 DigitalHut",
+        "coral reef study 2026 Science",
+        "animal extinction 3D DigitalHut",
+        "animal extinction 3D Science",
+        "climate research map DigitalHut",
+        "climate research map Science"
+      ],
+      "proofAngle": "interactive 3D proof, video-aware summary, source context, GLB preview, and category lane",
+      "relatedRoutes": [
+        "/watch/interactive-3d-experience",
+        "/category/science"
+      ]
+    },
+    {
+      "route": "/watch/interactive-3d-experience",
+      "canonical": "https://www.digitalhut.app/watch/interactive-3d-experience",
+      "type": "watch-proof",
+      "title": "Interactive 3D Experience: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "description": "A broad proof page for people searching interactive 3D experiences, AI guided visual explanations, and usable observatory pages before they know DigitalHut by name.",
+      "keywords": [
+        "interactive 3D experience",
+        "AI guided visual experience",
+        "visual expercience",
+        "coral reef study 2026 3D visual experience",
+        "animal extinction visual research engine",
+        "climate control data 3D visual report",
+        "coral reef study 2026 DigitalHut",
+        "coral reef study 2026 Science",
+        "animal extinction 3D DigitalHut",
+        "animal extinction 3D Science",
+        "climate research map DigitalHut",
+        "climate research map Science"
+      ],
+      "proofAngle": "interactive 3D proof, video-aware summary, source context, GLB preview, and category lane",
+      "relatedRoutes": [
+        "/blog/interactive-3d-experience",
+        "/category/science"
+      ]
+    },
+    {
+      "route": "/blog/youtube-video-content-radar",
+      "canonical": "https://www.digitalhut.app/blog/youtube-video-content-radar",
+      "type": "blog-proof",
+      "title": "YouTube Video Content Radar: DigitalHut Observatory Proof | DigitalHut Proof",
+      "description": "A proof route for reading video titles, channels, metadata, source context, and episode timing into useful bubble map, timeline, podcast, and GLB analytics.",
+      "keywords": [
+        "YouTube video content radar",
+        "video metadata visual analysis",
+        "AI video observatory system",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar",
+        "funny video explained DigitalHut",
+        "funny video explained Mainstream Streaming",
+        "viral clip source map DigitalHut",
+        "viral clip source map Mainstream Streaming",
+        "TikTok reel context DigitalHut",
+        "TikTok reel context Mainstream Streaming"
+      ],
+      "proofAngle": "video topic radar, changing timeline read, source links, podcast interrupt, and GLB model view",
+      "relatedRoutes": [
+        "/watch/youtube-video-content-radar",
+        "/category/mainstream-streaming"
+      ]
+    },
+    {
+      "route": "/watch/youtube-video-content-radar",
+      "canonical": "https://www.digitalhut.app/watch/youtube-video-content-radar",
+      "type": "watch-proof",
+      "title": "YouTube Video Content Radar: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "description": "A proof route for reading video titles, channels, metadata, source context, and episode timing into useful bubble map, timeline, podcast, and GLB analytics.",
+      "keywords": [
+        "YouTube video content radar",
+        "video metadata visual analysis",
+        "AI video observatory system",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar",
+        "funny video explained DigitalHut",
+        "funny video explained Mainstream Streaming",
+        "viral clip source map DigitalHut",
+        "viral clip source map Mainstream Streaming",
+        "TikTok reel context DigitalHut",
+        "TikTok reel context Mainstream Streaming"
+      ],
+      "proofAngle": "video topic radar, changing timeline read, source links, podcast interrupt, and GLB model view",
+      "relatedRoutes": [
+        "/blog/youtube-video-content-radar",
+        "/category/mainstream-streaming"
+      ]
+    },
+    {
+      "route": "/blog/current-market-video-observatory",
+      "canonical": "https://www.digitalhut.app/blog/current-market-video-observatory",
+      "type": "blog-proof",
+      "title": "Current Market Video Observatory: DigitalHut Proof | DigitalHut Proof",
+      "description": "A market proof page for linking stock video context, options-flow style highlights, company search, TradingView chart intent, podcast clips, and 3D business environments.",
+      "keywords": [
+        "current market video observatory",
+        "stock market visual analysis 3D",
+        "AI stock video research dashboard",
+        "company video research source map",
+        "earnings video observatory",
+        "stock market visual analysis DigitalHut",
+        "stock market visual analysis Businesses",
+        "company video research DigitalHut",
+        "company video research Businesses",
+        "AI data center market DigitalHut",
+        "AI data center market Businesses",
+        "business source map DigitalHut"
+      ],
+      "proofAngle": "top stock lane, market highlights, connected video, connected podcast, GLB environment, and backlinkable company route",
+      "relatedRoutes": [
+        "/watch/current-market-video-observatory",
+        "/category/businesses"
+      ]
+    },
+    {
+      "route": "/watch/current-market-video-observatory",
+      "canonical": "https://www.digitalhut.app/watch/current-market-video-observatory",
+      "type": "watch-proof",
+      "title": "Current Market Video Observatory: DigitalHut Proof | DigitalHut Watch Proof",
+      "description": "A market proof page for linking stock video context, options-flow style highlights, company search, TradingView chart intent, podcast clips, and 3D business environments.",
+      "keywords": [
+        "current market video observatory",
+        "stock market visual analysis 3D",
+        "AI stock video research dashboard",
+        "company video research source map",
+        "earnings video observatory",
+        "stock market visual analysis DigitalHut",
+        "stock market visual analysis Businesses",
+        "company video research DigitalHut",
+        "company video research Businesses",
+        "AI data center market DigitalHut",
+        "AI data center market Businesses",
+        "business source map DigitalHut"
+      ],
+      "proofAngle": "top stock lane, market highlights, connected video, connected podcast, GLB environment, and backlinkable company route",
+      "relatedRoutes": [
+        "/blog/current-market-video-observatory",
+        "/category/businesses"
+      ]
+    },
+    {
+      "route": "/blog/social-media-reel-3d-experience",
+      "canonical": "https://www.digitalhut.app/blog/social-media-reel-3d-experience",
+      "type": "blog-proof",
+      "title": "Social Media Reel 3D Experience: DigitalHut Proof | DigitalHut Proof",
+      "description": "An everyday creator proof page for turning TikTok, Instagram, YouTube Shorts, and viral reel searches into useful video-aware 3D observatory episodes.",
+      "keywords": [
+        "social media reel 3D experience",
+        "TikTok reel visual experience",
+        "Instagram reel 3D observatory",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar",
+        "funny video explained DigitalHut",
+        "funny video explained Mainstream Streaming",
+        "viral clip source map DigitalHut",
+        "viral clip source map Mainstream Streaming",
+        "TikTok reel context DigitalHut",
+        "TikTok reel context Mainstream Streaming"
+      ],
+      "proofAngle": "viral reel topic, video radar, short-form source links, sponsor stack, GLB preview, and shareable backlink",
+      "relatedRoutes": [
+        "/watch/social-media-reel-3d-experience",
+        "/category/mainstream-streaming"
+      ]
+    },
+    {
+      "route": "/watch/social-media-reel-3d-experience",
+      "canonical": "https://www.digitalhut.app/watch/social-media-reel-3d-experience",
+      "type": "watch-proof",
+      "title": "Social Media Reel 3D Experience: DigitalHut Proof | DigitalHut Watch Proof",
+      "description": "An everyday creator proof page for turning TikTok, Instagram, YouTube Shorts, and viral reel searches into useful video-aware 3D observatory episodes.",
+      "keywords": [
+        "social media reel 3D experience",
+        "TikTok reel visual experience",
+        "Instagram reel 3D observatory",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar",
+        "funny video explained DigitalHut",
+        "funny video explained Mainstream Streaming",
+        "viral clip source map DigitalHut",
+        "viral clip source map Mainstream Streaming",
+        "TikTok reel context DigitalHut",
+        "TikTok reel context Mainstream Streaming"
+      ],
+      "proofAngle": "viral reel topic, video radar, short-form source links, sponsor stack, GLB preview, and shareable backlink",
+      "relatedRoutes": [
+        "/blog/social-media-reel-3d-experience",
+        "/category/mainstream-streaming"
+      ]
+    },
+    {
+      "route": "/blog/vacation-resort-3d-preview",
+      "canonical": "https://www.digitalhut.app/blog/vacation-resort-3d-preview",
+      "type": "blog-proof",
+      "title": "Vacation Resort 3D Preview: DigitalHut Observatory Proof | DigitalHut Proof",
+      "description": "A travel proof page for families and travelers comparing resort rooms, local attractions, routes, food, weather context, and booking research through a 3D guided view.",
+      "keywords": [
+        "vacation resort 3D preview",
+        "family travel 3D observatory",
+        "resort room 3D preview before booking",
+        "international city visual guide",
+        "travel context source map",
+        "international city guide DigitalHut",
+        "international city guide Continent",
+        "vacation route map DigitalHut",
+        "vacation route map Continent",
+        "cultural place 3D DigitalHut",
+        "cultural place 3D Continent",
+        "resort visual preview DigitalHut"
+      ],
+      "proofAngle": "travel video radar, resort/source backlinks, 3D place preview, podcast/tour guide moment, and route timeline",
+      "relatedRoutes": [
+        "/watch/vacation-resort-3d-preview",
+        "/category/continent"
+      ]
+    },
+    {
+      "route": "/watch/vacation-resort-3d-preview",
+      "canonical": "https://www.digitalhut.app/watch/vacation-resort-3d-preview",
+      "type": "watch-proof",
+      "title": "Vacation Resort 3D Preview: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "description": "A travel proof page for families and travelers comparing resort rooms, local attractions, routes, food, weather context, and booking research through a 3D guided view.",
+      "keywords": [
+        "vacation resort 3D preview",
+        "family travel 3D observatory",
+        "resort room 3D preview before booking",
+        "international city visual guide",
+        "travel context source map",
+        "international city guide DigitalHut",
+        "international city guide Continent",
+        "vacation route map DigitalHut",
+        "vacation route map Continent",
+        "cultural place 3D DigitalHut",
+        "cultural place 3D Continent",
+        "resort visual preview DigitalHut"
+      ],
+      "proofAngle": "travel video radar, resort/source backlinks, 3D place preview, podcast/tour guide moment, and route timeline",
+      "relatedRoutes": [
+        "/blog/vacation-resort-3d-preview",
+        "/category/continent"
+      ]
+    },
+    {
+      "route": "/blog/podcast-moment-visual-analysis",
+      "canonical": "https://www.digitalhut.app/blog/podcast-moment-visual-analysis",
+      "type": "blog-proof",
+      "title": "Podcast Moment Visual Analysis: DigitalHut Proof | DigitalHut Proof",
+      "description": "A proof route for pausing the video feed, opening a matched podcast feature moment, and returning the viewer to the same visual research timeline with source context intact.",
+      "keywords": [
+        "podcast moment visual analysis",
+        "podcast feature interrupt for video research",
+        "AI podcast source visual summary",
+        "what is this topic explained with sources",
+        "public information source map",
+        "research before buying visual guide",
+        "wiki lookup visual hub DigitalHut",
+        "wiki lookup visual hub Researcher",
+        "what is this topic DigitalHut",
+        "what is this topic Researcher",
+        "source-backed summary DigitalHut",
+        "source-backed summary Researcher"
+      ],
+      "proofAngle": "podcast speaker pulse, matched source panel, video pause/resume, timeline branch, and research backlink",
+      "relatedRoutes": [
+        "/watch/podcast-moment-visual-analysis",
+        "/category/researcher"
+      ]
+    },
+    {
+      "route": "/watch/podcast-moment-visual-analysis",
+      "canonical": "https://www.digitalhut.app/watch/podcast-moment-visual-analysis",
+      "type": "watch-proof",
+      "title": "Podcast Moment Visual Analysis: DigitalHut Proof | DigitalHut Watch Proof",
+      "description": "A proof route for pausing the video feed, opening a matched podcast feature moment, and returning the viewer to the same visual research timeline with source context intact.",
+      "keywords": [
+        "podcast moment visual analysis",
+        "podcast feature interrupt for video research",
+        "AI podcast source visual summary",
+        "what is this topic explained with sources",
+        "public information source map",
+        "research before buying visual guide",
+        "wiki lookup visual hub DigitalHut",
+        "wiki lookup visual hub Researcher",
+        "what is this topic DigitalHut",
+        "what is this topic Researcher",
+        "source-backed summary DigitalHut",
+        "source-backed summary Researcher"
+      ],
+      "proofAngle": "podcast speaker pulse, matched source panel, video pause/resume, timeline branch, and research backlink",
+      "relatedRoutes": [
+        "/blog/podcast-moment-visual-analysis",
+        "/category/researcher"
+      ]
+    }
+  ],
+  "safeUse": [
+    "Use this packet to understand DigitalHut route intent, not as a live visitor analytics replacement.",
+    "Use Supabase events before promoting a rank slot into heavy page copy.",
+    "Use the sitemap and route metadata manifest as the crawlable truth.",
+    "Do not describe the offline backend system as paid-tier reasoning; it prepares evidence packets for Codex or approved AI oversight."
+  ]
+}

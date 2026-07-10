@@ -1,0 +1,131 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut System Claim Verification",
+  "status": "system-claim-verification-ready",
+  "guardrail": "Only backend API usage billing can be verified by OpenAI Admin API. Codex/ChatGPT subscription billing remains account-side unless OpenAI provides a plan entitlement API for this surface.",
+  "codexProClaim": {
+    "claimedTier": "$100 Codex Pro / Pro High user account claim",
+    "verificationStatus": "user-attested-not-api-verifiable-from-project",
+    "publicClaimUse": "Use as founder/operator context, not as an automated billing proof."
+  },
+  "openaiBillingApi": {
+    "route": "/api/provider-status?scope=openai-billing",
+    "requiredEnv": [
+      "OPENAI_ADMIN_KEY",
+      "OPENAI_ORG_ADMIN_KEY",
+      "DIGITALHUT_ADMIN_STATUS_TOKEN"
+    ],
+    "exposedToClient": "401 private unless admin token is provided",
+    "secretExposure": "never-return-admin-key",
+    "verifies": "OpenAI API organization costs endpoint access, not private cost totals or Codex subscription entitlement"
+  },
+  "nodeServer": {
+    "packageEngine": "node-24-configured",
+    "backendScript": "backend-script-present",
+    "startScript": "start-script-present",
+    "devScript": "vite-dev-script-present",
+    "livePortStatus": "not-detected-in-last-local-port-check",
+    "verificationNeeded": "Run a local listener check when the server is expected to be active."
+  },
+  "renderStack": {
+    "babylonCore": true,
+    "babylonLoaders": true,
+    "threeFiber": true,
+    "drei": true,
+    "modelViewer": true,
+    "status": "babylon-render-stack-present"
+  },
+  "fullVideoObservatoryCapabilities": [
+    {
+      "capability": "GLB and 3D rendering",
+      "status": "babylon-render-stack-present",
+      "proof": "Babylon dependencies, model-viewer, asset conversion API, Sketchfab API, GLB promotion lanes, and GLB receipt queues.",
+      "verifies": "DigitalHut can claim an interactive 3D renderer layer when GLB route behavior is live-measured."
+    },
+    {
+      "capability": "Apple/podcast source lane",
+      "status": "podcast-api-and-promotion-lanes-present",
+      "proof": "Podcast search API, podcast source promotion packet, podcast interrupt receipts, and source-completion measurement contract.",
+      "verifies": "DigitalHut can claim a podcast/source moment lane; Apple-specific branding should be used only when the source is actually Apple Podcasts or compatible metadata."
+    },
+    {
+      "capability": "YouTube analytics and content radar",
+      "status": "youtube-search-and-observatory-feed-present",
+      "proof": "YouTube search API, observatory feed API, Google speech analyzer, insight map, category queues, and search-intent promotion packet.",
+      "verifies": "DigitalHut can claim video-aware analytics when API/search/transcript/source metadata is available."
+    },
+    {
+      "capability": "Full-video observatory presentation",
+      "status": "full-system-ladder-push-ready",
+      "proof": "Autoplay, category lanes, GLB, podcast, source/backlink, market, timeline, watch/blog proof routes, and Supabase receipt contracts.",
+      "verifies": "DigitalHut can claim a full presentation system, with live usefulness proven by second-action receipts."
+    },
+    {
+      "capability": "Codex reasoning and SEO oversight",
+      "status": "codex-overseer-artifact-backed",
+      "proof": "FireCuda innovation map, ladder receipt acceleration, full-system ladder push, client rank movement snapshot, and system claim verification packets.",
+      "verifies": "DigitalHut can claim Codex-supervised refinement as an operator workflow, not an autonomous public bot."
+    }
+  ],
+  "envChecks": [
+    {
+      "id": "openai-billing-admin-key",
+      "claim": "OpenAI API billing access can be checked by a private backend endpoint.",
+      "envNames": [
+        "OPENAI_ADMIN_KEY",
+        "OPENAI_ORG_ADMIN_KEY",
+        "DIGITALHUT_ADMIN_STATUS_TOKEN"
+      ],
+      "localPresence": "not-read-from-env-in-generator",
+      "verificationRoute": "/api/provider-status?scope=openai-billing",
+      "status": "private-endpoint-added-admin-token-required"
+    },
+    {
+      "id": "supabase-database",
+      "claim": "Supabase backs human behavior and SEO receipt storage.",
+      "envNames": [
+        "SUPABASE_URL",
+        "SUPABASE_SERVICE_ROLE_KEY",
+        "SUPABASE_ANON_KEY",
+        "VITE_SUPABASE_URL",
+        "VITE_SUPABASE_ANON_KEY"
+      ],
+      "localPresence": "project-wired",
+      "verificationRoute": "/api/provider-status",
+      "status": "measurement-ready"
+    },
+    {
+      "id": "google-cloud",
+      "claim": "Google Cloud backs YouTube, speech, text-to-speech, and cloud service claims when env keys are present.",
+      "envNames": [
+        "GOOGLE_APPLICATION_CREDENTIALS",
+        "GOOGLE_CLOUD_PROJECT",
+        "GOOGLE_CLOUD_API_KEY",
+        "GOOGLE_SPEECH_API_KEY",
+        "GOOGLE_TEXT_TO_SPEECH_API_KEY",
+        "YOUTUBE_API_KEY"
+      ],
+      "localPresence": "env-presence-checked-by-provider-status",
+      "verificationRoute": "/api/provider-status",
+      "status": "provider-status-backed"
+    },
+    {
+      "id": "vercel-production",
+      "claim": "Vercel backs the public deployment and API routes.",
+      "envNames": [
+        "VERCEL_OIDC_TOKEN"
+      ],
+      "localPresence": "vercel-vite-config-present",
+      "verificationRoute": "/api/provider-status",
+      "status": "runtime-compatibility-local-ready-cloud-confirmation-needed"
+    }
+  ],
+  "cloudDatabaseClaim": {
+    "supabaseStatus": "measurement-ready",
+    "googleCloudStatus": "provider-status-backed",
+    "vercelStatus": "runtime-compatibility-local-ready-cloud-confirmation-needed",
+    "githubStatus": "version-control-backed-when-committed",
+    "ladderPushStatus": "full-system-ladder-push-ready"
+  },
+  "nextSystemMove": "Add OPENAI_ADMIN_KEY or OPENAI_ORG_ADMIN_KEY plus DIGITALHUT_ADMIN_STATUS_TOKEN only in Vercel/server env, then call /api/provider-status?scope=openai-billing with the admin token to verify API cost endpoint access without exposing secrets or totals."
+}

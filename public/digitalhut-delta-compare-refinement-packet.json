@@ -1,0 +1,231 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Delta Compare Refinement Packet",
+  "status": "delta-compare-refinement-ready",
+  "purpose": "Give the release-pair submission delta a clear promote/rewrite/hold decision path after deployment traffic lands.",
+  "guardrail": "Do not promote Current Market or Home Project only because they are staged. Require Search Console visibility plus Supabase behavior before expanding keywords.",
+  "deltaStatus": "submission-delta-ready",
+  "missingTargetCount": 6,
+  "pairDecisionCount": 3,
+  "supabaseRefinementStatus": "refinement-views-ready",
+  "globalCompareActions": [
+    {
+      "lane": "GLB renderer",
+      "signal": "62 GLB plays / 225 page views",
+      "reading": "GLB proof is the strongest current engagement signal.",
+      "action": "Promote 3D Model View proof in watch pages, blog intros, and category snippets before adding more generic copy."
+    },
+    {
+      "lane": "YouTube/category search",
+      "signal": "0 recorded search interactions",
+      "reading": "Search is not yet proving user intent.",
+      "action": "Move category lane dropdown and quick panel wording toward obvious search intent: next episode stays in lane, search creates radar, market clicks route to market view."
+    },
+    {
+      "lane": "Platform timing",
+      "signal": "1 autoplay starts / 225 page views",
+      "reading": "The live observatory now exposes queue, proof, analyzer, timing, and market cadence in the category-locked panel.",
+      "action": "Use the cadence rail to measure whether visitors understand the YouTube-style queue, same-category rotation, proof routes, and market/podcast routing before adding more pages."
+    },
+    {
+      "lane": "Podcast moments",
+      "signal": "2 podcast interrupts / 62 GLB plays",
+      "reading": "Podcast feature is underused compared with GLB interaction.",
+      "action": "Keep podcast as a click-to-interrupt moment with clearer speaker/source panel and return-to-YouTube state."
+    },
+    {
+      "lane": "Current Market",
+      "signal": "0 market opens",
+      "reading": "Market view needs stronger entry from regular feed.",
+      "action": "Keep Market in the regular feed, but make the top 3 bullish/bearish options a compact teaser that routes to the full market view."
+    },
+    {
+      "lane": "SEO proof",
+      "signal": "54 proof posts / 52 watch URLs / 137 sitemap URLs",
+      "reading": "Blog proof exists, but needs more movement from live experience to proof routes.",
+      "action": "Interlink standby, insights, blog, watch proof, and category pages so the crawler sees a complete DigitalHut observatory evidence loop."
+    },
+    {
+      "lane": "FireCuda keyword tiering",
+      "signal": "Scenario input: exotic environments cool monthly while messy visual content, filters, reels, and quick transformations need more first-page capture.",
+      "reading": "The map should not delete exotic environments; it should move them into second-place backlink defense while promoting broader visual-content searches into the featured lane.",
+      "action": "Use FireCuda overseer groups to separate main-featured visual content, second-place exotic environment backlinks, developer/research trust, and market/local business conversion lanes."
+    },
+    {
+      "lane": "New viral video first-source feed",
+      "signal": "Scenario input: a fresh viral video needs DigitalHut ready across analytics, GLB proof, podcast/source moment, backlinks, and crawlable proof without changing the live UI.",
+      "reading": "The front-end stays locked. Backend SEO and analytics should be ready to classify the topic, capture source behavior, connect GLB/podcast proof, and decide whether the viral lane deserves a public proof route.",
+      "action": "Stage the viral first-source keyword packet, Supabase event names, source/backlink targets, Google media checks, and compare/refine gate before any visible product change."
+    },
+    {
+      "lane": "Vercel/GitHub",
+      "signal": "15/15 product markers ready",
+      "reading": "Local code is ahead of production until the stable batch deploys.",
+      "action": "Deploy only after the GLB collapse, podcast click, standby proof page, and refinement board are in the same stable build."
+    }
+  ],
+  "pairDecisions": [
+    {
+      "pairSlug": "youtube-video-content-radar",
+      "launchLane": "Mainstream Streaming",
+      "routes": [
+        "/watch/youtube-video-content-radar",
+        "/blog/youtube-video-content-radar"
+      ],
+      "currentRead": "Release-pair delta needs a second behavior before promotion.",
+      "signalsToCompare": [
+        {
+          "signal": "page_view",
+          "baseline": 225,
+          "meaning": "proves traffic reached the proof route"
+        },
+        {
+          "signal": "blog_view",
+          "baseline": 14,
+          "meaning": "proves readable proof page attention"
+        },
+        {
+          "signal": "glb_preview_play",
+          "baseline": 62,
+          "meaning": "proves 3D model usefulness"
+        },
+        {
+          "signal": "podcast_interrupt_play",
+          "baseline": 2,
+          "meaning": "proves source/audio usefulness"
+        },
+        {
+          "signal": "search_intent_chip_select",
+          "baseline": 0,
+          "meaning": "proves active keyword intent"
+        },
+        {
+          "signal": "backlink_source_open",
+          "baseline": 0,
+          "meaning": "proves source/backlink curiosity"
+        }
+      ],
+      "promoteWhen": "page_view is joined by at least one proof action: proof_route_open, backlink_source_open, glb_preview_play, podcast_interrupt_play, market_view_open, or search_intent_chip_select",
+      "rewriteWhen": "crawler/page activity appears but the second action stays quiet",
+      "holdWhen": "no route activity appears after stable deployment and Search Console inspection",
+      "fireCudaDecision": "promote, rewrite, or hold this pair before expanding supporting long-tail variations"
+    },
+    {
+      "pairSlug": "current-market-video-observatory",
+      "launchLane": "Businesses",
+      "routes": [
+        "/watch/current-market-video-observatory",
+        "/blog/current-market-video-observatory"
+      ],
+      "currentRead": "Current Market is a release-pair delta but still has zero market opens, so it needs measured proof before stock SEO expands.",
+      "signalsToCompare": [
+        {
+          "signal": "page_view",
+          "baseline": 225,
+          "meaning": "proves traffic reached the proof route"
+        },
+        {
+          "signal": "blog_view",
+          "baseline": 14,
+          "meaning": "proves readable proof page attention"
+        },
+        {
+          "signal": "glb_preview_play",
+          "baseline": 62,
+          "meaning": "proves 3D model usefulness"
+        },
+        {
+          "signal": "podcast_interrupt_play",
+          "baseline": 2,
+          "meaning": "proves source/audio usefulness"
+        },
+        {
+          "signal": "search_intent_chip_select",
+          "baseline": 0,
+          "meaning": "proves active keyword intent"
+        },
+        {
+          "signal": "market_view_open",
+          "baseline": 0,
+          "meaning": "proves Current Market demand"
+        },
+        {
+          "signal": "backlink_source_open",
+          "baseline": 0,
+          "meaning": "proves source/backlink curiosity"
+        }
+      ],
+      "promoteWhen": "page_view is joined by at least one proof action: proof_route_open, backlink_source_open, glb_preview_play, podcast_interrupt_play, market_view_open, or search_intent_chip_select",
+      "rewriteWhen": "crawler/page activity appears but the second action stays quiet",
+      "holdWhen": "no route activity appears after stable deployment and Search Console inspection",
+      "fireCudaDecision": "promote, rewrite, or hold this pair before expanding supporting long-tail variations"
+    },
+    {
+      "pairSlug": "home-project-3d-visual-planner",
+      "launchLane": "Mainstream Streaming",
+      "routes": [
+        "/watch/home-project-3d-visual-planner",
+        "/blog/home-project-3d-visual-planner"
+      ],
+      "currentRead": "Home Project is a release-pair delta with strong GLB relevance, so it should lean on 3D usefulness before broad home-project SEO expands.",
+      "signalsToCompare": [
+        {
+          "signal": "page_view",
+          "baseline": 225,
+          "meaning": "proves traffic reached the proof route"
+        },
+        {
+          "signal": "blog_view",
+          "baseline": 14,
+          "meaning": "proves readable proof page attention"
+        },
+        {
+          "signal": "glb_preview_play",
+          "baseline": 62,
+          "meaning": "proves 3D model usefulness"
+        },
+        {
+          "signal": "podcast_interrupt_play",
+          "baseline": 2,
+          "meaning": "proves source/audio usefulness"
+        },
+        {
+          "signal": "search_intent_chip_select",
+          "baseline": 0,
+          "meaning": "proves active keyword intent"
+        },
+        {
+          "signal": "backlink_source_open",
+          "baseline": 0,
+          "meaning": "proves source/backlink curiosity"
+        }
+      ],
+      "promoteWhen": "page_view is joined by at least one proof action: proof_route_open, backlink_source_open, glb_preview_play, podcast_interrupt_play, market_view_open, or search_intent_chip_select",
+      "rewriteWhen": "crawler/page activity appears but the second action stays quiet",
+      "holdWhen": "no route activity appears after stable deployment and Search Console inspection",
+      "fireCudaDecision": "promote, rewrite, or hold this pair before expanding supporting long-tail variations"
+    }
+  ],
+  "compareOrder": [
+    "Confirm stable deploy and sitemap/Search Console visibility.",
+    "Read Supabase route_refinement for each watch/blog route in the delta.",
+    "Compare page_view against second-action proof events.",
+    "Promote pairs with second-action behavior into FireCuda winners.",
+    "Rewrite metadata for crawled-but-quiet pairs.",
+    "Hold inactive pairs without creating more public pages."
+  ],
+  "nextFireCudaMove": "After deployment, run Current Market and Home Project through this compare path before expanding market, home project, or 3D planner long-tail clusters.",
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  }
+}

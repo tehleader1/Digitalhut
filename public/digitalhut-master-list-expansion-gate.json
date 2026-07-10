@@ -1,0 +1,195 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Master List Expansion Gate",
+  "status": "master-list-expansion-gated-closed",
+  "purpose": "Protect the 2,572,944-rank-slot FireCuda universe from thin expansion until receipts earn promote or rewrite evidence.",
+  "guardrail": "Do not generate, publish, or submit expanded keyword pages from pending receipts. FireCuda stores the universe; receipts unlock measured expansion.",
+  "totalVariationCapacity": 2572944,
+  "allowedSlotTotal": 0,
+  "heldSlotTotal": 2572944,
+  "gateCount": 6,
+  "openGateCount": 0,
+  "closedGateCount": 6,
+  "receiptStatus": "firecuda-promotion-receipts-ready",
+  "gates": [
+    {
+      "pairSlug": "youtube-video-content-radar",
+      "launchLane": "Mainstream Streaming",
+      "watchRoute": "/watch/youtube-video-content-radar",
+      "blogRoute": "/blog/youtube-video-content-radar",
+      "receiptStatus": "receipt-ready-for-evidence",
+      "decision": "pending",
+      "secondActionWinner": "pending",
+      "masterListAction": "pending",
+      "expansionStatus": "closed-pending-evidence",
+      "allowedSlots": 0,
+      "laneVariationCapacity": 0,
+      "laneBridgeStatus": "needs-separate-lane-universe",
+      "proofRoutes": {
+        "watch": "/watch/youtube-video-content-radar",
+        "blog": "/blog/youtube-video-content-radar"
+      },
+      "unlockRequires": [
+        "build proof",
+        "Search Console route visibility",
+        "Supabase route_refinement",
+        "Supabase keyword_refinement",
+        "second-action evidence"
+      ],
+      "blockedReason": "receipt pending and launch lane is outside the counted mundane master-list universe"
+    },
+    {
+      "pairSlug": "search-intent-radar-visual-experience",
+      "launchLane": "Automatic System Presentation",
+      "watchRoute": "/watch/search-intent-radar-visual-experience",
+      "blogRoute": "/blog/search-intent-radar-visual-experience",
+      "receiptStatus": "receipt-ready-for-evidence",
+      "decision": "pending",
+      "secondActionWinner": "pending",
+      "masterListAction": "pending",
+      "expansionStatus": "closed-pending-evidence",
+      "allowedSlots": 0,
+      "laneVariationCapacity": 0,
+      "laneBridgeStatus": "needs-separate-lane-universe",
+      "proofRoutes": {
+        "watch": "/watch/search-intent-radar-visual-experience",
+        "blog": "/blog/search-intent-radar-visual-experience"
+      },
+      "unlockRequires": [
+        "build proof",
+        "Search Console route visibility",
+        "Supabase route_refinement",
+        "Supabase keyword_refinement",
+        "second-action evidence"
+      ],
+      "blockedReason": "receipt pending and launch lane is outside the counted mundane master-list universe"
+    },
+    {
+      "pairSlug": "looking-for-lunch-visual-observatory",
+      "launchLane": "Lunch And Local Food",
+      "watchRoute": "/watch/looking-for-lunch-visual-observatory",
+      "blogRoute": "/blog/looking-for-lunch-visual-observatory",
+      "receiptStatus": "receipt-ready-for-evidence",
+      "decision": "pending",
+      "secondActionWinner": "pending",
+      "masterListAction": "pending",
+      "expansionStatus": "closed-pending-evidence",
+      "allowedSlots": 0,
+      "laneVariationCapacity": 571536,
+      "laneBridgeStatus": "inside-counted-master-universe",
+      "proofRoutes": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/looking-for-lunch-visual-observatory",
+        "blog": "/blog/looking-for-lunch-visual-observatory"
+      },
+      "unlockRequires": [
+        "build proof",
+        "Search Console route visibility",
+        "Supabase route_refinement",
+        "Supabase keyword_refinement",
+        "second-action evidence"
+      ],
+      "blockedReason": "receipt still pending or missing second-action evidence"
+    },
+    {
+      "pairSlug": "calling-an-uber-visual-trip-guide",
+      "launchLane": "Rideshare And Commute",
+      "watchRoute": "/watch/calling-an-uber-visual-trip-guide",
+      "blogRoute": "/blog/calling-an-uber-visual-trip-guide",
+      "receiptStatus": "receipt-ready-for-evidence",
+      "decision": "pending",
+      "secondActionWinner": "pending",
+      "masterListAction": "pending",
+      "expansionStatus": "closed-pending-evidence",
+      "allowedSlots": 0,
+      "laneVariationCapacity": 344064,
+      "laneBridgeStatus": "inside-counted-master-universe",
+      "proofRoutes": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/calling-an-uber-visual-trip-guide",
+        "blog": "/blog/calling-an-uber-visual-trip-guide"
+      },
+      "unlockRequires": [
+        "build proof",
+        "Search Console route visibility",
+        "Supabase route_refinement",
+        "Supabase keyword_refinement",
+        "second-action evidence"
+      ],
+      "blockedReason": "receipt still pending or missing second-action evidence"
+    },
+    {
+      "pairSlug": "current-market-video-observatory",
+      "launchLane": "Businesses",
+      "watchRoute": "/watch/current-market-video-observatory",
+      "blogRoute": "/blog/current-market-video-observatory",
+      "receiptStatus": "receipt-ready-for-evidence",
+      "decision": "pending",
+      "secondActionWinner": "pending",
+      "masterListAction": "pending",
+      "expansionStatus": "closed-pending-evidence",
+      "allowedSlots": 0,
+      "laneVariationCapacity": 0,
+      "laneBridgeStatus": "needs-separate-lane-universe",
+      "proofRoutes": {
+        "watch": "/watch/current-market-video-observatory",
+        "blog": "/blog/current-market-video-observatory"
+      },
+      "unlockRequires": [
+        "build proof",
+        "Search Console route visibility",
+        "Supabase route_refinement",
+        "Supabase keyword_refinement",
+        "second-action evidence"
+      ],
+      "blockedReason": "receipt pending and launch lane is outside the counted mundane master-list universe"
+    },
+    {
+      "pairSlug": "home-project-3d-visual-planner",
+      "launchLane": "Mainstream Streaming",
+      "watchRoute": "/watch/home-project-3d-visual-planner",
+      "blogRoute": "/blog/home-project-3d-visual-planner",
+      "receiptStatus": "receipt-ready-for-evidence",
+      "decision": "pending",
+      "secondActionWinner": "pending",
+      "masterListAction": "pending",
+      "expansionStatus": "closed-pending-evidence",
+      "allowedSlots": 0,
+      "laneVariationCapacity": 0,
+      "laneBridgeStatus": "needs-separate-lane-universe",
+      "proofRoutes": {
+        "watch": "/watch/home-project-3d-visual-planner",
+        "blog": "/blog/home-project-3d-visual-planner"
+      },
+      "unlockRequires": [
+        "build proof",
+        "Search Console route visibility",
+        "Supabase route_refinement",
+        "Supabase keyword_refinement",
+        "second-action evidence"
+      ],
+      "blockedReason": "receipt pending and launch lane is outside the counted mundane master-list universe"
+    }
+  ],
+  "expansionRules": [
+    "Pending receipts keep all matching rank slots closed.",
+    "Promote receipts can unlock a small winner batch after second-action evidence.",
+    "Rewrite receipts can unlock a smaller metadata test batch after visibility evidence.",
+    "Hold receipts unlock zero new keyword surfaces.",
+    "Every opened slot must point back to a watch route, blog route, source/backlink, GLB, podcast, market, or search-intent proof."
+  ],
+  "nextFireCudaMove": "Keep the full master list held until receipts gain promote or rewrite evidence.",
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  }
+}

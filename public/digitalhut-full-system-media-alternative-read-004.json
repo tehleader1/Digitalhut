@@ -1,0 +1,237 @@
+{
+  "generatedAt": "2026-07-07T11:42:00-04:00",
+  "mode": "DigitalHut Full-System Media Alternative Read 004",
+  "status": "active-placement-map",
+  "domain": "https://www.digitalhut.app",
+  "positioning": {
+    "oneLine": "DigitalHut is a 2026 video, 3D rendering, podcast/source, market/context, and analytics observatory dapp interface for people who want an alternative to passive daily media watching.",
+    "notThis": [
+      "not a scrolling website",
+      "not a plain YouTube clone",
+      "not a standalone 3D asset library",
+      "not a podcast directory",
+      "not a thin SEO page farm"
+    ],
+    "this": [
+      "closed beta .exe direction",
+      "PWA direction in progress",
+      "single interface media observatory",
+      "video topic plus GLB context",
+      "podcast/source moment plus analytics",
+      "category-driven entertainment/research route system",
+      "Supabase/Google/Vercel-backed proof layer"
+    ]
+  },
+  "latestLiveRead": {
+    "pageViews": 278,
+    "uniqueVisitors": 95,
+    "blogViews": 14,
+    "glbPreviewPlays": 81,
+    "podcastInterrupts": 12,
+    "marketOpens": 5,
+    "autoplayStarts": 4,
+    "episodeShifts": 2,
+    "searchRuns": 0,
+    "proofRouteOpens": 0,
+    "sourceBacklinkOpens": 0,
+    "intentSelections": 0,
+    "searchConsoleRows": 0,
+    "searchConsoleClicks": 0,
+    "searchConsoleImpressions": 0,
+    "googleIndexing": {
+      "homepage": "Submitted and indexed",
+      "categoryMainstreamStreaming": "Discovered - currently not indexed",
+      "watchHomeProject3dVisualPlanner": "Discovered/unknown in latest inspection",
+      "rankClaim": "No Google rank movement claim until Search Console rows, impressions, clicks, or average position appear."
+    }
+  },
+  "fullSystemKeywordUniverse": [
+    {
+      "category": "daily-relax-alternative",
+      "intent": "User normally opens YouTube/TikTok/shorts after work but wants a different media interface.",
+      "longTailSeeds": [
+        "alternative to YouTube daily watch episodes",
+        "2026 video 3D podcast entertainment app",
+        "relax watching video with 3D model view",
+        "video app with podcast moments and 3D rendering",
+        "daily media observatory instead of scrolling"
+      ],
+      "routePressure": ["/", "/watch/what-am-i-watching-viral-video-explained", "/watch/watch-video-with-3d-model-proof"]
+    },
+    {
+      "category": "gamer",
+      "intent": "User wants game worlds, builds, VR rooms, top builds, server spaces, and asset context.",
+      "longTailSeeds": [
+        "gaming 3D environment viewer",
+        "game world GLB presentation",
+        "horror corridor VR room walkthrough",
+        "top game builds visual experience",
+        "server build 3D observatory episode"
+      ],
+      "routePressure": ["/category/gamer", "/watch/gaming-3d-environment-viewer", "/watch/gamer-programmer-renderer-hubs"]
+    },
+    {
+      "category": "real-estate",
+      "intent": "User wants walkthroughs, housing models, agency proof, and property context.",
+      "longTailSeeds": [
+        "real estate 3D house walkthrough",
+        "housing model 3D experience for agency",
+        "property video with 3D model proof",
+        "real estate agency virtual model 2026",
+        "home remodel 3D visualization"
+      ],
+      "routePressure": ["/category/real-estate", "/watch/real-estate-3d-house-walkthrough", "/watch/home-remodel-3d-visualization"]
+    },
+    {
+      "category": "planetary",
+      "intent": "User wants space, climate, planetary, earth, and orbital explainers with visual proof.",
+      "longTailSeeds": [
+        "planetary research 3D experience",
+        "orbital compute visual explainer",
+        "climate control 3D visual study",
+        "planetary views video observatory",
+        "space topic video with 3D context"
+      ],
+      "routePressure": ["/category/planetary", "/watch/planetary-research-3d-experience", "/watch/planetary-views-and-orbital-compute"]
+    },
+    {
+      "category": "exotic-environment",
+      "intent": "User wants environments, resorts, vacation previews, coral reefs, terrain, and immersive spaces.",
+      "longTailSeeds": [
+        "exotic environment 3D preview",
+        "vacation resort 3D preview",
+        "coral reef study 3D visual experience",
+        "terrain environment GLB walkthrough",
+        "immersive place video with 3D model"
+      ],
+      "routePressure": ["/watch/vacation-resort-3d-preview", "/watch/3d-imagery-helping-research-communities", "/watch/research-engine-for-3d-evidence"]
+    },
+    {
+      "category": "structure",
+      "intent": "User wants buildings, cities, architecture, home projects, and construction logic.",
+      "longTailSeeds": [
+        "building structure GLB viewer",
+        "city buildings 3D video analysis",
+        "home project 3D visual planner",
+        "architecture video with 3D rendering",
+        "construction visual observatory"
+      ],
+      "routePressure": ["/watch/home-project-3d-visual-planner", "/watch/mainstream-feed-to-3d-assets", "/category/3d-model-view"]
+    },
+    {
+      "category": "mainstream",
+      "intent": "User wants mainstream clips explained with 3D context and source proof.",
+      "longTailSeeds": [
+        "mainstream video observatory with 3D model",
+        "what am I watching viral video explained",
+        "funny mainstream video explained with source",
+        "video content radar with 3D context",
+        "watch video with 3D model proof"
+      ],
+      "routePressure": ["/category/mainstream-streaming", "/watch/funny-mainstream-video-explained", "/watch/youtube-video-content-radar"]
+    },
+    {
+      "category": "researcher",
+      "intent": "User wants study material, citations, explainers, evidence, and visual research workflow.",
+      "longTailSeeds": [
+        "research engine for 3D evidence",
+        "university research 3D experience",
+        "source backed video research hub",
+        "coral reef study 2026 3D visual",
+        "animal extinction 3D experience"
+      ],
+      "routePressure": ["/category/researcher", "/watch/research-engine-for-3d-evidence", "/watch/university-research-3d-experience"]
+    },
+    {
+      "category": "programmer",
+      "intent": "User wants dapp, renderer, API, Babylon, GLB, and developer proof.",
+      "longTailSeeds": [
+        "developer dapp 3D experience",
+        "Babylon GLB renderer research demo",
+        "programmer hub API renderer testing",
+        "video analytics dapp with GLB renderer",
+        "3D model view research engine"
+      ],
+      "routePressure": ["/category/programmer", "/watch/developer-dapp-3d-experience", "/watch/glb-research-assistant"]
+    },
+    {
+      "category": "workforce",
+      "intent": "User wants work training, decision support, market context, traffic studies, and enterprise proof.",
+      "longTailSeeds": [
+        "workforce video training with 3D context",
+        "market video observatory with data",
+        "traffic study 3D experience",
+        "business video with GLB proof",
+        "enterprise media observatory interface"
+      ],
+      "routePressure": ["/markets", "/watch/current-market-video-observatory", "/watch/traffic-study-3d-experience"]
+    }
+  ],
+  "simulatedLadderMatches": [
+    {
+      "competitorType": "passive video platform",
+      "examples": ["YouTube-style watch surface", "short-form video app", "decentralized video host"],
+      "skipIf": "Only provides upload/watch/feed behavior and does not combine playable 3D context plus podcast/source moments.",
+      "digitalhutEdge": "Can turn the watched topic into a research object: video plus GLB plus podcast/source plus market/context plus route proof.",
+      "trafficPull": "Position as alternative daily relax watch interface, not as a direct replacement for creator inventory."
+    },
+    {
+      "competitorType": "3D model library/viewer",
+      "examples": ["Sketchfab-style asset viewer", "desktop 3D viewer", "WebGL model gallery"],
+      "skipIf": "Only stores or renders 3D assets without tying them to live media topics.",
+      "digitalhutEdge": "Uses GLB as part of a moving media story, not a standalone object page.",
+      "trafficPull": "Target GLB plus video context searches and source-backed 3D proof pages."
+    },
+    {
+      "competitorType": "video podcast app",
+      "examples": ["Apple/Spotify/YouTube video podcast surfaces"],
+      "skipIf": "Podcast is only audio/video playback without surrounding 3D/context analytics.",
+      "digitalhutEdge": "Podcast is an interrupt/source moment inside a larger observatory, not a separate episode list.",
+      "trafficPull": "Target podcast source moment for viral video, guest explanation, and research clip language."
+    },
+    {
+      "competitorType": "social/feed reader",
+      "examples": ["Surf-style social web feed", "RSS/social aggregation", "fediverse video feed"],
+      "skipIf": "Only curates feeds and does not render topic-specific 3D/podcast/analytics views.",
+      "digitalhutEdge": "DigitalHut is not only discovery; it builds an interactive presentation around the selected topic.",
+      "trafficPull": "Target what-am-I-watching and everyday research observatory clusters."
+    },
+    {
+      "competitorType": "research/knowledge page",
+      "examples": ["wiki article", "thin explainer blog", "static study page"],
+      "skipIf": "Static text explains the topic but does not present media, 3D, and source moments together.",
+      "digitalhutEdge": "Turns topic lookup into a playable research interface.",
+      "trafficPull": "Target wiki lookup visual research hub and source-backed study language."
+    }
+  ],
+  "whiteHatPlacementPlan": {
+    "allowed": [
+      "public proof packets",
+      "watch routes",
+      "blog proof pages",
+      "structured metadata",
+      "llms discovery map",
+      "API/plugin documentation surfaces",
+      "natural community replies only when relevant and non-spam",
+      "developer showcase posts that honestly describe the feature"
+    ],
+    "notAllowed": [
+      "fake comments",
+      "spam backlinks",
+      "misleading rank claims",
+      "auto-posting to unrelated communities",
+      "thin duplicate pages"
+    ],
+    "nextPlacementTests": [
+      "developer proof: Babylon GLB renderer plus dapp video observatory",
+      "everyday proof: lunch/ride/flight/wiki visual guide",
+      "media alternative proof: daily relax watch alternative with video plus 3D plus podcast",
+      "research proof: source-backed study with GLB and podcast moment"
+    ]
+  },
+  "moveOnRule": {
+    "ifNoMovement": "Do not keep expanding the same pool. Move to the next category lane.",
+    "ifSomeMovement": "Absorb the winning route into llms, sitemap-facing route priority, blog proof, and next Search Console comparison.",
+    "ifGoogleRowsOpen": "Stop simulation language and switch to real query/page/country/position refinement."
+  }
+}

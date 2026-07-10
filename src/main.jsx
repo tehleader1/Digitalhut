@@ -33,6 +33,8 @@ const ExperimentsPage = React.lazy(() => import("./pages/ExperimentsPage"))
 const LocationIntelligencePage = React.lazy(() => import("./pages/LocationIntelligencePage"))
 const StandbyRunnerPage = React.lazy(() => import("./pages/StandbyRunnerPage"))
 const SystemProofPage = React.lazy(() => import("./pages/SystemProofPage"))
+const MasterKeywordCoveragePage = React.lazy(() => import("./pages/MasterKeywordCoveragePage"))
+const SourceBridgePage = React.lazy(() => import("./pages/SourceBridgePage"))
 const ObservatoryScanner = React.lazy(() => import("./components/ObservatoryScanner"))
 
 installDigitalHutSearchPixel()
@@ -131,6 +133,8 @@ ReactDOM.createRoot(
         <Route path="/watch/:slug" element={<WatchProofPage />} />
         <Route path="/category/:slug" element={<CategoryProofPage />} />
         <Route path="/system-proof" element={<SystemProofPage />} />
+        <Route path="/master-keyword-coverage" element={<MasterKeywordCoveragePage />} />
+        <Route path="/source-bridge" element={<SourceBridgePage />} />
         <Route path="/about" element={<TrustPage type="about" />} />
         <Route path="/contact" element={<TrustPage type="contact" />} />
         <Route path="/privacy" element={<TrustPage type="privacy" />} />

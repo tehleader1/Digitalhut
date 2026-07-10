@@ -4,12 +4,16 @@ import {
   createConversionRecord
 } from "../src/lib/assetConversionPipeline.js"
 
-const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY
+function envValue(key){
+  return String(process.env[key] || "").replace(/^['"]|['"]$/g, "").trim()
+}
+
+const supabaseUrl = envValue("SUPABASE_URL") || envValue("VITE_SUPABASE_URL") || envValue("NEXT_PUBLIC_SUPABASE_URL")
+const supabaseServiceKey = envValue("SUPABASE_SERVICE_ROLE_KEY") || envValue("DIGITALHUT_SUPABASE_SERVICE_ROLE_KEY") || envValue("SUPABASE_SECRET_KEY") || envValue("SUPABASE_ANON_KEY") || envValue("VITE_SUPABASE_ANON_KEY") || envValue("NEXT_PUBLIC_SUPABASE_ANON_KEY")
 const converterUrl = process.env.ASSET_CONVERTER_URL || ""
 const converterKey = process.env.ASSET_CONVERTER_API_KEY || ""
-const assetBucket = process.env.SUPABASE_ASSET_BUCKET || "digitalhut-assets"
-const firecudaFolder = process.env.SUPABASE_FIRECUDA_FOLDER || "firecuda-library"
+const assetBucket = envValue("SUPABASE_ASSET_BUCKET") || "digitalhut-assets"
+const firecudaFolder = envValue("SUPABASE_FIRECUDA_FOLDER") || "firecuda-library"
 
 function json(res, status, body){
   res.statusCode = status

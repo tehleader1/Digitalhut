@@ -1,0 +1,499 @@
+{
+  "generatedAt": "2026-07-10T02:01:53.248Z",
+  "status": "master-keyword-rotation-ready",
+  "site": "https://www.digitalhut.app",
+  "sitemapLimit": 50000,
+  "totalUniverse": 200572944,
+  "mode": "Rotate the full 200M keyword universe internally and expose the best 50,000 public sitemap doorways at a time.",
+  "guardrail": "The sitemap slice is not a fake 200M-page dump. It is a scored public window into real DigitalHut proof routes.",
+  "sourceOfTruth": {
+    "file": "src/lib/seoSearchClaimEngine.js",
+    "rule": "Only counted lanes from seoSearchClaimLanes create the 200M universe. Intro zones and traffic packets can influence rotation weight only when their lane id exactly matches an original counted lane id.",
+    "totalIndividualRanks": 200572944,
+    "countedLaneCount": 24
+  },
+  "liveRead": {
+    "pageViews": 323,
+    "uniqueVisitors": 119,
+    "totalEvents": 540,
+    "glbPreviewPlays": 83,
+    "podcastInterrupts": 13,
+    "autoplayStarts": 5,
+    "searchRuns": 2,
+    "marketOpens": 5,
+    "proofRouteOpens": 0,
+    "sourceOpens": 0
+  },
+  "sidePocketPressure": {
+    "isBlocking": true,
+    "reason": "direct/private homepage pocket has volume; collect it to the side while fresh exact-lane discovery stays open",
+    "homepageDirect": {
+      "lane": "unassigned-lane",
+      "path": "/",
+      "events": 211,
+      "latest": "2026-07-07T21:37:39.814689+00:00",
+      "origin": "direct-or-private-referrer",
+      "searches": 0,
+      "visitors": 76,
+      "pageViews": 162,
+      "marketOpens": 0,
+      "sourceOpens": 0,
+      "sampleEvents": [],
+      "sampleQueries": [],
+      "secondActions": 28,
+      "autoplayStarts": 0,
+      "glbPreviewPlays": 28,
+      "proofRouteOpens": 0,
+      "sampleReferrers": [],
+      "podcastInterrupts": 0,
+      "publicSignalScore": 1650
+    }
+  },
+  "freshnessPolicy": {
+    "action": "collect-homepage-pocket-to-the-side",
+    "rule": "If homepage traffic has volume but no proof, source, or search movement, preserve that audience as a side pocket while reducing its hold on the 50,000-row sitemap window and opening more rows for fresh exact-lane discovery pockets.",
+    "successMarker": "new exact-lane proof/source/search/GLB/podcast/autoplay events or functional Search Console rows"
+  },
+  "searchConsoleRead": {
+    "freshRows": 1,
+    "freshImpressions": 1,
+    "indexedInspectionTargets": 2,
+    "discoveredInspectionTargets": 4,
+    "unknownInspectionTargets": 8
+  },
+  "allocationWeights": {
+    "full-entertainment-dapp-alternative": 123,
+    "gaming-3d-world-observatory": 83,
+    "ai-video-podcast-source-explainer": 80,
+    "developer-programmer-research": 76,
+    "real-estate-3d-tour-observatory": 51,
+    "local-life-errands-companion": 48,
+    "international-language-side-markets": 41,
+    "market-company-observatory": 39,
+    "exotic-environment-visual-experience": 34,
+    "architecture-structure-engineering": 34,
+    "education-study-visual-research": 34,
+    "home-project-diy-visual": 30,
+    "creator-brand-product-showcase": 20,
+    "planetary-space-observatory": 16,
+    "virtual-travel-resort-vacation": 16,
+    "workforce-training-visual-system": 16,
+    "lifestyle-event-visual-experience": 16,
+    "social-reel-meme-analysis": 6,
+    "errands-review-before-buying": 24,
+    "wiki-quick-research": 28,
+    "lunch-local-food": 16,
+    "flight-travel-booking": 16,
+    "rideshare-commute": 16,
+    "funny-mainstream-video": 6
+  },
+  "allocations": [
+    {
+      "id": "full-entertainment-dapp-alternative",
+      "lane": "Full Entertainment Dapp Alternative",
+      "proofRoute": "/watch/full-view-episode-alternative",
+      "variationCapacity": 11000000,
+      "score": 123,
+      "sitemapRows": 8018,
+      "measurementSignals": [
+        "homepage entry",
+        "autoplay start",
+        "next episode",
+        "3D Model View open",
+        "podcast/source interrupt",
+        "live analytics read"
+      ]
+    },
+    {
+      "id": "gaming-3d-world-observatory",
+      "lane": "Gaming 3D World Observatory",
+      "proofRoute": "/watch/game-world-glb-presentation",
+      "variationCapacity": 11000000,
+      "score": 83,
+      "sitemapRows": 5410,
+      "measurementSignals": [
+        "GLB Model View open",
+        "autoplay start",
+        "watch route open",
+        "source/backlink open"
+      ]
+    },
+    {
+      "id": "ai-video-podcast-source-explainer",
+      "lane": "AI Video Podcast Source Explainer",
+      "proofRoute": "/watch/ai-video-podcast-source-explainer",
+      "variationCapacity": 11000000,
+      "score": 80,
+      "sitemapRows": 5215,
+      "measurementSignals": [
+        "podcast/source interrupt",
+        "search intent",
+        "source/backlink open",
+        "autoplay start"
+      ]
+    },
+    {
+      "id": "developer-programmer-research",
+      "lane": "Developer Programmer Research",
+      "proofRoute": "/watch/developer-programmer-research-observatory",
+      "variationCapacity": 11000000,
+      "score": 76,
+      "sitemapRows": 4954,
+      "measurementSignals": [
+        "documentation source open",
+        "blog proof open",
+        "search intent",
+        "watch proof open",
+        "Supabase event read",
+        "Search Console row"
+      ]
+    },
+    {
+      "id": "real-estate-3d-tour-observatory",
+      "lane": "Real Estate 3D Tour Observatory",
+      "proofRoute": "/watch/real-estate-3d-tour-observatory",
+      "variationCapacity": 11000000,
+      "score": 51,
+      "sitemapRows": 3324,
+      "measurementSignals": [
+        "GLB place preview",
+        "category lane select",
+        "source/backlink open",
+        "watch proof open"
+      ]
+    },
+    {
+      "id": "local-life-errands-companion",
+      "lane": "Local Life Errands Companion",
+      "proofRoute": "/watch/local-life-errands-companion",
+      "variationCapacity": 11000000,
+      "score": 48,
+      "sitemapRows": 3129,
+      "measurementSignals": [
+        "search intent",
+        "quick panel select",
+        "source/backlink open",
+        "watch route open"
+      ]
+    },
+    {
+      "id": "international-language-side-markets",
+      "lane": "International Language Side Markets",
+      "proofRoute": "/watch/international-language-side-markets",
+      "variationCapacity": 11000000,
+      "score": 41,
+      "sitemapRows": 2673,
+      "measurementSignals": [
+        "referral entry",
+        "search intent",
+        "source/backlink open",
+        "watch proof open"
+      ]
+    },
+    {
+      "id": "market-company-observatory",
+      "lane": "Market Company Observatory",
+      "proofRoute": "/watch/market-company-observatory",
+      "variationCapacity": 11000000,
+      "score": 39,
+      "sitemapRows": 2542,
+      "measurementSignals": [
+        "market open",
+        "source/backlink open",
+        "search intent",
+        "watch proof open"
+      ]
+    },
+    {
+      "id": "exotic-environment-visual-experience",
+      "lane": "Exotic Environment Visual Experience",
+      "proofRoute": "/watch/exotic-environment-visual-experience",
+      "variationCapacity": 11000000,
+      "score": 34,
+      "sitemapRows": 2216,
+      "measurementSignals": [
+        "GLB environment preview",
+        "source/backlink open",
+        "autoplay start",
+        "watch proof open"
+      ]
+    },
+    {
+      "id": "architecture-structure-engineering",
+      "lane": "Architecture Structure Engineering",
+      "proofRoute": "/watch/architecture-structure-engineering-visual",
+      "variationCapacity": 11000000,
+      "score": 34,
+      "sitemapRows": 2216,
+      "measurementSignals": [
+        "GLB structure preview",
+        "source route open",
+        "timeline read",
+        "search intent"
+      ]
+    },
+    {
+      "id": "education-study-visual-research",
+      "lane": "Education Study Visual Research",
+      "proofRoute": "/watch/education-study-visual-research",
+      "variationCapacity": 11000000,
+      "score": 34,
+      "sitemapRows": 2216,
+      "measurementSignals": [
+        "blog proof open",
+        "source route open",
+        "search intent",
+        "watch route open"
+      ]
+    },
+    {
+      "id": "home-project-diy-visual",
+      "lane": "Home Project DIY Visual",
+      "proofRoute": "/watch/home-project-diy-visual",
+      "variationCapacity": 11000000,
+      "score": 30,
+      "sitemapRows": 1956,
+      "measurementSignals": [
+        "GLB structure preview",
+        "source route open",
+        "search intent",
+        "watch route open"
+      ]
+    },
+    {
+      "id": "creator-brand-product-showcase",
+      "lane": "Creator Brand Product Showcase",
+      "proofRoute": "/watch/creator-brand-product-showcase",
+      "variationCapacity": 11000000,
+      "score": 20,
+      "sitemapRows": 1304,
+      "measurementSignals": [
+        "source/backlink open",
+        "watch route open",
+        "search intent",
+        "GLB Model View open"
+      ]
+    },
+    {
+      "id": "planetary-space-observatory",
+      "lane": "Planetary And Space Observatory",
+      "proofRoute": "/watch/planetary-space-visual-observatory",
+      "variationCapacity": 11000000,
+      "score": 16,
+      "sitemapRows": 1043,
+      "measurementSignals": [
+        "research source open",
+        "GLB environment preview",
+        "timeline read",
+        "blog proof open"
+      ]
+    },
+    {
+      "id": "virtual-travel-resort-vacation",
+      "lane": "Virtual Travel Resort Vacation",
+      "proofRoute": "/watch/virtual-travel-resort-vacation",
+      "variationCapacity": 11000000,
+      "score": 16,
+      "sitemapRows": 1043,
+      "measurementSignals": [
+        "GLB place preview",
+        "category lane select",
+        "source/backlink open",
+        "watch proof open"
+      ]
+    },
+    {
+      "id": "workforce-training-visual-system",
+      "lane": "Workforce Training Visual System",
+      "proofRoute": "/watch/workforce-training-visual-system",
+      "variationCapacity": 11000000,
+      "score": 16,
+      "sitemapRows": 1043,
+      "measurementSignals": [
+        "watch route open",
+        "source route open",
+        "timeline read",
+        "search intent"
+      ]
+    },
+    {
+      "id": "lifestyle-event-visual-experience",
+      "lane": "Lifestyle Event Visual Experience",
+      "proofRoute": "/watch/lifestyle-event-visual-experience",
+      "variationCapacity": 11000000,
+      "score": 16,
+      "sitemapRows": 1043,
+      "measurementSignals": [
+        "autoplay start",
+        "watch route open",
+        "source/backlink open",
+        "podcast/source interrupt"
+      ]
+    },
+    {
+      "id": "social-reel-meme-analysis",
+      "lane": "Social Reel Meme Analysis",
+      "proofRoute": "/watch/social-reel-meme-analysis",
+      "variationCapacity": 11000000,
+      "score": 6,
+      "sitemapRows": 391,
+      "measurementSignals": [
+        "autoplay start",
+        "watch route open",
+        "podcast/source interrupt",
+        "source/backlink open"
+      ]
+    },
+    {
+      "id": "errands-review-before-buying",
+      "lane": "Errands And Review Before Buying",
+      "proofRoute": "/watch/search-intent-radar-visual-experience",
+      "variationCapacity": 451584,
+      "score": 24,
+      "sitemapRows": 64,
+      "measurementSignals": [
+        "source/backlink open",
+        "blog proof open",
+        "quick panel select"
+      ]
+    },
+    {
+      "id": "wiki-quick-research",
+      "lane": "Wiki And Quick Research",
+      "proofRoute": "/watch/wiki-lookup-visual-research-hub",
+      "variationCapacity": 344064,
+      "score": 28,
+      "sitemapRows": 57,
+      "measurementSignals": [
+        "blog proof open",
+        "source route open",
+        "search intent"
+      ]
+    },
+    {
+      "id": "lunch-local-food",
+      "lane": "Lunch And Local Food",
+      "proofRoute": "/watch/looking-for-lunch-visual-observatory",
+      "variationCapacity": 571536,
+      "score": 16,
+      "sitemapRows": 54,
+      "measurementSignals": [
+        "search intent",
+        "backlink source open",
+        "watch route open"
+      ]
+    },
+    {
+      "id": "flight-travel-booking",
+      "lane": "Flight And Travel Booking",
+      "proofRoute": "/watch/booking-flight-ticket-visual-guide",
+      "variationCapacity": 419328,
+      "score": 16,
+      "sitemapRows": 40,
+      "measurementSignals": [
+        "category lane select",
+        "GLB place preview",
+        "watch proof open"
+      ]
+    },
+    {
+      "id": "rideshare-commute",
+      "lane": "Rideshare And Commute",
+      "proofRoute": "/watch/calling-an-uber-visual-trip-guide",
+      "variationCapacity": 344064,
+      "score": 16,
+      "sitemapRows": 33,
+      "measurementSignals": [
+        "quick panel select",
+        "timeline read",
+        "source/backlink open"
+      ]
+    },
+    {
+      "id": "funny-mainstream-video",
+      "lane": "Funny Mainstream Video",
+      "proofRoute": "/watch/funny-mainstream-video-explained",
+      "variationCapacity": 442368,
+      "score": 6,
+      "sitemapRows": 16,
+      "measurementSignals": [
+        "autoplay start",
+        "watch route open",
+        "podcast/source interrupt"
+      ]
+    }
+  ],
+  "topAllocations": [
+    {
+      "id": "full-entertainment-dapp-alternative",
+      "lane": "Full Entertainment Dapp Alternative",
+      "proofRoute": "/watch/full-view-episode-alternative",
+      "score": 123,
+      "sitemapRows": 8018
+    },
+    {
+      "id": "gaming-3d-world-observatory",
+      "lane": "Gaming 3D World Observatory",
+      "proofRoute": "/watch/game-world-glb-presentation",
+      "score": 83,
+      "sitemapRows": 5410
+    },
+    {
+      "id": "ai-video-podcast-source-explainer",
+      "lane": "AI Video Podcast Source Explainer",
+      "proofRoute": "/watch/ai-video-podcast-source-explainer",
+      "score": 80,
+      "sitemapRows": 5215
+    },
+    {
+      "id": "developer-programmer-research",
+      "lane": "Developer Programmer Research",
+      "proofRoute": "/watch/developer-programmer-research-observatory",
+      "score": 76,
+      "sitemapRows": 4954
+    },
+    {
+      "id": "real-estate-3d-tour-observatory",
+      "lane": "Real Estate 3D Tour Observatory",
+      "proofRoute": "/watch/real-estate-3d-tour-observatory",
+      "score": 51,
+      "sitemapRows": 3324
+    },
+    {
+      "id": "local-life-errands-companion",
+      "lane": "Local Life Errands Companion",
+      "proofRoute": "/watch/local-life-errands-companion",
+      "score": 48,
+      "sitemapRows": 3129
+    },
+    {
+      "id": "international-language-side-markets",
+      "lane": "International Language Side Markets",
+      "proofRoute": "/watch/international-language-side-markets",
+      "score": 41,
+      "sitemapRows": 2673
+    },
+    {
+      "id": "market-company-observatory",
+      "lane": "Market Company Observatory",
+      "proofRoute": "/watch/market-company-observatory",
+      "score": 39,
+      "sitemapRows": 2542
+    },
+    {
+      "id": "exotic-environment-visual-experience",
+      "lane": "Exotic Environment Visual Experience",
+      "proofRoute": "/watch/exotic-environment-visual-experience",
+      "score": 34,
+      "sitemapRows": 2216
+    },
+    {
+      "id": "architecture-structure-engineering",
+      "lane": "Architecture Structure Engineering",
+      "proofRoute": "/watch/architecture-structure-engineering-visual",
+      "score": 34,
+      "sitemapRows": 2216
+    }
+  ],
+  "nextAction": "Regenerate sitemap rows from this allocation so the homepage pocket is collected to the side while fresh exact-lane discovery remains open."
+}

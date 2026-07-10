@@ -1,0 +1,375 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Backlink Authority Packet",
+  "status": "authority-map-ready",
+  "purpose": "Turn release routes into backlink/source authority targets with clean anchor language, internal support routes, and Supabase events to measure.",
+  "guardrail": "Backlinks should point to useful proof routes with source context. Do not spam comments, fabricate endorsements, buy low-quality links, or create doorway pages.",
+  "releaseRouteCount": 8,
+  "priorityRouteCount": 4,
+  "supportRouteCount": 4,
+  "categoryCounts": {
+    "local restaurant guides": 1,
+    "food review blogs": 1,
+    "city tourism directories": 1,
+    "Google Business Profile posts": 1,
+    "neighborhood newsletters": 1,
+    "airport travel guides": 1,
+    "rideshare pickup explainers": 1,
+    "local transportation blogs": 1,
+    "hotel concierge pages": 1,
+    "city mobility resources": 1,
+    "market research blogs": 1,
+    "company analysis newsletters": 1,
+    "developer finance communities": 1,
+    "AI chip explainers": 1,
+    "TradingView idea pages": 1,
+    "consumer review blogs": 4,
+    "shopping guides": 4,
+    "local grocery resources": 4,
+    "Reddit-style product roundups": 4,
+    "deal research newsletters": 4,
+    "home improvement blogs": 1,
+    "contractor portfolios": 1,
+    "DIY planning guides": 1,
+    "real estate staging pages": 1,
+    "interior design communities": 1
+  },
+  "routeAuthorityPlans": [
+    {
+      "route": "/watch/looking-for-lunch-visual-observatory",
+      "canonical": "https://www.digitalhut.app/watch/looking-for-lunch-visual-observatory",
+      "title": "restaurants near me visual guide | DigitalHut Watch Proof",
+      "promotionStage": "push-next-deploy-proof",
+      "score": 228,
+      "authorityCategories": [
+        "local restaurant guides",
+        "food review blogs",
+        "city tourism directories",
+        "Google Business Profile posts",
+        "neighborhood newsletters"
+      ],
+      "backlinkAnchors": [
+        "restaurants near me visual guide",
+        "food near me video map",
+        "Lunch And Local Food DigitalHut observatory proof",
+        "restaurants near me visual guide source map",
+        "video + GLB proof for restaurants near me visual guide"
+      ],
+      "sourceAngles": [
+        "Use restaurants near me visual guide | DigitalHut Watch Proof as the proof destination, not a thin keyword page.",
+        "Pair /watch/looking-for-lunch-visual-observatory with /blog/looking-for-lunch-visual-observatory for readable blog proof.",
+        "Route category support through /category/mundane-off-time-experience.",
+        "Measure source/backlink clicks before expanding the keyword lane."
+      ],
+      "internalSupportRoutes": [
+        "/blog/looking-for-lunch-visual-observatory",
+        "/category/mundane-off-time-experience"
+      ],
+      "measurementEvents": [
+        "backlink_source_open",
+        "proof_route_open",
+        "watch_route_open",
+        "blog_route_open",
+        "glb_source_click"
+      ],
+      "status": "authority-priority"
+    },
+    {
+      "route": "/watch/calling-an-uber-visual-trip-guide",
+      "canonical": "https://www.digitalhut.app/watch/calling-an-uber-visual-trip-guide",
+      "title": "Uber pickup visual guide | DigitalHut Watch Proof",
+      "promotionStage": "push-next-deploy-proof",
+      "score": 144,
+      "authorityCategories": [
+        "airport travel guides",
+        "rideshare pickup explainers",
+        "local transportation blogs",
+        "hotel concierge pages",
+        "city mobility resources"
+      ],
+      "backlinkAnchors": [
+        "Uber pickup visual guide",
+        "airport Uber pickup source map",
+        "Rideshare And Commute DigitalHut observatory proof",
+        "Uber pickup visual guide source map",
+        "video + GLB proof for Uber pickup visual guide"
+      ],
+      "sourceAngles": [
+        "Use Uber pickup visual guide | DigitalHut Watch Proof as the proof destination, not a thin keyword page.",
+        "Pair /watch/calling-an-uber-visual-trip-guide with /blog/calling-an-uber-visual-trip-guide for readable blog proof.",
+        "Route category support through /category/mundane-off-time-experience.",
+        "Measure source/backlink clicks before expanding the keyword lane."
+      ],
+      "internalSupportRoutes": [
+        "/blog/calling-an-uber-visual-trip-guide",
+        "/category/mundane-off-time-experience"
+      ],
+      "measurementEvents": [
+        "backlink_source_open",
+        "proof_route_open",
+        "watch_route_open",
+        "blog_route_open",
+        "glb_source_click"
+      ],
+      "status": "authority-priority"
+    },
+    {
+      "route": "/watch/current-market-video-observatory",
+      "canonical": "https://www.digitalhut.app/watch/current-market-video-observatory",
+      "title": "Current Market Video Observatory: DigitalHut Proof | DigitalHut Watch Proof",
+      "promotionStage": "push-next-deploy-proof",
+      "score": 122,
+      "authorityCategories": [
+        "market research blogs",
+        "company analysis newsletters",
+        "developer finance communities",
+        "AI chip explainers",
+        "TradingView idea pages"
+      ],
+      "backlinkAnchors": [
+        "current market video observatory",
+        "stock market visual analysis 3D",
+        "Businesses DigitalHut observatory proof",
+        "Current Market Video Observatory: DigitalHut Proof source map",
+        "video + GLB proof for current market video observatory"
+      ],
+      "sourceAngles": [
+        "Use Current Market Video Observatory: DigitalHut Proof | DigitalHut Watch Proof as the proof destination, not a thin keyword page.",
+        "Pair /watch/current-market-video-observatory with /blog/current-market-video-observatory for readable blog proof.",
+        "Route category support through /category/businesses.",
+        "Measure source/backlink clicks before expanding the keyword lane."
+      ],
+      "internalSupportRoutes": [
+        "/blog/current-market-video-observatory",
+        "/category/businesses"
+      ],
+      "measurementEvents": [
+        "backlink_source_open",
+        "proof_route_open",
+        "watch_route_open",
+        "blog_route_open",
+        "glb_source_click"
+      ],
+      "status": "authority-priority"
+    },
+    {
+      "route": "/watch/youtube-video-content-radar",
+      "canonical": "https://www.digitalhut.app/watch/youtube-video-content-radar",
+      "title": "YouTube Video Content Radar: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "promotionStage": "push-next-deploy-proof",
+      "score": 114,
+      "authorityCategories": [
+        "consumer review blogs",
+        "shopping guides",
+        "local grocery resources",
+        "Reddit-style product roundups",
+        "deal research newsletters"
+      ],
+      "backlinkAnchors": [
+        "YouTube video content radar",
+        "video metadata visual analysis",
+        "Mainstream Streaming DigitalHut observatory proof",
+        "YouTube Video Content Radar: DigitalHut Observatory Proof source map",
+        "video + GLB proof for YouTube video content radar"
+      ],
+      "sourceAngles": [
+        "Use YouTube Video Content Radar: DigitalHut Observatory Proof | DigitalHut Watch Proof as the proof destination, not a thin keyword page.",
+        "Pair /watch/youtube-video-content-radar with /blog/youtube-video-content-radar for readable blog proof.",
+        "Route category support through /category/mainstream-streaming.",
+        "Measure source/backlink clicks before expanding the keyword lane."
+      ],
+      "internalSupportRoutes": [
+        "/blog/youtube-video-content-radar",
+        "/category/mainstream-streaming"
+      ],
+      "measurementEvents": [
+        "backlink_source_open",
+        "proof_route_open",
+        "watch_route_open",
+        "blog_route_open",
+        "glb_source_click"
+      ],
+      "status": "authority-priority"
+    },
+    {
+      "route": "/watch/home-project-3d-visual-planner",
+      "canonical": "https://www.digitalhut.app/watch/home-project-3d-visual-planner",
+      "title": "Home Project 3D Visual Planner: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "promotionStage": "submit-watch-blog-pair",
+      "score": 82,
+      "authorityCategories": [
+        "home improvement blogs",
+        "contractor portfolios",
+        "DIY planning guides",
+        "real estate staging pages",
+        "interior design communities"
+      ],
+      "backlinkAnchors": [
+        "home project 3D visual planner",
+        "home remodel 3D visualization",
+        "Mainstream Streaming DigitalHut observatory proof",
+        "Home Project 3D Visual Planner: DigitalHut Observatory Proof source map",
+        "video + GLB proof for home project 3D visual planner"
+      ],
+      "sourceAngles": [
+        "Use Home Project 3D Visual Planner: DigitalHut Observatory Proof | DigitalHut Watch Proof as the proof destination, not a thin keyword page.",
+        "Pair /watch/home-project-3d-visual-planner with /blog/home-project-3d-visual-planner for readable blog proof.",
+        "Route category support through /category/mainstream-streaming.",
+        "Measure source/backlink clicks before expanding the keyword lane."
+      ],
+      "internalSupportRoutes": [
+        "/blog/home-project-3d-visual-planner",
+        "/category/mainstream-streaming"
+      ],
+      "measurementEvents": [
+        "backlink_source_open",
+        "proof_route_open",
+        "watch_route_open",
+        "blog_route_open",
+        "glb_source_click"
+      ],
+      "status": "authority-support"
+    },
+    {
+      "route": "/watch/grocery-shopping-3d-experience",
+      "canonical": "https://www.digitalhut.app/watch/grocery-shopping-3d-experience",
+      "title": "product reviews visual summary | DigitalHut Watch Proof",
+      "promotionStage": "submit-watch-blog-pair",
+      "score": 66,
+      "authorityCategories": [
+        "consumer review blogs",
+        "shopping guides",
+        "local grocery resources",
+        "Reddit-style product roundups",
+        "deal research newsletters"
+      ],
+      "backlinkAnchors": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "Errands And Review Before Buying DigitalHut observatory proof",
+        "product reviews visual summary source map",
+        "video + GLB proof for product reviews visual summary"
+      ],
+      "sourceAngles": [
+        "Use product reviews visual summary | DigitalHut Watch Proof as the proof destination, not a thin keyword page.",
+        "Pair /watch/grocery-shopping-3d-experience with /blog/grocery-shopping-3d-experience for readable blog proof.",
+        "Route category support through /category/mainstream-streaming.",
+        "Measure source/backlink clicks before expanding the keyword lane."
+      ],
+      "internalSupportRoutes": [
+        "/blog/grocery-shopping-3d-experience",
+        "/category/mainstream-streaming"
+      ],
+      "measurementEvents": [
+        "backlink_source_open",
+        "proof_route_open",
+        "watch_route_open",
+        "blog_route_open",
+        "glb_source_click"
+      ],
+      "status": "authority-support"
+    },
+    {
+      "route": "/watch/search-intent-radar-visual-experience",
+      "canonical": "https://www.digitalhut.app/watch/search-intent-radar-visual-experience",
+      "title": "Search Intent Radar Visual Experience: DigitalHut Proof | DigitalHut Watch Proof",
+      "promotionStage": "submit-watch-blog-pair",
+      "score": 64,
+      "authorityCategories": [
+        "consumer review blogs",
+        "shopping guides",
+        "local grocery resources",
+        "Reddit-style product roundups",
+        "deal research newsletters"
+      ],
+      "backlinkAnchors": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "Automatic System Presentation DigitalHut observatory proof",
+        "Search Intent Radar Visual Experience: DigitalHut Proof source map",
+        "video + GLB proof for product reviews visual summary"
+      ],
+      "sourceAngles": [
+        "Use Search Intent Radar Visual Experience: DigitalHut Proof | DigitalHut Watch Proof as the proof destination, not a thin keyword page.",
+        "Pair /watch/search-intent-radar-visual-experience with /blog/search-intent-radar-visual-experience for readable blog proof.",
+        "Route category support through /category/automatic-system-presentation.",
+        "Measure source/backlink clicks before expanding the keyword lane."
+      ],
+      "internalSupportRoutes": [
+        "/blog/search-intent-radar-visual-experience",
+        "/category/automatic-system-presentation"
+      ],
+      "measurementEvents": [
+        "backlink_source_open",
+        "proof_route_open",
+        "watch_route_open",
+        "blog_route_open",
+        "glb_source_click"
+      ],
+      "status": "authority-support"
+    },
+    {
+      "route": "/blog/grocery-shopping-3d-experience",
+      "canonical": "https://www.digitalhut.app/blog/grocery-shopping-3d-experience",
+      "title": "product reviews visual summary | DigitalHut Proof",
+      "promotionStage": "submit-watch-blog-pair",
+      "score": 61,
+      "authorityCategories": [
+        "consumer review blogs",
+        "shopping guides",
+        "local grocery resources",
+        "Reddit-style product roundups",
+        "deal research newsletters"
+      ],
+      "backlinkAnchors": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "Errands And Review Before Buying DigitalHut observatory proof",
+        "product reviews visual summary source map",
+        "video + GLB proof for product reviews visual summary"
+      ],
+      "sourceAngles": [
+        "Use product reviews visual summary | DigitalHut Proof as the proof destination, not a thin keyword page.",
+        "Pair /blog/grocery-shopping-3d-experience with /blog/grocery-shopping-3d-experience for readable blog proof.",
+        "Route category support through /category/mainstream-streaming.",
+        "Measure source/backlink clicks before expanding the keyword lane."
+      ],
+      "internalSupportRoutes": [
+        "/blog/grocery-shopping-3d-experience",
+        "/category/mainstream-streaming",
+        "/watch/grocery-shopping-3d-experience"
+      ],
+      "measurementEvents": [
+        "backlink_source_open",
+        "proof_route_open",
+        "watch_route_open",
+        "blog_route_open",
+        "glb_source_click"
+      ],
+      "status": "authority-support"
+    }
+  ],
+  "measurementEvents": [
+    "backlink_source_open",
+    "proof_route_open",
+    "watch_route_open",
+    "blog_route_open",
+    "glb_source_click"
+  ],
+  "routeBoardStatus": "rank-board-ready",
+  "structuredDataStatus": "structured-data-ready",
+  "nextFireCudaMove": "Use source/backlink opens to decide which release-route authority lanes deserve broader FireCuda keyword promotion after deploy.",
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  }
+}

@@ -1,0 +1,31 @@
+{
+    "generatedAt":  "2026-07-07T13:05:00-04:00",
+    "deployPath":  "github-production-repo",
+    "repository":  "tehleader1/Digitalhut",
+    "commit":  "a534fd771a91b29db935b766b2c4ea3679005566",
+    "changedFiles":  [
+                         "src/lib/digitalhutSearchPixel.js"
+                     ],
+    "live":  {
+                 "statusCode":  200,
+                 "indexAsset":  "/assets/index-B13DJsVC.js",
+                 "hasProofRoute":  true,
+                 "hasSourceOpen":  true,
+                 "hasPodcastSource":  true,
+                 "hasPodcastInterruptStart":  true,
+                 "oldRiskPatternFound":  false
+             },
+    "postDeployFloor":  {
+                            "pageViews":  299,
+                            "uniqueVisitors":  107,
+                            "totalEvents":  516,
+                            "glbPreviewPlays":  83,
+                            "podcastInterrupts":  13,
+                            "autoplayStarts":  5,
+                            "searches":  2,
+                            "marketOpens":  5,
+                            "proofRouteOpens":  0,
+                            "sourceBacklinkOpens":  0
+                        },
+    "decision":  "deployed-dry-read-next-target-ai-video-podcast-source-explainer"
+}

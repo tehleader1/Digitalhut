@@ -1,0 +1,1681 @@
+{
+  "generatedAt": "2026-07-09T06:41:05.769Z",
+  "status": "digitalhut-360-coverage-ready",
+  "site": "https://www.digitalhut.app",
+  "sourceOfTruth": {
+    "file": "src/lib/seoSearchClaimEngine.js",
+    "totalIndividualRanks": 200572944,
+    "countedLaneCount": 24,
+    "rule": "The 200M list is owned by original counted longtail lanes only. Checkpoint zones, Search Console rows, and Supabase traffic can promote exact matching lanes, but cannot create or rename the source list."
+  },
+  "currentTraffic": {
+    "pageViews": 317,
+    "uniqueVisitors": 116,
+    "totalEvents": 534,
+    "glbPreviewPlays": 83,
+    "podcastInterrupts": 13,
+    "autoplayStarts": 5,
+    "searches": 2,
+    "proofRouteOpens": 0,
+    "sourceOpens": 0,
+    "zoneCheckpointOpens": 0,
+    "masterKeywordDoorEvents": 66
+  },
+  "searchConsole": {
+    "freshRows": 1,
+    "freshImpressions": 1,
+    "finalRows": 0,
+    "sitemapSurfacesVisible": 3,
+    "sitemapSurfacesPending": 3,
+    "nameAdjacentRows": [
+      {
+        "keys": [
+          "cyberhut",
+          "https://www.digitalhut.app/",
+          "esp"
+        ],
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 90
+      }
+    ],
+    "functionalRows": []
+  },
+  "rotation": {
+    "sitemapWindow": 50000,
+    "topAllocations": [
+      {
+        "id": "full-entertainment-dapp-alternative",
+        "lane": "Full Entertainment Dapp Alternative",
+        "proofRoute": "/watch/full-view-episode-alternative",
+        "score": 94,
+        "sitemapRows": 6368
+      },
+      {
+        "id": "gaming-3d-world-observatory",
+        "lane": "Gaming 3D World Observatory",
+        "proofRoute": "/watch/game-world-glb-presentation",
+        "score": 83,
+        "sitemapRows": 5623
+      },
+      {
+        "id": "ai-video-podcast-source-explainer",
+        "lane": "AI Video Podcast Source Explainer",
+        "proofRoute": "/watch/ai-video-podcast-source-explainer",
+        "score": 80,
+        "sitemapRows": 5420
+      },
+      {
+        "id": "developer-programmer-research",
+        "lane": "Developer Programmer Research",
+        "proofRoute": "/watch/developer-programmer-research-observatory",
+        "score": 76,
+        "sitemapRows": 5149
+      },
+      {
+        "id": "real-estate-3d-tour-observatory",
+        "lane": "Real Estate 3D Tour Observatory",
+        "proofRoute": "/watch/real-estate-3d-tour-observatory",
+        "score": 51,
+        "sitemapRows": 3455
+      },
+      {
+        "id": "local-life-errands-companion",
+        "lane": "Local Life Errands Companion",
+        "proofRoute": "/watch/local-life-errands-companion",
+        "score": 48,
+        "sitemapRows": 3252
+      },
+      {
+        "id": "international-language-side-markets",
+        "lane": "International Language Side Markets",
+        "proofRoute": "/watch/international-language-side-markets",
+        "score": 41,
+        "sitemapRows": 2778
+      },
+      {
+        "id": "market-company-observatory",
+        "lane": "Market Company Observatory",
+        "proofRoute": "/watch/market-company-observatory",
+        "score": 39,
+        "sitemapRows": 2642
+      },
+      {
+        "id": "exotic-environment-visual-experience",
+        "lane": "Exotic Environment Visual Experience",
+        "proofRoute": "/watch/exotic-environment-visual-experience",
+        "score": 34,
+        "sitemapRows": 2303
+      },
+      {
+        "id": "architecture-structure-engineering",
+        "lane": "Architecture Structure Engineering",
+        "proofRoute": "/watch/architecture-structure-engineering-visual",
+        "score": 34,
+        "sitemapRows": 2303
+      }
+    ]
+  },
+  "trafficLocationMap": [
+    {
+      "origin": "direct-or-private-referrer",
+      "path": "/",
+      "lane": "unassigned-lane",
+      "events": 227,
+      "visitors": 81,
+      "pageViews": 178,
+      "secondActions": 28,
+      "glbPreviewPlays": 28,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 1835,
+      "latest": "2026-07-09T04:38:27.091759+00:00",
+      "sampleEvents": [
+        "page_view",
+        "ui_click",
+        "glb_preview_play"
+      ],
+      "sampleQueries": [],
+      "sampleReferrers": []
+    },
+    {
+      "origin": "vercel-preview-or-deploy",
+      "path": "/",
+      "lane": "unassigned-lane",
+      "events": 160,
+      "visitors": 21,
+      "pageViews": 58,
+      "secondActions": 32,
+      "glbPreviewPlays": 32,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 1303,
+      "latest": "2026-07-07T08:29:13.571491+00:00",
+      "sampleEvents": [
+        "ui_click",
+        "page_view",
+        "glb_preview_play"
+      ],
+      "sampleQueries": [],
+      "sampleReferrers": [
+        "https://vercel.com/"
+      ]
+    },
+    {
+      "origin": "vercel-preview-or-deploy",
+      "path": "/",
+      "lane": "Mainstream Streaming",
+      "events": 36,
+      "visitors": 7,
+      "pageViews": 0,
+      "secondActions": 31,
+      "glbPreviewPlays": 16,
+      "podcastInterrupts": 12,
+      "autoplayStarts": 3,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 979,
+      "latest": "2026-07-07T08:27:43.104416+00:00",
+      "sampleEvents": [
+        "autoplay_pause",
+        "podcast_interrupt_end",
+        "podcast_interrupt_play",
+        "glb_preview_play",
+        "autoplay_episode_shift"
+      ],
+      "sampleQueries": [
+        "Horror Corridor VR room [Baked]",
+        "Time is NOT on your side",
+        "Full Gameready City Buildings IV [HongKong]"
+      ],
+      "sampleReferrers": [
+        "https://vercel.com/"
+      ]
+    },
+    {
+      "origin": "direct-or-private-referrer",
+      "path": "/blog/automatic-3d-autoplay-system",
+      "lane": "automatic-3d-autoplay-system",
+      "events": 13,
+      "visitors": 1,
+      "pageViews": 8,
+      "secondActions": 4,
+      "glbPreviewPlays": 4,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 157,
+      "latest": "2026-06-30T16:29:36.159596+00:00",
+      "sampleEvents": [
+        "blog_view",
+        "glb_preview_play",
+        "ui_click"
+      ],
+      "sampleQueries": [],
+      "sampleReferrers": []
+    },
+    {
+      "origin": "vercel-preview-or-deploy",
+      "path": "/",
+      "lane": "Businesses",
+      "events": 5,
+      "visitors": 2,
+      "pageViews": 0,
+      "secondActions": 5,
+      "glbPreviewPlays": 0,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 0,
+      "marketOpens": 5,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 90,
+      "latest": "2026-07-07T08:29:13.628456+00:00",
+      "sampleEvents": [
+        "ticker_search",
+        "market_view_open"
+      ],
+      "sampleQueries": [
+        "NVDA NVIDIA market observatory",
+        "NVDA NVIDIA"
+      ],
+      "sampleReferrers": [
+        "https://vercel.com/"
+      ]
+    },
+    {
+      "origin": "codex-overseer-test",
+      "path": "/audience-test/gaming-glb",
+      "lane": "Gaming GLB Viewer",
+      "events": 3,
+      "visitors": 1,
+      "pageViews": 1,
+      "secondActions": 2,
+      "glbPreviewPlays": 1,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 1,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 85,
+      "latest": "2026-07-07T12:41:02.525164+00:00",
+      "sampleEvents": [
+        "search_run",
+        "glb_preview_play",
+        "page_view"
+      ],
+      "sampleQueries": [
+        "gaming 3d environment viewer horror corridor vr room walkthrough"
+      ],
+      "sampleReferrers": [
+        "codex-overseer-multi-read-test"
+      ]
+    },
+    {
+      "origin": "codex-overseer-test",
+      "path": "/audience-test/research-podcast",
+      "lane": "Research Podcast Viewer",
+      "events": 3,
+      "visitors": 1,
+      "pageViews": 1,
+      "secondActions": 2,
+      "glbPreviewPlays": 0,
+      "podcastInterrupts": 1,
+      "autoplayStarts": 0,
+      "searches": 1,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 83,
+      "latest": "2026-07-07T12:41:05.314418+00:00",
+      "sampleEvents": [
+        "search_run",
+        "podcast_interrupt_play",
+        "page_view"
+      ],
+      "sampleQueries": [
+        "video research observatory podcast source backed 3d renderer"
+      ],
+      "sampleReferrers": [
+        "codex-overseer-multi-read-test"
+      ]
+    },
+    {
+      "origin": "direct-or-private-referrer",
+      "path": "/insights",
+      "lane": "unassigned-lane",
+      "events": 18,
+      "visitors": 2,
+      "pageViews": 18,
+      "secondActions": 0,
+      "glbPreviewPlays": 0,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 64,
+      "latest": "2026-06-30T16:30:24.558912+00:00",
+      "sampleEvents": [
+        "page_view"
+      ],
+      "sampleQueries": [],
+      "sampleReferrers": []
+    },
+    {
+      "origin": "codex-overseer-test",
+      "path": "/audience-test/after-work-relax",
+      "lane": "After Work Relax Viewer",
+      "events": 3,
+      "visitors": 1,
+      "pageViews": 1,
+      "secondActions": 2,
+      "glbPreviewPlays": 1,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 1,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 64,
+      "latest": "2026-07-07T12:40:59.584417+00:00",
+      "sampleEvents": [
+        "glb_preview_play",
+        "autoplay_start",
+        "page_view"
+      ],
+      "sampleQueries": [
+        "youtube alternative autoplay 3d model podcast analytics"
+      ],
+      "sampleReferrers": [
+        "codex-overseer-multi-read-test"
+      ]
+    },
+    {
+      "origin": "direct-or-private-referrer",
+      "path": "/blog",
+      "lane": "unassigned-lane",
+      "events": 5,
+      "visitors": 2,
+      "pageViews": 4,
+      "secondActions": 1,
+      "glbPreviewPlays": 1,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 54,
+      "latest": "2026-07-07T15:50:24.294811+00:00",
+      "sampleEvents": [
+        "blog_view",
+        "glb_preview_play"
+      ],
+      "sampleQueries": [],
+      "sampleReferrers": []
+    },
+    {
+      "origin": "digitalhut-internal-navigation",
+      "path": "/markets",
+      "lane": "unassigned-lane",
+      "events": 10,
+      "visitors": 2,
+      "pageViews": 10,
+      "secondActions": 0,
+      "glbPreviewPlays": 0,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 40,
+      "latest": "2026-07-06T01:19:32.176855+00:00",
+      "sampleEvents": [
+        "page_view"
+      ],
+      "sampleQueries": [],
+      "sampleReferrers": [
+        "https://www.digitalhut.app/"
+      ]
+    },
+    {
+      "origin": "vercel-preview-or-deploy",
+      "path": "/",
+      "lane": "Gamer",
+      "events": 2,
+      "visitors": 1,
+      "pageViews": 0,
+      "secondActions": 1,
+      "glbPreviewPlays": 0,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 1,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 29,
+      "latest": "2026-07-06T02:36:43.783798+00:00",
+      "sampleEvents": [
+        "autoplay_pause",
+        "autoplay_start"
+      ],
+      "sampleQueries": [
+        "Medieval City Pack Demo"
+      ],
+      "sampleReferrers": [
+        "https://vercel.com/"
+      ]
+    },
+    {
+      "origin": "direct-or-private-referrer",
+      "path": "/runner",
+      "lane": "unassigned-lane",
+      "events": 9,
+      "visitors": 1,
+      "pageViews": 5,
+      "secondActions": 0,
+      "glbPreviewPlays": 0,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 20,
+      "latest": "2026-06-30T00:40:28.488711+00:00",
+      "sampleEvents": [
+        "ui_click",
+        "page_view"
+      ],
+      "sampleQueries": [],
+      "sampleReferrers": []
+    },
+    {
+      "origin": "direct-or-private-referrer",
+      "path": "/markets",
+      "lane": "unassigned-lane",
+      "events": 7,
+      "visitors": 1,
+      "pageViews": 5,
+      "secondActions": 0,
+      "glbPreviewPlays": 0,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 20,
+      "latest": "2026-07-03T10:53:16.887058+00:00",
+      "sampleEvents": [
+        "page_view",
+        "ui_click"
+      ],
+      "sampleQueries": [],
+      "sampleReferrers": []
+    },
+    {
+      "origin": "digitalhut-internal-navigation",
+      "path": "/blog",
+      "lane": "unassigned-lane",
+      "events": 5,
+      "visitors": 1,
+      "pageViews": 3,
+      "secondActions": 0,
+      "glbPreviewPlays": 0,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 14,
+      "latest": "2026-06-30T15:28:42.123467+00:00",
+      "sampleEvents": [
+        "ui_click",
+        "blog_view"
+      ],
+      "sampleQueries": [],
+      "sampleReferrers": [
+        "https://www.digitalhut.app/"
+      ]
+    },
+    {
+      "origin": "vercel-preview-or-deploy",
+      "path": "/markets",
+      "lane": "unassigned-lane",
+      "events": 3,
+      "visitors": 1,
+      "pageViews": 3,
+      "secondActions": 0,
+      "glbPreviewPlays": 0,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 14,
+      "latest": "2026-06-30T00:34:03.336054+00:00",
+      "sampleEvents": [
+        "page_view"
+      ],
+      "sampleQueries": [],
+      "sampleReferrers": [
+        "https://v0-nft-time-capsule-dapp.vercel.app/"
+      ]
+    }
+  ],
+  "secondActionLocations": [
+    {
+      "origin": "vercel-preview-or-deploy",
+      "path": "/",
+      "lane": "unassigned-lane",
+      "events": 102,
+      "visitors": 18,
+      "pageViews": 0,
+      "secondActions": 32,
+      "glbPreviewPlays": 32,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 1114,
+      "latest": "2026-07-07T08:29:13.571491+00:00",
+      "sampleEvents": [
+        "ui_click",
+        "glb_preview_play"
+      ],
+      "sampleQueries": [],
+      "sampleReferrers": [
+        "https://vercel.com/"
+      ]
+    },
+    {
+      "origin": "vercel-preview-or-deploy",
+      "path": "/",
+      "lane": "Mainstream Streaming",
+      "events": 36,
+      "visitors": 7,
+      "pageViews": 0,
+      "secondActions": 31,
+      "glbPreviewPlays": 16,
+      "podcastInterrupts": 12,
+      "autoplayStarts": 3,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 979,
+      "latest": "2026-07-07T08:27:43.104416+00:00",
+      "sampleEvents": [
+        "autoplay_pause",
+        "podcast_interrupt_end",
+        "podcast_interrupt_play",
+        "glb_preview_play",
+        "autoplay_episode_shift"
+      ],
+      "sampleQueries": [
+        "Horror Corridor VR room [Baked]",
+        "Time is NOT on your side",
+        "Full Gameready City Buildings IV [HongKong]"
+      ],
+      "sampleReferrers": [
+        "https://vercel.com/"
+      ]
+    },
+    {
+      "origin": "direct-or-private-referrer",
+      "path": "/",
+      "lane": "unassigned-lane",
+      "events": 49,
+      "visitors": 9,
+      "pageViews": 0,
+      "secondActions": 28,
+      "glbPreviewPlays": 28,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 941,
+      "latest": "2026-07-06T01:24:27.36127+00:00",
+      "sampleEvents": [
+        "ui_click",
+        "glb_preview_play"
+      ],
+      "sampleQueries": [],
+      "sampleReferrers": []
+    },
+    {
+      "origin": "direct-or-private-referrer",
+      "path": "/blog/automatic-3d-autoplay-system",
+      "lane": "automatic-3d-autoplay-system",
+      "events": 5,
+      "visitors": 1,
+      "pageViews": 0,
+      "secondActions": 4,
+      "glbPreviewPlays": 4,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 133,
+      "latest": "2026-06-30T15:21:21.035893+00:00",
+      "sampleEvents": [
+        "glb_preview_play",
+        "ui_click"
+      ],
+      "sampleQueries": [],
+      "sampleReferrers": []
+    },
+    {
+      "origin": "vercel-preview-or-deploy",
+      "path": "/",
+      "lane": "Businesses",
+      "events": 5,
+      "visitors": 2,
+      "pageViews": 0,
+      "secondActions": 5,
+      "glbPreviewPlays": 0,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 0,
+      "marketOpens": 5,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 90,
+      "latest": "2026-07-07T08:29:13.628456+00:00",
+      "sampleEvents": [
+        "ticker_search",
+        "market_view_open"
+      ],
+      "sampleQueries": [
+        "NVDA NVIDIA market observatory",
+        "NVDA NVIDIA"
+      ],
+      "sampleReferrers": [
+        "https://vercel.com/"
+      ]
+    },
+    {
+      "origin": "codex-overseer-test",
+      "path": "/audience-test/gaming-glb",
+      "lane": "Gaming GLB Viewer",
+      "events": 2,
+      "visitors": 1,
+      "pageViews": 0,
+      "secondActions": 2,
+      "glbPreviewPlays": 1,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 1,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 82,
+      "latest": "2026-07-07T12:41:02.525164+00:00",
+      "sampleEvents": [
+        "search_run",
+        "glb_preview_play"
+      ],
+      "sampleQueries": [
+        "gaming 3d environment viewer horror corridor vr room walkthrough"
+      ],
+      "sampleReferrers": [
+        "codex-overseer-multi-read-test"
+      ]
+    },
+    {
+      "origin": "codex-overseer-test",
+      "path": "/audience-test/research-podcast",
+      "lane": "Research Podcast Viewer",
+      "events": 2,
+      "visitors": 1,
+      "pageViews": 0,
+      "secondActions": 2,
+      "glbPreviewPlays": 0,
+      "podcastInterrupts": 1,
+      "autoplayStarts": 0,
+      "searches": 1,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 80,
+      "latest": "2026-07-07T12:41:05.314418+00:00",
+      "sampleEvents": [
+        "search_run",
+        "podcast_interrupt_play"
+      ],
+      "sampleQueries": [
+        "video research observatory podcast source backed 3d renderer"
+      ],
+      "sampleReferrers": [
+        "codex-overseer-multi-read-test"
+      ]
+    },
+    {
+      "origin": "codex-overseer-test",
+      "path": "/audience-test/after-work-relax",
+      "lane": "After Work Relax Viewer",
+      "events": 2,
+      "visitors": 1,
+      "pageViews": 0,
+      "secondActions": 2,
+      "glbPreviewPlays": 1,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 1,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 61,
+      "latest": "2026-07-07T12:40:59.584417+00:00",
+      "sampleEvents": [
+        "glb_preview_play",
+        "autoplay_start"
+      ],
+      "sampleQueries": [
+        "youtube alternative autoplay 3d model podcast analytics"
+      ],
+      "sampleReferrers": [
+        "codex-overseer-multi-read-test"
+      ]
+    },
+    {
+      "origin": "direct-or-private-referrer",
+      "path": "/blog",
+      "lane": "unassigned-lane",
+      "events": 1,
+      "visitors": 1,
+      "pageViews": 0,
+      "secondActions": 1,
+      "glbPreviewPlays": 1,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 37,
+      "latest": "2026-06-29T20:31:12.020783+00:00",
+      "sampleEvents": [
+        "glb_preview_play"
+      ],
+      "sampleQueries": [],
+      "sampleReferrers": []
+    },
+    {
+      "origin": "vercel-preview-or-deploy",
+      "path": "/",
+      "lane": "Gamer",
+      "events": 2,
+      "visitors": 1,
+      "pageViews": 0,
+      "secondActions": 1,
+      "glbPreviewPlays": 0,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 1,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 29,
+      "latest": "2026-07-06T02:36:43.783798+00:00",
+      "sampleEvents": [
+        "autoplay_pause",
+        "autoplay_start"
+      ],
+      "sampleQueries": [
+        "Medieval City Pack Demo"
+      ],
+      "sampleReferrers": [
+        "https://vercel.com/"
+      ]
+    }
+  ],
+  "angleGroups": [
+    {
+      "id": "full-system-entertainment",
+      "label": "Full entertainment dapp alternative",
+      "laneIds": [
+        "full-entertainment-dapp-alternative",
+        "funny-mainstream-video",
+        "social-reel-meme-analysis",
+        "lifestyle-event-visual-experience"
+      ],
+      "cast": "video watching + 3D Model View + podcast/source moments + live analytics in one non-scrolling entertainment dapp",
+      "status": "sitemap-visible-awaiting-behavior",
+      "activeLaneIds": [],
+      "sitemapOnlyLaneIds": [
+        "full-entertainment-dapp-alternative",
+        "social-reel-meme-analysis",
+        "lifestyle-event-visual-experience",
+        "funny-mainstream-video"
+      ],
+      "missingBehaviorLaneIds": [
+        "full-entertainment-dapp-alternative",
+        "social-reel-meme-analysis",
+        "lifestyle-event-visual-experience",
+        "funny-mainstream-video"
+      ]
+    },
+    {
+      "id": "3d-glb-spatial",
+      "label": "3D, GLB, gaming, spatial, and environment view",
+      "laneIds": [
+        "gaming-3d-world-observatory",
+        "exotic-environment-visual-experience",
+        "planetary-space-observatory",
+        "virtual-travel-resort-vacation"
+      ],
+      "cast": "3D model preview, rotate/zoom, GLB source proof, spatial walkthrough, and visual research",
+      "status": "sitemap-visible-awaiting-behavior",
+      "activeLaneIds": [],
+      "sitemapOnlyLaneIds": [
+        "gaming-3d-world-observatory",
+        "planetary-space-observatory",
+        "exotic-environment-visual-experience",
+        "virtual-travel-resort-vacation"
+      ],
+      "missingBehaviorLaneIds": [
+        "gaming-3d-world-observatory",
+        "planetary-space-observatory",
+        "exotic-environment-visual-experience",
+        "virtual-travel-resort-vacation"
+      ]
+    },
+    {
+      "id": "research-developer-infrastructure",
+      "label": "Research, developer, programmer, and infrastructure proof",
+      "laneIds": [
+        "developer-programmer-research",
+        "education-study-visual-research",
+        "architecture-structure-engineering",
+        "workforce-training-visual-system",
+        "wiki-quick-research"
+      ],
+      "cast": "source-backed research, on-call infrastructure, cloud/database proof, API/docs context, and study routes",
+      "status": "sitemap-visible-awaiting-behavior",
+      "activeLaneIds": [],
+      "sitemapOnlyLaneIds": [
+        "architecture-structure-engineering",
+        "developer-programmer-research",
+        "workforce-training-visual-system",
+        "education-study-visual-research",
+        "wiki-quick-research"
+      ],
+      "missingBehaviorLaneIds": [
+        "architecture-structure-engineering",
+        "developer-programmer-research",
+        "workforce-training-visual-system",
+        "education-study-visual-research",
+        "wiki-quick-research"
+      ]
+    },
+    {
+      "id": "mundane-life-checkpoints",
+      "label": "Mundane life checkpoint capture",
+      "laneIds": [
+        "local-life-errands-companion",
+        "lunch-local-food",
+        "rideshare-commute",
+        "flight-travel-booking",
+        "errands-review-before-buying"
+      ],
+      "cast": "lunch, rideshare, flights, errands, reviews, and daily off-time searches routed into useful visual experiences",
+      "status": "sitemap-visible-awaiting-behavior",
+      "activeLaneIds": [],
+      "sitemapOnlyLaneIds": [
+        "local-life-errands-companion",
+        "lunch-local-food",
+        "rideshare-commute",
+        "flight-travel-booking",
+        "errands-review-before-buying"
+      ],
+      "missingBehaviorLaneIds": [
+        "local-life-errands-companion",
+        "lunch-local-food",
+        "rideshare-commute",
+        "flight-travel-booking",
+        "errands-review-before-buying"
+      ]
+    },
+    {
+      "id": "home-real-estate-product",
+      "label": "Home, real estate, creator, brand, and product proof",
+      "laneIds": [
+        "home-project-diy-visual",
+        "real-estate-3d-tour-observatory",
+        "creator-brand-product-showcase"
+      ],
+      "cast": "home projects, property tours, product demos, brand/client proof, and interactive 3D context",
+      "status": "sitemap-visible-awaiting-behavior",
+      "activeLaneIds": [],
+      "sitemapOnlyLaneIds": [
+        "real-estate-3d-tour-observatory",
+        "home-project-diy-visual",
+        "creator-brand-product-showcase"
+      ],
+      "missingBehaviorLaneIds": [
+        "real-estate-3d-tour-observatory",
+        "home-project-diy-visual",
+        "creator-brand-product-showcase"
+      ]
+    },
+    {
+      "id": "market-international",
+      "label": "Market, company, international, and AI explainer side markets",
+      "laneIds": [
+        "market-company-observatory",
+        "international-language-side-markets",
+        "ai-video-podcast-source-explainer"
+      ],
+      "cast": "market/company source reads, international side-market language, and AI video/podcast/source explanation",
+      "status": "sitemap-visible-awaiting-behavior",
+      "activeLaneIds": [],
+      "sitemapOnlyLaneIds": [
+        "ai-video-podcast-source-explainer",
+        "market-company-observatory",
+        "international-language-side-markets"
+      ],
+      "missingBehaviorLaneIds": [
+        "ai-video-podcast-source-explainer",
+        "market-company-observatory",
+        "international-language-side-markets"
+      ]
+    }
+  ],
+  "exactLaneCastQueue": [
+    {
+      "id": "full-entertainment-dapp-alternative",
+      "lane": "Full Entertainment Dapp Alternative",
+      "angle": "full entertainment alternative",
+      "zonePath": "/zone/full-entertainment-dapp-alternative",
+      "proofRoute": "/watch/full-view-episode-alternative",
+      "sitemapRows": 11138,
+      "rotationScore": 124,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/full-view-episode-alternative",
+        "open /zone/full-entertainment-dapp-alternative",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "gaming-3d-world-observatory",
+      "lane": "Gaming 3D World Observatory",
+      "angle": "gaming GLB and 3D world viewer",
+      "zonePath": "/zone/gaming-3d-world-observatory",
+      "proofRoute": "/watch/game-world-glb-presentation",
+      "sitemapRows": 4940,
+      "rotationScore": 55,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/game-world-glb-presentation",
+        "open /zone/gaming-3d-world-observatory",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "ai-video-podcast-source-explainer",
+      "lane": "AI Video Podcast Source Explainer",
+      "angle": "AI video, podcast, and source explainer",
+      "zonePath": "/zone/ai-video-podcast-source-explainer",
+      "proofRoute": "/watch/ai-video-podcast-source-explainer",
+      "sitemapRows": 4850,
+      "rotationScore": 54,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/ai-video-podcast-source-explainer",
+        "open /zone/ai-video-podcast-source-explainer",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "developer-programmer-research",
+      "lane": "Developer Programmer Research",
+      "angle": "developer, infrastructure, engineering, and training",
+      "zonePath": "/zone/developer-programmer-research",
+      "proofRoute": "/watch/developer-programmer-research-observatory",
+      "sitemapRows": 4671,
+      "rotationScore": 52,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/developer-programmer-research-observatory",
+        "open /zone/developer-programmer-research",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "local-life-errands-companion",
+      "lane": "Local Life Errands Companion",
+      "angle": "mundane life search capture",
+      "zonePath": "/zone/local-life-errands-companion",
+      "proofRoute": "/watch/local-life-errands-companion",
+      "sitemapRows": 2335,
+      "rotationScore": 26,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/local-life-errands-companion",
+        "open /zone/local-life-errands-companion",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "home-project-diy-visual",
+      "lane": "Home Project DIY Visual",
+      "angle": "home, real estate, and project planning",
+      "zonePath": "/zone/home-project-diy-visual",
+      "proofRoute": "/watch/home-project-diy-visual",
+      "sitemapRows": 898,
+      "rotationScore": 10,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/home-project-diy-visual",
+        "open /zone/home-project-diy-visual",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "wiki-quick-research",
+      "lane": "Wiki And Quick Research",
+      "angle": "research, study, wiki, and source-backed learning",
+      "zonePath": "/zone/wiki-quick-research",
+      "proofRoute": "/watch/wiki-lookup-visual-research-hub",
+      "sitemapRows": 28,
+      "rotationScore": 10,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/wiki-lookup-visual-research-hub",
+        "open /zone/wiki-quick-research",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "international-language-side-markets",
+      "lane": "International Language Side Markets",
+      "angle": "market and company observatory",
+      "zonePath": "/zone/international-language-side-markets",
+      "proofRoute": "/watch/international-language-side-markets",
+      "sitemapRows": 2246,
+      "rotationScore": 25,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/international-language-side-markets",
+        "open /zone/international-language-side-markets",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    }
+  ],
+  "realityGuardrail": {
+    "publicCoverage": "The sitemap and proof packets expose the 200M universe through 50,000 selected URLs plus route shells.",
+    "behaviorCoverage": "A lane is not considered live until Supabase records exact-lane behavior or Search Console produces a functional query/page row.",
+    "nameAdjacentPolicy": "digitalhut/cyberhut-style rows are logged but do not count as functionality wins.",
+    "noSourceMutation": "Checkpoint zones cannot create, rename, or override the original longtail source list."
+  },
+  "coverage": [
+    {
+      "id": "full-entertainment-dapp-alternative",
+      "lane": "Full Entertainment Dapp Alternative",
+      "angle": "full entertainment alternative",
+      "zonePath": "/zone/full-entertainment-dapp-alternative",
+      "proofRoute": "/watch/full-view-episode-alternative",
+      "sitemapRows": 11138,
+      "rotationScore": 124,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/full-view-episode-alternative",
+        "open /zone/full-entertainment-dapp-alternative",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "gaming-3d-world-observatory",
+      "lane": "Gaming 3D World Observatory",
+      "angle": "gaming GLB and 3D world viewer",
+      "zonePath": "/zone/gaming-3d-world-observatory",
+      "proofRoute": "/watch/game-world-glb-presentation",
+      "sitemapRows": 4940,
+      "rotationScore": 55,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/game-world-glb-presentation",
+        "open /zone/gaming-3d-world-observatory",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "real-estate-3d-tour-observatory",
+      "lane": "Real Estate 3D Tour Observatory",
+      "angle": "home, real estate, and project planning",
+      "zonePath": "/zone/real-estate-3d-tour-observatory",
+      "proofRoute": "/watch/real-estate-3d-tour-observatory",
+      "sitemapRows": 3324,
+      "rotationScore": 37,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/real-estate-3d-tour-observatory",
+        "open /zone/real-estate-3d-tour-observatory",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "planetary-space-observatory",
+      "lane": "Planetary And Space Observatory",
+      "angle": "planetary, exotic, travel, and spatial experience",
+      "zonePath": "/zone/planetary-space-observatory",
+      "proofRoute": "/watch/planetary-space-visual-observatory",
+      "sitemapRows": 898,
+      "rotationScore": 10,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/planetary-space-visual-observatory",
+        "open /zone/planetary-space-observatory",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "exotic-environment-visual-experience",
+      "lane": "Exotic Environment Visual Experience",
+      "angle": "planetary, exotic, travel, and spatial experience",
+      "zonePath": "/zone/exotic-environment-visual-experience",
+      "proofRoute": "/watch/exotic-environment-visual-experience",
+      "sitemapRows": 2515,
+      "rotationScore": 28,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/exotic-environment-visual-experience",
+        "open /zone/exotic-environment-visual-experience",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "architecture-structure-engineering",
+      "lane": "Architecture Structure Engineering",
+      "angle": "developer, infrastructure, engineering, and training",
+      "zonePath": "/zone/architecture-structure-engineering",
+      "proofRoute": "/watch/architecture-structure-engineering-visual",
+      "sitemapRows": 2515,
+      "rotationScore": 28,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/architecture-structure-engineering-visual",
+        "open /zone/architecture-structure-engineering",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "developer-programmer-research",
+      "lane": "Developer Programmer Research",
+      "angle": "developer, infrastructure, engineering, and training",
+      "zonePath": "/zone/developer-programmer-research",
+      "proofRoute": "/watch/developer-programmer-research-observatory",
+      "sitemapRows": 4671,
+      "rotationScore": 52,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/developer-programmer-research-observatory",
+        "open /zone/developer-programmer-research",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "ai-video-podcast-source-explainer",
+      "lane": "AI Video Podcast Source Explainer",
+      "angle": "AI video, podcast, and source explainer",
+      "zonePath": "/zone/ai-video-podcast-source-explainer",
+      "proofRoute": "/watch/ai-video-podcast-source-explainer",
+      "sitemapRows": 4850,
+      "rotationScore": 54,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/ai-video-podcast-source-explainer",
+        "open /zone/ai-video-podcast-source-explainer",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "social-reel-meme-analysis",
+      "lane": "Social Reel Meme Analysis",
+      "angle": "social, creator, reel, and mainstream clips",
+      "zonePath": "/zone/social-reel-meme-analysis",
+      "proofRoute": "/watch/social-reel-meme-analysis",
+      "sitemapRows": 898,
+      "rotationScore": 10,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/social-reel-meme-analysis",
+        "open /zone/social-reel-meme-analysis",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "virtual-travel-resort-vacation",
+      "lane": "Virtual Travel Resort Vacation",
+      "angle": "planetary, exotic, travel, and spatial experience",
+      "zonePath": "/zone/virtual-travel-resort-vacation",
+      "proofRoute": "/watch/virtual-travel-resort-vacation",
+      "sitemapRows": 898,
+      "rotationScore": 10,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/virtual-travel-resort-vacation",
+        "open /zone/virtual-travel-resort-vacation",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "market-company-observatory",
+      "lane": "Market Company Observatory",
+      "angle": "market and company observatory",
+      "zonePath": "/zone/market-company-observatory",
+      "proofRoute": "/watch/market-company-observatory",
+      "sitemapRows": 2964,
+      "rotationScore": 33,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/market-company-observatory",
+        "open /zone/market-company-observatory",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "workforce-training-visual-system",
+      "lane": "Workforce Training Visual System",
+      "angle": "developer, infrastructure, engineering, and training",
+      "zonePath": "/zone/workforce-training-visual-system",
+      "proofRoute": "/watch/workforce-training-visual-system",
+      "sitemapRows": 898,
+      "rotationScore": 10,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/workforce-training-visual-system",
+        "open /zone/workforce-training-visual-system",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "education-study-visual-research",
+      "lane": "Education Study Visual Research",
+      "angle": "research, study, wiki, and source-backed learning",
+      "zonePath": "/zone/education-study-visual-research",
+      "proofRoute": "/watch/education-study-visual-research",
+      "sitemapRows": 1976,
+      "rotationScore": 22,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/education-study-visual-research",
+        "open /zone/education-study-visual-research",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "local-life-errands-companion",
+      "lane": "Local Life Errands Companion",
+      "angle": "mundane life search capture",
+      "zonePath": "/zone/local-life-errands-companion",
+      "proofRoute": "/watch/local-life-errands-companion",
+      "sitemapRows": 2335,
+      "rotationScore": 26,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/local-life-errands-companion",
+        "open /zone/local-life-errands-companion",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "home-project-diy-visual",
+      "lane": "Home Project DIY Visual",
+      "angle": "home, real estate, and project planning",
+      "zonePath": "/zone/home-project-diy-visual",
+      "proofRoute": "/watch/home-project-diy-visual",
+      "sitemapRows": 898,
+      "rotationScore": 10,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/home-project-diy-visual",
+        "open /zone/home-project-diy-visual",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "lifestyle-event-visual-experience",
+      "lane": "Lifestyle Event Visual Experience",
+      "angle": "social, creator, reel, and mainstream clips",
+      "zonePath": "/zone/lifestyle-event-visual-experience",
+      "proofRoute": "/watch/lifestyle-event-visual-experience",
+      "sitemapRows": 898,
+      "rotationScore": 10,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/lifestyle-event-visual-experience",
+        "open /zone/lifestyle-event-visual-experience",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "creator-brand-product-showcase",
+      "lane": "Creator Brand Product Showcase",
+      "angle": "social, creator, reel, and mainstream clips",
+      "zonePath": "/zone/creator-brand-product-showcase",
+      "proofRoute": "/watch/creator-brand-product-showcase",
+      "sitemapRows": 898,
+      "rotationScore": 10,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/creator-brand-product-showcase",
+        "open /zone/creator-brand-product-showcase",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "international-language-side-markets",
+      "lane": "International Language Side Markets",
+      "angle": "market and company observatory",
+      "zonePath": "/zone/international-language-side-markets",
+      "proofRoute": "/watch/international-language-side-markets",
+      "sitemapRows": 2246,
+      "rotationScore": 25,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/international-language-side-markets",
+        "open /zone/international-language-side-markets",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "lunch-local-food",
+      "lane": "Lunch And Local Food",
+      "angle": "mundane life search capture",
+      "zonePath": "/zone/lunch-local-food",
+      "proofRoute": "/watch/looking-for-lunch-visual-observatory",
+      "sitemapRows": 47,
+      "rotationScore": 10,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/looking-for-lunch-visual-observatory",
+        "open /zone/lunch-local-food",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "rideshare-commute",
+      "lane": "Rideshare And Commute",
+      "angle": "mundane life search capture",
+      "zonePath": "/zone/rideshare-commute",
+      "proofRoute": "/watch/calling-an-uber-visual-trip-guide",
+      "sitemapRows": 28,
+      "rotationScore": 10,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/calling-an-uber-visual-trip-guide",
+        "open /zone/rideshare-commute",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "flight-travel-booking",
+      "lane": "Flight And Travel Booking",
+      "angle": "mundane life search capture",
+      "zonePath": "/zone/flight-travel-booking",
+      "proofRoute": "/watch/booking-flight-ticket-visual-guide",
+      "sitemapRows": 34,
+      "rotationScore": 10,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/booking-flight-ticket-visual-guide",
+        "open /zone/flight-travel-booking",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "wiki-quick-research",
+      "lane": "Wiki And Quick Research",
+      "angle": "research, study, wiki, and source-backed learning",
+      "zonePath": "/zone/wiki-quick-research",
+      "proofRoute": "/watch/wiki-lookup-visual-research-hub",
+      "sitemapRows": 28,
+      "rotationScore": 10,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/wiki-lookup-visual-research-hub",
+        "open /zone/wiki-quick-research",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "funny-mainstream-video",
+      "lane": "Funny Mainstream Video",
+      "angle": "social, creator, reel, and mainstream clips",
+      "zonePath": "/zone/funny-mainstream-video",
+      "proofRoute": "/watch/funny-mainstream-video-explained",
+      "sitemapRows": 36,
+      "rotationScore": 10,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/funny-mainstream-video-explained",
+        "open /zone/funny-mainstream-video",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    },
+    {
+      "id": "errands-review-before-buying",
+      "lane": "Errands And Review Before Buying",
+      "angle": "mundane life search capture",
+      "zonePath": "/zone/errands-review-before-buying",
+      "proofRoute": "/watch/search-intent-radar-visual-experience",
+      "sitemapRows": 67,
+      "rotationScore": 18,
+      "status": "sitemap-window-ready",
+      "coverageReality": "public-sitemap-only",
+      "exactSourceProtected": true,
+      "behaviorRequirements": [
+        "open /watch/search-intent-radar-visual-experience",
+        "open /zone/errands-review-before-buying",
+        "create proof_route_open or zone_checkpoint_open",
+        "create source/backlink open",
+        "create GLB, podcast, autoplay, market, or search behavior with this exact lane",
+        "earn a Search Console query/page row that is not just name-adjacent"
+      ],
+      "nextAction": "Hold as a 360 angle; do not expand until real events, Search Console rows, proof opens, or source opens appear."
+    }
+  ],
+  "uncoveredAngles": [
+    "full-entertainment-dapp-alternative",
+    "gaming-3d-world-observatory",
+    "real-estate-3d-tour-observatory",
+    "planetary-space-observatory",
+    "exotic-environment-visual-experience",
+    "architecture-structure-engineering",
+    "developer-programmer-research",
+    "ai-video-podcast-source-explainer",
+    "social-reel-meme-analysis",
+    "virtual-travel-resort-vacation",
+    "market-company-observatory",
+    "workforce-training-visual-system",
+    "education-study-visual-research",
+    "local-life-errands-companion",
+    "home-project-diy-visual",
+    "lifestyle-event-visual-experience",
+    "creator-brand-product-showcase",
+    "international-language-side-markets",
+    "lunch-local-food",
+    "rideshare-commute",
+    "flight-travel-booking",
+    "wiki-quick-research",
+    "funny-mainstream-video",
+    "errands-review-before-buying"
+  ],
+  "next360Move": "Create no new source list. Keep the original 24 lanes, let Google process the three submitted sitemap surfaces, and cast attention toward exact checkpoint routes that can produce zone_checkpoint_open, proof_route_open, source_open, GLB, podcast, autoplay, and search behavior."
+}

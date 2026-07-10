@@ -1,0 +1,161 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Separate Lane Receipt Bridge",
+  "status": "separate-lane-receipt-bridge-staged-held",
+  "purpose": "Connect each separate SEO universe to the exact FireCuda receipt evidence that can unlock measured expansion.",
+  "guardrail": "This bridge is not a publishing action. It keeps separate-lane universes closed until receipt decisions prove second-action behavior.",
+  "sourceUniverseStatus": "separate-lane-universes-staged-receipt-held",
+  "receiptStatus": "firecuda-promotion-receipts-ready",
+  "bridgeCount": 4,
+  "openBridgeCount": 0,
+  "openSlots": 0,
+  "heldSlots": 222912,
+  "bridges": [
+    {
+      "universeId": "home-visual-build-observatory",
+      "lane": "Mainstream Streaming",
+      "pairSlug": "youtube-video-content-radar",
+      "receiptStatus": "receipt-ready-for-evidence",
+      "bridgeStatus": "bridge-staged-receipt-held",
+      "decision": "pending",
+      "secondActionWinner": "pending",
+      "requiredSecondActions": [
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play"
+      ],
+      "watchRoute": "/watch/home-project-3d-visual-planner",
+      "blogRoute": "/blog/home-project-3d-visual-planner",
+      "categoryRoute": "/category/home-project-3d-experience",
+      "universeCapacity": 51840,
+      "openBatchSize": 0,
+      "heldSlots": 51840,
+      "unlockSequence": [
+        "build proof",
+        "watch route inspection",
+        "blog route inspection",
+        "Supabase second-action signal",
+        "FireCuda receipt decision",
+        "separate-lane batch open"
+      ],
+      "expansionAction": "Keep separate universe staged; do not publish expanded routes."
+    },
+    {
+      "universeId": "search-intent-system-presentation",
+      "lane": "Automatic System Presentation",
+      "pairSlug": "search-intent-radar-visual-experience",
+      "receiptStatus": "receipt-ready-for-evidence",
+      "bridgeStatus": "bridge-staged-receipt-held",
+      "decision": "pending",
+      "secondActionWinner": "pending",
+      "requiredSecondActions": [
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "market_view_open",
+        "search_intent_chip_select"
+      ],
+      "watchRoute": "/watch/search-intent-radar-visual-experience",
+      "blogRoute": "/blog/search-intent-radar-visual-experience",
+      "categoryRoute": "/category/search-intent-radar",
+      "universeCapacity": 54432,
+      "openBatchSize": 0,
+      "heldSlots": 54432,
+      "unlockSequence": [
+        "build proof",
+        "watch route inspection",
+        "blog route inspection",
+        "Supabase second-action signal",
+        "FireCuda receipt decision",
+        "separate-lane batch open"
+      ],
+      "expansionAction": "Keep separate universe staged; do not publish expanded routes."
+    },
+    {
+      "universeId": "market-business-observatory",
+      "lane": "Businesses",
+      "pairSlug": "current-market-video-observatory",
+      "receiptStatus": "receipt-ready-for-evidence",
+      "bridgeStatus": "bridge-staged-receipt-held",
+      "decision": "pending",
+      "secondActionWinner": "pending",
+      "requiredSecondActions": [
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "market_view_open",
+        "search_intent_chip_select"
+      ],
+      "watchRoute": "/watch/current-market-video-observatory",
+      "blogRoute": "/blog/current-market-video-observatory",
+      "categoryRoute": "/category/current-market-observatory",
+      "universeCapacity": 64800,
+      "openBatchSize": 0,
+      "heldSlots": 64800,
+      "unlockSequence": [
+        "build proof",
+        "watch route inspection",
+        "blog route inspection",
+        "Supabase second-action signal",
+        "FireCuda receipt decision",
+        "separate-lane batch open"
+      ],
+      "expansionAction": "Keep separate universe staged; do not publish expanded routes."
+    },
+    {
+      "universeId": "home-visual-build-observatory",
+      "lane": "Mainstream Streaming",
+      "pairSlug": "home-project-3d-visual-planner",
+      "receiptStatus": "receipt-ready-for-evidence",
+      "bridgeStatus": "bridge-staged-receipt-held",
+      "decision": "pending",
+      "secondActionWinner": "pending",
+      "requiredSecondActions": [
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "watchRoute": "/watch/home-project-3d-visual-planner",
+      "blogRoute": "/blog/home-project-3d-visual-planner",
+      "categoryRoute": "/category/home-project-3d-experience",
+      "universeCapacity": 51840,
+      "openBatchSize": 0,
+      "heldSlots": 51840,
+      "unlockSequence": [
+        "build proof",
+        "watch route inspection",
+        "blog route inspection",
+        "Supabase second-action signal",
+        "FireCuda receipt decision",
+        "separate-lane batch open"
+      ],
+      "expansionAction": "Keep separate universe staged; do not publish expanded routes."
+    }
+  ],
+  "bridgeRules": [
+    "A separate lane cannot open from page_view or blog_view alone.",
+    "A separate lane opens only when its receipt has promote or rewrite plus a second-action winner.",
+    "Market/business requires market, ticker, backlink, GLB, podcast, or search-intent proof.",
+    "Home/visual build requires GLB, proof route, backlink, podcast, or search-intent proof.",
+    "System presentation requires search, intent-chip, proof route, market, GLB, or podcast proof."
+  ],
+  "nextFireCudaMove": "Keep all separate-lane bridges staged until their receipts earn promote or rewrite evidence.",
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  }
+}

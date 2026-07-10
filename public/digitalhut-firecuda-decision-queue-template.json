@@ -1,0 +1,426 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut FireCuda Decision Queue Template",
+  "status": "firecuda-decision-queues-ready",
+  "purpose": "Pre-stage the promote, rewrite, and hold queues that will sort release-pair routes after Vercel build proof and Supabase traffic measurement.",
+  "guardrail": "These are queue templates, not live decisions. Do not promote, rewrite, or hold a pair until post-deploy measurement data exists.",
+  "releasePairCount": 7,
+  "promotionQueueCount": 7,
+  "rewriteQueueCount": 7,
+  "holdQueueCount": 7,
+  "measurementProofStatus": "measurement-proof-ready",
+  "orderedInspectionSteps": 14,
+  "promotionQueueTemplate": [
+    {
+      "order": 1,
+      "pairSlug": "youtube-video-content-radar",
+      "routes": [
+        "/watch/youtube-video-content-radar",
+        "/blog/youtube-video-content-radar"
+      ],
+      "launchLane": "Mainstream Streaming",
+      "condition": "Promote only if page_view or proof_route_open is joined by at least one second-action proof event.",
+      "secondActionEvents": [
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "fireCudaAction": "Move pair keywords into FireCuda winner list, strengthen internal links, and prepare supporting long-tail expansion.",
+      "searchConsoleAction": "Keep URL inspected and watch for continued route refinement movement.",
+      "sourceAction": "Attach backlink/source anchors that matched the second-action behavior.",
+      "priority": 640,
+      "deltaTracked": true
+    },
+    {
+      "order": 2,
+      "pairSlug": "search-intent-radar-visual-experience",
+      "routes": [
+        "/watch/search-intent-radar-visual-experience",
+        "/blog/search-intent-radar-visual-experience"
+      ],
+      "launchLane": "Automatic System Presentation",
+      "condition": "Promote only if page_view or proof_route_open is joined by at least one second-action proof event.",
+      "secondActionEvents": [
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "market_view_open",
+        "search_intent_chip_select"
+      ],
+      "fireCudaAction": "Move pair keywords into FireCuda winner list, strengthen internal links, and prepare supporting long-tail expansion.",
+      "searchConsoleAction": "Keep URL inspected and watch for continued route refinement movement.",
+      "sourceAction": "Attach backlink/source anchors that matched the second-action behavior.",
+      "priority": 172,
+      "deltaTracked": false
+    },
+    {
+      "order": 3,
+      "pairSlug": "looking-for-lunch-visual-observatory",
+      "routes": [
+        "/watch/looking-for-lunch-visual-observatory",
+        "/blog/looking-for-lunch-visual-observatory"
+      ],
+      "launchLane": "Lunch And Local Food",
+      "condition": "Promote only if page_view or proof_route_open is joined by at least one second-action proof event.",
+      "secondActionEvents": [
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "fireCudaAction": "Move pair keywords into FireCuda winner list, strengthen internal links, and prepare supporting long-tail expansion.",
+      "searchConsoleAction": "Keep URL inspected and watch for continued route refinement movement.",
+      "sourceAction": "Attach backlink/source anchors that matched the second-action behavior.",
+      "priority": 514,
+      "deltaTracked": false
+    },
+    {
+      "order": 4,
+      "pairSlug": "calling-an-uber-visual-trip-guide",
+      "routes": [
+        "/watch/calling-an-uber-visual-trip-guide",
+        "/blog/calling-an-uber-visual-trip-guide"
+      ],
+      "launchLane": "Rideshare And Commute",
+      "condition": "Promote only if page_view or proof_route_open is joined by at least one second-action proof event.",
+      "secondActionEvents": [
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "fireCudaAction": "Move pair keywords into FireCuda winner list, strengthen internal links, and prepare supporting long-tail expansion.",
+      "searchConsoleAction": "Keep URL inspected and watch for continued route refinement movement.",
+      "sourceAction": "Attach backlink/source anchors that matched the second-action behavior.",
+      "priority": 328,
+      "deltaTracked": false
+    },
+    {
+      "order": 5,
+      "pairSlug": "current-market-video-observatory",
+      "routes": [
+        "/watch/current-market-video-observatory",
+        "/blog/current-market-video-observatory"
+      ],
+      "launchLane": "Businesses",
+      "condition": "Promote only if page_view or proof_route_open is joined by at least one second-action proof event.",
+      "secondActionEvents": [
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "market_view_open",
+        "search_intent_chip_select"
+      ],
+      "fireCudaAction": "Move pair keywords into FireCuda winner list, strengthen internal links, and prepare supporting long-tail expansion.",
+      "searchConsoleAction": "Keep URL inspected and watch for continued route refinement movement.",
+      "sourceAction": "Attach backlink/source anchors that matched the second-action behavior.",
+      "priority": 306,
+      "deltaTracked": true
+    },
+    {
+      "order": 6,
+      "pairSlug": "home-project-3d-visual-planner",
+      "routes": [
+        "/watch/home-project-3d-visual-planner",
+        "/blog/home-project-3d-visual-planner"
+      ],
+      "launchLane": "Mainstream Streaming",
+      "condition": "Promote only if page_view or proof_route_open is joined by at least one second-action proof event.",
+      "secondActionEvents": [
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "fireCudaAction": "Move pair keywords into FireCuda winner list, strengthen internal links, and prepare supporting long-tail expansion.",
+      "searchConsoleAction": "Keep URL inspected and watch for continued route refinement movement.",
+      "sourceAction": "Attach backlink/source anchors that matched the second-action behavior.",
+      "priority": 204,
+      "deltaTracked": true
+    },
+    {
+      "order": 7,
+      "pairSlug": "grocery-shopping-3d-experience",
+      "routes": [
+        "/watch/grocery-shopping-3d-experience",
+        "/blog/grocery-shopping-3d-experience"
+      ],
+      "launchLane": "Errands And Review Before Buying",
+      "condition": "Promote only if page_view or proof_route_open is joined by at least one second-action proof event.",
+      "secondActionEvents": [
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "fireCudaAction": "Move pair keywords into FireCuda winner list, strengthen internal links, and prepare supporting long-tail expansion.",
+      "searchConsoleAction": "Keep URL inspected and watch for continued route refinement movement.",
+      "sourceAction": "Attach backlink/source anchors that matched the second-action behavior.",
+      "priority": 172,
+      "deltaTracked": false
+    }
+  ],
+  "rewriteQueueTemplate": [
+    {
+      "order": 1,
+      "pairSlug": "youtube-video-content-radar",
+      "routes": [
+        "/watch/youtube-video-content-radar",
+        "/blog/youtube-video-content-radar"
+      ],
+      "launchLane": "Mainstream Streaming",
+      "condition": "Rewrite if Search Console or page_view proves visibility but second-action proof events stay quiet.",
+      "rewriteTargets": [
+        "title",
+        "description",
+        "proofAngle",
+        "internal link anchor",
+        "category route language"
+      ],
+      "fireCudaAction": "Keep pair in measured rewrite queue and avoid adding new public pages until behavior improves.",
+      "priority": 640,
+      "deltaTracked": true
+    },
+    {
+      "order": 2,
+      "pairSlug": "search-intent-radar-visual-experience",
+      "routes": [
+        "/watch/search-intent-radar-visual-experience",
+        "/blog/search-intent-radar-visual-experience"
+      ],
+      "launchLane": "Automatic System Presentation",
+      "condition": "Rewrite if Search Console or page_view proves visibility but second-action proof events stay quiet.",
+      "rewriteTargets": [
+        "title",
+        "description",
+        "proofAngle",
+        "internal link anchor",
+        "category route language"
+      ],
+      "fireCudaAction": "Keep pair in measured rewrite queue and avoid adding new public pages until behavior improves.",
+      "priority": 172,
+      "deltaTracked": false
+    },
+    {
+      "order": 3,
+      "pairSlug": "looking-for-lunch-visual-observatory",
+      "routes": [
+        "/watch/looking-for-lunch-visual-observatory",
+        "/blog/looking-for-lunch-visual-observatory"
+      ],
+      "launchLane": "Lunch And Local Food",
+      "condition": "Rewrite if Search Console or page_view proves visibility but second-action proof events stay quiet.",
+      "rewriteTargets": [
+        "title",
+        "description",
+        "proofAngle",
+        "internal link anchor",
+        "category route language"
+      ],
+      "fireCudaAction": "Keep pair in measured rewrite queue and avoid adding new public pages until behavior improves.",
+      "priority": 514,
+      "deltaTracked": false
+    },
+    {
+      "order": 4,
+      "pairSlug": "calling-an-uber-visual-trip-guide",
+      "routes": [
+        "/watch/calling-an-uber-visual-trip-guide",
+        "/blog/calling-an-uber-visual-trip-guide"
+      ],
+      "launchLane": "Rideshare And Commute",
+      "condition": "Rewrite if Search Console or page_view proves visibility but second-action proof events stay quiet.",
+      "rewriteTargets": [
+        "title",
+        "description",
+        "proofAngle",
+        "internal link anchor",
+        "category route language"
+      ],
+      "fireCudaAction": "Keep pair in measured rewrite queue and avoid adding new public pages until behavior improves.",
+      "priority": 328,
+      "deltaTracked": false
+    },
+    {
+      "order": 5,
+      "pairSlug": "current-market-video-observatory",
+      "routes": [
+        "/watch/current-market-video-observatory",
+        "/blog/current-market-video-observatory"
+      ],
+      "launchLane": "Businesses",
+      "condition": "Rewrite if Search Console or page_view proves visibility but second-action proof events stay quiet.",
+      "rewriteTargets": [
+        "title",
+        "description",
+        "proofAngle",
+        "internal link anchor",
+        "category route language"
+      ],
+      "fireCudaAction": "Keep pair in measured rewrite queue and avoid adding new public pages until behavior improves.",
+      "priority": 306,
+      "deltaTracked": true
+    },
+    {
+      "order": 6,
+      "pairSlug": "home-project-3d-visual-planner",
+      "routes": [
+        "/watch/home-project-3d-visual-planner",
+        "/blog/home-project-3d-visual-planner"
+      ],
+      "launchLane": "Mainstream Streaming",
+      "condition": "Rewrite if Search Console or page_view proves visibility but second-action proof events stay quiet.",
+      "rewriteTargets": [
+        "title",
+        "description",
+        "proofAngle",
+        "internal link anchor",
+        "category route language"
+      ],
+      "fireCudaAction": "Keep pair in measured rewrite queue and avoid adding new public pages until behavior improves.",
+      "priority": 204,
+      "deltaTracked": true
+    },
+    {
+      "order": 7,
+      "pairSlug": "grocery-shopping-3d-experience",
+      "routes": [
+        "/watch/grocery-shopping-3d-experience",
+        "/blog/grocery-shopping-3d-experience"
+      ],
+      "launchLane": "Errands And Review Before Buying",
+      "condition": "Rewrite if Search Console or page_view proves visibility but second-action proof events stay quiet.",
+      "rewriteTargets": [
+        "title",
+        "description",
+        "proofAngle",
+        "internal link anchor",
+        "category route language"
+      ],
+      "fireCudaAction": "Keep pair in measured rewrite queue and avoid adding new public pages until behavior improves.",
+      "priority": 172,
+      "deltaTracked": false
+    }
+  ],
+  "holdQueueTemplate": [
+    {
+      "order": 1,
+      "pairSlug": "youtube-video-content-radar",
+      "routes": [
+        "/watch/youtube-video-content-radar",
+        "/blog/youtube-video-content-radar"
+      ],
+      "launchLane": "Mainstream Streaming",
+      "condition": "Hold if no route_refinement or keyword_refinement movement appears after stable deployment and inspection window.",
+      "fireCudaAction": "Return pair keywords to FireCuda backlog, keep canonical route crawlable, and do not expand supporting variations.",
+      "priority": 640,
+      "deltaTracked": true
+    },
+    {
+      "order": 2,
+      "pairSlug": "search-intent-radar-visual-experience",
+      "routes": [
+        "/watch/search-intent-radar-visual-experience",
+        "/blog/search-intent-radar-visual-experience"
+      ],
+      "launchLane": "Automatic System Presentation",
+      "condition": "Hold if no route_refinement or keyword_refinement movement appears after stable deployment and inspection window.",
+      "fireCudaAction": "Return pair keywords to FireCuda backlog, keep canonical route crawlable, and do not expand supporting variations.",
+      "priority": 172,
+      "deltaTracked": false
+    },
+    {
+      "order": 3,
+      "pairSlug": "looking-for-lunch-visual-observatory",
+      "routes": [
+        "/watch/looking-for-lunch-visual-observatory",
+        "/blog/looking-for-lunch-visual-observatory"
+      ],
+      "launchLane": "Lunch And Local Food",
+      "condition": "Hold if no route_refinement or keyword_refinement movement appears after stable deployment and inspection window.",
+      "fireCudaAction": "Return pair keywords to FireCuda backlog, keep canonical route crawlable, and do not expand supporting variations.",
+      "priority": 514,
+      "deltaTracked": false
+    },
+    {
+      "order": 4,
+      "pairSlug": "calling-an-uber-visual-trip-guide",
+      "routes": [
+        "/watch/calling-an-uber-visual-trip-guide",
+        "/blog/calling-an-uber-visual-trip-guide"
+      ],
+      "launchLane": "Rideshare And Commute",
+      "condition": "Hold if no route_refinement or keyword_refinement movement appears after stable deployment and inspection window.",
+      "fireCudaAction": "Return pair keywords to FireCuda backlog, keep canonical route crawlable, and do not expand supporting variations.",
+      "priority": 328,
+      "deltaTracked": false
+    },
+    {
+      "order": 5,
+      "pairSlug": "current-market-video-observatory",
+      "routes": [
+        "/watch/current-market-video-observatory",
+        "/blog/current-market-video-observatory"
+      ],
+      "launchLane": "Businesses",
+      "condition": "Hold if no route_refinement or keyword_refinement movement appears after stable deployment and inspection window.",
+      "fireCudaAction": "Return pair keywords to FireCuda backlog, keep canonical route crawlable, and do not expand supporting variations.",
+      "priority": 306,
+      "deltaTracked": true
+    },
+    {
+      "order": 6,
+      "pairSlug": "home-project-3d-visual-planner",
+      "routes": [
+        "/watch/home-project-3d-visual-planner",
+        "/blog/home-project-3d-visual-planner"
+      ],
+      "launchLane": "Mainstream Streaming",
+      "condition": "Hold if no route_refinement or keyword_refinement movement appears after stable deployment and inspection window.",
+      "fireCudaAction": "Return pair keywords to FireCuda backlog, keep canonical route crawlable, and do not expand supporting variations.",
+      "priority": 204,
+      "deltaTracked": true
+    },
+    {
+      "order": 7,
+      "pairSlug": "grocery-shopping-3d-experience",
+      "routes": [
+        "/watch/grocery-shopping-3d-experience",
+        "/blog/grocery-shopping-3d-experience"
+      ],
+      "launchLane": "Errands And Review Before Buying",
+      "condition": "Hold if no route_refinement or keyword_refinement movement appears after stable deployment and inspection window.",
+      "fireCudaAction": "Return pair keywords to FireCuda backlog, keep canonical route crawlable, and do not expand supporting variations.",
+      "priority": 172,
+      "deltaTracked": false
+    }
+  ],
+  "queueDecisionRules": [
+    "Promotion queue requires visibility plus a second action.",
+    "Rewrite queue is for crawled or visited routes that fail to earn second-action proof.",
+    "Hold queue is for routes with no measurable movement after the inspection window.",
+    "Delta-tracked pairs stay visible in every queue until Current Market and Home Project are proven or held."
+  ],
+  "nextFireCudaMove": "After traffic lands, populate one of these queues for each release pair before expanding the master SEO list.",
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  }
+}

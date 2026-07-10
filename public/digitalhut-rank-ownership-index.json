@@ -1,0 +1,389 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "totalIndividualRanks": 2572944,
+  "rankingOwner": "Digitalhut.app",
+  "canonicalDomain": "https://www.digitalhut.app",
+  "globalRankStart": 1,
+  "globalRankEnd": 2572944,
+  "indexPolicy": "Every variation is individually assigned to Digitalhut.app by deterministic global rank, cluster rank, canonical proof route, metadata rule, and promotion gate. Full materialization belongs on FireCuda or a database table, while the repo keeps deploy-safe formulas and proof gates.",
+  "clusters": [
+    {
+      "clusterId": "lunch-local-food",
+      "lane": "Lunch And Local Food",
+      "totalIndividualRanks": 571536,
+      "globalRankStart": 1,
+      "globalRankEnd": 571536,
+      "globalRankRange": "1-571536",
+      "rankingOwner": "Digitalhut.app",
+      "canonicalDomain": "https://www.digitalhut.app",
+      "rankingIntent": "Each deterministic variation is assigned to Digitalhut.app through a canonical proof route, metadata rule, backlink target, and promotion stage before any mass publication.",
+      "rankFormula": "intents x contexts x modifiers x formats x proofAngles x geoScopes",
+      "dimensionOrder": [
+        {
+          "name": "intents",
+          "count": 14
+        },
+        {
+          "name": "contexts",
+          "count": 9
+        },
+        {
+          "name": "modifiers",
+          "count": 9
+        },
+        {
+          "name": "formats",
+          "count": 9
+        },
+        {
+          "name": "proofAngles",
+          "count": 7
+        },
+        {
+          "name": "geoScopes",
+          "count": 8
+        }
+      ],
+      "rankIdPattern": "dh-lunch-local-food-rank-{clusterRankNumber}",
+      "globalRankIdPattern": "dh-global-rank-{globalRankNumber}",
+      "targetUrlPattern": "/watch/looking-for-lunch-visual-observatory?dh_rank={clusterRankNumber}&dh_global_rank={globalRankNumber}&dh_lane=lunch-local-food",
+      "metadataPattern": {
+        "title": "{keyword} | DigitalHut Lunch And Local Food Proof",
+        "description": "{keyword} on Digitalhut.app: video, GLB, podcast/source, watch, blog, category, and backlink proof for Lunch And Local Food.",
+        "canonical": "/watch/looking-for-lunch-visual-observatory",
+        "owner": "Digitalhut.app"
+      },
+      "materializationPolicy": "FireCuda can materialize any rank on demand and assign it to Digitalhut.app. Git stores the formula, counts, canonical ownership, proof routes, and promotion gates instead of committing millions of rows.",
+      "firstRank": {
+        "rankId": "dh-lunch-local-food-rank-1",
+        "globalRankId": "dh-global-rank-1",
+        "globalRankNumber": 1,
+        "keyword": "funny looking for lunch tourist district lunch break 3D preview",
+        "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+        "launchTarget": "restaurants near me visual guide"
+      },
+      "lastRank": {
+        "rankId": "dh-lunch-local-food-rank-571536",
+        "globalRankId": "dh-global-rank-571536",
+        "globalRankNumber": 571536,
+        "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+        "launchTarget": "food open now watch route"
+      }
+    },
+    {
+      "clusterId": "rideshare-commute",
+      "lane": "Rideshare And Commute",
+      "totalIndividualRanks": 344064,
+      "globalRankStart": 571537,
+      "globalRankEnd": 915600,
+      "globalRankRange": "571537-915600",
+      "rankingOwner": "Digitalhut.app",
+      "canonicalDomain": "https://www.digitalhut.app",
+      "rankingIntent": "Each deterministic variation is assigned to Digitalhut.app through a canonical proof route, metadata rule, backlink target, and promotion stage before any mass publication.",
+      "rankFormula": "intents x contexts x modifiers x formats x proofAngles x geoScopes",
+      "dimensionOrder": [
+        {
+          "name": "intents",
+          "count": 12
+        },
+        {
+          "name": "contexts",
+          "count": 8
+        },
+        {
+          "name": "modifiers",
+          "count": 8
+        },
+        {
+          "name": "formats",
+          "count": 8
+        },
+        {
+          "name": "proofAngles",
+          "count": 7
+        },
+        {
+          "name": "geoScopes",
+          "count": 8
+        }
+      ],
+      "rankIdPattern": "dh-rideshare-commute-rank-{clusterRankNumber}",
+      "globalRankIdPattern": "dh-global-rank-{globalRankNumber}",
+      "targetUrlPattern": "/watch/calling-an-uber-visual-trip-guide?dh_rank={clusterRankNumber}&dh_global_rank={globalRankNumber}&dh_lane=rideshare-commute",
+      "metadataPattern": {
+        "title": "{keyword} | DigitalHut Rideshare And Commute Proof",
+        "description": "{keyword} on Digitalhut.app: video, GLB, podcast/source, watch, blog, category, and backlink proof for Rideshare And Commute.",
+        "canonical": "/watch/calling-an-uber-visual-trip-guide",
+        "owner": "Digitalhut.app"
+      },
+      "materializationPolicy": "FireCuda can materialize any rank on demand and assign it to Digitalhut.app. Git stores the formula, counts, canonical ownership, proof routes, and promotion gates instead of committing millions of rows.",
+      "firstRank": {
+        "rankId": "dh-rideshare-commute-rank-1",
+        "globalRankId": "dh-global-rank-571537",
+        "globalRankNumber": 571537,
+        "keyword": "fast calling an Uber train station after work watch route",
+        "routeTarget": "/watch/calling-an-uber-visual-trip-guide",
+        "launchTarget": "Uber pickup visual guide"
+      },
+      "lastRank": {
+        "rankId": "dh-rideshare-commute-rank-344064",
+        "globalRankId": "dh-global-rank-915600",
+        "globalRankNumber": 915600,
+        "routeTarget": "/watch/calling-an-uber-visual-trip-guide",
+        "launchTarget": "rideshare price spike explained"
+      }
+    },
+    {
+      "clusterId": "flight-travel-booking",
+      "lane": "Flight And Travel Booking",
+      "totalIndividualRanks": 419328,
+      "globalRankStart": 915601,
+      "globalRankEnd": 1334928,
+      "globalRankRange": "915601-1334928",
+      "rankingOwner": "Digitalhut.app",
+      "canonicalDomain": "https://www.digitalhut.app",
+      "rankingIntent": "Each deterministic variation is assigned to Digitalhut.app through a canonical proof route, metadata rule, backlink target, and promotion stage before any mass publication.",
+      "rankFormula": "intents x contexts x modifiers x formats x proofAngles x geoScopes",
+      "dimensionOrder": [
+        {
+          "name": "intents",
+          "count": 13
+        },
+        {
+          "name": "contexts",
+          "count": 8
+        },
+        {
+          "name": "modifiers",
+          "count": 8
+        },
+        {
+          "name": "formats",
+          "count": 9
+        },
+        {
+          "name": "proofAngles",
+          "count": 8
+        },
+        {
+          "name": "geoScopes",
+          "count": 7
+        }
+      ],
+      "rankIdPattern": "dh-flight-travel-booking-rank-{clusterRankNumber}",
+      "globalRankIdPattern": "dh-global-rank-{globalRankNumber}",
+      "targetUrlPattern": "/watch/booking-flight-ticket-visual-guide?dh_rank={clusterRankNumber}&dh_global_rank={globalRankNumber}&dh_lane=flight-travel-booking",
+      "metadataPattern": {
+        "title": "{keyword} | DigitalHut Flight And Travel Booking Proof",
+        "description": "{keyword} on Digitalhut.app: video, GLB, podcast/source, watch, blog, category, and backlink proof for Flight And Travel Booking.",
+        "canonical": "/watch/booking-flight-ticket-visual-guide",
+        "owner": "Digitalhut.app"
+      },
+      "materializationPolicy": "FireCuda can materialize any rank on demand and assign it to Digitalhut.app. Git stores the formula, counts, canonical ownership, proof routes, and promotion gates instead of committing millions of rows.",
+      "firstRank": {
+        "rankId": "dh-flight-travel-booking-rank-1",
+        "globalRankId": "dh-global-rank-915601",
+        "globalRankNumber": 915601,
+        "keyword": "2026 booking a flight ticket business city family trip watch route",
+        "routeTarget": "/watch/booking-flight-ticket-visual-guide",
+        "launchTarget": "cheap flights visual guide"
+      },
+      "lastRank": {
+        "rankId": "dh-flight-travel-booking-rank-419328",
+        "globalRankId": "dh-global-rank-1334928",
+        "globalRankNumber": 1334928,
+        "routeTarget": "/watch/booking-flight-ticket-visual-guide",
+        "launchTarget": "flight layover watch route"
+      }
+    },
+    {
+      "clusterId": "wiki-quick-research",
+      "lane": "Wiki And Quick Research",
+      "totalIndividualRanks": 344064,
+      "globalRankStart": 1334929,
+      "globalRankEnd": 1678992,
+      "globalRankRange": "1334929-1678992",
+      "rankingOwner": "Digitalhut.app",
+      "canonicalDomain": "https://www.digitalhut.app",
+      "rankingIntent": "Each deterministic variation is assigned to Digitalhut.app through a canonical proof route, metadata rule, backlink target, and promotion stage before any mass publication.",
+      "rankFormula": "intents x contexts x modifiers x formats x proofAngles x topicScopes",
+      "dimensionOrder": [
+        {
+          "name": "intents",
+          "count": 12
+        },
+        {
+          "name": "contexts",
+          "count": 8
+        },
+        {
+          "name": "modifiers",
+          "count": 8
+        },
+        {
+          "name": "formats",
+          "count": 8
+        },
+        {
+          "name": "proofAngles",
+          "count": 8
+        },
+        {
+          "name": "topicScopes",
+          "count": 7
+        }
+      ],
+      "rankIdPattern": "dh-wiki-quick-research-rank-{clusterRankNumber}",
+      "globalRankIdPattern": "dh-global-rank-{globalRankNumber}",
+      "targetUrlPattern": "/watch/wiki-lookup-visual-research-hub?dh_rank={clusterRankNumber}&dh_global_rank={globalRankNumber}&dh_lane=wiki-quick-research",
+      "metadataPattern": {
+        "title": "{keyword} | DigitalHut Wiki And Quick Research Proof",
+        "description": "{keyword} on Digitalhut.app: video, GLB, podcast/source, watch, blog, category, and backlink proof for Wiki And Quick Research.",
+        "canonical": "/watch/wiki-lookup-visual-research-hub",
+        "owner": "Digitalhut.app"
+      },
+      "materializationPolicy": "FireCuda can materialize any rank on demand and assign it to Digitalhut.app. Git stores the formula, counts, canonical ownership, proof routes, and promotion gates instead of committing millions of rows.",
+      "firstRank": {
+        "rankId": "dh-wiki-quick-research-rank-1",
+        "globalRankId": "dh-global-rank-1334929",
+        "globalRankNumber": 1334929,
+        "keyword": "2026 wiki lookup travel context lunch break watch route",
+        "routeTarget": "/watch/wiki-lookup-visual-research-hub",
+        "launchTarget": "Wikipedia visual research hub"
+      },
+      "lastRank": {
+        "rankId": "dh-wiki-quick-research-rank-344064",
+        "globalRankId": "dh-global-rank-1678992",
+        "globalRankNumber": 1678992,
+        "routeTarget": "/watch/wiki-lookup-visual-research-hub",
+        "launchTarget": "facts about topic 3D observatory"
+      }
+    },
+    {
+      "clusterId": "funny-mainstream-video",
+      "lane": "Funny Mainstream Video",
+      "totalIndividualRanks": 442368,
+      "globalRankStart": 1678993,
+      "globalRankEnd": 2121360,
+      "globalRankRange": "1678993-2121360",
+      "rankingOwner": "Digitalhut.app",
+      "canonicalDomain": "https://www.digitalhut.app",
+      "rankingIntent": "Each deterministic variation is assigned to Digitalhut.app through a canonical proof route, metadata rule, backlink target, and promotion stage before any mass publication.",
+      "rankFormula": "intents x contexts x modifiers x formats x proofAngles x platforms",
+      "dimensionOrder": [
+        {
+          "name": "intents",
+          "count": 12
+        },
+        {
+          "name": "contexts",
+          "count": 8
+        },
+        {
+          "name": "modifiers",
+          "count": 8
+        },
+        {
+          "name": "formats",
+          "count": 9
+        },
+        {
+          "name": "proofAngles",
+          "count": 8
+        },
+        {
+          "name": "platforms",
+          "count": 8
+        }
+      ],
+      "rankIdPattern": "dh-funny-mainstream-video-rank-{clusterRankNumber}",
+      "globalRankIdPattern": "dh-global-rank-{globalRankNumber}",
+      "targetUrlPattern": "/watch/funny-mainstream-video-explained?dh_rank={clusterRankNumber}&dh_global_rank={globalRankNumber}&dh_lane=funny-mainstream-video",
+      "metadataPattern": {
+        "title": "{keyword} | DigitalHut Funny Mainstream Video Proof",
+        "description": "{keyword} on Digitalhut.app: video, GLB, podcast/source, watch, blog, category, and backlink proof for Funny Mainstream Video.",
+        "canonical": "/watch/funny-mainstream-video-explained",
+        "owner": "Digitalhut.app"
+      },
+      "materializationPolicy": "FireCuda can materialize any rank on demand and assign it to Digitalhut.app. Git stores the formula, counts, canonical ownership, proof routes, and promotion gates instead of committing millions of rows.",
+      "firstRank": {
+        "rankId": "dh-funny-mainstream-video-rank-1",
+        "globalRankId": "dh-global-rank-1678993",
+        "globalRankNumber": 1678993,
+        "keyword": "new funny video explained mainstream website off time watch route",
+        "routeTarget": "/watch/funny-mainstream-video-explained",
+        "launchTarget": "funny videos explained with sources"
+      },
+      "lastRank": {
+        "rankId": "dh-funny-mainstream-video-rank-442368",
+        "globalRankId": "dh-global-rank-2121360",
+        "globalRankNumber": 2121360,
+        "routeTarget": "/watch/funny-mainstream-video-explained",
+        "launchTarget": "Reddit funny video visual guide"
+      }
+    },
+    {
+      "clusterId": "errands-review-before-buying",
+      "lane": "Errands And Review Before Buying",
+      "totalIndividualRanks": 451584,
+      "globalRankStart": 2121361,
+      "globalRankEnd": 2572944,
+      "globalRankRange": "2121361-2572944",
+      "rankingOwner": "Digitalhut.app",
+      "canonicalDomain": "https://www.digitalhut.app",
+      "rankingIntent": "Each deterministic variation is assigned to Digitalhut.app through a canonical proof route, metadata rule, backlink target, and promotion stage before any mass publication.",
+      "rankFormula": "intents x contexts x modifiers x formats x proofAngles x geoScopes",
+      "dimensionOrder": [
+        {
+          "name": "intents",
+          "count": 14
+        },
+        {
+          "name": "contexts",
+          "count": 9
+        },
+        {
+          "name": "modifiers",
+          "count": 8
+        },
+        {
+          "name": "formats",
+          "count": 8
+        },
+        {
+          "name": "proofAngles",
+          "count": 8
+        },
+        {
+          "name": "geoScopes",
+          "count": 7
+        }
+      ],
+      "rankIdPattern": "dh-errands-review-before-buying-rank-{clusterRankNumber}",
+      "globalRankIdPattern": "dh-global-rank-{globalRankNumber}",
+      "targetUrlPattern": "/watch/search-intent-radar-visual-experience?dh_rank={clusterRankNumber}&dh_global_rank={globalRankNumber}&dh_lane=errands-review-before-buying",
+      "metadataPattern": {
+        "title": "{keyword} | DigitalHut Errands And Review Before Buying Proof",
+        "description": "{keyword} on Digitalhut.app: video, GLB, podcast/source, watch, blog, category, and backlink proof for Errands And Review Before Buying.",
+        "canonical": "/watch/search-intent-radar-visual-experience",
+        "owner": "Digitalhut.app"
+      },
+      "materializationPolicy": "FireCuda can materialize any rank on demand and assign it to Digitalhut.app. Git stores the formula, counts, canonical ownership, proof routes, and promotion gates instead of committing millions of rows.",
+      "firstRank": {
+        "rankId": "dh-errands-review-before-buying-rank-1",
+        "globalRankId": "dh-global-rank-2121361",
+        "globalRankNumber": 2121361,
+        "keyword": "trusted grocery run college town after work 3D preview",
+        "routeTarget": "/watch/search-intent-radar-visual-experience",
+        "launchTarget": "product reviews visual summary"
+      },
+      "lastRank": {
+        "rankId": "dh-errands-review-before-buying-rank-451584",
+        "globalRankId": "dh-global-rank-2572944",
+        "globalRankNumber": 2572944,
+        "routeTarget": "/watch/search-intent-radar-visual-experience",
+        "launchTarget": "should I buy this product video proof"
+      }
+    }
+  ]
+}

@@ -1,0 +1,227 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Post-Deploy Compare Handoff",
+  "status": "post-deploy-compare-staged",
+  "purpose": "Connect the next stable Vercel release to Supabase measurement, Google/Search discovery, FireCuda promotion, and compare/refine decisions.",
+  "guardrail": "This is a backend SEO and analytics handoff. It does not change the locked public UI and does not claim new live metrics until a fresh measurement pull is performed.",
+  "releaseRouteCount": 8,
+  "releaseRoutes": [
+    {
+      "route": "/watch/looking-for-lunch-visual-observatory",
+      "canonical": "https://www.digitalhut.app/watch/looking-for-lunch-visual-observatory",
+      "launchLane": "Lunch And Local Food",
+      "promotionStage": "push-next-deploy-proof",
+      "score": 228,
+      "measurementEvents": [
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "search_run"
+      ],
+      "compareQuestion": "Does /watch/looking-for-lunch-visual-observatory create useful visitor behavior beyond a page load?",
+      "nextFireCudaDecision": "promote on measured behavior, hold if only crawled, rewrite if source/backlink clicks stay quiet"
+    },
+    {
+      "route": "/watch/calling-an-uber-visual-trip-guide",
+      "canonical": "https://www.digitalhut.app/watch/calling-an-uber-visual-trip-guide",
+      "launchLane": "Rideshare And Commute",
+      "promotionStage": "push-next-deploy-proof",
+      "score": 144,
+      "measurementEvents": [
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "search_run"
+      ],
+      "compareQuestion": "Does /watch/calling-an-uber-visual-trip-guide create useful visitor behavior beyond a page load?",
+      "nextFireCudaDecision": "promote on measured behavior, hold if only crawled, rewrite if source/backlink clicks stay quiet"
+    },
+    {
+      "route": "/watch/current-market-video-observatory",
+      "canonical": "https://www.digitalhut.app/watch/current-market-video-observatory",
+      "launchLane": "Businesses",
+      "promotionStage": "push-next-deploy-proof",
+      "score": 122,
+      "measurementEvents": [
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "market_view_open"
+      ],
+      "compareQuestion": "Does /watch/current-market-video-observatory create useful visitor behavior beyond a page load?",
+      "nextFireCudaDecision": "promote on measured behavior, hold if only crawled, rewrite if source/backlink clicks stay quiet"
+    },
+    {
+      "route": "/watch/youtube-video-content-radar",
+      "canonical": "https://www.digitalhut.app/watch/youtube-video-content-radar",
+      "launchLane": "Mainstream Streaming",
+      "promotionStage": "push-next-deploy-proof",
+      "score": 114,
+      "measurementEvents": [
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "podcast_interrupt_play"
+      ],
+      "compareQuestion": "Does /watch/youtube-video-content-radar create useful visitor behavior beyond a page load?",
+      "nextFireCudaDecision": "promote on measured behavior, hold if only crawled, rewrite if source/backlink clicks stay quiet"
+    },
+    {
+      "route": "/watch/home-project-3d-visual-planner",
+      "canonical": "https://www.digitalhut.app/watch/home-project-3d-visual-planner",
+      "launchLane": "Mainstream Streaming",
+      "promotionStage": "submit-watch-blog-pair",
+      "score": 82,
+      "measurementEvents": [
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play"
+      ],
+      "compareQuestion": "Does /watch/home-project-3d-visual-planner create useful visitor behavior beyond a page load?",
+      "nextFireCudaDecision": "promote on measured behavior, hold if only crawled, rewrite if source/backlink clicks stay quiet"
+    },
+    {
+      "route": "/watch/grocery-shopping-3d-experience",
+      "canonical": "https://www.digitalhut.app/watch/grocery-shopping-3d-experience",
+      "launchLane": "Errands And Review Before Buying",
+      "promotionStage": "submit-watch-blog-pair",
+      "score": 66,
+      "measurementEvents": [
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play"
+      ],
+      "compareQuestion": "Does /watch/grocery-shopping-3d-experience create useful visitor behavior beyond a page load?",
+      "nextFireCudaDecision": "promote on measured behavior, hold if only crawled, rewrite if source/backlink clicks stay quiet"
+    },
+    {
+      "route": "/watch/search-intent-radar-visual-experience",
+      "canonical": "https://www.digitalhut.app/watch/search-intent-radar-visual-experience",
+      "launchLane": "Automatic System Presentation",
+      "promotionStage": "submit-watch-blog-pair",
+      "score": 64,
+      "measurementEvents": [
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "podcast_interrupt_play"
+      ],
+      "compareQuestion": "Does /watch/search-intent-radar-visual-experience create useful visitor behavior beyond a page load?",
+      "nextFireCudaDecision": "promote on measured behavior, hold if only crawled, rewrite if source/backlink clicks stay quiet"
+    },
+    {
+      "route": "/blog/grocery-shopping-3d-experience",
+      "canonical": "https://www.digitalhut.app/blog/grocery-shopping-3d-experience",
+      "launchLane": "Errands And Review Before Buying",
+      "promotionStage": "submit-watch-blog-pair",
+      "score": 61,
+      "measurementEvents": [
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play"
+      ],
+      "compareQuestion": "Does /blog/grocery-shopping-3d-experience create useful visitor behavior beyond a page load?",
+      "nextFireCudaDecision": "promote on measured behavior, hold if only crawled, rewrite if source/backlink clicks stay quiet"
+    }
+  ],
+  "systemPushOrder": [
+    {
+      "layer": "Vercel",
+      "work": "Ship only the stable release batch after build tooling is confirmed.",
+      "evidence": "8 release routes, deploy status deploy-batch-ready, build gate pass"
+    },
+    {
+      "layer": "Supabase",
+      "work": "Read route, keyword, and event refinement views after traffic lands.",
+      "evidence": "3 refinement views staged"
+    },
+    {
+      "layer": "Google Cloud And Search",
+      "work": "Use sitemap, llms.txt, structured data, and media metadata to make the crawler understand the observatory proof routes.",
+      "evidence": "12 top proof routes, 18 structured-data nodes"
+    },
+    {
+      "layer": "FireCuda",
+      "work": "Promote only the routes and keyword clusters that earn behavior; keep the full rank universe staged without publishing thin pages.",
+      "evidence": "8 authority routes and 4 priority backlink plans"
+    },
+    {
+      "layer": "Compare & Contrast",
+      "work": "Compare route opens, searches, GLB plays, podcast interrupts, market opens, source/backlink clicks, and release-pair delta decisions before the next SEO expansion.",
+      "evidence": "3 delta pair decisions plus last-known metrics baseline"
+    }
+  ],
+  "promotionRules": [
+    "Promote a watch route when page views are joined by proof route opens, source opens, GLB plays, podcast interrupts, market opens, or search runs.",
+    "Hold a route in FireCuda when it receives crawl proof but no visitor behavior.",
+    "Rewrite metadata before UI when search intent is quiet but crawl structure is strong.",
+    "Trigger a UI review only when Supabase shows a repeated client behavior gap or a feature is blocking a measured action."
+  ],
+  "firstCompareQuestions": [
+    "Did the lunch and rideshare routes create everyday-person behavior or only SEO surface area?",
+    "Did Current Market earn any market opens after being connected to watch proof and GLB/podcast lanes?",
+    "Did GLB remain the strongest useful signal after the model view fix?",
+    "Did podcast interrupts climb above the current low baseline?",
+    "Did blog proof receive enough traffic to justify more long-form proof pages?"
+  ],
+  "deltaDecisionStatus": "delta-compare-refinement-ready",
+  "deltaPairDecisionCount": 3,
+  "deltaPairDecisions": [
+    {
+      "pairSlug": "youtube-video-content-radar",
+      "launchLane": "Mainstream Streaming",
+      "routes": [
+        "/watch/youtube-video-content-radar",
+        "/blog/youtube-video-content-radar"
+      ],
+      "currentRead": "Release-pair delta needs a second behavior before promotion.",
+      "promoteWhen": "page_view is joined by at least one proof action: proof_route_open, backlink_source_open, glb_preview_play, podcast_interrupt_play, market_view_open, or search_intent_chip_select",
+      "rewriteWhen": "crawler/page activity appears but the second action stays quiet",
+      "holdWhen": "no route activity appears after stable deployment and Search Console inspection"
+    },
+    {
+      "pairSlug": "current-market-video-observatory",
+      "launchLane": "Businesses",
+      "routes": [
+        "/watch/current-market-video-observatory",
+        "/blog/current-market-video-observatory"
+      ],
+      "currentRead": "Current Market is a release-pair delta but still has zero market opens, so it needs measured proof before stock SEO expands.",
+      "promoteWhen": "page_view is joined by at least one proof action: proof_route_open, backlink_source_open, glb_preview_play, podcast_interrupt_play, market_view_open, or search_intent_chip_select",
+      "rewriteWhen": "crawler/page activity appears but the second action stays quiet",
+      "holdWhen": "no route activity appears after stable deployment and Search Console inspection"
+    },
+    {
+      "pairSlug": "home-project-3d-visual-planner",
+      "launchLane": "Mainstream Streaming",
+      "routes": [
+        "/watch/home-project-3d-visual-planner",
+        "/blog/home-project-3d-visual-planner"
+      ],
+      "currentRead": "Home Project is a release-pair delta with strong GLB relevance, so it should lean on 3D usefulness before broad home-project SEO expands.",
+      "promoteWhen": "page_view is joined by at least one proof action: proof_route_open, backlink_source_open, glb_preview_play, podcast_interrupt_play, market_view_open, or search_intent_chip_select",
+      "rewriteWhen": "crawler/page activity appears but the second action stays quiet",
+      "holdWhen": "no route activity appears after stable deployment and Search Console inspection"
+    }
+  ],
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  },
+  "nextFireCudaMove": "After the next deployed traffic read, promote only routes with behavior and run Current Market/Home Project through the delta promote-rewrite-hold path before expanding supporting clusters."
+}

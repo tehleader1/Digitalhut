@@ -1,0 +1,53 @@
+{
+  "generatedAt": "2026-07-09T03:44:00.000Z",
+  "status": "full-system-capture-post-ready",
+  "owner": "Digitalhut.app",
+  "purpose": "Create one measurable pass-by discovery lane that recognizes people who naturally see the full system without treating individual GLB names as the audience pull.",
+  "trackedEntryUrl": "https://www.digitalhut.app/watch/full-system-capture-post?ref=pass-by-discovery-track&utm_source=proof-route&utm_medium=full-system-observatory&utm_campaign=natural-system-visibility",
+  "postTitle": "DigitalHut Presents: A 2026 Entertainment Observatory",
+  "postCopy": "DigitalHut is a 2026 entertainment dapp system: preview subscriptions, watch a video, use Auto Play, read YouTube statistics, open a 3D Model View, rotate and zoom the model, switch to Next Model, trigger the GLB/podcast feed, search the episode, and see AI system analytics around the story in one interface. It is not a scrollable website. It is a full media session built for people who want the video, the model, the source, the podcast moment, and the explanation together.",
+  "shortPostCopy": "DigitalHut is a 2026 entertainment dapp system: subscription preview + Auto Play YouTube statistics + 3D Model View + GLB/podcast feed + search + AI live analytics in one non-scrollable interface.",
+  "mainFeatures": [
+    "Subscription preview for DigitalHut access tiers",
+    "Auto Play YouTube episode flow",
+    "YouTube statistics and readable live analytics",
+    "GLB and podcast feed matched to the episode",
+    "Interactive 3D Model View with zoom, rotate, and expand/collapse controls",
+    "Next Model and model preview controls",
+    "Search feature for episode and category discovery",
+    "AI system feature that reads video, model, podcast/source, proof, and backlink context"
+  ],
+  "captureBaseline": {
+    "totalEvents": 532,
+    "pageViews": 315,
+    "uniqueVisitors": 115,
+    "publicCandidate": {
+      "events": 312,
+      "visitors": 91,
+      "pageViews": 248,
+      "glbPreviewPlays": 33,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0
+    },
+    "previewOrTest": {
+      "events": 220,
+      "visitors": 27,
+      "pageViews": 67,
+      "glbPreviewPlays": 50,
+      "podcastInterrupts": 13,
+      "autoplayStarts": 5,
+      "searches": 2,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0
+    }
+  },
+  "duplicateTarget": {
+    "primary": "Recognize whether pass-by public-candidate visibility increases subscription preview, Auto Play, YouTube statistics, GLB/podcast feed, zoom/rotate, Next Model, search, or AI system actions while keeping the full entertainment dapp message as the route anchor.",
+    "secondary": "Get first public-candidate podcast, autoplay, search, proof route, or source/backlink event.",
+    "doNotPromote": "Do not treat individual GLB asset names as the content pull."
+  },
+  "measurementRule": "Compare new events by ref, path, origin bucket, and second-action marker. Stack only lanes where people who naturally see the system continue into GLB, podcast, autoplay, search, proof, or source actions."
+}

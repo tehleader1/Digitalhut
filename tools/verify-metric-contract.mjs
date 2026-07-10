@@ -18,7 +18,10 @@ const vercelConfig = JSON.parse(read("vercel.json"))
 const vercelIgnore = read(".vercelignore")
 const contract = JSON.parse(read("public/digitalhut-supabase-measurement-contract.json"))
 
-for(const eventName of ["watch_route_open", "blog_route_open", "category_proof_open"]){
+const proofRouteNames = ["proof_route_open", "watch_route_open", "blog_route_open", "category_proof_open", "zone_checkpoint_open"]
+const sourceNames = ["backlink_source_open", "glb_source_click", "podcast_source_open", "viral_source_backlink_open"]
+
+for(const eventName of proofRouteNames){
   requireText("digitalhutSearchPixel.js", pixel, eventName)
   requireText("insight-map.js", insightMap, eventName)
 }
@@ -27,7 +30,7 @@ for(const eventName of ["backlink_source_open", "glb_source_click", "podcast_sou
   requireText("digitalhutSearchPixel.js", pixel, eventName)
 }
 
-for(const eventName of ["backlink_source_open", "glb_source_click", "podcast_source_open", "viral_source_backlink_open"]){
+for(const eventName of sourceNames){
   requireText("insight-map.js", insightMap, eventName)
 }
 
@@ -49,13 +52,13 @@ const sourceContract = contract.events.find((event) => event.canonicalEvent === 
 if(!proofContract) throw new Error("measurement contract is missing proof_route_open")
 if(!sourceContract) throw new Error("measurement contract is missing backlink_source_open")
 
-for(const eventName of ["watch_route_open", "blog_route_open", "category_proof_open"]){
+for(const eventName of proofRouteNames){
   if(!proofContract.emittedNames?.includes(eventName) && !proofContract.aliases?.includes(eventName)){
     throw new Error(`proof_route_open contract is missing ${eventName}`)
   }
 }
 
-for(const eventName of ["glb_source_click", "podcast_source_open", "viral_source_backlink_open"]){
+for(const eventName of sourceNames.filter((eventName) => eventName !== "backlink_source_open")){
   if(!sourceContract.apiReadNames?.includes(eventName) && !sourceContract.aliases?.includes(eventName)){
     throw new Error(`backlink_source_open contract is missing ${eventName}`)
   }
@@ -65,7 +68,7 @@ console.log(JSON.stringify({
   ok: true,
   checked: checks.length,
   vercelBuildGate: vercelConfig.buildCommand,
-  proofRouteNames: ["watch_route_open", "blog_route_open", "category_proof_open"],
-  sourceNames: ["backlink_source_open", "glb_source_click", "podcast_source_open", "viral_source_backlink_open"],
+  proofRouteNames,
+  sourceNames,
   frontendPriorityGuards: ["linkContext", "proofEvent", "sourceIntent", "podcastControl", "genericPreviewGuard"]
 }, null, 2))

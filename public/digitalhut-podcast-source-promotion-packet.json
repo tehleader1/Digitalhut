@@ -1,0 +1,573 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Podcast Source Promotion Packet",
+  "status": "measurement-covered",
+  "purpose": "Make podcast/source moments useful: verified publisher audio when available, clear source fallback when audio is blocked, video pause/return behavior, proof routes, and backlink/source measurement.",
+  "currentRead": "Podcast interrupts have early proof. The next move is to connect every interrupt to a proof route and source/backlink open before expanding podcast SEO.",
+  "guardrail": "Do not clone voices, fabricate recordings, or imply endorsement. Use publisher audio/source pages and label blocked previews honestly.",
+  "behaviorRead": {
+    "podcastInterrupts": 2,
+    "glbPreviewPlays": 62,
+    "blogViews": 14,
+    "searchInteractions": 0,
+    "marketOpens": 0
+  },
+  "eventReadiness": [
+    {
+      "eventName": "podcast_interrupt_play",
+      "status": "covered",
+      "role": "podcast"
+    },
+    {
+      "eventName": "podcast_source_open",
+      "status": "covered",
+      "role": "podcast"
+    },
+    {
+      "eventName": "viral_podcast_source_start",
+      "status": "covered",
+      "role": "podcast"
+    },
+    {
+      "eventName": "proof_route_open",
+      "status": "covered",
+      "role": "proof"
+    },
+    {
+      "eventName": "backlink_source_open",
+      "status": "covered",
+      "role": "source"
+    },
+    {
+      "eventName": "search_intent_chip_select",
+      "status": "covered",
+      "role": "intent"
+    },
+    {
+      "eventName": "glb_preview_play",
+      "status": "covered",
+      "role": "3d"
+    },
+    {
+      "eventName": "autoplay_start",
+      "status": "covered",
+      "role": "presentation"
+    }
+  ],
+  "routeCount": 12,
+  "podcastRoutes": [
+    {
+      "route": "/blog/full-view-episode-alternative",
+      "canonical": "https://www.digitalhut.app/blog/full-view-episode-alternative",
+      "title": "Full-View Episode Alternative: DigitalHut Entertainment Observatory Proof | DigitalHut Proof",
+      "keywords": [
+        "YouTube alternative full-view episode",
+        "full-view episode with 3D model view",
+        "video app with podcast moments and live analytics",
+        "dapp entertainment observatory episode",
+        "compact video 3D podcast interface",
+        "YouTube alternative full-view episode with 3D model view",
+        "full-view episode with podcast moments and live analytics",
+        "DigitalHut observatory experience"
+      ],
+      "proofAngle": "video search, sound, autoplay, next/previous episode, 3D Model View, podcast/source moment, analytics, source proof, and backlink path"
+    },
+    {
+      "route": "/watch/full-view-episode-alternative",
+      "canonical": "https://www.digitalhut.app/watch/full-view-episode-alternative",
+      "title": "Full-View Episode Alternative: DigitalHut Entertainment Observatory Proof | DigitalHut Watch Proof",
+      "keywords": [
+        "YouTube alternative full-view episode",
+        "full-view episode with 3D model view",
+        "video app with podcast moments and live analytics",
+        "dapp entertainment observatory episode",
+        "compact video 3D podcast interface",
+        "YouTube alternative full-view episode with 3D model view",
+        "full-view episode with podcast moments and live analytics",
+        "DigitalHut observatory experience"
+      ],
+      "proofAngle": "video search, sound, autoplay, next/previous episode, 3D Model View, podcast/source moment, analytics, source proof, and backlink path"
+    },
+    {
+      "route": "/blog/home-project-3d-visual-planner",
+      "canonical": "https://www.digitalhut.app/blog/home-project-3d-visual-planner",
+      "title": "Home Project 3D Visual Planner: DigitalHut Observatory Proof | DigitalHut Proof",
+      "keywords": [
+        "home project 3D visual planner",
+        "home remodel 3D visualization",
+        "AI guided 3D room presentation",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar",
+        "funny video explained DigitalHut",
+        "funny video explained Mainstream Streaming"
+      ],
+      "proofAngle": "video radar, GLB proof dock, timeline, podcast/source moment, and shareable backlink"
+    },
+    {
+      "route": "/watch/home-project-3d-visual-planner",
+      "canonical": "https://www.digitalhut.app/watch/home-project-3d-visual-planner",
+      "title": "Home Project 3D Visual Planner: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "keywords": [
+        "home project 3D visual planner",
+        "home remodel 3D visualization",
+        "AI guided 3D room presentation",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar",
+        "funny video explained DigitalHut",
+        "funny video explained Mainstream Streaming"
+      ],
+      "proofAngle": "video radar, GLB proof dock, timeline, podcast/source moment, and shareable backlink"
+    },
+    {
+      "route": "/blog/home-remodel-3d-visualization",
+      "canonical": "https://www.digitalhut.app/blog/home-remodel-3d-visualization",
+      "title": "Home Remodel 3D Visualization: DigitalHut Observatory Proof | DigitalHut Proof",
+      "keywords": [
+        "home remodel 3D visualization",
+        "home project 3D visual planner",
+        "AI guided 3D room presentation",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar",
+        "funny video explained DigitalHut",
+        "funny video explained Mainstream Streaming"
+      ],
+      "proofAngle": "video radar, GLB proof dock, timeline, podcast/source moment, and shareable backlink"
+    },
+    {
+      "route": "/watch/home-remodel-3d-visualization",
+      "canonical": "https://www.digitalhut.app/watch/home-remodel-3d-visualization",
+      "title": "Home Remodel 3D Visualization: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "keywords": [
+        "home remodel 3D visualization",
+        "home project 3D visual planner",
+        "AI guided 3D room presentation",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar",
+        "funny video explained DigitalHut",
+        "funny video explained Mainstream Streaming"
+      ],
+      "proofAngle": "video radar, GLB proof dock, timeline, podcast/source moment, and shareable backlink"
+    },
+    {
+      "route": "/blog/coding-episode-3d-experience",
+      "canonical": "https://www.digitalhut.app/blog/coding-episode-3d-experience",
+      "title": "Coding Episode 3D Experience: DigitalHut Observatory Proof | DigitalHut Proof",
+      "keywords": [
+        "coding episode 3D experience",
+        "developer 3D observatory system",
+        "API powered 3D renderer dapp",
+        "Google Cloud API dapp setup visual guide",
+        "Supabase Vercel dapp observatory",
+        "developer dapp 3D experience",
+        "developer dapp 3D DigitalHut",
+        "developer dapp 3D Programmer"
+      ],
+      "proofAngle": "video radar, GLB proof dock, timeline, podcast/source moment, and shareable backlink"
+    },
+    {
+      "route": "/watch/coding-episode-3d-experience",
+      "canonical": "https://www.digitalhut.app/watch/coding-episode-3d-experience",
+      "title": "Coding Episode 3D Experience: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "keywords": [
+        "coding episode 3D experience",
+        "developer 3D observatory system",
+        "API powered 3D renderer dapp",
+        "Google Cloud API dapp setup visual guide",
+        "Supabase Vercel dapp observatory",
+        "developer dapp 3D experience",
+        "developer dapp 3D DigitalHut",
+        "developer dapp 3D Programmer"
+      ],
+      "proofAngle": "video radar, GLB proof dock, timeline, podcast/source moment, and shareable backlink"
+    },
+    {
+      "route": "/blog/google-cloud-speech-3d-experience",
+      "canonical": "https://www.digitalhut.app/blog/google-cloud-speech-3d-experience",
+      "title": "Google Cloud Speech 3D Experience: DigitalHut Observatory Proof | DigitalHut Proof",
+      "keywords": [
+        "Google Cloud speech 3D experience",
+        "speech analyzer visual summary",
+        "developer 3D observatory system",
+        "Google Cloud API dapp setup visual guide",
+        "Supabase Vercel dapp observatory",
+        "developer dapp 3D experience",
+        "developer dapp 3D DigitalHut",
+        "developer dapp 3D Programmer"
+      ],
+      "proofAngle": "video radar, GLB proof dock, timeline, podcast/source moment, and shareable backlink"
+    },
+    {
+      "route": "/watch/google-cloud-speech-3d-experience",
+      "canonical": "https://www.digitalhut.app/watch/google-cloud-speech-3d-experience",
+      "title": "Google Cloud Speech 3D Experience: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "keywords": [
+        "Google Cloud speech 3D experience",
+        "speech analyzer visual summary",
+        "developer 3D observatory system",
+        "Google Cloud API dapp setup visual guide",
+        "Supabase Vercel dapp observatory",
+        "developer dapp 3D experience",
+        "developer dapp 3D DigitalHut",
+        "developer dapp 3D Programmer"
+      ],
+      "proofAngle": "video radar, GLB proof dock, timeline, podcast/source moment, and shareable backlink"
+    },
+    {
+      "route": "/blog/youtube-video-content-radar",
+      "canonical": "https://www.digitalhut.app/blog/youtube-video-content-radar",
+      "title": "YouTube Video Content Radar: DigitalHut Observatory Proof | DigitalHut Proof",
+      "keywords": [
+        "YouTube video content radar",
+        "video metadata visual analysis",
+        "AI video observatory system",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar",
+        "funny video explained DigitalHut",
+        "funny video explained Mainstream Streaming"
+      ],
+      "proofAngle": "video topic radar, changing timeline read, source links, podcast interrupt, and GLB model view"
+    },
+    {
+      "route": "/watch/youtube-video-content-radar",
+      "canonical": "https://www.digitalhut.app/watch/youtube-video-content-radar",
+      "title": "YouTube Video Content Radar: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "keywords": [
+        "YouTube video content radar",
+        "video metadata visual analysis",
+        "AI video observatory system",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar",
+        "funny video explained DigitalHut",
+        "funny video explained Mainstream Streaming"
+      ],
+      "proofAngle": "video topic radar, changing timeline read, source links, podcast interrupt, and GLB model view"
+    }
+  ],
+  "podcastLanes": [
+    {
+      "id": "viral-source-authority",
+      "title": "Viral Source Authority",
+      "queries": [
+        "podcast source moment for viral video",
+        "Apple podcast clip with video analysis",
+        "audio source moment for trending video"
+      ],
+      "proofRoute": "/watch/podcast-source-moment-for-viral-video",
+      "role": "Support trending video explainers with publisher audio/source authority.",
+      "status": "interrupt-proof-active",
+      "routeTitle": "funny videos explained with sources | DigitalHut Watch Proof",
+      "canonical": "https://www.digitalhut.app/watch/podcast-source-moment-for-viral-video",
+      "proofKeywords": [
+        "funny videos explained with sources",
+        "viral videos source map",
+        "YouTube funny video observatory",
+        "TikTok funny video source proof",
+        "meme video timeline explained",
+        "Reddit funny video visual guide",
+        "podcast source moment for viral video",
+        "Apple podcast clip with video analysis"
+      ],
+      "measurementPath": [
+        "podcast_interrupt_play",
+        "podcast_source_open",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "supportSignals": [
+        "podcast interrupt proof is active",
+        "GLB proof is active",
+        "blog proof is active"
+      ]
+    },
+    {
+      "id": "video-research-interrupt",
+      "title": "Video Research Interrupt",
+      "queries": [
+        "podcast feature interrupt for video research",
+        "AI podcast moment for YouTube analysis",
+        "speaker pulse source panel"
+      ],
+      "proofRoute": "/watch/podcast-moment-visual-analysis",
+      "role": "Pause the video intentionally, play the source moment, then return to the observatory story.",
+      "status": "interrupt-proof-active",
+      "routeTitle": "Podcast Moment Visual Analysis: DigitalHut Proof | DigitalHut Watch Proof",
+      "canonical": "https://www.digitalhut.app/watch/podcast-moment-visual-analysis",
+      "proofKeywords": [
+        "podcast moment visual analysis",
+        "podcast feature interrupt for video research",
+        "AI podcast source visual summary",
+        "what is this topic explained with sources",
+        "public information source map",
+        "research before buying visual guide",
+        "wiki lookup visual hub DigitalHut",
+        "wiki lookup visual hub Researcher"
+      ],
+      "measurementPath": [
+        "podcast_interrupt_play",
+        "podcast_source_open",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "supportSignals": [
+        "podcast interrupt proof is active",
+        "GLB proof is active",
+        "blog proof is active"
+      ]
+    },
+    {
+      "id": "market-podcast-context",
+      "title": "Market Podcast Context",
+      "queries": [
+        "NVIDIA AI chip market podcast interview",
+        "Tesla EV robotics market podcast",
+        "Microsoft cloud AI market podcast"
+      ],
+      "proofRoute": "/watch/current-market-video-observatory",
+      "role": "Attach market/company podcast context to ticker searches without turning the product into financial advice.",
+      "status": "interrupt-proof-active",
+      "routeTitle": "Current Market Video Observatory: DigitalHut Proof | DigitalHut Watch Proof",
+      "canonical": "https://www.digitalhut.app/watch/current-market-video-observatory",
+      "proofKeywords": [
+        "current market video observatory",
+        "stock market visual analysis 3D",
+        "AI stock video research dashboard",
+        "company video research source map",
+        "earnings video observatory",
+        "stock market visual analysis DigitalHut",
+        "stock market visual analysis Businesses",
+        "company video research DigitalHut"
+      ],
+      "measurementPath": [
+        "podcast_interrupt_play",
+        "podcast_source_open",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "supportSignals": [
+        "podcast interrupt proof is active",
+        "GLB proof is active",
+        "blog proof is active"
+      ]
+    },
+    {
+      "id": "research-podcast-context",
+      "title": "Research Podcast Context",
+      "queries": [
+        "university research podcast visual analysis",
+        "science research podcast source map",
+        "climate study podcast source moment"
+      ],
+      "proofRoute": "/watch/source-backed-video-summary",
+      "role": "Turn research videos into source-backed listening moments with GLB/timeline proof.",
+      "status": "interrupt-proof-active",
+      "routeTitle": "Full-View Episode Alternative: DigitalHut Entertainment Observatory Proof | DigitalHut Proof",
+      "canonical": "https://www.digitalhut.app/blog/full-view-episode-alternative",
+      "proofKeywords": [
+        "YouTube alternative full-view episode",
+        "full-view episode with 3D model view",
+        "video app with podcast moments and live analytics",
+        "dapp entertainment observatory episode",
+        "compact video 3D podcast interface",
+        "YouTube alternative full-view episode with 3D model view",
+        "full-view episode with podcast moments and live analytics",
+        "DigitalHut observatory experience"
+      ],
+      "measurementPath": [
+        "podcast_interrupt_play",
+        "podcast_source_open",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "supportSignals": [
+        "podcast interrupt proof is active",
+        "GLB proof is active",
+        "blog proof is active"
+      ]
+    },
+    {
+      "id": "everyday-podcast-guide",
+      "title": "Everyday Podcast Guide",
+      "queries": [
+        "restaurants near me podcast source guide",
+        "flight delay podcast travel source",
+        "funny video podcast source moment"
+      ],
+      "proofRoute": "/watch/search-intent-radar-visual-experience",
+      "role": "Let ordinary searches inherit a useful source/audio layer when a topic needs more context.",
+      "status": "interrupt-proof-active",
+      "routeTitle": "Search Intent Radar Visual Experience: DigitalHut Proof | DigitalHut Watch Proof",
+      "canonical": "https://www.digitalhut.app/watch/search-intent-radar-visual-experience",
+      "proofKeywords": [
+        "search intent radar visual experience",
+        "visual search intent chips",
+        "same category video search timing",
+        "YouTube alternative full-view episode with 3D model view",
+        "full-view episode with podcast moments and live analytics",
+        "DigitalHut observatory experience",
+        "YouTube content radar with GLB proof",
+        "automatic 3D autoplay system"
+      ],
+      "measurementPath": [
+        "podcast_interrupt_play",
+        "podcast_source_open",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "supportSignals": [
+        "podcast interrupt proof is active",
+        "GLB proof is active",
+        "blog proof is active"
+      ]
+    }
+  ],
+  "searchBridge": [
+    {
+      "keyword": "funny looking for lunch tourist district lunch break 3D preview",
+      "podcastRole": "If this topic needs human context, attach a podcast/source moment before promoting the phrase.",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "measurementPath": [
+        "search_intent_chip_select",
+        "podcast_interrupt_play",
+        "podcast_source_open",
+        "proof_route_open"
+      ]
+    },
+    {
+      "keyword": "local what should I eat work district after work watch route",
+      "podcastRole": "If this topic needs human context, attach a podcast/source moment before promoting the phrase.",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "measurementPath": [
+        "search_intent_chip_select",
+        "podcast_interrupt_play",
+        "podcast_source_open",
+        "proof_route_open"
+      ]
+    },
+    {
+      "keyword": "open now best lunch near me international city downtown podcast source moment",
+      "podcastRole": "If this topic needs human context, attach a podcast/source moment before promoting the phrase.",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "measurementPath": [
+        "search_intent_chip_select",
+        "podcast_interrupt_play",
+        "podcast_source_open",
+        "proof_route_open"
+      ]
+    },
+    {
+      "keyword": "2026 cheap lunch spot near me near the office review observatory",
+      "podcastRole": "If this topic needs human context, attach a podcast/source moment before promoting the phrase.",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "measurementPath": [
+        "search_intent_chip_select",
+        "podcast_interrupt_play",
+        "podcast_source_open",
+        "proof_route_open"
+      ]
+    },
+    {
+      "keyword": "quick family lunch place city center while traveling backlink proof",
+      "podcastRole": "If this topic needs human context, attach a podcast/source moment before promoting the phrase.",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "measurementPath": [
+        "search_intent_chip_select",
+        "podcast_interrupt_play",
+        "podcast_source_open",
+        "proof_route_open"
+      ]
+    },
+    {
+      "keyword": "review-backed office lunch idea suburb before appointment decision guide",
+      "podcastRole": "If this topic needs human context, attach a podcast/source moment before promoting the phrase.",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "measurementPath": [
+        "search_intent_chip_select",
+        "podcast_interrupt_play",
+        "podcast_source_open",
+        "proof_route_open"
+      ]
+    }
+  ],
+  "marketBridge": [
+    {
+      "symbol": "NVDA",
+      "company": "NVIDIA",
+      "podcastSearch": "NVIDIA AI chip market podcast interview",
+      "routeTarget": "/watch/current-market-video-observatory",
+      "measurementPath": [
+        "market_view_open",
+        "podcast_interrupt_play",
+        "podcast_source_open",
+        "backlink_source_open"
+      ]
+    },
+    {
+      "symbol": "TSLA",
+      "company": "Tesla",
+      "podcastSearch": "Tesla EV robotics market podcast",
+      "routeTarget": "/watch/current-market-video-observatory",
+      "measurementPath": [
+        "market_view_open",
+        "podcast_interrupt_play",
+        "podcast_source_open",
+        "backlink_source_open"
+      ]
+    },
+    {
+      "symbol": "AAPL",
+      "company": "Apple",
+      "podcastSearch": "Apple consumer technology market podcast",
+      "routeTarget": "/watch/current-market-video-observatory",
+      "measurementPath": [
+        "market_view_open",
+        "podcast_interrupt_play",
+        "podcast_source_open",
+        "backlink_source_open"
+      ]
+    },
+    {
+      "symbol": "MSFT",
+      "company": "Microsoft",
+      "podcastSearch": "Microsoft cloud AI market podcast",
+      "routeTarget": "/watch/current-market-video-observatory",
+      "measurementPath": [
+        "market_view_open",
+        "podcast_interrupt_play",
+        "podcast_source_open",
+        "backlink_source_open"
+      ]
+    },
+    {
+      "symbol": "AMD",
+      "company": "AMD",
+      "podcastSearch": "AMD semiconductor market podcast",
+      "routeTarget": "/watch/current-market-video-observatory",
+      "measurementPath": [
+        "market_view_open",
+        "podcast_interrupt_play",
+        "podcast_source_open",
+        "backlink_source_open"
+      ]
+    }
+  ],
+  "nextFireCudaMove": "Promote podcast/source moments only where interrupt plays pair with proof-route opens, source/backlink opens, GLB context, or blog reads.",
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "generatedAt": "2026-07-07T11:28:00-04:00",
+  "mode": "DigitalHut Overseer Traffic Shuffle 003",
+  "status": "dry-pool-shifted-to-everyday-intent",
+  "domain": "https://www.digitalhut.app",
+  "reason": "Shuffle 002 did not open search, source, proof-route, or Search Console movement. The next audience cast moves from source-backed video research into everyday useful intent because repeated normal-life searches can prove DigitalHut is more than a visual demo.",
+  "latestLiveRead": {
+    "pageViews": 278,
+    "uniqueVisitors": 95,
+    "blogViews": 14,
+    "glbPreviewPlays": 81,
+    "podcastInterrupts": 12,
+    "marketOpens": 5,
+    "autoplayStarts": 4,
+    "searchRuns": 0,
+    "proofRouteOpens": 0,
+    "sourceBacklinkOpens": 0,
+    "intentSelections": 0,
+    "searchConsoleRows": 0,
+    "searchConsoleClicks": 0,
+    "searchConsoleImpressions": 0
+  },
+  "wholeSystemConfirmation": {
+    "video": "The video/feed still carries the main experience.",
+    "glb": "3D model interaction remains the leading proof signal.",
+    "podcast": "Podcast moments have enough measured use to remain part of the system, but they need topic/source alignment.",
+    "market": "Market context has small real signal and should stay available as a branch, not the center of every pool.",
+    "seo": "The active bottleneck is not page quantity. It is user proof: search, source opens, proof-route opens, and Search Console rows."
+  },
+  "nextAudienceCast": {
+    "name": "Everyday Useful Visual Observatory",
+    "humanReason": "People do not always search like developers. They search for lunch, rides, flights, products, quick explanations, and local decisions. DigitalHut can turn those ordinary searches into video plus 3D plus source proof.",
+    "primaryRoutes": [
+      "/watch/looking-for-lunch-visual-observatory",
+      "/watch/calling-an-uber-visual-trip-guide",
+      "/watch/booking-flight-ticket-visual-guide",
+      "/watch/wiki-lookup-visual-research-hub",
+      "/watch/grocery-shopping-3d-experience"
+    ],
+    "longTailCluster": [
+      "restaurants near me visual guide with source proof",
+      "lunch near me video map with 3D preview",
+      "Uber pickup visual guide with location source",
+      "flight ticket visual guide with route context",
+      "wiki lookup visual research hub with 3D proof",
+      "grocery product review visual summary with source links",
+      "local decision video explained with 3D context",
+      "everyday search observatory with source backed video"
+    ],
+    "whyThisCanCompete": "Most everyday search pages are lists, ads, maps, or thin summaries. DigitalHut can compete where the searcher wants visual confirmation, source trust, and a playable context layer."
+  },
+  "trafficPoolSorting": {
+    "movementToKeep": [
+      "GLB preview plays",
+      "podcast interrupts",
+      "market opens",
+      "homepage and blog views"
+    ],
+    "dryValvesToOpen": [
+      "search runs",
+      "source/backlink opens",
+      "proof route opens",
+      "intent selections",
+      "Search Console impressions"
+    ],
+    "ifDryAgain": "Move to a high-trust professional lane: real estate walkthrough, developer proof, or market observatory.",
+    "ifOpens": "Absorb the winning route into the proof map, attach it to the homepage/category language, then submit sitemap only after a stable batch."
+  },
+  "systemAbsorptionPlan": {
+    "firecuda": "Record everyday intent as a separate rank floor from GLB/gaming so the 8TB mapping layer can compare normal-life traffic against developer/3D traffic.",
+    "supabase": "Watch whether everyday routes create the first search/source/proof interaction.",
+    "googleCloud": "Treat Search Console as delayed truth. Do not claim rank movement until impressions or rows appear.",
+    "vercel": "Deploy this as a public proof artifact and discovery hint only; no UI change.",
+    "codexOverseer": "On the next read, compare everyday intent against GLB/source-backed research and keep only the pool that opens measured action."
+  },
+  "nextTrigger": {
+    "notifyIfAny": [
+      "searchRuns > 0",
+      "proofRouteOpens > 0",
+      "sourceBacklinkOpens > 0",
+      "intentSelections > 0",
+      "Search Console impressions > 0",
+      "pageViews > 278",
+      "uniqueVisitors > 95",
+      "glbPreviewPlays > 81",
+      "podcastInterrupts > 12",
+      "marketOpens > 5"
+    ],
+    "standbyRead": "This is a pop-in shuffle, not a 15-minute automation loop."
+  }
+}

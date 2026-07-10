@@ -1,0 +1,905 @@
+{
+  "generatedAt": "2026-07-10T02:01:54.134Z",
+  "status": "client-attempt-router-ready",
+  "site": "https://www.digitalhut.app",
+  "mode": "Secure and exploit the DigitalHut 200M SEO Master List as the strongest lane; categories, competitors, source bridges, proof routes, behavior reads, and Search Console rows are all facets inside that master list.",
+  "guardrail": "This is not a claim of Google rank. It is the routing system that decides which whole-system keyword pressure deserves public proof until Search Console and Supabase confirm behavior.",
+  "baseline": {
+    "pageViews": 319,
+    "uniqueVisitors": 117,
+    "totalEvents": 536,
+    "glb": 83,
+    "podcast": 13,
+    "autoplay": 5,
+    "searches": 2,
+    "market": 5,
+    "proof": 0,
+    "source": 0,
+    "blogViews": 28,
+    "masterKeywordDoorEvents": 68
+  },
+  "currentTotals": {
+    "pageViews": 323,
+    "uniqueVisitors": 119,
+    "totalEvents": 540,
+    "glb": 83,
+    "podcast": 13,
+    "autoplay": 5,
+    "searches": 2,
+    "market": 5,
+    "proof": 0,
+    "source": 0,
+    "blogViews": 28,
+    "masterKeywordDoorEvents": 72
+  },
+  "freshDelta": {
+    "pageViews": 4,
+    "uniqueVisitors": 2,
+    "totalEvents": 4,
+    "glb": 0,
+    "podcast": 0,
+    "autoplay": 0,
+    "searches": 0,
+    "market": 0,
+    "proof": 0,
+    "source": 0,
+    "blogViews": 0,
+    "masterKeywordDoorEvents": 4
+  },
+  "searchConsole": {
+    "freshRows": 1,
+    "freshImpressions": 1,
+    "freshClicks": 0,
+    "finalRows": 1,
+    "finalImpressions": 1,
+    "finalClicks": 0,
+    "indexedInspectionTargets": 2,
+    "discoveredInspectionTargets": 4,
+    "unknownInspectionTargets": 8,
+    "sitemapSurfacesVisible": 0,
+    "sitemapSurfacesPending": 0
+  },
+  "masterKeywordUniverse": 200572944,
+  "publicSitemapWindow": 50000,
+  "wholeSystemAttempt": {
+    "id": "digitalhut-200m-seo-master-list",
+    "lane": "DigitalHut 200M SEO Master List",
+    "role": "the complete SEO master list: every everyday watcher, researcher, gamer, creator, builder, traveler, buyer, developer, and mainstream viewer route must have DigitalHut's dapp proof engine behind it",
+    "score": 202,
+    "proofRoute": "/system-proof",
+    "publicUrl": "https://www.digitalhut.app/system-proof",
+    "sourceBridgeUrl": "https://www.digitalhut.app/digitalhut-proof-source-conversion-bridge.json#digitalhut-200m-seo-master-list",
+    "objective": "Run the 200M SEO master list as the strongest lane. Anything discovered through that list must route back to DigitalHut's working dapp proof engine.",
+    "dappProofEngine": {
+      "role": "the product proof behind every longtail route",
+      "modules": [
+        "video watching/session flow",
+        "3D Model View and GLB interaction",
+        "podcast/source moment",
+        "live analytics",
+        "search and category routing",
+        "Supabase behavior telemetry",
+        "sitemap and Search Console proof"
+      ],
+      "rule": "No keyword facet is promoted unless DigitalHut can show or measure a useful dapp behavior behind it."
+    },
+    "nextProofMove": "Move fresh entry traffic into any second action: GLB Model View, podcast/source, autoplay, search, market, proof, or source open.",
+    "claimScope": {
+      "variationCapacity": 200572944,
+      "universe": 200572944,
+      "countedRankSlots": true,
+      "publicSitemapWindow": 50000
+    },
+    "intentPhrases": [
+      "DigitalHut 200M SEO Master List backed by a working 2026 entertainment dapp observatory",
+      "200M longtail keyword map with video watching, 3D Model View, podcast/source moments, search, autoplay, and live analytics behind every useful route",
+      "DigitalHut master keyword list routed through one dapp proof engine instead of thin SEO pages",
+      "everyday life, gaming, research, real estate, travel, market, developer, creator, and study searches entering DigitalHut's dapp system"
+    ],
+    "measurementSignals": [
+      "page view",
+      "unique visitor",
+      "master keyword door event",
+      "GLB Model View open",
+      "podcast/source interrupt",
+      "autoplay start",
+      "search intent",
+      "market open",
+      "proof route open",
+      "source/backlink open",
+      "Search Console query row"
+    ],
+    "requiredWinCondition": "Any keyword facet can start the pull, but the win belongs to the 200M SEO Master List only when visitors complete second actions and proof/source opens inside the dapp.",
+    "backlinkTargets": [
+      "podcast source",
+      "video source",
+      "summary proof",
+      "creator page",
+      "watch proof route",
+      "YouTube session tool discussion",
+      "AI video tool page",
+      "3D viewer source",
+      "podcast/source page",
+      "game build source",
+      "mod page",
+      "3D model source",
+      "server guide",
+      "official documentation",
+      "GitHub source",
+      "API guide",
+      "developer article",
+      "cloud architecture note",
+      "local source",
+      "store page",
+      "review source",
+      "map source",
+      "regional source",
+      "translated guide",
+      "local market source",
+      "international community",
+      "education source",
+      "dataset"
+    ],
+    "internalRotationArm": {
+      "id": "digitalhut-full-200m-keyword-list",
+      "lane": "DigitalHut 200M SEO Master List",
+      "aliases": [
+        "DigitalHut Full 200,572,944 Keyword List",
+        "DigitalHut 200,572,944 Longtail Keyword Universe"
+      ],
+      "score": 200,
+      "proofRoute": "/system-proof",
+      "publicUrl": "https://www.digitalhut.app/system-proof",
+      "role": "the strongest lane and source of truth; every category, proof route, source bridge, comparison test, and evidence read is a facet inside this SEO master list",
+      "universe": 200572944,
+      "publicSitemapWindow": 50000
+    },
+    "universeFacets": [
+      {
+        "id": "ai-video-podcast-source-explainer",
+        "lane": "AI Video Podcast Source Explainer",
+        "score": 123,
+        "proofRoute": "/watch/ai-video-podcast-source-explainer",
+        "role": "evidence facet inside the 200M SEO Master List"
+      },
+      {
+        "id": "full-entertainment-dapp-alternative",
+        "lane": "Full Entertainment Dapp Alternative",
+        "score": 121,
+        "proofRoute": "/watch/full-view-episode-alternative",
+        "role": "evidence facet inside the 200M SEO Master List"
+      },
+      {
+        "id": "gaming-3d-world-observatory",
+        "lane": "Gaming 3D World Observatory",
+        "score": 97,
+        "proofRoute": "/watch/game-world-glb-presentation",
+        "role": "evidence facet inside the 200M SEO Master List"
+      },
+      {
+        "id": "developer-programmer-research",
+        "lane": "Developer Programmer Research",
+        "score": 91,
+        "proofRoute": "/watch/developer-programmer-research-observatory",
+        "role": "evidence facet inside the 200M SEO Master List"
+      },
+      {
+        "id": "local-life-errands-companion",
+        "lane": "Local Life Errands Companion",
+        "score": 75,
+        "proofRoute": "/watch/local-life-errands-companion",
+        "role": "evidence facet inside the 200M SEO Master List"
+      },
+      {
+        "id": "international-language-side-markets",
+        "lane": "International Language Side Markets",
+        "score": 56,
+        "proofRoute": "/watch/international-language-side-markets",
+        "role": "evidence facet inside the 200M SEO Master List"
+      },
+      {
+        "id": "education-study-visual-research",
+        "lane": "Education Study Visual Research",
+        "score": 53,
+        "proofRoute": "/watch/education-study-visual-research",
+        "role": "evidence facet inside the 200M SEO Master List"
+      },
+      {
+        "id": "wiki-quick-research",
+        "lane": "Wiki And Quick Research",
+        "score": 52,
+        "proofRoute": "/watch/wiki-lookup-visual-research-hub",
+        "role": "evidence facet inside the 200M SEO Master List"
+      },
+      {
+        "id": "home-project-diy-visual",
+        "lane": "Home Project DIY Visual",
+        "score": 51,
+        "proofRoute": "/watch/home-project-diy-visual",
+        "role": "evidence facet inside the 200M SEO Master List"
+      },
+      {
+        "id": "creator-brand-product-showcase",
+        "lane": "Creator Brand Product Showcase",
+        "score": 47,
+        "proofRoute": "/watch/creator-brand-product-showcase",
+        "role": "evidence facet inside the 200M SEO Master List"
+      }
+    ],
+    "strongestRotationArm": {
+      "id": "digitalhut-full-200m-keyword-list",
+      "lane": "DigitalHut 200M SEO Master List",
+      "aliases": [
+        "DigitalHut Full 200,572,944 Keyword List",
+        "DigitalHut 200,572,944 Longtail Keyword Universe"
+      ],
+      "score": 200,
+      "proofRoute": "/system-proof",
+      "publicUrl": "https://www.digitalhut.app/system-proof",
+      "role": "the strongest lane and source of truth; every category, proof route, source bridge, comparison test, and evidence read is a facet inside this SEO master list",
+      "universe": 200572944,
+      "publicSitemapWindow": 50000
+    },
+    "wholeSystemAttractionUniverse": {
+      "id": "digitalhut-full-200m-keyword-list",
+      "lane": "DigitalHut 200M SEO Master List",
+      "aliases": [
+        "DigitalHut Full 200,572,944 Keyword List",
+        "DigitalHut 200,572,944 Longtail Keyword Universe"
+      ],
+      "score": 200,
+      "proofRoute": "/system-proof",
+      "publicUrl": "https://www.digitalhut.app/system-proof",
+      "role": "the strongest lane and source of truth; every category, proof route, source bridge, comparison test, and evidence read is a facet inside this SEO master list",
+      "universe": 200572944,
+      "publicSitemapWindow": 50000
+    },
+    "measurableFacet": {
+      "id": "digitalhut-200m-seo-master-list",
+      "lane": "DigitalHut 200M SEO Master List",
+      "score": 200,
+      "proofRoute": "/system-proof",
+      "publicUrl": "https://www.digitalhut.app/system-proof",
+      "role": "the SEO master list as a whole is the measurable facet; category lanes are sub-signals only",
+      "strongestSubSignal": {
+        "id": "ai-video-podcast-source-explainer",
+        "lane": "AI Video Podcast Source Explainer",
+        "score": 123,
+        "proofRoute": "/watch/ai-video-podcast-source-explainer"
+      }
+    },
+    "currentRead": {
+      "freshDelta": {
+        "pageViews": 4,
+        "uniqueVisitors": 2,
+        "totalEvents": 4,
+        "glb": 0,
+        "podcast": 0,
+        "autoplay": 0,
+        "searches": 0,
+        "market": 0,
+        "proof": 0,
+        "source": 0,
+        "blogViews": 0,
+        "masterKeywordDoorEvents": 4
+      },
+      "searchConsole": {
+        "freshRows": 1,
+        "freshImpressions": 1,
+        "freshClicks": 0,
+        "finalRows": 1,
+        "finalImpressions": 1,
+        "finalClicks": 0,
+        "indexedInspectionTargets": 2,
+        "discoveredInspectionTargets": 4,
+        "unknownInspectionTargets": 8,
+        "sitemapSurfacesVisible": 0,
+        "sitemapSurfacesPending": 0
+      }
+    }
+  },
+  "clientAttemptOrder": [
+    {
+      "id": "ai-video-podcast-source-explainer",
+      "lane": "AI Video Podcast Source Explainer",
+      "role": "viewer asking what a video or podcast is saying and wanting source-backed context",
+      "score": 123,
+      "proofRoute": "/watch/ai-video-podcast-source-explainer",
+      "publicUrl": "https://www.digitalhut.app/watch/ai-video-podcast-source-explainer",
+      "sourceBridgeUrl": "https://www.digitalhut.app/digitalhut-proof-source-conversion-bridge.json#ai-video-podcast-source-explainer",
+      "objective": "Convert the fresh entry lift into a second action.",
+      "nextProofMove": "Use the full-system phrase and route to GLB Model View, podcast/source moment, search, or proof/source bridge.",
+      "claimScope": {
+        "variationCapacity": 11000000,
+        "universe": 200572944,
+        "countedRankSlots": true
+      },
+      "intentPhrases": [
+        "AI Video Podcast Source Explainer with video watching, 3D Model View, podcast source moments, and live analytics",
+        "2026 AI Video Podcast Source Explainer dapp entertainment observatory",
+        "AI Video Podcast Source Explainer source backed video and 3D research view",
+        "AI Video Podcast Source Explainer alternative to a plain video page"
+      ],
+      "measurementSignals": [
+        "podcast/source interrupt",
+        "search intent",
+        "source/backlink open",
+        "autoplay start"
+      ],
+      "requiredWinCondition": "At least one second action, then proof_route_open or source/backlink open.",
+      "backlinkTargets": [
+        "podcast source",
+        "video source",
+        "summary proof",
+        "creator page",
+        "watch proof route"
+      ]
+    },
+    {
+      "id": "full-entertainment-dapp-alternative",
+      "lane": "Full Entertainment Dapp Alternative",
+      "role": "viewer looking for a complete alternative to a plain YouTube session",
+      "score": 121,
+      "proofRoute": "/watch/full-view-episode-alternative",
+      "publicUrl": "https://www.digitalhut.app/watch/full-view-episode-alternative",
+      "sourceBridgeUrl": "https://www.digitalhut.app/digitalhut-proof-source-conversion-bridge.json#full-entertainment-dapp-alternative",
+      "objective": "Convert the fresh entry lift into a second action.",
+      "nextProofMove": "Use the full-system phrase and route to GLB Model View, podcast/source moment, search, or proof/source bridge.",
+      "claimScope": {
+        "variationCapacity": 11000000,
+        "universe": 200572944,
+        "countedRankSlots": true
+      },
+      "intentPhrases": [
+        "Full Entertainment Dapp Alternative with video watching, 3D Model View, podcast source moments, and live analytics",
+        "2026 Full Entertainment Dapp Alternative dapp entertainment observatory",
+        "Full Entertainment Dapp Alternative source backed video and 3D research view",
+        "Full Entertainment Dapp Alternative alternative to a plain video page"
+      ],
+      "measurementSignals": [
+        "homepage entry",
+        "autoplay start",
+        "next episode",
+        "3D Model View open",
+        "podcast/source interrupt",
+        "live analytics read"
+      ],
+      "requiredWinCondition": "At least one second action, then proof_route_open or source/backlink open.",
+      "backlinkTargets": [
+        "YouTube session tool discussion",
+        "AI video tool page",
+        "3D viewer source",
+        "podcast/source page",
+        "watch proof route"
+      ]
+    },
+    {
+      "id": "gaming-3d-world-observatory",
+      "lane": "Gaming 3D World Observatory",
+      "role": "gamer searching builds, worlds, servers, maps, walkthroughs, and 3D previews",
+      "score": 97,
+      "proofRoute": "/watch/game-world-glb-presentation",
+      "publicUrl": "https://www.digitalhut.app/watch/game-world-glb-presentation",
+      "sourceBridgeUrl": "https://www.digitalhut.app/digitalhut-proof-source-conversion-bridge.json#gaming-3d-world-observatory",
+      "objective": "Convert the fresh entry lift into a second action.",
+      "nextProofMove": "Use the full-system phrase and route to GLB Model View, podcast/source moment, search, or proof/source bridge.",
+      "claimScope": {
+        "variationCapacity": 11000000,
+        "universe": 200572944,
+        "countedRankSlots": true
+      },
+      "intentPhrases": [
+        "Gaming 3D World Observatory with video watching, 3D Model View, podcast source moments, and live analytics",
+        "2026 Gaming 3D World Observatory dapp entertainment observatory",
+        "Gaming 3D World Observatory source backed video and 3D research view",
+        "Gaming 3D World Observatory alternative to a plain video page"
+      ],
+      "measurementSignals": [
+        "GLB Model View open",
+        "autoplay start",
+        "watch route open",
+        "source/backlink open"
+      ],
+      "requiredWinCondition": "At least one second action, then proof_route_open or source/backlink open.",
+      "backlinkTargets": [
+        "game build source",
+        "mod page",
+        "3D model source",
+        "server guide",
+        "watch proof route"
+      ]
+    },
+    {
+      "id": "developer-programmer-research",
+      "lane": "Developer Programmer Research",
+      "role": "developer, programmer, or technical researcher studying tools, APIs, code, docs, and demos",
+      "score": 91,
+      "proofRoute": "/watch/developer-programmer-research-observatory",
+      "publicUrl": "https://www.digitalhut.app/watch/developer-programmer-research-observatory",
+      "sourceBridgeUrl": "https://www.digitalhut.app/digitalhut-proof-source-conversion-bridge.json#developer-programmer-research",
+      "objective": "Convert the fresh entry lift into a second action.",
+      "nextProofMove": "Use the full-system phrase and route to GLB Model View, podcast/source moment, search, or proof/source bridge.",
+      "claimScope": {
+        "variationCapacity": 11000000,
+        "universe": 200572944,
+        "countedRankSlots": true
+      },
+      "intentPhrases": [
+        "Developer Programmer Research with video watching, 3D Model View, podcast source moments, and live analytics",
+        "2026 Developer Programmer Research dapp entertainment observatory",
+        "Developer Programmer Research source backed video and 3D research view",
+        "Developer Programmer Research alternative to a plain video page"
+      ],
+      "measurementSignals": [
+        "documentation source open",
+        "blog proof open",
+        "search intent",
+        "watch proof open",
+        "Supabase event read",
+        "Search Console row"
+      ],
+      "requiredWinCondition": "At least one second action, then proof_route_open or source/backlink open.",
+      "backlinkTargets": [
+        "official documentation",
+        "GitHub source",
+        "API guide",
+        "developer article",
+        "cloud architecture note",
+        "watch proof route"
+      ]
+    },
+    {
+      "id": "local-life-errands-companion",
+      "lane": "Local Life Errands Companion",
+      "role": "everyday person searching local food, stores, rides, chores, deals, schedules, and decisions",
+      "score": 75,
+      "proofRoute": "/watch/local-life-errands-companion",
+      "publicUrl": "https://www.digitalhut.app/watch/local-life-errands-companion",
+      "sourceBridgeUrl": "https://www.digitalhut.app/digitalhut-proof-source-conversion-bridge.json#local-life-errands-companion",
+      "objective": "Convert the fresh entry lift into a second action.",
+      "nextProofMove": "Use the full-system phrase and route to GLB Model View, podcast/source moment, search, or proof/source bridge.",
+      "claimScope": {
+        "variationCapacity": 11000000,
+        "universe": 200572944,
+        "countedRankSlots": true
+      },
+      "intentPhrases": [
+        "Local Life Errands Companion with video watching, 3D Model View, podcast source moments, and live analytics",
+        "2026 Local Life Errands Companion dapp entertainment observatory",
+        "Local Life Errands Companion source backed video and 3D research view",
+        "Local Life Errands Companion alternative to a plain video page"
+      ],
+      "measurementSignals": [
+        "search intent",
+        "quick panel select",
+        "source/backlink open",
+        "watch route open"
+      ],
+      "requiredWinCondition": "At least one second action, then proof_route_open or source/backlink open.",
+      "backlinkTargets": [
+        "local source",
+        "store page",
+        "review source",
+        "map source",
+        "watch proof route"
+      ]
+    },
+    {
+      "id": "international-language-side-markets",
+      "lane": "International Language Side Markets",
+      "role": "global viewer searching local-language entertainment, research, travel, products, and visual media context",
+      "score": 56,
+      "proofRoute": "/watch/international-language-side-markets",
+      "publicUrl": "https://www.digitalhut.app/watch/international-language-side-markets",
+      "sourceBridgeUrl": "https://www.digitalhut.app/digitalhut-proof-source-conversion-bridge.json#international-language-side-markets",
+      "objective": "Convert the fresh entry lift into a second action.",
+      "nextProofMove": "Use the full-system phrase and route to GLB Model View, podcast/source moment, search, or proof/source bridge.",
+      "claimScope": {
+        "variationCapacity": 11000000,
+        "universe": 200572944,
+        "countedRankSlots": true
+      },
+      "intentPhrases": [
+        "International Language Side Markets with video watching, 3D Model View, podcast source moments, and live analytics",
+        "2026 International Language Side Markets dapp entertainment observatory",
+        "International Language Side Markets source backed video and 3D research view",
+        "International Language Side Markets alternative to a plain video page"
+      ],
+      "measurementSignals": [
+        "referral entry",
+        "search intent",
+        "source/backlink open",
+        "watch proof open"
+      ],
+      "requiredWinCondition": "At least one second action, then proof_route_open or source/backlink open.",
+      "backlinkTargets": [
+        "regional source",
+        "translated guide",
+        "local market source",
+        "international community",
+        "watch proof route"
+      ]
+    },
+    {
+      "id": "education-study-visual-research",
+      "lane": "Education Study Visual Research",
+      "role": "student, teacher, parent, or researcher seeking visual explainers, studies, facts, and source trails",
+      "score": 53,
+      "proofRoute": "/watch/education-study-visual-research",
+      "publicUrl": "https://www.digitalhut.app/watch/education-study-visual-research",
+      "sourceBridgeUrl": "https://www.digitalhut.app/digitalhut-proof-source-conversion-bridge.json#education-study-visual-research",
+      "objective": "Convert the fresh entry lift into a second action.",
+      "nextProofMove": "Use the full-system phrase and route to GLB Model View, podcast/source moment, search, or proof/source bridge.",
+      "claimScope": {
+        "variationCapacity": 11000000,
+        "universe": 200572944,
+        "countedRankSlots": true
+      },
+      "intentPhrases": [
+        "Education Study Visual Research with video watching, 3D Model View, podcast source moments, and live analytics",
+        "2026 Education Study Visual Research dapp entertainment observatory",
+        "Education Study Visual Research source backed video and 3D research view",
+        "Education Study Visual Research alternative to a plain video page"
+      ],
+      "measurementSignals": [
+        "blog proof open",
+        "source route open",
+        "search intent",
+        "watch route open"
+      ],
+      "requiredWinCondition": "At least one second action, then proof_route_open or source/backlink open.",
+      "backlinkTargets": [
+        "education source",
+        "dataset",
+        "research article",
+        "reference page",
+        "watch proof route"
+      ]
+    },
+    {
+      "id": "wiki-quick-research",
+      "lane": "Wiki And Quick Research",
+      "role": "student, parent, researcher, or developer looking for a source-backed quick explanation",
+      "score": 52,
+      "proofRoute": "/watch/wiki-lookup-visual-research-hub",
+      "publicUrl": "https://www.digitalhut.app/watch/wiki-lookup-visual-research-hub",
+      "sourceBridgeUrl": "https://www.digitalhut.app/digitalhut-proof-source-conversion-bridge.json#wiki-and-quick-research",
+      "objective": "Convert the fresh entry lift into a second action.",
+      "nextProofMove": "Use the full-system phrase and route to GLB Model View, podcast/source moment, search, or proof/source bridge.",
+      "claimScope": {
+        "variationCapacity": 344064,
+        "universe": 200572944,
+        "countedRankSlots": true
+      },
+      "intentPhrases": [
+        "Wiki And Quick Research with video watching, 3D Model View, podcast source moments, and live analytics",
+        "2026 Wiki And Quick Research dapp entertainment observatory",
+        "Wiki And Quick Research source backed video and 3D research view",
+        "Wiki And Quick Research alternative to a plain video page"
+      ],
+      "measurementSignals": [
+        "blog proof open",
+        "source route open",
+        "search intent"
+      ],
+      "requiredWinCondition": "At least one second action, then proof_route_open or source/backlink open.",
+      "backlinkTargets": [
+        "reference page",
+        "dataset",
+        "official documentation",
+        "research article"
+      ]
+    },
+    {
+      "id": "home-project-diy-visual",
+      "lane": "Home Project DIY Visual",
+      "role": "homeowner or renter planning repairs, projects, rooms, furniture, tools, and visual walkthroughs",
+      "score": 51,
+      "proofRoute": "/watch/home-project-diy-visual",
+      "publicUrl": "https://www.digitalhut.app/watch/home-project-diy-visual",
+      "sourceBridgeUrl": "https://www.digitalhut.app/digitalhut-proof-source-conversion-bridge.json#home-project-diy-visual",
+      "objective": "Convert the fresh entry lift into a second action.",
+      "nextProofMove": "Use the full-system phrase and route to GLB Model View, podcast/source moment, search, or proof/source bridge.",
+      "claimScope": {
+        "variationCapacity": 11000000,
+        "universe": 200572944,
+        "countedRankSlots": true
+      },
+      "intentPhrases": [
+        "Home Project DIY Visual with video watching, 3D Model View, podcast source moments, and live analytics",
+        "2026 Home Project DIY Visual dapp entertainment observatory",
+        "Home Project DIY Visual source backed video and 3D research view",
+        "Home Project DIY Visual alternative to a plain video page"
+      ],
+      "measurementSignals": [
+        "GLB structure preview",
+        "source route open",
+        "search intent",
+        "watch route open"
+      ],
+      "requiredWinCondition": "At least one second action, then proof_route_open or source/backlink open.",
+      "backlinkTargets": [
+        "DIY guide",
+        "tool source",
+        "room model",
+        "project checklist",
+        "watch proof route"
+      ]
+    },
+    {
+      "id": "creator-brand-product-showcase",
+      "lane": "Creator Brand Product Showcase",
+      "role": "creator, client, or buyer comparing products, brands, demos, reviews, and social proof",
+      "score": 47,
+      "proofRoute": "/watch/creator-brand-product-showcase",
+      "publicUrl": "https://www.digitalhut.app/watch/creator-brand-product-showcase",
+      "sourceBridgeUrl": "https://www.digitalhut.app/digitalhut-proof-source-conversion-bridge.json#creator-brand-product-showcase",
+      "objective": "Convert the fresh entry lift into a second action.",
+      "nextProofMove": "Use the full-system phrase and route to GLB Model View, podcast/source moment, search, or proof/source bridge.",
+      "claimScope": {
+        "variationCapacity": 11000000,
+        "universe": 200572944,
+        "countedRankSlots": true
+      },
+      "intentPhrases": [
+        "Creator Brand Product Showcase with video watching, 3D Model View, podcast source moments, and live analytics",
+        "2026 Creator Brand Product Showcase dapp entertainment observatory",
+        "Creator Brand Product Showcase source backed video and 3D research view",
+        "Creator Brand Product Showcase alternative to a plain video page"
+      ],
+      "measurementSignals": [
+        "source/backlink open",
+        "watch route open",
+        "search intent",
+        "GLB Model View open"
+      ],
+      "requiredWinCondition": "At least one second action, then proof_route_open or source/backlink open.",
+      "backlinkTargets": [
+        "brand page",
+        "product source",
+        "creator page",
+        "review source",
+        "watch proof route"
+      ]
+    }
+  ],
+  "strongestAttempt": {
+    "id": "digitalhut-200m-seo-master-list",
+    "lane": "DigitalHut 200M SEO Master List",
+    "role": "the complete SEO master list: every everyday watcher, researcher, gamer, creator, builder, traveler, buyer, developer, and mainstream viewer route must have DigitalHut's dapp proof engine behind it",
+    "score": 202,
+    "proofRoute": "/system-proof",
+    "publicUrl": "https://www.digitalhut.app/system-proof",
+    "sourceBridgeUrl": "https://www.digitalhut.app/digitalhut-proof-source-conversion-bridge.json#digitalhut-200m-seo-master-list",
+    "objective": "Run the 200M SEO master list as the strongest lane. Anything discovered through that list must route back to DigitalHut's working dapp proof engine.",
+    "dappProofEngine": {
+      "role": "the product proof behind every longtail route",
+      "modules": [
+        "video watching/session flow",
+        "3D Model View and GLB interaction",
+        "podcast/source moment",
+        "live analytics",
+        "search and category routing",
+        "Supabase behavior telemetry",
+        "sitemap and Search Console proof"
+      ],
+      "rule": "No keyword facet is promoted unless DigitalHut can show or measure a useful dapp behavior behind it."
+    },
+    "nextProofMove": "Move fresh entry traffic into any second action: GLB Model View, podcast/source, autoplay, search, market, proof, or source open.",
+    "claimScope": {
+      "variationCapacity": 200572944,
+      "universe": 200572944,
+      "countedRankSlots": true,
+      "publicSitemapWindow": 50000
+    },
+    "intentPhrases": [
+      "DigitalHut 200M SEO Master List backed by a working 2026 entertainment dapp observatory",
+      "200M longtail keyword map with video watching, 3D Model View, podcast/source moments, search, autoplay, and live analytics behind every useful route",
+      "DigitalHut master keyword list routed through one dapp proof engine instead of thin SEO pages",
+      "everyday life, gaming, research, real estate, travel, market, developer, creator, and study searches entering DigitalHut's dapp system"
+    ],
+    "measurementSignals": [
+      "page view",
+      "unique visitor",
+      "master keyword door event",
+      "GLB Model View open",
+      "podcast/source interrupt",
+      "autoplay start",
+      "search intent",
+      "market open",
+      "proof route open",
+      "source/backlink open",
+      "Search Console query row"
+    ],
+    "requiredWinCondition": "Any keyword facet can start the pull, but the win belongs to the 200M SEO Master List only when visitors complete second actions and proof/source opens inside the dapp.",
+    "backlinkTargets": [
+      "podcast source",
+      "video source",
+      "summary proof",
+      "creator page",
+      "watch proof route",
+      "YouTube session tool discussion",
+      "AI video tool page",
+      "3D viewer source",
+      "podcast/source page",
+      "game build source",
+      "mod page",
+      "3D model source",
+      "server guide",
+      "official documentation",
+      "GitHub source",
+      "API guide",
+      "developer article",
+      "cloud architecture note",
+      "local source",
+      "store page",
+      "review source",
+      "map source",
+      "regional source",
+      "translated guide",
+      "local market source",
+      "international community",
+      "education source",
+      "dataset"
+    ],
+    "internalRotationArm": {
+      "id": "digitalhut-full-200m-keyword-list",
+      "lane": "DigitalHut 200M SEO Master List",
+      "aliases": [
+        "DigitalHut Full 200,572,944 Keyword List",
+        "DigitalHut 200,572,944 Longtail Keyword Universe"
+      ],
+      "score": 200,
+      "proofRoute": "/system-proof",
+      "publicUrl": "https://www.digitalhut.app/system-proof",
+      "role": "the strongest lane and source of truth; every category, proof route, source bridge, comparison test, and evidence read is a facet inside this SEO master list",
+      "universe": 200572944,
+      "publicSitemapWindow": 50000
+    },
+    "universeFacets": [
+      {
+        "id": "ai-video-podcast-source-explainer",
+        "lane": "AI Video Podcast Source Explainer",
+        "score": 123,
+        "proofRoute": "/watch/ai-video-podcast-source-explainer",
+        "role": "evidence facet inside the 200M SEO Master List"
+      },
+      {
+        "id": "full-entertainment-dapp-alternative",
+        "lane": "Full Entertainment Dapp Alternative",
+        "score": 121,
+        "proofRoute": "/watch/full-view-episode-alternative",
+        "role": "evidence facet inside the 200M SEO Master List"
+      },
+      {
+        "id": "gaming-3d-world-observatory",
+        "lane": "Gaming 3D World Observatory",
+        "score": 97,
+        "proofRoute": "/watch/game-world-glb-presentation",
+        "role": "evidence facet inside the 200M SEO Master List"
+      },
+      {
+        "id": "developer-programmer-research",
+        "lane": "Developer Programmer Research",
+        "score": 91,
+        "proofRoute": "/watch/developer-programmer-research-observatory",
+        "role": "evidence facet inside the 200M SEO Master List"
+      },
+      {
+        "id": "local-life-errands-companion",
+        "lane": "Local Life Errands Companion",
+        "score": 75,
+        "proofRoute": "/watch/local-life-errands-companion",
+        "role": "evidence facet inside the 200M SEO Master List"
+      },
+      {
+        "id": "international-language-side-markets",
+        "lane": "International Language Side Markets",
+        "score": 56,
+        "proofRoute": "/watch/international-language-side-markets",
+        "role": "evidence facet inside the 200M SEO Master List"
+      },
+      {
+        "id": "education-study-visual-research",
+        "lane": "Education Study Visual Research",
+        "score": 53,
+        "proofRoute": "/watch/education-study-visual-research",
+        "role": "evidence facet inside the 200M SEO Master List"
+      },
+      {
+        "id": "wiki-quick-research",
+        "lane": "Wiki And Quick Research",
+        "score": 52,
+        "proofRoute": "/watch/wiki-lookup-visual-research-hub",
+        "role": "evidence facet inside the 200M SEO Master List"
+      },
+      {
+        "id": "home-project-diy-visual",
+        "lane": "Home Project DIY Visual",
+        "score": 51,
+        "proofRoute": "/watch/home-project-diy-visual",
+        "role": "evidence facet inside the 200M SEO Master List"
+      },
+      {
+        "id": "creator-brand-product-showcase",
+        "lane": "Creator Brand Product Showcase",
+        "score": 47,
+        "proofRoute": "/watch/creator-brand-product-showcase",
+        "role": "evidence facet inside the 200M SEO Master List"
+      }
+    ],
+    "strongestRotationArm": {
+      "id": "digitalhut-full-200m-keyword-list",
+      "lane": "DigitalHut 200M SEO Master List",
+      "aliases": [
+        "DigitalHut Full 200,572,944 Keyword List",
+        "DigitalHut 200,572,944 Longtail Keyword Universe"
+      ],
+      "score": 200,
+      "proofRoute": "/system-proof",
+      "publicUrl": "https://www.digitalhut.app/system-proof",
+      "role": "the strongest lane and source of truth; every category, proof route, source bridge, comparison test, and evidence read is a facet inside this SEO master list",
+      "universe": 200572944,
+      "publicSitemapWindow": 50000
+    },
+    "wholeSystemAttractionUniverse": {
+      "id": "digitalhut-full-200m-keyword-list",
+      "lane": "DigitalHut 200M SEO Master List",
+      "aliases": [
+        "DigitalHut Full 200,572,944 Keyword List",
+        "DigitalHut 200,572,944 Longtail Keyword Universe"
+      ],
+      "score": 200,
+      "proofRoute": "/system-proof",
+      "publicUrl": "https://www.digitalhut.app/system-proof",
+      "role": "the strongest lane and source of truth; every category, proof route, source bridge, comparison test, and evidence read is a facet inside this SEO master list",
+      "universe": 200572944,
+      "publicSitemapWindow": 50000
+    },
+    "measurableFacet": {
+      "id": "digitalhut-200m-seo-master-list",
+      "lane": "DigitalHut 200M SEO Master List",
+      "score": 200,
+      "proofRoute": "/system-proof",
+      "publicUrl": "https://www.digitalhut.app/system-proof",
+      "role": "the SEO master list as a whole is the measurable facet; category lanes are sub-signals only",
+      "strongestSubSignal": {
+        "id": "ai-video-podcast-source-explainer",
+        "lane": "AI Video Podcast Source Explainer",
+        "score": 123,
+        "proofRoute": "/watch/ai-video-podcast-source-explainer"
+      }
+    },
+    "currentRead": {
+      "freshDelta": {
+        "pageViews": 4,
+        "uniqueVisitors": 2,
+        "totalEvents": 4,
+        "glb": 0,
+        "podcast": 0,
+        "autoplay": 0,
+        "searches": 0,
+        "market": 0,
+        "proof": 0,
+        "source": 0,
+        "blogViews": 0,
+        "masterKeywordDoorEvents": 4
+      },
+      "searchConsole": {
+        "freshRows": 1,
+        "freshImpressions": 1,
+        "freshClicks": 0,
+        "finalRows": 1,
+        "finalImpressions": 1,
+        "finalClicks": 0,
+        "indexedInspectionTargets": 2,
+        "discoveredInspectionTargets": 4,
+        "unknownInspectionTargets": 8,
+        "sitemapSurfacesVisible": 0,
+        "sitemapSurfacesPending": 0
+      }
+    }
+  },
+  "nextCast": "Cast the whole 200M system: DigitalHut 200M SEO Master List backed by a working 2026 entertainment dapp observatory",
+  "nextMeasurement": "If this produces only page views, keep it weak. If it produces any GLB/podcast/autoplay/search/market movement, duplicate the whole-system path once. If it produces proof/source, stack the whole-system lane."
+}

@@ -1,0 +1,66 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Deploy Readiness Audit",
+  "status": "deploy-ready-staged",
+  "cloudBuildConfigReady": true,
+  "buildAuthority": "deploy-ready-staged",
+  "read": "SEO proof, route coverage, rank ownership, robots, and local build tooling are ready for a stable deploy batch.",
+  "checks": [
+    {
+      "id": "product-markers",
+      "status": "pass",
+      "read": "15/15 product markers ready"
+    },
+    {
+      "id": "route-coverage",
+      "status": "pass",
+      "read": "124/124 proof routes have metadata"
+    },
+    {
+      "id": "rank-ownership",
+      "status": "pass",
+      "read": "2,572,944 keyword slots assigned to Digitalhut.app"
+    },
+    {
+      "id": "sitemap-depth",
+      "status": "pass",
+      "read": "137 sitemap URLs / 52 watch / 52 blog"
+    },
+    {
+      "id": "robots-sitemap",
+      "status": "pass",
+      "read": "robots.txt points to sitemap"
+    },
+    {
+      "id": "route-metadata-launch",
+      "status": "pass",
+      "read": "33 launch-target metadata routes"
+    },
+    {
+      "id": "rank-slot-samples",
+      "status": "pass",
+      "read": "18 rank-slot proof samples generated"
+    },
+    {
+      "id": "ai-search-discovery",
+      "status": "pass",
+      "read": "60 AI/search discovery routes / 24 launch samples"
+    },
+    {
+      "id": "supabase-refinement-views",
+      "status": "pass",
+      "read": "3 Supabase SEO refinement views staged for route, keyword, and event comparison"
+    },
+    {
+      "id": "vercel-cloud-build-config",
+      "status": "pass",
+      "read": "Vercel cloud build config is staged for npm ci --legacy-peer-deps, Vite build, and dist output"
+    },
+    {
+      "id": "local-build-tooling",
+      "status": "pass",
+      "read": "local Vite build binary present"
+    }
+  ],
+  "nextAction": "Deploy only after a meaningful stable batch and final route/metadata check."
+}

@@ -1,0 +1,643 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Post-Deploy Measurement Proof",
+  "status": "measurement-proof-ready",
+  "purpose": "Define exactly which Supabase events decide Search Console submission, FireCuda promotion, metadata rewrite, or hold after a stable Vercel build.",
+  "guardrail": "No live metric claim is made here. This packet is a post-deploy measurement contract that activates only after build proof and traffic data exist.",
+  "releaseDecision": "Local dependencies look closer, but local proof still requires a completed npm run build result before release.",
+  "releaseGate": [
+    {
+      "gate": "local-build-proof",
+      "status": "pass",
+      "releaseMeaning": "Local build proof is ready from direct Vite output."
+    },
+    {
+      "gate": "vercel-cloud-build-proof",
+      "status": "staged",
+      "releaseMeaning": "Vercel can attempt the authoritative cloud build after deployment is intentionally triggered."
+    },
+    {
+      "gate": "seo-release-proof",
+      "status": "deploy-batch-ready",
+      "releaseMeaning": "SEO routes are staged, but production claims wait for a passing build path."
+    },
+    {
+      "gate": "post-deploy-measurement-proof",
+      "status": "ready-after-deploy",
+      "releaseMeaning": "After deploy, measure route behavior before FireCuda promotion."
+    }
+  ],
+  "releaseRouteCount": 8,
+  "measurementEventCount": 8,
+  "proofEvents": [
+    {
+      "eventName": "page_view",
+      "status": "closed-loop",
+      "feature": "Page and proof-route visibility",
+      "humanRole": "everyday viewer",
+      "seoDecision": "Decides whether a route deserves more internal links, better title copy, or FireCuda hold."
+    },
+    {
+      "eventName": "proof_route_open",
+      "status": "closed-loop",
+      "feature": "Watch/blog/category proof",
+      "humanRole": "researcher",
+      "seoDecision": "Moves crawlable proof pages between launch-primary, support, rewrite, and FireCuda hold."
+    },
+    {
+      "eventName": "backlink_source_open",
+      "status": "closed-loop",
+      "feature": "Source and backlink trust",
+      "humanRole": "developer",
+      "seoDecision": "Identifies which source links help the observatory look useful instead of decorative."
+    },
+    {
+      "eventName": "glb_preview_play",
+      "status": "closed-loop",
+      "feature": "3D/GLB proof",
+      "humanRole": "developer",
+      "seoDecision": "Turns renderer interest into GLB source/backlink proof and 3D route priority."
+    },
+    {
+      "eventName": "podcast_interrupt_play",
+      "status": "closed-loop",
+      "feature": "Podcast/source moment",
+      "humanRole": "creator",
+      "seoDecision": "Decides whether podcast/source moments deserve featured support copy or stay secondary."
+    },
+    {
+      "eventName": "market_view_open",
+      "status": "closed-loop",
+      "feature": "Market feed",
+      "humanRole": "market watcher",
+      "seoDecision": "Decides when market keywords should route into market view instead of the regular feed."
+    },
+    {
+      "eventName": "search_intent_chip_select",
+      "status": "closed-loop",
+      "feature": "Suggested intent selection",
+      "humanRole": "digital nomad",
+      "seoDecision": "Separates phrases visitors choose from phrases that only look good in the master list."
+    },
+    {
+      "eventName": "search_run",
+      "status": "closed-loop",
+      "feature": "Search intent",
+      "humanRole": "researcher",
+      "seoDecision": "Promotes exact typed phrases from FireCuda into watch/blog/category proof."
+    }
+  ],
+  "releaseTargets": [
+    {
+      "route": "/watch/youtube-video-content-radar",
+      "type": "watch-proof",
+      "launchLane": "Mainstream Streaming",
+      "priority": 100,
+      "requiredEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play"
+      ],
+      "searchConsoleAction": "Add to release-pair delta inspection set after stable build."
+    },
+    {
+      "route": "/blog/youtube-video-content-radar",
+      "type": "blog-proof",
+      "launchLane": "Mainstream Streaming",
+      "priority": 95,
+      "requiredEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play"
+      ],
+      "searchConsoleAction": "Add to release-pair delta inspection set after stable build."
+    },
+    {
+      "route": "/watch/search-intent-radar-visual-experience",
+      "type": "watch-proof",
+      "launchLane": "Automatic System Presentation",
+      "priority": 99,
+      "requiredEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "market_view_open",
+        "search_intent_chip_select"
+      ],
+      "searchConsoleAction": "Inspect after sitemap submission and compare behavior."
+    },
+    {
+      "route": "/blog/search-intent-radar-visual-experience",
+      "type": "blog-proof",
+      "launchLane": "Automatic System Presentation",
+      "priority": 94,
+      "requiredEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "market_view_open",
+        "search_intent_chip_select"
+      ],
+      "searchConsoleAction": "Inspect after sitemap submission and compare behavior."
+    },
+    {
+      "route": "/watch/looking-for-lunch-visual-observatory",
+      "type": "watch-proof",
+      "launchLane": "Lunch And Local Food",
+      "priority": 98,
+      "requiredEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "searchConsoleAction": "Inspect after sitemap submission and compare behavior."
+    },
+    {
+      "route": "/blog/looking-for-lunch-visual-observatory",
+      "type": "blog-proof",
+      "launchLane": "Lunch And Local Food",
+      "priority": 93,
+      "requiredEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "searchConsoleAction": "Inspect after sitemap submission and compare behavior."
+    },
+    {
+      "route": "/watch/calling-an-uber-visual-trip-guide",
+      "type": "watch-proof",
+      "launchLane": "Rideshare And Commute",
+      "priority": 97,
+      "requiredEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "searchConsoleAction": "Inspect after sitemap submission and compare behavior."
+    },
+    {
+      "route": "/blog/calling-an-uber-visual-trip-guide",
+      "type": "blog-proof",
+      "launchLane": "Rideshare And Commute",
+      "priority": 92,
+      "requiredEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "searchConsoleAction": "Inspect after sitemap submission and compare behavior."
+    },
+    {
+      "route": "/watch/current-market-video-observatory",
+      "type": "watch-proof",
+      "launchLane": "Businesses",
+      "priority": 96,
+      "requiredEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "market_view_open",
+        "search_intent_chip_select"
+      ],
+      "searchConsoleAction": "Add to release-pair delta inspection set after stable build."
+    },
+    {
+      "route": "/blog/current-market-video-observatory",
+      "type": "blog-proof",
+      "launchLane": "Businesses",
+      "priority": 91,
+      "requiredEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "market_view_open",
+        "search_intent_chip_select"
+      ],
+      "searchConsoleAction": "Add to release-pair delta inspection set after stable build."
+    },
+    {
+      "route": "/watch/home-project-3d-visual-planner",
+      "type": "watch-proof",
+      "launchLane": "Mainstream Streaming",
+      "priority": 95,
+      "requiredEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "searchConsoleAction": "Add to release-pair delta inspection set after stable build."
+    },
+    {
+      "route": "/blog/home-project-3d-visual-planner",
+      "type": "blog-proof",
+      "launchLane": "Mainstream Streaming",
+      "priority": 90,
+      "requiredEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "searchConsoleAction": "Add to release-pair delta inspection set after stable build."
+    }
+  ],
+  "orderedInspectionSequence": [
+    {
+      "order": 1,
+      "phase": "inspect-watch-proof",
+      "route": "/watch/youtube-video-content-radar",
+      "type": "watch-proof",
+      "priority": 100,
+      "launchLane": "Mainstream Streaming",
+      "requiredEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play"
+      ],
+      "action": "Add to release-pair delta inspection set after stable build.",
+      "waitFor": "Search Console URL inspection plus Supabase route_refinement after traffic"
+    },
+    {
+      "order": 2,
+      "phase": "inspect-watch-proof",
+      "route": "/watch/search-intent-radar-visual-experience",
+      "type": "watch-proof",
+      "priority": 99,
+      "launchLane": "Automatic System Presentation",
+      "requiredEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "market_view_open",
+        "search_intent_chip_select"
+      ],
+      "action": "Inspect after sitemap submission and compare behavior.",
+      "waitFor": "Search Console URL inspection plus Supabase route_refinement after traffic"
+    },
+    {
+      "order": 3,
+      "phase": "inspect-watch-proof",
+      "route": "/watch/looking-for-lunch-visual-observatory",
+      "type": "watch-proof",
+      "priority": 98,
+      "launchLane": "Lunch And Local Food",
+      "requiredEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "action": "Inspect after sitemap submission and compare behavior.",
+      "waitFor": "Search Console URL inspection plus Supabase route_refinement after traffic"
+    },
+    {
+      "order": 4,
+      "phase": "inspect-watch-proof",
+      "route": "/watch/calling-an-uber-visual-trip-guide",
+      "type": "watch-proof",
+      "priority": 97,
+      "launchLane": "Rideshare And Commute",
+      "requiredEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "action": "Inspect after sitemap submission and compare behavior.",
+      "waitFor": "Search Console URL inspection plus Supabase route_refinement after traffic"
+    },
+    {
+      "order": 5,
+      "phase": "inspect-watch-proof",
+      "route": "/watch/current-market-video-observatory",
+      "type": "watch-proof",
+      "priority": 96,
+      "launchLane": "Businesses",
+      "requiredEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "market_view_open",
+        "search_intent_chip_select"
+      ],
+      "action": "Add to release-pair delta inspection set after stable build.",
+      "waitFor": "Search Console URL inspection plus Supabase route_refinement after traffic"
+    },
+    {
+      "order": 6,
+      "phase": "inspect-watch-proof",
+      "route": "/watch/home-project-3d-visual-planner",
+      "type": "watch-proof",
+      "priority": 95,
+      "launchLane": "Mainstream Streaming",
+      "requiredEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "action": "Add to release-pair delta inspection set after stable build.",
+      "waitFor": "Search Console URL inspection plus Supabase route_refinement after traffic"
+    },
+    {
+      "order": 7,
+      "phase": "inspect-blog-proof",
+      "route": "/blog/youtube-video-content-radar",
+      "type": "blog-proof",
+      "priority": 95,
+      "launchLane": "Mainstream Streaming",
+      "requiredEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play"
+      ],
+      "action": "Add to release-pair delta inspection set after stable build.",
+      "waitFor": "Blog view, proof route, source/backlink, GLB, podcast, market, or search-intent behavior"
+    },
+    {
+      "order": 8,
+      "phase": "inspect-blog-proof",
+      "route": "/blog/search-intent-radar-visual-experience",
+      "type": "blog-proof",
+      "priority": 94,
+      "launchLane": "Automatic System Presentation",
+      "requiredEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "market_view_open",
+        "search_intent_chip_select"
+      ],
+      "action": "Inspect after sitemap submission and compare behavior.",
+      "waitFor": "Blog view, proof route, source/backlink, GLB, podcast, market, or search-intent behavior"
+    },
+    {
+      "order": 9,
+      "phase": "inspect-blog-proof",
+      "route": "/blog/looking-for-lunch-visual-observatory",
+      "type": "blog-proof",
+      "priority": 93,
+      "launchLane": "Lunch And Local Food",
+      "requiredEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "action": "Inspect after sitemap submission and compare behavior.",
+      "waitFor": "Blog view, proof route, source/backlink, GLB, podcast, market, or search-intent behavior"
+    },
+    {
+      "order": 10,
+      "phase": "inspect-blog-proof",
+      "route": "/blog/calling-an-uber-visual-trip-guide",
+      "type": "blog-proof",
+      "priority": 92,
+      "launchLane": "Rideshare And Commute",
+      "requiredEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "action": "Inspect after sitemap submission and compare behavior.",
+      "waitFor": "Blog view, proof route, source/backlink, GLB, podcast, market, or search-intent behavior"
+    },
+    {
+      "order": 11,
+      "phase": "inspect-blog-proof",
+      "route": "/blog/current-market-video-observatory",
+      "type": "blog-proof",
+      "priority": 91,
+      "launchLane": "Businesses",
+      "requiredEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "market_view_open",
+        "search_intent_chip_select"
+      ],
+      "action": "Add to release-pair delta inspection set after stable build.",
+      "waitFor": "Blog view, proof route, source/backlink, GLB, podcast, market, or search-intent behavior"
+    },
+    {
+      "order": 12,
+      "phase": "inspect-blog-proof",
+      "route": "/blog/home-project-3d-visual-planner",
+      "type": "blog-proof",
+      "priority": 90,
+      "launchLane": "Mainstream Streaming",
+      "requiredEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "action": "Add to release-pair delta inspection set after stable build.",
+      "waitFor": "Blog view, proof route, source/backlink, GLB, podcast, market, or search-intent behavior"
+    },
+    {
+      "order": 13,
+      "phase": "wait-and-measure",
+      "route": "Supabase route_refinement + keyword_refinement",
+      "type": "measurement-window",
+      "priority": 0,
+      "launchLane": "All release pairs",
+      "requiredEvents": [
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "market_view_open",
+        "search_intent_chip_select",
+        "search_run"
+      ],
+      "action": "Wait for enough real behavior to separate promote, rewrite, and hold decisions.",
+      "waitFor": "At least one second useful action beyond page_view on a release target"
+    },
+    {
+      "order": 14,
+      "phase": "compare-and-decide",
+      "route": "FireCuda promotion board",
+      "type": "decision-pass",
+      "priority": 0,
+      "launchLane": "FireCuda > Supabase > Search Console",
+      "requiredEvents": [
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "market_view_open",
+        "search_intent_chip_select"
+      ],
+      "action": "Promote winners, rewrite crawled-but-quiet routes, and hold inactive routes.",
+      "waitFor": "Compare result recorded before expanding keywords"
+    }
+  ],
+  "inspectionPhaseCounts": {
+    "inspect-watch-proof": 6,
+    "inspect-blog-proof": 6,
+    "wait-and-measure": 1,
+    "compare-and-decide": 1
+  },
+  "deltaDecisions": [
+    {
+      "pairSlug": "youtube-video-content-radar",
+      "routes": [
+        "/watch/youtube-video-content-radar",
+        "/blog/youtube-video-content-radar"
+      ],
+      "promoteWhen": "page_view is joined by at least one proof action: proof_route_open, backlink_source_open, glb_preview_play, podcast_interrupt_play, market_view_open, or search_intent_chip_select",
+      "rewriteWhen": "crawler/page activity appears but the second action stays quiet",
+      "holdWhen": "no route activity appears after stable deployment and Search Console inspection"
+    },
+    {
+      "pairSlug": "current-market-video-observatory",
+      "routes": [
+        "/watch/current-market-video-observatory",
+        "/blog/current-market-video-observatory"
+      ],
+      "promoteWhen": "page_view is joined by at least one proof action: proof_route_open, backlink_source_open, glb_preview_play, podcast_interrupt_play, market_view_open, or search_intent_chip_select",
+      "rewriteWhen": "crawler/page activity appears but the second action stays quiet",
+      "holdWhen": "no route activity appears after stable deployment and Search Console inspection"
+    },
+    {
+      "pairSlug": "home-project-3d-visual-planner",
+      "routes": [
+        "/watch/home-project-3d-visual-planner",
+        "/blog/home-project-3d-visual-planner"
+      ],
+      "promoteWhen": "page_view is joined by at least one proof action: proof_route_open, backlink_source_open, glb_preview_play, podcast_interrupt_play, market_view_open, or search_intent_chip_select",
+      "rewriteWhen": "crawler/page activity appears but the second action stays quiet",
+      "holdWhen": "no route activity appears after stable deployment and Search Console inspection"
+    }
+  ],
+  "decisionMatrix": [
+    {
+      "outcome": "Search Console submit/inspect",
+      "condition": "stable build proof exists and route is in releaseTargets",
+      "requiredEvidence": [
+        "sitemap route present",
+        "canonical URL present",
+        "Vercel build proof"
+      ]
+    },
+    {
+      "outcome": "FireCuda promote",
+      "condition": "route receives page/proof traffic plus at least one second useful action",
+      "requiredEvidence": [
+        "page_view or proof_route_open",
+        "glb_preview_play or podcast_interrupt_play or market_view_open or search_intent_chip_select or backlink_source_open"
+      ]
+    },
+    {
+      "outcome": "metadata rewrite",
+      "condition": "route receives crawl/page activity but no second useful action",
+      "requiredEvidence": [
+        "page_view or Search Console visibility",
+        "no second action in Supabase route_refinement"
+      ]
+    },
+    {
+      "outcome": "FireCuda hold",
+      "condition": "route receives no measured activity after stable deploy and inspection window",
+      "requiredEvidence": [
+        "no route_refinement movement",
+        "no keyword_refinement movement"
+      ]
+    }
+  ],
+  "nextFireCudaMove": "After Vercel build proof, use this measurement matrix to decide Search Console inspection, FireCuda promotion, metadata rewrite, or hold for the release routes and delta pairs.",
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  }
+}

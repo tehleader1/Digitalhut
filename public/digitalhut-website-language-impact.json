@@ -1,0 +1,230 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Website Language Impact Read",
+  "status": "language-impact-visible-backend-staged",
+  "purpose": "Show how the FireCuda SEO structure is changing DigitalHut's public-facing language, route proof, and visitor meaning without forcing a UI change.",
+  "frontendLock": "No visual change. This read explains the language and route direction that the current SEO structure is feeding into the website.",
+  "metricFreshnessStatus": "stale-live-refresh-needed",
+  "deployGate": "deploy-ready-staged",
+  "oneLineRead": "DigitalHut is moving from a showcase of moving analytics into a useful 2026 entertainment/research observatory: every topic should read as video explained with sources, GLB context, podcast/source authority, backlinks, and proof routes.",
+  "coreShift": [
+    {
+      "from": "DigitalHut as a cool 3D/video analytics display",
+      "to": "DigitalHut as a useful source-backed observatory that explains what a person is watching, searching, buying, researching, or comparing"
+    },
+    {
+      "from": "broad dapp / GLB / analytics language",
+      "to": "normal human phrases like lunch, groceries, Uber, flights, funny videos, product reviews, developer proof, market story, and viral source map"
+    },
+    {
+      "from": "visual experience as the whole message",
+      "to": "video + GLB + podcast/source + backlink + watch/blog proof as one useful research presentation"
+    }
+  ],
+  "websiteVoiceNow": [
+    "Useful first, impressive second.",
+    "Everyday search language before technical dapp language.",
+    "Source-backed proof instead of filler motion.",
+    "Video topic, 3D context, podcast/source moment, market/source panel, watch route, blog route, and backlink path should all speak about the same subject.",
+    "Stale metrics are labeled stale until Supabase/Vercel/Search Console refresh them."
+  ],
+  "visitorShouldFeel": [
+    "I can understand what this video/topic is about faster than plain YouTube.",
+    "The 3D and podcast panels are extra research proof, not decoration.",
+    "The blog/watch pages prove this system has routes and sources behind the presentation.",
+    "The category language feels like something I would actually search."
+  ],
+  "masterClusters": [
+    {
+      "lane": "Lunch And Local Food",
+      "role": "person on break",
+      "visibleLanguage": [
+        "cheap looking for lunch near me visual guide",
+        "what should I eat after work video map review source",
+        "city center best lunch near me funny source map",
+        "cheap lunch spot downtown local video proof 3D preview"
+      ],
+      "proofRoutes": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/looking-for-lunch-visual-observatory",
+        "blog": "/blog/looking-for-lunch-visual-observatory"
+      },
+      "languageEffect": "This lane makes DigitalHut read like a person on break tool instead of a generic AI page."
+    },
+    {
+      "lane": "Rideshare And Commute",
+      "role": "traveler or worker between places",
+      "visibleLanguage": [
+        "safe calling an Uber near me visual trip guide",
+        "rideshare pickup airport arrival route map price signal",
+        "airport airport Uber pickup fast 3D pickup view",
+        "late night ride late night open now local guide watch route"
+      ],
+      "proofRoutes": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/calling-an-uber-visual-trip-guide",
+        "blog": "/blog/calling-an-uber-visual-trip-guide"
+      },
+      "languageEffect": "This lane makes DigitalHut read like a traveler or worker between places tool instead of a generic AI page."
+    },
+    {
+      "lane": "Flight And Travel Booking",
+      "role": "traveler comparing money, timing, and trust",
+      "visibleLanguage": [
+        "cheap booking a flight ticket near me visual guide",
+        "cheap flight ticket business trip source map airport source",
+        "domestic flight delay 2026 3D map guide",
+        "airport layover holiday travel last minute price signal watch route"
+      ],
+      "proofRoutes": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/booking-flight-ticket-visual-guide",
+        "blog": "/blog/booking-flight-ticket-visual-guide"
+      },
+      "languageEffect": "This lane makes DigitalHut read like a traveler comparing money, timing, and trust tool instead of a generic AI page."
+    },
+    {
+      "lane": "Wiki And Quick Research",
+      "role": "curious viewer looking something up",
+      "visibleLanguage": [
+        "beginner wiki lookup science visual research hub",
+        "what is this topic home research source map reference source",
+        "business beginner research 2026 3D observatory",
+        "public information developer question source-backed timeline source watch route"
+      ],
+      "proofRoutes": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/wiki-lookup-visual-research-hub",
+        "blog": "/blog/wiki-lookup-visual-research-hub"
+      },
+      "languageEffect": "This lane makes DigitalHut read like a curious viewer looking something up tool instead of a generic AI page."
+    },
+    {
+      "lane": "Funny Mainstream Video",
+      "role": "viewer killing time",
+      "visibleLanguage": [
+        "funny funny video explained YouTube explained with sources",
+        "mainstream funny clip lunch break source map creator source",
+        "TikTok what am I watching funny video new timeline explained",
+        "meme video family room 2026 video proof watch route"
+      ],
+      "proofRoutes": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/funny-mainstream-video-explained",
+        "blog": "/blog/funny-mainstream-video-explained"
+      },
+      "languageEffect": "This lane makes DigitalHut read like a viewer killing time tool instead of a generic AI page."
+    },
+    {
+      "lane": "Errands And Review Before Buying",
+      "role": "person making a small spending decision",
+      "visibleLanguage": [
+        "cheap grocery run near me visual guide",
+        "closest store before work source map review source",
+        "suburb best deals trusted video proof",
+        "should I buy this product family trip quick price signal 3D preview"
+      ],
+      "proofRoutes": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/search-intent-radar-visual-experience",
+        "blog": "/blog/search-intent-radar-visual-experience"
+      },
+      "languageEffect": "This lane makes DigitalHut read like a person making a small spending decision tool instead of a generic AI page."
+    }
+  ],
+  "freshClusters": [
+    {
+      "lane": "Everyday Local Decisions",
+      "intent": "normal people choosing lunch, errands, stores, repairs, local services, or quick family plans",
+      "visibleLanguage": [
+        "best lunch near me visual source map",
+        "grocery deal visual observatory",
+        "local repair quote video proof",
+        "family weekend plan source-backed guide",
+        "nearby store review timeline"
+      ],
+      "proofTargets": [
+        "/watch/looking-for-lunch-visual-observatory",
+        "/blog/grocery-shopping-3d-experience",
+        "/category/mundane-off-time-experience"
+      ],
+      "status": "staged-waiting-fresh-statistics"
+    },
+    {
+      "lane": "Viral First-Source Entertainment",
+      "intent": "new video, reel, clip, or topic appears and DigitalHut can become a source-backed first observer",
+      "visibleLanguage": [
+        "new viral video source map",
+        "what is this viral clip about",
+        "funny video explained with backlinks",
+        "trending reel visual timeline",
+        "first source viral video observatory"
+      ],
+      "proofTargets": [
+        "/watch/funny-mainstream-video-explained",
+        "/blog/funny-mainstream-video-explained",
+        "/category/what-am-i-watching-observatory"
+      ],
+      "status": "staged-waiting-fresh-statistics"
+    },
+    {
+      "lane": "Research Developer Proof",
+      "intent": "developer, researcher, student, or analyst needs a sourced visual read instead of a loose summary",
+      "visibleLanguage": [
+        "developer dapp analytics proof",
+        "research topic 3d visual source map",
+        "AI video analysis timeline for researchers",
+        "backend analytics observatory proof",
+        "programmer research hub with source links"
+      ],
+      "proofTargets": [
+        "/watch/wiki-lookup-visual-research-hub",
+        "/blog/wiki-lookup-visual-research-hub",
+        "/category/system-presentation-proof"
+      ],
+      "status": "staged-waiting-fresh-statistics"
+    },
+    {
+      "lane": "Market Company Story",
+      "intent": "market user searches company, ticker, video, podcast, and 3D context together",
+      "visibleLanguage": [
+        "stock video analytics with sources",
+        "company news 3d market observatory",
+        "top volume stock visual research",
+        "market podcast company source map",
+        "ticker search video timeline"
+      ],
+      "proofTargets": [
+        "/market",
+        "/watch/current-market-video-observatory",
+        "/blog/current-market-video-observatory"
+      ],
+      "status": "staged-waiting-fresh-statistics"
+    },
+    {
+      "lane": "Creator 3D Podcast Authority",
+      "intent": "creator or viewer wants video, 3D model, and podcast/source moment to explain the same topic",
+      "visibleLanguage": [
+        "3d model video podcast observatory",
+        "creator reel source-backed 3d preview",
+        "podcast speaker moment video analytics",
+        "GLB model view for video research",
+        "interactive visual experience with podcast proof"
+      ],
+      "proofTargets": [
+        "/watch/search-intent-radar-visual-experience",
+        "/blog/search-intent-radar-visual-experience",
+        "/category/3d-visual-experience"
+      ],
+      "status": "staged-waiting-fresh-statistics"
+    }
+  ],
+  "currentPublicProofRead": {
+    "sitemapUrls": 137,
+    "blogProofPosts": 54,
+    "watchProofRoutes": 52,
+    "categoryRoutes": 20,
+    "totalRankSlots": 2572944
+  },
+  "nextLanguageMove": "When metrics refresh, promote whichever language lane gets real behavior: local decisions, viral first-source, research/developer proof, market/company story, or creator 3D podcast authority."
+}

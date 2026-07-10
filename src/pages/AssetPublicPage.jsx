@@ -1,5 +1,6 @@
 import {Link, useParams} from "react-router-dom"
-import "@google/model-viewer"
+import {useEffect} from "react"
+import {loadModelViewer} from "../lib/modelViewerRuntime"
 import "./AssetLab.css"
 
 const storageKey = "digitalhut:assetLab"
@@ -17,6 +18,10 @@ export default function AssetPublicPage(){
   const {slug} = useParams()
   const lookupSlug = slug?.startsWith("asset_") ? slug : `asset_${slug}`
   const asset = readAssets().find((item) => item.slug === lookupSlug || item.slug === slug) || readAssets()[0]
+
+  useEffect(() => {
+    loadModelViewer()
+  }, [])
 
   if(!asset){
     return <main className="dh-backend-page"><section className="dh-public-asset"><h1>Asset not published yet</h1><p>This DigitalHut model link is waiting for backend publishing.</p><Link className="dh-backend-btn" to="/asset-lab">Open Asset Lab</Link></section></main>

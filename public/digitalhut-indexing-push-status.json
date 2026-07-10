@@ -1,9 +1,25 @@
 {
-  "generatedAt": "2026-07-07T20:57:06.4857549Z",
-  "status": "system-proof-indexing-push-prepared",
+  "generatedAt": "2026-07-09T03:22:40.640Z",
+  "status": "system-proof-indexing-push-live",
   "owner": "Digitalhut.app",
   "verifiedMasterKeywordUniverse": 200572944,
   "objective": "make Google understand DigitalHut as a full 2026 dapp entertainment observatory, not a generic video/blog site, and produce Search Console rows through crawlable HTML proof routes",
+  "crawlShells": {
+    "status": "live",
+    "routeCount": 143,
+    "purpose": "route-specific HTML, titles, descriptions, canonicals, OpenGraph tags, JSON-LD, and crawlable proof bodies are generated before deployment while the React dapp remains active for humans"
+  },
+  "sitemapSurfaces": {
+    "visibleInSearchConsole": 3,
+    "pending": 3,
+    "totalRows": 50152,
+    "masterKeywordRows": 50000,
+    "root": "https://www.digitalhut.app/sitemap.xml",
+    "index": "https://www.digitalhut.app/sitemap-index.xml",
+    "masterKeyword": "https://www.digitalhut.app/sitemap-master-keyword-50000.xml",
+    "warnings": 0,
+    "errors": 0
+  },
   "rowProducingHtmlRoutes": [
     "https://www.digitalhut.app/system-proof",
     "https://www.digitalhut.app/watch/full-view-episode-alternative",
@@ -15,16 +31,57 @@
     "https://www.digitalhut.app/blog/home-project-3d-visual-planner"
   ],
   "googleCurrent": {
-    "sitemapLastSubmitted": "2026-07-07T20:22:50.418Z",
-    "sitemapLastDownloaded": "2026-07-07T20:22:51.621Z",
+    "sitemapLastSubmitted": "2026-07-09T03:21:56.233Z",
+    "sitemapLastDownloaded": "2026-07-09T02:37:49.539Z",
     "sitemapWarnings": "0",
     "sitemapErrors": "0",
-    "searchRows": 0,
-    "clicks": 0,
-    "impressions": 0,
+    "finalSearchRows": 0,
+    "finalClicks": 0,
+    "finalImpressions": 0,
+    "freshSearchRows": 1,
+    "freshClicks": 0,
+    "freshImpressions": 1,
+    "freshAveragePosition": 90,
+    "firstFreshQuery": "cyberhut",
+    "firstFreshCountry": "esp",
+    "firstFreshPage": "https://www.digitalhut.app/",
     "homepage": "Submitted and indexed",
-    "discoveredWatchRoute": "Discovered - currently not indexed",
-    "discoveredCategoryRoute": "Discovered - currently not indexed"
+    "systemProof": "Discovered - currently not indexed",
+    "masterKeywordCoverage": "Discovered - currently not indexed",
+    "longtailWebCast": "Discovered - currently not indexed",
+    "fullViewWatchRoute": "Discovered - currently not indexed",
+    "fullViewBlogRoute": "Crawled - currently not indexed",
+    "homeProjectWatchRoute": "Crawled - currently not indexed",
+    "automatic3dAutoplayBlog": "Discovered - currently not indexed",
+    "mainstreamCategoryRoute": "Discovered - currently not indexed",
+    "operatorSearchTrail": "Discovered - currently not indexed",
+    "homepageFocusArtifact": "Discovered - currently not indexed",
+    "functionalityLadderCompetitors": "submitted in sitemap for real competitor matching",
+    "competitionSeoPullPackage": "submitted in sitemap for grouped audience pulls",
+    "discoveredInspectionTargets": 6,
+    "unknownInspectionTargets": 6,
+    "canonicalProofInspections": 12,
+    "seoCycleReceipt": "written to Supabase runner reports and submitted in sitemap"
+  },
+  "visibleQueryFamily": {
+    "firstVisibleQuery": "cyberhut",
+    "visibleSearchLink": "https://www.digitalhut.app/",
+    "interpretation": "Google is testing brand-adjacent language first. DigitalHut should use the indexed homepage as the umbrella doorway, then route users into watch, category, blog, GLB, podcast/source, and analytics proof pages.",
+    "homepageVariationTargets": [
+      "cyberhut",
+      "cyber hut",
+      "digitalhut",
+      "digital hut",
+      "digital hut app",
+      "digitalhut app",
+      "cyber hut entertainment observatory",
+      "digital hut 3d observatory",
+      "digitalhut 2026 dapp entertainment observatory",
+      "digital hut video 3d podcast analytics",
+      "digitalhut youtube alternative 3d model view",
+      "digital hut glb podcast source analytics"
+    ],
+    "routingRule": "Keep the first visible query family anchored to the homepage because that is the indexed link, then let /watch/full-view-episode-alternative, /system-proof, /master-keyword-coverage, and the route shells prove specific longtail branches."
   },
   "systemFunctionality": [
     "video watching",
@@ -43,22 +100,51 @@
     "Codex reasoning oversight"
   ],
   "trafficBaseline": {
-    "pageViews": 299,
-    "uniqueVisitors": 107,
-    "totalEvents": 516,
+    "pageViews": 315,
+    "uniqueVisitors": 115,
+    "totalEvents": 532,
     "blogViews": 28,
     "glbPreviewPlays": 83,
     "podcastInterrupts": 13,
     "autoplayStarts": 5,
     "searches": 2,
+    "marketOpens": 5,
     "proofRouteOpens": 0,
     "sourceBacklinkOpens": 0
   },
+  "currentRead": {
+    "movement": "Traffic is currently steady at 315 page views and 115 unique visitors. The completed movement this cycle is infrastructure proof: sitemap rows are now 50,152, the 50,000 master keyword sitemap remains capped, the SEO cycle receipt is public, and Supabase has a confirmed non-traffic runner report row. Proof/source opens remain the missing hit marker.",
+    "promote": [
+      "full entertainment alternative",
+      "Mainstream Streaming",
+      "Gaming GLB Viewer",
+      "automatic 3D autoplay",
+      "home project 3D visual planner",
+      "research/source explainer"
+    ],
+    "competitionPullPackage": "full entertainment observatory, GLB/3D viewer, AI video podcast source, spatial virtual experience, and research model interrogation groups are now the measured package",
+    "hold": [
+      "cyberhut-only expansion without repeated DigitalHut or observatory intent",
+      "broad filler keyword expansion without route entry",
+      "proof/source backlink claims until proofRouteOpens or sourceBacklinkOpens rise above zero",
+      "rank movement claims beyond the one verified fresh Search Console impression"
+    ]
+  },
   "rowProductionPlan": [
-    "Deploy and resubmit sitemap containing /system-proof plus exact discovered URLs.",
-    "Use /system-proof as the crawlable explanation page for DigitalHut uniqueness and infrastructure capacity.",
-    "Use watch/category/blog pages as row-producing landing pages for the 200M master keyword clusters.",
-    "Watch Search Console for impressions and average position before claiming public rank movement.",
-    "Promote lanes with impressions, clicks, GLB plays, podcast interrupts, proof opens, or source opens; demote quiet filler lanes."
-  ]
+    "Keep all three sitemap surfaces live and visible with no errors.",
+    "Let Google crawl the 143 route-specific proof shells before making additional sitemap changes.",
+    "Use /system-proof, /master-keyword-coverage, watch pages, category pages, and blog proof pages as row-producing landing pages for the 200M master keyword clusters.",
+    "Watch Search Console for impressions, pages, countries, and average position before claiming public rank movement.",
+    "Promote lanes with impressions, clicks, GLB plays, podcast interrupts, proof opens, or source opens; demote quiet filler lanes.",
+    "Use /digitalhut-functionality-ladder-competitors.json to benchmark against real overlapping platforms instead of same-word brand matches.",
+    "Next hit marker is one real proof route open or one source/backlink open."
+  ],
+  "databaseReceipt": {
+    "status": "seo-cycle-receipt-written-to-supabase",
+    "target": "public.digitalhut_runner_reports",
+    "saved": true,
+    "insertedId": "c946c2d6-1aa9-407e-a793-a8a1c3943aec",
+    "score": 98,
+    "publicUrl": "https://www.digitalhut.app/digitalhut-seo-cycle-receipt-latest.json"
+  }
 }

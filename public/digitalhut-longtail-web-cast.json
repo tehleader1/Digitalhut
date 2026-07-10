@@ -1,0 +1,55 @@
+{
+  "generatedAt": "2026-07-07",
+  "mode": "DigitalHut Long-Tail Web Cast",
+  "status": "deployable-public-longtail-expansion-map",
+  "domain": "https://www.digitalhut.app",
+  "purpose": "Expand DigitalHut categories into wide long-tail search webs while keeping public crawl surfaces focused on useful proof routes.",
+  "bottleneckRelease": {
+    "problem": "A DigitalHut category is too small if it only names the site feature.",
+    "solution": "Every category replicates into searcher roles, everyday questions, source/backlink targets, GLB proof, podcast/source moments, and canonical watch/blog/category routes.",
+    "publicGuardrail": "Expose useful proof routes and structured keyword families, not millions of thin generated pages."
+  },
+  "webCastRule": [
+    "everyday question searches",
+    "entertainment and social video searches",
+    "research and developer searches",
+    "3D and GLB visual proof searches",
+    "podcast and source moment searches",
+    "backlink and source map searches",
+    "local, seasonal, market, and event timing"
+  ],
+  "categoryWebs": [
+    {"category": "Mainstream Streaming", "intent": "explain viral or confusing video moments with source-backed visuals", "families": ["funny video explained", "viral clip source map", "TikTok reel context", "Instagram reel reaction", "YouTube video radar", "what am I watching"], "roles": ["social media viewer", "parent sharing a clip", "creator checking context"], "sourceTargets": ["creator/source page", "first-source article", "mainstream video source"], "proofRoute": "/watch/funny-mainstream-video-explained"},
+    {"category": "Planetary", "intent": "turn space, climate, orbit, and planetary topics into visual research", "families": ["planetary research 3D", "orbital visual guide", "climate data observatory", "space video explanation", "satellite visual model"], "roles": ["student", "space fan", "climate researcher"], "sourceTargets": ["space agency source", "climate data source", "satellite documentation"], "proofRoute": "/watch/planetary-research-3d-experience"},
+    {"category": "Real Estate", "intent": "turn property, remodel, resort, and home searches into 3D decisions", "families": ["home remodel 3D", "real estate walkthrough", "resort 3D preview", "vacation property model", "housing model visual experience"], "roles": ["homeowner", "buyer", "agent", "vacation property shopper"], "sourceTargets": ["listing page", "neighborhood guide", "agency source"], "proofRoute": "/watch/real-estate-3d-house-walkthrough"},
+    {"category": "Mobility", "intent": "explain commute, rideshare, airport pickup, traffic, and route decisions", "families": ["Uber pickup guide", "airport rideshare source map", "traffic visual study", "route delay observatory", "late-night ride guide"], "roles": ["commuter", "traveler", "airport passenger"], "sourceTargets": ["airport source", "rideshare help page", "traffic source"], "proofRoute": "/watch/calling-an-uber-visual-trip-guide"},
+    {"category": "Science", "intent": "explain studies and nature systems through 3D visual context", "families": ["coral reef study 2026", "animal extinction 3D", "climate research map", "biology visual explanation", "environmental source proof"], "roles": ["student", "teacher", "researcher", "documentary viewer"], "sourceTargets": ["study source", "dataset", "university article"], "proofRoute": "/watch/university-research-3d-experience"},
+    {"category": "Researcher", "intent": "make public information searches readable with sources and visual structure", "families": ["wiki lookup visual hub", "what is this topic", "source-backed summary", "study explainer", "evidence map", "research before buying"], "roles": ["student", "developer", "parent checking facts", "researcher comparing sources"], "sourceTargets": ["reference page", "dataset", "official documentation"], "proofRoute": "/watch/wiki-lookup-visual-research-hub"},
+    {"category": "Continent", "intent": "connect travel, culture, vacation, geography, and place research", "families": ["international city guide", "vacation route map", "cultural place 3D", "resort visual preview", "travel context source map"], "roles": ["traveler", "family planner", "digital nomad"], "sourceTargets": ["travel guide", "local source", "booking research page"], "proofRoute": "/watch/vacation-resort-3d-preview"},
+    {"category": "History", "intent": "connect documentary, timeline, event, and archive searches", "families": ["historical topic visual guide", "documentary source map", "timeline node points", "archive visual context", "history explained with sources"], "roles": ["student", "documentary viewer", "teacher"], "sourceTargets": ["archive page", "documentary source", "museum source"], "proofRoute": "/watch/wiki-lookup-visual-research-hub"},
+    {"category": "Businesses", "intent": "connect market, company, tech, and business research", "families": ["stock market visual analysis", "company video research", "AI data center market", "business source map", "earnings video observatory"], "roles": ["investor", "founder", "market watcher", "tech reviewer"], "sourceTargets": ["company source", "market data source", "earnings release"], "proofRoute": "/watch/current-market-video-observatory"},
+    {"category": "Workforce", "intent": "connect workday intent, productivity, lunch, commute, and tools", "families": ["lunch near office", "work commute visual guide", "developer workflow", "productivity source map", "after work decision guide"], "roles": ["office worker", "contractor", "commuter"], "sourceTargets": ["local menu source", "work tool source", "commute guide"], "proofRoute": "/watch/looking-for-lunch-visual-observatory"},
+    {"category": "Programmer", "intent": "connect coding, dapps, cloud, AI tools, and developer proof", "families": ["developer dapp 3D", "coding episode visual guide", "Google Cloud API setup", "Supabase Vercel dapp", "AI research engine"], "roles": ["developer", "founder", "cloud engineer"], "sourceTargets": ["official documentation", "GitHub source", "cloud setup page"], "proofRoute": "/watch/developer-dapp-3d-experience"},
+    {"category": "Gamer", "intent": "connect builds, servers, maps, 3D assets, and gaming culture", "families": ["top server builds", "gaming 3D environment", "GLB game asset", "creator-safe world assets", "top builds visual experience"], "roles": ["gamer", "server owner", "builder", "creator"], "sourceTargets": ["creator build page", "asset source", "server guide"], "proofRoute": "/watch/gaming-3d-environment-viewer"},
+    {"category": "DigitalHut Presentation", "intent": "explain the complete observatory product and its proof system", "families": ["automatic 3D autoplay", "podcast moment analysis", "3D model view research", "YouTube content radar", "DigitalHut observatory experience"], "roles": ["viewer testing the dapp", "developer evaluating the stack", "researcher judging usefulness"], "sourceTargets": ["watch proof route", "blog proof route", "metadata manifest"], "proofRoute": "/watch/automatic-3d-autoplay-system"}
+  ],
+  "everydayWebCastLanes": [
+    {"lane": "Lunch And Local Food", "searcher": "a person deciding where to eat", "cast": ["restaurants near me visual guide", "lunch near office source map", "funny lunch reel explained", "best food near me video proof"]},
+    {"lane": "Rideshare And Commute", "searcher": "a traveler or commuter", "cast": ["Uber pickup airport visual guide", "rideshare location explained", "late night ride source map", "traffic delay visual observatory"]},
+    {"lane": "Flight And Travel Booking", "searcher": "a traveler comparing flights", "cast": ["cheap flights visual guide", "flight delay source map", "airport layover 3D guide", "holiday ticket visual research"]},
+    {"lane": "Wiki And Quick Research", "searcher": "a student, parent, developer, or researcher", "cast": ["what is this topic explained", "wiki lookup visual hub", "public information source map", "research before buying visual guide"]},
+    {"lane": "Funny Mainstream Video", "searcher": "a social media viewer", "cast": ["funny video explained with sources", "TikTok reel context", "viral clip source map", "what am I watching funny video"]},
+    {"lane": "Errands And Review Before Buying", "searcher": "a shopper or household planner", "cast": ["product reviews visual summary", "Reddit reviews source map", "best deals near me", "grocery run visual guide"]}
+  ],
+  "expansionFormula": "search phrase + visual proof + source/backlink + DigitalHut category + canonical route",
+  "replicationFormula": "category lane -> searcher role -> everyday phrase -> visual proof -> source/backlink -> watch proof route -> blog proof route -> Search Console comparison",
+  "exampleCasts": [
+    "funny grocery reel source map DigitalHut Mainstream Streaming",
+    "coral reef study 2026 3D visual experience DigitalHut Science",
+    "housing model 3D experience real estate agency DigitalHut Real Estate",
+    "top gaming server builds visual experience DigitalHut Gamer",
+    "Google Cloud API dapp setup visual guide DigitalHut Programmer"
+  ],
+  "bottleneckRule": "If a category is too narrow, expand by searcher role instead of adding filler.",
+  "searcherRoles": ["parent", "student", "developer", "traveler", "homeowner", "gamer", "researcher", "investor", "local shopper", "social media viewer", "small business owner"]
+}

@@ -1,0 +1,123 @@
+{
+  "generatedAt": "2026-07-07T11:18:00-04:00",
+  "mode": "DigitalHut Overseer Traffic Shuffle 002",
+  "status": "dry-pool-move-on",
+  "domain": "https://www.digitalhut.app",
+  "overseerRead": {
+    "summary": "The whole DigitalHut system is live and measurable, but the current pool has not opened new search, source, proof-route, or Search Console movement. Keep the strongest engagement evidence, move the audience cast, and do not touch the front-end UI for this shuffle.",
+    "wholeSystemConfirmation": [
+      "YouTube/video observatory is the main presentation surface.",
+      "GLB renderer is the strongest measured interaction signal.",
+      "Podcast interrupt has a real measured lane but needs more source-style user action.",
+      "Market panel has small but real activity through NVDA/NVIDIA interest.",
+      "Search, source/backlink, proof route, and intent selection remain dry."
+    ],
+    "decision": "HOLD_VISUALS_MOVE_SEO_CAST",
+    "deployRule": "Deploy only because this public proof artifact and llms discovery map changed."
+  },
+  "livePoolSnapshot": {
+    "totalEvents": 489,
+    "pageViews": 278,
+    "uniqueVisitors": 95,
+    "blogViews": 14,
+    "last48HourPageViews": 82,
+    "glbPreviewPlays": 81,
+    "podcastInterrupts": 12,
+    "marketOpens": 5,
+    "autoplayStarts": 4,
+    "episodeShifts": 2,
+    "searchRuns": 0,
+    "proofRouteOpens": 0,
+    "sourceBacklinkOpens": 0,
+    "intentSelections": 0,
+    "searchConsoleRows": 0,
+    "searchConsoleClicks": 0,
+    "searchConsoleImpressions": 0
+  },
+  "movementPools": [
+    {
+      "pool": "3D environment curiosity",
+      "evidence": "81 GLB preview plays with Horror Corridor, Medieval City Pack, Hong Kong city buildings, and Sci Fi Corridor leading.",
+      "systemUse": "Keep using GLB as the proof engine, but do not narrow DigitalHut into only a GLB site."
+    },
+    {
+      "pool": "market curiosity",
+      "evidence": "5 market opens and 2 ticker searches clustered around NVDA/NVIDIA.",
+      "systemUse": "Keep market as contextual proof beside the observatory, not the whole identity."
+    },
+    {
+      "pool": "podcast/source moment",
+      "evidence": "12 podcast interrupts show the feature can attract action.",
+      "systemUse": "Turn the next cast toward source-backed explanation so podcast moments create trust instead of reading like filler."
+    }
+  ],
+  "dryPools": [
+    {
+      "pool": "search intent",
+      "count": 0,
+      "nextCast": "Make the next long-tail language ask what the viewer is trying to understand, not just what asset is rendered."
+    },
+    {
+      "pool": "source/backlink opens",
+      "count": 0,
+      "nextCast": "Use source-backed video research and verified 3D model proof language before adding more broad pages."
+    },
+    {
+      "pool": "proof route opens",
+      "count": 0,
+      "nextCast": "Move users from homepage curiosity into watch/blog proof routes tied to the current content object."
+    },
+    {
+      "pool": "Google Search Console query rows",
+      "count": 0,
+      "nextCast": "No rank movement claim until Search Console returns real rows, clicks, impressions, or average position."
+    }
+  ],
+  "nextAudienceCast": {
+    "name": "Source-Backed Video Research Observatory",
+    "why": "The current system already gets 3D attention. The missing traffic pool is people who need a reason to use DigitalHut instead of watching the raw video alone.",
+    "primaryLongTailCluster": [
+      "what am I watching video explained with 3D proof",
+      "source backed video research with 3D model view",
+      "YouTube topic explained with GLB environment and podcast source",
+      "video content radar with source links and 3D context",
+      "entertainment observatory that explains videos with sources"
+    ],
+    "supportClusters": [
+      "horror corridor VR room walkthrough source proof",
+      "game world GLB presentation for video topics",
+      "NVDA market video observatory with source data",
+      "podcast source moment for viral video analysis",
+      "watch video with 3D model proof and backlinks"
+    ],
+    "routePressure": [
+      "/watch/what-am-i-watching-viral-video-explained",
+      "/watch/watch-video-with-3d-model-proof",
+      "/watch/podcast-source-moment-for-viral-video",
+      "/watch/gaming-3d-environment-viewer",
+      "/watch/current-market-video-observatory"
+    ]
+  },
+  "systemAbsorptionPlan": {
+    "firecuda": "Store this shuffle as a rank floor marker: GLB interest exists, source/proof/search does not yet convert.",
+    "supabase": "Watch for the first search_run, source_open, proof_route_open, or intent_selection before calling this pool active.",
+    "googleCloud": "Use Search Console rows and indexing state as the external truth layer.",
+    "vercel": "Publish only stable proof packets, not thin keyword floods.",
+    "github": "Preserve this artifact as a code-structure checkpoint for the next deploy batch.",
+    "codexOverseer": "If the next read still shows zeros, shuffle to a different human-use lane instead of forcing this one."
+  },
+  "nextTrigger": {
+    "notifyIfAny": [
+      "searchRuns > 0",
+      "proofRouteOpens > 0",
+      "sourceBacklinkOpens > 0",
+      "intentSelections > 0",
+      "searchConsoleRows > 0",
+      "searchConsoleImpressions > 0",
+      "glbPreviewPlays > 81",
+      "podcastInterrupts > 12",
+      "marketOpens > 5"
+    ],
+    "ifDry": "Move on quickly to the next whole-system audience cast without editing visuals."
+  }
+}

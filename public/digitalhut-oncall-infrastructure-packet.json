@@ -1,0 +1,196 @@
+{
+  "generatedAt": "2026-07-09T05:39:10.266Z",
+  "status": "oncall-infrastructure-packet-ready",
+  "site": "https://www.digitalhut.app",
+  "canonicalRoute": "https://www.digitalhut.app/watch/on-call-system-engineer-observatory",
+  "blogRoute": "https://www.digitalhut.app/blog/on-call-system-engineer-observatory",
+  "categoryRoute": "https://www.digitalhut.app/category/programmer",
+  "videoReference": {
+    "title": "On-call Engineer 2026",
+    "url": "https://youtu.be/sY1UqUuBqQQ",
+    "usage": "public context reference only; DigitalHut does not copy transcript, captions, or protected video content",
+    "reason": "The reference frames the serious infrastructure-maintenance job behind DigitalHut: keeping media, GLB rendering, podcast/source moments, databases, cloud services, deployments, and analytics reliable."
+  },
+  "verifiedVideoContext": {
+    "source": "YouTube visible description, hashtags, music panel, and visible page context inspected in browser",
+    "transcriptStatus": "transcript button is visible in the page, but YouTube did not expose transcript lines through direct caption/transcript requests during this run",
+    "creatorDescriptionExamples": [
+      "on-call engineer interview",
+      "pager test calls",
+      "one call that is not a test",
+      "Hetzner data-center filming context",
+      "on-call life",
+      "pager duty",
+      "cloud computing",
+      "data center video",
+      "data center tour",
+      "on-prem migration",
+      "expired SSL certificate",
+      "Kubernetes",
+      "cloud engineering",
+      "Prometheus",
+      "observability"
+    ],
+    "visibleCommunityContext": [
+      "Cloudflare-style outage mention",
+      "disaster recovery testing joke",
+      "database administrator adjacent recommendation"
+    ],
+    "guardrail": "Creator description examples are treated as public metadata/context; community comments are context only, not creator claims."
+  },
+  "lane": {
+    "id": "on-call-system-engineer-observatory",
+    "category": "Programmer",
+    "publicMeaning": "DigitalHut is not only an entertainment page. It is a maintained media infrastructure system: storage, cloud, database, deployment, renderer, podcast/source, analytics, sitemap, and Search Console surfaces working together.",
+    "longtailFamilies": [
+      "on call system engineer observatory",
+      "FireCuda Google Cloud Supabase Vercel infrastructure",
+      "video analytics dapp backend maintenance",
+      "3D renderer podcast system reliability",
+      "cloud database storage uptime dapp infrastructure",
+      "system engineer maintaining live media analytics",
+      "Search Console Supabase live media infrastructure",
+      "pager duty observability Prometheus Kubernetes incident response",
+      "expired SSL certificate on-prem migration cloud engineering",
+      "data center tour live media infrastructure maintenance"
+    ],
+    "backlinkAngles": [
+      "developer article",
+      "cloud architecture note",
+      "database analytics proof",
+      "deployment proof",
+      "watch proof route"
+    ],
+    "measurementSignals": [
+      "Search Console row",
+      "Supabase event read",
+      "watch route open",
+      "proof route open",
+      "source open",
+      "GLB play",
+      "podcast interrupt"
+    ]
+  },
+  "currentRead": {
+    "pageViews": 317,
+    "uniqueVisitors": 116,
+    "totalEvents": 534,
+    "glbPreviewPlays": 83,
+    "podcastInterrupts": 13,
+    "autoplayStarts": 5,
+    "searchRuns": 2,
+    "marketOpens": 5,
+    "proofRouteOpens": 0,
+    "sourceOpens": 0,
+    "topContentPull": "Full Entertainment Observatory Alternative"
+  },
+  "searchConsoleRead": {
+    "sitemapVisible": true,
+    "sitemapSurfacesVisible": 3,
+    "sitemapSurfacesPending": 1,
+    "searchConsoleRows": 1,
+    "finalRows": 0,
+    "freshRows": 1,
+    "freshImpressions": 1,
+    "indexedInspectionTargets": 1,
+    "discoveredInspectionTargets": 8,
+    "unknownInspectionTargets": 4
+  },
+  "masterKeywordRead": {
+    "totalSitemapRows": 50173,
+    "masterKeywordRows": 50000,
+    "verifiedMasterKeywordUniverse": 200572944,
+    "coveragePolicy": "DigitalHut reads the 200M longtail universe as full-system claim lanes. Google receives crawlable proof routes, a 50,000 URL discovery sitemap, and public JSON coverage instead of millions of duplicate thin URLs."
+  },
+  "infrastructureSignals": [
+    {
+      "system": "FireCuda staging ground",
+      "role": "large local capacity for SEO mapping, route shells, proof artifacts, build receipts, and longtail refinement snapshots",
+      "publicProof": "https://www.digitalhut.app/digitalhut-master-keyword-coverage.json",
+      "measurement": "master keyword coverage and sitemap row production"
+    },
+    {
+      "system": "Supabase analytics database",
+      "role": "records page views, visitors, GLB plays, podcast interrupts, autoplay, search, market opens, proof opens, and source opens",
+      "publicProof": "https://www.digitalhut.app/api/insight-map",
+      "measurement": "live event totals and latest behavior"
+    },
+    {
+      "system": "Google Cloud and Search Console",
+      "role": "validates sitemap visibility, crawl discovery, Search Console rows, and search-surface readiness",
+      "publicProof": "https://www.digitalhut.app/digitalhut-search-console-row-push.json",
+      "measurement": "sitemap rows, master keyword rows, indexed/discovered/unknown inspection targets"
+    },
+    {
+      "system": "Vercel deployment layer",
+      "role": "serves the dapp, public proof artifacts, route shells, sitemap, and API surfaces",
+      "publicProof": "https://www.digitalhut.app/sitemap.xml",
+      "measurement": "public route availability and deployment-crawl readiness"
+    },
+    {
+      "system": "DigitalHut media observatory",
+      "role": "connects video watching, 3D Model View, podcast/source moments, search, and live analytics into one dapp interface",
+      "publicProof": "https://www.digitalhut.app/watch/on-call-system-engineer-observatory",
+      "measurement": "watch route opens, GLB plays, podcast interrupts, autoplay starts, search runs, proof/source opens"
+    }
+  ],
+  "exampleMap": [
+    {
+      "videoExample": "pager test calls and one real page",
+      "digitalhutTranslation": "alerts that separate harmless system noise from a real production incident",
+      "keywordMap": [
+        "pager duty observability",
+        "on call incident response",
+        "DigitalHut uptime proof",
+        "live analytics alert routing"
+      ],
+      "route": "https://www.digitalhut.app/watch/on-call-system-engineer-observatory"
+    },
+    {
+      "videoExample": "on-prem migration",
+      "digitalhutTranslation": "moving or staging heavy media, database, and SEO proof workloads between local FireCuda capacity and cloud infrastructure",
+      "keywordMap": [
+        "on prem migration dapp infrastructure",
+        "FireCuda cloud staging",
+        "local storage to cloud database",
+        "media dapp migration proof"
+      ],
+      "route": "https://www.digitalhut.app/watch/on-call-system-engineer-observatory"
+    },
+    {
+      "videoExample": "expired SSL certificate",
+      "digitalhutTranslation": "public trust, domain health, API calls, video embeds, Search Console, and crawler access depend on clean HTTPS status",
+      "keywordMap": [
+        "expired SSL certificate monitoring",
+        "HTTPS dapp uptime",
+        "Search Console crawl access",
+        "Vercel domain certificate proof"
+      ],
+      "route": "https://www.digitalhut.app/system-proof"
+    },
+    {
+      "videoExample": "Kubernetes, Prometheus, and observability",
+      "digitalhutTranslation": "the observatory must measure renderer health, API events, Supabase rows, user behavior, sitemap rows, and proof/source openings",
+      "keywordMap": [
+        "Prometheus observability dapp",
+        "Kubernetes media infrastructure",
+        "Supabase event observability",
+        "3D renderer monitoring"
+      ],
+      "route": "https://www.digitalhut.app/digitalhut-oncall-infrastructure-packet.json"
+    },
+    {
+      "videoExample": "data center and cloud computing",
+      "digitalhutTranslation": "DigitalHut's public experience depends on physical storage, cloud APIs, deployment infrastructure, and database reliability working together",
+      "keywordMap": [
+        "data center cloud dapp",
+        "Google Cloud Supabase Vercel infrastructure",
+        "video 3D podcast cloud system",
+        "backend infrastructure entertainment observatory"
+      ],
+      "route": "https://www.digitalhut.app/blog/on-call-system-engineer-observatory"
+    }
+  ],
+  "decision": "keep this as a serious developer/infrastructure proof lane while Search Console and Supabase behavior decide promotion",
+  "nextAction": "Use this lane to explain why DigitalHut is a maintained 2026 dapp infrastructure system, then promote only when developer, proof, source, GLB, podcast, search, or Search Console rows move."
+}

@@ -1,0 +1,902 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Search Intent Promotion Packet",
+  "status": "measurement-covered",
+  "purpose": "Turn quiet search behavior into a disciplined promotion path: category chips, proof routes, watch/blog support, source opens, then FireCuda rank movement.",
+  "currentRead": "Search interactions are still zero, so DigitalHut should not pretend typed demand exists. Use category chips, proof routes, GLB plays, blog views, podcast starts, and source opens to validate intent.",
+  "guardrail": "Do not publish thin pages for all 2,572,944 variations. Stage every phrase behind measured intent and proof-route behavior.",
+  "behaviorRead": {
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "blogViews": 14,
+    "marketOpens": 0
+  },
+  "eventReadiness": [
+    {
+      "eventName": "search_run",
+      "status": "covered",
+      "role": "intent"
+    },
+    {
+      "eventName": "search_intent_chip_select",
+      "status": "covered",
+      "role": "intent"
+    },
+    {
+      "eventName": "category_lane_select",
+      "status": "covered",
+      "role": "support"
+    },
+    {
+      "eventName": "proof_route_open",
+      "status": "covered",
+      "role": "proof"
+    },
+    {
+      "eventName": "watch_route_open",
+      "status": "covered",
+      "role": "proof"
+    },
+    {
+      "eventName": "blog_route_open",
+      "status": "covered",
+      "role": "proof"
+    },
+    {
+      "eventName": "backlink_source_open",
+      "status": "covered",
+      "role": "source"
+    },
+    {
+      "eventName": "glb_preview_play",
+      "status": "covered",
+      "role": "3d"
+    },
+    {
+      "eventName": "podcast_interrupt_play",
+      "status": "covered",
+      "role": "podcast"
+    },
+    {
+      "eventName": "market_view_open",
+      "status": "covered",
+      "role": "market"
+    }
+  ],
+  "promotionCounts": {
+    "route-staged-needs-intent": 10,
+    "supabase-watch-wait": 14
+  },
+  "priorityIntentCandidates": [
+    {
+      "keyword": "funny looking for lunch tourist district lunch break 3D preview",
+      "lane": "Lunch And Local Food",
+      "clusterId": "lunch-local-food",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "routeTitle": "restaurants near me visual guide | DigitalHut Watch Proof",
+      "canonical": "https://www.digitalhut.app/watch/looking-for-lunch-visual-observatory",
+      "stage": "proof-route-seed",
+      "promotionStage": "route-staged-needs-intent",
+      "provenSignals": [],
+      "missingSignals": [
+        "search intent",
+        "backlink source open",
+        "watch route open"
+      ],
+      "backlinkIntent": "GLB place context for looking for lunch"
+    },
+    {
+      "keyword": "local what should I eat work district after work watch route",
+      "lane": "Lunch And Local Food",
+      "clusterId": "lunch-local-food",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "routeTitle": "restaurants near me visual guide | DigitalHut Watch Proof",
+      "canonical": "https://www.digitalhut.app/watch/looking-for-lunch-visual-observatory",
+      "stage": "proof-route-seed",
+      "promotionStage": "route-staged-needs-intent",
+      "provenSignals": [],
+      "missingSignals": [
+        "search intent",
+        "backlink source open",
+        "watch route open"
+      ],
+      "backlinkIntent": "timeline decision for what should I eat"
+    },
+    {
+      "keyword": "open now best lunch near me international city downtown podcast source moment",
+      "lane": "Lunch And Local Food",
+      "clusterId": "lunch-local-food",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "routeTitle": "restaurants near me visual guide | DigitalHut Watch Proof",
+      "canonical": "https://www.digitalhut.app/watch/looking-for-lunch-visual-observatory",
+      "stage": "proof-route-seed",
+      "promotionStage": "route-staged-needs-intent",
+      "provenSignals": [],
+      "missingSignals": [
+        "search intent",
+        "backlink source open",
+        "watch route open"
+      ],
+      "backlinkIntent": "quick panel signal for best lunch near me"
+    },
+    {
+      "keyword": "2026 cheap lunch spot near me near the office review observatory",
+      "lane": "Lunch And Local Food",
+      "clusterId": "lunch-local-food",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "routeTitle": "restaurants near me visual guide | DigitalHut Watch Proof",
+      "canonical": "https://www.digitalhut.app/watch/looking-for-lunch-visual-observatory",
+      "stage": "proof-route-seed",
+      "promotionStage": "route-staged-needs-intent",
+      "provenSignals": [],
+      "missingSignals": [
+        "search intent",
+        "backlink source open",
+        "watch route open"
+      ],
+      "backlinkIntent": "menu source for cheap lunch spot"
+    },
+    {
+      "keyword": "quick family lunch place city center while traveling backlink proof",
+      "lane": "Lunch And Local Food",
+      "clusterId": "lunch-local-food",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "routeTitle": "restaurants near me visual guide | DigitalHut Watch Proof",
+      "canonical": "https://www.digitalhut.app/watch/looking-for-lunch-visual-observatory",
+      "stage": "proof-route-seed",
+      "promotionStage": "route-staged-needs-intent",
+      "provenSignals": [],
+      "missingSignals": [
+        "search intent",
+        "backlink source open",
+        "watch route open"
+      ],
+      "backlinkIntent": "review source for family lunch place"
+    },
+    {
+      "keyword": "review-backed office lunch idea suburb before appointment decision guide",
+      "lane": "Lunch And Local Food",
+      "clusterId": "lunch-local-food",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "routeTitle": "restaurants near me visual guide | DigitalHut Watch Proof",
+      "canonical": "https://www.digitalhut.app/watch/looking-for-lunch-visual-observatory",
+      "stage": "supabase-watch-candidate",
+      "promotionStage": "supabase-watch-wait",
+      "provenSignals": [],
+      "missingSignals": [
+        "search intent",
+        "backlink source open",
+        "watch route open"
+      ],
+      "backlinkIntent": "local backlink for office lunch idea"
+    },
+    {
+      "keyword": "source-backed quick food nearby airport area lunch break visual guide",
+      "lane": "Lunch And Local Food",
+      "clusterId": "lunch-local-food",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "routeTitle": "restaurants near me visual guide | DigitalHut Watch Proof",
+      "canonical": "https://www.digitalhut.app/watch/looking-for-lunch-visual-observatory",
+      "stage": "supabase-watch-candidate",
+      "promotionStage": "supabase-watch-wait",
+      "provenSignals": [],
+      "missingSignals": [
+        "search intent",
+        "backlink source open",
+        "watch route open"
+      ],
+      "backlinkIntent": "video proof for quick food nearby"
+    },
+    {
+      "keyword": "cheap local restaurant review college town after work video map",
+      "lane": "Lunch And Local Food",
+      "clusterId": "lunch-local-food",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "routeTitle": "restaurants near me visual guide | DigitalHut Watch Proof",
+      "canonical": "https://www.digitalhut.app/watch/looking-for-lunch-visual-observatory",
+      "stage": "supabase-watch-candidate",
+      "promotionStage": "supabase-watch-wait",
+      "provenSignals": [],
+      "missingSignals": [
+        "search intent",
+        "backlink source open",
+        "watch route open"
+      ],
+      "backlinkIntent": "GLB place context for local restaurant review"
+    },
+    {
+      "keyword": "best healthy lunch option tourist district downtown source map",
+      "lane": "Lunch And Local Food",
+      "clusterId": "lunch-local-food",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "routeTitle": "restaurants near me visual guide | DigitalHut Watch Proof",
+      "canonical": "https://www.digitalhut.app/watch/looking-for-lunch-visual-observatory",
+      "stage": "supabase-watch-candidate",
+      "promotionStage": "supabase-watch-wait",
+      "provenSignals": [],
+      "missingSignals": [
+        "search intent",
+        "backlink source open",
+        "watch route open"
+      ],
+      "backlinkIntent": "timeline decision for healthy lunch option"
+    },
+    {
+      "keyword": "funny late lunch place work district near the office 3D preview",
+      "lane": "Lunch And Local Food",
+      "clusterId": "lunch-local-food",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "routeTitle": "restaurants near me visual guide | DigitalHut Watch Proof",
+      "canonical": "https://www.digitalhut.app/watch/looking-for-lunch-visual-observatory",
+      "stage": "supabase-watch-candidate",
+      "promotionStage": "supabase-watch-wait",
+      "provenSignals": [],
+      "missingSignals": [
+        "search intent",
+        "backlink source open",
+        "watch route open"
+      ],
+      "backlinkIntent": "quick panel signal for late lunch place"
+    },
+    {
+      "keyword": "local food truck nearby international city while traveling watch route",
+      "lane": "Lunch And Local Food",
+      "clusterId": "lunch-local-food",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "routeTitle": "restaurants near me visual guide | DigitalHut Watch Proof",
+      "canonical": "https://www.digitalhut.app/watch/looking-for-lunch-visual-observatory",
+      "stage": "supabase-watch-candidate",
+      "promotionStage": "supabase-watch-wait",
+      "provenSignals": [],
+      "missingSignals": [
+        "search intent",
+        "backlink source open",
+        "watch route open"
+      ],
+      "backlinkIntent": "menu source for food truck nearby"
+    },
+    {
+      "keyword": "open now restaurant menu preview near me before appointment podcast source moment",
+      "lane": "Lunch And Local Food",
+      "clusterId": "lunch-local-food",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "routeTitle": "restaurants near me visual guide | DigitalHut Watch Proof",
+      "canonical": "https://www.digitalhut.app/watch/looking-for-lunch-visual-observatory",
+      "stage": "supabase-watch-candidate",
+      "promotionStage": "supabase-watch-wait",
+      "provenSignals": [],
+      "missingSignals": [
+        "search intent",
+        "backlink source open",
+        "watch route open"
+      ],
+      "backlinkIntent": "review source for restaurant menu preview"
+    },
+    {
+      "keyword": "2026 lunch break meal city center lunch break review observatory",
+      "lane": "Lunch And Local Food",
+      "clusterId": "lunch-local-food",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "routeTitle": "restaurants near me visual guide | DigitalHut Watch Proof",
+      "canonical": "https://www.digitalhut.app/watch/looking-for-lunch-visual-observatory",
+      "stage": "supabase-watch-candidate",
+      "promotionStage": "supabase-watch-wait",
+      "provenSignals": [],
+      "missingSignals": [
+        "search intent",
+        "backlink source open",
+        "watch route open"
+      ],
+      "backlinkIntent": "local backlink for lunch break meal"
+    },
+    {
+      "keyword": "quick nearby cafe choice suburb after work backlink proof",
+      "lane": "Lunch And Local Food",
+      "clusterId": "lunch-local-food",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "routeTitle": "restaurants near me visual guide | DigitalHut Watch Proof",
+      "canonical": "https://www.digitalhut.app/watch/looking-for-lunch-visual-observatory",
+      "stage": "supabase-watch-candidate",
+      "promotionStage": "supabase-watch-wait",
+      "provenSignals": [],
+      "missingSignals": [
+        "search intent",
+        "backlink source open",
+        "watch route open"
+      ],
+      "backlinkIntent": "video proof for nearby cafe choice"
+    },
+    {
+      "keyword": "review-backed looking for lunch airport area downtown decision guide",
+      "lane": "Lunch And Local Food",
+      "clusterId": "lunch-local-food",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "routeTitle": "restaurants near me visual guide | DigitalHut Watch Proof",
+      "canonical": "https://www.digitalhut.app/watch/looking-for-lunch-visual-observatory",
+      "stage": "supabase-watch-candidate",
+      "promotionStage": "supabase-watch-wait",
+      "provenSignals": [],
+      "missingSignals": [
+        "search intent",
+        "backlink source open",
+        "watch route open"
+      ],
+      "backlinkIntent": "GLB place context for looking for lunch"
+    },
+    {
+      "keyword": "fast calling an Uber train station after work watch route",
+      "lane": "Rideshare And Commute",
+      "clusterId": "rideshare-commute",
+      "routeTarget": "/watch/calling-an-uber-visual-trip-guide",
+      "routeTitle": "Uber pickup visual guide | DigitalHut Watch Proof",
+      "canonical": "https://www.digitalhut.app/watch/calling-an-uber-visual-trip-guide",
+      "stage": "proof-route-seed",
+      "promotionStage": "route-staged-needs-intent",
+      "provenSignals": [],
+      "missingSignals": [
+        "quick panel select",
+        "timeline read",
+        "source/backlink open"
+      ],
+      "backlinkIntent": "video proof for calling an Uber"
+    },
+    {
+      "keyword": "open now rideshare pickup suburb airport arrival source map",
+      "lane": "Rideshare And Commute",
+      "clusterId": "rideshare-commute",
+      "routeTarget": "/watch/calling-an-uber-visual-trip-guide",
+      "routeTitle": "Uber pickup visual guide | DigitalHut Watch Proof",
+      "canonical": "https://www.digitalhut.app/watch/calling-an-uber-visual-trip-guide",
+      "stage": "proof-route-seed",
+      "promotionStage": "route-staged-needs-intent",
+      "provenSignals": [],
+      "missingSignals": [
+        "quick panel select",
+        "timeline read",
+        "source/backlink open"
+      ],
+      "backlinkIntent": "GLB location context for rideshare pickup"
+    },
+    {
+      "keyword": "2026 airport Uber pickup international city late night timeline guide",
+      "lane": "Rideshare And Commute",
+      "clusterId": "rideshare-commute",
+      "routeTarget": "/watch/calling-an-uber-visual-trip-guide",
+      "routeTitle": "Uber pickup visual guide | DigitalHut Watch Proof",
+      "canonical": "https://www.digitalhut.app/watch/calling-an-uber-visual-trip-guide",
+      "stage": "proof-route-seed",
+      "promotionStage": "route-staged-needs-intent",
+      "provenSignals": [],
+      "missingSignals": [
+        "quick panel select",
+        "timeline read",
+        "source/backlink open"
+      ],
+      "backlinkIntent": "quick panel signal for airport Uber pickup"
+    },
+    {
+      "keyword": "local late night ride near me rainy commute podcast source moment",
+      "lane": "Rideshare And Commute",
+      "clusterId": "rideshare-commute",
+      "routeTarget": "/watch/calling-an-uber-visual-trip-guide",
+      "routeTitle": "Uber pickup visual guide | DigitalHut Watch Proof",
+      "canonical": "https://www.digitalhut.app/watch/calling-an-uber-visual-trip-guide",
+      "stage": "proof-route-seed",
+      "promotionStage": "route-staged-needs-intent",
+      "provenSignals": [],
+      "missingSignals": [
+        "quick panel select",
+        "timeline read",
+        "source/backlink open"
+      ],
+      "backlinkIntent": "pickup source for late night ride"
+    },
+    {
+      "keyword": "source-backed commute delay airport business travel backlink proof",
+      "lane": "Rideshare And Commute",
+      "clusterId": "rideshare-commute",
+      "routeTarget": "/watch/calling-an-uber-visual-trip-guide",
+      "routeTitle": "Uber pickup visual guide | DigitalHut Watch Proof",
+      "canonical": "https://www.digitalhut.app/watch/calling-an-uber-visual-trip-guide",
+      "stage": "proof-route-seed",
+      "promotionStage": "route-staged-needs-intent",
+      "provenSignals": [],
+      "missingSignals": [
+        "quick panel select",
+        "timeline read",
+        "source/backlink open"
+      ],
+      "backlinkIntent": "price signal for commute delay"
+    },
+    {
+      "keyword": "visual pickup location downtown college campus visual trip guide",
+      "lane": "Rideshare And Commute",
+      "clusterId": "rideshare-commute",
+      "routeTarget": "/watch/calling-an-uber-visual-trip-guide",
+      "routeTitle": "Uber pickup visual guide | DigitalHut Watch Proof",
+      "canonical": "https://www.digitalhut.app/watch/calling-an-uber-visual-trip-guide",
+      "stage": "supabase-watch-candidate",
+      "promotionStage": "supabase-watch-wait",
+      "provenSignals": [],
+      "missingSignals": [
+        "quick panel select",
+        "timeline read",
+        "source/backlink open"
+      ],
+      "backlinkIntent": "route timing for pickup location"
+    },
+    {
+      "keyword": "safe rideshare price spike hotel zone airport arrival route map",
+      "lane": "Rideshare And Commute",
+      "clusterId": "rideshare-commute",
+      "routeTarget": "/watch/calling-an-uber-visual-trip-guide",
+      "routeTitle": "Uber pickup visual guide | DigitalHut Watch Proof",
+      "canonical": "https://www.digitalhut.app/watch/calling-an-uber-visual-trip-guide",
+      "stage": "supabase-watch-candidate",
+      "promotionStage": "supabase-watch-wait",
+      "provenSignals": [],
+      "missingSignals": [
+        "quick panel select",
+        "timeline read",
+        "source/backlink open"
+      ],
+      "backlinkIntent": "local guide for rideshare price spike"
+    },
+    {
+      "keyword": "cheap Uber vs train stadium area downtown event 3D pickup view",
+      "lane": "Rideshare And Commute",
+      "clusterId": "rideshare-commute",
+      "routeTarget": "/watch/calling-an-uber-visual-trip-guide",
+      "routeTitle": "Uber pickup visual guide | DigitalHut Watch Proof",
+      "canonical": "https://www.digitalhut.app/watch/calling-an-uber-visual-trip-guide",
+      "stage": "supabase-watch-candidate",
+      "promotionStage": "supabase-watch-wait",
+      "provenSignals": [],
+      "missingSignals": [
+        "quick panel select",
+        "timeline read",
+        "source/backlink open"
+      ],
+      "backlinkIntent": "video proof for Uber vs train"
+    },
+    {
+      "keyword": "fast downtown pickup train station rainy commute watch route",
+      "lane": "Rideshare And Commute",
+      "clusterId": "rideshare-commute",
+      "routeTarget": "/watch/calling-an-uber-visual-trip-guide",
+      "routeTitle": "Uber pickup visual guide | DigitalHut Watch Proof",
+      "canonical": "https://www.digitalhut.app/watch/calling-an-uber-visual-trip-guide",
+      "stage": "supabase-watch-candidate",
+      "promotionStage": "supabase-watch-wait",
+      "provenSignals": [],
+      "missingSignals": [
+        "quick panel select",
+        "timeline read",
+        "source/backlink open"
+      ],
+      "backlinkIntent": "GLB location context for downtown pickup"
+    }
+  ],
+  "stagedProofRoutes": [
+    {
+      "route": "/watch/booking-flight-ticket-visual-guide",
+      "lane": "Flight And Travel Booking",
+      "type": "watch-proof",
+      "title": "cheap flights visual guide | DigitalHut Watch Proof",
+      "topKeywords": [
+        "cheap flights visual guide",
+        "flight tickets source map",
+        "flight status visual observatory",
+        "airport delays 3D map guide",
+        "Google Flights alternative visual guide",
+        "flight layover watch route"
+      ],
+      "action": "Include in next sitemap/deploy proof batch and Search Console URL inspection queue after the stable deploy."
+    },
+    {
+      "route": "/watch/funny-mainstream-video-explained",
+      "lane": "Funny Mainstream Video",
+      "type": "watch-proof",
+      "title": "funny videos explained with sources | DigitalHut Watch Proof",
+      "topKeywords": [
+        "funny videos explained with sources",
+        "viral videos source map",
+        "YouTube funny video observatory",
+        "TikTok funny video source proof",
+        "meme video timeline explained",
+        "Reddit funny video visual guide"
+      ],
+      "action": "Include in next sitemap/deploy proof batch and Search Console URL inspection queue after the stable deploy."
+    },
+    {
+      "route": "/watch/looking-for-lunch-visual-observatory",
+      "lane": "Lunch And Local Food",
+      "type": "watch-proof",
+      "title": "restaurants near me visual guide | DigitalHut Watch Proof",
+      "topKeywords": [
+        "restaurants near me visual guide",
+        "food near me video map",
+        "lunch near me source-backed review",
+        "best restaurants near me 3D preview",
+        "menu near me visual observatory",
+        "food open now watch route"
+      ],
+      "action": "Include in next sitemap/deploy proof batch and Search Console URL inspection queue after the stable deploy."
+    },
+    {
+      "route": "/watch/search-intent-radar-visual-experience",
+      "lane": "Errands And Review Before Buying",
+      "type": "watch-proof",
+      "title": "Search Intent Radar Visual Experience: DigitalHut Proof | DigitalHut Watch Proof",
+      "topKeywords": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "best deals near me visual guide",
+        "grocery near me source proof",
+        "pharmacy near me visual guide",
+        "should I buy this product video proof"
+      ],
+      "action": "Include in next sitemap/deploy proof batch and Search Console URL inspection queue after the stable deploy."
+    },
+    {
+      "route": "/watch/calling-an-uber-visual-trip-guide",
+      "lane": "Rideshare And Commute",
+      "type": "watch-proof",
+      "title": "Uber pickup visual guide | DigitalHut Watch Proof",
+      "topKeywords": [
+        "Uber pickup visual guide",
+        "airport Uber pickup source map",
+        "rideshare pickup location explained",
+        "ride to airport visual route",
+        "taxi near me 3D pickup view",
+        "rideshare price spike explained"
+      ],
+      "action": "Include in next sitemap/deploy proof batch and Search Console URL inspection queue after the stable deploy."
+    },
+    {
+      "route": "/watch/wiki-lookup-visual-research-hub",
+      "lane": "Wiki And Quick Research",
+      "type": "watch-proof",
+      "title": "Wikipedia visual research hub | DigitalHut Watch Proof",
+      "topKeywords": [
+        "Wikipedia visual research hub",
+        "wiki lookup source map",
+        "what is this topic explained with sources",
+        "meaning of topic visual guide",
+        "history of topic timeline",
+        "facts about topic 3D observatory"
+      ],
+      "action": "Include in next sitemap/deploy proof batch and Search Console URL inspection queue after the stable deploy."
+    },
+    {
+      "route": "/blog/booking-flight-ticket-visual-guide",
+      "lane": "Flight And Travel Booking",
+      "type": "blog-proof",
+      "title": "cheap flights visual guide | DigitalHut Proof",
+      "topKeywords": [
+        "cheap flights visual guide",
+        "flight tickets source map",
+        "flight status visual observatory",
+        "airport delays 3D map guide",
+        "Google Flights alternative visual guide",
+        "flight layover watch route"
+      ],
+      "action": "Include in next sitemap/deploy proof batch and Search Console URL inspection queue after the stable deploy."
+    },
+    {
+      "route": "/blog/funny-mainstream-video-explained",
+      "lane": "Funny Mainstream Video",
+      "type": "blog-proof",
+      "title": "funny videos explained with sources | DigitalHut Proof",
+      "topKeywords": [
+        "funny videos explained with sources",
+        "viral videos source map",
+        "YouTube funny video observatory",
+        "TikTok funny video source proof",
+        "meme video timeline explained",
+        "Reddit funny video visual guide"
+      ],
+      "action": "Include in next sitemap/deploy proof batch and Search Console URL inspection queue after the stable deploy."
+    },
+    {
+      "route": "/blog/looking-for-lunch-visual-observatory",
+      "lane": "Lunch And Local Food",
+      "type": "blog-proof",
+      "title": "restaurants near me visual guide | DigitalHut Proof",
+      "topKeywords": [
+        "restaurants near me visual guide",
+        "food near me video map",
+        "lunch near me source-backed review",
+        "best restaurants near me 3D preview",
+        "menu near me visual observatory",
+        "food open now watch route"
+      ],
+      "action": "Include in next sitemap/deploy proof batch and Search Console URL inspection queue after the stable deploy."
+    },
+    {
+      "route": "/blog/search-intent-radar-visual-experience",
+      "lane": "Errands And Review Before Buying",
+      "type": "blog-proof",
+      "title": "Search Intent Radar Visual Experience: DigitalHut Proof | DigitalHut Proof",
+      "topKeywords": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "best deals near me visual guide",
+        "grocery near me source proof",
+        "pharmacy near me visual guide",
+        "should I buy this product video proof"
+      ],
+      "action": "Include in next sitemap/deploy proof batch and Search Console URL inspection queue after the stable deploy."
+    },
+    {
+      "route": "/blog/calling-an-uber-visual-trip-guide",
+      "lane": "Rideshare And Commute",
+      "type": "blog-proof",
+      "title": "Uber pickup visual guide | DigitalHut Proof",
+      "topKeywords": [
+        "Uber pickup visual guide",
+        "airport Uber pickup source map",
+        "rideshare pickup location explained",
+        "ride to airport visual route",
+        "taxi near me 3D pickup view",
+        "rideshare price spike explained"
+      ],
+      "action": "Include in next sitemap/deploy proof batch and Search Console URL inspection queue after the stable deploy."
+    },
+    {
+      "route": "/blog/wiki-lookup-visual-research-hub",
+      "lane": "Wiki And Quick Research",
+      "type": "blog-proof",
+      "title": "Wikipedia visual research hub | DigitalHut Proof",
+      "topKeywords": [
+        "Wikipedia visual research hub",
+        "wiki lookup source map",
+        "what is this topic explained with sources",
+        "meaning of topic visual guide",
+        "history of topic timeline",
+        "facts about topic 3D observatory"
+      ],
+      "action": "Include in next sitemap/deploy proof batch and Search Console URL inspection queue after the stable deploy."
+    },
+    {
+      "route": "/category/mundane-off-time-experience",
+      "lane": "Lunch And Local Food + Flight And Travel Booking + Funny Mainstream Video + Errands And Review Before Buying + Rideshare And Commute + Wiki And Quick Research",
+      "type": "category-proof",
+      "title": "restaurants near me visual guide | DigitalHut Category Proof Lane",
+      "topKeywords": [
+        "restaurants near me visual guide",
+        "food near me video map",
+        "lunch near me source-backed review",
+        "best restaurants near me 3D preview",
+        "menu near me visual observatory",
+        "food open now watch route"
+      ],
+      "action": "Include in next sitemap/deploy proof batch and Search Console URL inspection queue after the stable deploy."
+    },
+    {
+      "route": "/blog/grocery-shopping-3d-experience",
+      "lane": "product reviews visual summary",
+      "type": "blog-proof",
+      "title": "product reviews visual summary | DigitalHut Proof",
+      "topKeywords": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "best deals near me visual guide",
+        "grocery near me source proof",
+        "pharmacy near me visual guide",
+        "should I buy this product video proof"
+      ],
+      "action": "Hold for sitemap crawl; promote only if Supabase sees blog/watch/category movement."
+    },
+    {
+      "route": "/watch/grocery-shopping-3d-experience",
+      "lane": "product reviews visual summary",
+      "type": "watch-proof",
+      "title": "product reviews visual summary | DigitalHut Watch Proof",
+      "topKeywords": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "best deals near me visual guide",
+        "grocery near me source proof",
+        "pharmacy near me visual guide",
+        "should I buy this product video proof"
+      ],
+      "action": "Hold for sitemap crawl; promote only if Supabase sees blog/watch/category movement."
+    },
+    {
+      "route": "/blog/traffic-study-3d-experience",
+      "lane": "Traffic Study 3D Experience: DigitalHut Observatory Proof",
+      "type": "blog-proof",
+      "title": "Traffic Study 3D Experience: DigitalHut Observatory Proof | DigitalHut Proof",
+      "topKeywords": [
+        "traffic study 3D experience",
+        "traffic data visual experience",
+        "city planning 3D visual analysis",
+        "airport Uber pickup visual guide",
+        "rideshare pickup location explained",
+        "traffic delay visual observatory"
+      ],
+      "action": "Hold for sitemap crawl; promote only if Supabase sees blog/watch/category movement."
+    },
+    {
+      "route": "/watch/traffic-study-3d-experience",
+      "lane": "Traffic Study 3D Experience: DigitalHut Observatory Proof",
+      "type": "watch-proof",
+      "title": "Traffic Study 3D Experience: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "topKeywords": [
+        "traffic study 3D experience",
+        "traffic data visual experience",
+        "city planning 3D visual analysis",
+        "airport Uber pickup visual guide",
+        "rideshare pickup location explained",
+        "traffic delay visual observatory"
+      ],
+      "action": "Hold for sitemap crawl; promote only if Supabase sees blog/watch/category movement."
+    },
+    {
+      "route": "/blog/grocery-shopping-visual-expercience",
+      "lane": "product reviews visual summary",
+      "type": "blog-proof",
+      "title": "product reviews visual summary | DigitalHut Proof",
+      "topKeywords": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "best deals near me visual guide",
+        "grocery near me source proof",
+        "pharmacy near me visual guide",
+        "should I buy this product video proof"
+      ],
+      "action": "Hold for sitemap crawl; promote only if Supabase sees blog/watch/category movement."
+    }
+  ],
+  "sourceBacklinkBridge": [
+    {
+      "keyword": "funny looking for lunch tourist district lunch break 3D preview",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "sourceNeed": "GLB place context for looking for lunch",
+      "measurementPath": [
+        "search_intent_chip_select",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "fireCudaAction": "Hold broad variation rank, surface this phrase through category chips and proof routes until source/backlink opens confirm real demand."
+    },
+    {
+      "keyword": "local what should I eat work district after work watch route",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "sourceNeed": "timeline decision for what should I eat",
+      "measurementPath": [
+        "search_intent_chip_select",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "fireCudaAction": "Hold broad variation rank, surface this phrase through category chips and proof routes until source/backlink opens confirm real demand."
+    },
+    {
+      "keyword": "open now best lunch near me international city downtown podcast source moment",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "sourceNeed": "quick panel signal for best lunch near me",
+      "measurementPath": [
+        "search_intent_chip_select",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "fireCudaAction": "Hold broad variation rank, surface this phrase through category chips and proof routes until source/backlink opens confirm real demand."
+    },
+    {
+      "keyword": "2026 cheap lunch spot near me near the office review observatory",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "sourceNeed": "menu source for cheap lunch spot",
+      "measurementPath": [
+        "search_intent_chip_select",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "fireCudaAction": "Hold broad variation rank, surface this phrase through category chips and proof routes until source/backlink opens confirm real demand."
+    },
+    {
+      "keyword": "quick family lunch place city center while traveling backlink proof",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "sourceNeed": "review source for family lunch place",
+      "measurementPath": [
+        "search_intent_chip_select",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "fireCudaAction": "Hold broad variation rank, surface this phrase through category chips and proof routes until source/backlink opens confirm real demand."
+    },
+    {
+      "keyword": "review-backed office lunch idea suburb before appointment decision guide",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "sourceNeed": "local backlink for office lunch idea",
+      "measurementPath": [
+        "search_intent_chip_select",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "fireCudaAction": "Hold broad variation rank, surface this phrase through category chips and proof routes until source/backlink opens confirm real demand."
+    },
+    {
+      "keyword": "source-backed quick food nearby airport area lunch break visual guide",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "sourceNeed": "video proof for quick food nearby",
+      "measurementPath": [
+        "search_intent_chip_select",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "fireCudaAction": "Hold broad variation rank, surface this phrase through category chips and proof routes until source/backlink opens confirm real demand."
+    },
+    {
+      "keyword": "cheap local restaurant review college town after work video map",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "sourceNeed": "GLB place context for local restaurant review",
+      "measurementPath": [
+        "search_intent_chip_select",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "fireCudaAction": "Hold broad variation rank, surface this phrase through category chips and proof routes until source/backlink opens confirm real demand."
+    },
+    {
+      "keyword": "best healthy lunch option tourist district downtown source map",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "sourceNeed": "timeline decision for healthy lunch option",
+      "measurementPath": [
+        "search_intent_chip_select",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "fireCudaAction": "Hold broad variation rank, surface this phrase through category chips and proof routes until source/backlink opens confirm real demand."
+    },
+    {
+      "keyword": "funny late lunch place work district near the office 3D preview",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "sourceNeed": "quick panel signal for late lunch place",
+      "measurementPath": [
+        "search_intent_chip_select",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "fireCudaAction": "Hold broad variation rank, surface this phrase through category chips and proof routes until source/backlink opens confirm real demand."
+    },
+    {
+      "keyword": "local food truck nearby international city while traveling watch route",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "sourceNeed": "menu source for food truck nearby",
+      "measurementPath": [
+        "search_intent_chip_select",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "fireCudaAction": "Hold broad variation rank, surface this phrase through category chips and proof routes until source/backlink opens confirm real demand."
+    },
+    {
+      "keyword": "open now restaurant menu preview near me before appointment podcast source moment",
+      "routeTarget": "/watch/looking-for-lunch-visual-observatory",
+      "sourceNeed": "review source for restaurant menu preview",
+      "measurementPath": [
+        "search_intent_chip_select",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "fireCudaAction": "Hold broad variation rank, surface this phrase through category chips and proof routes until source/backlink opens confirm real demand."
+    }
+  ],
+  "nextFireCudaMove": "Keep search phrases staged, improve measurement visibility, and let category/proof/source behavior choose the first promotion lane.",
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  }
+}

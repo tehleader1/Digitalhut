@@ -1,0 +1,90 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Supabase SEO Refinement Views Packet",
+  "status": "refinement-views-ready",
+  "purpose": "Give Supabase a readable comparison layer for FireCuda SEO cycles without changing the raw pixel event table.",
+  "guardrail": "Views are additive and read-only. Apply only after reviewing migration SQL in Supabase; do not delete raw events or overwrite measured behavior.",
+  "migration": "supabase/migrations/202607060001_digitalhut_seo_refinement_views.sql",
+  "table": "public.digitalhut_search_pixel_events",
+  "measurementStatus": "measurement-ready",
+  "backlinkAuthorityStatus": "authority-map-ready",
+  "releaseRouteCount": 8,
+  "viewCount": 3,
+  "views": [
+    {
+      "name": "public.digitalhut_seo_event_rollup",
+      "purpose": "Group raw visitor events by event, path, category, and keyword hint.",
+      "feeds": [
+        "FireCuda event quality",
+        "event family sanity check",
+        "human-role behavior reads"
+      ],
+      "requiredEvents": [
+        "page_view",
+        "search_run",
+        "search_intent_chip_select",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "market_view_open",
+        "proof_route_open",
+        "backlink_source_open",
+        "autoplay_start",
+        "timeline_scrub"
+      ]
+    },
+    {
+      "name": "public.digitalhut_seo_route_refinement",
+      "purpose": "Score routes by page, proof, source, GLB, podcast, market, and intent behavior.",
+      "feeds": [
+        "unified proof-route board",
+        "deploy proof batch",
+        "Search Console queue"
+      ],
+      "requiredEvents": [
+        "page_view",
+        "blog_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "market_view_open"
+      ]
+    },
+    {
+      "name": "public.digitalhut_seo_keyword_refinement",
+      "purpose": "Separate keywords that get real interactions from FireCuda-held candidates.",
+      "feeds": [
+        "SEO master list",
+        "backlink authority map",
+        "rank-slot promotion gates"
+      ],
+      "requiredEvents": [
+        "search_run",
+        "search_intent_chip_select",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play"
+      ]
+    }
+  ],
+  "compareCycle": [
+    "Read route_refinement for proof-route winners and lagging release routes.",
+    "Read keyword_refinement for exact phrases earning search/source/GLB behavior.",
+    "Read event_rollup to catch duplicate or missing event families before changing UI.",
+    "Feed promoted route/keyword pairs back into FireCuda and the unified proof board."
+  ],
+  "nextFireCudaMove": "After these views are applied in Supabase, compare route and keyword behavior against the release batch before expanding long-tail public surfaces.",
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  }
+}

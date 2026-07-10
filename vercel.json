@@ -2,7 +2,7 @@
   "version": 2,
   "framework": "vite",
   "devCommand": "npm run dev -- --host 127.0.0.1 --port $PORT",
-  "buildCommand": "node tools/verify-metric-contract.mjs && node tools/generate-search-console-row-sitemaps.mjs && vite build",
+  "buildCommand": "node tools/verify-metric-contract.mjs && node tools/generate-search-console-row-sitemaps.mjs && vite build && node tools/generate-route-crawl-shells.mjs",
   "installCommand": "npm ci --legacy-peer-deps",
   "outputDirectory": "dist",
   "headers": [
@@ -17,6 +17,24 @@
     },
     {
       "source": "/sitemap-routes.xml",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=300, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/sitemap-index.xml",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=300, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/sitemap-master-keyword-50000.xml",
       "headers": [
         {
           "key": "Cache-Control",

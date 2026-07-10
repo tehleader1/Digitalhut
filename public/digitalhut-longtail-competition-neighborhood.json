@@ -1,0 +1,272 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Longtail Competition Neighborhood",
+  "status": "competition-neighborhood-staged-live-rank-proof-needed",
+  "purpose": "Boil down where DigitalHut really sits around long-tail keyword competition instead of only naming company-size competitors.",
+  "guardrail": "This packet does not pretend to know exact live rank. It defines the real competition neighborhood and the receipts required to replace estimates with measured ranking.",
+  "metricFreshnessStatus": "stale-live-refresh-needed",
+  "rankBenchmarkStatus": "rank-benchmark-staged-waiting-live-rank-proof",
+  "sourceRead": "Public quick searches may not surface new/low-authority routes. Real position must come from Search Console, SERP API, Supabase receipts, and index proof.",
+  "rowCount": 4,
+  "rows": [
+    {
+      "id": "functional-3d-proof-over-landing-page",
+      "lane": "3D Proof Beats Sales Page",
+      "keywordSet": [
+        "3d model proof instead of landing page",
+        "inspectable 3d visual source map",
+        "business with real 3d preview proof",
+        "video explained with 3d model proof"
+      ],
+      "currentEstimatedRank": 236000000,
+      "rankState": "not-live-confirmed-staged-from-rank-floor",
+      "realNeighborhoodRead": "DigitalHut is not yet competing like an established authority page. It is most likely sitting in the long-tail staging layer beside unproven or weakly connected pages until indexing, Search Console impressions, backlinks, and visitor receipts prove movement.",
+      "likelyAdjacentCompetitors": [
+        "unindexed or newly indexed proof pages",
+        "thin affiliate or roundup posts",
+        "local service landing pages with weak source proof",
+        "directory/listing pages that answer only one piece of the search",
+        "forum and Reddit-style discussion pages",
+        "YouTube or short-video result pages without a full research layer",
+        "small SaaS feature pages that describe functionality but do not prove it live",
+        "old blog posts with stale metadata"
+      ],
+      "competitorBands": [
+        {
+          "band": "top-10",
+          "whoUsuallyLivesThere": "platforms, big directories, high-authority publications, dominant local/map results",
+          "digitalhutMove": "Do not fight head terms first. Use long-tail proof phrases that combine video, source, GLB, podcast, and route proof."
+        },
+        {
+          "band": "top-100",
+          "whoUsuallyLivesThere": "specialist blogs, niche SaaS pages, creator posts, strong review pages, indexed YouTube/Reddit results",
+          "digitalhutMove": "Push proof pages with exact human language and same-topic backlinks."
+        },
+        {
+          "band": "top-1,000",
+          "whoUsuallyLivesThere": "small company pages, thin how-to posts, forum threads, local landing pages, older content",
+          "digitalhutMove": "This is the first realistic climb target after indexing and a few source/backlink receipts."
+        },
+        {
+          "band": "deep-rank-floor",
+          "whoUsuallyLivesThere": "unindexed, newly staged, duplicate, weak, or low-proof content",
+          "digitalhutMove": "Current estimated starting floor. Move up by proving route usefulness, not by adding filler keywords."
+        }
+      ],
+      "exactProofNeeded": [
+        "Search Console query, impression, click, and average position for each keyword",
+        "SERP/API rank check for each keyword and route",
+        "Supabase receipt tying the keyword to route opens, source opens, GLB plays, podcast starts, and search behavior",
+        "Backlink/source receipt proving another useful page points to the proof route",
+        "Vercel/index proof confirming the route is crawlable and stable"
+      ],
+      "rankPushConclusion": "For 3D Proof Beats Sales Page, DigitalHut should assume it is near the deep rank floor until indexed behavior proves otherwise. The first win is not #1; it is escaping the weak/unproven long-tail neighborhood into a visible proof band."
+    },
+    {
+      "id": "functional-video-source-observatory",
+      "lane": "Video Source Observatory",
+      "keywordSet": [
+        "video explained with source map",
+        "youtube video source proof observatory",
+        "what am i watching video backlinks",
+        "viral video explained with proof routes"
+      ],
+      "currentEstimatedRank": 237250000,
+      "rankState": "not-live-confirmed-staged-from-rank-floor",
+      "realNeighborhoodRead": "DigitalHut is not yet competing like an established authority page. It is most likely sitting in the long-tail staging layer beside unproven or weakly connected pages until indexing, Search Console impressions, backlinks, and visitor receipts prove movement.",
+      "likelyAdjacentCompetitors": [
+        "unindexed or newly indexed proof pages",
+        "thin affiliate or roundup posts",
+        "local service landing pages with weak source proof",
+        "directory/listing pages that answer only one piece of the search",
+        "forum and Reddit-style discussion pages",
+        "YouTube or short-video result pages without a full research layer",
+        "small SaaS feature pages that describe functionality but do not prove it live",
+        "old blog posts with stale metadata"
+      ],
+      "competitorBands": [
+        {
+          "band": "top-10",
+          "whoUsuallyLivesThere": "platforms, big directories, high-authority publications, dominant local/map results",
+          "digitalhutMove": "Do not fight head terms first. Use long-tail proof phrases that combine video, source, GLB, podcast, and route proof."
+        },
+        {
+          "band": "top-100",
+          "whoUsuallyLivesThere": "specialist blogs, niche SaaS pages, creator posts, strong review pages, indexed YouTube/Reddit results",
+          "digitalhutMove": "Push proof pages with exact human language and same-topic backlinks."
+        },
+        {
+          "band": "top-1,000",
+          "whoUsuallyLivesThere": "small company pages, thin how-to posts, forum threads, local landing pages, older content",
+          "digitalhutMove": "This is the first realistic climb target after indexing and a few source/backlink receipts."
+        },
+        {
+          "band": "deep-rank-floor",
+          "whoUsuallyLivesThere": "unindexed, newly staged, duplicate, weak, or low-proof content",
+          "digitalhutMove": "Current estimated starting floor. Move up by proving route usefulness, not by adding filler keywords."
+        }
+      ],
+      "exactProofNeeded": [
+        "Search Console query, impression, click, and average position for each keyword",
+        "SERP/API rank check for each keyword and route",
+        "Supabase receipt tying the keyword to route opens, source opens, GLB plays, podcast starts, and search behavior",
+        "Backlink/source receipt proving another useful page points to the proof route",
+        "Vercel/index proof confirming the route is crawlable and stable"
+      ],
+      "rankPushConclusion": "For Video Source Observatory, DigitalHut should assume it is near the deep rank floor until indexed behavior proves otherwise. The first win is not #1; it is escaping the weak/unproven long-tail neighborhood into a visible proof band."
+    },
+    {
+      "id": "functional-everyday-decision-map",
+      "lane": "Everyday Decision Map",
+      "keywordSet": [
+        "best lunch near me visual source map",
+        "grocery deal visual proof route",
+        "local service source backed visual guide",
+        "nearby store review timeline proof"
+      ],
+      "currentEstimatedRank": 236000000,
+      "rankState": "not-live-confirmed-staged-from-rank-floor",
+      "realNeighborhoodRead": "DigitalHut is not yet competing like an established authority page. It is most likely sitting in the long-tail staging layer beside unproven or weakly connected pages until indexing, Search Console impressions, backlinks, and visitor receipts prove movement.",
+      "likelyAdjacentCompetitors": [
+        "unindexed or newly indexed proof pages",
+        "thin affiliate or roundup posts",
+        "local service landing pages with weak source proof",
+        "directory/listing pages that answer only one piece of the search",
+        "forum and Reddit-style discussion pages",
+        "YouTube or short-video result pages without a full research layer",
+        "small SaaS feature pages that describe functionality but do not prove it live",
+        "old blog posts with stale metadata"
+      ],
+      "competitorBands": [
+        {
+          "band": "top-10",
+          "whoUsuallyLivesThere": "platforms, big directories, high-authority publications, dominant local/map results",
+          "digitalhutMove": "Do not fight head terms first. Use long-tail proof phrases that combine video, source, GLB, podcast, and route proof."
+        },
+        {
+          "band": "top-100",
+          "whoUsuallyLivesThere": "specialist blogs, niche SaaS pages, creator posts, strong review pages, indexed YouTube/Reddit results",
+          "digitalhutMove": "Push proof pages with exact human language and same-topic backlinks."
+        },
+        {
+          "band": "top-1,000",
+          "whoUsuallyLivesThere": "small company pages, thin how-to posts, forum threads, local landing pages, older content",
+          "digitalhutMove": "This is the first realistic climb target after indexing and a few source/backlink receipts."
+        },
+        {
+          "band": "deep-rank-floor",
+          "whoUsuallyLivesThere": "unindexed, newly staged, duplicate, weak, or low-proof content",
+          "digitalhutMove": "Current estimated starting floor. Move up by proving route usefulness, not by adding filler keywords."
+        }
+      ],
+      "exactProofNeeded": [
+        "Search Console query, impression, click, and average position for each keyword",
+        "SERP/API rank check for each keyword and route",
+        "Supabase receipt tying the keyword to route opens, source opens, GLB plays, podcast starts, and search behavior",
+        "Backlink/source receipt proving another useful page points to the proof route",
+        "Vercel/index proof confirming the route is crawlable and stable"
+      ],
+      "rankPushConclusion": "For Everyday Decision Map, DigitalHut should assume it is near the deep rank floor until indexed behavior proves otherwise. The first win is not #1; it is escaping the weak/unproven long-tail neighborhood into a visible proof band."
+    },
+    {
+      "id": "functional-developer-research-proof",
+      "lane": "Developer Research Proof",
+      "keywordSet": [
+        "developer dapp analytics proof",
+        "backend analytics observatory proof",
+        "research topic 3d visual source map",
+        "programmer research hub with source links"
+      ],
+      "currentEstimatedRank": 238500000,
+      "rankState": "not-live-confirmed-staged-from-rank-floor",
+      "realNeighborhoodRead": "DigitalHut is not yet competing like an established authority page. It is most likely sitting in the long-tail staging layer beside unproven or weakly connected pages until indexing, Search Console impressions, backlinks, and visitor receipts prove movement.",
+      "likelyAdjacentCompetitors": [
+        "unindexed or newly indexed proof pages",
+        "thin affiliate or roundup posts",
+        "local service landing pages with weak source proof",
+        "directory/listing pages that answer only one piece of the search",
+        "forum and Reddit-style discussion pages",
+        "YouTube or short-video result pages without a full research layer",
+        "small SaaS feature pages that describe functionality but do not prove it live",
+        "old blog posts with stale metadata"
+      ],
+      "competitorBands": [
+        {
+          "band": "top-10",
+          "whoUsuallyLivesThere": "platforms, big directories, high-authority publications, dominant local/map results",
+          "digitalhutMove": "Do not fight head terms first. Use long-tail proof phrases that combine video, source, GLB, podcast, and route proof."
+        },
+        {
+          "band": "top-100",
+          "whoUsuallyLivesThere": "specialist blogs, niche SaaS pages, creator posts, strong review pages, indexed YouTube/Reddit results",
+          "digitalhutMove": "Push proof pages with exact human language and same-topic backlinks."
+        },
+        {
+          "band": "top-1,000",
+          "whoUsuallyLivesThere": "small company pages, thin how-to posts, forum threads, local landing pages, older content",
+          "digitalhutMove": "This is the first realistic climb target after indexing and a few source/backlink receipts."
+        },
+        {
+          "band": "deep-rank-floor",
+          "whoUsuallyLivesThere": "unindexed, newly staged, duplicate, weak, or low-proof content",
+          "digitalhutMove": "Current estimated starting floor. Move up by proving route usefulness, not by adding filler keywords."
+        }
+      ],
+      "exactProofNeeded": [
+        "Search Console query, impression, click, and average position for each keyword",
+        "SERP/API rank check for each keyword and route",
+        "Supabase receipt tying the keyword to route opens, source opens, GLB plays, podcast starts, and search behavior",
+        "Backlink/source receipt proving another useful page points to the proof route",
+        "Vercel/index proof confirming the route is crawlable and stable"
+      ],
+      "rankPushConclusion": "For Developer Research Proof, DigitalHut should assume it is near the deep rank floor until indexed behavior proves otherwise. The first win is not #1; it is escaping the weak/unproven long-tail neighborhood into a visible proof band."
+    }
+  ],
+  "firstRankPush": [
+    {
+      "lane": "3D Proof Beats Sales Page",
+      "currentEstimatedRank": 236000000,
+      "likelyCompetitionBand": "deep-rank-floor",
+      "firstRealisticEscapeTarget": "top-1,000 long-tail proof band",
+      "requiredProof": [
+        "Search Console query, impression, click, and average position for each keyword",
+        "SERP/API rank check for each keyword and route",
+        "Supabase receipt tying the keyword to route opens, source opens, GLB plays, podcast starts, and search behavior"
+      ]
+    },
+    {
+      "lane": "Video Source Observatory",
+      "currentEstimatedRank": 237250000,
+      "likelyCompetitionBand": "deep-rank-floor",
+      "firstRealisticEscapeTarget": "top-1,000 long-tail proof band",
+      "requiredProof": [
+        "Search Console query, impression, click, and average position for each keyword",
+        "SERP/API rank check for each keyword and route",
+        "Supabase receipt tying the keyword to route opens, source opens, GLB plays, podcast starts, and search behavior"
+      ]
+    },
+    {
+      "lane": "Everyday Decision Map",
+      "currentEstimatedRank": 236000000,
+      "likelyCompetitionBand": "deep-rank-floor",
+      "firstRealisticEscapeTarget": "top-1,000 long-tail proof band",
+      "requiredProof": [
+        "Search Console query, impression, click, and average position for each keyword",
+        "SERP/API rank check for each keyword and route",
+        "Supabase receipt tying the keyword to route opens, source opens, GLB plays, podcast starts, and search behavior"
+      ]
+    },
+    {
+      "lane": "Developer Research Proof",
+      "currentEstimatedRank": 238500000,
+      "likelyCompetitionBand": "deep-rank-floor",
+      "firstRealisticEscapeTarget": "top-1,000 long-tail proof band",
+      "requiredProof": [
+        "Search Console query, impression, click, and average position for each keyword",
+        "SERP/API rank check for each keyword and route",
+        "Supabase receipt tying the keyword to route opens, source opens, GLB plays, podcast starts, and search behavior"
+      ]
+    }
+  ],
+  "nextSystemMove": "Stop describing only company sizes. Track the actual long-tail neighborhood: platforms at the top, niche/affiliate/forum/local pages in the middle, and weak/unindexed proof pages near the floor. Use receipts to climb one band at a time."
+}

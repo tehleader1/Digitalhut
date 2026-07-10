@@ -1,0 +1,213 @@
+{
+  "generatedAt": "2026-07-07T11:56:00-04:00",
+  "mode": "DigitalHut Full-System Entertainment Compatibility Ladder 005",
+  "status": "primary-ladder-lane-corrected",
+  "domain": "https://www.digitalhut.app",
+  "primaryLadderLane": {
+    "name": "Full System Dapp Entertainment Experience",
+    "claim": "DigitalHut competes as a compact 2026 media system: video search, video playback, sound, autoplay, next episode, previous episode, 3D Model View, podcast play, and live analytics in one dapp interface.",
+    "whyThisIsStronger": "The rank target is not a single niche like real estate, market, or developer proof. Those are category inputs. The real competition is the full entertainment compatibility loop that a long-time YouTube user expects when they want an alternative.",
+    "notSideLane": [
+      "not only real estate walkthrough",
+      "not only developer proof",
+      "not only market observatory",
+      "not only GLB viewer",
+      "not only podcast player"
+    ],
+    "coreCompatibilityFeatures": [
+      "Auto Play",
+      "Next Episode",
+      "Previous Episode",
+      "Video Search",
+      "Video Playback",
+      "Sound",
+      "3D Model View",
+      "Podcast Play",
+      "One-view analytics",
+      "Category selection",
+      "Episode proof routes",
+      "Source/backlink proof"
+    ]
+  },
+  "latestLiveRead": {
+    "pageViews": 278,
+    "uniqueVisitors": 95,
+    "blogViews": 14,
+    "glbPreviewPlays": 81,
+    "podcastInterrupts": 12,
+    "marketOpens": 5,
+    "autoplayStarts": 4,
+    "episodeShifts": 2,
+    "searchRuns": 0,
+    "proofRouteOpens": 0,
+    "sourceBacklinkOpens": 0,
+    "intentSelections": 0,
+    "searchConsoleRows": 0,
+    "searchConsoleClicks": 0,
+    "searchConsoleImpressions": 0,
+    "rankGuardrail": "No real Google rank improvement claim until Search Console returns query/page/country rows, impressions, clicks, or average position."
+  },
+  "seoMasterListActivation": {
+    "rule": "All long-tail keyword families should point back to the full compatibility loop, not to isolated feature labels.",
+    "masterPhraseFrame": [
+      "{topic} video with 3D model view and podcast play",
+      "{topic} autoplay episode with live analytics",
+      "{topic} video search with sound 3D view and podcast moment",
+      "{topic} alternative to YouTube with 3D rendering and source proof",
+      "{topic} dapp entertainment observatory episode",
+      "{topic} compact video 3D podcast interface",
+      "{topic} watch episode with GLB model view",
+      "{topic} next episode previous episode 3D analytics"
+    ],
+    "categoryInjection": [
+      {
+        "category": "gamer",
+        "examples": [
+          "gaming video with 3D model view and podcast play",
+          "game world autoplay episode with live analytics",
+          "horror corridor VR room video search with sound 3D view"
+        ]
+      },
+      {
+        "category": "real-estate",
+        "examples": [
+          "real estate video with 3D model view and podcast play",
+          "home walkthrough autoplay episode with live analytics",
+          "property video search with sound 3D view and source proof"
+        ]
+      },
+      {
+        "category": "planetary",
+        "examples": [
+          "planetary video with 3D model view and podcast play",
+          "space topic autoplay episode with live analytics",
+          "climate study video search with sound 3D view"
+        ]
+      },
+      {
+        "category": "exotic-environment",
+        "examples": [
+          "vacation resort video with 3D model view and podcast play",
+          "coral reef autoplay episode with live analytics",
+          "terrain environment video search with sound 3D view"
+        ]
+      },
+      {
+        "category": "structure",
+        "examples": [
+          "building structure video with 3D model view and podcast play",
+          "city building autoplay episode with live analytics",
+          "architecture video search with sound 3D view"
+        ]
+      },
+      {
+        "category": "mainstream",
+        "examples": [
+          "mainstream video with 3D model view and podcast play",
+          "funny video autoplay episode with live analytics",
+          "what am I watching video search with sound 3D view"
+        ]
+      },
+      {
+        "category": "researcher",
+        "examples": [
+          "research video with 3D model view and podcast play",
+          "study topic autoplay episode with live analytics",
+          "source backed video search with sound 3D view"
+        ]
+      },
+      {
+        "category": "programmer",
+        "examples": [
+          "developer dapp video with 3D model view and podcast play",
+          "Babylon GLB autoplay episode with live analytics",
+          "programmer video search with sound 3D view"
+        ]
+      },
+      {
+        "category": "workforce",
+        "examples": [
+          "workforce training video with 3D model view and podcast play",
+          "market context autoplay episode with live analytics",
+          "business video search with sound 3D view"
+        ]
+      }
+    ]
+  },
+  "ladderMatchFilter": {
+    "skip": [
+      {
+        "type": "plain article or blog",
+        "reason": "Cannot compete with full media compatibility."
+      },
+      {
+        "type": "single-feature 3D model viewer",
+        "reason": "DigitalHut uses 3D as part of video/podcast/analytics, not only as an asset page."
+      },
+      {
+        "type": "podcast-only directory",
+        "reason": "DigitalHut podcast moments interrupt and return to the media story."
+      },
+      {
+        "type": "static market dashboard",
+        "reason": "Market data is a contextual branch, not the main entertainment system."
+      }
+    ],
+    "compete": [
+      {
+        "type": "video platform watch interface",
+        "metric": "autoplay, next/previous, search, sound, continuous episode compatibility"
+      },
+      {
+        "type": "interactive media platform",
+        "metric": "same-view video plus 3D rendering plus analytics"
+      },
+      {
+        "type": "research entertainment app",
+        "metric": "source/proof routes and useful analysis attached to the entertainment moment"
+      },
+      {
+        "type": "dapp media interface",
+        "metric": "wallet/cloud/database-backed proof plus PWA direction"
+      }
+    ]
+  },
+  "rankBoostMechanism": {
+    "whatCanActuallyMoveRank": [
+      "Google discovers the sitemap routes",
+      "Search Console begins returning impressions and query rows",
+      "users trigger search, source, proof-route, GLB, podcast, autoplay, and episode-shift events",
+      "metadata consistently describes the full compatibility loop",
+      "public proof packets avoid thin duplicate pages",
+      "natural white-hat mentions point to the exact watch/proof route that matches the audience intent"
+    ],
+    "whatCannotBeClaimedYet": [
+      "real rank increase",
+      "higher Google position",
+      "traffic pull from backlinks",
+      "viral lift"
+    ],
+    "nextProofTrigger": [
+      "searchRuns > 0",
+      "proofRouteOpens > 0",
+      "sourceBacklinkOpens > 0",
+      "Search Console impressions > 0",
+      "Search Console query rows > 0",
+      "autoplayStarts > 4",
+      "episodeShifts > 2",
+      "glbPreviewPlays > 81",
+      "podcastInterrupts > 12"
+    ]
+  },
+  "nextPlacementRead": {
+    "primaryTarget": "users searching for an alternative to passive video watching that still feels compatible with YouTube-style entertainment expectations",
+    "searchLanguage": [
+      "alternative to YouTube with autoplay next episode 3D model view",
+      "video app with 3D rendering podcast play and analytics",
+      "2026 entertainment dapp video search with 3D model view",
+      "watch episodes with GLB model view and podcast moments",
+      "compact video 3D podcast analytics interface"
+    ],
+    "placementRule": "Only place this where the full interface matters. If a page or community only cares about one side feature, skip it and move on."
+  }
+}

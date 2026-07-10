@@ -48,6 +48,28 @@
   white-space: nowrap;
 }
 
+body:has(.dh-youtube-story-renderer) .dh-guardian-mini {
+  right: 10px;
+  bottom: 10px;
+  width: 52px;
+  min-height: 52px;
+  grid-template-columns: 1fr;
+  padding: 4px;
+  opacity: .58;
+  overflow: hidden;
+  transform: scale(.86);
+  transform-origin: bottom right;
+}
+
+body:has(.dh-youtube-story-renderer) .dh-guardian-mini span {
+  display: none;
+}
+
+body:has(.dh-youtube-story-renderer) .dh-guardian-mini img {
+  width: 42px;
+  height: 42px;
+}
+
 .dh-guardian-block {
   position: fixed;
   inset: 0;

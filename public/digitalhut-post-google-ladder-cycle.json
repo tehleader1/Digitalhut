@@ -1,0 +1,16 @@
+{
+  "generatedAt": "2026-07-07",
+  "mode": "DigitalHut Post-Google Ladder Cycle",
+  "status": "google-indexed-baseline-connected",
+  "googleConsole": {
+    "urlInspection": "url-is-on-google-can-appear-in-search",
+    "searchConsoleApi": "connected-private-provider-route",
+    "sitemapVisible": true,
+    "sitemapWarnings": 0,
+    "sitemapErrors": 0,
+    "rankMovement": "not-public-until-search-console-comparison"
+  },
+  "publicRead": "DigitalHut is eligible in Google Search and has a clean sitemap. Public route timing and category proof maps are exposed for crawlers.",
+  "adminDetails": "Detailed measurement is handled through protected operations, not this public artifact.",
+  "guardrail": "No public rank claims are made from private analytics. Real advancement requires Search Console impressions, query rows, clicks, ctr, or average-position movement."
+}

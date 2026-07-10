@@ -1,0 +1,149 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Experience Cycle Niche Ownership",
+  "status": "experience-cycle-niche-ownership-staged",
+  "purpose": "Make DigitalHut own niches by proving that visitors complete richer experience cycles than competitor frameworks provide.",
+  "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  },
+  "cycleScore": 73,
+  "completedStageCount": 4,
+  "strongestStage": "3D GLB Open",
+  "cycleStages": [
+    {
+      "stage": "autoplay-start",
+      "label": "Auto Play",
+      "currentEvents": 1,
+      "rate": 0.4,
+      "requiredReceipt": "presentation_started",
+      "seoMeaning": "Visitor allowed the observatory to begin instead of treating the page as a static article."
+    },
+    {
+      "stage": "glb-open",
+      "label": "3D GLB Open",
+      "currentEvents": 62,
+      "rate": 27.6,
+      "requiredReceipt": "glb_preview_opened",
+      "seoMeaning": "Visitor inspected the functional layer competitors usually do not have."
+    },
+    {
+      "stage": "glb-manipulate",
+      "label": "3D Rotate / Zoom",
+      "currentEvents": 0,
+      "rate": 0,
+      "requiredReceipt": "glb_rotated_or_zoomed",
+      "seoMeaning": "This is the strongest proof that DigitalHut is being used as a tool, not just viewed as media."
+    },
+    {
+      "stage": "podcast-source",
+      "label": "Podcast / Source Moment",
+      "currentEvents": 2,
+      "rate": 0.9,
+      "requiredReceipt": "podcast_source_started",
+      "seoMeaning": "Visitor accepted a source-authority interruption inside the video/research flow."
+    },
+    {
+      "stage": "system-search",
+      "label": "System Search",
+      "currentEvents": 0,
+      "rate": 0,
+      "requiredReceipt": "observatory_search_used",
+      "seoMeaning": "Visitor trusted the system enough to ask it a follow-up question."
+    },
+    {
+      "stage": "category-hop",
+      "label": "Category Aspect Check",
+      "currentEvents": 0,
+      "rate": 0,
+      "requiredReceipt": "category_lane_selected",
+      "seoMeaning": "Visitor moved from one niche post to another, proving the cluster can branch."
+    },
+    {
+      "stage": "proof-route",
+      "label": "Blog / Watch Proof",
+      "currentEvents": 14,
+      "rate": 6.2,
+      "requiredReceipt": "proof_route_opened",
+      "seoMeaning": "Visitor crossed from entertainment into crawlable proof content."
+    }
+  ],
+  "nichePosts": [
+    {
+      "id": "3d-visual-proof-post",
+      "niche": "3D visual proof over static pages",
+      "occupiedPost": "DigitalHut proves the subject with a video-linked Babylon/GLB inspection layer.",
+      "currentEvidence": "62 GLB preview events",
+      "cycleGap": "Need rotate/zoom receipts to prove hands-on inspection, not only model opening.",
+      "competitorToBeat": "3D portfolio/gallery and thin sales pages",
+      "pushAction": "Keep this as the lead post until GLB manipulation and source clicks are measured.",
+      "status": "occupy-and-push"
+    },
+    {
+      "id": "video-explained-source-post",
+      "niche": "Video explained with source proof",
+      "occupiedPost": "DigitalHut sits between raw video and research, explaining what the content means with sources and backlinks.",
+      "currentEvidence": "14 blog proof views and 2 podcast/source moments",
+      "cycleGap": "Need source/backlink clicks and same-topic watch/blog continuation.",
+      "competitorToBeat": "single-medium video page and static explainers",
+      "pushAction": "Use watch/blog pairs around specific videos, not broad entertainment keywords.",
+      "status": "occupy-and-refine"
+    },
+    {
+      "id": "search-opinion-post",
+      "niche": "Search based on system opinion",
+      "occupiedPost": "DigitalHut should let visitors search after the system forms an opinion from video, GLB, and source context.",
+      "currentEvidence": "0 search events",
+      "cycleGap": "Search is quiet, so the system needs clearer prompts and proof of what search can do.",
+      "competitorToBeat": "generic search result pages and Q&A pages",
+      "pushAction": "Hold scale. Seed intent examples in proof routes until visitors search.",
+      "status": "hold-for-behavior"
+    },
+    {
+      "id": "category-branch-post",
+      "niche": "Category-aspect branching",
+      "occupiedPost": "DigitalHut should make one completed experience branch into related category lanes.",
+      "currentEvidence": "category aspect events not present in last-known local snapshot",
+      "cycleGap": "Need category lane selected receipts and next-episode/category continuation.",
+      "competitorToBeat": "directories and listing pages",
+      "pushAction": "Capture category hop events before expanding more category SEO.",
+      "status": "receipt-needed"
+    }
+  ],
+  "ownershipGates": [
+    {
+      "gate": "occupy",
+      "passRule": "Any real cycle stage has measurable behavior and a crawlable proof route exists.",
+      "currentStatus": "pass",
+      "nextMove": "Keep the post active and measure which event pulls the visitor deeper."
+    },
+    {
+      "gate": "defend",
+      "passRule": "At least three cycle stages fire in the same niche family.",
+      "currentStatus": "pass",
+      "nextMove": "Connect GLB proof, blog proof, and podcast/source moments into the same niche page family."
+    },
+    {
+      "gate": "scale",
+      "passRule": "Cycle score passes 55 and proof depth beats competitor framework score.",
+      "currentStatus": "hold",
+      "nextMove": "Scale only after source/backlink, rotate/zoom, search, or category-hop receipts improve."
+    }
+  ],
+  "competitiveRead": "compatible-enough-to-attack-niche-frameworks",
+  "featureScore": 62,
+  "proofScore": 38,
+  "movementProofStatus": "movement-proof-contract-ready-live-receipts-needed",
+  "originProofStatus": "origin-proof-missing-live-capture-needed",
+  "nextSystemMove": "Occupy the 3D visual proof post first, add rotate/zoom and source-click receipts, then return between runs to decide whether the niche post pushes, holds, rewrites, or moves to stronger competition."
+}

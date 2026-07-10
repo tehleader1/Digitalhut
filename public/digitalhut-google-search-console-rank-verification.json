@@ -1,0 +1,70 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Google Search Console Rank Verification",
+  "status": "google-rank-verification-ready",
+  "guardrail": "This packet is not a made-up ranking system. It reflects sitemap/metadata readiness and waits for real Google Search Console sitemap, query, page, click, impression, CTR, and average-position rows before claiming rank movement.",
+  "googleLiveRankStatus": "pending-search-console-proof",
+  "googleProviderRoute": "/api/provider-status?scope=google-search-console",
+  "rankHigherStatus": "not-claimed-until-search-console-comparison",
+  "googleSitemapReflection": {
+    "sitemapUrls": 137,
+    "proofRoutes": 124,
+    "metadataRoutes": 124,
+    "sitemapProofRoutes": 124,
+    "launchTargetRoutes": 33,
+    "coverageStatus": "pass",
+    "immediateSubmissionRoutes": 13,
+    "supportSubmissionRoutes": 18
+  },
+  "searchConsoleFieldsRequired": [
+    "query",
+    "page",
+    "country",
+    "clicks",
+    "impressions",
+    "ctr",
+    "position"
+  ],
+  "rankHigherRule": "A route/query is only marked ranked higher when the latest Search Console average position is numerically lower than the previous stored average position for the same query+page.",
+  "routeGroups": [
+    {
+      "group": "watch proof",
+      "count": 52,
+      "role": "Google-style sitemap discovery surface for video observatory routes."
+    },
+    {
+      "group": "blog proof",
+      "count": 52,
+      "role": "Readable long-tail support layer that explains why each watch route exists."
+    },
+    {
+      "group": "category proof",
+      "count": 20,
+      "role": "Internal linking and topic-cluster layer for route families."
+    },
+    {
+      "group": "launch targets",
+      "count": 33,
+      "role": "First rank push routes with metadata and proof alignment."
+    }
+  ],
+  "searchReadinessGates": [
+    {
+      "gate": "sitemap present",
+      "status": "pass",
+      "read": "137 sitemap URLs generated."
+    },
+    {
+      "gate": "metadata matches sitemap",
+      "status": "pass",
+      "read": "Every sitemap blog/watch/category proof route has a Digitalhut.app metadata manifest record, with no extras or duplicates."
+    },
+    {
+      "gate": "Google live read",
+      "status": "pending-search-console-proof",
+      "read": "Needs /api/provider-status?scope=google-search-console to return sitemap and search analytics rows before claiming real Google rank movement."
+    }
+  ],
+  "publicClaimLanguage": "DigitalHut has sitemap-backed proof routes ready for Google to read. Real Google rank movement is pending Search Console proof.",
+  "nextSystemMove": "Add GOOGLE_SERVICE_ACCOUNT_JSON and GOOGLE_SEARCH_CONSOLE_SITE_URL, add the service account in Search Console, then call /api/provider-status?scope=google-search-console and store snapshots for rank-higher comparisons."
+}

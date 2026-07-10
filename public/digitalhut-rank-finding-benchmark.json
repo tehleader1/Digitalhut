@@ -1,0 +1,778 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Rank Finding Benchmark",
+  "status": "rank-benchmark-staged-waiting-live-rank-proof",
+  "purpose": "Benchmark DigitalHut cluster language against small companies, mid-size companies, enterprise companies, and platform competitors while reserving live rank claims for measured Search Console/SEO API proof.",
+  "guardrail": "Do not claim live ranking positions from this packet alone. The #236,000,000 scale is a starting search-universe estimate until Search Console, Supabase, Vercel, or an approved SEO API fills measured position fields.",
+  "metricFreshnessStatus": "stale-live-refresh-needed",
+  "websiteLanguageStatus": "language-impact-visible-backend-staged",
+  "benchmarkTiers": {
+    "local": {
+      "tier": "small-company",
+      "label": "Small Company / Local Operator",
+      "competitors": [
+        "local restaurants",
+        "local repair shops",
+        "independent creators",
+        "small investor blogs",
+        "local real estate agencies"
+      ],
+      "benchmark": "Can win fast on specific city, service, creator, or niche phrases if DigitalHut has better source proof and richer media context."
+    },
+    "mid": {
+      "tier": "mid-size-company",
+      "label": "Mid-Size Company / Specialist Platform",
+      "competitors": [
+        "Yelp",
+        "Tripadvisor",
+        "Angi",
+        "Seeking Alpha",
+        "Sketchfab creators",
+        "Matterport service providers",
+        "university labs"
+      ],
+      "benchmark": "Harder to outrank on head terms, but DigitalHut can attack compound long-tail terms that combine video, source map, GLB, podcast, and proof route language."
+    },
+    "enterprise": {
+      "tier": "enterprise-company",
+      "label": "Enterprise Company",
+      "competitors": [
+        "Google",
+        "YouTube",
+        "Reddit",
+        "Wikipedia",
+        "Yahoo Finance",
+        "Bloomberg",
+        "TikTok",
+        "Instagram"
+      ],
+      "benchmark": "Do not fight the homepage head term first. Use DigitalHut as the source-backed observatory layer that explains what the enterprise feed is showing."
+    },
+    "platform": {
+      "tier": "platform-layer",
+      "label": "Platform / Search Surface",
+      "competitors": [
+        "Google Search",
+        "YouTube Search",
+        "TikTok discovery",
+        "Reddit search",
+        "Apple Podcasts",
+        "TradingView"
+      ],
+      "benchmark": "DigitalHut should become the bridge page that connects platform content, source proof, 3D context, podcast/source authority, and measurable visitor behavior."
+    }
+  },
+  "rankUniverseFloor": 236000000,
+  "rowCount": 11,
+  "rows": [
+    {
+      "id": "fresh-local-decision-loop",
+      "lane": "Everyday Local Decisions",
+      "source": "fresh-cluster-dump",
+      "priority": 1,
+      "role": "normal people choosing lunch, errands, stores, repairs, local services, or quick family plans",
+      "keywordCategory": "best lunch near me visual source map",
+      "benchmark": {
+        "competitorExamples": {
+          "small": [
+            "local service businesses",
+            "local review blogs",
+            "independent guide sites"
+          ],
+          "mid": [
+            "Yelp",
+            "Tripadvisor",
+            "Angi",
+            "local marketplace sites"
+          ],
+          "enterprise": [
+            "Google Maps",
+            "DoorDash",
+            "Uber",
+            "Reddit",
+            "YouTube"
+          ],
+          "platform": [
+            "Google Search",
+            "Google Maps",
+            "YouTube Search",
+            "Reddit search"
+          ]
+        },
+        "innovationAngle": "Own the normal-person search by turning it into a source-backed visual decision guide with video, GLB context, and proof routes."
+      },
+      "mediaIntake": [
+        "search_run",
+        "backlink_source_open",
+        "watch_route_open"
+      ],
+      "seoRanking": {
+        "searchUniversePosition": 236000000,
+        "rankRead": "estimated #236,000,000 until live Search Console or SEO API proof is captured",
+        "targetNextBand": "top 1,000,000 long-tail proof band",
+        "targetLaunchBand": "top 100,000 after route indexing + behavior proof",
+        "targetAuthorityBand": "top 10,000 after backlinks + repeated interaction proof",
+        "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+      },
+      "proofRoutes": [
+        "/watch/looking-for-lunch-visual-observatory",
+        "/blog/grocery-shopping-3d-experience",
+        "/category/mundane-off-time-experience"
+      ],
+      "measurementNeeded": [
+        "Search Console query position",
+        "Supabase event receipt",
+        "Vercel route proof",
+        "source/backlink open"
+      ]
+    },
+    {
+      "id": "fresh-viral-first-source-loop",
+      "lane": "Viral First-Source Entertainment",
+      "source": "fresh-cluster-dump",
+      "priority": 2,
+      "role": "new video, reel, clip, or topic appears and DigitalHut can become a source-backed first observer",
+      "keywordCategory": "new viral video source map",
+      "benchmark": {
+        "competitorExamples": {
+          "small": [
+            "independent creators",
+            "podcast clip blogs",
+            "3D artist portfolios"
+          ],
+          "mid": [
+            "Know Your Meme",
+            "Sketchfab creators",
+            "creator newsletters"
+          ],
+          "enterprise": [
+            "YouTube",
+            "TikTok",
+            "Instagram",
+            "Reddit",
+            "Apple Podcasts"
+          ],
+          "platform": [
+            "YouTube Search",
+            "TikTok discovery",
+            "Apple Podcasts",
+            "Reddit search"
+          ]
+        },
+        "innovationAngle": "Explain the clip or creator moment while matching it to GLB preview, podcast/source authority, backlinks, and watch/blog proof."
+      },
+      "mediaIntake": [
+        "autoplay_start",
+        "podcast_interrupt",
+        "proof_route_open"
+      ],
+      "seoRanking": {
+        "searchUniversePosition": 237250000,
+        "rankRead": "estimated #237,250,000 until live Search Console or SEO API proof is captured",
+        "targetNextBand": "top 1,000,000 long-tail proof band",
+        "targetLaunchBand": "top 100,000 after route indexing + behavior proof",
+        "targetAuthorityBand": "top 10,000 after backlinks + repeated interaction proof",
+        "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+      },
+      "proofRoutes": [
+        "/watch/funny-mainstream-video-explained",
+        "/blog/funny-mainstream-video-explained",
+        "/category/what-am-i-watching-observatory"
+      ],
+      "measurementNeeded": [
+        "Search Console query position",
+        "Supabase event receipt",
+        "Vercel route proof",
+        "source/backlink open"
+      ]
+    },
+    {
+      "id": "fresh-research-developer-loop",
+      "lane": "Research Developer Proof",
+      "source": "fresh-cluster-dump",
+      "priority": 3,
+      "role": "developer, researcher, student, or analyst needs a sourced visual read instead of a loose summary",
+      "keywordCategory": "developer dapp analytics proof",
+      "benchmark": {
+        "competitorExamples": {
+          "small": [
+            "developer blogs",
+            "student research pages",
+            "independent documentation sites"
+          ],
+          "mid": [
+            "university labs",
+            "Stack Overflow-style answers",
+            "research institute pages"
+          ],
+          "enterprise": [
+            "Wikipedia",
+            "Google Scholar",
+            "GitHub",
+            "YouTube education"
+          ],
+          "platform": [
+            "Google Search",
+            "YouTube Search",
+            "GitHub search"
+          ]
+        },
+        "innovationAngle": "Turn topic lookup into a visual research proof page with source links, timeline, GLB context, and developer-readable evidence."
+      },
+      "mediaIntake": [
+        "blog_view",
+        "source_route_open",
+        "search_intent_chip_select"
+      ],
+      "seoRanking": {
+        "searchUniversePosition": 238500000,
+        "rankRead": "estimated #238,500,000 until live Search Console or SEO API proof is captured",
+        "targetNextBand": "top 5,000,000 long-tail proof band",
+        "targetLaunchBand": "top 100,000 after route indexing + behavior proof",
+        "targetAuthorityBand": "top 10,000 after backlinks + repeated interaction proof",
+        "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+      },
+      "proofRoutes": [
+        "/watch/wiki-lookup-visual-research-hub",
+        "/blog/wiki-lookup-visual-research-hub",
+        "/category/system-presentation-proof"
+      ],
+      "measurementNeeded": [
+        "Search Console query position",
+        "Supabase event receipt",
+        "Vercel route proof",
+        "source/backlink open"
+      ]
+    },
+    {
+      "id": "fresh-market-company-loop",
+      "lane": "Market Company Story",
+      "source": "fresh-cluster-dump",
+      "priority": 4,
+      "role": "market user searches company, ticker, video, podcast, and 3D context together",
+      "keywordCategory": "stock video analytics with sources",
+      "benchmark": {
+        "competitorExamples": {
+          "small": [
+            "independent market newsletters",
+            "local business finance blogs"
+          ],
+          "mid": [
+            "Seeking Alpha",
+            "The Motley Fool",
+            "TradingView authors"
+          ],
+          "enterprise": [
+            "Yahoo Finance",
+            "Bloomberg",
+            "CNBC",
+            "MarketWatch"
+          ],
+          "platform": [
+            "Google Finance",
+            "YouTube market search",
+            "TradingView"
+          ]
+        },
+        "innovationAngle": "Connect ticker search, video context, company story, GLB environment, podcast/source moment, and chart/source proof."
+      },
+      "mediaIntake": [
+        "market_view_open",
+        "ticker_search",
+        "glb_preview_play"
+      ],
+      "seoRanking": {
+        "searchUniversePosition": 239750000,
+        "rankRead": "estimated #239,750,000 until live Search Console or SEO API proof is captured",
+        "targetNextBand": "top 5,000,000 long-tail proof band",
+        "targetLaunchBand": "top 100,000 after route indexing + behavior proof",
+        "targetAuthorityBand": "top 10,000 after backlinks + repeated interaction proof",
+        "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+      },
+      "proofRoutes": [
+        "/market",
+        "/watch/current-market-video-observatory",
+        "/blog/current-market-video-observatory"
+      ],
+      "measurementNeeded": [
+        "Search Console query position",
+        "Supabase event receipt",
+        "Vercel route proof",
+        "source/backlink open"
+      ]
+    },
+    {
+      "id": "fresh-creator-3d-podcast-loop",
+      "lane": "Creator 3D Podcast Authority",
+      "source": "fresh-cluster-dump",
+      "priority": 5,
+      "role": "creator or viewer wants video, 3D model, and podcast/source moment to explain the same topic",
+      "keywordCategory": "3d model video podcast observatory",
+      "benchmark": {
+        "competitorExamples": {
+          "small": [
+            "independent creators",
+            "podcast clip blogs",
+            "3D artist portfolios"
+          ],
+          "mid": [
+            "Know Your Meme",
+            "Sketchfab creators",
+            "creator newsletters"
+          ],
+          "enterprise": [
+            "YouTube",
+            "TikTok",
+            "Instagram",
+            "Reddit",
+            "Apple Podcasts"
+          ],
+          "platform": [
+            "YouTube Search",
+            "TikTok discovery",
+            "Apple Podcasts",
+            "Reddit search"
+          ]
+        },
+        "innovationAngle": "Explain the clip or creator moment while matching it to GLB preview, podcast/source authority, backlinks, and watch/blog proof."
+      },
+      "mediaIntake": [
+        "glb_preview_play",
+        "podcast_source_open",
+        "search_run"
+      ],
+      "seoRanking": {
+        "searchUniversePosition": 241000000,
+        "rankRead": "estimated #241,000,000 until live Search Console or SEO API proof is captured",
+        "targetNextBand": "top 5,000,000 long-tail proof band",
+        "targetLaunchBand": "top 100,000 after route indexing + behavior proof",
+        "targetAuthorityBand": "top 10,000 after backlinks + repeated interaction proof",
+        "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+      },
+      "proofRoutes": [
+        "/watch/search-intent-radar-visual-experience",
+        "/blog/search-intent-radar-visual-experience",
+        "/category/3d-visual-experience"
+      ],
+      "measurementNeeded": [
+        "Search Console query position",
+        "Supabase event receipt",
+        "Vercel route proof",
+        "source/backlink open"
+      ]
+    },
+    {
+      "id": "lunch-local-food",
+      "lane": "Lunch And Local Food",
+      "source": "seo-master-list",
+      "priority": 1,
+      "role": "person on break",
+      "keywordCategory": "cheap looking for lunch near me visual guide",
+      "benchmark": {
+        "competitorExamples": {
+          "small": [
+            "local service businesses",
+            "local review blogs",
+            "independent guide sites"
+          ],
+          "mid": [
+            "Yelp",
+            "Tripadvisor",
+            "Angi",
+            "local marketplace sites"
+          ],
+          "enterprise": [
+            "Google Maps",
+            "DoorDash",
+            "Uber",
+            "Reddit",
+            "YouTube"
+          ],
+          "platform": [
+            "Google Search",
+            "Google Maps",
+            "YouTube Search",
+            "Reddit search"
+          ]
+        },
+        "innovationAngle": "Own the normal-person search by turning it into a source-backed visual decision guide with video, GLB context, and proof routes."
+      },
+      "mediaIntake": [
+        "watch route",
+        "blog proof",
+        "category lane",
+        "source/backlink proof",
+        "GLB or podcast support"
+      ],
+      "seoRanking": {
+        "searchUniversePosition": 236000000,
+        "rankRead": "estimated #236,000,000 until live Search Console or SEO API proof is captured",
+        "targetNextBand": "top 1,000,000 long-tail proof band",
+        "targetLaunchBand": "top 100,000 after route indexing + behavior proof",
+        "targetAuthorityBand": "top 10,000 after backlinks + repeated interaction proof",
+        "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+      },
+      "proofRoutes": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/looking-for-lunch-visual-observatory",
+        "blog": "/blog/looking-for-lunch-visual-observatory"
+      },
+      "measurementNeeded": [
+        "Search Console query position",
+        "Supabase route/event behavior",
+        "backlink/source click proof"
+      ]
+    },
+    {
+      "id": "rideshare-commute",
+      "lane": "Rideshare And Commute",
+      "source": "seo-master-list",
+      "priority": 2,
+      "role": "traveler or worker between places",
+      "keywordCategory": "safe calling an Uber near me visual trip guide",
+      "benchmark": {
+        "competitorExamples": {
+          "small": [
+            "local service businesses",
+            "local review blogs",
+            "independent guide sites"
+          ],
+          "mid": [
+            "Yelp",
+            "Tripadvisor",
+            "Angi",
+            "local marketplace sites"
+          ],
+          "enterprise": [
+            "Google Maps",
+            "DoorDash",
+            "Uber",
+            "Reddit",
+            "YouTube"
+          ],
+          "platform": [
+            "Google Search",
+            "Google Maps",
+            "YouTube Search",
+            "Reddit search"
+          ]
+        },
+        "innovationAngle": "Own the normal-person search by turning it into a source-backed visual decision guide with video, GLB context, and proof routes."
+      },
+      "mediaIntake": [
+        "watch route",
+        "blog proof",
+        "category lane",
+        "source/backlink proof",
+        "GLB or podcast support"
+      ],
+      "seoRanking": {
+        "searchUniversePosition": 237250000,
+        "rankRead": "estimated #237,250,000 until live Search Console or SEO API proof is captured",
+        "targetNextBand": "top 1,000,000 long-tail proof band",
+        "targetLaunchBand": "top 100,000 after route indexing + behavior proof",
+        "targetAuthorityBand": "top 10,000 after backlinks + repeated interaction proof",
+        "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+      },
+      "proofRoutes": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/calling-an-uber-visual-trip-guide",
+        "blog": "/blog/calling-an-uber-visual-trip-guide"
+      },
+      "measurementNeeded": [
+        "Search Console query position",
+        "Supabase route/event behavior",
+        "backlink/source click proof"
+      ]
+    },
+    {
+      "id": "flight-travel-booking",
+      "lane": "Flight And Travel Booking",
+      "source": "seo-master-list",
+      "priority": 3,
+      "role": "traveler comparing money, timing, and trust",
+      "keywordCategory": "cheap booking a flight ticket near me visual guide",
+      "benchmark": {
+        "competitorExamples": {
+          "small": [
+            "local service businesses",
+            "local review blogs",
+            "independent guide sites"
+          ],
+          "mid": [
+            "Yelp",
+            "Tripadvisor",
+            "Angi",
+            "local marketplace sites"
+          ],
+          "enterprise": [
+            "Google Maps",
+            "DoorDash",
+            "Uber",
+            "Reddit",
+            "YouTube"
+          ],
+          "platform": [
+            "Google Search",
+            "Google Maps",
+            "YouTube Search",
+            "Reddit search"
+          ]
+        },
+        "innovationAngle": "Own the normal-person search by turning it into a source-backed visual decision guide with video, GLB context, and proof routes."
+      },
+      "mediaIntake": [
+        "watch route",
+        "blog proof",
+        "category lane",
+        "source/backlink proof",
+        "GLB or podcast support"
+      ],
+      "seoRanking": {
+        "searchUniversePosition": 238500000,
+        "rankRead": "estimated #238,500,000 until live Search Console or SEO API proof is captured",
+        "targetNextBand": "top 5,000,000 long-tail proof band",
+        "targetLaunchBand": "top 100,000 after route indexing + behavior proof",
+        "targetAuthorityBand": "top 10,000 after backlinks + repeated interaction proof",
+        "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+      },
+      "proofRoutes": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/booking-flight-ticket-visual-guide",
+        "blog": "/blog/booking-flight-ticket-visual-guide"
+      },
+      "measurementNeeded": [
+        "Search Console query position",
+        "Supabase route/event behavior",
+        "backlink/source click proof"
+      ]
+    },
+    {
+      "id": "wiki-quick-research",
+      "lane": "Wiki And Quick Research",
+      "source": "seo-master-list",
+      "priority": 4,
+      "role": "curious viewer looking something up",
+      "keywordCategory": "beginner wiki lookup science visual research hub",
+      "benchmark": {
+        "competitorExamples": {
+          "small": [
+            "developer blogs",
+            "student research pages",
+            "independent documentation sites"
+          ],
+          "mid": [
+            "university labs",
+            "Stack Overflow-style answers",
+            "research institute pages"
+          ],
+          "enterprise": [
+            "Wikipedia",
+            "Google Scholar",
+            "GitHub",
+            "YouTube education"
+          ],
+          "platform": [
+            "Google Search",
+            "YouTube Search",
+            "GitHub search"
+          ]
+        },
+        "innovationAngle": "Turn topic lookup into a visual research proof page with source links, timeline, GLB context, and developer-readable evidence."
+      },
+      "mediaIntake": [
+        "watch route",
+        "blog proof",
+        "category lane",
+        "source/backlink proof",
+        "GLB or podcast support"
+      ],
+      "seoRanking": {
+        "searchUniversePosition": 239750000,
+        "rankRead": "estimated #239,750,000 until live Search Console or SEO API proof is captured",
+        "targetNextBand": "top 5,000,000 long-tail proof band",
+        "targetLaunchBand": "top 100,000 after route indexing + behavior proof",
+        "targetAuthorityBand": "top 10,000 after backlinks + repeated interaction proof",
+        "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+      },
+      "proofRoutes": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/wiki-lookup-visual-research-hub",
+        "blog": "/blog/wiki-lookup-visual-research-hub"
+      },
+      "measurementNeeded": [
+        "Search Console query position",
+        "Supabase route/event behavior",
+        "backlink/source click proof"
+      ]
+    },
+    {
+      "id": "funny-mainstream-video",
+      "lane": "Funny Mainstream Video",
+      "source": "seo-master-list",
+      "priority": 5,
+      "role": "viewer killing time",
+      "keywordCategory": "funny funny video explained YouTube explained with sources",
+      "benchmark": {
+        "competitorExamples": {
+          "small": [
+            "independent creators",
+            "podcast clip blogs",
+            "3D artist portfolios"
+          ],
+          "mid": [
+            "Know Your Meme",
+            "Sketchfab creators",
+            "creator newsletters"
+          ],
+          "enterprise": [
+            "YouTube",
+            "TikTok",
+            "Instagram",
+            "Reddit",
+            "Apple Podcasts"
+          ],
+          "platform": [
+            "YouTube Search",
+            "TikTok discovery",
+            "Apple Podcasts",
+            "Reddit search"
+          ]
+        },
+        "innovationAngle": "Explain the clip or creator moment while matching it to GLB preview, podcast/source authority, backlinks, and watch/blog proof."
+      },
+      "mediaIntake": [
+        "watch route",
+        "blog proof",
+        "category lane",
+        "source/backlink proof",
+        "GLB or podcast support"
+      ],
+      "seoRanking": {
+        "searchUniversePosition": 241000000,
+        "rankRead": "estimated #241,000,000 until live Search Console or SEO API proof is captured",
+        "targetNextBand": "top 5,000,000 long-tail proof band",
+        "targetLaunchBand": "top 100,000 after route indexing + behavior proof",
+        "targetAuthorityBand": "top 10,000 after backlinks + repeated interaction proof",
+        "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+      },
+      "proofRoutes": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/funny-mainstream-video-explained",
+        "blog": "/blog/funny-mainstream-video-explained"
+      },
+      "measurementNeeded": [
+        "Search Console query position",
+        "Supabase route/event behavior",
+        "backlink/source click proof"
+      ]
+    },
+    {
+      "id": "errands-review-before-buying",
+      "lane": "Errands And Review Before Buying",
+      "source": "seo-master-list",
+      "priority": 6,
+      "role": "person making a small spending decision",
+      "keywordCategory": "cheap grocery run near me visual guide",
+      "benchmark": {
+        "competitorExamples": {
+          "small": [
+            "local service businesses",
+            "local review blogs",
+            "independent guide sites"
+          ],
+          "mid": [
+            "Yelp",
+            "Tripadvisor",
+            "Angi",
+            "local marketplace sites"
+          ],
+          "enterprise": [
+            "Google Maps",
+            "DoorDash",
+            "Uber",
+            "Reddit",
+            "YouTube"
+          ],
+          "platform": [
+            "Google Search",
+            "Google Maps",
+            "YouTube Search",
+            "Reddit search"
+          ]
+        },
+        "innovationAngle": "Own the normal-person search by turning it into a source-backed visual decision guide with video, GLB context, and proof routes."
+      },
+      "mediaIntake": [
+        "watch route",
+        "blog proof",
+        "category lane",
+        "source/backlink proof",
+        "GLB or podcast support"
+      ],
+      "seoRanking": {
+        "searchUniversePosition": 242250000,
+        "rankRead": "estimated #242,250,000 until live Search Console or SEO API proof is captured",
+        "targetNextBand": "top 5,000,000 long-tail proof band",
+        "targetLaunchBand": "top 100,000 after route indexing + behavior proof",
+        "targetAuthorityBand": "top 10,000 after backlinks + repeated interaction proof",
+        "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+      },
+      "proofRoutes": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/search-intent-radar-visual-experience",
+        "blog": "/blog/search-intent-radar-visual-experience"
+      },
+      "measurementNeeded": [
+        "Search Console query position",
+        "Supabase route/event behavior",
+        "backlink/source click proof"
+      ]
+    }
+  ],
+  "topImmediateTargets": [
+    {
+      "lane": "Everyday Local Decisions",
+      "keywordCategory": "best lunch near me visual source map",
+      "rankRead": "estimated #236,000,000 until live Search Console or SEO API proof is captured",
+      "innovationAngle": "Own the normal-person search by turning it into a source-backed visual decision guide with video, GLB context, and proof routes.",
+      "targetNextBand": "top 1,000,000 long-tail proof band"
+    },
+    {
+      "lane": "Viral First-Source Entertainment",
+      "keywordCategory": "new viral video source map",
+      "rankRead": "estimated #237,250,000 until live Search Console or SEO API proof is captured",
+      "innovationAngle": "Explain the clip or creator moment while matching it to GLB preview, podcast/source authority, backlinks, and watch/blog proof.",
+      "targetNextBand": "top 1,000,000 long-tail proof band"
+    },
+    {
+      "lane": "Research Developer Proof",
+      "keywordCategory": "developer dapp analytics proof",
+      "rankRead": "estimated #238,500,000 until live Search Console or SEO API proof is captured",
+      "innovationAngle": "Turn topic lookup into a visual research proof page with source links, timeline, GLB context, and developer-readable evidence.",
+      "targetNextBand": "top 5,000,000 long-tail proof band"
+    },
+    {
+      "lane": "Market Company Story",
+      "keywordCategory": "stock video analytics with sources",
+      "rankRead": "estimated #239,750,000 until live Search Console or SEO API proof is captured",
+      "innovationAngle": "Connect ticker search, video context, company story, GLB environment, podcast/source moment, and chart/source proof.",
+      "targetNextBand": "top 5,000,000 long-tail proof band"
+    },
+    {
+      "lane": "Creator 3D Podcast Authority",
+      "keywordCategory": "3d model video podcast observatory",
+      "rankRead": "estimated #241,000,000 until live Search Console or SEO API proof is captured",
+      "innovationAngle": "Explain the clip or creator moment while matching it to GLB preview, podcast/source authority, backlinks, and watch/blog proof.",
+      "targetNextBand": "top 5,000,000 long-tail proof band"
+    },
+    {
+      "lane": "Lunch And Local Food",
+      "keywordCategory": "cheap looking for lunch near me visual guide",
+      "rankRead": "estimated #236,000,000 until live Search Console or SEO API proof is captured",
+      "innovationAngle": "Own the normal-person search by turning it into a source-backed visual decision guide with video, GLB context, and proof routes.",
+      "targetNextBand": "top 1,000,000 long-tail proof band"
+    }
+  ],
+  "nextSystemMove": "Keep benchmark rows staged. Refresh live metrics/rank proof before promoting any cluster as improving against competitors."
+}

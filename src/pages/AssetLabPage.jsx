@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react"
 import {Link} from "react-router-dom"
-import "@google/model-viewer"
+import {loadModelViewer} from "../lib/modelViewerRuntime"
 import "./AssetLab.css"
 
 const storageKey = "digitalhut:assetLab"
@@ -342,6 +342,10 @@ export default function AssetLabPage(){
   const orbit = ["25deg 62deg auto", "80deg 66deg auto", "-40deg 58deg auto", "18deg 44deg auto"][demoStep % 4]
   const fov = ["36deg", "28deg", "42deg", "30deg"][demoStep % 4]
   const spokenLine = selected?.translations?.[language] || selected?.dialogue?.[demoStep % selected.dialogue.length] || ""
+
+  useEffect(() => {
+    loadModelViewer()
+  }, [])
 
   useEffect(() => writeAssets(assets), [assets])
 

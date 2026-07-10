@@ -47,6 +47,137 @@ function hasAlpaca(){
   return Boolean((process.env.ALPACA_API_KEY || process.env.VITE_ALPACA_API_KEY) && (process.env.ALPACA_SECRET_KEY || process.env.VITE_ALPACA_SECRET_KEY))
 }
 
+function envValue(...keys){
+  return keys.map((key) => String(process.env[key] || "").trim()).find(Boolean) || ""
+}
+
+function hasGeneralMarketProvider(){
+  return Boolean(
+    envValue("FMP_API_KEY", "VITE_FMP_API_KEY") ||
+    envValue("ALPHA_VANTAGE_API_KEY", "VITE_ALPHA_VANTAGE_API_KEY") ||
+    envValue("POLYGON_API_KEY", "VITE_POLYGON_API_KEY")
+  )
+}
+
+async function readJson(url, source){
+  const response = await fetch(url, {headers: {Accept: "application/json", "User-Agent": "DigitalHut/1.0 market-read"}})
+  const text = await response.text()
+  if(!response.ok) throw new Error(`${source} returned ${response.status}: ${text.slice(0, 160)}`)
+  return JSON.parse(text)
+}
+
+function quoteWindowFor(symbol, quote){
+  const price = Number(quote.price || 0)
+  const volume = Number(quote.volume || 0)
+  const changePct = Number(quote.changePct || 0)
+  const side = changePct >= 0 ? "buy-pressure" : "sell-pressure"
+  const notional = price && volume ? price * volume : 0
+  const timingScore = Math.max(24, Math.min(96, Math.round(52 + Math.abs(changePct) * 9 + (volume ? 10 : 0))))
+  const print = {
+    time: quote.checkedAt,
+    price,
+    size: volume,
+    notional: Number(notional.toFixed(2)),
+    exchange: quote.source,
+    conditions: ["provider-quote"],
+    tape: "quote",
+    side,
+    confidence: "provider-quote-stat"
+  }
+  return {
+    id: "provider-quote",
+    symbol,
+    tradeCount: price ? 1 : 0,
+    totalVolume: volume,
+    totalNotional: Number(notional.toFixed(2)),
+    buyPressureNotional: side === "buy-pressure" ? Number(notional.toFixed(2)) : 0,
+    sellPressureNotional: side === "sell-pressure" ? Number(notional.toFixed(2)) : 0,
+    largestPrintAmount: Number(notional.toFixed(2)),
+    largestPrintSide: side,
+    pressure: changePct >= 0 ? "provider-quote-up" : "provider-quote-down",
+    technical: {
+      timingScore,
+      timingSignal: changePct >= 0 ? "quote-up-watch" : "quote-down-watch",
+      lastPrice: price,
+      dayMovePct: Number(changePct.toFixed(2)),
+      chartContext: `${quote.source} reports ${symbol} near $${price || "pending"} with ${changePct.toFixed(2)}% move and ${volume ? volume.toLocaleString() : "pending"} volume.`
+    },
+    largestPrints: price ? [print] : [],
+    biggestInferredBuys: side === "buy-pressure" && price ? [print] : [],
+    biggestInferredSells: side === "sell-pressure" && price ? [print] : []
+  }
+}
+
+async function fetchGeneralMarketSnapshot(symbol){
+  const checkedAt = new Date().toISOString()
+  const fmpKey = envValue("FMP_API_KEY", "VITE_FMP_API_KEY")
+  if(fmpKey){
+    const payload = await readJson(`https://financialmodelingprep.com/api/v3/quote/${encodeURIComponent(symbol)}?apikey=${encodeURIComponent(fmpKey)}`, "FMP")
+    const row = Array.isArray(payload) ? payload[0] : payload
+    if(row?.price){
+      return {
+        symbol,
+        checkedAt,
+        source: "Financial Modeling Prep API",
+        price: Number(row.price || 0),
+        changePct: Number(row.changesPercentage || row.changePercentage || 0),
+        volume: Number(row.volume || 0)
+      }
+    }
+  }
+  const alphaKey = envValue("ALPHA_VANTAGE_API_KEY", "VITE_ALPHA_VANTAGE_API_KEY")
+  if(alphaKey){
+    const payload = await readJson(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${encodeURIComponent(symbol)}&apikey=${encodeURIComponent(alphaKey)}`, "Alpha Vantage")
+    const row = payload?.["Global Quote"] || {}
+    const price = Number(row["05. price"] || 0)
+    if(price){
+      return {
+        symbol,
+        checkedAt,
+        source: "Alpha Vantage Global Quote",
+        price,
+        changePct: Number(String(row["10. change percent"] || "0").replace("%", "")),
+        volume: Number(row["06. volume"] || 0)
+      }
+    }
+  }
+  const polygonKey = envValue("POLYGON_API_KEY", "VITE_POLYGON_API_KEY")
+  if(polygonKey){
+    const payload = await readJson(`https://api.polygon.io/v2/aggs/ticker/${encodeURIComponent(symbol)}/prev?adjusted=true&apiKey=${encodeURIComponent(polygonKey)}`, "Polygon")
+    const row = Array.isArray(payload?.results) ? payload.results[0] : null
+    const price = Number(row?.c || 0)
+    if(price){
+      const open = Number(row?.o || price)
+      return {
+        symbol,
+        checkedAt,
+        source: "Polygon Previous Close API",
+        price,
+        changePct: open ? ((price - open) / open) * 100 : 0,
+        volume: Number(row?.v || 0)
+      }
+    }
+  }
+  throw new Error("No general market quote provider returned a usable price.")
+}
+
+async function generalMarketPayload(symbol){
+  const quote = await fetchGeneralMarketSnapshot(symbol)
+  const window = quoteWindowFor(symbol, quote)
+  const summary = `${symbol} ${quote.source} read: price near $${quote.price || "pending"}, ${Number(quote.changePct || 0).toFixed(2)}% move, ${quote.volume ? quote.volume.toLocaleString() : "pending"} volume.`
+  return {
+    symbol,
+    configured: true,
+    source: quote.source,
+    feed: "general-market-provider",
+    checkedAt: quote.checkedAt,
+    disclaimer: "General quote/stat providers do not identify individual traders. This is market context for the observatory view, not financial advice.",
+    summary,
+    windows: [window],
+    errors: []
+  }
+}
+
 async function fetchTrades(symbol, windowDef){
   const params = new URLSearchParams({
     start: windowStart(windowDef),
@@ -205,10 +336,24 @@ export default async function handler(req, res){
   const symbol = cleanSymbol(req.query?.symbol || req.query?.ticker || req.query?.q)
   if(!symbol) return res.status(400).json({error: "Ticker symbol required", examples: [...knownTickerHints].slice(0, 8)})
   if(!hasAlpaca()){
+    if(hasGeneralMarketProvider()){
+      try {
+        const payload = await generalMarketPayload(symbol)
+        res.setHeader("Cache-Control", "no-store")
+        return res.status(200).json(payload)
+      } catch (error) {
+        return res.status(200).json({
+          symbol,
+          configured: false,
+          message: `General market provider configured, but no quote was returned: ${error?.message || "quote unavailable"}`,
+          windows: []
+        })
+      }
+    }
     return res.status(200).json({
       symbol,
       configured: false,
-      message: "ALPACA_API_KEY and ALPACA_SECRET_KEY are required for trade-flow windows.",
+      message: "Add ALPACA_API_KEY/ALPACA_SECRET_KEY for trade-flow windows, or ALPHA_VANTAGE_API_KEY/FMP_API_KEY/POLYGON_API_KEY for general stock market reads.",
       windows: []
     })
   }
@@ -228,6 +373,14 @@ export default async function handler(req, res){
   }
 
   const latest = windows[windows.length - 1] || windows[0]
+  if(!latest && hasGeneralMarketProvider()){
+    try {
+      const payload = await generalMarketPayload(symbol)
+      payload.errors = errors
+      res.setHeader("Cache-Control", "no-store")
+      return res.status(200).json(payload)
+    } catch {}
+  }
   const summary = latest
     ? `${symbol} ${latest.id} window shows ${latest.pressure}. Largest print amount was about $${Math.round(latest.largestPrintAmount).toLocaleString()} with ${latest.largestPrintSide}; chart timing score ${latest.technical?.timingScore || 0}/100. Buy/sell side is inferred, not trader identity.`
     : `${symbol} did not return usable Alpaca trade windows.`

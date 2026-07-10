@@ -1,0 +1,507 @@
+{
+  "generatedAt": "2026-07-10T02:01:59.521Z",
+  "status": "active-client-attempt-cycle-produced",
+  "site": "https://www.digitalhut.app",
+  "mode": "build + rotate + attempt + measure",
+  "guardrail": "No Google rank claim is made until Search Console query rows, clicks, impressions, and a previous snapshot allow comparison.",
+  "baseline": {
+    "pageViews": 319,
+    "uniqueVisitors": 117,
+    "totalEvents": 536,
+    "glb": 83,
+    "podcast": 13,
+    "autoplay": 5,
+    "searches": 2,
+    "market": 5,
+    "proof": 0,
+    "source": 0,
+    "blogViews": 28,
+    "masterKeywordDoorEvents": 68
+  },
+  "currentTotals": {
+    "pageViews": 323,
+    "uniqueVisitors": 119,
+    "totalEvents": 540,
+    "glb": 83,
+    "podcast": 13,
+    "autoplay": 5,
+    "searches": 2,
+    "market": 5,
+    "proof": 0,
+    "source": 0,
+    "blogViews": 28,
+    "masterKeywordDoorEvents": 72
+  },
+  "freshDelta": {
+    "pageViews": 4,
+    "uniqueVisitors": 2,
+    "totalEvents": 4,
+    "glb": 0,
+    "podcast": 0,
+    "autoplay": 0,
+    "searches": 0,
+    "market": 0,
+    "proof": 0,
+    "source": 0,
+    "blogViews": 0,
+    "masterKeywordDoorEvents": 4
+  },
+  "secondActionDelta": 0,
+  "decision": "weak-entry-lift-bridge-to-second-action",
+  "searchConsole": {
+    "freshRows": 1,
+    "freshImpressions": 1,
+    "freshClicks": 0,
+    "finalRows": 1,
+    "finalImpressions": 1,
+    "finalClicks": 0,
+    "indexedInspectionTargets": 2,
+    "discoveredInspectionTargets": 4,
+    "unknownInspectionTargets": 8,
+    "sitemapSurfacesVisible": 3,
+    "sitemapSurfacesPending": 2,
+    "totalSitemapRows": 50228,
+    "masterKeywordRows": 50000,
+    "routeCrawlShellCount": 181,
+    "rankingTruth": "Search Console has query rows; rank movement can be compared against saved snapshots."
+  },
+  "sitemap": {
+    "totalRows": 50228,
+    "urlRows": 228,
+    "masterRows": 50000,
+    "universe": 200572944,
+    "routeCrawlShellCount": 181
+  },
+  "strongestAttempt": {
+    "id": "digitalhut-200m-seo-master-list",
+    "lane": "DigitalHut 200M SEO Master List",
+    "role": "the complete SEO master list: every everyday watcher, researcher, gamer, creator, builder, traveler, buyer, developer, and mainstream viewer route must have DigitalHut's dapp proof engine behind it",
+    "score": 202,
+    "proofRoute": "/system-proof",
+    "publicUrl": "https://www.digitalhut.app/system-proof",
+    "sourceBridgeUrl": "https://www.digitalhut.app/digitalhut-proof-source-conversion-bridge.json#digitalhut-200m-seo-master-list",
+    "objective": "Run the 200M SEO master list as the strongest lane. Anything discovered through that list must route back to DigitalHut's working dapp proof engine.",
+    "dappProofEngine": {
+      "role": "the product proof behind every longtail route",
+      "modules": [
+        "video watching/session flow",
+        "3D Model View and GLB interaction",
+        "podcast/source moment",
+        "live analytics",
+        "search and category routing",
+        "Supabase behavior telemetry",
+        "sitemap and Search Console proof"
+      ],
+      "rule": "No keyword facet is promoted unless DigitalHut can show or measure a useful dapp behavior behind it."
+    },
+    "nextProofMove": "Move fresh entry traffic into any second action: GLB Model View, podcast/source, autoplay, search, market, proof, or source open.",
+    "claimScope": {
+      "variationCapacity": 200572944,
+      "universe": 200572944,
+      "countedRankSlots": true,
+      "publicSitemapWindow": 50000
+    },
+    "intentPhrases": [
+      "DigitalHut 200M SEO Master List backed by a working 2026 entertainment dapp observatory",
+      "200M longtail keyword map with video watching, 3D Model View, podcast/source moments, search, autoplay, and live analytics behind every useful route",
+      "DigitalHut master keyword list routed through one dapp proof engine instead of thin SEO pages",
+      "everyday life, gaming, research, real estate, travel, market, developer, creator, and study searches entering DigitalHut's dapp system"
+    ],
+    "measurementSignals": [
+      "page view",
+      "unique visitor",
+      "master keyword door event",
+      "GLB Model View open",
+      "podcast/source interrupt",
+      "autoplay start",
+      "search intent",
+      "market open",
+      "proof route open",
+      "source/backlink open",
+      "Search Console query row"
+    ],
+    "requiredWinCondition": "Any keyword facet can start the pull, but the win belongs to the 200M SEO Master List only when visitors complete second actions and proof/source opens inside the dapp.",
+    "backlinkTargets": [
+      "podcast source",
+      "video source",
+      "summary proof",
+      "creator page",
+      "watch proof route",
+      "YouTube session tool discussion",
+      "AI video tool page",
+      "3D viewer source",
+      "podcast/source page",
+      "game build source",
+      "mod page",
+      "3D model source",
+      "server guide",
+      "official documentation",
+      "GitHub source",
+      "API guide",
+      "developer article",
+      "cloud architecture note",
+      "local source",
+      "store page",
+      "review source",
+      "map source",
+      "regional source",
+      "translated guide",
+      "local market source",
+      "international community",
+      "education source",
+      "dataset"
+    ],
+    "internalRotationArm": {
+      "id": "digitalhut-full-200m-keyword-list",
+      "lane": "DigitalHut 200M SEO Master List",
+      "aliases": [
+        "DigitalHut Full 200,572,944 Keyword List",
+        "DigitalHut 200,572,944 Longtail Keyword Universe"
+      ],
+      "score": 200,
+      "proofRoute": "/system-proof",
+      "publicUrl": "https://www.digitalhut.app/system-proof",
+      "role": "the strongest lane and source of truth; every category, proof route, source bridge, comparison test, and evidence read is a facet inside this SEO master list",
+      "universe": 200572944,
+      "publicSitemapWindow": 50000
+    },
+    "universeFacets": [
+      {
+        "id": "ai-video-podcast-source-explainer",
+        "lane": "AI Video Podcast Source Explainer",
+        "score": 123,
+        "proofRoute": "/watch/ai-video-podcast-source-explainer",
+        "role": "evidence facet inside the 200M SEO Master List"
+      },
+      {
+        "id": "full-entertainment-dapp-alternative",
+        "lane": "Full Entertainment Dapp Alternative",
+        "score": 121,
+        "proofRoute": "/watch/full-view-episode-alternative",
+        "role": "evidence facet inside the 200M SEO Master List"
+      },
+      {
+        "id": "gaming-3d-world-observatory",
+        "lane": "Gaming 3D World Observatory",
+        "score": 97,
+        "proofRoute": "/watch/game-world-glb-presentation",
+        "role": "evidence facet inside the 200M SEO Master List"
+      },
+      {
+        "id": "developer-programmer-research",
+        "lane": "Developer Programmer Research",
+        "score": 91,
+        "proofRoute": "/watch/developer-programmer-research-observatory",
+        "role": "evidence facet inside the 200M SEO Master List"
+      },
+      {
+        "id": "local-life-errands-companion",
+        "lane": "Local Life Errands Companion",
+        "score": 75,
+        "proofRoute": "/watch/local-life-errands-companion",
+        "role": "evidence facet inside the 200M SEO Master List"
+      },
+      {
+        "id": "international-language-side-markets",
+        "lane": "International Language Side Markets",
+        "score": 56,
+        "proofRoute": "/watch/international-language-side-markets",
+        "role": "evidence facet inside the 200M SEO Master List"
+      },
+      {
+        "id": "education-study-visual-research",
+        "lane": "Education Study Visual Research",
+        "score": 53,
+        "proofRoute": "/watch/education-study-visual-research",
+        "role": "evidence facet inside the 200M SEO Master List"
+      },
+      {
+        "id": "wiki-quick-research",
+        "lane": "Wiki And Quick Research",
+        "score": 52,
+        "proofRoute": "/watch/wiki-lookup-visual-research-hub",
+        "role": "evidence facet inside the 200M SEO Master List"
+      },
+      {
+        "id": "home-project-diy-visual",
+        "lane": "Home Project DIY Visual",
+        "score": 51,
+        "proofRoute": "/watch/home-project-diy-visual",
+        "role": "evidence facet inside the 200M SEO Master List"
+      },
+      {
+        "id": "creator-brand-product-showcase",
+        "lane": "Creator Brand Product Showcase",
+        "score": 47,
+        "proofRoute": "/watch/creator-brand-product-showcase",
+        "role": "evidence facet inside the 200M SEO Master List"
+      }
+    ],
+    "strongestRotationArm": {
+      "id": "digitalhut-full-200m-keyword-list",
+      "lane": "DigitalHut 200M SEO Master List",
+      "aliases": [
+        "DigitalHut Full 200,572,944 Keyword List",
+        "DigitalHut 200,572,944 Longtail Keyword Universe"
+      ],
+      "score": 200,
+      "proofRoute": "/system-proof",
+      "publicUrl": "https://www.digitalhut.app/system-proof",
+      "role": "the strongest lane and source of truth; every category, proof route, source bridge, comparison test, and evidence read is a facet inside this SEO master list",
+      "universe": 200572944,
+      "publicSitemapWindow": 50000
+    },
+    "wholeSystemAttractionUniverse": {
+      "id": "digitalhut-full-200m-keyword-list",
+      "lane": "DigitalHut 200M SEO Master List",
+      "aliases": [
+        "DigitalHut Full 200,572,944 Keyword List",
+        "DigitalHut 200,572,944 Longtail Keyword Universe"
+      ],
+      "score": 200,
+      "proofRoute": "/system-proof",
+      "publicUrl": "https://www.digitalhut.app/system-proof",
+      "role": "the strongest lane and source of truth; every category, proof route, source bridge, comparison test, and evidence read is a facet inside this SEO master list",
+      "universe": 200572944,
+      "publicSitemapWindow": 50000
+    },
+    "measurableFacet": {
+      "id": "digitalhut-200m-seo-master-list",
+      "lane": "DigitalHut 200M SEO Master List",
+      "score": 200,
+      "proofRoute": "/system-proof",
+      "publicUrl": "https://www.digitalhut.app/system-proof",
+      "role": "the SEO master list as a whole is the measurable facet; category lanes are sub-signals only",
+      "strongestSubSignal": {
+        "id": "ai-video-podcast-source-explainer",
+        "lane": "AI Video Podcast Source Explainer",
+        "score": 123,
+        "proofRoute": "/watch/ai-video-podcast-source-explainer"
+      }
+    },
+    "currentRead": {
+      "freshDelta": {
+        "pageViews": 4,
+        "uniqueVisitors": 2,
+        "totalEvents": 4,
+        "glb": 0,
+        "podcast": 0,
+        "autoplay": 0,
+        "searches": 0,
+        "market": 0,
+        "proof": 0,
+        "source": 0,
+        "blogViews": 0,
+        "masterKeywordDoorEvents": 4
+      },
+      "searchConsole": {
+        "freshRows": 1,
+        "freshImpressions": 1,
+        "freshClicks": 0,
+        "finalRows": 1,
+        "finalImpressions": 1,
+        "finalClicks": 0,
+        "indexedInspectionTargets": 2,
+        "discoveredInspectionTargets": 4,
+        "unknownInspectionTargets": 8,
+        "sitemapSurfacesVisible": 0,
+        "sitemapSurfacesPending": 0
+      }
+    }
+  },
+  "nextAttempt": {
+    "lane": "DigitalHut 200M SEO Master List",
+    "route": "/system-proof",
+    "cast": "DigitalHut 200M SEO Master List backed by a working 2026 entertainment dapp observatory",
+    "winCondition": "Any keyword facet can start the pull, but the win belongs to the 200M SEO Master List only when visitors complete second actions and proof/source opens inside the dapp.",
+    "measurementSignals": [
+      "page view",
+      "unique visitor",
+      "master keyword door event",
+      "GLB Model View open",
+      "podcast/source interrupt",
+      "autoplay start",
+      "search intent",
+      "market open",
+      "proof route open",
+      "source/backlink open",
+      "Search Console query row"
+    ]
+  },
+  "internalRotationArm": {
+    "id": "digitalhut-full-200m-keyword-list",
+    "lane": "DigitalHut 200M SEO Master List",
+    "aliases": [
+      "DigitalHut Full 200,572,944 Keyword List",
+      "DigitalHut 200,572,944 Longtail Keyword Universe"
+    ],
+    "score": 200,
+    "proofRoute": "/system-proof",
+    "publicUrl": "https://www.digitalhut.app/system-proof",
+    "role": "the strongest lane and source of truth; every category, proof route, source bridge, comparison test, and evidence read is a facet inside this SEO master list",
+    "universe": 200572944,
+    "publicSitemapWindow": 50000
+  },
+  "wholeSystemAttractionUniverse": {
+    "id": "digitalhut-full-200m-keyword-list",
+    "lane": "DigitalHut 200M SEO Master List",
+    "aliases": [
+      "DigitalHut Full 200,572,944 Keyword List",
+      "DigitalHut 200,572,944 Longtail Keyword Universe"
+    ],
+    "score": 200,
+    "proofRoute": "/system-proof",
+    "publicUrl": "https://www.digitalhut.app/system-proof",
+    "role": "the strongest lane and source of truth; every category, proof route, source bridge, comparison test, and evidence read is a facet inside this SEO master list",
+    "universe": 200572944,
+    "publicSitemapWindow": 50000
+  },
+  "rotation": {
+    "status": "master-keyword-rotation-ready",
+    "role": "the DigitalHut 200M SEO Master List is the strongest lane; every lane, route, source, comparison, and behavior read is a measurable facet inside that list",
+    "strongestLane": "Full Entertainment Dapp Alternative",
+    "allocationCount": 24
+  },
+  "measurableFacet": {
+    "id": "digitalhut-200m-seo-master-list",
+    "lane": "DigitalHut 200M SEO Master List",
+    "score": 200,
+    "proofRoute": "/system-proof",
+    "publicUrl": "https://www.digitalhut.app/system-proof",
+    "role": "the SEO master list as a whole is the measurable facet; category lanes are sub-signals only",
+    "strongestSubSignal": {
+      "id": "ai-video-podcast-source-explainer",
+      "lane": "AI Video Podcast Source Explainer",
+      "score": 123,
+      "proofRoute": "/watch/ai-video-podcast-source-explainer"
+    }
+  },
+  "duplication": {
+    "status": "audience-side-pocket-and-duplication-map-ready",
+    "nextAction": "Keep the 117 unique visitors collected to the side. Treat broad homepage/direct movement as the 200M whole-system entry, then duplicate only pockets that create second actions or proof/source opens.",
+    "targetCount": 12
+  },
+  "ladder": {
+    "status": "ladder-match-architecture-ready",
+    "definition": "A DigitalHut ladder match is a comparative proof/statistic test against similar structured systems. It records which capabilities DigitalHut has tested, where competitors still lead, where DigitalHut has an advantage, and which measurable proof is required next.",
+    "matchCount": 11,
+    "standingsCount": 4,
+    "nextServerMove": "Keep comparative tests active, but aim the next user flow at proof/source opens. The current system has behavior, but the public proof layer needs a source/proof hit."
+  },
+  "steps": [
+    {
+      "id": "search-console",
+      "script": "tools/search-console-ranking-test.mjs",
+      "status": "ok",
+      "startedAt": "2026-07-10T02:01:42.787Z",
+      "completedAt": "2026-07-10T02:01:51.475Z",
+      "outputTail": "    \"discoveredInspectionTargets\": 4,\n    \"unknownInspectionTargets\": 8,\n    \"canonicalProofInspections\": 12,\n    \"sitemapSurfacesVisible\": 3,\n    \"sitemapSurfacesPending\": 2,\n    \"nextAction\": \"Compare query/page/country rows against the previous snapshot and promote only routes with real impressions.\"\n  }\n}"
+    },
+    {
+      "id": "fresh-audience",
+      "script": "tools/write-fresh-audience-collection.mjs",
+      "status": "ok",
+      "startedAt": "2026-07-10T02:01:51.475Z",
+      "completedAt": "2026-07-10T02:01:52.612Z",
+      "outputTail": "    \"source\": 0,\n    \"blogViews\": 0,\n    \"masterKeywordDoorEvents\": 4\n  },\n  \"freshDecision\": \"fresh-movement-needs-second-action\",\n  \"publicPath\": \"public/digitalhut-fresh-audience-collection.json\",\n  \"docsPath\": \"docs/digitalhut-fresh-audience-collection.md\"\n}"
+    },
+    {
+      "id": "proof-source-bridge",
+      "script": "tools/write-proof-source-conversion-bridge.mjs",
+      "status": "ok",
+      "startedAt": "2026-07-10T02:01:52.612Z",
+      "completedAt": "2026-07-10T02:01:53.196Z",
+      "outputTail": "    \"searches\": 2,\n    \"marketOpens\": 5,\n    \"proofRouteOpens\": 0,\n    \"sourceOpens\": 0\n  },\n  \"priorityTargets\": 10,\n  \"nextAction\": \"Keep the 200M SEO Master List bridge as the public conversion path. Use facets only to decide which doorway gets more sitemap pressure.\"\n}"
+    },
+    {
+      "id": "master-keyword-rotation",
+      "script": "tools/write-master-keyword-rotation.mjs",
+      "status": "ok",
+      "startedAt": "2026-07-10T02:01:53.196Z",
+      "completedAt": "2026-07-10T02:01:53.745Z",
+      "outputTail": "    \"podcastInterrupts\": 13,\n    \"autoplayStarts\": 5,\n    \"searchRuns\": 2,\n    \"marketOpens\": 5,\n    \"proofRouteOpens\": 0,\n    \"sourceOpens\": 0\n  }\n}"
+    },
+    {
+      "id": "client-attempt-router",
+      "script": "tools/write-client-attempt-router.mjs",
+      "status": "ok",
+      "startedAt": "2026-07-10T02:01:53.745Z",
+      "completedAt": "2026-07-10T02:01:54.193Z",
+      "outputTail": "      \"publicUrl\": \"https://www.digitalhut.app/system-proof\",\n      \"role\": \"the strongest lane and source of truth; every category, proof route, source bridge, comparison test, and evidence read is a facet inside this SEO master list\",\n      \"universe\": 200572944,\n      \"publicSitemapWindow\": 50000\n    }\n  },\n  \"nextMeasurement\": \"If this produces only page views, keep it weak. If it produces any GLB/podcast/autoplay/search/market movement, duplicate the whole-system path once. If it produces proof/source, stack the whole-system lane.\"\n}"
+    },
+    {
+      "id": "audience-duplication",
+      "script": "tools/write-audience-duplication-battle-shout.mjs",
+      "status": "ok",
+      "startedAt": "2026-07-10T02:01:54.193Z",
+      "completedAt": "2026-07-10T02:01:54.697Z",
+      "outputTail": "    \"searches\": 2,\n    \"marketOpens\": 5,\n    \"proofRouteOpens\": 0,\n    \"sourceOpens\": 0\n  },\n  \"duplicationTargets\": 12,\n  \"nextAction\": \"Keep the 117 unique visitors collected to the side. Treat broad homepage/direct movement as the 200M whole-system entry, then duplicate only pockets that create second actions or proof/source opens.\"\n}"
+    },
+    {
+      "id": "ladder-match-architecture",
+      "script": "tools/write-ladder-match-architecture.mjs",
+      "status": "ok",
+      "startedAt": "2026-07-10T02:01:54.697Z",
+      "completedAt": "2026-07-10T02:01:55.146Z",
+      "outputTail": "    \"searches\": 2,\n    \"market\": 5,\n    \"proof\": 0,\n    \"source\": 0,\n    \"masterKeywordDoorEvents\": 72\n  },\n  \"nextServerMove\": \"Keep comparative tests active, but aim the next user flow at proof/source opens. The current system has behavior, but the public proof layer needs a source/proof hit.\"\n}"
+    },
+    {
+      "id": "external-comparable-system-tests",
+      "script": "tools/write-external-comparable-system-tests.mjs",
+      "status": "ok",
+      "startedAt": "2026-07-10T02:01:55.146Z",
+      "completedAt": "2026-07-10T02:01:55.625Z",
+      "outputTail": "    \"autoplay\": 5,\n    \"searches\": 2,\n    \"market\": 5,\n    \"proof\": 0,\n    \"source\": 0,\n    \"masterKeywordDoorEvents\": 72\n  }\n}"
+    },
+    {
+      "id": "google-cloud-api-consumption-read",
+      "script": "tools/write-google-cloud-api-consumption-read.mjs",
+      "status": "ok",
+      "startedAt": "2026-07-10T02:01:55.625Z",
+      "completedAt": "2026-07-10T02:01:55.730Z",
+      "outputTail": "      \"service\": \"youtube.googleapis.com\",\n      \"activePoints\": 9,\n      \"total\": 0.173333,\n      \"decision\": \"light-content-source-service\"\n    }\n  ],\n  \"seoDecision\": \"Keep Search Console as the master-list proof service. Do not over-poll; use it for sitemap/index/query-row truth and push the dapp to produce proof/source behavior.\"\n}"
+    },
+    {
+      "id": "seo-cycle-receipt",
+      "script": "tools/write-seo-cycle-receipt.mjs",
+      "status": "ok",
+      "startedAt": "2026-07-10T02:01:55.730Z",
+      "completedAt": "2026-07-10T02:01:56.233Z",
+      "outputTail": "    \"writeType\": \"seo-cycle-receipt\",\n    \"saved\": false,\n    \"reason\": \"supabase-runner-report-network-failed\",\n    \"detail\": \"ENOTFOUND\"\n  },\n  \"publicReceiptPath\": \"C:\\\\Users\\\\Admin\\\\Documents\\\\Codex\\\\2026-07-03\\\\ri\\\\digitalhut-deploy-clean-20260705-231218\\\\public\\\\digitalhut-seo-cycle-receipt-latest.json\",\n  \"docsReceiptPath\": \"C:\\\\Users\\\\Admin\\\\Documents\\\\Codex\\\\2026-07-03\\\\ri\\\\digitalhut-deploy-clean-20260705-231218\\\\docs\\\\digitalhut-seo-cycle-receipt-latest.json\"\n}"
+    },
+    {
+      "id": "sitemap-row-push",
+      "script": "tools/generate-search-console-row-sitemaps.mjs",
+      "status": "ok",
+      "startedAt": "2026-07-10T02:01:56.233Z",
+      "completedAt": "2026-07-10T02:01:57.805Z",
+      "outputTail": "  \"producedMasterKeywordUrlRows\": 50000,\n  \"producedTotalSitemapUrlRows\": 50228,\n  \"verifiedMasterKeywordUniverse\": 200572944,\n  \"sitemap\": \"public/sitemap.xml\",\n  \"sitemapIndex\": \"public/sitemap-index.xml\",\n  \"masterKeywordSitemap\": \"public/sitemap-master-keyword-50000.xml\",\n  \"receipt\": \"public/digitalhut-search-console-row-push.json\"\n}"
+    },
+    {
+      "id": "metric-contract",
+      "script": "tools/verify-metric-contract.mjs",
+      "status": "ok",
+      "startedAt": "2026-07-10T02:01:57.806Z",
+      "completedAt": "2026-07-10T02:01:57.867Z",
+      "outputTail": "  \"frontendPriorityGuards\": [\n    \"linkContext\",\n    \"proofEvent\",\n    \"sourceIntent\",\n    \"podcastControl\",\n    \"genericPreviewGuard\"\n  ]\n}"
+    },
+    {
+      "id": "route-crawl-shells",
+      "script": "tools/generate-route-crawl-shells.mjs",
+      "status": "ok",
+      "startedAt": "2026-07-10T02:01:57.867Z",
+      "completedAt": "2026-07-10T02:01:58.738Z",
+      "outputTail": "{\n  \"generatedAt\": \"2026-07-10T02:01:58.715Z\",\n  \"status\": \"route-crawl-shells-produced\",\n  \"routeCount\": 181,\n  \"sourceManifestRoutes\": 124,\n  \"extraRoutes\": 170,\n  \"purpose\": \"Give crawlers route-specific DigitalHut proof HTML while preserving the same React dapp for users.\"\n}"
+    },
+    {
+      "id": "seo-structure-reevaluation",
+      "script": "tools/write-seo-structure-reevaluation.mjs",
+      "status": "ok",
+      "startedAt": "2026-07-10T02:01:58.739Z",
+      "completedAt": "2026-07-10T02:01:59.207Z",
+      "outputTail": "    \"sitemapSurfacesPending\": 2\n  },\n  \"sitemap\": {\n    \"totalRows\": 50228,\n    \"masterRows\": 50000,\n    \"universe\": 200572944\n  }\n}"
+    }
+  ],
+  "failedStep": null,
+  "nextAction": "Keep the 200M SEO Master List as the attempt, but aim the next pass at GLB, podcast/source, autoplay, search, or market."
+}

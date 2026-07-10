@@ -1,0 +1,47 @@
+{
+  "generatedAt": "2026-07-07",
+  "mode": "DigitalHut Public Market Timing Map",
+  "status": "deployable-public-seo-map",
+  "domain": "https://www.digitalhut.app",
+  "purpose": "Map DigitalHut categories, long-tail lanes, route timing, and public proof routes for search engines and AI crawlers.",
+  "deployTimingRules": [
+    "deploy when a public category, watch route, blog route, sitemap route, metadata title, or crawler guide changes",
+    "deploy when Google Search Console confirms the site is eligible and the new public map can be crawled",
+    "hold when the change is only internal measurement or non-public research",
+    "keep public pages focused on video topic radar, GLB/3D preview, podcast/source moment, market view, watch proof, blog proof, and category proof"
+  ],
+  "coreCategories": [
+    {"category": "Mainstream Streaming", "timing": "daily and trend-triggered", "longTailFocus": ["funny videos explained with sources", "viral video source map", "YouTube video content radar", "TikTok reel visual context"], "route": "/watch/funny-mainstream-video-explained"},
+    {"category": "Planetary", "timing": "weekly and event-triggered", "longTailFocus": ["planetary research 3D experience", "orbital compute visual guide", "space video observatory"], "route": "/watch/planetary-research-3d-experience"},
+    {"category": "Real Estate", "timing": "weekly and seasonal", "longTailFocus": ["real estate 3D house walkthrough", "home remodel 3D visualization", "resort property 3D preview"], "route": "/watch/real-estate-3d-house-walkthrough"},
+    {"category": "Mobility", "timing": "daily local intent", "longTailFocus": ["Uber pickup visual guide", "rideshare pickup source map", "airport commute route explainer"], "route": "/watch/calling-an-uber-visual-trip-guide"},
+    {"category": "Science", "timing": "weekly and research-triggered", "longTailFocus": ["coral reef study visual experience", "animal extinction 3D experience", "climate research source map"], "route": "/watch/university-research-3d-experience"},
+    {"category": "Researcher", "timing": "weekly and source-triggered", "longTailFocus": ["research engine for 3D evidence", "wiki lookup source map", "public information visual research hub"], "route": "/watch/wiki-lookup-visual-research-hub"},
+    {"category": "Continent", "timing": "seasonal and travel-triggered", "longTailFocus": ["international city visual guide", "vacation route observatory", "cultural place 3D preview"], "route": "/watch/vacation-resort-3d-preview"},
+    {"category": "History", "timing": "weekly and documentary-triggered", "longTailFocus": ["historical topic visual guide", "timeline source map", "documentary 3D context"], "route": "/watch/wiki-lookup-visual-research-hub"},
+    {"category": "Businesses", "timing": "daily market and company-triggered", "longTailFocus": ["current market video observatory", "stock market visual analysis 3D", "company research source map"], "route": "/watch/current-market-video-observatory"},
+    {"category": "Workforce", "timing": "weekday and productivity-triggered", "longTailFocus": ["work commute visual guide", "lunch near office source map", "developer workflow observatory"], "route": "/watch/looking-for-lunch-visual-observatory"},
+    {"category": "Programmer", "timing": "weekly and release-triggered", "longTailFocus": ["developer dapp 3D experience", "coding episode 3D experience", "AI research engine with visual analysis"], "route": "/watch/developer-dapp-3d-experience"},
+    {"category": "Gamer", "timing": "weekend and release-triggered", "longTailFocus": ["gaming 3D environment viewer", "creator-safe game world assets", "server build visual experience"], "route": "/watch/gaming-3d-environment-viewer"},
+    {"category": "DigitalHut Presentation", "timing": "release-triggered", "longTailFocus": ["automatic 3D autoplay system", "podcast moment visual analysis", "3D model view researcher preview"], "route": "/watch/automatic-3d-autoplay-system"}
+  ],
+  "everydayLongTailLanes": [
+    {"lane": "Lunch And Local Food", "timing": "late morning, lunch, travel windows", "searchPattern": ["restaurants near me visual guide", "food near me video map", "lunch near me source-backed review"], "proofRoute": "/watch/looking-for-lunch-visual-observatory"},
+    {"lane": "Rideshare And Commute", "timing": "commute, airport, late night", "searchPattern": ["Uber pickup visual guide", "rideshare pickup location explained", "ride to airport visual route"], "proofRoute": "/watch/calling-an-uber-visual-trip-guide"},
+    {"lane": "Flight And Travel Booking", "timing": "travel planning, holidays, delays", "searchPattern": ["cheap flights visual guide", "flight tickets source map", "airport delays 3D map guide"], "proofRoute": "/watch/booking-flight-ticket-visual-guide"},
+    {"lane": "Wiki And Quick Research", "timing": "school, work, news cycles", "searchPattern": ["Wikipedia visual research hub", "what is this topic explained with sources", "public information 3D observatory"], "proofRoute": "/watch/wiki-lookup-visual-research-hub"},
+    {"lane": "Funny Mainstream Video", "timing": "evening, weekend, viral spikes", "searchPattern": ["funny videos explained with sources", "mainstream website funny clip explained", "what am I watching funny video"], "proofRoute": "/watch/funny-mainstream-video-explained"},
+    {"lane": "Errands And Review Before Buying", "timing": "weekend, payday, shopping windows", "searchPattern": ["product reviews visual summary", "Reddit reviews source map", "best deals near me visual guide"], "proofRoute": "/watch/search-intent-radar-visual-experience"}
+  ],
+  "publicCompareAndContrastRule": [
+    "clear search phrase people actually type",
+    "watch proof route",
+    "blog proof route",
+    "category proof route",
+    "GLB or 3D visual angle",
+    "podcast or source moment",
+    "backlink or source route",
+    "sitemap-visible canonical URL"
+  ],
+  "rankMovementRule": "Ranking movement is only claimed after Google Search Console returns impressions, clicks, CTR, query rows, page rows, country rows, or average-position movement."
+}

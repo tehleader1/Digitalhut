@@ -1,0 +1,190 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut FireCuda Innovation Mapping Layer",
+  "status": "firecuda-innovation-map-artifact-ready",
+  "purpose": "Artifact the 8TB FireCuda mapping system as the DigitalHut innovation layer that sits after frontend, backend, and cloud.",
+  "physicalBase": "FireCuda 8TB staging ground",
+  "enterpriseInterfaceTarget": "100TB-class database interface model for cluster maps, receipt ledgers, media/source indexes, and competition matrices",
+  "mapAuthorityScore": 69,
+  "totalVariationSlots": 2572944,
+  "rankOwnershipSlots": 2572944,
+  "routeCount": 124,
+  "launchTargetRoutes": 33,
+  "cycleScore": 73,
+  "featureScore": 62,
+  "proofScore": 38,
+  "architectureLayers": [
+    {
+      "layer": "frontend-experience",
+      "role": "User-facing DigitalHut observatory: video, live analytics, GLB, podcast/source moments, category lanes, market panel, and proof navigation.",
+      "ownedBy": "Digitalhut.app interface",
+      "fireCudaDependency": "Frontend sends receipts into the map: what the visitor watched, opened, rotated, searched, clicked, or ignored."
+    },
+    {
+      "layer": "backend-measurement",
+      "role": "Event capture, API mediation, source packets, route metadata, watch/blog/category proof, and Supabase refinement views.",
+      "ownedBy": "DigitalHut backend and Supabase contracts",
+      "fireCudaDependency": "Backend normalizes receipts so the map can compare clusters and decide what deserves promotion."
+    },
+    {
+      "layer": "cloud-distribution",
+      "role": "Vercel deploy surface, Google Cloud/Search Console/source metadata, public JSON packets, sitemap, crawler guidance, and structured data.",
+      "ownedBy": "Vercel, Google Cloud, Supabase, GitHub",
+      "fireCudaDependency": "Cloud turns selected map decisions into crawlable, measurable public proof."
+    },
+    {
+      "layer": "firecuda-innovation-map",
+      "role": "The DigitalHut innovation layer: deep cluster storage, rank-slot ownership, receipt ledgers, competition gaps, niche posts, rewrite/hold/promote decisions, and enterprise-scale interface planning.",
+      "ownedBy": "FireCuda 8TB staging ground with 100TB-class database interface design target",
+      "fireCudaDependency": "This is the layer that decides what the product should occupy next."
+    }
+  ],
+  "mapTables": [
+    {
+      "table": "cluster_universe_map",
+      "purpose": "Stores every lane, niche, keyword variation, rank owner, proof route, and target audience.",
+      "currentCardinality": "2,572,944 variation slots",
+      "enterpriseScaleRole": "Can shard by lane, language, region, platform, and intent when the database interface grows beyond the local 8TB staging layer."
+    },
+    {
+      "table": "experience_cycle_receipts",
+      "purpose": "Stores completed visitor stages: autoplay, GLB open, GLB rotate/zoom, podcast, search, category hop, proof route, backlink/source click.",
+      "currentCardinality": "225 page views / 72 unique visitors last-known",
+      "enterpriseScaleRole": "Turns a few real full cycles into proof that DigitalHut outperforms static competitor frameworks."
+    },
+    {
+      "table": "competition_framework_matrix",
+      "purpose": "Compares DigitalHut against sales pages, video pages, 3D galleries, research blogs, dashboards, and stronger compatible competitors.",
+      "currentCardinality": "5 framework classes",
+      "enterpriseScaleRole": "Prevents wasted SEO fights by only advancing when the system beats the current class by metric."
+    },
+    {
+      "table": "niche_post_occupancy",
+      "purpose": "Tracks which niche post DigitalHut currently occupies, defends, scales, rewrites, or abandons.",
+      "currentCardinality": "4 occupied/staged posts",
+      "enterpriseScaleRole": "Lets the system return between runs and check individual posts instead of restarting from scratch."
+    },
+    {
+      "table": "origin_and_backlink_receipts",
+      "purpose": "Stores direct/search/social/referral/local/unknown origin buckets plus backlink/source proof.",
+      "currentCardinality": "6 origin buckets staged",
+      "enterpriseScaleRole": "Turns traffic origin into repeatable audience extraction."
+    },
+    {
+      "table": "promotion_decision_ledger",
+      "purpose": "Records why a cluster was promoted, held, rewritten, paired with routes, or blocked from scale.",
+      "currentCardinality": "decision contract staged",
+      "enterpriseScaleRole": "Creates an audit trail for enterprise SEO decisions instead of loose keyword dumping."
+    }
+  ],
+  "mapOperations": [
+    {
+      "operation": "map",
+      "input": "FireCuda cluster universe, everyday search language, route metadata, platform/source packets",
+      "output": "rank-owned keyword slots and niche post candidates",
+      "decisionRule": "Only store candidates that can connect to a DigitalHut function or proof route."
+    },
+    {
+      "operation": "measure",
+      "input": "Supabase/Vercel/Search Console/user-cycle receipts",
+      "output": "cycle score, proof score, origin proof, feature usefulness",
+      "decisionRule": "Do not claim movement without a receipt."
+    },
+    {
+      "operation": "compare",
+      "input": "DigitalHut cycle data and competitor framework classes",
+      "output": "compatible competitor to attack next",
+      "decisionRule": "Beat thin/static frameworks before fighting enterprise head terms."
+    },
+    {
+      "operation": "occupy",
+      "input": "winning niche post and proof route family",
+      "output": "watch/blog/category/source-backed cluster position",
+      "decisionRule": "Hold the post while behavior improves; rewrite if receipts stay weak."
+    },
+    {
+      "operation": "scale",
+      "input": "repeatable full-cycle behavior and backlinks/source clicks",
+      "output": "larger cluster expansion and stronger competition lane",
+      "decisionRule": "Scale only when the full experience cycle outpaces competitor usefulness."
+    }
+  ],
+  "innovationClaims": [
+    "FireCuda is the DigitalHut innovation layer after frontend and backend.",
+    "The map turns storage into decisions: promote, hold, rewrite, occupy, defend, scale.",
+    "The current 8TB staging ground is treated as the local enterprise map base.",
+    "The 100TB database interface is the expansion model for sharded clusters, receipt history, media/source packets, and competition matrices.",
+    "The map is what makes DigitalHut more than a website: it remembers which niches were tested and why they moved."
+  ],
+  "capacityGovernance": {
+    "currentPhysicalTier": "8TB FireCuda local staging ground",
+    "nextRackTarget": "30TB database rack expansion",
+    "enterpriseInterfaceCeiling": "100TB-class sharded database interface",
+    "currentUsageReceiptStatus": "actual-disk-usage-receipt-captured",
+    "capacityReceipt": {
+      "capturedAt": "2026-07-07T01:23:00-04:00",
+      "source": "Get-CimInstance Win32_LogicalDisk capacity receipt",
+      "deviceId": "D:",
+      "volumeName": "Seagate",
+      "sizeTb": 7.28,
+      "freeTb": 7.26,
+      "usedTb": 0.02,
+      "usedPct": 0.2,
+      "pressureStage": "normal",
+      "nextRackTarget": "30TB database rack expansion",
+      "read": "FireCuda/Seagate staging drive is breathing comfortably. No 30TB rack pressure yet."
+    },
+    "utilizationRead": "D: Seagate: 0.02TB used of 7.28TB (0.2% used), 7.26TB free",
+    "currentPressureStage": "normal",
+    "currentRackDecision": "stay-on-8tb-firecuda-base",
+    "measurementContract": [
+      "Measure raw media/source packets separately from public deploy artifacts.",
+      "Measure cluster universe rows separately from generated watch/blog/category routes.",
+      "Measure receipt ledgers by event volume, retention window, route, origin bucket, and niche post.",
+      "Measure GLB/media cache pressure separately from SEO text/map metadata.",
+      "Promote to a larger rack only when useful receipts, media/source growth, and cluster replay value justify the storage."
+    ],
+    "pressureStages": [
+      {
+        "stage": "normal",
+        "estimatedUtilization": "0-55%",
+        "systemMeaning": "8TB is breathing comfortably. Keep mapping clusters, receipts, and proof routes locally.",
+        "action": "Stay on FireCuda base and refine quality."
+      },
+      {
+        "stage": "pressure-watch",
+        "estimatedUtilization": "55-70%",
+        "systemMeaning": "The map is becoming a real database layer. Begin pruning filler packets and compressing stale source caches.",
+        "action": "Start weekly retention rules and archive weak/no-receipt clusters."
+      },
+      {
+        "stage": "expansion-planning",
+        "estimatedUtilization": "70-82%",
+        "systemMeaning": "DigitalHut is nearing enterprise storage pressure. The next 30TB rack should be quoted and staged.",
+        "action": "Prepare sharding by niche, media type, origin bucket, and receipt class."
+      },
+      {
+        "stage": "rack-trigger",
+        "estimatedUtilization": "82-90%",
+        "systemMeaning": "The 8TB base is no longer enough for reliable growth.",
+        "action": "Move hot receipt ledgers and media/source caches into the 30TB rack expansion."
+      },
+      {
+        "stage": "hard-limit",
+        "estimatedUtilization": "90%+",
+        "systemMeaning": "Do not keep dumping data into the local map. Data quality and system stability are now at risk.",
+        "action": "Freeze filler expansion, archive cold lanes, and migrate before scaling SEO."
+      }
+    ],
+    "upgradeSignals": [
+      "Full-cycle receipts grow faster than stale/filler clusters.",
+      "GLB/media source cache becomes repeatedly useful in multiple niches.",
+      "Search Console/Supabase origins prove repeat visitors from several clusters.",
+      "Backlink/source receipts require longer retention for compare-and-contrast decisions.",
+      "Route metadata and proof packets become too valuable to prune aggressively."
+    ]
+  },
+  "currentLeadPost": "3D GLB Open",
+  "currentLeadNiche": "3D visual proof over static pages",
+  "nextSystemMove": "Keep the FireCuda map as the enterprise innovation artifact. Use it to judge every cluster by receipts, not by keyword volume alone, then deploy only meaningful map changes that improve DigitalHut's public proof."
+}

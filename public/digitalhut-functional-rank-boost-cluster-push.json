@@ -1,0 +1,163 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Functional Rank Boost Cluster Push",
+  "status": "functional-rank-boost-staged-15-minute-standby-ready",
+  "purpose": "Stage the first reasonable cluster dumps that can boost DigitalHut where competitors have sales pages but not built observatory functionality.",
+  "guardrail": "No public flood. These clusters are staged into the system and respect the 4 blog posts per 24 hours whiteboard cap until live rank/behavior proof refreshes.",
+  "metricFreshnessStatus": "stale-live-refresh-needed",
+  "rankBenchmarkStatus": "rank-benchmark-staged-waiting-live-rank-proof",
+  "rankJumpStatus": "rank-jump-staged-live-proof-needed",
+  "normalBlogCap24h": 4,
+  "audienceConclusion": {
+    "status": "last-known-stale-but-directional",
+    "read": "The current audience appears visual-proof curious before it is search-panel or market-panel active.",
+    "evidence": [
+      "62 GLB previews against 225 page views (27.6% of page views) shows the 3D proof lane is the strongest visible behavior.",
+      "14 blog views (6.2% of page views) shows proof pages have some traction but need stronger route/source connection.",
+      "0 search interactions means the system should create clearer human-intent entry points before expecting typed search behavior.",
+      "0 market opens means market rank clusters should stay staged until the market panel earns behavior.",
+      "2 podcast interrupts means podcast/source authority is present but still a support lane, not the lead lane."
+    ],
+    "audienceRequestInference": [
+      "Show me useful proof, not a sales landing page.",
+      "Let me inspect 3D/source context quickly.",
+      "Explain what the video/topic is about without making me search manually.",
+      "Give me proof routes and backlinks that make the presentation credible."
+    ]
+  },
+  "clusterCount": 4,
+  "clusters": [
+    {
+      "id": "functional-3d-proof-over-landing-page",
+      "lane": "3D Proof Beats Sales Page",
+      "audienceNeed": "Visitors are proving they want inspectable 3D/GLB context, not just a company asking for money.",
+      "competitorGap": "Most small and mid-size companies have front-facing service pages, image galleries, or forms, but no live 3D proof route tied to video/source context.",
+      "keywords": [
+        "3d model proof instead of landing page",
+        "inspectable 3d visual source map",
+        "business with real 3d preview proof",
+        "video explained with 3d model proof"
+      ],
+      "proofRoutes": [
+        "/watch/search-intent-radar-visual-experience",
+        "/blog/search-intent-radar-visual-experience",
+        "/category/3d-visual-experience"
+      ],
+      "currentEstimatedRank": 236000000,
+      "nextTargetRank": 1000000,
+      "authorityTargetRank": 100000,
+      "systemPush": "Lead with GLB/source proof because last-known behavior favors GLB previews.",
+      "priority": 1,
+      "blogReleaseStatus": "within-4-per-24h-cap-staged",
+      "rankJumpPotential": 235900000,
+      "requiredReceipts": [
+        "Search Console query position",
+        "Supabase route/event behavior",
+        "backlink/source click",
+        "watch/blog/category proof",
+        "same-topic video/GLB/podcast alignment"
+      ]
+    },
+    {
+      "id": "functional-video-source-observatory",
+      "lane": "Video Source Observatory",
+      "audienceNeed": "Visitors need the system to explain a video/topic with sources, backlinks, and route proof before they trust the analytics.",
+      "competitorGap": "Most media pages embed video or summarize it, but do not combine video, source links, backlink proof, GLB context, podcast/source moments, and measured behavior.",
+      "keywords": [
+        "video explained with source map",
+        "youtube video source proof observatory",
+        "what am i watching video backlinks",
+        "viral video explained with proof routes"
+      ],
+      "proofRoutes": [
+        "/watch/funny-mainstream-video-explained",
+        "/blog/funny-mainstream-video-explained",
+        "/category/what-am-i-watching-observatory"
+      ],
+      "currentEstimatedRank": 237250000,
+      "nextTargetRank": 1000000,
+      "authorityTargetRank": 100000,
+      "systemPush": "Attach every entertainment/video cluster to backlinks and watch/blog proof before public promotion.",
+      "priority": 2,
+      "blogReleaseStatus": "within-4-per-24h-cap-staged",
+      "rankJumpPotential": 237150000,
+      "requiredReceipts": [
+        "Search Console query position",
+        "Supabase route/event behavior",
+        "backlink/source click",
+        "watch/blog/category proof",
+        "same-topic video/GLB/podcast alignment"
+      ]
+    },
+    {
+      "id": "functional-everyday-decision-map",
+      "lane": "Everyday Decision Map",
+      "audienceNeed": "Normal users need useful local decisions: lunch, groceries, repairs, tickets, rides, and reviews with source proof.",
+      "competitorGap": "Most local companies and directories show listings, reviews, or booking forms, but do not build a source-backed visual decision map.",
+      "keywords": [
+        "best lunch near me visual source map",
+        "grocery deal visual proof route",
+        "local service source backed visual guide",
+        "nearby store review timeline proof"
+      ],
+      "proofRoutes": [
+        "/watch/looking-for-lunch-visual-observatory",
+        "/blog/grocery-shopping-3d-experience",
+        "/category/mundane-off-time-experience"
+      ],
+      "currentEstimatedRank": 236000000,
+      "nextTargetRank": 1000000,
+      "authorityTargetRank": 100000,
+      "systemPush": "Use everyday language first because search is quiet and typed behavior needs clearer entry points.",
+      "priority": 3,
+      "blogReleaseStatus": "within-4-per-24h-cap-staged",
+      "rankJumpPotential": 235900000,
+      "requiredReceipts": [
+        "Search Console query position",
+        "Supabase route/event behavior",
+        "backlink/source click",
+        "watch/blog/category proof",
+        "same-topic video/GLB/podcast alignment"
+      ]
+    },
+    {
+      "id": "functional-developer-research-proof",
+      "lane": "Developer Research Proof",
+      "audienceNeed": "Technical visitors need evidence that the system is infrastructure-backed, not a visual demo.",
+      "competitorGap": "Many developer/research pages explain features, but do not show route proof, cloud readiness, source events, GLB proof, and measurement contracts together.",
+      "keywords": [
+        "developer dapp analytics proof",
+        "backend analytics observatory proof",
+        "research topic 3d visual source map",
+        "programmer research hub with source links"
+      ],
+      "proofRoutes": [
+        "/watch/wiki-lookup-visual-research-hub",
+        "/blog/wiki-lookup-visual-research-hub",
+        "/category/system-presentation-proof"
+      ],
+      "currentEstimatedRank": 238500000,
+      "nextTargetRank": 1000000,
+      "authorityTargetRank": 100000,
+      "systemPush": "Use build/system proof to show DigitalHut has real infrastructure behind the media presentation.",
+      "priority": 4,
+      "blogReleaseStatus": "within-4-per-24h-cap-staged",
+      "rankJumpPotential": 238400000,
+      "requiredReceipts": [
+        "Search Console query position",
+        "Supabase route/event behavior",
+        "backlink/source click",
+        "watch/blog/category proof",
+        "same-topic video/GLB/podcast alignment"
+      ]
+    }
+  ],
+  "systemCombinationPush": [
+    "FireCuda stores the four cluster dumps, rank targets, filler rejects, and backlink candidates.",
+    "Supabase waits for route, source, GLB, podcast, search, blog, and category receipts before promotion.",
+    "Google Cloud supports media/source metadata enrichment when allowed by API/source rules.",
+    "Vercel serves only stable proof packets and route metadata after build/deploy proof.",
+    "Codex reasoning compares the audience read against the cluster map and keeps filler out."
+  ],
+  "nextSystemMove": "Run a 15-minute standby so the whole system refreshes around these four functionality-first rank clusters, then review live-proof blockers before any publish/deploy step."
+}

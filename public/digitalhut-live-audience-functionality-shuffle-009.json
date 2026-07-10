@@ -1,0 +1,102 @@
+{
+  "generatedAt": "2026-07-07T13:33:31.151Z",
+  "status": "live-audience-custom-build-read",
+  "searchConsoleStatus": "delayed-ranking-window-no-query-rows-yet",
+  "productionMetrics": {
+    "pageViews": 282,
+    "uniqueVisitors": 99,
+    "totalEvents": 499,
+    "searchInteractions": 2,
+    "autoplayStarts": 5,
+    "episodeShifts": 2,
+    "glbPreviewPlays": 83,
+    "glbReplicaPlays": 0,
+    "podcastInterrupts": 13,
+    "marketOpens": 5,
+    "blogViews": 14,
+    "proofRouteOpens": 0,
+    "sourceBacklinkOpens": 0
+  },
+  "movementPools": [
+    {
+      "pool": "GLB/Mainstream environment lane",
+      "signal": "83 GLB preview plays",
+      "decision": "current active custom-build arm"
+    },
+    {
+      "pool": "Homepage/core presentation",
+      "signal": "209 homepage page views",
+      "decision": "entry attention is holding"
+    },
+    {
+      "pool": "Podcast interrupts",
+      "signal": "13 podcast interrupts",
+      "decision": "keep as support layer, not lead lane"
+    },
+    {
+      "pool": "Market panel",
+      "signal": "5 market opens",
+      "decision": "secondary credibility lane"
+    }
+  ],
+  "dryPools": [
+    "proof route opens",
+    "source/backlink opens",
+    "intent selections",
+    "GLB replica plays",
+    "organic Search Console query rows"
+  ],
+  "primaryAudienceTarget": {
+    "label": "Daily video watcher looking for a richer YouTube-style alternative",
+    "phrase": "YouTube alternative full-view episode with 3D Model View, podcast/source moments, and live analytics",
+    "seoRole": "parent lane for the next custom build shuffle"
+  },
+  "functionalityCompetitors": [
+    {
+      "type": "YouTube-style video players",
+      "currentStrength": "playback, playlists, queueing, player events",
+      "digitalhutOpening": "same watch rhythm plus GLB view, podcast/source interrupts, analytics, and proof routes",
+      "matchLevel": 82
+    },
+    {
+      "type": "Sketchfab/Fab-style 3D model viewers",
+      "currentStrength": "controllable 3D viewer, model discovery, embed flow",
+      "digitalhutOpening": "video topic turns into a connected model view with podcast/source and SEO proof",
+      "matchLevel": 78
+    },
+    {
+      "type": "Descript-style AI video/podcast tools",
+      "currentStrength": "creation, editing, transcription, podcast/video production",
+      "digitalhutOpening": "viewer-facing observatory, not just creator editing",
+      "matchLevel": 62
+    },
+    {
+      "type": "NotebookLM-style research summaries",
+      "currentStrength": "source-aware research and audio/video summaries",
+      "digitalhutOpening": "entertainment view where research appears around live media and GLB context",
+      "matchLevel": 58
+    },
+    {
+      "type": "Matterport-style digital twins",
+      "currentStrength": "spatial tours and property/space modeling",
+      "digitalhutOpening": "all-topic 3D/media observatory, not only scanned places",
+      "matchLevel": 55
+    },
+    {
+      "type": "TradingView-style market analytics",
+      "currentStrength": "market charting and data panels",
+      "digitalhutOpening": "market as one category inside the full entertainment/research view",
+      "matchLevel": 42
+    }
+  ],
+  "nextThresholds": {
+    "pageViews": 292,
+    "uniqueVisitors": 104,
+    "glbPreviewPlays": 90,
+    "podcastInterrupts": 16,
+    "autoplayStarts": 8,
+    "searchInteractions": 4,
+    "proofRouteOpens": 1,
+    "sourceBacklinkOpens": 1
+  }
+}
