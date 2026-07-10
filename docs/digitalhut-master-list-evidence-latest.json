@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-10T23:17:36.199Z",
+  "generatedAt": "2026-07-10T23:35:24.842Z",
   "status": "master-list-evidence-connected",
   "truthBoundary": "The 200,572,944 value is deterministic internal variation capacity. Public search ownership requires indexed canonical routes, impressions, clicks, and user conversions.",
   "storageMode": "healthy-system-drive-and-cloud-evidence",
@@ -12,7 +12,7 @@
     "publicQueryParameterRows": 0
   },
   "production": {
-    "generatedAt": "2026-07-10T23:17:37.080Z",
+    "generatedAt": "2026-07-10T23:35:25.247Z",
     "pageViews": 325,
     "uniqueVisitors": 120,
     "totalEvents": 542,
@@ -42,6 +42,302 @@
     "metadataRoutes": 165,
     "sitemapProofRoutes": 165,
     "missingRoutes": []
+  },
+  "productionTrails": {
+    "status": "production-trails-verified",
+    "checked": 24,
+    "passed": 24,
+    "failed": 0,
+    "checks": [
+      {
+        "id": "full-entertainment-dapp-alternative",
+        "route": "/watch/full-view-episode-alternative",
+        "status": 200,
+        "signals": {
+          "canonical": true,
+          "systemProof": true,
+          "masterList": true,
+          "sourceBridge": true
+        },
+        "pass": true
+      },
+      {
+        "id": "gaming-3d-world-observatory",
+        "route": "/watch/game-world-glb-presentation",
+        "status": 200,
+        "signals": {
+          "canonical": true,
+          "systemProof": true,
+          "masterList": true,
+          "sourceBridge": true
+        },
+        "pass": true
+      },
+      {
+        "id": "real-estate-3d-tour-observatory",
+        "route": "/watch/real-estate-3d-tour-observatory",
+        "status": 200,
+        "signals": {
+          "canonical": true,
+          "systemProof": true,
+          "masterList": true,
+          "sourceBridge": true
+        },
+        "pass": true
+      },
+      {
+        "id": "planetary-space-observatory",
+        "route": "/watch/planetary-space-visual-observatory",
+        "status": 200,
+        "signals": {
+          "canonical": true,
+          "systemProof": true,
+          "masterList": true,
+          "sourceBridge": true
+        },
+        "pass": true
+      },
+      {
+        "id": "exotic-environment-visual-experience",
+        "route": "/watch/exotic-environment-visual-experience",
+        "status": 200,
+        "signals": {
+          "canonical": true,
+          "systemProof": true,
+          "masterList": true,
+          "sourceBridge": true
+        },
+        "pass": true
+      },
+      {
+        "id": "architecture-structure-engineering",
+        "route": "/watch/architecture-structure-engineering-visual",
+        "status": 200,
+        "signals": {
+          "canonical": true,
+          "systemProof": true,
+          "masterList": true,
+          "sourceBridge": true
+        },
+        "pass": true
+      },
+      {
+        "id": "developer-programmer-research",
+        "route": "/watch/developer-programmer-research-observatory",
+        "status": 200,
+        "signals": {
+          "canonical": true,
+          "systemProof": true,
+          "masterList": true,
+          "sourceBridge": true
+        },
+        "pass": true
+      },
+      {
+        "id": "ai-video-podcast-source-explainer",
+        "route": "/watch/ai-video-podcast-source-explainer",
+        "status": 200,
+        "signals": {
+          "canonical": true,
+          "systemProof": true,
+          "masterList": true,
+          "sourceBridge": true
+        },
+        "pass": true
+      },
+      {
+        "id": "social-reel-meme-analysis",
+        "route": "/watch/social-reel-meme-analysis",
+        "status": 200,
+        "signals": {
+          "canonical": true,
+          "systemProof": true,
+          "masterList": true,
+          "sourceBridge": true
+        },
+        "pass": true
+      },
+      {
+        "id": "virtual-travel-resort-vacation",
+        "route": "/watch/virtual-travel-resort-vacation",
+        "status": 200,
+        "signals": {
+          "canonical": true,
+          "systemProof": true,
+          "masterList": true,
+          "sourceBridge": true
+        },
+        "pass": true
+      },
+      {
+        "id": "market-company-observatory",
+        "route": "/watch/market-company-observatory",
+        "status": 200,
+        "signals": {
+          "canonical": true,
+          "systemProof": true,
+          "masterList": true,
+          "sourceBridge": true
+        },
+        "pass": true
+      },
+      {
+        "id": "workforce-training-visual-system",
+        "route": "/watch/workforce-training-visual-system",
+        "status": 200,
+        "signals": {
+          "canonical": true,
+          "systemProof": true,
+          "masterList": true,
+          "sourceBridge": true
+        },
+        "pass": true
+      },
+      {
+        "id": "education-study-visual-research",
+        "route": "/watch/education-study-visual-research",
+        "status": 200,
+        "signals": {
+          "canonical": true,
+          "systemProof": true,
+          "masterList": true,
+          "sourceBridge": true
+        },
+        "pass": true
+      },
+      {
+        "id": "local-life-errands-companion",
+        "route": "/watch/local-life-errands-companion",
+        "status": 200,
+        "signals": {
+          "canonical": true,
+          "systemProof": true,
+          "masterList": true,
+          "sourceBridge": true
+        },
+        "pass": true
+      },
+      {
+        "id": "home-project-diy-visual",
+        "route": "/watch/home-project-diy-visual",
+        "status": 200,
+        "signals": {
+          "canonical": true,
+          "systemProof": true,
+          "masterList": true,
+          "sourceBridge": true
+        },
+        "pass": true
+      },
+      {
+        "id": "lifestyle-event-visual-experience",
+        "route": "/watch/lifestyle-event-visual-experience",
+        "status": 200,
+        "signals": {
+          "canonical": true,
+          "systemProof": true,
+          "masterList": true,
+          "sourceBridge": true
+        },
+        "pass": true
+      },
+      {
+        "id": "creator-brand-product-showcase",
+        "route": "/watch/creator-brand-product-showcase",
+        "status": 200,
+        "signals": {
+          "canonical": true,
+          "systemProof": true,
+          "masterList": true,
+          "sourceBridge": true
+        },
+        "pass": true
+      },
+      {
+        "id": "international-language-side-markets",
+        "route": "/watch/international-language-side-markets",
+        "status": 200,
+        "signals": {
+          "canonical": true,
+          "systemProof": true,
+          "masterList": true,
+          "sourceBridge": true
+        },
+        "pass": true
+      },
+      {
+        "id": "lunch-local-food",
+        "route": "/watch/looking-for-lunch-visual-observatory",
+        "status": 200,
+        "signals": {
+          "canonical": true,
+          "systemProof": true,
+          "masterList": true,
+          "sourceBridge": true
+        },
+        "pass": true
+      },
+      {
+        "id": "rideshare-commute",
+        "route": "/watch/calling-an-uber-visual-trip-guide",
+        "status": 200,
+        "signals": {
+          "canonical": true,
+          "systemProof": true,
+          "masterList": true,
+          "sourceBridge": true
+        },
+        "pass": true
+      },
+      {
+        "id": "flight-travel-booking",
+        "route": "/watch/booking-flight-ticket-visual-guide",
+        "status": 200,
+        "signals": {
+          "canonical": true,
+          "systemProof": true,
+          "masterList": true,
+          "sourceBridge": true
+        },
+        "pass": true
+      },
+      {
+        "id": "wiki-quick-research",
+        "route": "/watch/wiki-lookup-visual-research-hub",
+        "status": 200,
+        "signals": {
+          "canonical": true,
+          "systemProof": true,
+          "masterList": true,
+          "sourceBridge": true
+        },
+        "pass": true
+      },
+      {
+        "id": "funny-mainstream-video",
+        "route": "/watch/funny-mainstream-video-explained",
+        "status": 200,
+        "signals": {
+          "canonical": true,
+          "systemProof": true,
+          "masterList": true,
+          "sourceBridge": true
+        },
+        "pass": true
+      },
+      {
+        "id": "errands-review-before-buying",
+        "route": "/watch/search-intent-radar-visual-experience",
+        "status": 200,
+        "signals": {
+          "canonical": true,
+          "systemProof": true,
+          "masterList": true,
+          "sourceBridge": true
+        },
+        "pass": true
+      }
+    ]
   },
   "laneEvidence": [
     {
@@ -1375,7 +1671,7 @@
     }
   ],
   "compareAndContrast": {
-    "previousGeneratedAt": "2026-07-10T22:41:56.711Z",
+    "previousGeneratedAt": "2026-07-10T23:34:49.235Z",
     "productionDelta": {
       "pageViews": 0,
       "uniqueVisitors": 0,
