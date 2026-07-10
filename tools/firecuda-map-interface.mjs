@@ -6,6 +6,7 @@ const repoRoot = resolve(dirname(new URL(import.meta.url).pathname.replace(/^\/(
 const fireCudaRoot = process.env.DIGITALHUT_FIRECUDA_PATH || "D:\\DigitalHutAgent"
 const localReceiptPath = resolve(repoRoot, "docs", "digitalhut-firecuda-codex-map-interface-latest.json")
 const publicReceiptPath = resolve(repoRoot, "public", "digitalhut-firecuda-codex-map-interface.json")
+const healthReceiptPath = resolve(repoRoot, "docs", "digitalhut-firecuda-health-latest.json")
 const fireCudaReceiptPath = `${fireCudaRoot}\\seo-map\\digitalhut-codex-map-interface-latest.json`
 
 function readJson(path, fallback = {}){
@@ -37,7 +38,21 @@ function fireCudaHealth(){
       && !/Repair|Failed|Unknown|Degraded/i.test(operational)
       && disk.PathReady === true
       && disk.EnumerationReady === true
-    return {healthy, status: healthy ? "healthy" : "quarantined", fireCudaRoot, disk}
+    const healthReceipt = readJson(healthReceiptPath)
+    const receiptSaysUnhealthy = healthReceipt.status === "unhealthy"
+      || Number(healthReceipt.disk?.StorageErrorCount || 0) > 0
+    const effectiveHealthy = healthy && !receiptSaysUnhealthy
+    return {
+      healthy: effectiveHealthy,
+      status: effectiveHealthy ? "healthy" : "quarantined",
+      fireCudaRoot,
+      disk,
+      healthReceipt: healthReceipt.status ? {
+        status: healthReceipt.status,
+        storageErrorCount: Number(healthReceipt.disk?.StorageErrorCount || 0),
+        storageErrorIds: healthReceipt.disk?.StorageErrorIds || []
+      } : null
+    }
   } catch(error){
     return {healthy: false, status: "unavailable", fireCudaRoot, error: String(error?.stderr || error?.message || error).trim()}
   }

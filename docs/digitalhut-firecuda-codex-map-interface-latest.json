@@ -1,0 +1,374 @@
+{
+  "generatedAt": "2026-07-10T23:49:43.132Z",
+  "status": "firecuda-map-local-queue",
+  "mode": "DigitalHut Codex Oversight Map Interface",
+  "intelligenceBoundary": "This interface stores evidence and Codex decision receipts. It does not claim autonomous Codex reasoning when Codex is offline.",
+  "flow": [
+    "FireCuda map",
+    "Supabase behavior",
+    "Google/Search Console evidence",
+    "Vercel production",
+    "Compare and contrast",
+    "Codex oversight"
+  ],
+  "fireCuda": {
+    "healthy": false,
+    "status": "quarantined",
+    "fireCudaRoot": "D:\\DigitalHutAgent",
+    "disk": {
+      "HealthStatus": "Healthy",
+      "OperationalStatus": "OK",
+      "Size": 8001546088448,
+      "SizeRemaining": 7984013004800,
+      "PathReady": true,
+      "EnumerationReady": true
+    },
+    "healthReceipt": {
+      "status": "unhealthy",
+      "storageErrorCount": 233,
+      "storageErrorIds": [
+        129,
+        7,
+        153,
+        51
+      ]
+    }
+  },
+  "masterList": {
+    "totalUniverse": 200572944,
+    "countedLanes": 24,
+    "internalSelectionWindow": 50000,
+    "publicCanonicalRoutes": 50,
+    "publicQueryParameterRows": 0
+  },
+  "live": {
+    "ready": true,
+    "generatedAt": "2026-07-10T23:49:43.964Z",
+    "pageViews": 325,
+    "uniqueVisitors": 120,
+    "totalEvents": 542,
+    "glb": 83,
+    "podcast": 13,
+    "autoplay": 5,
+    "searches": 2,
+    "market": 5,
+    "proof": 0,
+    "source": 0,
+    "masterKeywordDoorEvents": 74,
+    "freshAudience": {
+      "status": "fresh-audience-live-read",
+      "baseline": {
+        "capturedAt": "2026-07-09T07:16:06.858Z",
+        "reason": "Old pocket put to the side. Fresh audience reads only report movement above this baseline.",
+        "pageViews": 319,
+        "uniqueVisitors": 117,
+        "totalEvents": 536,
+        "glb": 83,
+        "podcast": 13,
+        "autoplay": 5,
+        "searches": 2,
+        "market": 5,
+        "proof": 0,
+        "source": 0,
+        "blogViews": 28,
+        "masterKeywordDoorEvents": 68
+      },
+      "delta": {
+        "pageViews": 6,
+        "uniqueVisitors": 3,
+        "totalEvents": 6,
+        "glb": 0,
+        "podcast": 0,
+        "autoplay": 0,
+        "searches": 0,
+        "market": 0,
+        "proof": 0,
+        "source": 0,
+        "blogViews": 0,
+        "masterKeywordDoorEvents": 6
+      },
+      "decision": "fresh-weak-page-lift",
+      "secondActionDelta": 0,
+      "notify": false,
+      "summary": "fresh-weak-page-lift: 6 fresh page views, 3 fresh visitors, 6 fresh events, 0 fresh second actions, 0 proof opens, 0 source opens.",
+      "nextTarget": "Route new page-view movement into full-system proof before expanding another lane.",
+      "routeCandidates": [
+        {
+          "lane": "DigitalHut 200M SEO Master List",
+          "origin": "direct-or-private-referrer",
+          "path": "/",
+          "visitors": 76,
+          "pageViews": 162,
+          "secondActions": 28,
+          "proofRouteOpens": 0,
+          "sourceOpens": 0,
+          "nextRoute": "/system-proof",
+          "sourceBridge": "/source-bridge?lane=DigitalHut%20200M%20SEO%20Master%20List&source=door-trail#digitalhut-200m-seo-master-list",
+          "sourceEvidence": "/digitalhut-proof-source-conversion-bridge.json#digitalhut-200m-seo-master-list"
+        },
+        {
+          "lane": "DigitalHut 200M SEO Master List",
+          "origin": "vercel-preview-or-deploy",
+          "path": "/",
+          "visitors": 21,
+          "pageViews": 58,
+          "secondActions": 32,
+          "proofRouteOpens": 0,
+          "sourceOpens": 0,
+          "nextRoute": "/system-proof",
+          "sourceBridge": "/source-bridge?lane=DigitalHut%20200M%20SEO%20Master%20List&source=door-trail#digitalhut-200m-seo-master-list",
+          "sourceEvidence": "/digitalhut-proof-source-conversion-bridge.json#digitalhut-200m-seo-master-list"
+        },
+        {
+          "lane": "Mainstream Streaming",
+          "origin": "vercel-preview-or-deploy",
+          "path": "/",
+          "visitors": 7,
+          "pageViews": 0,
+          "secondActions": 31,
+          "proofRouteOpens": 0,
+          "sourceOpens": 0,
+          "nextRoute": "/watch/mainstream-streaming",
+          "sourceBridge": "/source-bridge?lane=Mainstream%20Streaming&source=door-trail#mainstream-streaming",
+          "sourceEvidence": "/digitalhut-proof-source-conversion-bridge.json#mainstream-streaming"
+        },
+        {
+          "lane": "automatic 3d autoplay system",
+          "origin": "direct-or-private-referrer",
+          "path": "/blog/automatic-3d-autoplay-system",
+          "visitors": 1,
+          "pageViews": 8,
+          "secondActions": 4,
+          "proofRouteOpens": 0,
+          "sourceOpens": 0,
+          "nextRoute": "/blog/automatic-3d-autoplay-system",
+          "sourceBridge": "/source-bridge?lane=automatic%203d%20autoplay%20system&source=door-trail#automatic-3d-autoplay-system",
+          "sourceEvidence": "/digitalhut-proof-source-conversion-bridge.json#automatic-3d-autoplay-system"
+        },
+        {
+          "lane": "Businesses",
+          "origin": "vercel-preview-or-deploy",
+          "path": "/",
+          "visitors": 2,
+          "pageViews": 0,
+          "secondActions": 5,
+          "proofRouteOpens": 0,
+          "sourceOpens": 0,
+          "nextRoute": "/watch/businesses",
+          "sourceBridge": "/source-bridge?lane=Businesses&source=door-trail#businesses",
+          "sourceEvidence": "/digitalhut-proof-source-conversion-bridge.json#businesses"
+        },
+        {
+          "lane": "After Work Relax Viewer",
+          "origin": "external-referrer",
+          "path": "/audience-test/after-work-relax",
+          "visitors": 1,
+          "pageViews": 1,
+          "secondActions": 2,
+          "proofRouteOpens": 0,
+          "sourceOpens": 0,
+          "nextRoute": "/audience-test/after-work-relax",
+          "sourceBridge": "/source-bridge?lane=After%20Work%20Relax%20Viewer&source=door-trail#after-work-relax-viewer",
+          "sourceEvidence": "/digitalhut-proof-source-conversion-bridge.json#after-work-relax-viewer"
+        },
+        {
+          "lane": "Gaming GLB Viewer",
+          "origin": "external-referrer",
+          "path": "/audience-test/gaming-glb",
+          "visitors": 1,
+          "pageViews": 1,
+          "secondActions": 2,
+          "proofRouteOpens": 0,
+          "sourceOpens": 0,
+          "nextRoute": "/audience-test/gaming-glb",
+          "sourceBridge": "/source-bridge?lane=Gaming%20GLB%20Viewer&source=door-trail#gaming-glb-viewer",
+          "sourceEvidence": "/digitalhut-proof-source-conversion-bridge.json#gaming-glb-viewer"
+        },
+        {
+          "lane": "Research Podcast Viewer",
+          "origin": "external-referrer",
+          "path": "/audience-test/research-podcast",
+          "visitors": 1,
+          "pageViews": 1,
+          "secondActions": 2,
+          "proofRouteOpens": 0,
+          "sourceOpens": 0,
+          "nextRoute": "/audience-test/research-podcast",
+          "sourceBridge": "/source-bridge?lane=Research%20Podcast%20Viewer&source=door-trail#research-podcast-viewer",
+          "sourceEvidence": "/digitalhut-proof-source-conversion-bridge.json#research-podcast-viewer"
+        }
+      ]
+    },
+    "topMasterKeywordLanes": [
+      {
+        "lane": "unassigned-lane",
+        "events": 423,
+        "latest": "2026-07-07T21:37:39.814689+00:00",
+        "glbPlays": 61,
+        "searches": 0,
+        "pageViews": 264,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "podcastInterrupts": 0
+      },
+      {
+        "lane": "Mainstream Streaming",
+        "events": 36,
+        "latest": "2026-07-07T08:27:43.104416+00:00",
+        "glbPlays": 16,
+        "searches": 0,
+        "pageViews": 0,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "podcastInterrupts": 12
+      },
+      {
+        "lane": "Market Observatory",
+        "events": 20,
+        "latest": "2026-07-06T01:19:32.176855+00:00",
+        "glbPlays": 0,
+        "searches": 0,
+        "pageViews": 18,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "podcastInterrupts": 0
+      },
+      {
+        "lane": "automatic 3d autoplay system",
+        "events": 13,
+        "latest": "2026-06-30T16:29:36.159596+00:00",
+        "glbPlays": 4,
+        "searches": 0,
+        "pageViews": 8,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "podcastInterrupts": 0
+      },
+      {
+        "lane": "Errands And Review Before Buying",
+        "events": 8,
+        "latest": "2026-07-09T12:47:20.428444+00:00",
+        "glbPlays": 0,
+        "searches": 0,
+        "pageViews": 8,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "podcastInterrupts": 0
+      },
+      {
+        "lane": "Full Entertainment Dapp Alternative",
+        "events": 8,
+        "latest": "2026-07-09T04:38:27.091759+00:00",
+        "glbPlays": 0,
+        "searches": 0,
+        "pageViews": 8,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "podcastInterrupts": 0
+      },
+      {
+        "lane": "Businesses",
+        "events": 5,
+        "latest": "2026-07-07T08:29:13.628456+00:00",
+        "glbPlays": 0,
+        "searches": 0,
+        "pageViews": 0,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "podcastInterrupts": 0
+      },
+      {
+        "lane": "Research Podcast Viewer",
+        "events": 3,
+        "latest": "2026-07-07T12:41:05.314418+00:00",
+        "glbPlays": 0,
+        "searches": 1,
+        "pageViews": 1,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "podcastInterrupts": 1
+      },
+      {
+        "lane": "Gaming GLB Viewer",
+        "events": 3,
+        "latest": "2026-07-07T12:41:02.525164+00:00",
+        "glbPlays": 1,
+        "searches": 1,
+        "pageViews": 1,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "podcastInterrupts": 0
+      },
+      {
+        "lane": "After Work Relax Viewer",
+        "events": 3,
+        "latest": "2026-07-07T12:40:59.584417+00:00",
+        "glbPlays": 1,
+        "searches": 0,
+        "pageViews": 1,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "podcastInterrupts": 0
+      },
+      {
+        "lane": "DigitalHut 200M SEO Master List",
+        "events": 2,
+        "latest": "2026-07-10T21:33:34.320116+00:00",
+        "glbPlays": 0,
+        "searches": 0,
+        "pageViews": 2,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "podcastInterrupts": 0
+      },
+      {
+        "lane": "home project 3d visual planner",
+        "events": 2,
+        "latest": "2026-07-07T16:26:02.662158+00:00",
+        "glbPlays": 0,
+        "searches": 0,
+        "pageViews": 2,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "podcastInterrupts": 0
+      }
+    ],
+    "originBuckets": []
+  },
+  "routeCoverage": {
+    "status": "pass",
+    "sitemapProofRoutes": 165,
+    "metadataRoutes": 165,
+    "missing": [],
+    "extra": []
+  },
+  "attachedEvidence": {
+    "seoReevaluationStatus": "seo-structure-reevaluation-ready",
+    "googleCloudReadStatus": "google-cloud-api-consumption-read-produced"
+  },
+  "decisions": [
+    {
+      "id": "canonical-route-contract",
+      "decision": "hold-and-measure",
+      "evidence": "165/165 metadata-to-sitemap routes; 0 missing",
+      "nextAction": "Do not expand routes until proof/source movement appears."
+    },
+    {
+      "id": "entry-to-proof-conversion",
+      "decision": "strengthen-proof-source-bridge",
+      "evidence": "0 proof opens / 0 source opens / 74 master-keyword door events",
+      "nextAction": "Keep the full entertainment dapp claim stable and route entry traffic toward system proof and source evidence."
+    },
+    {
+      "id": "master-list-allocation",
+      "decision": "score-internally-publish-canonically",
+      "evidence": "200572944 internal variations / 50000 selected / 50 canonical master routes",
+      "nextAction": "Reweight the 50,000 internal selection only from real Supabase and Search Console receipts; never publish parameter duplicates."
+    }
+  ],
+  "sync": {
+    "status": "queued-on-system-drive",
+    "target": "C:\\Users\\Admin\\Documents\\Codex\\2026-07-03\\ri\\Digitalhut-github-cloudbuild\\docs\\digitalhut-firecuda-codex-map-interface-latest.json",
+    "reason": "FireCuda volume has not passed the health gate."
+  }
+}
