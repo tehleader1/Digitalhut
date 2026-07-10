@@ -1,0 +1,27 @@
+{
+  "status": "unhealthy",
+  "required": true,
+  "disk": {
+    "DriveLetter": "D",
+    "HealthStatus": "Healthy",
+    "OperationalStatus": "OK",
+    "Size": 8001546088448,
+    "SizeRemaining": 7984013004800,
+    "DiskNumber": 2,
+    "DiskName": "Seagate FireCuda X Vault",
+    "SerialNumber": "00000000NC1H0261",
+    "AgentPath": "D:\\DigitalHutAgent",
+    "PathReady": false,
+    "EnumerationReady": false,
+    "StorageErrorCount": 233,
+    "StorageErrorIds": [
+      129,
+      7,
+      153,
+      51
+    ]
+  },
+  "freeTb": 7.98,
+  "checkedAt": "2026-07-10T23:49:34.811Z",
+  "policy": "Read-only gate. A green volume label is insufficient when Windows has logged disk or UASP errors since boot. Repairs and dismounts require an explicit operator action."
+}

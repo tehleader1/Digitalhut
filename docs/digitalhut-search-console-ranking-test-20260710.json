@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-10T23:17:25.209Z",
+  "generatedAt": "2026-07-10T23:34:39.377Z",
   "siteUrl": "https://www.digitalhut.app/",
   "sitemapUrl": "https://www.digitalhut.app/sitemap.xml",
   "sitemapUrls": [
@@ -78,8 +78,8 @@
     "masterKeywordRows": 50000,
     "totalSitemapRows": 279,
     "masterKeywordUniverse": 200572944,
-    "routeCrawlShellsReady": false,
-    "routeCrawlShellCount": 0,
+    "routeCrawlShellsReady": true,
+    "routeCrawlShellCount": 192,
     "canonicalProofInspections": 12,
     "sitemapIndexUrl": "https://www.digitalhut.app/sitemap-index.xml",
     "masterKeywordSitemapUrl": "https://www.digitalhut.app/sitemap-master-keyword-50000.xml",
@@ -381,8 +381,8 @@
     "publicProofRowsReady": 279,
     "masterKeywordRowsReady": 50000,
     "masterKeywordUniverse": 200572944,
-    "routeCrawlShellsReady": false,
-    "routeCrawlShellCount": 0,
+    "routeCrawlShellsReady": true,
+    "routeCrawlShellCount": 192,
     "searchConsoleRows": 2,
     "indexedInspectionTargets": 2,
     "discoveredInspectionTargets": 8,

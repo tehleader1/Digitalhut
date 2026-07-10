@@ -1,6 +1,6 @@
 # DigitalHut Search Console Ranking Test
 
-Generated: 2026-07-10T23:17:25.209Z
+Generated: 2026-07-10T23:34:39.377Z
 
 ## Real Google Status
 
@@ -27,8 +27,8 @@ Generated: 2026-07-10T23:17:25.209Z
 - Master keyword universe: 200572944
 - Master keyword sitemap rows: 50000
 - Total sitemap rows: 279
-- Route crawl shells ready: no
-- Route crawl shell count: 0
+- Route crawl shells ready: yes
+- Route crawl shell count: 192
 - Canonical proof inspections: 12
 - Sitemap surfaces visible: 3
 - Sitemap surfaces pending: 2
@@ -91,7 +91,7 @@ Search Console has query rows; rank movement can be compared against saved snaps
 - Indexed inspection targets: 2
 - Discovered inspection targets: 8
 - Unknown inspection targets: 2
-- Route crawl shells ready: no
-- Route crawl shell count: 0
+- Route crawl shells ready: yes
+- Route crawl shell count: 192
 - Search Console rows: 2
 - Next action: Compare query/page/country rows against the previous snapshot and promote only routes with real impressions.

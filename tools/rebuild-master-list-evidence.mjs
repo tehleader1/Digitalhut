@@ -75,6 +75,44 @@ async function productionRead(){
   return response.json()
 }
 
+async function verifyProductionTrails(lanes){
+  const checks = await Promise.all(lanes.map(async (lane) => {
+    const route = lane.proofRoute || `/watch/${lane.id}`
+    const url = `https://www.digitalhut.app${route}`
+    try {
+      const response = await fetch(url, {
+        headers: {"User-Agent": "DigitalHut-Crawl-Trail-Verifier/1.0"},
+        signal: AbortSignal.timeout(15_000)
+      })
+      const html = await response.text()
+      const canonical = `https://www.digitalhut.app${route}`
+      const signals = {
+        canonical: html.includes(`href="${canonical}"`) || html.includes(`href='${canonical}'`),
+        systemProof: html.includes('href="/system-proof"') || html.includes("href='/system-proof'"),
+        masterList: html.includes('href="/master-keyword-coverage"') || html.includes("href='/master-keyword-coverage'"),
+        sourceBridge: html.includes("/source-bridge?route=")
+      }
+      return {
+        id: lane.id,
+        route,
+        status: response.status,
+        signals,
+        pass: response.ok && Object.values(signals).every(Boolean)
+      }
+    } catch (error) {
+      return {id: lane.id, route, status: 0, signals: {}, pass: false, error: error.message}
+    }
+  }))
+  const passed = checks.filter((check) => check.pass).length
+  return {
+    status: passed === checks.length ? "production-trails-verified" : "production-trails-incomplete",
+    checked: checks.length,
+    passed,
+    failed: checks.length - passed,
+    checks
+  }
+}
+
 function searchConsoleRead(){
   const candidates = [
     readJson(resolve(repoRoot, "docs", "digitalhut-search-console-ranking-test-latest.json")),
@@ -113,6 +151,7 @@ async function main(){
   const pixel = livePayload.pixel || {}
   const observedLanes = Array.isArray(pixel.topMasterKeywordLanes) ? pixel.topMasterKeywordLanes : []
   const coverageLanes = Array.isArray(coverage.lanes) ? coverage.lanes : []
+  const productionTrails = await verifyProductionTrails(coverageLanes)
   const searchConsole = searchConsoleRead()
   const unassigned = observedLanes.find((lane) => normalize(lane.lane) === "unassigned lane") || {}
   const totalEvents = number(pixel.totalEvents)
@@ -211,6 +250,7 @@ async function main(){
       sitemapProofRoutes: number(routeAudit.sitemapProofRoutes),
       missingRoutes: routeAudit.missingMetadataRoutes || []
     },
+    productionTrails,
     laneEvidence,
     compareAndContrast: {
       previousGeneratedAt: previousReceipt.generatedAt || null,
