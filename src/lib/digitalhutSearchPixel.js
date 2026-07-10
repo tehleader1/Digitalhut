@@ -62,7 +62,9 @@ function defaultCategoryForEvent(eventName, data = {}){
   const pathname = typeof location !== "undefined" ? location.pathname : ""
   if(pathname === "/" || pathname === digitalhutMasterListBridge.proofRoute || pathname === digitalhutMasterListBridge.keywordCoverageRoute) return digitalhutMasterListBridge.lane
   if(["page_view", "proof_route_open", "backlink_source_open", "watch_route_open", "blog_route_open", "category_proof_open", "zone_checkpoint_open"].includes(eventName)) return digitalhutMasterListBridge.lane
-  return ""
+  // Generic controls still belong to the full-system measurable facet. Specific
+  // category and route attributes above continue to win when they are present.
+  return digitalhutMasterListBridge.lane
 }
 
 function sendPixel(eventName, data = {}){
