@@ -1,9 +1,7 @@
 {
   "generatedAt": "2026-07-10T22:35:32.646Z",
-  "status": "master-list-evidence-connected",
+  "status": "master-list-compare-complete",
   "truthBoundary": "The 200,572,944 value is deterministic internal variation capacity. Public search ownership requires indexed canonical routes, impressions, clicks, and user conversions.",
-  "storageMode": "healthy-system-drive-and-cloud-evidence",
-  "fireCudaStatus": "quarantined-after-confirmed-bad-block-readback",
   "masterList": {
     "internalVariationCapacity": 200572944,
     "countedLanes": 24,
@@ -11,49 +9,43 @@
     "publicCanonicalRoutes": 50,
     "publicQueryParameterRows": 0
   },
-  "production": {
-    "generatedAt": "2026-07-10T22:35:33.440Z",
-    "pageViews": 325,
-    "uniqueVisitors": 120,
-    "totalEvents": 542,
-    "secondActions": 108,
-    "proofOpens": 0,
-    "sourceOpens": 0,
-    "masterKeywordDoorEvents": 74,
-    "unassignedEvents": 423,
-    "unassignedShare": 0.7804
+  "compareAndContrast": {
+    "previousGeneratedAt": "2026-07-10T11:30:42.652Z",
+    "productionDelta": {
+      "pageViews": 2,
+      "uniqueVisitors": 1,
+      "totalEvents": 2,
+      "secondActions": 0,
+      "proofOpens": 0,
+      "sourceOpens": 0,
+      "masterKeywordDoorEvents": 2
+    },
+    "movingLanes": [
+      "full-entertainment-dapp-alternative"
+    ],
+    "promotionReadyLanes": [],
+    "trailCoverage": {
+      "lanes": 24,
+      "canonicalProofRoutes": 24,
+      "sourceBridges": 24,
+      "evidencePackets": 24,
+      "complete": true
+    }
   },
-  "searchConsole": {
-    "freshRows": 0,
-    "freshImpressions": 0,
-    "freshClicks": 0,
-    "source": "no-current-search-console-receipt"
-  },
-  "routeContract": {
-    "status": "pass",
-    "metadataRoutes": 165,
-    "sitemapProofRoutes": 165,
-    "missingRoutes": []
-  },
-  "laneEvidence": [
+  "laneDecisions": [
     {
       "id": "full-entertainment-dapp-alternative",
       "lane": "Full Entertainment Dapp Alternative",
-      "variationCapacity": 11000000,
-      "proofRoute": "/watch/full-view-episode-alternative",
-      "evidenceScore": 139,
       "evidenceState": "behavior-evidence",
-      "observedAliases": [
-        "Mainstream Streaming",
-        "Full Entertainment Dapp Alternative",
-        "After Work Relax Viewer",
-        "DigitalHut 200M SEO Master List"
-      ],
-      "events": 49,
-      "pageViews": 11,
-      "secondActions": 29,
-      "proofOpens": 0,
-      "sourceOpens": 0,
+      "movement": {
+        "events": 2,
+        "pageViews": 2,
+        "secondActions": 0,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "evidenceScore": 2
+      },
+      "decision": "reinforce-proof-source-trail",
       "trail": {
         "canonicalProofRoute": "/watch/full-view-episode-alternative",
         "sourceBridge": "/source-bridge?lane=Full+Entertainment+Dapp+Alternative&source=master-list-compare#full-entertainment-dapp-alternative",
@@ -87,33 +79,21 @@
           "podcast/source interrupt",
           "live analytics read"
         ]
-      },
-      "movement": {
-        "events": 2,
-        "pageViews": 2,
-        "secondActions": 0,
-        "proofOpens": 0,
-        "sourceOpens": 0,
-        "evidenceScore": 2
-      },
-      "decision": "reinforce-proof-source-trail"
+      }
     },
     {
       "id": "gaming-3d-world-observatory",
       "lane": "Gaming 3D World Observatory",
-      "variationCapacity": 11000000,
-      "proofRoute": "/watch/game-world-glb-presentation",
-      "evidenceScore": 35,
       "evidenceState": "behavior-evidence",
-      "observedAliases": [
-        "automatic 3d autoplay system",
-        "Gaming GLB Viewer"
-      ],
-      "events": 16,
-      "pageViews": 9,
-      "secondActions": 6,
-      "proofOpens": 0,
-      "sourceOpens": 0,
+      "movement": {
+        "events": 0,
+        "pageViews": 0,
+        "secondActions": 0,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "evidenceScore": 0
+      },
+      "decision": "hold-and-observe",
       "trail": {
         "canonicalProofRoute": "/watch/game-world-glb-presentation",
         "sourceBridge": "/source-bridge?lane=Gaming+3D+World+Observatory&source=master-list-compare#gaming-3d-world-observatory",
@@ -145,7 +125,12 @@
           "watch route open",
           "source/backlink open"
         ]
-      },
+      }
+    },
+    {
+      "id": "market-company-observatory",
+      "lane": "Market Company Observatory",
+      "evidenceState": "behavior-evidence",
       "movement": {
         "events": 0,
         "pageViews": 0,
@@ -154,23 +139,7 @@
         "sourceOpens": 0,
         "evidenceScore": 0
       },
-      "decision": "hold-and-observe"
-    },
-    {
-      "id": "market-company-observatory",
-      "lane": "Market Company Observatory",
-      "variationCapacity": 11000000,
-      "proofRoute": "/watch/market-company-observatory",
-      "evidenceScore": 18,
-      "evidenceState": "behavior-evidence",
-      "observedAliases": [
-        "Market Observatory"
-      ],
-      "events": 20,
-      "pageViews": 18,
-      "secondActions": 0,
-      "proofOpens": 0,
-      "sourceOpens": 0,
+      "decision": "hold-and-observe",
       "trail": {
         "canonicalProofRoute": "/watch/market-company-observatory",
         "sourceBridge": "/source-bridge?lane=Market+Company+Observatory&source=master-list-compare#market-company-observatory",
@@ -202,7 +171,12 @@
           "search intent",
           "watch proof open"
         ]
-      },
+      }
+    },
+    {
+      "id": "ai-video-podcast-source-explainer",
+      "lane": "AI Video Podcast Source Explainer",
+      "evidenceState": "behavior-evidence",
       "movement": {
         "events": 0,
         "pageViews": 0,
@@ -211,23 +185,7 @@
         "sourceOpens": 0,
         "evidenceScore": 0
       },
-      "decision": "hold-and-observe"
-    },
-    {
-      "id": "ai-video-podcast-source-explainer",
-      "lane": "AI Video Podcast Source Explainer",
-      "variationCapacity": 11000000,
-      "proofRoute": "/watch/ai-video-podcast-source-explainer",
-      "evidenceScore": 12,
-      "evidenceState": "behavior-evidence",
-      "observedAliases": [
-        "Research Podcast Viewer"
-      ],
-      "events": 3,
-      "pageViews": 1,
-      "secondActions": 2,
-      "proofOpens": 0,
-      "sourceOpens": 0,
+      "decision": "hold-and-observe",
       "trail": {
         "canonicalProofRoute": "/watch/ai-video-podcast-source-explainer",
         "sourceBridge": "/source-bridge?lane=AI+Video+Podcast+Source+Explainer&source=master-list-compare#ai-video-podcast-source-explainer",
@@ -259,7 +217,12 @@
           "source/backlink open",
           "autoplay start"
         ]
-      },
+      }
+    },
+    {
+      "id": "local-life-errands-companion",
+      "lane": "Local Life Errands Companion",
+      "evidenceState": "behavior-evidence",
       "movement": {
         "events": 0,
         "pageViews": 0,
@@ -268,23 +231,7 @@
         "sourceOpens": 0,
         "evidenceScore": 0
       },
-      "decision": "hold-and-observe"
-    },
-    {
-      "id": "local-life-errands-companion",
-      "lane": "Local Life Errands Companion",
-      "variationCapacity": 11000000,
-      "proofRoute": "/watch/local-life-errands-companion",
-      "evidenceScore": 8,
-      "evidenceState": "behavior-evidence",
-      "observedAliases": [
-        "Errands And Review Before Buying"
-      ],
-      "events": 8,
-      "pageViews": 8,
-      "secondActions": 0,
-      "proofOpens": 0,
-      "sourceOpens": 0,
+      "decision": "hold-and-observe",
       "trail": {
         "canonicalProofRoute": "/watch/local-life-errands-companion",
         "sourceBridge": "/source-bridge?lane=Local+Life+Errands+Companion&source=master-list-compare#local-life-errands-companion",
@@ -316,7 +263,12 @@
           "source/backlink open",
           "watch route open"
         ]
-      },
+      }
+    },
+    {
+      "id": "errands-review-before-buying",
+      "lane": "Errands And Review Before Buying",
+      "evidenceState": "behavior-evidence",
       "movement": {
         "events": 0,
         "pageViews": 0,
@@ -325,23 +277,7 @@
         "sourceOpens": 0,
         "evidenceScore": 0
       },
-      "decision": "hold-and-observe"
-    },
-    {
-      "id": "errands-review-before-buying",
-      "lane": "Errands And Review Before Buying",
-      "variationCapacity": 451584,
-      "proofRoute": "/watch/search-intent-radar-visual-experience",
-      "evidenceScore": 8,
-      "evidenceState": "behavior-evidence",
-      "observedAliases": [
-        "Errands And Review Before Buying"
-      ],
-      "events": 8,
-      "pageViews": 8,
-      "secondActions": 0,
-      "proofOpens": 0,
-      "sourceOpens": 0,
+      "decision": "hold-and-observe",
       "trail": {
         "canonicalProofRoute": "/watch/search-intent-radar-visual-experience",
         "sourceBridge": "/source-bridge?lane=Errands+And+Review+Before+Buying&source=master-list-compare#errands-review-before-buying",
@@ -371,7 +307,12 @@
           "blog proof open",
           "quick panel select"
         ]
-      },
+      }
+    },
+    {
+      "id": "real-estate-3d-tour-observatory",
+      "lane": "Real Estate 3D Tour Observatory",
+      "evidenceState": "unobserved-candidate",
       "movement": {
         "events": 0,
         "pageViews": 0,
@@ -380,21 +321,7 @@
         "sourceOpens": 0,
         "evidenceScore": 0
       },
-      "decision": "hold-and-observe"
-    },
-    {
-      "id": "real-estate-3d-tour-observatory",
-      "lane": "Real Estate 3D Tour Observatory",
-      "variationCapacity": 11000000,
-      "proofRoute": "/watch/real-estate-3d-tour-observatory",
-      "evidenceScore": 0,
-      "evidenceState": "unobserved-candidate",
-      "observedAliases": [],
-      "events": 0,
-      "pageViews": 0,
-      "secondActions": 0,
-      "proofOpens": 0,
-      "sourceOpens": 0,
+      "decision": "hold-and-observe",
       "trail": {
         "canonicalProofRoute": "/watch/real-estate-3d-tour-observatory",
         "sourceBridge": "/source-bridge?lane=Real+Estate+3D+Tour+Observatory&source=master-list-compare#real-estate-3d-tour-observatory",
@@ -426,7 +353,12 @@
           "source/backlink open",
           "watch proof open"
         ]
-      },
+      }
+    },
+    {
+      "id": "planetary-space-observatory",
+      "lane": "Planetary And Space Observatory",
+      "evidenceState": "unobserved-candidate",
       "movement": {
         "events": 0,
         "pageViews": 0,
@@ -435,21 +367,7 @@
         "sourceOpens": 0,
         "evidenceScore": 0
       },
-      "decision": "hold-and-observe"
-    },
-    {
-      "id": "planetary-space-observatory",
-      "lane": "Planetary And Space Observatory",
-      "variationCapacity": 11000000,
-      "proofRoute": "/watch/planetary-space-visual-observatory",
-      "evidenceScore": 0,
-      "evidenceState": "unobserved-candidate",
-      "observedAliases": [],
-      "events": 0,
-      "pageViews": 0,
-      "secondActions": 0,
-      "proofOpens": 0,
-      "sourceOpens": 0,
+      "decision": "hold-and-observe",
       "trail": {
         "canonicalProofRoute": "/watch/planetary-space-visual-observatory",
         "sourceBridge": "/source-bridge?lane=Planetary+And+Space+Observatory&source=master-list-compare#planetary-space-observatory",
@@ -481,7 +399,12 @@
           "timeline read",
           "blog proof open"
         ]
-      },
+      }
+    },
+    {
+      "id": "exotic-environment-visual-experience",
+      "lane": "Exotic Environment Visual Experience",
+      "evidenceState": "unobserved-candidate",
       "movement": {
         "events": 0,
         "pageViews": 0,
@@ -490,21 +413,7 @@
         "sourceOpens": 0,
         "evidenceScore": 0
       },
-      "decision": "hold-and-observe"
-    },
-    {
-      "id": "exotic-environment-visual-experience",
-      "lane": "Exotic Environment Visual Experience",
-      "variationCapacity": 11000000,
-      "proofRoute": "/watch/exotic-environment-visual-experience",
-      "evidenceScore": 0,
-      "evidenceState": "unobserved-candidate",
-      "observedAliases": [],
-      "events": 0,
-      "pageViews": 0,
-      "secondActions": 0,
-      "proofOpens": 0,
-      "sourceOpens": 0,
+      "decision": "hold-and-observe",
       "trail": {
         "canonicalProofRoute": "/watch/exotic-environment-visual-experience",
         "sourceBridge": "/source-bridge?lane=Exotic+Environment+Visual+Experience&source=master-list-compare#exotic-environment-visual-experience",
@@ -536,7 +445,12 @@
           "autoplay start",
           "watch proof open"
         ]
-      },
+      }
+    },
+    {
+      "id": "architecture-structure-engineering",
+      "lane": "Architecture Structure Engineering",
+      "evidenceState": "unobserved-candidate",
       "movement": {
         "events": 0,
         "pageViews": 0,
@@ -545,21 +459,7 @@
         "sourceOpens": 0,
         "evidenceScore": 0
       },
-      "decision": "hold-and-observe"
-    },
-    {
-      "id": "architecture-structure-engineering",
-      "lane": "Architecture Structure Engineering",
-      "variationCapacity": 11000000,
-      "proofRoute": "/watch/architecture-structure-engineering-visual",
-      "evidenceScore": 0,
-      "evidenceState": "unobserved-candidate",
-      "observedAliases": [],
-      "events": 0,
-      "pageViews": 0,
-      "secondActions": 0,
-      "proofOpens": 0,
-      "sourceOpens": 0,
+      "decision": "hold-and-observe",
       "trail": {
         "canonicalProofRoute": "/watch/architecture-structure-engineering-visual",
         "sourceBridge": "/source-bridge?lane=Architecture+Structure+Engineering&source=master-list-compare#architecture-structure-engineering",
@@ -591,7 +491,12 @@
           "timeline read",
           "search intent"
         ]
-      },
+      }
+    },
+    {
+      "id": "developer-programmer-research",
+      "lane": "Developer Programmer Research",
+      "evidenceState": "unobserved-candidate",
       "movement": {
         "events": 0,
         "pageViews": 0,
@@ -600,21 +505,7 @@
         "sourceOpens": 0,
         "evidenceScore": 0
       },
-      "decision": "hold-and-observe"
-    },
-    {
-      "id": "developer-programmer-research",
-      "lane": "Developer Programmer Research",
-      "variationCapacity": 11000000,
-      "proofRoute": "/watch/developer-programmer-research-observatory",
-      "evidenceScore": 0,
-      "evidenceState": "unobserved-candidate",
-      "observedAliases": [],
-      "events": 0,
-      "pageViews": 0,
-      "secondActions": 0,
-      "proofOpens": 0,
-      "sourceOpens": 0,
+      "decision": "hold-and-observe",
       "trail": {
         "canonicalProofRoute": "/watch/developer-programmer-research-observatory",
         "sourceBridge": "/source-bridge?lane=Developer+Programmer+Research&source=master-list-compare#developer-programmer-research",
@@ -649,7 +540,12 @@
           "Supabase event read",
           "Search Console row"
         ]
-      },
+      }
+    },
+    {
+      "id": "social-reel-meme-analysis",
+      "lane": "Social Reel Meme Analysis",
+      "evidenceState": "unobserved-candidate",
       "movement": {
         "events": 0,
         "pageViews": 0,
@@ -658,21 +554,7 @@
         "sourceOpens": 0,
         "evidenceScore": 0
       },
-      "decision": "hold-and-observe"
-    },
-    {
-      "id": "social-reel-meme-analysis",
-      "lane": "Social Reel Meme Analysis",
-      "variationCapacity": 11000000,
-      "proofRoute": "/watch/social-reel-meme-analysis",
-      "evidenceScore": 0,
-      "evidenceState": "unobserved-candidate",
-      "observedAliases": [],
-      "events": 0,
-      "pageViews": 0,
-      "secondActions": 0,
-      "proofOpens": 0,
-      "sourceOpens": 0,
+      "decision": "hold-and-observe",
       "trail": {
         "canonicalProofRoute": "/watch/social-reel-meme-analysis",
         "sourceBridge": "/source-bridge?lane=Social+Reel+Meme+Analysis&source=master-list-compare#social-reel-meme-analysis",
@@ -704,7 +586,12 @@
           "podcast/source interrupt",
           "source/backlink open"
         ]
-      },
+      }
+    },
+    {
+      "id": "virtual-travel-resort-vacation",
+      "lane": "Virtual Travel Resort Vacation",
+      "evidenceState": "unobserved-candidate",
       "movement": {
         "events": 0,
         "pageViews": 0,
@@ -713,21 +600,7 @@
         "sourceOpens": 0,
         "evidenceScore": 0
       },
-      "decision": "hold-and-observe"
-    },
-    {
-      "id": "virtual-travel-resort-vacation",
-      "lane": "Virtual Travel Resort Vacation",
-      "variationCapacity": 11000000,
-      "proofRoute": "/watch/virtual-travel-resort-vacation",
-      "evidenceScore": 0,
-      "evidenceState": "unobserved-candidate",
-      "observedAliases": [],
-      "events": 0,
-      "pageViews": 0,
-      "secondActions": 0,
-      "proofOpens": 0,
-      "sourceOpens": 0,
+      "decision": "hold-and-observe",
       "trail": {
         "canonicalProofRoute": "/watch/virtual-travel-resort-vacation",
         "sourceBridge": "/source-bridge?lane=Virtual+Travel+Resort+Vacation&source=master-list-compare#virtual-travel-resort-vacation",
@@ -759,7 +632,12 @@
           "source/backlink open",
           "watch proof open"
         ]
-      },
+      }
+    },
+    {
+      "id": "workforce-training-visual-system",
+      "lane": "Workforce Training Visual System",
+      "evidenceState": "unobserved-candidate",
       "movement": {
         "events": 0,
         "pageViews": 0,
@@ -768,21 +646,7 @@
         "sourceOpens": 0,
         "evidenceScore": 0
       },
-      "decision": "hold-and-observe"
-    },
-    {
-      "id": "workforce-training-visual-system",
-      "lane": "Workforce Training Visual System",
-      "variationCapacity": 11000000,
-      "proofRoute": "/watch/workforce-training-visual-system",
-      "evidenceScore": 0,
-      "evidenceState": "unobserved-candidate",
-      "observedAliases": [],
-      "events": 0,
-      "pageViews": 0,
-      "secondActions": 0,
-      "proofOpens": 0,
-      "sourceOpens": 0,
+      "decision": "hold-and-observe",
       "trail": {
         "canonicalProofRoute": "/watch/workforce-training-visual-system",
         "sourceBridge": "/source-bridge?lane=Workforce+Training+Visual+System&source=master-list-compare#workforce-training-visual-system",
@@ -814,7 +678,12 @@
           "timeline read",
           "search intent"
         ]
-      },
+      }
+    },
+    {
+      "id": "education-study-visual-research",
+      "lane": "Education Study Visual Research",
+      "evidenceState": "unobserved-candidate",
       "movement": {
         "events": 0,
         "pageViews": 0,
@@ -823,21 +692,7 @@
         "sourceOpens": 0,
         "evidenceScore": 0
       },
-      "decision": "hold-and-observe"
-    },
-    {
-      "id": "education-study-visual-research",
-      "lane": "Education Study Visual Research",
-      "variationCapacity": 11000000,
-      "proofRoute": "/watch/education-study-visual-research",
-      "evidenceScore": 0,
-      "evidenceState": "unobserved-candidate",
-      "observedAliases": [],
-      "events": 0,
-      "pageViews": 0,
-      "secondActions": 0,
-      "proofOpens": 0,
-      "sourceOpens": 0,
+      "decision": "hold-and-observe",
       "trail": {
         "canonicalProofRoute": "/watch/education-study-visual-research",
         "sourceBridge": "/source-bridge?lane=Education+Study+Visual+Research&source=master-list-compare#education-study-visual-research",
@@ -869,7 +724,12 @@
           "search intent",
           "watch route open"
         ]
-      },
+      }
+    },
+    {
+      "id": "home-project-diy-visual",
+      "lane": "Home Project DIY Visual",
+      "evidenceState": "unobserved-candidate",
       "movement": {
         "events": 0,
         "pageViews": 0,
@@ -878,21 +738,7 @@
         "sourceOpens": 0,
         "evidenceScore": 0
       },
-      "decision": "hold-and-observe"
-    },
-    {
-      "id": "home-project-diy-visual",
-      "lane": "Home Project DIY Visual",
-      "variationCapacity": 11000000,
-      "proofRoute": "/watch/home-project-diy-visual",
-      "evidenceScore": 0,
-      "evidenceState": "unobserved-candidate",
-      "observedAliases": [],
-      "events": 0,
-      "pageViews": 0,
-      "secondActions": 0,
-      "proofOpens": 0,
-      "sourceOpens": 0,
+      "decision": "hold-and-observe",
       "trail": {
         "canonicalProofRoute": "/watch/home-project-diy-visual",
         "sourceBridge": "/source-bridge?lane=Home+Project+DIY+Visual&source=master-list-compare#home-project-diy-visual",
@@ -924,7 +770,12 @@
           "search intent",
           "watch route open"
         ]
-      },
+      }
+    },
+    {
+      "id": "lifestyle-event-visual-experience",
+      "lane": "Lifestyle Event Visual Experience",
+      "evidenceState": "unobserved-candidate",
       "movement": {
         "events": 0,
         "pageViews": 0,
@@ -933,21 +784,7 @@
         "sourceOpens": 0,
         "evidenceScore": 0
       },
-      "decision": "hold-and-observe"
-    },
-    {
-      "id": "lifestyle-event-visual-experience",
-      "lane": "Lifestyle Event Visual Experience",
-      "variationCapacity": 11000000,
-      "proofRoute": "/watch/lifestyle-event-visual-experience",
-      "evidenceScore": 0,
-      "evidenceState": "unobserved-candidate",
-      "observedAliases": [],
-      "events": 0,
-      "pageViews": 0,
-      "secondActions": 0,
-      "proofOpens": 0,
-      "sourceOpens": 0,
+      "decision": "hold-and-observe",
       "trail": {
         "canonicalProofRoute": "/watch/lifestyle-event-visual-experience",
         "sourceBridge": "/source-bridge?lane=Lifestyle+Event+Visual+Experience&source=master-list-compare#lifestyle-event-visual-experience",
@@ -979,7 +816,12 @@
           "source/backlink open",
           "podcast/source interrupt"
         ]
-      },
+      }
+    },
+    {
+      "id": "creator-brand-product-showcase",
+      "lane": "Creator Brand Product Showcase",
+      "evidenceState": "unobserved-candidate",
       "movement": {
         "events": 0,
         "pageViews": 0,
@@ -988,21 +830,7 @@
         "sourceOpens": 0,
         "evidenceScore": 0
       },
-      "decision": "hold-and-observe"
-    },
-    {
-      "id": "creator-brand-product-showcase",
-      "lane": "Creator Brand Product Showcase",
-      "variationCapacity": 11000000,
-      "proofRoute": "/watch/creator-brand-product-showcase",
-      "evidenceScore": 0,
-      "evidenceState": "unobserved-candidate",
-      "observedAliases": [],
-      "events": 0,
-      "pageViews": 0,
-      "secondActions": 0,
-      "proofOpens": 0,
-      "sourceOpens": 0,
+      "decision": "hold-and-observe",
       "trail": {
         "canonicalProofRoute": "/watch/creator-brand-product-showcase",
         "sourceBridge": "/source-bridge?lane=Creator+Brand+Product+Showcase&source=master-list-compare#creator-brand-product-showcase",
@@ -1034,7 +862,12 @@
           "search intent",
           "GLB Model View open"
         ]
-      },
+      }
+    },
+    {
+      "id": "international-language-side-markets",
+      "lane": "International Language Side Markets",
+      "evidenceState": "unobserved-candidate",
       "movement": {
         "events": 0,
         "pageViews": 0,
@@ -1043,21 +876,7 @@
         "sourceOpens": 0,
         "evidenceScore": 0
       },
-      "decision": "hold-and-observe"
-    },
-    {
-      "id": "international-language-side-markets",
-      "lane": "International Language Side Markets",
-      "variationCapacity": 11000000,
-      "proofRoute": "/watch/international-language-side-markets",
-      "evidenceScore": 0,
-      "evidenceState": "unobserved-candidate",
-      "observedAliases": [],
-      "events": 0,
-      "pageViews": 0,
-      "secondActions": 0,
-      "proofOpens": 0,
-      "sourceOpens": 0,
+      "decision": "hold-and-observe",
       "trail": {
         "canonicalProofRoute": "/watch/international-language-side-markets",
         "sourceBridge": "/source-bridge?lane=International+Language+Side+Markets&source=master-list-compare#international-language-side-markets",
@@ -1089,7 +908,12 @@
           "source/backlink open",
           "watch proof open"
         ]
-      },
+      }
+    },
+    {
+      "id": "lunch-local-food",
+      "lane": "Lunch And Local Food",
+      "evidenceState": "unobserved-candidate",
       "movement": {
         "events": 0,
         "pageViews": 0,
@@ -1098,21 +922,7 @@
         "sourceOpens": 0,
         "evidenceScore": 0
       },
-      "decision": "hold-and-observe"
-    },
-    {
-      "id": "lunch-local-food",
-      "lane": "Lunch And Local Food",
-      "variationCapacity": 571536,
-      "proofRoute": "/watch/looking-for-lunch-visual-observatory",
-      "evidenceScore": 0,
-      "evidenceState": "unobserved-candidate",
-      "observedAliases": [],
-      "events": 0,
-      "pageViews": 0,
-      "secondActions": 0,
-      "proofOpens": 0,
-      "sourceOpens": 0,
+      "decision": "hold-and-observe",
       "trail": {
         "canonicalProofRoute": "/watch/looking-for-lunch-visual-observatory",
         "sourceBridge": "/source-bridge?lane=Lunch+And+Local+Food&source=master-list-compare#lunch-local-food",
@@ -1142,7 +952,12 @@
           "backlink source open",
           "watch route open"
         ]
-      },
+      }
+    },
+    {
+      "id": "rideshare-commute",
+      "lane": "Rideshare And Commute",
+      "evidenceState": "unobserved-candidate",
       "movement": {
         "events": 0,
         "pageViews": 0,
@@ -1151,21 +966,7 @@
         "sourceOpens": 0,
         "evidenceScore": 0
       },
-      "decision": "hold-and-observe"
-    },
-    {
-      "id": "rideshare-commute",
-      "lane": "Rideshare And Commute",
-      "variationCapacity": 344064,
-      "proofRoute": "/watch/calling-an-uber-visual-trip-guide",
-      "evidenceScore": 0,
-      "evidenceState": "unobserved-candidate",
-      "observedAliases": [],
-      "events": 0,
-      "pageViews": 0,
-      "secondActions": 0,
-      "proofOpens": 0,
-      "sourceOpens": 0,
+      "decision": "hold-and-observe",
       "trail": {
         "canonicalProofRoute": "/watch/calling-an-uber-visual-trip-guide",
         "sourceBridge": "/source-bridge?lane=Rideshare+And+Commute&source=master-list-compare#rideshare-commute",
@@ -1195,7 +996,12 @@
           "timeline read",
           "source/backlink open"
         ]
-      },
+      }
+    },
+    {
+      "id": "flight-travel-booking",
+      "lane": "Flight And Travel Booking",
+      "evidenceState": "unobserved-candidate",
       "movement": {
         "events": 0,
         "pageViews": 0,
@@ -1204,21 +1010,7 @@
         "sourceOpens": 0,
         "evidenceScore": 0
       },
-      "decision": "hold-and-observe"
-    },
-    {
-      "id": "flight-travel-booking",
-      "lane": "Flight And Travel Booking",
-      "variationCapacity": 419328,
-      "proofRoute": "/watch/booking-flight-ticket-visual-guide",
-      "evidenceScore": 0,
-      "evidenceState": "unobserved-candidate",
-      "observedAliases": [],
-      "events": 0,
-      "pageViews": 0,
-      "secondActions": 0,
-      "proofOpens": 0,
-      "sourceOpens": 0,
+      "decision": "hold-and-observe",
       "trail": {
         "canonicalProofRoute": "/watch/booking-flight-ticket-visual-guide",
         "sourceBridge": "/source-bridge?lane=Flight+And+Travel+Booking&source=master-list-compare#flight-travel-booking",
@@ -1248,7 +1040,12 @@
           "GLB place preview",
           "watch proof open"
         ]
-      },
+      }
+    },
+    {
+      "id": "wiki-quick-research",
+      "lane": "Wiki And Quick Research",
+      "evidenceState": "unobserved-candidate",
       "movement": {
         "events": 0,
         "pageViews": 0,
@@ -1257,21 +1054,7 @@
         "sourceOpens": 0,
         "evidenceScore": 0
       },
-      "decision": "hold-and-observe"
-    },
-    {
-      "id": "wiki-quick-research",
-      "lane": "Wiki And Quick Research",
-      "variationCapacity": 344064,
-      "proofRoute": "/watch/wiki-lookup-visual-research-hub",
-      "evidenceScore": 0,
-      "evidenceState": "unobserved-candidate",
-      "observedAliases": [],
-      "events": 0,
-      "pageViews": 0,
-      "secondActions": 0,
-      "proofOpens": 0,
-      "sourceOpens": 0,
+      "decision": "hold-and-observe",
       "trail": {
         "canonicalProofRoute": "/watch/wiki-lookup-visual-research-hub",
         "sourceBridge": "/source-bridge?lane=Wiki+And+Quick+Research&source=master-list-compare#wiki-quick-research",
@@ -1301,7 +1084,12 @@
           "source route open",
           "search intent"
         ]
-      },
+      }
+    },
+    {
+      "id": "funny-mainstream-video",
+      "lane": "Funny Mainstream Video",
+      "evidenceState": "unobserved-candidate",
       "movement": {
         "events": 0,
         "pageViews": 0,
@@ -1310,21 +1098,7 @@
         "sourceOpens": 0,
         "evidenceScore": 0
       },
-      "decision": "hold-and-observe"
-    },
-    {
-      "id": "funny-mainstream-video",
-      "lane": "Funny Mainstream Video",
-      "variationCapacity": 442368,
-      "proofRoute": "/watch/funny-mainstream-video-explained",
-      "evidenceScore": 0,
-      "evidenceState": "unobserved-candidate",
-      "observedAliases": [],
-      "events": 0,
-      "pageViews": 0,
-      "secondActions": 0,
-      "proofOpens": 0,
-      "sourceOpens": 0,
+      "decision": "hold-and-observe",
       "trail": {
         "canonicalProofRoute": "/watch/funny-mainstream-video-explained",
         "sourceBridge": "/source-bridge?lane=Funny+Mainstream+Video&source=master-list-compare#funny-mainstream-video",
@@ -1354,56 +1128,7 @@
           "watch route open",
           "podcast/source interrupt"
         ]
-      },
-      "movement": {
-        "events": 0,
-        "pageViews": 0,
-        "secondActions": 0,
-        "proofOpens": 0,
-        "sourceOpens": 0,
-        "evidenceScore": 0
-      },
-      "decision": "hold-and-observe"
-    }
-  ],
-  "compareAndContrast": {
-    "previousGeneratedAt": "2026-07-10T11:30:42.652Z",
-    "productionDelta": {
-      "pageViews": 2,
-      "uniqueVisitors": 1,
-      "totalEvents": 2,
-      "secondActions": 0,
-      "proofOpens": 0,
-      "sourceOpens": 0,
-      "masterKeywordDoorEvents": 2
-    },
-    "movingLanes": [
-      "full-entertainment-dapp-alternative"
-    ],
-    "promotionReadyLanes": [],
-    "trailCoverage": {
-      "lanes": 24,
-      "canonicalProofRoutes": 24,
-      "sourceBridges": 24,
-      "evidencePackets": 24,
-      "complete": true
-    }
-  },
-  "decisions": [
-    {
-      "priority": 1,
-      "action": "assign-future-generic-events-to-master-list",
-      "reason": "423 of 542 events are historically unassigned; the pixel contract now defaults future generic controls to the full-system lane."
-    },
-    {
-      "priority": 2,
-      "action": "convert-behavior-to-proof-and-source",
-      "reason": "0 proof opens and 0 source opens remain the missing public authority signals."
-    },
-    {
-      "priority": 3,
-      "action": "hold-canonical-route-shape",
-      "reason": "Retune internal selection weights from observed behavior and Search Console evidence; do not publish millions of thin or parameter-duplicate URLs."
+      }
     }
   ]
 }
