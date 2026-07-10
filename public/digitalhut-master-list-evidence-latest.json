@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-10T22:35:32.646Z",
+  "generatedAt": "2026-07-10T22:41:56.711Z",
   "status": "master-list-evidence-connected",
   "truthBoundary": "The 200,572,944 value is deterministic internal variation capacity. Public search ownership requires indexed canonical routes, impressions, clicks, and user conversions.",
   "storageMode": "healthy-system-drive-and-cloud-evidence",
@@ -12,7 +12,7 @@
     "publicQueryParameterRows": 0
   },
   "production": {
-    "generatedAt": "2026-07-10T22:35:33.440Z",
+    "generatedAt": "2026-07-10T22:41:57.500Z",
     "pageViews": 325,
     "uniqueVisitors": 120,
     "totalEvents": 542,
@@ -24,10 +24,18 @@
     "unassignedShare": 0.7804
   },
   "searchConsole": {
-    "freshRows": 0,
-    "freshImpressions": 0,
+    "freshRows": 1,
+    "freshImpressions": 1,
     "freshClicks": 0,
-    "source": "no-current-search-console-receipt"
+    "averagePosition": 90,
+    "topQueries": [
+      "cyberhut"
+    ],
+    "functionalityRows": 0,
+    "querySignal": "near-brand-or-unclassified-query",
+    "indexedRepresentatives": 2,
+    "discoveredRepresentatives": 8,
+    "source": "live-search-console-receipt"
   },
   "routeContract": {
     "status": "pass",
@@ -89,14 +97,14 @@
         ]
       },
       "movement": {
-        "events": 2,
-        "pageViews": 2,
+        "events": 0,
+        "pageViews": 0,
         "secondActions": 0,
         "proofOpens": 0,
         "sourceOpens": 0,
-        "evidenceScore": 2
+        "evidenceScore": 0
       },
-      "decision": "reinforce-proof-source-trail"
+      "decision": "hold-and-observe"
     },
     {
       "id": "gaming-3d-world-observatory",
@@ -1367,19 +1375,24 @@
     }
   ],
   "compareAndContrast": {
-    "previousGeneratedAt": "2026-07-10T11:30:42.652Z",
+    "previousGeneratedAt": "2026-07-10T22:41:23.712Z",
     "productionDelta": {
-      "pageViews": 2,
-      "uniqueVisitors": 1,
-      "totalEvents": 2,
+      "pageViews": 0,
+      "uniqueVisitors": 0,
+      "totalEvents": 0,
       "secondActions": 0,
       "proofOpens": 0,
       "sourceOpens": 0,
-      "masterKeywordDoorEvents": 2
+      "masterKeywordDoorEvents": 0
     },
-    "movingLanes": [
-      "full-entertainment-dapp-alternative"
-    ],
+    "searchConsoleDelta": {
+      "rows": 1,
+      "impressions": 1,
+      "clicks": 0,
+      "indexedRepresentatives": 0,
+      "discoveredRepresentatives": 0
+    },
+    "movingLanes": [],
     "promotionReadyLanes": [],
     "trailCoverage": {
       "lanes": 24,

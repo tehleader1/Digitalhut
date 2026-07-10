@@ -77,18 +77,30 @@ async function productionRead(){
 
 function searchConsoleRead(){
   const candidates = [
-    "digitalhut-search-console-ranking-test.json",
-    "digitalhut-indexing-push-status.json",
-    "digitalhut-search-console-row-push.json"
-  ].map((name) => readJson(resolve(repoRoot, "public", name)))
-  const ranking = candidates.find((entry) => entry?.compareAndContrast || entry?.searchAnalytics) || {}
+    readJson(resolve(repoRoot, "docs", "digitalhut-search-console-ranking-test-20260707.json")),
+    readJson(resolve(repoRoot, "public", "digitalhut-search-console-ranking-test.json")),
+    readJson(resolve(repoRoot, "public", "digitalhut-indexing-push-status.json")),
+    readJson(resolve(repoRoot, "public", "digitalhut-search-console-row-push.json"))
+  ]
+  const ranking = candidates.find((entry) => entry?.freshRows !== undefined || entry?.finalRows !== undefined || entry?.compareAndContrast || entry?.searchAnalytics) || {}
   const indexing = candidates.find((entry) => entry?.searchConsole || entry?.indexing) || {}
   const compare = ranking.compareAndContrast || ranking.searchAnalytics || indexing.searchConsole || {}
+  const analytics = ranking.searchAnalyticsFresh || ranking.searchAnalyticsFinal || compare
+  const topRows = Array.isArray(analytics.topRows) ? analytics.topRows : []
+  const queryTerms = topRows.map((row) => String(row?.keys?.[0] || "").toLowerCase()).filter(Boolean)
+  const functionalityTerms = ["3d", "glb", "video", "podcast", "analytics", "observatory", "dapp", "research", "autoplay"]
+  const functionalityRows = queryTerms.filter((query) => functionalityTerms.some((term) => query.includes(term))).length
   return {
-    freshRows: number(compare.freshRows || compare.rowCount || compare.rows),
-    freshImpressions: number(compare.freshImpressions || compare.totalImpressions || compare.impressions),
-    freshClicks: number(compare.freshClicks || compare.totalClicks || compare.clicks),
-    source: Object.keys(compare).length ? "saved-search-console-receipt" : "no-current-search-console-receipt"
+    freshRows: number(ranking.freshRows ?? ranking.finalRows ?? analytics.rowCount ?? compare.freshRows ?? compare.rowCount ?? compare.rows),
+    freshImpressions: number(ranking.freshImpressions ?? ranking.finalImpressions ?? analytics.totalImpressions ?? compare.freshImpressions ?? compare.totalImpressions ?? compare.impressions),
+    freshClicks: number(ranking.freshClicks ?? ranking.finalClicks ?? analytics.totalClicks ?? compare.freshClicks ?? compare.totalClicks ?? compare.clicks),
+    averagePosition: number(analytics.averagePosition),
+    topQueries: queryTerms.slice(0, 10),
+    functionalityRows,
+    querySignal: functionalityRows > 0 ? "functionality-query-evidence" : queryTerms.length ? "near-brand-or-unclassified-query" : "no-query-evidence",
+    indexedRepresentatives: number(ranking.indexedProofFacet?.indexedRepresentativeCount ?? compare.indexedInspectionTargets),
+    discoveredRepresentatives: number(ranking.indexedProofFacet?.discoveredRepresentativeCount ?? compare.discoveredInspectionTargets),
+    source: Object.keys(ranking).length ? "live-search-console-receipt" : "no-current-search-console-receipt"
   }
 }
 
@@ -157,6 +169,14 @@ async function main(){
     sourceOpens: number(pixel.totalSourceOpens) - number(previousProduction.sourceOpens),
     masterKeywordDoorEvents: number(pixel.totalMasterKeywordDoorEvents) - number(previousProduction.masterKeywordDoorEvents)
   }
+  const previousSearchConsole = previousReceipt.searchConsole || {}
+  const searchConsoleDelta = {
+    rows: searchConsole.freshRows - number(previousSearchConsole.freshRows),
+    impressions: searchConsole.freshImpressions - number(previousSearchConsole.freshImpressions),
+    clicks: searchConsole.freshClicks - number(previousSearchConsole.freshClicks),
+    indexedRepresentatives: searchConsole.indexedRepresentatives - number(previousSearchConsole.indexedRepresentatives),
+    discoveredRepresentatives: searchConsole.discoveredRepresentatives - number(previousSearchConsole.discoveredRepresentatives)
+  }
 
   const receipt = {
     generatedAt: new Date().toISOString(),
@@ -194,6 +214,7 @@ async function main(){
     compareAndContrast: {
       previousGeneratedAt: previousReceipt.generatedAt || null,
       productionDelta,
+      searchConsoleDelta,
       movingLanes: laneEvidence.filter((lane) => Object.values(lane.movement).some((value) => value > 0)).map((lane) => lane.id),
       promotionReadyLanes: laneEvidence.filter((lane) => lane.decision === "promote-canonical-route").map((lane) => lane.id),
       trailCoverage: {
@@ -246,6 +267,7 @@ async function main(){
     production: receipt.production,
     searchConsole: receipt.searchConsole,
     productionDelta,
+    searchConsoleDelta,
     movingLanes: receipt.compareAndContrast.movingLanes,
     promotionReadyLanes: receipt.compareAndContrast.promotionReadyLanes
   })

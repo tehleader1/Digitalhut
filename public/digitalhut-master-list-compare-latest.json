@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-10T22:35:32.646Z",
+  "generatedAt": "2026-07-10T22:41:56.711Z",
   "status": "master-list-compare-complete",
   "truthBoundary": "The 200,572,944 value is deterministic internal variation capacity. Public search ownership requires indexed canonical routes, impressions, clicks, and user conversions.",
   "masterList": {
@@ -10,19 +10,24 @@
     "publicQueryParameterRows": 0
   },
   "compareAndContrast": {
-    "previousGeneratedAt": "2026-07-10T11:30:42.652Z",
+    "previousGeneratedAt": "2026-07-10T22:41:23.712Z",
     "productionDelta": {
-      "pageViews": 2,
-      "uniqueVisitors": 1,
-      "totalEvents": 2,
+      "pageViews": 0,
+      "uniqueVisitors": 0,
+      "totalEvents": 0,
       "secondActions": 0,
       "proofOpens": 0,
       "sourceOpens": 0,
-      "masterKeywordDoorEvents": 2
+      "masterKeywordDoorEvents": 0
     },
-    "movingLanes": [
-      "full-entertainment-dapp-alternative"
-    ],
+    "searchConsoleDelta": {
+      "rows": 1,
+      "impressions": 1,
+      "clicks": 0,
+      "indexedRepresentatives": 0,
+      "discoveredRepresentatives": 0
+    },
+    "movingLanes": [],
     "promotionReadyLanes": [],
     "trailCoverage": {
       "lanes": 24,
@@ -38,14 +43,14 @@
       "lane": "Full Entertainment Dapp Alternative",
       "evidenceState": "behavior-evidence",
       "movement": {
-        "events": 2,
-        "pageViews": 2,
+        "events": 0,
+        "pageViews": 0,
         "secondActions": 0,
         "proofOpens": 0,
         "sourceOpens": 0,
-        "evidenceScore": 2
+        "evidenceScore": 0
       },
-      "decision": "reinforce-proof-source-trail",
+      "decision": "hold-and-observe",
       "trail": {
         "canonicalProofRoute": "/watch/full-view-episode-alternative",
         "sourceBridge": "/source-bridge?lane=Full+Entertainment+Dapp+Alternative&source=master-list-compare#full-entertainment-dapp-alternative",

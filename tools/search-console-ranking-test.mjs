@@ -26,7 +26,7 @@ async function readEnvFile(){
     const [key, ...rest] = trimmed.split("=")
     env[key.trim()] = rest.join("=").trim().replace(/^"|"$/g, "")
   }
-  return env
+  return {...env, ...process.env}
 }
 
 async function readServiceAccount(env){
