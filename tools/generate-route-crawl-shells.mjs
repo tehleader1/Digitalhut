@@ -48,7 +48,12 @@ function buildShell(baseHtml, route){
   const description = escapeHtml(stripTags(route.description || route.proofAngle || "DigitalHut proof route for video watching, 3D Model View, podcast/source moments, live analytics, GLB rendering, and source-backed observatory search."))
   const canonical = escapeHtml(route.canonical || `${domain}${route.route}`)
   const keywords = escapeHtml((route.keywords || []).slice(0, 18).join(", "))
-  const relatedLinks = (route.relatedRoutes || [])
+  const routeTrail = [
+    "/system-proof",
+    "/master-keyword-coverage",
+    `/source-bridge?route=${encodeURIComponent(route.route)}&source=crawl-shell`
+  ]
+  const relatedLinks = [...new Set([...(route.relatedRoutes || []), ...routeTrail])]
     .slice(0, 8)
     .map((related) => `<a href="${escapeHtml(related)}">${escapeHtml(related)}</a>`)
     .join(" ")

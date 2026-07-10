@@ -1,0 +1,397 @@
+{
+  "generatedAt": "2026-07-10T23:17:25.209Z",
+  "siteUrl": "https://www.digitalhut.app/",
+  "sitemapUrl": "https://www.digitalhut.app/sitemap.xml",
+  "sitemapUrls": [
+    "https://www.digitalhut.app/sitemap.xml",
+    "https://www.digitalhut.app/sitemap-index.xml",
+    "https://www.digitalhut.app/sitemap-master-keyword-50000.xml"
+  ],
+  "serviceAccountEmail": "digitalhut-observatory-runner@supportrd-auth.iam.gserviceaccount.com",
+  "api": {
+    "sites": {
+      "ok": true,
+      "status": 200
+    },
+    "sitemapSubmit": {
+      "ok": null,
+      "status": "not-requested",
+      "results": []
+    },
+    "sitemaps": {
+      "ok": true,
+      "status": 200
+    },
+    "finalSearchAnalytics": {
+      "ok": true,
+      "status": 200
+    },
+    "freshSearchAnalytics": {
+      "ok": true,
+      "status": 200
+    }
+  },
+  "sitesAccessible": [
+    {
+      "siteUrl": "https://www.digitalhut.app/",
+      "permissionLevel": "siteFullUser"
+    }
+  ],
+  "sitemap": {
+    "path": "https://www.digitalhut.app/sitemap.xml",
+    "lastSubmitted": "2026-07-09T06:27:31.576Z",
+    "lastDownloaded": "2026-07-09T02:37:49.539Z",
+    "isPending": true,
+    "warnings": "0",
+    "errors": "0"
+  },
+  "sitemaps": [
+    {
+      "path": "https://www.digitalhut.app/sitemap.xml",
+      "lastSubmitted": "2026-07-09T06:27:31.576Z",
+      "lastDownloaded": "2026-07-09T02:37:49.539Z",
+      "isPending": true,
+      "isSitemapsIndex": false,
+      "warnings": "0",
+      "errors": "0"
+    },
+    {
+      "path": "https://www.digitalhut.app/sitemap-index.xml",
+      "lastSubmitted": "2026-07-09T06:27:31.693Z",
+      "lastDownloaded": "2026-07-09T06:27:32.111Z",
+      "isPending": false,
+      "isSitemapsIndex": true,
+      "warnings": "0",
+      "errors": "0"
+    },
+    {
+      "path": "https://www.digitalhut.app/sitemap-master-keyword-50000.xml",
+      "lastSubmitted": "2026-07-09T06:27:31.700Z",
+      "lastDownloaded": "2026-07-09T03:21:57.966Z",
+      "isPending": true,
+      "isSitemapsIndex": false,
+      "warnings": "0",
+      "errors": "0"
+    }
+  ],
+  "masterKeywordPublicProof": {
+    "masterKeywordRows": 50000,
+    "totalSitemapRows": 279,
+    "masterKeywordUniverse": 200572944,
+    "routeCrawlShellsReady": false,
+    "routeCrawlShellCount": 0,
+    "canonicalProofInspections": 12,
+    "sitemapIndexUrl": "https://www.digitalhut.app/sitemap-index.xml",
+    "masterKeywordSitemapUrl": "https://www.digitalhut.app/sitemap-master-keyword-50000.xml",
+    "sampleUrls": [
+      "https://www.digitalhut.app/master-keyword-coverage",
+      "https://www.digitalhut.app/system-proof"
+    ]
+  },
+  "searchAnalyticsFinal": {
+    "rowCount": 1,
+    "totalClicks": 0,
+    "totalImpressions": 1,
+    "averagePosition": 90,
+    "topRows": [
+      {
+        "keys": [
+          "cyberhut",
+          "https://www.digitalhut.app/",
+          "esp"
+        ],
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 90
+      }
+    ]
+  },
+  "searchAnalyticsFresh": {
+    "rowCount": 1,
+    "totalClicks": 0,
+    "totalImpressions": 1,
+    "averagePosition": 90,
+    "topRows": [
+      {
+        "keys": [
+          "cyberhut",
+          "https://www.digitalhut.app/",
+          "esp"
+        ],
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 90
+      }
+    ]
+  },
+  "inspections": [
+    {
+      "url": "https://www.digitalhut.app/",
+      "ok": true,
+      "status": 200,
+      "verdict": "PASS",
+      "coverageState": "Submitted and indexed",
+      "robotsTxtState": "ALLOWED",
+      "indexingState": "INDEXING_ALLOWED",
+      "lastCrawlTime": "2026-07-09T03:03:07Z",
+      "pageFetchState": "SUCCESSFUL",
+      "googleCanonical": "https://www.digitalhut.app/",
+      "userCanonical": "https://www.digitalhut.app/",
+      "error": null
+    },
+    {
+      "url": "https://www.digitalhut.app/system-proof",
+      "ok": true,
+      "status": 200,
+      "verdict": "NEUTRAL",
+      "coverageState": "Discovered - currently not indexed",
+      "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+      "indexingState": "INDEXING_STATE_UNSPECIFIED",
+      "lastCrawlTime": null,
+      "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+      "googleCanonical": null,
+      "userCanonical": null,
+      "error": null
+    },
+    {
+      "url": "https://www.digitalhut.app/master-keyword-coverage",
+      "ok": true,
+      "status": 200,
+      "verdict": "NEUTRAL",
+      "coverageState": "Discovered - currently not indexed",
+      "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+      "indexingState": "INDEXING_STATE_UNSPECIFIED",
+      "lastCrawlTime": null,
+      "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+      "googleCanonical": null,
+      "userCanonical": null,
+      "error": null
+    },
+    {
+      "url": "https://www.digitalhut.app/digitalhut-longtail-web-cast.json",
+      "ok": true,
+      "status": 200,
+      "verdict": "NEUTRAL",
+      "coverageState": "Discovered - currently not indexed",
+      "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+      "indexingState": "INDEXING_STATE_UNSPECIFIED",
+      "lastCrawlTime": null,
+      "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+      "googleCanonical": null,
+      "userCanonical": null,
+      "error": null
+    },
+    {
+      "url": "https://www.digitalhut.app/digitalhut-operator-search-trail-latest.json",
+      "ok": true,
+      "status": 200,
+      "verdict": "NEUTRAL",
+      "coverageState": "Discovered - currently not indexed",
+      "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+      "indexingState": "INDEXING_STATE_UNSPECIFIED",
+      "lastCrawlTime": null,
+      "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+      "googleCanonical": null,
+      "userCanonical": null,
+      "error": null
+    },
+    {
+      "url": "https://www.digitalhut.app/digitalhut-search-visible-homepage-focus.json",
+      "ok": true,
+      "status": 200,
+      "verdict": "NEUTRAL",
+      "coverageState": "Discovered - currently not indexed",
+      "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+      "indexingState": "INDEXING_STATE_UNSPECIFIED",
+      "lastCrawlTime": null,
+      "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+      "googleCanonical": null,
+      "userCanonical": null,
+      "error": null
+    },
+    {
+      "url": "https://www.digitalhut.app/digitalhut-functionality-ladder-competitors.json",
+      "ok": true,
+      "status": 200,
+      "verdict": "NEUTRAL",
+      "coverageState": "URL is unknown to Google",
+      "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+      "indexingState": "INDEXING_STATE_UNSPECIFIED",
+      "lastCrawlTime": null,
+      "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+      "googleCanonical": null,
+      "userCanonical": null,
+      "error": null
+    },
+    {
+      "url": "https://www.digitalhut.app/digitalhut-competition-seo-pull-package.json",
+      "ok": true,
+      "status": 200,
+      "verdict": "NEUTRAL",
+      "coverageState": "URL is unknown to Google",
+      "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+      "indexingState": "INDEXING_STATE_UNSPECIFIED",
+      "lastCrawlTime": null,
+      "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+      "googleCanonical": null,
+      "userCanonical": null,
+      "error": null
+    },
+    {
+      "url": "https://www.digitalhut.app/watch/full-view-episode-alternative",
+      "ok": true,
+      "status": 200,
+      "verdict": "NEUTRAL",
+      "coverageState": "Discovered - currently not indexed",
+      "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+      "indexingState": "INDEXING_STATE_UNSPECIFIED",
+      "lastCrawlTime": null,
+      "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+      "googleCanonical": null,
+      "userCanonical": null,
+      "error": null
+    },
+    {
+      "url": "https://www.digitalhut.app/blog/full-view-episode-alternative",
+      "ok": true,
+      "status": 200,
+      "verdict": "NEUTRAL",
+      "coverageState": "Crawled - currently not indexed",
+      "robotsTxtState": "ALLOWED",
+      "indexingState": "INDEXING_ALLOWED",
+      "lastCrawlTime": "2026-07-08T12:00:53Z",
+      "pageFetchState": "SUCCESSFUL",
+      "googleCanonical": "https://www.digitalhut.app/blog/full-view-episode-alternative",
+      "userCanonical": "https://www.digitalhut.app/blog/full-view-episode-alternative",
+      "error": null
+    },
+    {
+      "url": "https://www.digitalhut.app/watch/home-project-3d-visual-planner",
+      "ok": true,
+      "status": 200,
+      "verdict": "PASS",
+      "coverageState": "Submitted and indexed",
+      "robotsTxtState": "ALLOWED",
+      "indexingState": "INDEXING_ALLOWED",
+      "lastCrawlTime": "2026-07-08T19:38:35Z",
+      "pageFetchState": "SUCCESSFUL",
+      "googleCanonical": "https://www.digitalhut.app/watch/home-project-3d-visual-planner",
+      "userCanonical": "https://www.digitalhut.app/",
+      "error": null
+    },
+    {
+      "url": "https://www.digitalhut.app/blog/automatic-3d-autoplay-system",
+      "ok": true,
+      "status": 200,
+      "verdict": "NEUTRAL",
+      "coverageState": "Discovered - currently not indexed",
+      "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+      "indexingState": "INDEXING_STATE_UNSPECIFIED",
+      "lastCrawlTime": null,
+      "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+      "googleCanonical": null,
+      "userCanonical": null,
+      "error": null
+    },
+    {
+      "url": "https://www.digitalhut.app/category/mainstream-streaming",
+      "ok": true,
+      "status": 200,
+      "verdict": "NEUTRAL",
+      "coverageState": "Discovered - currently not indexed",
+      "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
+      "indexingState": "INDEXING_STATE_UNSPECIFIED",
+      "lastCrawlTime": null,
+      "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+      "googleCanonical": null,
+      "userCanonical": null,
+      "error": null
+    }
+  ],
+  "indexedProofFacet": {
+    "status": "master-list-facet-has-indexed-representatives",
+    "interpretation": "Indexed proof targets are treated as representative windows into the 200,572,944 DigitalHut SEO Master List, not isolated page wins.",
+    "measurableFacet": "DigitalHut 200M SEO Master List",
+    "universe": 200572944,
+    "publicSitemapWindow": 50000,
+    "totalPublicRows": 279,
+    "indexedRepresentativeCount": 2,
+    "discoveredRepresentativeCount": 8,
+    "indexedRepresentatives": [
+      {
+        "url": "https://www.digitalhut.app/",
+        "coverageState": "Submitted and indexed",
+        "lastCrawlTime": "2026-07-09T03:03:07Z",
+        "role": "homepage entry representative for the full DigitalHut entertainment observatory"
+      },
+      {
+        "url": "https://www.digitalhut.app/watch/home-project-3d-visual-planner",
+        "coverageState": "Submitted and indexed",
+        "lastCrawlTime": "2026-07-08T19:38:35Z",
+        "role": "crawl-confirmed proof window into the 200M master keyword universe"
+      }
+    ],
+    "discoveredRepresentatives": [
+      {
+        "url": "https://www.digitalhut.app/system-proof",
+        "coverageState": "Discovered - currently not indexed",
+        "role": "queued representative route for the same master-list facet"
+      },
+      {
+        "url": "https://www.digitalhut.app/master-keyword-coverage",
+        "coverageState": "Discovered - currently not indexed",
+        "role": "queued representative route for the same master-list facet"
+      },
+      {
+        "url": "https://www.digitalhut.app/digitalhut-longtail-web-cast.json",
+        "coverageState": "Discovered - currently not indexed",
+        "role": "queued representative route for the same master-list facet"
+      },
+      {
+        "url": "https://www.digitalhut.app/digitalhut-operator-search-trail-latest.json",
+        "coverageState": "Discovered - currently not indexed",
+        "role": "queued representative route for the same master-list facet"
+      },
+      {
+        "url": "https://www.digitalhut.app/digitalhut-search-visible-homepage-focus.json",
+        "coverageState": "Discovered - currently not indexed",
+        "role": "queued representative route for the same master-list facet"
+      },
+      {
+        "url": "https://www.digitalhut.app/watch/full-view-episode-alternative",
+        "coverageState": "Discovered - currently not indexed",
+        "role": "queued representative route for the same master-list facet"
+      },
+      {
+        "url": "https://www.digitalhut.app/blog/automatic-3d-autoplay-system",
+        "coverageState": "Discovered - currently not indexed",
+        "role": "queued representative route for the same master-list facet"
+      },
+      {
+        "url": "https://www.digitalhut.app/category/mainstream-streaming",
+        "coverageState": "Discovered - currently not indexed",
+        "role": "queued representative route for the same master-list facet"
+      }
+    ],
+    "nextRequirement": "Turn indexed representatives into Search Console query rows, proof route opens, source/backlink opens, and second actions inside the observatory."
+  },
+  "compareAndContrast": {
+    "publicProofRowsReady": 279,
+    "masterKeywordRowsReady": 50000,
+    "masterKeywordUniverse": 200572944,
+    "routeCrawlShellsReady": false,
+    "routeCrawlShellCount": 0,
+    "searchConsoleRows": 2,
+    "indexedInspectionTargets": 2,
+    "discoveredInspectionTargets": 8,
+    "unknownInspectionTargets": 2,
+    "canonicalProofInspections": 12,
+    "sitemapSurfacesVisible": 3,
+    "sitemapSurfacesPending": 2,
+    "indexedMasterListFacetStatus": "master-list-facet-has-indexed-representatives",
+    "nextAction": "Compare query/page/country rows against the previous snapshot and promote only routes with real impressions."
+  },
+  "rankingTruth": "Search Console has query rows; rank movement can be compared against saved snapshots."
+}
