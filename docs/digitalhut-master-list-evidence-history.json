@@ -1,0 +1,39 @@
+{
+  "status": "master-list-history",
+  "snapshots": [
+    {
+      "generatedAt": "2026-07-10T22:35:32.646Z",
+      "production": {
+        "generatedAt": "2026-07-10T22:35:33.440Z",
+        "pageViews": 325,
+        "uniqueVisitors": 120,
+        "totalEvents": 542,
+        "secondActions": 108,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "masterKeywordDoorEvents": 74,
+        "unassignedEvents": 423,
+        "unassignedShare": 0.7804
+      },
+      "searchConsole": {
+        "freshRows": 0,
+        "freshImpressions": 0,
+        "freshClicks": 0,
+        "source": "no-current-search-console-receipt"
+      },
+      "productionDelta": {
+        "pageViews": 2,
+        "uniqueVisitors": 1,
+        "totalEvents": 2,
+        "secondActions": 0,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "masterKeywordDoorEvents": 2
+      },
+      "movingLanes": [
+        "full-entertainment-dapp-alternative"
+      ],
+      "promotionReadyLanes": []
+    }
+  ]
+}

@@ -4,6 +4,9 @@ import {dirname, resolve} from "node:path"
 const repoRoot = resolve(dirname(new URL(import.meta.url).pathname.replace(/^\/(?:[A-Za-z]:)/, (match) => match.slice(1))), "..")
 const publicPath = resolve(repoRoot, "public", "digitalhut-master-list-evidence-latest.json")
 const docsPath = resolve(repoRoot, "docs", "digitalhut-master-list-evidence-latest.json")
+const publicComparePath = resolve(repoRoot, "public", "digitalhut-master-list-compare-latest.json")
+const docsComparePath = resolve(repoRoot, "docs", "digitalhut-master-list-compare-latest.json")
+const historyPath = resolve(repoRoot, "docs", "digitalhut-master-list-evidence-history.json")
 
 function readJson(path, fallback = {}){
   try {
@@ -46,6 +49,23 @@ function scoreObservedLane(lane){
     + number(lane.sourceOpens) * 12
 }
 
+function delta(current, previous, key){
+  return number(current?.[key]) - number(previous?.[key])
+}
+
+function laneTrail(lane){
+  const proofRoute = lane.proofRoute || `/watch/${lane.id}`
+  const params = new URLSearchParams({lane: lane.lane, source: "master-list-compare"})
+  return {
+    canonicalProofRoute: proofRoute,
+    sourceBridge: `/source-bridge?${params.toString()}#${lane.id}`,
+    evidencePacket: `/digitalhut-master-list-evidence-latest.json#${lane.id}`,
+    queryFamilies: Array.isArray(lane.queryFamilies) ? lane.queryFamilies.slice(0, 12) : [],
+    backlinkTargets: Array.isArray(lane.backlinkTargets) ? lane.backlinkTargets : [],
+    measurementSignals: Array.isArray(lane.measurementSignals) ? lane.measurementSignals : []
+  }
+}
+
 async function productionRead(){
   const response = await fetch("https://www.digitalhut.app/api/insight-map", {
     headers: {"User-Agent": "DigitalHut-Master-List-Evidence/1.0"},
@@ -73,6 +93,7 @@ function searchConsoleRead(){
 }
 
 async function main(){
+  const previousReceipt = readJson(publicPath)
   const coverage = readJson(resolve(repoRoot, "public", "digitalhut-master-keyword-coverage.json"))
   const routeAudit = readJson(resolve(repoRoot, "public", "digitalhut-route-coverage-audit.json"))
   const livePayload = await productionRead()
@@ -83,12 +104,13 @@ async function main(){
   const unassigned = observedLanes.find((lane) => normalize(lane.lane) === "unassigned lane") || {}
   const totalEvents = number(pixel.totalEvents)
 
+  const previousById = new Map((previousReceipt.laneEvidence || []).map((lane) => [lane.id, lane]))
   const laneEvidence = coverageLanes.map((lane) => {
     const matches = observedLanes.filter((observed) => laneMatches(lane, observed.lane))
     const score = matches.reduce((sum, observed) => sum + scoreObservedLane(observed), 0)
     const proof = matches.reduce((sum, observed) => sum + number(observed.proofOpens), 0)
     const source = matches.reduce((sum, observed) => sum + number(observed.sourceOpens), 0)
-    return {
+    const current = {
       id: lane.id,
       lane: lane.lane,
       variationCapacity: number(lane.variationCapacity),
@@ -100,9 +122,41 @@ async function main(){
       pageViews: matches.reduce((sum, observed) => sum + number(observed.pageViews), 0),
       secondActions: matches.reduce((sum, observed) => sum + number(observed.glbPlays) + number(observed.podcastInterrupts) + number(observed.searches), 0),
       proofOpens: proof,
-      sourceOpens: source
+      sourceOpens: source,
+      trail: laneTrail(lane)
+    }
+    const previous = previousById.get(lane.id) || {}
+    const movement = {
+      events: delta(current, previous, "events"),
+      pageViews: delta(current, previous, "pageViews"),
+      secondActions: delta(current, previous, "secondActions"),
+      proofOpens: delta(current, previous, "proofOpens"),
+      sourceOpens: delta(current, previous, "sourceOpens"),
+      evidenceScore: delta(current, previous, "evidenceScore")
+    }
+    const publicAuthorityMovement = movement.proofOpens + movement.sourceOpens
+    const behaviorMovement = movement.pageViews + movement.secondActions
+    return {
+      ...current,
+      movement,
+      decision: publicAuthorityMovement > 0
+        ? "promote-canonical-route"
+        : behaviorMovement > 0
+          ? "reinforce-proof-source-trail"
+          : "hold-and-observe"
     }
   }).sort((left, right) => right.evidenceScore - left.evidenceScore)
+
+  const previousProduction = previousReceipt.production || {}
+  const productionDelta = {
+    pageViews: number(pixel.totalPageViews) - number(previousProduction.pageViews),
+    uniqueVisitors: number(pixel.uniqueVisitors) - number(previousProduction.uniqueVisitors),
+    totalEvents: totalEvents - number(previousProduction.totalEvents),
+    secondActions: number(pixel.totalGlbPreviewPlays) + number(pixel.totalPodcastInterrupts) + number(pixel.totalAutoplayStarts) + number(pixel.totalSearchRuns) + number(pixel.totalMarketOpens) - number(previousProduction.secondActions),
+    proofOpens: number(pixel.totalProofRouteOpens) - number(previousProduction.proofOpens),
+    sourceOpens: number(pixel.totalSourceOpens) - number(previousProduction.sourceOpens),
+    masterKeywordDoorEvents: number(pixel.totalMasterKeywordDoorEvents) - number(previousProduction.masterKeywordDoorEvents)
+  }
 
   const receipt = {
     generatedAt: new Date().toISOString(),
@@ -137,6 +191,19 @@ async function main(){
       missingRoutes: routeAudit.missingMetadataRoutes || []
     },
     laneEvidence,
+    compareAndContrast: {
+      previousGeneratedAt: previousReceipt.generatedAt || null,
+      productionDelta,
+      movingLanes: laneEvidence.filter((lane) => Object.values(lane.movement).some((value) => value > 0)).map((lane) => lane.id),
+      promotionReadyLanes: laneEvidence.filter((lane) => lane.decision === "promote-canonical-route").map((lane) => lane.id),
+      trailCoverage: {
+        lanes: laneEvidence.length,
+        canonicalProofRoutes: laneEvidence.filter((lane) => lane.trail.canonicalProofRoute).length,
+        sourceBridges: laneEvidence.filter((lane) => lane.trail.sourceBridge).length,
+        evidencePackets: laneEvidence.filter((lane) => lane.trail.evidencePacket).length,
+        complete: laneEvidence.every((lane) => lane.trail.canonicalProofRoute && lane.trail.sourceBridge && lane.trail.evidencePacket)
+      }
+    },
     decisions: [
       {
         priority: 1,
@@ -160,6 +227,29 @@ async function main(){
   mkdirSync(dirname(docsPath), {recursive: true})
   writeFileSync(publicPath, `${JSON.stringify(receipt, null, 2)}\n`, "utf8")
   writeFileSync(docsPath, `${JSON.stringify(receipt, null, 2)}\n`, "utf8")
+  const compareReceipt = {
+    generatedAt: receipt.generatedAt,
+    status: "master-list-compare-complete",
+    truthBoundary: receipt.truthBoundary,
+    masterList: receipt.masterList,
+    compareAndContrast: receipt.compareAndContrast,
+    laneDecisions: laneEvidence.map(({id, lane, evidenceState, movement, decision, trail}) => ({
+      id, lane, evidenceState, movement, decision, trail
+    }))
+  }
+  writeFileSync(publicComparePath, `${JSON.stringify(compareReceipt, null, 2)}\n`, "utf8")
+  writeFileSync(docsComparePath, `${JSON.stringify(compareReceipt, null, 2)}\n`, "utf8")
+  const history = readJson(historyPath, {snapshots: []})
+  const snapshots = Array.isArray(history.snapshots) ? history.snapshots : []
+  snapshots.push({
+    generatedAt: receipt.generatedAt,
+    production: receipt.production,
+    searchConsole: receipt.searchConsole,
+    productionDelta,
+    movingLanes: receipt.compareAndContrast.movingLanes,
+    promotionReadyLanes: receipt.compareAndContrast.promotionReadyLanes
+  })
+  writeFileSync(historyPath, `${JSON.stringify({status: "master-list-history", snapshots: snapshots.slice(-60)}, null, 2)}\n`, "utf8")
   console.log(JSON.stringify({
     status: receipt.status,
     universe: receipt.masterList.internalVariationCapacity,
@@ -167,6 +257,8 @@ async function main(){
     unassignedShare: receipt.production.unassignedShare,
     proofOpens: receipt.production.proofOpens,
     sourceOpens: receipt.production.sourceOpens
+    ,movingLanes: receipt.compareAndContrast.movingLanes.length
+    ,trailCoverage: receipt.compareAndContrast.trailCoverage.complete
   }, null, 2))
 }
 

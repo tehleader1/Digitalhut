@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-10T11:30:42.652Z",
+  "generatedAt": "2026-07-10T22:35:32.646Z",
   "status": "master-list-evidence-connected",
   "truthBoundary": "The 200,572,944 value is deterministic internal variation capacity. Public search ownership requires indexed canonical routes, impressions, clicks, and user conversions.",
   "storageMode": "healthy-system-drive-and-cloud-evidence",
@@ -12,16 +12,16 @@
     "publicQueryParameterRows": 0
   },
   "production": {
-    "generatedAt": "2026-07-10T11:30:43.176Z",
-    "pageViews": 323,
-    "uniqueVisitors": 119,
-    "totalEvents": 540,
+    "generatedAt": "2026-07-10T22:35:33.440Z",
+    "pageViews": 325,
+    "uniqueVisitors": 120,
+    "totalEvents": 542,
     "secondActions": 108,
     "proofOpens": 0,
     "sourceOpens": 0,
-    "masterKeywordDoorEvents": 72,
+    "masterKeywordDoorEvents": 74,
     "unassignedEvents": 423,
-    "unassignedShare": 0.7833
+    "unassignedShare": 0.7804
   },
   "searchConsole": {
     "freshRows": 0,
@@ -41,18 +41,62 @@
       "lane": "Full Entertainment Dapp Alternative",
       "variationCapacity": 11000000,
       "proofRoute": "/watch/full-view-episode-alternative",
-      "evidenceScore": 137,
+      "evidenceScore": 139,
       "evidenceState": "behavior-evidence",
       "observedAliases": [
         "Mainstream Streaming",
         "Full Entertainment Dapp Alternative",
-        "After Work Relax Viewer"
+        "After Work Relax Viewer",
+        "DigitalHut 200M SEO Master List"
       ],
-      "events": 47,
-      "pageViews": 9,
+      "events": 49,
+      "pageViews": 11,
       "secondActions": 29,
       "proofOpens": 0,
-      "sourceOpens": 0
+      "sourceOpens": 0,
+      "trail": {
+        "canonicalProofRoute": "/watch/full-view-episode-alternative",
+        "sourceBridge": "/source-bridge?lane=Full+Entertainment+Dapp+Alternative&source=master-list-compare#full-entertainment-dapp-alternative",
+        "evidencePacket": "/digitalhut-master-list-evidence-latest.json#full-entertainment-dapp-alternative",
+        "queryFamilies": [
+          "Full Entertainment Dapp Alternative",
+          "viewer looking for a complete alternative to a plain YouTube session",
+          "homepage entry",
+          "autoplay start",
+          "next episode",
+          "3D Model View open",
+          "podcast/source interrupt",
+          "live analytics read",
+          "YouTube session tool discussion",
+          "AI video tool page",
+          "3D viewer source",
+          "podcast/source page"
+        ],
+        "backlinkTargets": [
+          "YouTube session tool discussion",
+          "AI video tool page",
+          "3D viewer source",
+          "podcast/source page",
+          "watch proof route"
+        ],
+        "measurementSignals": [
+          "homepage entry",
+          "autoplay start",
+          "next episode",
+          "3D Model View open",
+          "podcast/source interrupt",
+          "live analytics read"
+        ]
+      },
+      "movement": {
+        "events": 2,
+        "pageViews": 2,
+        "secondActions": 0,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "evidenceScore": 2
+      },
+      "decision": "reinforce-proof-source-trail"
     },
     {
       "id": "gaming-3d-world-observatory",
@@ -69,7 +113,48 @@
       "pageViews": 9,
       "secondActions": 6,
       "proofOpens": 0,
-      "sourceOpens": 0
+      "sourceOpens": 0,
+      "trail": {
+        "canonicalProofRoute": "/watch/game-world-glb-presentation",
+        "sourceBridge": "/source-bridge?lane=Gaming+3D+World+Observatory&source=master-list-compare#gaming-3d-world-observatory",
+        "evidencePacket": "/digitalhut-master-list-evidence-latest.json#gaming-3d-world-observatory",
+        "queryFamilies": [
+          "Gaming 3D World Observatory",
+          "gamer searching builds, worlds, servers, maps, walkthroughs, and 3D previews",
+          "GLB Model View open",
+          "autoplay start",
+          "watch route open",
+          "source/backlink open",
+          "game build source",
+          "mod page",
+          "3D model source",
+          "server guide",
+          "watch proof route",
+          "Gaming 3D World Observatory 3D Model View"
+        ],
+        "backlinkTargets": [
+          "game build source",
+          "mod page",
+          "3D model source",
+          "server guide",
+          "watch proof route"
+        ],
+        "measurementSignals": [
+          "GLB Model View open",
+          "autoplay start",
+          "watch route open",
+          "source/backlink open"
+        ]
+      },
+      "movement": {
+        "events": 0,
+        "pageViews": 0,
+        "secondActions": 0,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "evidenceScore": 0
+      },
+      "decision": "hold-and-observe"
     },
     {
       "id": "market-company-observatory",
@@ -85,7 +170,48 @@
       "pageViews": 18,
       "secondActions": 0,
       "proofOpens": 0,
-      "sourceOpens": 0
+      "sourceOpens": 0,
+      "trail": {
+        "canonicalProofRoute": "/watch/market-company-observatory",
+        "sourceBridge": "/source-bridge?lane=Market+Company+Observatory&source=master-list-compare#market-company-observatory",
+        "evidencePacket": "/digitalhut-master-list-evidence-latest.json#market-company-observatory",
+        "queryFamilies": [
+          "Market Company Observatory",
+          "viewer checking companies, stocks, business signals, charts, products, and source-backed market context",
+          "market open",
+          "source/backlink open",
+          "search intent",
+          "watch proof open",
+          "company source",
+          "market chart",
+          "financial source",
+          "product page",
+          "watch proof route",
+          "Market Company Observatory 3D Model View"
+        ],
+        "backlinkTargets": [
+          "company source",
+          "market chart",
+          "financial source",
+          "product page",
+          "watch proof route"
+        ],
+        "measurementSignals": [
+          "market open",
+          "source/backlink open",
+          "search intent",
+          "watch proof open"
+        ]
+      },
+      "movement": {
+        "events": 0,
+        "pageViews": 0,
+        "secondActions": 0,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "evidenceScore": 0
+      },
+      "decision": "hold-and-observe"
     },
     {
       "id": "ai-video-podcast-source-explainer",
@@ -101,7 +227,48 @@
       "pageViews": 1,
       "secondActions": 2,
       "proofOpens": 0,
-      "sourceOpens": 0
+      "sourceOpens": 0,
+      "trail": {
+        "canonicalProofRoute": "/watch/ai-video-podcast-source-explainer",
+        "sourceBridge": "/source-bridge?lane=AI+Video+Podcast+Source+Explainer&source=master-list-compare#ai-video-podcast-source-explainer",
+        "evidencePacket": "/digitalhut-master-list-evidence-latest.json#ai-video-podcast-source-explainer",
+        "queryFamilies": [
+          "AI Video Podcast Source Explainer",
+          "viewer asking what a video or podcast is saying and wanting source-backed context",
+          "podcast/source interrupt",
+          "search intent",
+          "source/backlink open",
+          "autoplay start",
+          "podcast source",
+          "video source",
+          "summary proof",
+          "creator page",
+          "watch proof route",
+          "AI Video Podcast Source Explainer 3D Model View"
+        ],
+        "backlinkTargets": [
+          "podcast source",
+          "video source",
+          "summary proof",
+          "creator page",
+          "watch proof route"
+        ],
+        "measurementSignals": [
+          "podcast/source interrupt",
+          "search intent",
+          "source/backlink open",
+          "autoplay start"
+        ]
+      },
+      "movement": {
+        "events": 0,
+        "pageViews": 0,
+        "secondActions": 0,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "evidenceScore": 0
+      },
+      "decision": "hold-and-observe"
     },
     {
       "id": "local-life-errands-companion",
@@ -117,7 +284,48 @@
       "pageViews": 8,
       "secondActions": 0,
       "proofOpens": 0,
-      "sourceOpens": 0
+      "sourceOpens": 0,
+      "trail": {
+        "canonicalProofRoute": "/watch/local-life-errands-companion",
+        "sourceBridge": "/source-bridge?lane=Local+Life+Errands+Companion&source=master-list-compare#local-life-errands-companion",
+        "evidencePacket": "/digitalhut-master-list-evidence-latest.json#local-life-errands-companion",
+        "queryFamilies": [
+          "Local Life Errands Companion",
+          "everyday person searching local food, stores, rides, chores, deals, schedules, and decisions",
+          "search intent",
+          "quick panel select",
+          "source/backlink open",
+          "watch route open",
+          "local source",
+          "store page",
+          "review source",
+          "map source",
+          "watch proof route",
+          "Local Life Errands Companion 3D Model View"
+        ],
+        "backlinkTargets": [
+          "local source",
+          "store page",
+          "review source",
+          "map source",
+          "watch proof route"
+        ],
+        "measurementSignals": [
+          "search intent",
+          "quick panel select",
+          "source/backlink open",
+          "watch route open"
+        ]
+      },
+      "movement": {
+        "events": 0,
+        "pageViews": 0,
+        "secondActions": 0,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "evidenceScore": 0
+      },
+      "decision": "hold-and-observe"
     },
     {
       "id": "errands-review-before-buying",
@@ -133,7 +341,46 @@
       "pageViews": 8,
       "secondActions": 0,
       "proofOpens": 0,
-      "sourceOpens": 0
+      "sourceOpens": 0,
+      "trail": {
+        "canonicalProofRoute": "/watch/search-intent-radar-visual-experience",
+        "sourceBridge": "/source-bridge?lane=Errands+And+Review+Before+Buying&source=master-list-compare#errands-review-before-buying",
+        "evidencePacket": "/digitalhut-master-list-evidence-latest.json#errands-review-before-buying",
+        "queryFamilies": [
+          "Errands And Review Before Buying",
+          "buyer checking groceries, stores, product reviews, deals, and local errands before spending",
+          "source/backlink open",
+          "blog proof open",
+          "quick panel select",
+          "review source",
+          "product source",
+          "local store source",
+          "watch proof route",
+          "Errands And Review Before Buying 3D Model View",
+          "Errands And Review Before Buying video observatory",
+          "Errands And Review Before Buying category proof"
+        ],
+        "backlinkTargets": [
+          "review source",
+          "product source",
+          "local store source",
+          "watch proof route"
+        ],
+        "measurementSignals": [
+          "source/backlink open",
+          "blog proof open",
+          "quick panel select"
+        ]
+      },
+      "movement": {
+        "events": 0,
+        "pageViews": 0,
+        "secondActions": 0,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "evidenceScore": 0
+      },
+      "decision": "hold-and-observe"
     },
     {
       "id": "real-estate-3d-tour-observatory",
@@ -147,7 +394,48 @@
       "pageViews": 0,
       "secondActions": 0,
       "proofOpens": 0,
-      "sourceOpens": 0
+      "sourceOpens": 0,
+      "trail": {
+        "canonicalProofRoute": "/watch/real-estate-3d-tour-observatory",
+        "sourceBridge": "/source-bridge?lane=Real+Estate+3D+Tour+Observatory&source=master-list-compare#real-estate-3d-tour-observatory",
+        "evidencePacket": "/digitalhut-master-list-evidence-latest.json#real-estate-3d-tour-observatory",
+        "queryFamilies": [
+          "Real Estate 3D Tour Observatory",
+          "buyer, agent, or client comparing homes, agencies, resorts, rentals, and property models",
+          "GLB place preview",
+          "category lane select",
+          "source/backlink open",
+          "watch proof open",
+          "agency listing",
+          "property page",
+          "virtual tour source",
+          "local market guide",
+          "watch proof route",
+          "Real Estate 3D Tour Observatory 3D Model View"
+        ],
+        "backlinkTargets": [
+          "agency listing",
+          "property page",
+          "virtual tour source",
+          "local market guide",
+          "watch proof route"
+        ],
+        "measurementSignals": [
+          "GLB place preview",
+          "category lane select",
+          "source/backlink open",
+          "watch proof open"
+        ]
+      },
+      "movement": {
+        "events": 0,
+        "pageViews": 0,
+        "secondActions": 0,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "evidenceScore": 0
+      },
+      "decision": "hold-and-observe"
     },
     {
       "id": "planetary-space-observatory",
@@ -161,7 +449,48 @@
       "pageViews": 0,
       "secondActions": 0,
       "proofOpens": 0,
-      "sourceOpens": 0
+      "sourceOpens": 0,
+      "trail": {
+        "canonicalProofRoute": "/watch/planetary-space-visual-observatory",
+        "sourceBridge": "/source-bridge?lane=Planetary+And+Space+Observatory&source=master-list-compare#planetary-space-observatory",
+        "evidencePacket": "/digitalhut-master-list-evidence-latest.json#planetary-space-observatory",
+        "queryFamilies": [
+          "Planetary And Space Observatory",
+          "viewer researching planets, launches, telescopes, orbital visuals, and space explainers",
+          "research source open",
+          "GLB environment preview",
+          "timeline read",
+          "blog proof open",
+          "space agency source",
+          "launch article",
+          "research dataset",
+          "orbital model source",
+          "watch proof route",
+          "Planetary And Space Observatory 3D Model View"
+        ],
+        "backlinkTargets": [
+          "space agency source",
+          "launch article",
+          "research dataset",
+          "orbital model source",
+          "watch proof route"
+        ],
+        "measurementSignals": [
+          "research source open",
+          "GLB environment preview",
+          "timeline read",
+          "blog proof open"
+        ]
+      },
+      "movement": {
+        "events": 0,
+        "pageViews": 0,
+        "secondActions": 0,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "evidenceScore": 0
+      },
+      "decision": "hold-and-observe"
     },
     {
       "id": "exotic-environment-visual-experience",
@@ -175,7 +504,48 @@
       "pageViews": 0,
       "secondActions": 0,
       "proofOpens": 0,
-      "sourceOpens": 0
+      "sourceOpens": 0,
+      "trail": {
+        "canonicalProofRoute": "/watch/exotic-environment-visual-experience",
+        "sourceBridge": "/source-bridge?lane=Exotic+Environment+Visual+Experience&source=master-list-compare#exotic-environment-visual-experience",
+        "evidencePacket": "/digitalhut-master-list-evidence-latest.json#exotic-environment-visual-experience",
+        "queryFamilies": [
+          "Exotic Environment Visual Experience",
+          "traveler, gamer, or researcher exploring unusual environments, caves, reefs, islands, ruins, and resorts",
+          "GLB environment preview",
+          "source/backlink open",
+          "autoplay start",
+          "watch proof open",
+          "environment source",
+          "travel guide",
+          "research article",
+          "3D environment source",
+          "watch proof route",
+          "Exotic Environment Visual Experience 3D Model View"
+        ],
+        "backlinkTargets": [
+          "environment source",
+          "travel guide",
+          "research article",
+          "3D environment source",
+          "watch proof route"
+        ],
+        "measurementSignals": [
+          "GLB environment preview",
+          "source/backlink open",
+          "autoplay start",
+          "watch proof open"
+        ]
+      },
+      "movement": {
+        "events": 0,
+        "pageViews": 0,
+        "secondActions": 0,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "evidenceScore": 0
+      },
+      "decision": "hold-and-observe"
     },
     {
       "id": "architecture-structure-engineering",
@@ -189,7 +559,48 @@
       "pageViews": 0,
       "secondActions": 0,
       "proofOpens": 0,
-      "sourceOpens": 0
+      "sourceOpens": 0,
+      "trail": {
+        "canonicalProofRoute": "/watch/architecture-structure-engineering-visual",
+        "sourceBridge": "/source-bridge?lane=Architecture+Structure+Engineering&source=master-list-compare#architecture-structure-engineering",
+        "evidencePacket": "/digitalhut-master-list-evidence-latest.json#architecture-structure-engineering",
+        "queryFamilies": [
+          "Architecture Structure Engineering",
+          "builder, engineer, student, or owner studying structures, layouts, materials, and 3D models",
+          "GLB structure preview",
+          "source route open",
+          "timeline read",
+          "search intent",
+          "engineering source",
+          "architecture model",
+          "building code explainer",
+          "project guide",
+          "watch proof route",
+          "Architecture Structure Engineering 3D Model View"
+        ],
+        "backlinkTargets": [
+          "engineering source",
+          "architecture model",
+          "building code explainer",
+          "project guide",
+          "watch proof route"
+        ],
+        "measurementSignals": [
+          "GLB structure preview",
+          "source route open",
+          "timeline read",
+          "search intent"
+        ]
+      },
+      "movement": {
+        "events": 0,
+        "pageViews": 0,
+        "secondActions": 0,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "evidenceScore": 0
+      },
+      "decision": "hold-and-observe"
     },
     {
       "id": "developer-programmer-research",
@@ -203,7 +614,51 @@
       "pageViews": 0,
       "secondActions": 0,
       "proofOpens": 0,
-      "sourceOpens": 0
+      "sourceOpens": 0,
+      "trail": {
+        "canonicalProofRoute": "/watch/developer-programmer-research-observatory",
+        "sourceBridge": "/source-bridge?lane=Developer+Programmer+Research&source=master-list-compare#developer-programmer-research",
+        "evidencePacket": "/digitalhut-master-list-evidence-latest.json#developer-programmer-research",
+        "queryFamilies": [
+          "Developer Programmer Research",
+          "developer, programmer, or technical researcher studying tools, APIs, code, docs, and demos",
+          "documentation source open",
+          "blog proof open",
+          "search intent",
+          "watch proof open",
+          "Supabase event read",
+          "Search Console row",
+          "official documentation",
+          "GitHub source",
+          "API guide",
+          "developer article"
+        ],
+        "backlinkTargets": [
+          "official documentation",
+          "GitHub source",
+          "API guide",
+          "developer article",
+          "cloud architecture note",
+          "watch proof route"
+        ],
+        "measurementSignals": [
+          "documentation source open",
+          "blog proof open",
+          "search intent",
+          "watch proof open",
+          "Supabase event read",
+          "Search Console row"
+        ]
+      },
+      "movement": {
+        "events": 0,
+        "pageViews": 0,
+        "secondActions": 0,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "evidenceScore": 0
+      },
+      "decision": "hold-and-observe"
     },
     {
       "id": "social-reel-meme-analysis",
@@ -217,7 +672,48 @@
       "pageViews": 0,
       "secondActions": 0,
       "proofOpens": 0,
-      "sourceOpens": 0
+      "sourceOpens": 0,
+      "trail": {
+        "canonicalProofRoute": "/watch/social-reel-meme-analysis",
+        "sourceBridge": "/source-bridge?lane=Social+Reel+Meme+Analysis&source=master-list-compare#social-reel-meme-analysis",
+        "evidencePacket": "/digitalhut-master-list-evidence-latest.json#social-reel-meme-analysis",
+        "queryFamilies": [
+          "Social Reel Meme Analysis",
+          "viewer decoding reels, shorts, memes, funny clips, trends, and social moments",
+          "autoplay start",
+          "watch route open",
+          "podcast/source interrupt",
+          "source/backlink open",
+          "creator page",
+          "trend source",
+          "mainstream video source",
+          "podcast/source moment",
+          "watch proof route",
+          "Social Reel Meme Analysis 3D Model View"
+        ],
+        "backlinkTargets": [
+          "creator page",
+          "trend source",
+          "mainstream video source",
+          "podcast/source moment",
+          "watch proof route"
+        ],
+        "measurementSignals": [
+          "autoplay start",
+          "watch route open",
+          "podcast/source interrupt",
+          "source/backlink open"
+        ]
+      },
+      "movement": {
+        "events": 0,
+        "pageViews": 0,
+        "secondActions": 0,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "evidenceScore": 0
+      },
+      "decision": "hold-and-observe"
     },
     {
       "id": "virtual-travel-resort-vacation",
@@ -231,7 +727,48 @@
       "pageViews": 0,
       "secondActions": 0,
       "proofOpens": 0,
-      "sourceOpens": 0
+      "sourceOpens": 0,
+      "trail": {
+        "canonicalProofRoute": "/watch/virtual-travel-resort-vacation",
+        "sourceBridge": "/source-bridge?lane=Virtual+Travel+Resort+Vacation&source=master-list-compare#virtual-travel-resort-vacation",
+        "evidencePacket": "/digitalhut-master-list-evidence-latest.json#virtual-travel-resort-vacation",
+        "queryFamilies": [
+          "Virtual Travel Resort Vacation",
+          "traveler comparing vacation ideas, resorts, rentals, places, and visual previews before booking",
+          "GLB place preview",
+          "category lane select",
+          "source/backlink open",
+          "watch proof open",
+          "resort page",
+          "travel guide",
+          "map source",
+          "vacation review",
+          "watch proof route",
+          "Virtual Travel Resort Vacation 3D Model View"
+        ],
+        "backlinkTargets": [
+          "resort page",
+          "travel guide",
+          "map source",
+          "vacation review",
+          "watch proof route"
+        ],
+        "measurementSignals": [
+          "GLB place preview",
+          "category lane select",
+          "source/backlink open",
+          "watch proof open"
+        ]
+      },
+      "movement": {
+        "events": 0,
+        "pageViews": 0,
+        "secondActions": 0,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "evidenceScore": 0
+      },
+      "decision": "hold-and-observe"
     },
     {
       "id": "workforce-training-visual-system",
@@ -245,7 +782,48 @@
       "pageViews": 0,
       "secondActions": 0,
       "proofOpens": 0,
-      "sourceOpens": 0
+      "sourceOpens": 0,
+      "trail": {
+        "canonicalProofRoute": "/watch/workforce-training-visual-system",
+        "sourceBridge": "/source-bridge?lane=Workforce+Training+Visual+System&source=master-list-compare#workforce-training-visual-system",
+        "evidencePacket": "/digitalhut-master-list-evidence-latest.json#workforce-training-visual-system",
+        "queryFamilies": [
+          "Workforce Training Visual System",
+          "worker, trainer, or team lead using visual media to understand jobs, safety, tools, and workflows",
+          "watch route open",
+          "source route open",
+          "timeline read",
+          "search intent",
+          "training source",
+          "workflow guide",
+          "tool documentation",
+          "safety article",
+          "watch proof route",
+          "Workforce Training Visual System 3D Model View"
+        ],
+        "backlinkTargets": [
+          "training source",
+          "workflow guide",
+          "tool documentation",
+          "safety article",
+          "watch proof route"
+        ],
+        "measurementSignals": [
+          "watch route open",
+          "source route open",
+          "timeline read",
+          "search intent"
+        ]
+      },
+      "movement": {
+        "events": 0,
+        "pageViews": 0,
+        "secondActions": 0,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "evidenceScore": 0
+      },
+      "decision": "hold-and-observe"
     },
     {
       "id": "education-study-visual-research",
@@ -259,7 +837,48 @@
       "pageViews": 0,
       "secondActions": 0,
       "proofOpens": 0,
-      "sourceOpens": 0
+      "sourceOpens": 0,
+      "trail": {
+        "canonicalProofRoute": "/watch/education-study-visual-research",
+        "sourceBridge": "/source-bridge?lane=Education+Study+Visual+Research&source=master-list-compare#education-study-visual-research",
+        "evidencePacket": "/digitalhut-master-list-evidence-latest.json#education-study-visual-research",
+        "queryFamilies": [
+          "Education Study Visual Research",
+          "student, teacher, parent, or researcher seeking visual explainers, studies, facts, and source trails",
+          "blog proof open",
+          "source route open",
+          "search intent",
+          "watch route open",
+          "education source",
+          "dataset",
+          "research article",
+          "reference page",
+          "watch proof route",
+          "Education Study Visual Research 3D Model View"
+        ],
+        "backlinkTargets": [
+          "education source",
+          "dataset",
+          "research article",
+          "reference page",
+          "watch proof route"
+        ],
+        "measurementSignals": [
+          "blog proof open",
+          "source route open",
+          "search intent",
+          "watch route open"
+        ]
+      },
+      "movement": {
+        "events": 0,
+        "pageViews": 0,
+        "secondActions": 0,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "evidenceScore": 0
+      },
+      "decision": "hold-and-observe"
     },
     {
       "id": "home-project-diy-visual",
@@ -273,7 +892,48 @@
       "pageViews": 0,
       "secondActions": 0,
       "proofOpens": 0,
-      "sourceOpens": 0
+      "sourceOpens": 0,
+      "trail": {
+        "canonicalProofRoute": "/watch/home-project-diy-visual",
+        "sourceBridge": "/source-bridge?lane=Home+Project+DIY+Visual&source=master-list-compare#home-project-diy-visual",
+        "evidencePacket": "/digitalhut-master-list-evidence-latest.json#home-project-diy-visual",
+        "queryFamilies": [
+          "Home Project DIY Visual",
+          "homeowner or renter planning repairs, projects, rooms, furniture, tools, and visual walkthroughs",
+          "GLB structure preview",
+          "source route open",
+          "search intent",
+          "watch route open",
+          "DIY guide",
+          "tool source",
+          "room model",
+          "project checklist",
+          "watch proof route",
+          "Home Project DIY Visual 3D Model View"
+        ],
+        "backlinkTargets": [
+          "DIY guide",
+          "tool source",
+          "room model",
+          "project checklist",
+          "watch proof route"
+        ],
+        "measurementSignals": [
+          "GLB structure preview",
+          "source route open",
+          "search intent",
+          "watch route open"
+        ]
+      },
+      "movement": {
+        "events": 0,
+        "pageViews": 0,
+        "secondActions": 0,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "evidenceScore": 0
+      },
+      "decision": "hold-and-observe"
     },
     {
       "id": "lifestyle-event-visual-experience",
@@ -287,7 +947,48 @@
       "pageViews": 0,
       "secondActions": 0,
       "proofOpens": 0,
-      "sourceOpens": 0
+      "sourceOpens": 0,
+      "trail": {
+        "canonicalProofRoute": "/watch/lifestyle-event-visual-experience",
+        "sourceBridge": "/source-bridge?lane=Lifestyle+Event+Visual+Experience&source=master-list-compare#lifestyle-event-visual-experience",
+        "evidencePacket": "/digitalhut-master-list-evidence-latest.json#lifestyle-event-visual-experience",
+        "queryFamilies": [
+          "Lifestyle Event Visual Experience",
+          "viewer exploring family events, concerts, sports, fitness, food, culture, and lifestyle media",
+          "autoplay start",
+          "watch route open",
+          "source/backlink open",
+          "podcast/source interrupt",
+          "event source",
+          "creator page",
+          "venue guide",
+          "lifestyle article",
+          "watch proof route",
+          "Lifestyle Event Visual Experience 3D Model View"
+        ],
+        "backlinkTargets": [
+          "event source",
+          "creator page",
+          "venue guide",
+          "lifestyle article",
+          "watch proof route"
+        ],
+        "measurementSignals": [
+          "autoplay start",
+          "watch route open",
+          "source/backlink open",
+          "podcast/source interrupt"
+        ]
+      },
+      "movement": {
+        "events": 0,
+        "pageViews": 0,
+        "secondActions": 0,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "evidenceScore": 0
+      },
+      "decision": "hold-and-observe"
     },
     {
       "id": "creator-brand-product-showcase",
@@ -301,7 +1002,48 @@
       "pageViews": 0,
       "secondActions": 0,
       "proofOpens": 0,
-      "sourceOpens": 0
+      "sourceOpens": 0,
+      "trail": {
+        "canonicalProofRoute": "/watch/creator-brand-product-showcase",
+        "sourceBridge": "/source-bridge?lane=Creator+Brand+Product+Showcase&source=master-list-compare#creator-brand-product-showcase",
+        "evidencePacket": "/digitalhut-master-list-evidence-latest.json#creator-brand-product-showcase",
+        "queryFamilies": [
+          "Creator Brand Product Showcase",
+          "creator, client, or buyer comparing products, brands, demos, reviews, and social proof",
+          "source/backlink open",
+          "watch route open",
+          "search intent",
+          "GLB Model View open",
+          "brand page",
+          "product source",
+          "creator page",
+          "review source",
+          "watch proof route",
+          "Creator Brand Product Showcase 3D Model View"
+        ],
+        "backlinkTargets": [
+          "brand page",
+          "product source",
+          "creator page",
+          "review source",
+          "watch proof route"
+        ],
+        "measurementSignals": [
+          "source/backlink open",
+          "watch route open",
+          "search intent",
+          "GLB Model View open"
+        ]
+      },
+      "movement": {
+        "events": 0,
+        "pageViews": 0,
+        "secondActions": 0,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "evidenceScore": 0
+      },
+      "decision": "hold-and-observe"
     },
     {
       "id": "international-language-side-markets",
@@ -315,7 +1057,48 @@
       "pageViews": 0,
       "secondActions": 0,
       "proofOpens": 0,
-      "sourceOpens": 0
+      "sourceOpens": 0,
+      "trail": {
+        "canonicalProofRoute": "/watch/international-language-side-markets",
+        "sourceBridge": "/source-bridge?lane=International+Language+Side+Markets&source=master-list-compare#international-language-side-markets",
+        "evidencePacket": "/digitalhut-master-list-evidence-latest.json#international-language-side-markets",
+        "queryFamilies": [
+          "International Language Side Markets",
+          "global viewer searching local-language entertainment, research, travel, products, and visual media context",
+          "referral entry",
+          "search intent",
+          "source/backlink open",
+          "watch proof open",
+          "regional source",
+          "translated guide",
+          "local market source",
+          "international community",
+          "watch proof route",
+          "International Language Side Markets 3D Model View"
+        ],
+        "backlinkTargets": [
+          "regional source",
+          "translated guide",
+          "local market source",
+          "international community",
+          "watch proof route"
+        ],
+        "measurementSignals": [
+          "referral entry",
+          "search intent",
+          "source/backlink open",
+          "watch proof open"
+        ]
+      },
+      "movement": {
+        "events": 0,
+        "pageViews": 0,
+        "secondActions": 0,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "evidenceScore": 0
+      },
+      "decision": "hold-and-observe"
     },
     {
       "id": "lunch-local-food",
@@ -329,7 +1112,46 @@
       "pageViews": 0,
       "secondActions": 0,
       "proofOpens": 0,
-      "sourceOpens": 0
+      "sourceOpens": 0,
+      "trail": {
+        "canonicalProofRoute": "/watch/looking-for-lunch-visual-observatory",
+        "sourceBridge": "/source-bridge?lane=Lunch+And+Local+Food&source=master-list-compare#lunch-local-food",
+        "evidencePacket": "/digitalhut-master-list-evidence-latest.json#lunch-local-food",
+        "queryFamilies": [
+          "Lunch And Local Food",
+          "everyday person choosing food, lunch, menu, or local reviews during off time",
+          "search intent",
+          "backlink source open",
+          "watch route open",
+          "restaurant/menu source",
+          "local review source",
+          "food map source",
+          "watch proof route",
+          "Lunch And Local Food 3D Model View",
+          "Lunch And Local Food video observatory",
+          "Lunch And Local Food category proof"
+        ],
+        "backlinkTargets": [
+          "restaurant/menu source",
+          "local review source",
+          "food map source",
+          "watch proof route"
+        ],
+        "measurementSignals": [
+          "search intent",
+          "backlink source open",
+          "watch route open"
+        ]
+      },
+      "movement": {
+        "events": 0,
+        "pageViews": 0,
+        "secondActions": 0,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "evidenceScore": 0
+      },
+      "decision": "hold-and-observe"
     },
     {
       "id": "rideshare-commute",
@@ -343,7 +1165,46 @@
       "pageViews": 0,
       "secondActions": 0,
       "proofOpens": 0,
-      "sourceOpens": 0
+      "sourceOpens": 0,
+      "trail": {
+        "canonicalProofRoute": "/watch/calling-an-uber-visual-trip-guide",
+        "sourceBridge": "/source-bridge?lane=Rideshare+And+Commute&source=master-list-compare#rideshare-commute",
+        "evidencePacket": "/digitalhut-master-list-evidence-latest.json#rideshare-commute",
+        "queryFamilies": [
+          "Rideshare And Commute",
+          "traveler or commuter checking pickup, traffic, airport, or late-night route context",
+          "quick panel select",
+          "timeline read",
+          "source/backlink open",
+          "rideshare/travel guide",
+          "airport source",
+          "traffic source",
+          "watch proof route",
+          "Rideshare And Commute 3D Model View",
+          "Rideshare And Commute video observatory",
+          "Rideshare And Commute category proof"
+        ],
+        "backlinkTargets": [
+          "rideshare/travel guide",
+          "airport source",
+          "traffic source",
+          "watch proof route"
+        ],
+        "measurementSignals": [
+          "quick panel select",
+          "timeline read",
+          "source/backlink open"
+        ]
+      },
+      "movement": {
+        "events": 0,
+        "pageViews": 0,
+        "secondActions": 0,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "evidenceScore": 0
+      },
+      "decision": "hold-and-observe"
     },
     {
       "id": "flight-travel-booking",
@@ -357,7 +1218,46 @@
       "pageViews": 0,
       "secondActions": 0,
       "proofOpens": 0,
-      "sourceOpens": 0
+      "sourceOpens": 0,
+      "trail": {
+        "canonicalProofRoute": "/watch/booking-flight-ticket-visual-guide",
+        "sourceBridge": "/source-bridge?lane=Flight+And+Travel+Booking&source=master-list-compare#flight-travel-booking",
+        "evidencePacket": "/digitalhut-master-list-evidence-latest.json#flight-travel-booking",
+        "queryFamilies": [
+          "Flight And Travel Booking",
+          "traveler comparing flights, airports, delays, layovers, and booking decisions",
+          "category lane select",
+          "GLB place preview",
+          "watch proof open",
+          "airline or airport source",
+          "flight status source",
+          "travel guide",
+          "watch proof route",
+          "Flight And Travel Booking 3D Model View",
+          "Flight And Travel Booking video observatory",
+          "Flight And Travel Booking category proof"
+        ],
+        "backlinkTargets": [
+          "airline or airport source",
+          "flight status source",
+          "travel guide",
+          "watch proof route"
+        ],
+        "measurementSignals": [
+          "category lane select",
+          "GLB place preview",
+          "watch proof open"
+        ]
+      },
+      "movement": {
+        "events": 0,
+        "pageViews": 0,
+        "secondActions": 0,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "evidenceScore": 0
+      },
+      "decision": "hold-and-observe"
     },
     {
       "id": "wiki-quick-research",
@@ -371,7 +1271,46 @@
       "pageViews": 0,
       "secondActions": 0,
       "proofOpens": 0,
-      "sourceOpens": 0
+      "sourceOpens": 0,
+      "trail": {
+        "canonicalProofRoute": "/watch/wiki-lookup-visual-research-hub",
+        "sourceBridge": "/source-bridge?lane=Wiki+And+Quick+Research&source=master-list-compare#wiki-quick-research",
+        "evidencePacket": "/digitalhut-master-list-evidence-latest.json#wiki-quick-research",
+        "queryFamilies": [
+          "Wiki And Quick Research",
+          "student, parent, researcher, or developer looking for a source-backed quick explanation",
+          "blog proof open",
+          "source route open",
+          "search intent",
+          "reference page",
+          "dataset",
+          "official documentation",
+          "research article",
+          "Wiki And Quick Research 3D Model View",
+          "Wiki And Quick Research video observatory",
+          "Wiki And Quick Research category proof"
+        ],
+        "backlinkTargets": [
+          "reference page",
+          "dataset",
+          "official documentation",
+          "research article"
+        ],
+        "measurementSignals": [
+          "blog proof open",
+          "source route open",
+          "search intent"
+        ]
+      },
+      "movement": {
+        "events": 0,
+        "pageViews": 0,
+        "secondActions": 0,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "evidenceScore": 0
+      },
+      "decision": "hold-and-observe"
     },
     {
       "id": "funny-mainstream-video",
@@ -385,14 +1324,76 @@
       "pageViews": 0,
       "secondActions": 0,
       "proofOpens": 0,
-      "sourceOpens": 0
+      "sourceOpens": 0,
+      "trail": {
+        "canonicalProofRoute": "/watch/funny-mainstream-video-explained",
+        "sourceBridge": "/source-bridge?lane=Funny+Mainstream+Video&source=master-list-compare#funny-mainstream-video",
+        "evidencePacket": "/digitalhut-master-list-evidence-latest.json#funny-mainstream-video",
+        "queryFamilies": [
+          "Funny Mainstream Video",
+          "viewer trying to understand a funny, viral, reel, shorts, meme, or mainstream video moment",
+          "autoplay start",
+          "watch route open",
+          "podcast/source interrupt",
+          "creator/source page",
+          "first-source article",
+          "mainstream video source",
+          "podcast/source moment",
+          "Funny Mainstream Video 3D Model View",
+          "Funny Mainstream Video video observatory",
+          "Funny Mainstream Video category proof"
+        ],
+        "backlinkTargets": [
+          "creator/source page",
+          "first-source article",
+          "mainstream video source",
+          "podcast/source moment"
+        ],
+        "measurementSignals": [
+          "autoplay start",
+          "watch route open",
+          "podcast/source interrupt"
+        ]
+      },
+      "movement": {
+        "events": 0,
+        "pageViews": 0,
+        "secondActions": 0,
+        "proofOpens": 0,
+        "sourceOpens": 0,
+        "evidenceScore": 0
+      },
+      "decision": "hold-and-observe"
     }
   ],
+  "compareAndContrast": {
+    "previousGeneratedAt": "2026-07-10T11:30:42.652Z",
+    "productionDelta": {
+      "pageViews": 2,
+      "uniqueVisitors": 1,
+      "totalEvents": 2,
+      "secondActions": 0,
+      "proofOpens": 0,
+      "sourceOpens": 0,
+      "masterKeywordDoorEvents": 2
+    },
+    "movingLanes": [
+      "full-entertainment-dapp-alternative"
+    ],
+    "promotionReadyLanes": [],
+    "trailCoverage": {
+      "lanes": 24,
+      "canonicalProofRoutes": 24,
+      "sourceBridges": 24,
+      "evidencePackets": 24,
+      "complete": true
+    }
+  },
   "decisions": [
     {
       "priority": 1,
       "action": "assign-future-generic-events-to-master-list",
-      "reason": "423 of 540 events are historically unassigned; the pixel contract now defaults future generic controls to the full-system lane."
+      "reason": "423 of 542 events are historically unassigned; the pixel contract now defaults future generic controls to the full-system lane."
     },
     {
       "priority": 2,
