@@ -1,4 +1,5 @@
-import {seoSearchClaimForQuery} from "./seoSearchClaimEngine"
+﻿import {seoEntryTrailForEvent, seoSearchClaimForQuery} from "./seoSearchClaimEngine"
+import {digitalhutMasterListBridge} from "./digitalhutMasterListBridge"
 const pixelEndpoint = "/api/insight-map"
 const sessionKey = "digitalhut_pixel_session_id"
 const visitorKey = "digitalhut_pixel_visitor_id"
@@ -55,21 +56,50 @@ function inferKeywordHint(text){
   return map.find(([needle]) => value.includes(needle))?.[1] || ""
 }
 
+function defaultCategoryForEvent(eventName, data = {}){
+  const explicit = data.category || data.lane || data.metadata?.lane || ""
+  if(explicit) return explicit
+  const pathname = typeof location !== "undefined" ? location.pathname : ""
+  if(pathname === "/" || pathname === digitalhutMasterListBridge.proofRoute || pathname === digitalhutMasterListBridge.keywordCoverageRoute) return digitalhutMasterListBridge.lane
+  if(["page_view", "proof_route_open", "backlink_source_open", "watch_route_open", "blog_route_open", "category_proof_open", "zone_checkpoint_open"].includes(eventName)) return digitalhutMasterListBridge.lane
+  // Generic controls still belong to the full-system measurable facet. Specific
+  // category and route attributes above continue to win when they are present.
+  return digitalhutMasterListBridge.lane
+}
+
 function sendPixel(eventName, data = {}){
+  const category = defaultCategoryForEvent(eventName, data)
+  const pixelData = {...data, category}
   const searchClaimText = data.search || data.query || data.keywordHint || data.label || ""
+  const path = `${location.pathname}${location.search}${location.hash}`
+  const entryTrail = seoEntryTrailForEvent(eventName, {
+    ...pixelData,
+    path,
+    referrer: document.referrer || "",
+    title: document.title || ""
+  })
   const seoClaim = eventName === "search_run"
-    ? seoSearchClaimForQuery(searchClaimText, {category: data.category || "", path: location.pathname})
-    : null
+    ? seoSearchClaimForQuery(searchClaimText, {category, path: location.pathname})
+    : entryTrail.backlinkTrail
+      ? {
+        lane: entryTrail.backlinkTrail.lane,
+        rankOwnershipMode: entryTrail.backlinkTrail.mode,
+        rankUrl: entryTrail.backlinkTrail.rankUrl,
+        measurementSignals: entryTrail.backlinkTrail.measurementSignals
+      }
+      : null
   const body = {
     eventName,
-    ...currentContext(data),
-    keywordHint: data.keywordHint || inferKeywordHint(`${data.label || ""} ${data.path || ""} ${data.category || ""}`),
+    ...currentContext(pixelData),
+    keywordHint: data.keywordHint || inferKeywordHint(`${data.label || ""} ${data.path || ""} ${category}`),
     seoClaim,
+    entryTrail,
     metadata: {
       viewport: `${innerWidth}x${innerHeight}`,
       language: navigator.language || "",
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "",
       seoClaim,
+      entryTrail,
       ...data.metadata
     }
   }
@@ -116,15 +146,52 @@ function trackSearchInput(input, reason){
 }
 
 function routeProofEventForPath(pathname){
+  if(pathname === digitalhutMasterListBridge.proofRoute || pathname === digitalhutMasterListBridge.keywordCoverageRoute || pathname === "/source-bridge") return "proof_route_open"
   if(/^\/watch\/[^/]+/.test(pathname)) return "watch_route_open"
+  if(/^\/zone\/[^/]+/.test(pathname)) return "zone_checkpoint_open"
   if(/^\/category\/[^/]+/.test(pathname)) return "category_proof_open"
   if(/^\/blog\/[^/]+/.test(pathname)) return "blog_route_open"
   return ""
 }
 
 function routeSlugForPath(pathname){
-  const match = pathname.match(/^\/(?:watch|category|blog)\/([^/]+)/)
+  if(pathname === digitalhutMasterListBridge.proofRoute) return digitalhutMasterListBridge.id
+  if(pathname === digitalhutMasterListBridge.keywordCoverageRoute) return "digitalhut-master-keyword-coverage"
+  if(pathname === "/source-bridge") return "digitalhut-200m-source-bridge"
+  const match = pathname.match(/^\/(?:watch|category|blog|zone)\/([^/]+)/)
   return match ? decodeURIComponent(match[1]) : ""
+}
+
+function masterKeywordParams(){
+  const params = new URLSearchParams(location.search || "")
+  const lane = params.get("dh_lane") || ""
+  const globalRank = params.get("dh_global_rank") || ""
+  const rank = params.get("dh_rank") || ""
+  const query = params.get("dh_query") || ""
+  return {
+    lane,
+    globalRank,
+    rank,
+    query,
+    isMasterKeywordDoor: Boolean(lane || globalRank || query)
+  }
+}
+
+function masterListTrailForPath(pathname, masterKeyword = {}){
+  const slug = routeSlugForPath(pathname)
+  const title = typeof document !== "undefined" ? document.title || "" : ""
+  return {
+    lane: masterKeyword.lane || digitalhutMasterListBridge.lane,
+    globalRank: masterKeyword.globalRank || "",
+    rank: masterKeyword.rank || "",
+    query: masterKeyword.query || inferKeywordHint(`${slug} ${title}`) || "DigitalHut full entertainment dapp observatory",
+    source: masterKeyword.isMasterKeywordDoor ? "url-master-keyword-params" : "site-wide-master-list-entry",
+    proofRoute: digitalhutMasterListBridge.proofRoute,
+    sourceBridgePath: digitalhutMasterListBridge.sourceBridgePath,
+    measurableFacet: digitalhutMasterListBridge.lane,
+    universe: digitalhutMasterListBridge.universe,
+    publicSitemapWindow: digitalhutMasterListBridge.publicSitemapWindow
+  }
 }
 
 function linkContext(href){
@@ -142,15 +209,28 @@ function linkContext(href){
 
 function trackPageView(reason = "route"){
   const pathname = location.pathname
-  sendPixel(pathname.startsWith("/blog") ? "blog_view" : "page_view", {metadata: {reason}})
+  const masterKeyword = masterKeywordParams()
+  const masterListTrail = masterListTrailForPath(pathname, masterKeyword)
+  sendPixel(pathname.startsWith("/blog") ? "blog_view" : "page_view", {
+    keywordHint: masterListTrail.query,
+    category: masterListTrail.lane,
+    metadata: {
+      reason,
+      masterKeyword: masterListTrail,
+      masterListTrail
+    }
+  })
   const proofEvent = routeProofEventForPath(pathname)
   if(proofEvent){
     sendPixel(proofEvent, {
-      keywordHint: inferKeywordHint(routeSlugForPath(pathname)),
+      keywordHint: masterListTrail.query,
+      category: masterListTrail.lane,
       metadata: {
         reason,
         routeSlug: routeSlugForPath(pathname),
-        routePath: pathname
+        routePath: pathname,
+        masterKeyword: masterListTrail,
+        masterListTrail
       }
     })
   }
@@ -244,3 +324,9 @@ export function installDigitalHutSearchPixel(){
   installSearchTracking()
   trackPageView("initial")
 }
+
+
+
+
+
+

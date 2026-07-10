@@ -1,0 +1,189 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Competition Framework Metric Push",
+  "status": "competition-framework-metric-push-staged",
+  "frameworkRead": "compatible-enough-to-attack-niche-frameworks",
+  "purpose": "Physically compare DigitalHut against competitor framework/functionality before advancing SEO intertwine to stronger compatible competitors.",
+  "guardrail": "No claim of beating a competitor without a metric receipt. This packet stages the beat gates and moves only when DigitalHut wins the metric test.",
+  "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  },
+  "metricRates": {
+    "glbRate": 27.6,
+    "blogRate": 6.2,
+    "podcastRate": 0.9,
+    "searchRate": 0,
+    "marketRate": 0,
+    "autoplayRate": 0.4
+  },
+  "scores": {
+    "featureScore": 62,
+    "proofScore": 38,
+    "expansionScore": 34
+  },
+  "metricTests": [
+    {
+      "test": "Feature usefulness",
+      "currentValue": 62,
+      "passAt": 55,
+      "status": "pass-last-known",
+      "reads": "62 GLB plays, 14 blog views, 2 podcast interrupts, 0 searches, 0 market opens"
+    },
+    {
+      "test": "Proof depth",
+      "currentValue": 38,
+      "passAt": 40,
+      "status": "needs-source-backlink-events",
+      "reads": "Measures whether proof routes create continuation beyond the first visual hit."
+    },
+    {
+      "test": "Expansion readiness",
+      "currentValue": 34,
+      "passAt": 35,
+      "status": "hold-broad-expansion",
+      "reads": "Measures whether DigitalHut should climb to stronger competitors or keep extracting the current neighborhood."
+    }
+  ],
+  "competitorFrameworks": [
+    {
+      "id": "thin-sales-page",
+      "className": "Thin Sales Page / Give Me Money Site",
+      "competitorFunction": "Landing copy, form, basic images, maybe a blog.",
+      "digitalhutFunction": "Video story, Babylon/GLB proof, podcast/source moment, backlinks, watch/blog/category routes, Supabase event receipts.",
+      "metricGate": "Beat when DigitalHut route gets any GLB play or source click and the competitor page has no comparable interactive proof layer.",
+      "currentDigitalhutAdvantage": "active-advantage",
+      "seoIntertwineMove": "Use phrases that expose the functional gap: visual proof, 3D preview, source-backed observatory, video explained with model context.",
+      "nextCompatibleCompetition": "small-company and local operator pages"
+    },
+    {
+      "id": "single-medium-video",
+      "className": "Single-Medium Video Page",
+      "competitorFunction": "Video playback, comments, title/description, platform recommendations.",
+      "digitalhutFunction": "Video plus analytics map, source backlinks, GLB context, podcast/source interrupt, route proof, and SEO packet metadata.",
+      "metricGate": "Beat when same-topic route holds GLB/source/blog continuation beyond raw video playback.",
+      "currentDigitalhutAdvantage": "partial-advantage",
+      "seoIntertwineMove": "Target long-tail phrases where people ask what the video means, what sources back it, and what 3D/context explains it.",
+      "nextCompatibleCompetition": "YouTube result pages, creator blogs, short-video explainers"
+    },
+    {
+      "id": "3d-portfolio-gallery",
+      "className": "3D Portfolio / Model Gallery",
+      "competitorFunction": "Model preview, title, artist profile, asset page.",
+      "digitalhutFunction": "GLB/Babylon model tied to video topic, analytics explanation, backlink/source proof, and route-level audience receipts.",
+      "metricGate": "Beat when GLB preview rate stays above 20% of page views and route proof connects model to topic/source.",
+      "currentDigitalhutAdvantage": "active-advantage",
+      "seoIntertwineMove": "Push inspectable model proof phrases, not generic 3D gallery terms.",
+      "nextCompatibleCompetition": "Sketchfab creators, 3D artist pages, Matterport-style tours"
+    },
+    {
+      "id": "static-research-blog",
+      "className": "Static Research Blog / Wiki-Style Result",
+      "competitorFunction": "Article, citations, maybe images or embedded video.",
+      "digitalhutFunction": "Research topic rendered as video context, GLB visual, timeline/bubble analytics, source/podcast proof, and followable proof routes.",
+      "metricGate": "Beat when blog/watch pair gets source click, GLB play, or repeat route behavior.",
+      "currentDigitalhutAdvantage": "partial-advantage",
+      "seoIntertwineMove": "Compete on research questions that need visual explanation, not pure encyclopedia head terms.",
+      "nextCompatibleCompetition": "niche research blogs, university explainers, wiki-adjacent pages"
+    },
+    {
+      "id": "market-dashboard",
+      "className": "Market Dashboard / Finance Result",
+      "competitorFunction": "Ticker price, chart, news headline, stock list.",
+      "digitalhutFunction": "Ticker plus company story, connected media, GLB environment, podcast/source moment, and analytics summary.",
+      "metricGate": "Beat only after market opens or ticker searches appear in Supabase.",
+      "currentDigitalhutAdvantage": "hold-until-market-behavior",
+      "seoIntertwineMove": "Hold broad market expansion. Use quick proof snippets inside regular feed until behavior appears.",
+      "nextCompatibleCompetition": "small finance blogs first, not enterprise finance portals"
+    }
+  ],
+  "competitionProgression": [
+    {
+      "step": 1,
+      "className": "Thin Sales Page / Give Me Money Site",
+      "currentDigitalhutAdvantage": "active-advantage",
+      "metricGate": "Beat when DigitalHut route gets any GLB play or source click and the competitor page has no comparable interactive proof layer.",
+      "moveWhenBeat": "small-company and local operator pages",
+      "seoIntertwineMove": "Use phrases that expose the functional gap: visual proof, 3D preview, source-backed observatory, video explained with model context."
+    },
+    {
+      "step": 2,
+      "className": "Single-Medium Video Page",
+      "currentDigitalhutAdvantage": "partial-advantage",
+      "metricGate": "Beat when same-topic route holds GLB/source/blog continuation beyond raw video playback.",
+      "moveWhenBeat": "YouTube result pages, creator blogs, short-video explainers",
+      "seoIntertwineMove": "Target long-tail phrases where people ask what the video means, what sources back it, and what 3D/context explains it."
+    },
+    {
+      "step": 3,
+      "className": "3D Portfolio / Model Gallery",
+      "currentDigitalhutAdvantage": "active-advantage",
+      "metricGate": "Beat when GLB preview rate stays above 20% of page views and route proof connects model to topic/source.",
+      "moveWhenBeat": "Sketchfab creators, 3D artist pages, Matterport-style tours",
+      "seoIntertwineMove": "Push inspectable model proof phrases, not generic 3D gallery terms."
+    },
+    {
+      "step": 4,
+      "className": "Static Research Blog / Wiki-Style Result",
+      "currentDigitalhutAdvantage": "partial-advantage",
+      "metricGate": "Beat when blog/watch pair gets source click, GLB play, or repeat route behavior.",
+      "moveWhenBeat": "niche research blogs, university explainers, wiki-adjacent pages",
+      "seoIntertwineMove": "Compete on research questions that need visual explanation, not pure encyclopedia head terms."
+    },
+    {
+      "step": 5,
+      "className": "Market Dashboard / Finance Result",
+      "currentDigitalhutAdvantage": "hold-until-market-behavior",
+      "metricGate": "Beat only after market opens or ticker searches appear in Supabase.",
+      "moveWhenBeat": "small finance blogs first, not enterprise finance portals",
+      "seoIntertwineMove": "Hold broad market expansion. Use quick proof snippets inside regular feed until behavior appears."
+    }
+  ],
+  "seoPushQueue": [
+    {
+      "priority": 1,
+      "push": "Attack thin sales pages and 3D galleries first",
+      "reason": "DigitalHut has a real interaction layer where many competitors only show copy, images, or static embeds.",
+      "keywordAngle": "3d visual proof, source-backed video explanation, inspectable model route, observatory proof page",
+      "metricRequired": "GLB preview or source click tied to route"
+    },
+    {
+      "priority": 2,
+      "push": "Attack single-medium video explainers second",
+      "reason": "DigitalHut can separate itself by explaining the video with GLB, podcast/source, backlinks, and analytics.",
+      "keywordAngle": "what is this video about, video explained with source map, viral video proof route",
+      "metricRequired": "watch/blog pair plus source/backlink receipt"
+    },
+    {
+      "priority": 3,
+      "push": "Hold market and broad enterprise fights",
+      "reason": "Last-known market and search behavior are quiet; fighting enterprise head terms now wastes rank energy.",
+      "keywordAngle": "only use market as a connected proof lane until market opens appear",
+      "metricRequired": "market open, ticker search, or company route receipt"
+    }
+  ],
+  "compatibleNow": [
+    "Thin Sales Page / Give Me Money Site",
+    "Single-Medium Video Page",
+    "3D Portfolio / Model Gallery",
+    "Static Research Blog / Wiki-Style Result"
+  ],
+  "heldUntilReceipts": [
+    "Market Dashboard / Finance Result"
+  ],
+  "movementProofStatus": "movement-proof-contract-ready-live-receipts-needed",
+  "originProofStatus": "origin-proof-missing-live-capture-needed",
+  "competitionNeighborhoodStatus": "competition-neighborhood-staged-live-rank-proof-needed",
+  "rankBenchmarkStatus": "rank-benchmark-staged-waiting-live-rank-proof",
+  "nextMeasuredPush": "Use GLB/source proof to beat thin sales pages, 3D galleries, and single-medium video pages first. Move to stronger competitors only after Supabase/Search Console/Vercel receipts prove the win."
+}

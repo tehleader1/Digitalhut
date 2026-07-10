@@ -1,0 +1,105 @@
+{
+  "generatedAt": "2026-07-07",
+  "mode": "DigitalHut Competition Metric Test Cycle 004",
+  "status": "public-competition-metric-map-ready",
+  "domain": "https://www.digitalhut.app",
+  "purpose": "Map professional competition against DigitalHut functionality while Google Search Console ranking movement is pending.",
+  "googleWindow": {
+    "homepageIndexed": true,
+    "sitemapSubmitted": true,
+    "proofRoutesInSitemap": true,
+    "searchConsoleRows": 0,
+    "rankingClaim": "not-claimed-until-impressions-clicks-queries-or-position-exist"
+  },
+  "customMetrics": [
+    "Video Radar",
+    "Source Confidence",
+    "GLB / 3D Evidence",
+    "Podcast / Audio Moment",
+    "Timeline / Moment Map",
+    "Backlink / Source Path",
+    "Search Intent Fit",
+    "SEO Surface",
+    "User Action Loop",
+    "DigitalHut Differentiation"
+  ],
+  "competitorLanes": [
+    {
+      "lane": "Video Understanding / Video Radar",
+      "sites": [
+        {"name": "YouTube Data API", "url": "https://developers.google.com/youtube/v3/docs/search/list", "test": "search relevance, filters, region, published date, topic IDs", "digitalhutTarget": "better category matching and no-reload episode queue"},
+        {"name": "Google Cloud Video Intelligence", "url": "https://cloud.google.com/video-intelligence/docs", "test": "shot, frame, segment, object, text, and audio analysis", "digitalhutTarget": "content confidence panel and scene-aware analytics"},
+        {"name": "TwelveLabs", "url": "https://docs.twelvelabs.io/", "test": "video search, analysis, embeddings, structured outputs", "digitalhutTarget": "match their video intelligence feel with DigitalHut visual proof"},
+        {"name": "VideoDB", "url": "https://videodb.io/", "test": "video search and real-time understanding workflows", "digitalhutTarget": "compare against DigitalHut story-building from clips"},
+        {"name": "Voxel51", "url": "https://voxel51.com/", "test": "video/dataset search and visual AI workflows", "digitalhutTarget": "compare against DigitalHut observable media analysis"}
+      ]
+    },
+    {
+      "lane": "3D / GLB / Digital Twin",
+      "sites": [
+        {"name": "Sketchfab", "url": "https://sketchfab.com/developers/download-api", "test": "downloadable GLB/glTF/USDZ, licensing, source, auth", "digitalhutTarget": "GLB evidence card with source/fallback status"},
+        {"name": "Matterport", "url": "https://matterport.com/", "test": "digital twin walkthroughs and property utility", "digitalhutTarget": "real estate 3D experience plus video source proof"},
+        {"name": "Cesium ion", "url": "https://cesium.com/platform/cesium-ion/", "test": "cloud 3D tiling, geospatial context, stories, streaming", "digitalhutTarget": "planetary, continent, and geospatial observatory lanes"},
+        {"name": "Babylon.js Sandbox", "url": "https://sandbox.babylonjs.com/", "test": "model loading, inspection, WebGL renderer behavior", "digitalhutTarget": "cleaner 3D Model View and evidence controls"},
+        {"name": "Spline", "url": "https://spline.design/", "test": "browser 3D scenes and design workflows", "digitalhutTarget": "visual polish and embed/share potential"}
+      ]
+    },
+    {
+      "lane": "Podcast / Audio Source Moments",
+      "sites": [
+        {"name": "Apple iTunes Search API", "url": "https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/iTuneSearchAPI/index.html", "test": "podcast search, previews, attribution/legal constraints", "digitalhutTarget": "podcast source moment with correct promotional framing"},
+        {"name": "Listen Notes", "url": "https://www.listennotes.com/api/", "test": "podcast episode search and metadata", "digitalhutTarget": "better live podcast matching by video topic"},
+        {"name": "Podchaser", "url": "https://www.podchaser.com/", "test": "podcast discovery, credits, episode context", "digitalhutTarget": "authority/source card for speaker moments"},
+        {"name": "Spotify for Developers", "url": "https://developer.spotify.com/documentation/web-api", "test": "show/episode metadata where available", "digitalhutTarget": "metadata depth and playback constraints"}
+      ]
+    },
+    {
+      "lane": "Research / Source Grounding",
+      "sites": [
+        {"name": "NotebookLM", "url": "https://notebooklm.google/", "test": "source-grounded summaries and audio/video overviews", "digitalhutTarget": "source confidence panel and research readability"},
+        {"name": "Perplexity", "url": "https://www.perplexity.ai/", "test": "sourced answer/search UX", "digitalhutTarget": "backlink/source map and useful answer flow"},
+        {"name": "Elicit", "url": "https://elicit.com/", "test": "paper discovery and evidence extraction", "digitalhutTarget": "science/research proof routes"},
+        {"name": "Consensus", "url": "https://consensus.app/", "test": "research answer extraction", "digitalhutTarget": "study-oriented long-tail pages"},
+        {"name": "Google Scholar", "url": "https://scholar.google.com/", "test": "academic source discovery", "digitalhutTarget": "source targets for research category"}
+      ]
+    },
+    {
+      "lane": "Market / Financial Intelligence",
+      "sites": [
+        {"name": "TradingView Lightweight Charts", "url": "https://tradingview.github.io/lightweight-charts/", "test": "interactive financial charts", "digitalhutTarget": "market panel chart usefulness"},
+        {"name": "Yahoo Finance", "url": "https://finance.yahoo.com/", "test": "quote pages, news, company data", "digitalhutTarget": "compact stock proof plus related video/source"},
+        {"name": "Finviz", "url": "https://finviz.com/", "test": "scanners, heatmaps, visual market context", "digitalhutTarget": "top 10 volume/bullish/bearish quick panel"},
+        {"name": "Koyfin", "url": "https://www.koyfin.com/", "test": "dashboards, macro/company analytics", "digitalhutTarget": "market dashboard readability"},
+        {"name": "Seeking Alpha", "url": "https://seekingalpha.com/", "test": "articles, earnings, investor opinions", "digitalhutTarget": "market route source/backlink lane"}
+      ]
+    }
+  ],
+  "firstLadderMatches": [
+    {"route": "/watch/home-project-3d-visual-planner", "competitors": ["Planner 5D", "HomeByMe", "Matterport"], "reason": "home utility and 3D proof"},
+    {"route": "/watch/real-estate-3d-house-walkthrough", "competitors": ["Matterport", "Zillow-style tours"], "reason": "commercial property intent"},
+    {"route": "/watch/gaming-3d-environment-viewer", "competitors": ["Sketchfab", "Babylon Sandbox"], "reason": "GLB model interaction"},
+    {"route": "/watch/university-research-3d-experience", "competitors": ["NotebookLM", "Elicit", "Consensus"], "reason": "useful research explanation"},
+    {"route": "/watch/current-market-video-observatory", "competitors": ["TradingView", "Yahoo Finance"], "reason": "market view held until behavior improves"},
+    {"route": "/watch/funny-mainstream-video-explained", "competitors": ["YouTube", "Perplexity"], "reason": "viral video explanation layer"},
+    {"route": "/watch/calling-an-uber-visual-trip-guide", "competitors": ["Google Maps", "rideshare help pages"], "reason": "everyday decision intent"},
+    {"route": "/watch/developer-dapp-3d-experience", "competitors": ["Vercel", "Supabase", "Dune", "Alchemy"], "reason": "dapp infrastructure proof"}
+  ],
+  "trafficLanes": [
+    {"lane": "Product Hunt / indie builders", "angle": "new entertainment observatory research hub", "firstRoute": "/watch/automatic-3d-autoplay-system"},
+    {"lane": "Show HN style", "angle": "video plus GLB plus podcast analytics experiment", "firstRoute": "/watch/developer-dapp-3d-experience"},
+    {"lane": "Dev.to / Hashnode / Medium", "angle": "technical build proof with Google Cloud, Supabase, Vercel, and GLB", "firstRoute": "/category/programmer"},
+    {"lane": "Sketchfab / Babylon / Cesium communities", "angle": "GLB evidence viewer and 3D source context", "firstRoute": "/watch/glb-research-assistant"},
+    {"lane": "Real estate creator lanes", "angle": "property video plus 3D walkthrough plus source map", "firstRoute": "/watch/real-estate-3d-house-walkthrough"},
+    {"lane": "Research/student lanes", "angle": "source-backed visual research and 3D evidence", "firstRoute": "/watch/university-research-3d-experience"},
+    {"lane": "YouTube creator/source lanes", "angle": "explain what a video is about with source routes", "firstRoute": "/watch/funny-mainstream-video-explained"},
+    {"lane": "Local business lanes", "angle": "lunch, remodel, grocery, review, and errands with visual proof", "firstRoute": "/watch/looking-for-lunch-visual-observatory"}
+  ],
+  "nextBuildTargets": [
+    "Content Radar Confidence Panel",
+    "GLB Evidence Card",
+    "Podcast Source Match Card",
+    "Route Pairing Board",
+    "Market Mini-Teaser only until market opens increase"
+  ],
+  "standbyRule": "Watch traffic and Search Console. If traffic is dry, shift competition SEO long-tail categories instead of changing visuals."
+}

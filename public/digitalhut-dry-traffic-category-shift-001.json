@@ -1,0 +1,87 @@
+{
+  "generatedAt": "2026-07-07T09:06:20-04:00",
+  "mode": "DigitalHut Dry Traffic Category Shift 001",
+  "status": "active-while-search-console-rows-zero",
+  "domain": "https://www.digitalhut.app",
+  "trigger": {
+    "searchConsoleRows": 0,
+    "clicks": 0,
+    "impressions": 0,
+    "positiveMovement": "proof routes discovered but not indexed",
+    "decision": "shift competition SEO long-tail categories without visual redesign"
+  },
+  "categoryShift": [
+    {
+      "priority": 1,
+      "lane": "Home / Remodel 3D Utility",
+      "route": "/watch/home-project-3d-visual-planner",
+      "competitors": ["Planner 5D", "HomeByMe", "Matterport", "Floorplanner"],
+      "longTailTargets": [
+        "home project 3D visual planner",
+        "home remodel 3D visualization video source map",
+        "AI guided 3D room presentation",
+        "home project virtual model source proof",
+        "home remodel visual decision guide"
+      ],
+      "proofNeeded": ["GLB evidence card", "content radar confidence", "watch/blog/category route pairing"],
+      "reason": "Google has discovered the home project proof route and this lane has practical homeowner intent."
+    },
+    {
+      "priority": 2,
+      "lane": "Research / 3D Evidence",
+      "route": "/watch/university-research-3d-experience",
+      "competitors": ["NotebookLM", "Elicit", "Consensus", "Google Scholar"],
+      "longTailTargets": [
+        "university research 3D experience",
+        "research engine for 3D evidence",
+        "AI research engine with visual analysis",
+        "coral reef study 2026 3D visual experience",
+        "source backed visual research hub"
+      ],
+      "proofNeeded": ["confirmed vs inferred source labels", "source/backlink map", "timeline evidence points"],
+      "reason": "This lane has authority value and separates DigitalHut from generic entertainment pages."
+    },
+    {
+      "priority": 3,
+      "lane": "GLB / Gaming Asset Meaning",
+      "route": "/watch/gaming-3d-environment-viewer",
+      "competitors": ["Sketchfab", "Babylon.js Sandbox", "PlayCanvas", "Spline"],
+      "longTailTargets": [
+        "gaming 3D environment viewer",
+        "game world GLB presentation",
+        "creator safe 360 game world assets",
+        "GLB research assistant",
+        "3D model view research"
+      ],
+      "proofNeeded": ["model source/fallback status", "expand/collapse evidence card", "rotate/zoom/source action loop"],
+      "reason": "Last-known behavior showed GLB as the strongest interaction path."
+    },
+    {
+      "priority": 4,
+      "lane": "Real Estate / 3D Walkthrough",
+      "route": "/watch/real-estate-3d-house-walkthrough",
+      "competitors": ["Matterport", "Zillow-style tours", "real estate agency walkthroughs"],
+      "longTailTargets": [
+        "real estate 3D house walkthrough",
+        "housing model 3D experience real estate agency",
+        "international real estate 3D visualization",
+        "vacation property model source map",
+        "3D neighborhood viewer"
+      ],
+      "proofNeeded": ["property GLB context", "source route", "buyer decision timeline"],
+      "reason": "Commercial intent lane with clear useful-system value."
+    }
+  ],
+  "hold": [
+    {
+      "lane": "Market / Financial Intelligence",
+      "reason": "Hold full expansion until market opens or ticker searches appear."
+    },
+    {
+      "lane": "Mass keyword universe",
+      "reason": "Hold 2,572,944 variation release until Search Console rows appear."
+    }
+  ],
+  "nextBuildTarget": "Content Radar Confidence Panel",
+  "nextCheck": "Rerun Search Console and provider/traffic checks after the next 30-minute standby."
+}

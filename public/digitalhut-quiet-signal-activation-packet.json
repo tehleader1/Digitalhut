@@ -1,0 +1,279 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Quiet Signal Activation Packet",
+  "status": "quiet-signal-activation-staged",
+  "purpose": "Turn zero search interactions and zero market opens into a measured backend plan instead of guessing or changing the locked UI.",
+  "guardrail": "Backend SEO only. Use this packet to wait, measure, and promote proven routes; do not publish thin pages or make visual changes without repeated measured friction.",
+  "quietSignals": [
+    {
+      "id": "search-intent",
+      "metric": "searchInteractions",
+      "value": 0,
+      "status": "quiet",
+      "risk": "Visitors may not understand search/category as the content radar yet.",
+      "promotionGate": "Do not promote typed-search keyword winners until search_run or search_intent_chip_select appears."
+    },
+    {
+      "id": "current-market",
+      "metric": "marketOpens",
+      "value": 0,
+      "status": "quiet",
+      "risk": "Current Market is staged but not yet earning measured opens.",
+      "promotionGate": "Do not expand stock-specific SEO until market_view_open or ticker_search appears."
+    }
+  ],
+  "activationRouteCount": 14,
+  "prioritizedRoutes": [
+    {
+      "type": "search-intent",
+      "label": "2026 cheap lunch spot near me near the office review observatory",
+      "route": "/watch/looking-for-lunch-visual-observatory",
+      "currentStage": "route-staged-needs-intent",
+      "watchEvents": [
+        "search_intent_chip_select",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "fireCudaDecision": "promote exact phrase only after intent and proof behavior show together",
+      "releaseScore": 228,
+      "releaseStage": "push-next-deploy-proof",
+      "compareQuestion": "Does /watch/looking-for-lunch-visual-observatory create useful visitor behavior beyond a page load?"
+    },
+    {
+      "type": "search-intent",
+      "label": "cheap local restaurant review college town after work video map",
+      "route": "/watch/looking-for-lunch-visual-observatory",
+      "currentStage": "supabase-watch-wait",
+      "watchEvents": [
+        "search_intent_chip_select",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "fireCudaDecision": "promote exact phrase only after intent and proof behavior show together",
+      "releaseScore": 228,
+      "releaseStage": "push-next-deploy-proof",
+      "compareQuestion": "Does /watch/looking-for-lunch-visual-observatory create useful visitor behavior beyond a page load?"
+    },
+    {
+      "type": "search-intent",
+      "label": "funny looking for lunch tourist district lunch break 3D preview",
+      "route": "/watch/looking-for-lunch-visual-observatory",
+      "currentStage": "route-staged-needs-intent",
+      "watchEvents": [
+        "search_intent_chip_select",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "fireCudaDecision": "promote exact phrase only after intent and proof behavior show together",
+      "releaseScore": 228,
+      "releaseStage": "push-next-deploy-proof",
+      "compareQuestion": "Does /watch/looking-for-lunch-visual-observatory create useful visitor behavior beyond a page load?"
+    },
+    {
+      "type": "search-intent",
+      "label": "local what should I eat work district after work watch route",
+      "route": "/watch/looking-for-lunch-visual-observatory",
+      "currentStage": "route-staged-needs-intent",
+      "watchEvents": [
+        "search_intent_chip_select",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "fireCudaDecision": "promote exact phrase only after intent and proof behavior show together",
+      "releaseScore": 228,
+      "releaseStage": "push-next-deploy-proof",
+      "compareQuestion": "Does /watch/looking-for-lunch-visual-observatory create useful visitor behavior beyond a page load?"
+    },
+    {
+      "type": "search-intent",
+      "label": "open now best lunch near me international city downtown podcast source moment",
+      "route": "/watch/looking-for-lunch-visual-observatory",
+      "currentStage": "route-staged-needs-intent",
+      "watchEvents": [
+        "search_intent_chip_select",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "fireCudaDecision": "promote exact phrase only after intent and proof behavior show together",
+      "releaseScore": 228,
+      "releaseStage": "push-next-deploy-proof",
+      "compareQuestion": "Does /watch/looking-for-lunch-visual-observatory create useful visitor behavior beyond a page load?"
+    },
+    {
+      "type": "search-intent",
+      "label": "quick family lunch place city center while traveling backlink proof",
+      "route": "/watch/looking-for-lunch-visual-observatory",
+      "currentStage": "route-staged-needs-intent",
+      "watchEvents": [
+        "search_intent_chip_select",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "fireCudaDecision": "promote exact phrase only after intent and proof behavior show together",
+      "releaseScore": 228,
+      "releaseStage": "push-next-deploy-proof",
+      "compareQuestion": "Does /watch/looking-for-lunch-visual-observatory create useful visitor behavior beyond a page load?"
+    },
+    {
+      "type": "search-intent",
+      "label": "review-backed office lunch idea suburb before appointment decision guide",
+      "route": "/watch/looking-for-lunch-visual-observatory",
+      "currentStage": "supabase-watch-wait",
+      "watchEvents": [
+        "search_intent_chip_select",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "fireCudaDecision": "promote exact phrase only after intent and proof behavior show together",
+      "releaseScore": 228,
+      "releaseStage": "push-next-deploy-proof",
+      "compareQuestion": "Does /watch/looking-for-lunch-visual-observatory create useful visitor behavior beyond a page load?"
+    },
+    {
+      "type": "search-intent",
+      "label": "source-backed quick food nearby airport area lunch break visual guide",
+      "route": "/watch/looking-for-lunch-visual-observatory",
+      "currentStage": "supabase-watch-wait",
+      "watchEvents": [
+        "search_intent_chip_select",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "fireCudaDecision": "promote exact phrase only after intent and proof behavior show together",
+      "releaseScore": 228,
+      "releaseStage": "push-next-deploy-proof",
+      "compareQuestion": "Does /watch/looking-for-lunch-visual-observatory create useful visitor behavior beyond a page load?"
+    },
+    {
+      "type": "market",
+      "label": "AAPL Apple consumer tech",
+      "route": "/watch/current-market-video-observatory",
+      "currentStage": "market-open-needed",
+      "watchEvents": [
+        "market_view_open",
+        "ticker_search",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "fireCudaDecision": "promote company/market phrase only after market open or ticker search proves demand",
+      "releaseScore": 122,
+      "releaseStage": "push-next-deploy-proof",
+      "compareQuestion": "Does /watch/current-market-video-observatory create useful visitor behavior beyond a page load?"
+    },
+    {
+      "type": "market",
+      "label": "AMD AMD semiconductors",
+      "route": "/watch/current-market-video-observatory",
+      "currentStage": "market-open-needed",
+      "watchEvents": [
+        "market_view_open",
+        "ticker_search",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "fireCudaDecision": "promote company/market phrase only after market open or ticker search proves demand",
+      "releaseScore": 122,
+      "releaseStage": "push-next-deploy-proof",
+      "compareQuestion": "Does /watch/current-market-video-observatory create useful visitor behavior beyond a page load?"
+    },
+    {
+      "type": "market",
+      "label": "AMZN Amazon commerce cloud",
+      "route": "/watch/current-market-video-observatory",
+      "currentStage": "market-open-needed",
+      "watchEvents": [
+        "market_view_open",
+        "ticker_search",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "fireCudaDecision": "promote company/market phrase only after market open or ticker search proves demand",
+      "releaseScore": 122,
+      "releaseStage": "push-next-deploy-proof",
+      "compareQuestion": "Does /watch/current-market-video-observatory create useful visitor behavior beyond a page load?"
+    },
+    {
+      "type": "market",
+      "label": "MSFT Microsoft cloud AI",
+      "route": "/watch/current-market-video-observatory",
+      "currentStage": "market-open-needed",
+      "watchEvents": [
+        "market_view_open",
+        "ticker_search",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "fireCudaDecision": "promote company/market phrase only after market open or ticker search proves demand",
+      "releaseScore": 122,
+      "releaseStage": "push-next-deploy-proof",
+      "compareQuestion": "Does /watch/current-market-video-observatory create useful visitor behavior beyond a page load?"
+    },
+    {
+      "type": "market",
+      "label": "NVDA NVIDIA AI chips",
+      "route": "/watch/current-market-video-observatory",
+      "currentStage": "market-open-needed",
+      "watchEvents": [
+        "market_view_open",
+        "ticker_search",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "fireCudaDecision": "promote company/market phrase only after market open or ticker search proves demand",
+      "releaseScore": 122,
+      "releaseStage": "push-next-deploy-proof",
+      "compareQuestion": "Does /watch/current-market-video-observatory create useful visitor behavior beyond a page load?"
+    },
+    {
+      "type": "market",
+      "label": "TSLA Tesla EV robotics",
+      "route": "/watch/current-market-video-observatory",
+      "currentStage": "market-open-needed",
+      "watchEvents": [
+        "market_view_open",
+        "ticker_search",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "fireCudaDecision": "promote company/market phrase only after market open or ticker search proves demand",
+      "releaseScore": 122,
+      "releaseStage": "push-next-deploy-proof",
+      "compareQuestion": "Does /watch/current-market-video-observatory create useful visitor behavior beyond a page load?"
+    }
+  ],
+  "measurementViews": [
+    {
+      "name": "public.digitalhut_seo_event_rollup",
+      "role": "Group raw visitor events by event, path, category, and keyword hint."
+    },
+    {
+      "name": "public.digitalhut_seo_route_refinement",
+      "role": "Score routes by page, proof, source, GLB, podcast, market, and intent behavior."
+    },
+    {
+      "name": "public.digitalhut_seo_keyword_refinement",
+      "role": "Separate keywords that get real interactions from FireCuda-held candidates."
+    }
+  ],
+  "activationRules": [
+    "If search remains zero but proof/source opens rise, rewrite metadata and category copy before making UI changes.",
+    "If market opens remain zero after deployment, keep market in FireCuda staging and do not expand stock pages.",
+    "If GLB plays keep rising while search is quiet, use GLB language as the bridge into search/category education.",
+    "If podcast interrupts rise with a market route, promote that ticker/source lane into the next proof batch.",
+    "If a route only receives page views, keep it crawlable but hold long-tail expansion until a second behavior appears."
+  ],
+  "nextFireCudaMove": "Use Supabase route_refinement and keyword_refinement to choose whether quiet search/market lanes become promoted winners, metadata rewrites, or FireCuda-held backlog.",
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  }
+}

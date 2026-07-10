@@ -1,0 +1,349 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut First-Wave Action Queue",
+  "status": "first-wave-action-queue-ready",
+  "purpose": "Turn first-wave watch/blog evidence ledger slots into exact post-deploy actions: inspect, measure, decide, and feed FireCuda.",
+  "guardrail": "Backend SEO operation only. This queue does not deploy, submit, or claim results; it waits for build proof and then defines the order of work.",
+  "pairCount": 6,
+  "actionCount": 24,
+  "phaseCounts": {
+    "inspect-watch-route": 6,
+    "ready": 24,
+    "inspect-blog-route": 6,
+    "wait-supabase-second-action": 6,
+    "firecuda-decision": 6
+  },
+  "releaseReadiness": [
+    {
+      "gate": "build-proof",
+      "status": "build-proof-intake-ready",
+      "requiredBeforeAction": true
+    },
+    {
+      "gate": "activation",
+      "status": "measurement-activation-ready",
+      "requiredBeforeAction": true
+    },
+    {
+      "gate": "measurement-proof",
+      "status": "measurement-proof-ready",
+      "requiredBeforeAction": true
+    },
+    {
+      "gate": "ledger",
+      "status": "route-pair-ledger-ready",
+      "requiredBeforeAction": true
+    }
+  ],
+  "actions": [
+    {
+      "order": 1,
+      "pairSlug": "youtube-video-content-radar",
+      "phase": "inspect-watch-route",
+      "status": "ready",
+      "route": "/watch/youtube-video-content-radar",
+      "system": "Google Search Console",
+      "evidenceNeeded": "URL inspection can read the watch proof route after stable deployment.",
+      "successSignal": "page_view or proof_route_open appears for the watch route.",
+      "nextIfSuccess": "inspect matching blog proof route",
+      "nextIfQuiet": "check route metadata and internal proof links before rewrite"
+    },
+    {
+      "order": 2,
+      "pairSlug": "youtube-video-content-radar",
+      "phase": "inspect-blog-route",
+      "status": "ready",
+      "route": "/blog/youtube-video-content-radar",
+      "system": "Google Search Console",
+      "evidenceNeeded": "URL inspection can read the blog support route after stable deployment.",
+      "successSignal": "blog_view or page_view appears for the blog route.",
+      "nextIfSuccess": "wait for Supabase second-action window",
+      "nextIfQuiet": "rewrite blog title/description/internal link context after measurement window"
+    },
+    {
+      "order": 3,
+      "pairSlug": "youtube-video-content-radar",
+      "phase": "wait-supabase-second-action",
+      "status": "ready",
+      "route": "/watch/youtube-video-content-radar + /blog/youtube-video-content-radar",
+      "system": "Supabase refinement views",
+      "evidenceNeeded": "proof_route_open, backlink_source_open, glb_preview_play, podcast_interrupt_play",
+      "successSignal": "At least one second-action signal appears beyond page_view/blog_view.",
+      "nextIfSuccess": "route pair to FireCuda promote queue",
+      "nextIfQuiet": "route pair to metadata rewrite queue"
+    },
+    {
+      "order": 4,
+      "pairSlug": "youtube-video-content-radar",
+      "phase": "firecuda-decision",
+      "status": "ready",
+      "route": "/watch/youtube-video-content-radar + /blog/youtube-video-content-radar",
+      "system": "FireCuda decision queue",
+      "evidenceNeeded": "Search Console visibility plus Supabase route_refinement and keyword_refinement.",
+      "successSignal": "promote-or-rewrite-after-second-action",
+      "nextIfSuccess": "promote/rewrite/hold and update master SEO list",
+      "nextIfQuiet": "hold expansion and preserve crawl budget"
+    },
+    {
+      "order": 5,
+      "pairSlug": "search-intent-radar-visual-experience",
+      "phase": "inspect-watch-route",
+      "status": "ready",
+      "route": "/watch/search-intent-radar-visual-experience",
+      "system": "Google Search Console",
+      "evidenceNeeded": "URL inspection can read the watch proof route after stable deployment.",
+      "successSignal": "page_view or proof_route_open appears for the watch route.",
+      "nextIfSuccess": "inspect matching blog proof route",
+      "nextIfQuiet": "check route metadata and internal proof links before rewrite"
+    },
+    {
+      "order": 6,
+      "pairSlug": "search-intent-radar-visual-experience",
+      "phase": "inspect-blog-route",
+      "status": "ready",
+      "route": "/blog/search-intent-radar-visual-experience",
+      "system": "Google Search Console",
+      "evidenceNeeded": "URL inspection can read the blog support route after stable deployment.",
+      "successSignal": "blog_view or page_view appears for the blog route.",
+      "nextIfSuccess": "wait for Supabase second-action window",
+      "nextIfQuiet": "rewrite blog title/description/internal link context after measurement window"
+    },
+    {
+      "order": 7,
+      "pairSlug": "search-intent-radar-visual-experience",
+      "phase": "wait-supabase-second-action",
+      "status": "ready",
+      "route": "/watch/search-intent-radar-visual-experience + /blog/search-intent-radar-visual-experience",
+      "system": "Supabase refinement views",
+      "evidenceNeeded": "proof_route_open, backlink_source_open, glb_preview_play, podcast_interrupt_play, market_view_open, search_intent_chip_select",
+      "successSignal": "At least one second-action signal appears beyond page_view/blog_view.",
+      "nextIfSuccess": "route pair to FireCuda promote queue",
+      "nextIfQuiet": "route pair to metadata rewrite queue"
+    },
+    {
+      "order": 8,
+      "pairSlug": "search-intent-radar-visual-experience",
+      "phase": "firecuda-decision",
+      "status": "ready",
+      "route": "/watch/search-intent-radar-visual-experience + /blog/search-intent-radar-visual-experience",
+      "system": "FireCuda decision queue",
+      "evidenceNeeded": "Search Console visibility plus Supabase route_refinement and keyword_refinement.",
+      "successSignal": "promote-or-rewrite-after-second-action",
+      "nextIfSuccess": "promote/rewrite/hold and update master SEO list",
+      "nextIfQuiet": "hold expansion and preserve crawl budget"
+    },
+    {
+      "order": 9,
+      "pairSlug": "looking-for-lunch-visual-observatory",
+      "phase": "inspect-watch-route",
+      "status": "ready",
+      "route": "/watch/looking-for-lunch-visual-observatory",
+      "system": "Google Search Console",
+      "evidenceNeeded": "URL inspection can read the watch proof route after stable deployment.",
+      "successSignal": "page_view or proof_route_open appears for the watch route.",
+      "nextIfSuccess": "inspect matching blog proof route",
+      "nextIfQuiet": "check route metadata and internal proof links before rewrite"
+    },
+    {
+      "order": 10,
+      "pairSlug": "looking-for-lunch-visual-observatory",
+      "phase": "inspect-blog-route",
+      "status": "ready",
+      "route": "/blog/looking-for-lunch-visual-observatory",
+      "system": "Google Search Console",
+      "evidenceNeeded": "URL inspection can read the blog support route after stable deployment.",
+      "successSignal": "blog_view or page_view appears for the blog route.",
+      "nextIfSuccess": "wait for Supabase second-action window",
+      "nextIfQuiet": "rewrite blog title/description/internal link context after measurement window"
+    },
+    {
+      "order": 11,
+      "pairSlug": "looking-for-lunch-visual-observatory",
+      "phase": "wait-supabase-second-action",
+      "status": "ready",
+      "route": "/watch/looking-for-lunch-visual-observatory + /blog/looking-for-lunch-visual-observatory",
+      "system": "Supabase refinement views",
+      "evidenceNeeded": "proof_route_open, backlink_source_open, glb_preview_play, podcast_interrupt_play, search_intent_chip_select",
+      "successSignal": "At least one second-action signal appears beyond page_view/blog_view.",
+      "nextIfSuccess": "route pair to FireCuda promote queue",
+      "nextIfQuiet": "route pair to metadata rewrite queue"
+    },
+    {
+      "order": 12,
+      "pairSlug": "looking-for-lunch-visual-observatory",
+      "phase": "firecuda-decision",
+      "status": "ready",
+      "route": "/watch/looking-for-lunch-visual-observatory + /blog/looking-for-lunch-visual-observatory",
+      "system": "FireCuda decision queue",
+      "evidenceNeeded": "Search Console visibility plus Supabase route_refinement and keyword_refinement.",
+      "successSignal": "promote-or-rewrite-after-second-action",
+      "nextIfSuccess": "promote/rewrite/hold and update master SEO list",
+      "nextIfQuiet": "hold expansion and preserve crawl budget"
+    },
+    {
+      "order": 13,
+      "pairSlug": "calling-an-uber-visual-trip-guide",
+      "phase": "inspect-watch-route",
+      "status": "ready",
+      "route": "/watch/calling-an-uber-visual-trip-guide",
+      "system": "Google Search Console",
+      "evidenceNeeded": "URL inspection can read the watch proof route after stable deployment.",
+      "successSignal": "page_view or proof_route_open appears for the watch route.",
+      "nextIfSuccess": "inspect matching blog proof route",
+      "nextIfQuiet": "check route metadata and internal proof links before rewrite"
+    },
+    {
+      "order": 14,
+      "pairSlug": "calling-an-uber-visual-trip-guide",
+      "phase": "inspect-blog-route",
+      "status": "ready",
+      "route": "/blog/calling-an-uber-visual-trip-guide",
+      "system": "Google Search Console",
+      "evidenceNeeded": "URL inspection can read the blog support route after stable deployment.",
+      "successSignal": "blog_view or page_view appears for the blog route.",
+      "nextIfSuccess": "wait for Supabase second-action window",
+      "nextIfQuiet": "rewrite blog title/description/internal link context after measurement window"
+    },
+    {
+      "order": 15,
+      "pairSlug": "calling-an-uber-visual-trip-guide",
+      "phase": "wait-supabase-second-action",
+      "status": "ready",
+      "route": "/watch/calling-an-uber-visual-trip-guide + /blog/calling-an-uber-visual-trip-guide",
+      "system": "Supabase refinement views",
+      "evidenceNeeded": "proof_route_open, backlink_source_open, glb_preview_play, podcast_interrupt_play, search_intent_chip_select",
+      "successSignal": "At least one second-action signal appears beyond page_view/blog_view.",
+      "nextIfSuccess": "route pair to FireCuda promote queue",
+      "nextIfQuiet": "route pair to metadata rewrite queue"
+    },
+    {
+      "order": 16,
+      "pairSlug": "calling-an-uber-visual-trip-guide",
+      "phase": "firecuda-decision",
+      "status": "ready",
+      "route": "/watch/calling-an-uber-visual-trip-guide + /blog/calling-an-uber-visual-trip-guide",
+      "system": "FireCuda decision queue",
+      "evidenceNeeded": "Search Console visibility plus Supabase route_refinement and keyword_refinement.",
+      "successSignal": "promote-or-rewrite-after-second-action",
+      "nextIfSuccess": "promote/rewrite/hold and update master SEO list",
+      "nextIfQuiet": "hold expansion and preserve crawl budget"
+    },
+    {
+      "order": 17,
+      "pairSlug": "current-market-video-observatory",
+      "phase": "inspect-watch-route",
+      "status": "ready",
+      "route": "/watch/current-market-video-observatory",
+      "system": "Google Search Console",
+      "evidenceNeeded": "URL inspection can read the watch proof route after stable deployment.",
+      "successSignal": "page_view or proof_route_open appears for the watch route.",
+      "nextIfSuccess": "inspect matching blog proof route",
+      "nextIfQuiet": "check route metadata and internal proof links before rewrite"
+    },
+    {
+      "order": 18,
+      "pairSlug": "current-market-video-observatory",
+      "phase": "inspect-blog-route",
+      "status": "ready",
+      "route": "/blog/current-market-video-observatory",
+      "system": "Google Search Console",
+      "evidenceNeeded": "URL inspection can read the blog support route after stable deployment.",
+      "successSignal": "blog_view or page_view appears for the blog route.",
+      "nextIfSuccess": "wait for Supabase second-action window",
+      "nextIfQuiet": "rewrite blog title/description/internal link context after measurement window"
+    },
+    {
+      "order": 19,
+      "pairSlug": "current-market-video-observatory",
+      "phase": "wait-supabase-second-action",
+      "status": "ready",
+      "route": "/watch/current-market-video-observatory + /blog/current-market-video-observatory",
+      "system": "Supabase refinement views",
+      "evidenceNeeded": "proof_route_open, backlink_source_open, glb_preview_play, podcast_interrupt_play, market_view_open, search_intent_chip_select",
+      "successSignal": "At least one second-action signal appears beyond page_view/blog_view.",
+      "nextIfSuccess": "route pair to FireCuda promote queue",
+      "nextIfQuiet": "route pair to metadata rewrite queue"
+    },
+    {
+      "order": 20,
+      "pairSlug": "current-market-video-observatory",
+      "phase": "firecuda-decision",
+      "status": "ready",
+      "route": "/watch/current-market-video-observatory + /blog/current-market-video-observatory",
+      "system": "FireCuda decision queue",
+      "evidenceNeeded": "Search Console visibility plus Supabase route_refinement and keyword_refinement.",
+      "successSignal": "promote-or-rewrite-after-second-action",
+      "nextIfSuccess": "promote/rewrite/hold and update master SEO list",
+      "nextIfQuiet": "hold expansion and preserve crawl budget"
+    },
+    {
+      "order": 21,
+      "pairSlug": "home-project-3d-visual-planner",
+      "phase": "inspect-watch-route",
+      "status": "ready",
+      "route": "/watch/home-project-3d-visual-planner",
+      "system": "Google Search Console",
+      "evidenceNeeded": "URL inspection can read the watch proof route after stable deployment.",
+      "successSignal": "page_view or proof_route_open appears for the watch route.",
+      "nextIfSuccess": "inspect matching blog proof route",
+      "nextIfQuiet": "check route metadata and internal proof links before rewrite"
+    },
+    {
+      "order": 22,
+      "pairSlug": "home-project-3d-visual-planner",
+      "phase": "inspect-blog-route",
+      "status": "ready",
+      "route": "/blog/home-project-3d-visual-planner",
+      "system": "Google Search Console",
+      "evidenceNeeded": "URL inspection can read the blog support route after stable deployment.",
+      "successSignal": "blog_view or page_view appears for the blog route.",
+      "nextIfSuccess": "wait for Supabase second-action window",
+      "nextIfQuiet": "rewrite blog title/description/internal link context after measurement window"
+    },
+    {
+      "order": 23,
+      "pairSlug": "home-project-3d-visual-planner",
+      "phase": "wait-supabase-second-action",
+      "status": "ready",
+      "route": "/watch/home-project-3d-visual-planner + /blog/home-project-3d-visual-planner",
+      "system": "Supabase refinement views",
+      "evidenceNeeded": "proof_route_open, backlink_source_open, glb_preview_play, podcast_interrupt_play, search_intent_chip_select",
+      "successSignal": "At least one second-action signal appears beyond page_view/blog_view.",
+      "nextIfSuccess": "route pair to FireCuda promote queue",
+      "nextIfQuiet": "route pair to metadata rewrite queue"
+    },
+    {
+      "order": 24,
+      "pairSlug": "home-project-3d-visual-planner",
+      "phase": "firecuda-decision",
+      "status": "ready",
+      "route": "/watch/home-project-3d-visual-planner + /blog/home-project-3d-visual-planner",
+      "system": "FireCuda decision queue",
+      "evidenceNeeded": "Search Console visibility plus Supabase route_refinement and keyword_refinement.",
+      "successSignal": "promote-or-rewrite-after-second-action",
+      "nextIfSuccess": "promote/rewrite/hold and update master SEO list",
+      "nextIfQuiet": "hold expansion and preserve crawl budget"
+    }
+  ],
+  "operatingRules": [
+    "Do not start URL inspection until build proof exists.",
+    "Always inspect the watch route before the matching blog route.",
+    "Never promote from page_view or blog_view alone.",
+    "Promote when a second action appears: proof route, backlink, GLB, podcast, market, search intent, or search run.",
+    "Rewrite quiet but visible pairs; hold pairs with no measured route activity."
+  ],
+  "nextFireCudaMove": "Run the first-wave queue and update FireCuda decisions from Supabase second-action evidence.",
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  }
+}

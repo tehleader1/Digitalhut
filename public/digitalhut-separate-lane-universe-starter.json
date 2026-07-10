@@ -1,0 +1,363 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Separate Lane Universe Starter",
+  "status": "separate-lane-universes-staged-receipt-held",
+  "purpose": "Create counted SEO universe starters for first-wave lanes that sit outside the current mundane off-time master list.",
+  "guardrail": "These are formulas and staging maps only. Do not publish, submit, or expand them until receipts earn promote or rewrite evidence.",
+  "sourceGateStatus": "master-list-expansion-gated-closed",
+  "separateLaneCount": 4,
+  "totalSeparateCapacity": 222912,
+  "combinedHeldCapacity": 2795856,
+  "universes": [
+    {
+      "universeId": "home-visual-build-observatory",
+      "lane": "Mainstream Streaming",
+      "receiptPair": "home-project-3d-visual-planner",
+      "proofRoutes": {
+        "watch": "/watch/home-project-3d-visual-planner",
+        "blog": "/blog/home-project-3d-visual-planner",
+        "category": "/category/home-project-3d-experience"
+      },
+      "proofSignal": "home project visual planning + GLB preview + source/backlink open + watch proof route",
+      "dimensions": {
+        "projects": [
+          "kitchen remodel",
+          "garage build",
+          "backyard patio",
+          "gaming room",
+          "home office",
+          "bathroom upgrade",
+          "basement studio",
+          "rental property refresh"
+        ],
+        "intents": [
+          "3D home project planner",
+          "visual remodel idea",
+          "before and after build",
+          "home project video guide",
+          "room design observatory",
+          "contractor research view"
+        ],
+        "contexts": [
+          "weekend project",
+          "budget planning",
+          "family upgrade",
+          "real estate showing",
+          "DIY research",
+          "contractor quote"
+        ],
+        "formats": [
+          "3D model preview",
+          "timeline map",
+          "source proof page",
+          "watch route",
+          "podcast expert moment",
+          "visual checklist"
+        ],
+        "proofAngles": [
+          "cost clue",
+          "material choice",
+          "layout comparison",
+          "space planning",
+          "resale value",
+          "safety and permit research"
+        ],
+        "geoScopes": [
+          "suburban home",
+          "city apartment",
+          "rental unit",
+          "vacation property",
+          "starter home"
+        ]
+      },
+      "pairSlug": "youtube-video-content-radar",
+      "receiptStatus": "receipt-ready-for-evidence",
+      "expansionStatus": "closed-pending-evidence",
+      "variationCapacity": 51840,
+      "dimensionCounts": {
+        "projects": 8,
+        "intents": 6,
+        "contexts": 6,
+        "formats": 6,
+        "proofAngles": 6,
+        "geoScopes": 5
+      },
+      "sampleKeywords": [
+        "Mainstream Streaming 3D home project planner",
+        "kitchen remodel 3D model preview",
+        "home project 3d visual planner source proof",
+        "Mainstream Streaming podcast GLB backlink research view"
+      ],
+      "unlockRule": "Only count as expandable after the matching receipt earns promote or rewrite evidence.",
+      "currentAction": "stage universe formula; do not publish expanded routes"
+    },
+    {
+      "universeId": "search-intent-system-presentation",
+      "lane": "Automatic System Presentation",
+      "receiptPair": "search-intent-radar-visual-experience",
+      "proofRoutes": {
+        "watch": "/watch/search-intent-radar-visual-experience",
+        "blog": "/blog/search-intent-radar-visual-experience",
+        "category": "/category/search-intent-radar"
+      },
+      "proofSignal": "search run + intent chip select + timeline scrub + proof route open",
+      "dimensions": {
+        "searches": [
+          "what am I watching",
+          "explain this video",
+          "best source for this topic",
+          "turn video into research",
+          "visual search engine",
+          "AI video analysis"
+        ],
+        "intents": [
+          "search intent radar",
+          "video research hub",
+          "observatory system read",
+          "developer analytics view",
+          "content source map",
+          "watch route summary"
+        ],
+        "contexts": [
+          "viral video",
+          "coding video",
+          "case study",
+          "family reel",
+          "real estate clip",
+          "gaming build",
+          "market video"
+        ],
+        "formats": [
+          "bubble map",
+          "timeline proof",
+          "3D source view",
+          "podcast source popup",
+          "backlink map",
+          "blog proof"
+        ],
+        "proofAngles": [
+          "source credibility",
+          "second action",
+          "viewer curiosity",
+          "topic extraction",
+          "trend match",
+          "research usefulness"
+        ],
+        "geoScopes": [
+          "US viewer",
+          "global viewer",
+          "creator",
+          "developer",
+          "researcher",
+          "everyday viewer"
+        ]
+      },
+      "pairSlug": "search-intent-radar-visual-experience",
+      "receiptStatus": "receipt-ready-for-evidence",
+      "expansionStatus": "closed-pending-evidence",
+      "variationCapacity": 54432,
+      "dimensionCounts": {
+        "searches": 6,
+        "intents": 6,
+        "contexts": 7,
+        "formats": 6,
+        "proofAngles": 6,
+        "geoScopes": 6
+      },
+      "sampleKeywords": [
+        "Automatic System Presentation search intent radar",
+        "what am I watching bubble map",
+        "search intent radar visual experience source proof",
+        "Automatic System Presentation podcast GLB backlink research view"
+      ],
+      "unlockRule": "Only count as expandable after the matching receipt earns promote or rewrite evidence.",
+      "currentAction": "stage universe formula; do not publish expanded routes"
+    },
+    {
+      "universeId": "market-business-observatory",
+      "lane": "Businesses",
+      "receiptPair": "current-market-video-observatory",
+      "proofRoutes": {
+        "watch": "/watch/current-market-video-observatory",
+        "blog": "/blog/current-market-video-observatory",
+        "category": "/category/current-market-observatory"
+      },
+      "proofSignal": "market view open + ticker search + source/backlink open + GLB market environment",
+      "dimensions": {
+        "tickers": [
+          "NVDA",
+          "TSLA",
+          "AAPL",
+          "MSFT",
+          "GOOGL",
+          "AMD",
+          "META",
+          "AMZN",
+          "PLTR",
+          "SMCI"
+        ],
+        "intents": [
+          "current market video",
+          "stock research observatory",
+          "bullish or bearish read",
+          "top volume stock",
+          "earnings visual analysis",
+          "company research video"
+        ],
+        "contexts": [
+          "pre market",
+          "market open",
+          "earnings week",
+          "after hours",
+          "breaking market news",
+          "sector rotation"
+        ],
+        "formats": [
+          "video observatory",
+          "3D company environment",
+          "podcast source moment",
+          "TradingView-style chart read",
+          "backlink proof page",
+          "watch route proof"
+        ],
+        "proofAngles": [
+          "volume spike",
+          "news catalyst",
+          "price reaction",
+          "developer infrastructure",
+          "AI market read",
+          "company source proof"
+        ],
+        "geoScopes": [
+          "US market",
+          "global market",
+          "retail investor",
+          "developer investor",
+          "small business owner"
+        ]
+      },
+      "pairSlug": "current-market-video-observatory",
+      "receiptStatus": "receipt-ready-for-evidence",
+      "expansionStatus": "closed-pending-evidence",
+      "variationCapacity": 64800,
+      "dimensionCounts": {
+        "tickers": 10,
+        "intents": 6,
+        "contexts": 6,
+        "formats": 6,
+        "proofAngles": 6,
+        "geoScopes": 5
+      },
+      "sampleKeywords": [
+        "Businesses current market video",
+        "NVDA video observatory",
+        "current market video observatory source proof",
+        "Businesses podcast GLB backlink research view"
+      ],
+      "unlockRule": "Only count as expandable after the matching receipt earns promote or rewrite evidence.",
+      "currentAction": "stage universe formula; do not publish expanded routes"
+    },
+    {
+      "universeId": "home-visual-build-observatory",
+      "lane": "Mainstream Streaming",
+      "receiptPair": "home-project-3d-visual-planner",
+      "proofRoutes": {
+        "watch": "/watch/home-project-3d-visual-planner",
+        "blog": "/blog/home-project-3d-visual-planner",
+        "category": "/category/home-project-3d-experience"
+      },
+      "proofSignal": "home project visual planning + GLB preview + source/backlink open + watch proof route",
+      "dimensions": {
+        "projects": [
+          "kitchen remodel",
+          "garage build",
+          "backyard patio",
+          "gaming room",
+          "home office",
+          "bathroom upgrade",
+          "basement studio",
+          "rental property refresh"
+        ],
+        "intents": [
+          "3D home project planner",
+          "visual remodel idea",
+          "before and after build",
+          "home project video guide",
+          "room design observatory",
+          "contractor research view"
+        ],
+        "contexts": [
+          "weekend project",
+          "budget planning",
+          "family upgrade",
+          "real estate showing",
+          "DIY research",
+          "contractor quote"
+        ],
+        "formats": [
+          "3D model preview",
+          "timeline map",
+          "source proof page",
+          "watch route",
+          "podcast expert moment",
+          "visual checklist"
+        ],
+        "proofAngles": [
+          "cost clue",
+          "material choice",
+          "layout comparison",
+          "space planning",
+          "resale value",
+          "safety and permit research"
+        ],
+        "geoScopes": [
+          "suburban home",
+          "city apartment",
+          "rental unit",
+          "vacation property",
+          "starter home"
+        ]
+      },
+      "pairSlug": "home-project-3d-visual-planner",
+      "receiptStatus": "receipt-ready-for-evidence",
+      "expansionStatus": "closed-pending-evidence",
+      "variationCapacity": 51840,
+      "dimensionCounts": {
+        "projects": 8,
+        "intents": 6,
+        "contexts": 6,
+        "formats": 6,
+        "proofAngles": 6,
+        "geoScopes": 5
+      },
+      "sampleKeywords": [
+        "Mainstream Streaming 3D home project planner",
+        "kitchen remodel 3D model preview",
+        "home project 3d visual planner source proof",
+        "Mainstream Streaming podcast GLB backlink research view"
+      ],
+      "unlockRule": "Only count as expandable after the matching receipt earns promote or rewrite evidence.",
+      "currentAction": "stage universe formula; do not publish expanded routes"
+    }
+  ],
+  "expansionRules": [
+    "Keep market/business, home visual build, and system presentation separate from mundane off-time SEO.",
+    "Use receipt evidence to decide whether each universe earns promote, rewrite, or hold.",
+    "Do not merge separate-lane capacity into the 2,572,944 master list until a receipt proves behavior.",
+    "Every separate lane must keep a watch route, blog route, GLB/source/podcast/backlink proof path, and Supabase measurement lane."
+  ],
+  "nextFireCudaMove": "Hold these separate universes behind receipts; after evidence lands, open only the specific lane that earned promote or rewrite.",
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  }
+}

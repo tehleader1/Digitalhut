@@ -1,0 +1,148 @@
+{
+  "generatedAt": "2026-07-06T06:35:19.373Z",
+  "mode": "DigitalHut Viral First-Source System Capability",
+  "frontendLock": "No live observatory UI changes. This packet prepares backend SEO analytics, source proof, GLB proof, podcast/source moments, and compare/refine movement.",
+  "input": {
+    "topic": "new viral video",
+    "category": "Mainstream Streaming",
+    "platform": "YouTube",
+    "source": "first source feed",
+    "market": "United States",
+    "urgency": "ready"
+  },
+  "slug": "new-viral-video",
+  "stackFlow": [
+    {
+      "layer": "FireCuda",
+      "status": "ready",
+      "action": "Stage \"new viral video\" with first-source, international, backlink, category, and creator/research phrase variants."
+    },
+    {
+      "layer": "SEO Master List",
+      "status": "ready",
+      "action": "Queue 12 long-tail phrases for proof-route evaluation before publishing new pages."
+    },
+    {
+      "layer": "Supabase",
+      "status": "ready",
+      "action": "Measure source opens, watch opens, search intent, autoplay, GLB plays, podcast starts, backlink opens, and proof route use."
+    },
+    {
+      "layer": "Google Cloud",
+      "status": "ready",
+      "action": "Use YouTube metadata, allowed transcripts/user-provided transcripts, Speech/TTS readiness, and quota-safe discovery for the content read."
+    },
+    {
+      "layer": "Vercel",
+      "status": "ready",
+      "action": "Deploy only after a stable batch needs this packet public."
+    },
+    {
+      "layer": "Compare & Contrast",
+      "status": "ready",
+      "action": "Compare the viral packet against last-known GLB, podcast, search, blog, watch, source, and market behavior."
+    }
+  ],
+  "keywords": [
+    "new viral video first source feed",
+    "new viral video analytics 2026",
+    "new viral video DigitalHut observatory",
+    "new viral video GLB renderer proof",
+    "new viral video Apple Podcasts source moment",
+    "new viral video backlink source route",
+    "new viral video watch route proof",
+    "new viral video YouTube source verification",
+    "Mainstream Streaming viral first source observatory",
+    "United States new viral video visual research",
+    "first source feed viral source verification",
+    "breaking new viral video 3D evidence map"
+  ],
+  "eventSignals": [
+    {
+      "event": "viral_source_packet_ready",
+      "purpose": "System capability exists and can be attached to the next backend SEO analysis cycle."
+    },
+    {
+      "event": "viral_source_route_open",
+      "purpose": "Visitor opens the first-source route."
+    },
+    {
+      "event": "viral_source_backlink_open",
+      "purpose": "Visitor opens a related backlink/source reference."
+    },
+    {
+      "event": "viral_glb_proof_play",
+      "purpose": "Visitor plays the topic-linked 3D proof view."
+    },
+    {
+      "event": "viral_podcast_source_start",
+      "purpose": "Visitor starts the related podcast/source moment."
+    },
+    {
+      "event": "viral_watch_route_open",
+      "purpose": "Visitor opens the crawlable watch proof route."
+    }
+  ],
+  "proofGates": [
+    {
+      "gate": "source",
+      "status": "watch",
+      "action": "Attach a verified source URL before calling this a first-source feed."
+    },
+    {
+      "gate": "glb",
+      "status": "ready",
+      "action": "Use the GLB renderer as topic proof only when the model/source matches the topic."
+    },
+    {
+      "gate": "podcast",
+      "status": "ready",
+      "action": "Use podcast/source moment as support, not as a fake video replacement."
+    },
+    {
+      "gate": "seo-proof",
+      "status": "ready",
+      "action": "Promote to blog/watch/sitemap only when the angle is useful and not filler."
+    },
+    {
+      "gate": "deploy",
+      "status": "ready",
+      "action": "Deploy only as part of a stable backend SEO/proof batch."
+    }
+  ],
+  "compareSignals": [
+    {
+      "signal": "search",
+      "lastKnown": 0,
+      "read": "If search stays quiet, use source/watch/backlink behavior to validate the topic first."
+    },
+    {
+      "signal": "glb",
+      "lastKnown": 62,
+      "read": "GLB is the credibility winner; attach it to the topic only when it adds research value."
+    },
+    {
+      "signal": "podcast",
+      "lastKnown": 2,
+      "read": "Podcast/source moment should support the viral topic and return users to the video story."
+    },
+    {
+      "signal": "blog",
+      "lastKnown": 14,
+      "read": "Blog proof should display the system thinking after behavior proves the topic has value."
+    },
+    {
+      "signal": "sitemap",
+      "lastKnown": 117,
+      "read": "Crawlable depth is ready; avoid adding new routes until the topic earns a public proof angle."
+    }
+  ],
+  "readyAlert": {
+    "id": "viral-first-source-packet-latest",
+    "level": "ready",
+    "lane": "New Viral Video",
+    "trigger": "new viral video",
+    "read": "Backend packet generated for YouTube/Mainstream Streaming; 12 keywords, 6 event signals, and 5 proof gates staged.",
+    "nextAction": "Use this system capability during backend SEO analysis, then promote only the phrases that earn source/watch/GLB/podcast/backlink behavior."
+  }
+}

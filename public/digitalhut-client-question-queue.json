@@ -1,0 +1,115 @@
+{
+  "generatedAt": "2026-07-09T06:47:47.110Z",
+  "status": "client-question-queue-ready",
+  "site": "https://www.digitalhut.app",
+  "purpose": "Track live client questions and searches so DigitalHut helps the audience instead of only counting page views.",
+  "guardrail": "This queue contains observed searches, keyword hints, and question-like events. It does not invent client questions.",
+  "currentRead": {
+    "pageViews": 317,
+    "uniqueVisitors": 116,
+    "totalEvents": 534,
+    "searches": 2,
+    "proofRouteOpens": 0,
+    "sourceOpens": 0
+  },
+  "liveQuestions": [
+    {
+      "question": "Medieval City Pack Demo",
+      "helpLane": "3D Model View / GLB help",
+      "origin": "keyword-hint-rollup",
+      "path": "/",
+      "eventName": "keyword_hint",
+      "count": 9,
+      "visitors": null,
+      "latest": "",
+      "status": "needs-helpful-answer",
+      "nextHelpfulAction": "Turn this hint into a useful answer that connects video, 3D Model View, podcast/source moment, and the next route."
+    },
+    {
+      "question": "Horror Corridor VR room [Baked]",
+      "helpLane": "3D Model View / GLB help",
+      "origin": "keyword-hint-rollup",
+      "path": "/",
+      "eventName": "keyword_hint",
+      "count": 6,
+      "visitors": null,
+      "latest": "",
+      "status": "needs-helpful-answer",
+      "nextHelpfulAction": "Turn this hint into a useful answer that connects video, 3D Model View, podcast/source moment, and the next route."
+    },
+    {
+      "question": "video research observatory podcast source backed 3d renderer",
+      "helpLane": "3D Model View / GLB help",
+      "origin": "keyword-hint-rollup",
+      "path": "/",
+      "eventName": "keyword_hint",
+      "count": 3,
+      "visitors": null,
+      "latest": "",
+      "status": "needs-helpful-answer",
+      "nextHelpfulAction": "Turn this hint into a useful answer that connects video, 3D Model View, podcast/source moment, and the next route."
+    },
+    {
+      "question": "gaming 3d environment viewer horror corridor vr room walkthrough",
+      "helpLane": "3D Model View / GLB help",
+      "origin": "keyword-hint-rollup",
+      "path": "/",
+      "eventName": "keyword_hint",
+      "count": 3,
+      "visitors": null,
+      "latest": "",
+      "status": "needs-helpful-answer",
+      "nextHelpfulAction": "Turn this hint into a useful answer that connects video, 3D Model View, podcast/source moment, and the next route."
+    },
+    {
+      "question": "youtube alternative autoplay 3d model podcast analytics",
+      "helpLane": "3D Model View / GLB help",
+      "origin": "keyword-hint-rollup",
+      "path": "/",
+      "eventName": "keyword_hint",
+      "count": 3,
+      "visitors": null,
+      "latest": "",
+      "status": "needs-helpful-answer",
+      "nextHelpfulAction": "Turn this hint into a useful answer that connects video, 3D Model View, podcast/source moment, and the next route."
+    },
+    {
+      "question": "NVDA NVIDIA",
+      "helpLane": "market observatory help",
+      "origin": "keyword-hint-rollup",
+      "path": "/",
+      "eventName": "keyword_hint",
+      "count": 3,
+      "visitors": null,
+      "latest": "",
+      "status": "needs-helpful-answer",
+      "nextHelpfulAction": "Turn this hint into a useful answer that connects video, 3D Model View, podcast/source moment, and the next route."
+    },
+    {
+      "question": "Full Gameready City Buildings IV [HongKong]",
+      "helpLane": "3D Model View / GLB help",
+      "origin": "keyword-hint-rollup",
+      "path": "/",
+      "eventName": "keyword_hint",
+      "count": 3,
+      "visitors": null,
+      "latest": "",
+      "status": "needs-helpful-answer",
+      "nextHelpfulAction": "Turn this hint into a useful answer that connects video, 3D Model View, podcast/source moment, and the next route."
+    },
+    {
+      "question": "Horror podcast clip",
+      "helpLane": "3D Model View / GLB help",
+      "origin": "keyword-hint-rollup",
+      "path": "/",
+      "eventName": "keyword_hint",
+      "count": 3,
+      "visitors": null,
+      "latest": "",
+      "status": "needs-helpful-answer",
+      "nextHelpfulAction": "Turn this hint into a useful answer that connects video, 3D Model View, podcast/source moment, and the next route."
+    }
+  ],
+  "unansweredCount": 8,
+  "nextAction": "Use the first live question as the next helpful answer target; connect the answer to the video, GLB, podcast/source moment, and proof/source route."
+}

@@ -1,0 +1,67 @@
+steps:
+  - id: install
+    name: node:24-bookworm
+    entrypoint: npm
+    args:
+      - ci
+      - --legacy-peer-deps
+      - --no-audit
+      - --no-fund
+    env:
+      - CI=true
+
+  - id: verify-and-build
+    name: node:24-bookworm
+    entrypoint: bash
+    args:
+      - -ceu
+      - |
+        node tools/verify-metric-contract.mjs
+        node tools/generate-search-console-row-sitemaps.mjs
+        ./node_modules/.bin/vite build
+
+        if [ ! -f tools/generate-route-crawl-shells.mjs ]; then
+          echo "GitHub is missing tools/generate-route-crawl-shells.mjs from the production build."
+          exit 1
+        fi
+
+        node tools/generate-route-crawl-shells.mjs
+    env:
+      - CI=true
+      - DIGITALHUT_CLOUD_BUILD=true
+
+  - id: verify-seo-artifacts
+    name: node:24-bookworm
+    entrypoint: node
+    args:
+      - tools/verify-cloud-build-artifacts.mjs
+    env:
+      - _MASTER_KEYWORD_UNIVERSE=${_MASTER_KEYWORD_UNIVERSE}
+      - _SITEMAP_WINDOW=${_SITEMAP_WINDOW}
+      - BUILD_ID=$BUILD_ID
+      - COMMIT_SHA=$COMMIT_SHA
+      - BRANCH_NAME=$BRANCH_NAME
+
+  - id: dependency-audit
+    name: node:24-bookworm
+    entrypoint: bash
+    args:
+      - -ceu
+      - |
+        npm audit --omit=dev --json > dist/digitalhut-cloud-build-audit.json || true
+        node -e "const fs=require('node:fs');const a=JSON.parse(fs.readFileSync('dist/digitalhut-cloud-build-audit.json','utf8'));console.log(JSON.stringify({status:'audit-recorded',vulnerabilities:a.metadata?.vulnerabilities||{}},null,2))"
+
+substitutions:
+  _MASTER_KEYWORD_UNIVERSE: "200572944"
+  _SITEMAP_WINDOW: "50000"
+
+options:
+  machineType: E2_STANDARD_2
+  logging: CLOUD_LOGGING_ONLY
+
+timeout: 1200s
+
+tags:
+  - digitalhut
+  - production-verification
+  - seo-proof

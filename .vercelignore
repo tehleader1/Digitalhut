@@ -6,6 +6,10 @@ release/
 electron/
 electron-builder.json
 
+# Corrupted legacy loader entry on the local FireCuda/Windows filesystem.
+# Runtime imports now use src/lib/modelViewerRuntime.js.
+src/lib/modelViewerLoader.js
+
 # Local FireCuda staging files. These are intentionally not committed and should
 # not be uploaded by direct Vercel CLI deploys.
 public/models/firecuda-library/abandoned_farm_house_with_hay.glb

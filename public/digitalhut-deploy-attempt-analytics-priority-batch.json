@@ -1,0 +1,32 @@
+{
+    "generatedAt":  "2026-07-07T12:58:00-04:00",
+    "intent":  "Deploy verified analytics-priority batch.",
+    "status":  "deploy-blocked-by-tooling-auth-not-app-code",
+    "readyEvidence":  [
+                          "metric verifier passed 19 checks",
+                          "direct Vite production build passed",
+                          "release command center current",
+                          "frontend proof/source priority guarded"
+                      ],
+    "blockers":  [
+                     "vercel command missing",
+                     "local Vercel CLI missing",
+                     "VERCEL_TOKEN missing",
+                     "Vercel auth.json missing",
+                     "workspace is not a Git checkout",
+                     "bundled npm wrapper missing resolvable nopt dependency"
+                 ],
+    "currentFloor":  {
+                         "pageViews":  299,
+                         "uniqueVisitors":  107,
+                         "totalEvents":  516,
+                         "glbPreviewPlays":  83,
+                         "podcastInterrupts":  13,
+                         "autoplayStarts":  5,
+                         "searches":  2,
+                         "marketOpens":  5,
+                         "proofRouteOpens":  0,
+                         "sourceBacklinkOpens":  0
+                     },
+    "nextExactMove":  "Restore Vercel CLI/auth/token or use a real Git checkout connected to production, then deploy and compare proof/source hit markers first."
+}

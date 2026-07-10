@@ -1,0 +1,107 @@
+{
+  "generatedAt": "2026-07-07T07:05:00-04:00",
+  "mode": "DigitalHut Traffic Pool Stack Reset 001",
+  "status": "active-pool-absorption",
+  "domain": "https://www.digitalhut.app",
+  "resetReason": "The active shuffle found no new movement after the GLB/Mainstream/Gaming target shift. The system should absorb the strongest existing pool into the whole DigitalHut observatory instead of treating GLB as a separate narrow lane.",
+  "currentPools": {
+    "movement": {
+      "pageViews": 278,
+      "uniqueVisitors": 95,
+      "last48HourPageViews": 82,
+      "glbPreviewPlays": 81,
+      "podcastInterrupts": 12,
+      "marketOpens": 5,
+      "blogViews": 14,
+      "topCategory": "Mainstream Streaming",
+      "topAsset": "Horror Corridor VR room [Baked]",
+      "supportAssets": [
+        "Medieval City Pack Demo",
+        "Full Gameready City Buildings IV [HongKong]",
+        "Sci Fi Modular Asset Pack (Sci Fi Corridor)"
+      ]
+    },
+    "dry": {
+      "searchRuns": 0,
+      "proofRouteOpens": 0,
+      "sourceBacklinkOpens": 0,
+      "searchConsoleRows": 0,
+      "searchConsoleClicks": 0,
+      "searchConsoleImpressions": 0
+    }
+  },
+  "absorbedAudienceLane": {
+    "name": "Whole-System Observatory Source Bridge",
+    "route": "/watch/gaming-3d-environment-viewer",
+    "category": "/category/mainstream-streaming",
+    "supportRoutes": [
+      "/watch/glb-research-assistant",
+      "/watch/automatic-3d-autoplay-system",
+      "/watch/funny-mainstream-video-explained"
+    ],
+    "humanRead": "A viewer who already responds to the 3D renderer needs the full DigitalHut system to confirm why the video, GLB, podcast/source moment, market/context panel, watch route, blog proof, and backlink/source path matter together.",
+    "systemRead": "The next code/metadata structure should not add more broad keywords. It should connect each active content object to a readable source/proof/search action across the whole observatory.",
+    "overseerConfirmation": {
+      "role": "Codex overseer confirms whether a pool is real movement, dry traffic, or a structure-change trigger.",
+      "checks": [
+        "Supabase feature events",
+        "Google Search Console rows, clicks, impressions, and indexing",
+        "Vercel deployment health",
+        "public proof packets and llms metadata",
+        "route/watch/blog/internal link behavior",
+        "GLB, podcast, market, search, source, and proof-route interactions"
+      ],
+      "decisionRule": "A pool is absorbed only when it improves the whole DigitalHut presentation and search proof loop, not just one feature panel."
+    }
+  },
+  "freshLongTailStack": [
+    {
+      "pool": "GLB environment proof",
+      "phrases": [
+        "horror corridor VR room walkthrough with source",
+        "game world GLB presentation with video context",
+        "interactive 3D environment viewer for YouTube videos",
+        "creator safe 360 game world asset source map",
+        "GLB scene research assistant for video topics"
+      ]
+    },
+    {
+      "pool": "Mainstream video observatory",
+      "phrases": [
+        "viral clip 3D environment analysis",
+        "mainstream video observatory with GLB proof",
+        "watch video with live 3D analytics",
+        "YouTube video with 3D model view and source links",
+        "AI video radar with playable 3D scene"
+      ]
+    },
+    {
+      "pool": "Developer proof",
+      "phrases": [
+        "Babylon GLB renderer research demo",
+        "dapp entertainment observatory with 3D renderer",
+        "source backed GLB video analysis",
+        "3D model view research engine",
+        "DigitalHut GLB observatory proof route"
+      ]
+    }
+  ],
+  "nextSystemAdjustment": {
+    "searchDryFix": "The next UI/code change should make the search action obvious around the whole content moment: video topic, GLB model, podcast/source moment, market/context data, and source/backlink proof.",
+    "proofDryFix": "If proof route opens remain zero, add stronger internal route bridges from homepage/category/system panels to the matching watch and blog proof routes.",
+    "sourceDryFix": "If source opens remain zero, attach visible source/backlink labels to the complete content object before creating more public pages.",
+    "overseerFix": "Every pool shuffle must report whether the whole system should hold, promote, rewrite, or reset before the next deployment.",
+    "deployRule": "Deploy only when a public proof artifact, llms metadata, route metadata, or behavior capture path changes."
+  },
+  "successThreshold": {
+    "notifyIf": [
+      "glbPreviewPlays > 81",
+      "searchRuns > 0",
+      "proofRouteOpens > 0",
+      "sourceBacklinkOpens > 0",
+      "searchConsoleRows > 0",
+      "searchConsoleImpressions > 0"
+    ],
+    "rankGuardrail": "No rank improvement claim until Search Console returns real query rows, impressions, clicks, or average position."
+  }
+}

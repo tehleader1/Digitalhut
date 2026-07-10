@@ -26,7 +26,7 @@ function podcastQuery(feed){
   return [voice, feed?.title, feed?.query].filter(Boolean).join(" ").slice(0, 220)
 }
 
-export default function PodcastMatchPanel({feed, compact = false}){
+export default function PodcastMatchPanel({feed, compact = false, specialMoment = false}){
   const [episodes, setEpisodes] = useState([])
   const [status, setStatus] = useState("idle")
   const [activeId, setActiveId] = useState("")
@@ -94,11 +94,17 @@ export default function PodcastMatchPanel({feed, compact = false}){
     audio.addEventListener("ended", () => setActiveId(""), {once: true})
   }
 
-  if(status === "idle" || status === "loading") return <aside className={`dh-podcast-panel ${compact ? "compact" : ""}`}><span>Matching an intelligent podcast voice to this 3D environment...</span></aside>
+  if(status === "idle" || status === "loading") return <aside className={`dh-podcast-panel ${compact ? "compact" : ""} ${specialMoment ? "special-moment" : ""}`}><span>Matching an intelligent podcast voice to this 3D environment...</span></aside>
   if(!episodes.length) return null
 
-  return <aside className={`dh-podcast-panel ${compact ? "compact" : ""}`}>
-    <header><span>Matched Podcast Voices</span><b>3D remains primary</b></header>
+  return <aside className={`dh-podcast-panel ${compact ? "compact" : ""} ${specialMoment ? "special-moment" : ""}`}>
+    <header>
+      <span>Matched Podcast Voices</span>
+      <button className={`dh-podcast-speaker ${activeId ? "playing" : ""}`} type="button" onClick={() => activeId ? (audioRef.current?.pause(), setActiveId("")) : playClip(episodes[0])} disabled={!episodes[0]?.audioUrl} aria-label={activeId ? "Stop podcast special moment" : "Play podcast special moment"}>
+        <i aria-hidden="true" />
+        <b>{specialMoment ? "Special Moment" : "3D remains primary"}</b>
+      </button>
+    </header>
     {playbackStatus && <div className="dh-podcast-status" role="status">{playbackStatus}</div>}
     <div className="dh-podcast-list">
       {episodes.map((episode) => <article key={episode.id} className={activeId === episode.id ? "playing" : ""}>

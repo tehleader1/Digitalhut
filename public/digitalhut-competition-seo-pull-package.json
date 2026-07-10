@@ -1,0 +1,216 @@
+{
+  "generatedAt": "2026-07-09T03:18:00.000Z",
+  "status": "competition-seo-pull-package-produced",
+  "owner": "Digitalhut.app",
+  "purpose": "Move DigitalHut from bolt-tightening into grouped audience pulls by matching the complete entertainment observatory against real product categories with overlapping functionality.",
+  "guardrail": "This is an internal competition and SEO positioning package. It does not claim Google rank movement until Search Console produces query rows, impressions, clicks, or indexed proof routes.",
+  "currentBaseline": {
+    "pageViews": 315,
+    "uniqueVisitors": 115,
+    "totalEvents": 532,
+    "glbPreviewPlays": 83,
+    "podcastInterrupts": 13,
+    "autoplayStarts": 5,
+    "searches": 2,
+    "marketOpens": 5,
+    "proofRouteOpens": 0,
+    "sourceBacklinkOpens": 0,
+    "searchConsoleRows": 1,
+    "firstVisibleQuery": "cyberhut",
+    "firstVisibleQueryClass": "brand-adjacent-noise-until-repeated"
+  },
+  "systemStanding": {
+    "overallStage": "foundation-recognition",
+    "productProof": "strongest around GLB plays and homepage entry",
+    "trafficPull": "not proven yet because proof route opens and source opens are still zero",
+    "searchRecognition": "homepage indexed with one fresh impression; supporting proof routes are still waiting for indexing",
+    "nextStageTrigger": "Move to grouped-pull-confirmed when page views, unique visitors, GLB, podcast, proof route, source, or Search Console rows move above baseline."
+  },
+  "completeCompetitionPackage": {
+    "coreClaim": "video watching plus 3D Model View plus podcast/source moments plus live analytics in one 2026 dapp entertainment observatory",
+    "whyItCanCompete": [
+      "single-screen media session instead of separate video, 3D, podcast, and analytics tools",
+      "crawlable watch/category/blog proof routes behind a live interactive product",
+      "behavior metrics already separate page views, unique visitors, GLB, podcast, autoplay, search, proof, and source events",
+      "50,000 sitemap URL rows represent the first public discovery layer of the 200,572,944 longtail search-route universe"
+    ],
+    "missingProof": [
+      "proof route opens above zero",
+      "source/backlink opens above zero",
+      "Search Console rows beyond the first homepage impression",
+      "fresh Google-discovered functionality routes for the real competitor package"
+    ]
+  },
+  "groupedPulls": [
+    {
+      "id": "full-entertainment-observatory",
+      "priority": 1,
+      "audience": "people who want a richer alternative to a normal YouTube session",
+      "competitorSet": [
+        "YouTube session behavior",
+        "3D model viewer platforms",
+        "video podcast analytics platforms",
+        "AI video summary tools"
+      ],
+      "targetPhrases": [
+        "youtube alternative with 3d model view podcast and live analytics",
+        "video watching with 3d viewer and podcast source moments",
+        "2026 dapp entertainment observatory",
+        "full screen video research observatory with glb preview"
+      ],
+      "primaryRoute": "https://www.digitalhut.app/watch/full-view-episode-alternative",
+      "supportRoutes": [
+        "https://www.digitalhut.app/",
+        "https://www.digitalhut.app/system-proof",
+        "https://www.digitalhut.app/master-keyword-coverage"
+      ],
+      "winSignals": [
+        "pageViews > 315",
+        "uniqueVisitors > 115",
+        "autoplayStarts > 5",
+        "glbPreviewPlays > 83",
+        "podcastInterrupts > 13",
+        "proofRouteOpens > 0",
+        "sourceBacklinkOpens > 0"
+      ],
+      "currentDecision": "cast-first"
+    },
+    {
+      "id": "glb-3d-viewer-pull",
+      "priority": 2,
+      "audience": "3D model viewers, game world explorers, GLB researchers, VR room walkthrough users",
+      "competitorSet": [
+        "Sketchfab",
+        "model-viewer",
+        "VNTANA",
+        "OmniView 3D",
+        "Autodesk Viewer",
+        "3DViewerOnline"
+      ],
+      "targetPhrases": [
+        "game world glb presentation with live analytics",
+        "3d model viewer with video context",
+        "horror corridor vr room walkthrough glb viewer",
+        "browser glb viewer with source backed analytics"
+      ],
+      "primaryRoute": "https://www.digitalhut.app/watch/game-world-glb-presentation",
+      "supportRoutes": [
+        "https://www.digitalhut.app/asset-lab",
+        "https://www.digitalhut.app/category/gaming-3d-world-observatory",
+        "https://www.digitalhut.app/digitalhut-functionality-ladder-competitors.json"
+      ],
+      "winSignals": [
+        "glbPreviewPlays > 83",
+        "sourceBacklinkOpens > 0",
+        "Search Console query contains glb, 3d viewer, model view, vr room, or game world"
+      ],
+      "currentDecision": "promote-because-current-strongest-behavior-signal"
+    },
+    {
+      "id": "ai-video-podcast-source-pull",
+      "priority": 3,
+      "audience": "people comparing AI video summarizers, podcast tools, source explainers, and video-podcast analytics",
+      "competitorSet": [
+        "Eightify",
+        "BibiGPT",
+        "VidNotes",
+        "Heuristica",
+        "Simplecast",
+        "Swell AI"
+      ],
+      "targetPhrases": [
+        "ai video podcast source explainer with live analytics",
+        "youtube video summary with podcast source moment",
+        "podcast clip interrupt inside video research system",
+        "video podcast analytics with source backed timeline"
+      ],
+      "primaryRoute": "https://www.digitalhut.app/watch/ai-video-podcast-source-explainer",
+      "supportRoutes": [
+        "https://www.digitalhut.app/blog/full-view-episode-alternative",
+        "https://www.digitalhut.app/blog/automatic-3d-autoplay-system"
+      ],
+      "winSignals": [
+        "podcastInterrupts > 13",
+        "searches > 2",
+        "sourceBacklinkOpens > 0",
+        "Search Console query contains podcast, source, summary, transcript, or video analytics"
+      ],
+      "currentDecision": "cast-second-after-glb"
+    },
+    {
+      "id": "spatial-virtual-experience-pull",
+      "priority": 4,
+      "audience": "people searching virtual tours, spatial media, home project visual planners, resorts, real estate, and interactive environments",
+      "competitorSet": [
+        "SeekBeak",
+        "Matterport",
+        "Panoee",
+        "Insta360 3D Tour",
+        "3DVista"
+      ],
+      "targetPhrases": [
+        "home project 3d visual planner video observatory",
+        "virtual tour with glb model view and video analytics",
+        "interactive spatial experience with source backed timeline",
+        "real estate 3d walkthrough with podcast and analytics"
+      ],
+      "primaryRoute": "https://www.digitalhut.app/watch/home-project-3d-visual-planner",
+      "supportRoutes": [
+        "https://www.digitalhut.app/category/mainstream-streaming",
+        "https://www.digitalhut.app/blog/home-project-3d-visual-planner"
+      ],
+      "winSignals": [
+        "proofRouteOpens > 0",
+        "blogViews > 28",
+        "Search Console query contains home project, virtual tour, spatial, 3d walkthrough, or visual planner"
+      ],
+      "currentDecision": "hold-until-proof-routes-move"
+    },
+    {
+      "id": "research-model-interrogation-pull",
+      "priority": 5,
+      "audience": "researchers, students, developers, engineers, and source-first users who need visual explanation with proof",
+      "competitorSet": [
+        "CoLab",
+        "Arc 3D Model Viewer",
+        "Open3D",
+        "research summary tools",
+        "source explainer tools"
+      ],
+      "targetPhrases": [
+        "research summary video with source backlinks and 3d model view",
+        "developer study visual observatory with live analytics",
+        "3d research assistant with video source timeline",
+        "coral reef study 3d visual experience source backed"
+      ],
+      "primaryRoute": "https://www.digitalhut.app/watch/wiki-lookup-visual-research-hub",
+      "supportRoutes": [
+        "https://www.digitalhut.app/insights",
+        "https://www.digitalhut.app/blog/university-research-3d-experience",
+        "https://www.digitalhut.app/digitalhut-longtail-web-cast.json"
+      ],
+      "winSignals": [
+        "searches > 2",
+        "sourceBacklinkOpens > 0",
+        "Search Console query contains research, source, study, developer, engineer, or data"
+      ],
+      "currentDecision": "cast-when-searches-move"
+    }
+  ],
+  "nextMeasurementWindow": {
+    "baselineSetAt": "2026-07-09T03:18:00.000Z",
+    "checkAfter": "first meaningful traffic delta or next Search Console row",
+    "doNotDeployFor": [
+      "one-word brand noise",
+      "cosmetic copy churn",
+      "new sitemap rows without a route or measurement reason"
+    ],
+    "deployFor": [
+      "new public proof artifact",
+      "new inspected route cluster",
+      "proof/source tracking correction",
+      "sitemap or route-shell breakage",
+      "data-backed SEO lane promotion"
+    ]
+  }
+}

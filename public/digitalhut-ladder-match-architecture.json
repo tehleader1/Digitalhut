@@ -1,0 +1,809 @@
+{
+  "generatedAt": "2026-07-10T02:01:54.749Z",
+  "status": "ladder-match-architecture-ready",
+  "site": "https://www.digitalhut.app",
+  "definition": "A DigitalHut ladder match is a comparative proof/statistic test against similar structured systems. It records which capabilities DigitalHut has tested, where competitors still lead, where DigitalHut has an advantage, and which measurable proof is required next.",
+  "guardrail": "This artifact is not a fake rank-boost claim and not an official Google ranking feature. It gives crawlers and users evidence-based comparisons: tested functionality, flaws, advantages, proof routes, source bridges, Supabase behavior, and Search Console status.",
+  "masterKeywordLeague": {
+    "strongestLane": "DigitalHut 200M SEO Master List",
+    "internalRotationArm": "DigitalHut 200M SEO Master List",
+    "universe": 200572944,
+    "publicSitemapWindow": 50000,
+    "role": "Every comparative test, route, source bridge, category read, and behavior signal is a facet inside the 200M SEO Master List; DigitalHut.app is the dapp proof engine behind those facets."
+  },
+  "currentMetrics": {
+    "pageViews": 323,
+    "uniqueVisitors": 119,
+    "totalEvents": 540,
+    "glb": 83,
+    "podcast": 13,
+    "autoplay": 5,
+    "searches": 2,
+    "market": 5,
+    "proof": 0,
+    "source": 0,
+    "masterKeywordDoorEvents": 72
+  },
+  "searchConsole": {
+    "freshRows": 1,
+    "freshImpressions": 1,
+    "freshClicks": 0,
+    "finalRows": 1,
+    "finalImpressions": 1,
+    "finalClicks": 0
+  },
+  "ladderRules": [
+    "Compare only against similar structured applications/websites.",
+    "Do not claim a win from invented language; record flaws and advantages from measurable signals.",
+    "A functionality advantage is not a traffic advantage until proof/source, second-action, or Search Console movement appears.",
+    "Enterprise-level comparisons require capacity-aware proof across video, GLB, podcast/source, analytics, sitemap, and database read."
+  ],
+  "standings": [
+    {
+      "seoLaneId": "gaming-3d-world-observatory",
+      "seoLane": "Gaming 3D World Observatory",
+      "provenAdvantages": 0,
+      "activeTests": 5,
+      "proofResponses": 0,
+      "needsProof": 0,
+      "highestClass": "Enterprise"
+    },
+    {
+      "seoLaneId": "full-entertainment-dapp-alternative",
+      "seoLane": "Full Entertainment Dapp Alternative",
+      "provenAdvantages": 0,
+      "activeTests": 3,
+      "proofResponses": 0,
+      "needsProof": 0,
+      "highestClass": "Enterprise"
+    },
+    {
+      "seoLaneId": "home-project-diy-visual",
+      "seoLane": "Home Project DIY Visual",
+      "provenAdvantages": 0,
+      "activeTests": 2,
+      "proofResponses": 0,
+      "needsProof": 0,
+      "highestClass": "Mid"
+    },
+    {
+      "seoLaneId": "ai-video-podcast-source-explainer",
+      "seoLane": "AI Video Podcast Source Explainer",
+      "provenAdvantages": 0,
+      "activeTests": 1,
+      "proofResponses": 0,
+      "needsProof": 0,
+      "highestClass": "Pro"
+    }
+  ],
+  "matches": [
+    {
+      "id": "full-entertainment-observatory__youtube",
+      "lane": "full entertainment observatory",
+      "seoLaneId": "full-entertainment-dapp-alternative",
+      "seoLane": "Full Entertainment Dapp Alternative",
+      "matchType": "Full Entertainment Dapp Alternative vs YouTube",
+      "competitor": {
+        "name": "YouTube",
+        "url": "https://www.youtube.com/",
+        "observedOverlap": "video watching, search, autoplay, and episode/session behavior"
+      },
+      "rankClass": "Enterprise",
+      "status": "active-test",
+      "testType": "comparative-proof-statistic-test",
+      "serverArchitectureLoad": {
+        "serverLoad": "very-high",
+        "reason": "requires multi-system proof across video, GLB, podcast/source, analytics, sitemap, and engagement"
+      },
+      "digitalhutAdvantage": "DigitalHut's claim is the combined system: video watching, 3D Model View, podcast/source moments, live analytics, watch routes, category lanes, and sitemap/Search Console proof in one interface.",
+      "opponentAdvantage": "video watching, search, autoplay, and episode/session behavior",
+      "evidenceBasis": {
+        "digitalhutTestedCapabilities": [
+          "video watching/session route",
+          "3D Model View or GLB behavior",
+          "podcast/source moment behavior",
+          "live analytics measurement",
+          "SEO proof route",
+          "source/backlink bridge"
+        ],
+        "currentDigitalhutSignals": {
+          "pageViews": 323,
+          "uniqueVisitors": 119,
+          "glb": 83,
+          "podcast": 13,
+          "autoplay": 5,
+          "searches": 2,
+          "proof": 0,
+          "source": 0
+        },
+        "comparedAgainst": "video watching, search, autoplay, and episode/session behavior",
+        "notAGoogleRankClaim": true
+      },
+      "flawsFound": [
+        "proof route opens are still zero",
+        "source/backlink opens are still zero",
+        "search usage is still thin"
+      ],
+      "advantagesFound": [
+        "GLB/3D behavior is already measurable",
+        "podcast/source interrupt behavior is already measurable",
+        "autoplay/session behavior is already measurable",
+        "DigitalHut combines video, GLB, podcast/source, analytics, and SEO proof in one interface"
+      ],
+      "internalBenchmark": {
+        "digitalhutCapabilityScore": 100,
+        "opponentAuthorityClassScore": 92,
+        "scoreGuardrail": "Internal capability benchmark only. This is not a Google ranking score, not a paid-rank claim, and not a declared SEO win.",
+        "result": "functionality-advantage-traffic-proof-pending",
+        "secondActions": 108,
+        "winCondition": "DigitalHut must produce proof/source opens, repeated second actions, or Search Console query growth before this becomes a proven SEO advantage."
+      },
+      "proofRoute": "/watch/full-view-episode-alternative",
+      "sourceBridgeUrl": "/digitalhut-proof-source-conversion-bridge.json#full-entertainment-dapp-alternative",
+      "nextProofNeeded": "Open one source/backlink from /watch/full-view-episode-alternative and record backlink_source_open.",
+      "promotionRule": "Promote only after Search Console rows, proof/source opens, or repeated second actions move beyond the saved baseline."
+    },
+    {
+      "id": "full-entertainment-observatory__sketchfab",
+      "lane": "full entertainment observatory",
+      "seoLaneId": "full-entertainment-dapp-alternative",
+      "seoLane": "Full Entertainment Dapp Alternative",
+      "matchType": "Full Entertainment Dapp Alternative vs Sketchfab",
+      "competitor": {
+        "name": "Sketchfab",
+        "url": "https://sketchfab.com/",
+        "observedOverlap": "3D model discovery and interactive model presentation"
+      },
+      "rankClass": "Enterprise",
+      "status": "active-test",
+      "testType": "comparative-proof-statistic-test",
+      "serverArchitectureLoad": {
+        "serverLoad": "very-high",
+        "reason": "requires multi-system proof across video, GLB, podcast/source, analytics, sitemap, and engagement"
+      },
+      "digitalhutAdvantage": "DigitalHut's claim is the combined system: video watching, 3D Model View, podcast/source moments, live analytics, watch routes, category lanes, and sitemap/Search Console proof in one interface.",
+      "opponentAdvantage": "3D model discovery and interactive model presentation",
+      "evidenceBasis": {
+        "digitalhutTestedCapabilities": [
+          "video watching/session route",
+          "3D Model View or GLB behavior",
+          "podcast/source moment behavior",
+          "live analytics measurement",
+          "SEO proof route",
+          "source/backlink bridge"
+        ],
+        "currentDigitalhutSignals": {
+          "pageViews": 323,
+          "uniqueVisitors": 119,
+          "glb": 83,
+          "podcast": 13,
+          "autoplay": 5,
+          "searches": 2,
+          "proof": 0,
+          "source": 0
+        },
+        "comparedAgainst": "3D model discovery and interactive model presentation",
+        "notAGoogleRankClaim": true
+      },
+      "flawsFound": [
+        "proof route opens are still zero",
+        "source/backlink opens are still zero",
+        "search usage is still thin"
+      ],
+      "advantagesFound": [
+        "GLB/3D behavior is already measurable",
+        "podcast/source interrupt behavior is already measurable",
+        "autoplay/session behavior is already measurable",
+        "DigitalHut combines video, GLB, podcast/source, analytics, and SEO proof in one interface"
+      ],
+      "internalBenchmark": {
+        "digitalhutCapabilityScore": 100,
+        "opponentAuthorityClassScore": 92,
+        "scoreGuardrail": "Internal capability benchmark only. This is not a Google ranking score, not a paid-rank claim, and not a declared SEO win.",
+        "result": "functionality-advantage-traffic-proof-pending",
+        "secondActions": 108,
+        "winCondition": "DigitalHut must produce proof/source opens, repeated second actions, or Search Console query growth before this becomes a proven SEO advantage."
+      },
+      "proofRoute": "/watch/full-view-episode-alternative",
+      "sourceBridgeUrl": "/digitalhut-proof-source-conversion-bridge.json#full-entertainment-dapp-alternative",
+      "nextProofNeeded": "Open one source/backlink from /watch/full-view-episode-alternative and record backlink_source_open.",
+      "promotionRule": "Promote only after Search Console rows, proof/source opens, or repeated second actions move beyond the saved baseline."
+    },
+    {
+      "id": "full-entertainment-observatory__simplecast",
+      "lane": "full entertainment observatory",
+      "seoLaneId": "full-entertainment-dapp-alternative",
+      "seoLane": "Full Entertainment Dapp Alternative",
+      "matchType": "Full Entertainment Dapp Alternative vs Simplecast",
+      "competitor": {
+        "name": "Simplecast",
+        "url": "https://blog.simplecast.com/grow-your-audience-everywhere-simplecast-adds-youtube-publishing-and-unified-podcast-analytics",
+        "observedOverlap": "podcast and video analytics"
+      },
+      "rankClass": "Pro",
+      "status": "active-test",
+      "testType": "comparative-proof-statistic-test",
+      "serverArchitectureLoad": {
+        "serverLoad": "high",
+        "reason": "requires competitor proof, source bridge, Search Console row, and second-action measurement"
+      },
+      "digitalhutAdvantage": "DigitalHut's claim is the combined system: video watching, 3D Model View, podcast/source moments, live analytics, watch routes, category lanes, and sitemap/Search Console proof in one interface.",
+      "opponentAdvantage": "podcast and video analytics",
+      "evidenceBasis": {
+        "digitalhutTestedCapabilities": [
+          "video watching/session route",
+          "3D Model View or GLB behavior",
+          "podcast/source moment behavior",
+          "live analytics measurement",
+          "SEO proof route",
+          "source/backlink bridge"
+        ],
+        "currentDigitalhutSignals": {
+          "pageViews": 323,
+          "uniqueVisitors": 119,
+          "glb": 83,
+          "podcast": 13,
+          "autoplay": 5,
+          "searches": 2,
+          "proof": 0,
+          "source": 0
+        },
+        "comparedAgainst": "podcast and video analytics",
+        "notAGoogleRankClaim": true
+      },
+      "flawsFound": [
+        "proof route opens are still zero",
+        "source/backlink opens are still zero",
+        "search usage is still thin"
+      ],
+      "advantagesFound": [
+        "GLB/3D behavior is already measurable",
+        "podcast/source interrupt behavior is already measurable",
+        "autoplay/session behavior is already measurable",
+        "DigitalHut combines video, GLB, podcast/source, analytics, and SEO proof in one interface"
+      ],
+      "internalBenchmark": {
+        "digitalhutCapabilityScore": 100,
+        "opponentAuthorityClassScore": 76,
+        "scoreGuardrail": "Internal capability benchmark only. This is not a Google ranking score, not a paid-rank claim, and not a declared SEO win.",
+        "result": "functionality-advantage-traffic-proof-pending",
+        "secondActions": 108,
+        "winCondition": "DigitalHut must produce proof/source opens, repeated second actions, or Search Console query growth before this becomes a proven SEO advantage."
+      },
+      "proofRoute": "/watch/full-view-episode-alternative",
+      "sourceBridgeUrl": "/digitalhut-proof-source-conversion-bridge.json#full-entertainment-dapp-alternative",
+      "nextProofNeeded": "Open one source/backlink from /watch/full-view-episode-alternative and record backlink_source_open.",
+      "promotionRule": "Promote only after Search Console rows, proof/source opens, or repeated second actions move beyond the saved baseline."
+    },
+    {
+      "id": "3d-model-web-viewer__sketchfab",
+      "lane": "3D model web viewer",
+      "seoLaneId": "gaming-3d-world-observatory",
+      "seoLane": "Gaming 3D World Observatory",
+      "matchType": "Gaming 3D World Observatory vs Sketchfab",
+      "competitor": {
+        "name": "Sketchfab",
+        "url": "https://sketchfab.com/",
+        "observedOverlap": "publish, share, discover, and embed interactive 3D content"
+      },
+      "rankClass": "Enterprise",
+      "status": "active-test",
+      "testType": "comparative-proof-statistic-test",
+      "serverArchitectureLoad": {
+        "serverLoad": "very-high",
+        "reason": "requires multi-system proof across video, GLB, podcast/source, analytics, sitemap, and engagement"
+      },
+      "digitalhutAdvantage": "DigitalHut attaches the 3D model view to a video episode, podcast/source moment, live analytics, and route-level SEO proof instead of presenting the model as a standalone viewer.",
+      "opponentAdvantage": "publish, share, discover, and embed interactive 3D content",
+      "evidenceBasis": {
+        "digitalhutTestedCapabilities": [
+          "video watching/session route",
+          "3D Model View or GLB behavior",
+          "podcast/source moment behavior",
+          "live analytics measurement",
+          "SEO proof route",
+          "source/backlink bridge"
+        ],
+        "currentDigitalhutSignals": {
+          "pageViews": 323,
+          "uniqueVisitors": 119,
+          "glb": 83,
+          "podcast": 13,
+          "autoplay": 5,
+          "searches": 2,
+          "proof": 0,
+          "source": 0
+        },
+        "comparedAgainst": "publish, share, discover, and embed interactive 3D content",
+        "notAGoogleRankClaim": true
+      },
+      "flawsFound": [
+        "proof route opens are still zero",
+        "source/backlink opens are still zero",
+        "search usage is still thin"
+      ],
+      "advantagesFound": [
+        "GLB/3D behavior is already measurable",
+        "podcast/source interrupt behavior is already measurable",
+        "autoplay/session behavior is already measurable",
+        "DigitalHut combines video, GLB, podcast/source, analytics, and SEO proof in one interface"
+      ],
+      "internalBenchmark": {
+        "digitalhutCapabilityScore": 99,
+        "opponentAuthorityClassScore": 92,
+        "scoreGuardrail": "Internal capability benchmark only. This is not a Google ranking score, not a paid-rank claim, and not a declared SEO win.",
+        "result": "functionality-advantage-traffic-proof-pending",
+        "secondActions": 108,
+        "winCondition": "DigitalHut must produce proof/source opens, repeated second actions, or Search Console query growth before this becomes a proven SEO advantage."
+      },
+      "proofRoute": "/watch/game-world-glb-presentation",
+      "sourceBridgeUrl": "/digitalhut-proof-source-conversion-bridge.json#gaming-3d-world-observatory",
+      "nextProofNeeded": "Open one source/backlink from /watch/game-world-glb-presentation and record backlink_source_open.",
+      "promotionRule": "Promote only after Search Console rows, proof/source opens, or repeated second actions move beyond the saved baseline."
+    },
+    {
+      "id": "podcast-and-video-analytics__simplecast",
+      "lane": "podcast and video analytics",
+      "seoLaneId": "ai-video-podcast-source-explainer",
+      "seoLane": "AI Video Podcast Source Explainer",
+      "matchType": "AI Video Podcast Source Explainer vs Simplecast",
+      "competitor": {
+        "name": "Simplecast",
+        "url": "https://blog.simplecast.com/grow-your-audience-everywhere-simplecast-adds-youtube-publishing-and-unified-podcast-analytics",
+        "observedOverlap": "unified podcast and YouTube analytics across video and audio performance"
+      },
+      "rankClass": "Pro",
+      "status": "active-test",
+      "testType": "comparative-proof-statistic-test",
+      "serverArchitectureLoad": {
+        "serverLoad": "high",
+        "reason": "requires competitor proof, source bridge, Search Console row, and second-action measurement"
+      },
+      "digitalhutAdvantage": "DigitalHut turns podcast/source moments into an interruptible observatory feature inside the same episode interface instead of a separate analytics dashboard.",
+      "opponentAdvantage": "unified podcast and YouTube analytics across video and audio performance",
+      "evidenceBasis": {
+        "digitalhutTestedCapabilities": [
+          "video watching/session route",
+          "3D Model View or GLB behavior",
+          "podcast/source moment behavior",
+          "live analytics measurement",
+          "SEO proof route",
+          "source/backlink bridge"
+        ],
+        "currentDigitalhutSignals": {
+          "pageViews": 323,
+          "uniqueVisitors": 119,
+          "glb": 83,
+          "podcast": 13,
+          "autoplay": 5,
+          "searches": 2,
+          "proof": 0,
+          "source": 0
+        },
+        "comparedAgainst": "unified podcast and YouTube analytics across video and audio performance",
+        "notAGoogleRankClaim": true
+      },
+      "flawsFound": [
+        "proof route opens are still zero",
+        "source/backlink opens are still zero",
+        "search usage is still thin"
+      ],
+      "advantagesFound": [
+        "GLB/3D behavior is already measurable",
+        "podcast/source interrupt behavior is already measurable",
+        "autoplay/session behavior is already measurable",
+        "DigitalHut combines video, GLB, podcast/source, analytics, and SEO proof in one interface"
+      ],
+      "internalBenchmark": {
+        "digitalhutCapabilityScore": 99,
+        "opponentAuthorityClassScore": 76,
+        "scoreGuardrail": "Internal capability benchmark only. This is not a Google ranking score, not a paid-rank claim, and not a declared SEO win.",
+        "result": "functionality-advantage-traffic-proof-pending",
+        "secondActions": 108,
+        "winCondition": "DigitalHut must produce proof/source opens, repeated second actions, or Search Console query growth before this becomes a proven SEO advantage."
+      },
+      "proofRoute": "/watch/ai-video-podcast-source-explainer",
+      "sourceBridgeUrl": "/digitalhut-proof-source-conversion-bridge.json#ai-video-podcast-source-explainer",
+      "nextProofNeeded": "Open one source/backlink from /watch/ai-video-podcast-source-explainer and record backlink_source_open.",
+      "promotionRule": "Promote only after Search Console rows, proof/source opens, or repeated second actions move beyond the saved baseline."
+    },
+    {
+      "id": "3d-research-and-model-interrogation__colab",
+      "lane": "3D research and model interrogation",
+      "seoLaneId": "gaming-3d-world-observatory",
+      "seoLane": "Gaming 3D World Observatory",
+      "matchType": "Gaming 3D World Observatory vs CoLab",
+      "competitor": {
+        "name": "CoLab",
+        "url": "https://www.colabsoftware.com/product/model-interrogation-analysis",
+        "observedOverlap": "browser-based CAD model viewing, model browser, and analysis"
+      },
+      "rankClass": "Pro",
+      "status": "active-test",
+      "testType": "comparative-proof-statistic-test",
+      "serverArchitectureLoad": {
+        "serverLoad": "high",
+        "reason": "requires competitor proof, source bridge, Search Console row, and second-action measurement"
+      },
+      "digitalhutAdvantage": "DigitalHut blends research source explanation with video context, GLB visualization, and live behavior analytics.",
+      "opponentAdvantage": "browser-based CAD model viewing, model browser, and analysis",
+      "evidenceBasis": {
+        "digitalhutTestedCapabilities": [
+          "video watching/session route",
+          "3D Model View or GLB behavior",
+          "podcast/source moment behavior",
+          "live analytics measurement",
+          "SEO proof route",
+          "source/backlink bridge"
+        ],
+        "currentDigitalhutSignals": {
+          "pageViews": 323,
+          "uniqueVisitors": 119,
+          "glb": 83,
+          "podcast": 13,
+          "autoplay": 5,
+          "searches": 2,
+          "proof": 0,
+          "source": 0
+        },
+        "comparedAgainst": "browser-based CAD model viewing, model browser, and analysis",
+        "notAGoogleRankClaim": true
+      },
+      "flawsFound": [
+        "proof route opens are still zero",
+        "source/backlink opens are still zero",
+        "search usage is still thin"
+      ],
+      "advantagesFound": [
+        "GLB/3D behavior is already measurable",
+        "podcast/source interrupt behavior is already measurable",
+        "autoplay/session behavior is already measurable",
+        "DigitalHut combines video, GLB, podcast/source, analytics, and SEO proof in one interface"
+      ],
+      "internalBenchmark": {
+        "digitalhutCapabilityScore": 99,
+        "opponentAuthorityClassScore": 76,
+        "scoreGuardrail": "Internal capability benchmark only. This is not a Google ranking score, not a paid-rank claim, and not a declared SEO win.",
+        "result": "functionality-advantage-traffic-proof-pending",
+        "secondActions": 108,
+        "winCondition": "DigitalHut must produce proof/source opens, repeated second actions, or Search Console query growth before this becomes a proven SEO advantage."
+      },
+      "proofRoute": "/watch/game-world-glb-presentation",
+      "sourceBridgeUrl": "/digitalhut-proof-source-conversion-bridge.json#gaming-3d-world-observatory",
+      "nextProofNeeded": "Open one source/backlink from /watch/game-world-glb-presentation and record backlink_source_open.",
+      "promotionRule": "Promote only after Search Console rows, proof/source opens, or repeated second actions move beyond the saved baseline."
+    },
+    {
+      "id": "3d-model-web-viewer__model-viewer",
+      "lane": "3D model web viewer",
+      "seoLaneId": "gaming-3d-world-observatory",
+      "seoLane": "Gaming 3D World Observatory",
+      "matchType": "Gaming 3D World Observatory vs model-viewer",
+      "competitor": {
+        "name": "model-viewer",
+        "url": "https://modelviewer.dev/",
+        "observedOverlap": "web component for interactive 3D models and AR"
+      },
+      "rankClass": "Mid",
+      "status": "active-test",
+      "testType": "comparative-proof-statistic-test",
+      "serverArchitectureLoad": {
+        "serverLoad": "medium",
+        "reason": "requires sitemap rows, route proof, and Supabase behavior checks"
+      },
+      "digitalhutAdvantage": "DigitalHut attaches the 3D model view to a video episode, podcast/source moment, live analytics, and route-level SEO proof instead of presenting the model as a standalone viewer.",
+      "opponentAdvantage": "web component for interactive 3D models and AR",
+      "evidenceBasis": {
+        "digitalhutTestedCapabilities": [
+          "video watching/session route",
+          "3D Model View or GLB behavior",
+          "podcast/source moment behavior",
+          "live analytics measurement",
+          "SEO proof route",
+          "source/backlink bridge"
+        ],
+        "currentDigitalhutSignals": {
+          "pageViews": 323,
+          "uniqueVisitors": 119,
+          "glb": 83,
+          "podcast": 13,
+          "autoplay": 5,
+          "searches": 2,
+          "proof": 0,
+          "source": 0
+        },
+        "comparedAgainst": "web component for interactive 3D models and AR",
+        "notAGoogleRankClaim": true
+      },
+      "flawsFound": [
+        "proof route opens are still zero",
+        "source/backlink opens are still zero",
+        "search usage is still thin"
+      ],
+      "advantagesFound": [
+        "GLB/3D behavior is already measurable",
+        "podcast/source interrupt behavior is already measurable",
+        "autoplay/session behavior is already measurable",
+        "DigitalHut combines video, GLB, podcast/source, analytics, and SEO proof in one interface"
+      ],
+      "internalBenchmark": {
+        "digitalhutCapabilityScore": 99,
+        "opponentAuthorityClassScore": 62,
+        "scoreGuardrail": "Internal capability benchmark only. This is not a Google ranking score, not a paid-rank claim, and not a declared SEO win.",
+        "result": "functionality-advantage-traffic-proof-pending",
+        "secondActions": 108,
+        "winCondition": "DigitalHut must produce proof/source opens, repeated second actions, or Search Console query growth before this becomes a proven SEO advantage."
+      },
+      "proofRoute": "/watch/game-world-glb-presentation",
+      "sourceBridgeUrl": "/digitalhut-proof-source-conversion-bridge.json#gaming-3d-world-observatory",
+      "nextProofNeeded": "Open one source/backlink from /watch/game-world-glb-presentation and record backlink_source_open.",
+      "promotionRule": "Promote only after Search Console rows, proof/source opens, or repeated second actions move beyond the saved baseline."
+    },
+    {
+      "id": "3d-model-web-viewer__vntana",
+      "lane": "3D model web viewer",
+      "seoLaneId": "gaming-3d-world-observatory",
+      "seoLane": "Gaming 3D World Observatory",
+      "matchType": "Gaming 3D World Observatory vs VNTANA",
+      "competitor": {
+        "name": "VNTANA",
+        "url": "https://www.vntana.com/the-ultimate-guide-to-3d-viewers/",
+        "observedOverlap": "browser-based 3D viewer and product visualization"
+      },
+      "rankClass": "Mid",
+      "status": "active-test",
+      "testType": "comparative-proof-statistic-test",
+      "serverArchitectureLoad": {
+        "serverLoad": "medium",
+        "reason": "requires sitemap rows, route proof, and Supabase behavior checks"
+      },
+      "digitalhutAdvantage": "DigitalHut attaches the 3D model view to a video episode, podcast/source moment, live analytics, and route-level SEO proof instead of presenting the model as a standalone viewer.",
+      "opponentAdvantage": "browser-based 3D viewer and product visualization",
+      "evidenceBasis": {
+        "digitalhutTestedCapabilities": [
+          "video watching/session route",
+          "3D Model View or GLB behavior",
+          "podcast/source moment behavior",
+          "live analytics measurement",
+          "SEO proof route",
+          "source/backlink bridge"
+        ],
+        "currentDigitalhutSignals": {
+          "pageViews": 323,
+          "uniqueVisitors": 119,
+          "glb": 83,
+          "podcast": 13,
+          "autoplay": 5,
+          "searches": 2,
+          "proof": 0,
+          "source": 0
+        },
+        "comparedAgainst": "browser-based 3D viewer and product visualization",
+        "notAGoogleRankClaim": true
+      },
+      "flawsFound": [
+        "proof route opens are still zero",
+        "source/backlink opens are still zero",
+        "search usage is still thin"
+      ],
+      "advantagesFound": [
+        "GLB/3D behavior is already measurable",
+        "podcast/source interrupt behavior is already measurable",
+        "autoplay/session behavior is already measurable",
+        "DigitalHut combines video, GLB, podcast/source, analytics, and SEO proof in one interface"
+      ],
+      "internalBenchmark": {
+        "digitalhutCapabilityScore": 99,
+        "opponentAuthorityClassScore": 62,
+        "scoreGuardrail": "Internal capability benchmark only. This is not a Google ranking score, not a paid-rank claim, and not a declared SEO win.",
+        "result": "functionality-advantage-traffic-proof-pending",
+        "secondActions": 108,
+        "winCondition": "DigitalHut must produce proof/source opens, repeated second actions, or Search Console query growth before this becomes a proven SEO advantage."
+      },
+      "proofRoute": "/watch/game-world-glb-presentation",
+      "sourceBridgeUrl": "/digitalhut-proof-source-conversion-bridge.json#gaming-3d-world-observatory",
+      "nextProofNeeded": "Open one source/backlink from /watch/game-world-glb-presentation and record backlink_source_open.",
+      "promotionRule": "Promote only after Search Console rows, proof/source opens, or repeated second actions move beyond the saved baseline."
+    },
+    {
+      "id": "interactive-spatial-media__seekbeak",
+      "lane": "interactive spatial media",
+      "seoLaneId": "home-project-diy-visual",
+      "seoLane": "Home Project DIY Visual",
+      "matchType": "Home Project DIY Visual vs SeekBeak",
+      "competitor": {
+        "name": "SeekBeak",
+        "url": "https://seekbeak.com/interactive-3d-models/",
+        "observedOverlap": "interactive 3D models, hotspots, material swaps, flythroughs, and embeddable 3D experiences"
+      },
+      "rankClass": "Mid",
+      "status": "active-test",
+      "testType": "comparative-proof-statistic-test",
+      "serverArchitectureLoad": {
+        "serverLoad": "medium",
+        "reason": "requires sitemap rows, route proof, and Supabase behavior checks"
+      },
+      "digitalhutAdvantage": "DigitalHut is consumer-facing and entertainment/research-oriented, combining video, 3D, podcast, and analytics in one active screen.",
+      "opponentAdvantage": "interactive 3D models, hotspots, material swaps, flythroughs, and embeddable 3D experiences",
+      "evidenceBasis": {
+        "digitalhutTestedCapabilities": [
+          "video watching/session route",
+          "3D Model View or GLB behavior",
+          "podcast/source moment behavior",
+          "live analytics measurement",
+          "SEO proof route",
+          "source/backlink bridge"
+        ],
+        "currentDigitalhutSignals": {
+          "pageViews": 323,
+          "uniqueVisitors": 119,
+          "glb": 83,
+          "podcast": 13,
+          "autoplay": 5,
+          "searches": 2,
+          "proof": 0,
+          "source": 0
+        },
+        "comparedAgainst": "interactive 3D models, hotspots, material swaps, flythroughs, and embeddable 3D experiences",
+        "notAGoogleRankClaim": true
+      },
+      "flawsFound": [
+        "proof route opens are still zero",
+        "source/backlink opens are still zero",
+        "search usage is still thin"
+      ],
+      "advantagesFound": [
+        "GLB/3D behavior is already measurable",
+        "podcast/source interrupt behavior is already measurable",
+        "autoplay/session behavior is already measurable",
+        "DigitalHut combines video, GLB, podcast/source, analytics, and SEO proof in one interface"
+      ],
+      "internalBenchmark": {
+        "digitalhutCapabilityScore": 99,
+        "opponentAuthorityClassScore": 62,
+        "scoreGuardrail": "Internal capability benchmark only. This is not a Google ranking score, not a paid-rank claim, and not a declared SEO win.",
+        "result": "functionality-advantage-traffic-proof-pending",
+        "secondActions": 108,
+        "winCondition": "DigitalHut must produce proof/source opens, repeated second actions, or Search Console query growth before this becomes a proven SEO advantage."
+      },
+      "proofRoute": "/watch/home-project-diy-visual",
+      "sourceBridgeUrl": "/digitalhut-proof-source-conversion-bridge.json#home-project-diy-visual",
+      "nextProofNeeded": "Open one source/backlink from /watch/home-project-diy-visual and record backlink_source_open.",
+      "promotionRule": "Promote only after Search Console rows, proof/source opens, or repeated second actions move beyond the saved baseline."
+    },
+    {
+      "id": "interactive-spatial-media__aveva-3d-viewer-omi-app",
+      "lane": "interactive spatial media",
+      "seoLaneId": "home-project-diy-visual",
+      "seoLane": "Home Project DIY Visual",
+      "matchType": "Home Project DIY Visual vs AVEVA 3D Viewer OMI App",
+      "competitor": {
+        "name": "AVEVA 3D Viewer OMI App",
+        "url": "https://www.aveva.com/en/products/3d-viewer-for-omi-app/",
+        "observedOverlap": "3D model visualization for operational and spatial context"
+      },
+      "rankClass": "Mid",
+      "status": "active-test",
+      "testType": "comparative-proof-statistic-test",
+      "serverArchitectureLoad": {
+        "serverLoad": "medium",
+        "reason": "requires sitemap rows, route proof, and Supabase behavior checks"
+      },
+      "digitalhutAdvantage": "DigitalHut is consumer-facing and entertainment/research-oriented, combining video, 3D, podcast, and analytics in one active screen.",
+      "opponentAdvantage": "3D model visualization for operational and spatial context",
+      "evidenceBasis": {
+        "digitalhutTestedCapabilities": [
+          "video watching/session route",
+          "3D Model View or GLB behavior",
+          "podcast/source moment behavior",
+          "live analytics measurement",
+          "SEO proof route",
+          "source/backlink bridge"
+        ],
+        "currentDigitalhutSignals": {
+          "pageViews": 323,
+          "uniqueVisitors": 119,
+          "glb": 83,
+          "podcast": 13,
+          "autoplay": 5,
+          "searches": 2,
+          "proof": 0,
+          "source": 0
+        },
+        "comparedAgainst": "3D model visualization for operational and spatial context",
+        "notAGoogleRankClaim": true
+      },
+      "flawsFound": [
+        "proof route opens are still zero",
+        "source/backlink opens are still zero",
+        "search usage is still thin"
+      ],
+      "advantagesFound": [
+        "GLB/3D behavior is already measurable",
+        "podcast/source interrupt behavior is already measurable",
+        "autoplay/session behavior is already measurable",
+        "DigitalHut combines video, GLB, podcast/source, analytics, and SEO proof in one interface"
+      ],
+      "internalBenchmark": {
+        "digitalhutCapabilityScore": 99,
+        "opponentAuthorityClassScore": 62,
+        "scoreGuardrail": "Internal capability benchmark only. This is not a Google ranking score, not a paid-rank claim, and not a declared SEO win.",
+        "result": "functionality-advantage-traffic-proof-pending",
+        "secondActions": 108,
+        "winCondition": "DigitalHut must produce proof/source opens, repeated second actions, or Search Console query growth before this becomes a proven SEO advantage."
+      },
+      "proofRoute": "/watch/home-project-diy-visual",
+      "sourceBridgeUrl": "/digitalhut-proof-source-conversion-bridge.json#home-project-diy-visual",
+      "nextProofNeeded": "Open one source/backlink from /watch/home-project-diy-visual and record backlink_source_open.",
+      "promotionRule": "Promote only after Search Console rows, proof/source opens, or repeated second actions move beyond the saved baseline."
+    },
+    {
+      "id": "3d-research-and-model-interrogation__arc-3d-model-viewer",
+      "lane": "3D research and model interrogation",
+      "seoLaneId": "gaming-3d-world-observatory",
+      "seoLane": "Gaming 3D World Observatory",
+      "matchType": "Gaming 3D World Observatory vs Arc 3D Model Viewer",
+      "competitor": {
+        "name": "Arc 3D Model Viewer",
+        "url": "https://www.rchsd.org/programs-services/3d-innovations-lab/research-projects/arc3dmodelviewer/",
+        "observedOverlap": "3D datasets and anatomical or non-medical 3D viewing"
+      },
+      "rankClass": "Mid",
+      "status": "active-test",
+      "testType": "comparative-proof-statistic-test",
+      "serverArchitectureLoad": {
+        "serverLoad": "medium",
+        "reason": "requires sitemap rows, route proof, and Supabase behavior checks"
+      },
+      "digitalhutAdvantage": "DigitalHut blends research source explanation with video context, GLB visualization, and live behavior analytics.",
+      "opponentAdvantage": "3D datasets and anatomical or non-medical 3D viewing",
+      "evidenceBasis": {
+        "digitalhutTestedCapabilities": [
+          "video watching/session route",
+          "3D Model View or GLB behavior",
+          "podcast/source moment behavior",
+          "live analytics measurement",
+          "SEO proof route",
+          "source/backlink bridge"
+        ],
+        "currentDigitalhutSignals": {
+          "pageViews": 323,
+          "uniqueVisitors": 119,
+          "glb": 83,
+          "podcast": 13,
+          "autoplay": 5,
+          "searches": 2,
+          "proof": 0,
+          "source": 0
+        },
+        "comparedAgainst": "3D datasets and anatomical or non-medical 3D viewing",
+        "notAGoogleRankClaim": true
+      },
+      "flawsFound": [
+        "proof route opens are still zero",
+        "source/backlink opens are still zero",
+        "search usage is still thin"
+      ],
+      "advantagesFound": [
+        "GLB/3D behavior is already measurable",
+        "podcast/source interrupt behavior is already measurable",
+        "autoplay/session behavior is already measurable",
+        "DigitalHut combines video, GLB, podcast/source, analytics, and SEO proof in one interface"
+      ],
+      "internalBenchmark": {
+        "digitalhutCapabilityScore": 99,
+        "opponentAuthorityClassScore": 62,
+        "scoreGuardrail": "Internal capability benchmark only. This is not a Google ranking score, not a paid-rank claim, and not a declared SEO win.",
+        "result": "functionality-advantage-traffic-proof-pending",
+        "secondActions": 108,
+        "winCondition": "DigitalHut must produce proof/source opens, repeated second actions, or Search Console query growth before this becomes a proven SEO advantage."
+      },
+      "proofRoute": "/watch/game-world-glb-presentation",
+      "sourceBridgeUrl": "/digitalhut-proof-source-conversion-bridge.json#gaming-3d-world-observatory",
+      "nextProofNeeded": "Open one source/backlink from /watch/game-world-glb-presentation and record backlink_source_open.",
+      "promotionRule": "Promote only after Search Console rows, proof/source opens, or repeated second actions move beyond the saved baseline."
+    }
+  ],
+  "nextServerMove": "Keep comparative tests active, but aim the next user flow at proof/source opens. The current system has behavior, but the public proof layer needs a source/proof hit.",
+  "nextGoogleMove": "Keep sitemap stable, expose this as a proof/statistics artifact, and compare future Search Console rows against the benchmark board."
+}

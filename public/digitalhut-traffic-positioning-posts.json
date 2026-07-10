@@ -1,0 +1,82 @@
+{
+  "generatedAt": "2026-07-09T04:10:00.000Z",
+  "status": "traffic-positioning-posts-ready",
+  "owner": "Digitalhut.app",
+  "purpose": "Position DigitalHut where current traffic is already moving, without forcing traffic or pretending the 200M keyword universe is guaranteed Google rank.",
+  "masterKeywordUniverse": 200572944,
+  "representativeSitemapRows": 50000,
+  "totalSitemapRows": 50166,
+  "routeCrawlShells": 155,
+  "currentRead": {
+    "pageViews": 315,
+    "uniqueVisitors": 115,
+    "glbPreviewPlays": 83,
+    "podcastInterrupts": 13,
+    "autoplayStarts": 5,
+    "searches": 2,
+    "marketOpens": 5,
+    "proofRouteOpens": 0,
+    "sourceOpens": 0,
+    "searchConsoleFreshRows": 1,
+    "searchConsoleFreshImpressions": 1,
+    "sitemapRows": 50166,
+    "masterKeywordRows": 50000,
+    "masterKeywordUniverse": 200572944,
+    "routeCrawlShells": 155
+  },
+  "whyThe200MListRegisters": {
+    "explanation": "The 200,572,944 figure is an internal deterministic ownership universe built from measured human-intent lanes and variationCapacity values. The website does not publish 200M thin URLs. It publishes canonical proof routes, public JSON proof packets, and a capped 50,000-row master keyword sitemap so Google can crawl representative rows and later return real query/impression/click data.",
+    "guardrail": "Actual traffic is proven only by Search Console rows/impressions/clicks, Supabase events, proof route opens, source/backlink opens, GLB plays, podcast interrupts, autoplay starts, searches, and market opens."
+  },
+  "positioningPosts": [
+    {
+      "slug": "full-system-capture-post",
+      "route": "/watch/full-system-capture-post",
+      "area": "Full Entertainment Dapp Alternative",
+      "trafficReason": "Strongest public-candidate pull: 312 public-candidate events, 91 visitors, 248 page views, 33 GLB plays.",
+      "message": "DigitalHut is a subscription-ready 2026 entertainment dapp system, not a scrollable website.",
+      "proveWith": ["subscription preview", "autoplay_start", "glb_preview_play", "podcast_interrupt_play", "search_run", "proof_route_open", "backlink_source_open"]
+    },
+    {
+      "slug": "gaming-3d-environment-pass-by",
+      "route": "/watch/gaming-3d-environment-pass-by",
+      "area": "Gaming And 3D Environment Viewer",
+      "trafficReason": "Second strongest content pull: gaming/3D environment hints and GLB assets are already visible in event diagnostics.",
+      "message": "Game worlds and VR rooms become video sessions with a live 3D Model View, not static model browsing.",
+      "proveWith": ["glb_preview_play", "glb_zoom_rotate", "next_model_select", "autoplay_start", "backlink_source_open"]
+    },
+    {
+      "slug": "ai-video-podcast-source-pass-by",
+      "route": "/watch/ai-video-podcast-source-pass-by",
+      "area": "AI Video Podcast Source Explainer",
+      "trafficReason": "Podcast/source and AI video hints are present, but need stronger second actions.",
+      "message": "DigitalHut explains the episode with podcast/source moments, AI system reads, search intent, and source proof.",
+      "proveWith": ["podcast_interrupt_play", "search_run", "source_open", "autoplay_start", "proof_route_open"]
+    },
+    {
+      "slug": "research-developer-source-pass-by",
+      "route": "/watch/research-developer-source-pass-by",
+      "area": "Research Developer Source Observatory",
+      "trafficReason": "Developer/research proof is low-volume but strategically important for credibility and ranking comparisons.",
+      "message": "Developers and researchers can inspect the source-backed system: API, renderer, database, cloud, route proof, and analytics.",
+      "proveWith": ["blog_route_open", "source_open", "search_run", "glb_preview_play", "proof_route_open"]
+    },
+    {
+      "slug": "market-observatory-pass-by",
+      "route": "/watch/market-observatory-pass-by",
+      "area": "Market Observatory",
+      "trafficReason": "Market opens exist and should be treated as a distinct business-media session, not a replacement for the full dapp.",
+      "message": "Company and market searches become video, source statistics, GLB environment context, and podcast/source moments.",
+      "proveWith": ["market_view_open", "ticker_search", "source_open", "glb_preview_play", "podcast_interrupt_play"]
+    },
+    {
+      "slug": "spatial-home-travel-pass-by",
+      "route": "/watch/spatial-home-travel-pass-by",
+      "area": "Spatial Home Travel And Real Estate Experience",
+      "trafficReason": "Spatial/home/travel is smaller now, but it connects everyday searches to one of DigitalHut's clearest useful 3D cases.",
+      "message": "Homes, resorts, travel places, and real estate searches become video-linked 3D media sessions with source-backed context.",
+      "proveWith": ["glb_preview_play", "watch_route_open", "search_run", "backlink_source_open", "autoplay_start"]
+    }
+  ],
+  "nextMove": "Let Search Console and Supabase decide which positioning post earns promotion. Promote lanes with impressions plus second-action behavior; rewrite or hold lanes with discovery but no continuation."
+}

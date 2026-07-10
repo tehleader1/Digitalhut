@@ -1,0 +1,533 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.digitalhut.app/#organization",
+      "name": "DigitalHut",
+      "url": "https://www.digitalhut.app",
+      "description": "DigitalHut is a 2026 dapp entertainment observatory and research hub for video topics, GLB/3D context, podcast/source moments, market panels, watch proof, blog proof, and long-tail search routes."
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.digitalhut.app/#website",
+      "name": "DigitalHut Presents",
+      "url": "https://www.digitalhut.app",
+      "publisher": {
+        "@id": "https://www.digitalhut.app/#organization"
+      },
+      "description": "A 2026 dapp entertainment observatory that connects YouTube-style video topics, 3D/GLB context, podcast/source moments, market panels, watch proof, blog proof, and long-tail search routes.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://www.digitalhut.app/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://www.digitalhut.app/digitalhut-seo-master-list-packet.json#rank-dataset",
+      "name": "DigitalHut FireCuda Long-Tail Rank Ownership Dataset",
+      "url": "https://www.digitalhut.app/digitalhut-seo-master-list-packet.json",
+      "description": "Crawl proof routes and generated public packets. Do not infer that all 2,572,944 rank slots are public pages; they are deterministic FireCuda/database-held candidates with promotion gates.",
+      "creator": {
+        "@id": "https://www.digitalhut.app/#organization"
+      },
+      "measurementTechnique": "Deterministic rank slot generation with Supabase behavior gates and proof-route promotion stages.",
+      "variableMeasured": [
+        "page views",
+        "search interactions",
+        "autoplay starts",
+        "GLB preview plays",
+        "podcast interrupts",
+        "market opens",
+        "blog views"
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://www.digitalhut.app/llms.txt#top-proof-routes",
+      "name": "DigitalHut Top Proof Routes",
+      "description": "Highest priority crawlable proof routes selected from the unified route board.",
+      "numberOfItems": 12,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "url": "https://www.digitalhut.app/watch/looking-for-lunch-visual-observatory",
+          "name": "restaurants near me visual guide | DigitalHut Watch Proof",
+          "description": "video context, local source links, GLB place context, watch proof, and backlink path",
+          "additionalType": "push-next-deploy-proof",
+          "keywords": "restaurants near me visual guide, food near me video map, lunch near me source-backed review, best restaurants near me 3D preview, menu near me visual observatory, food open now watch route, funny looking for lunch tourist district lunch break 3D preview, local what should I eat work district after work watch route"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "url": "https://www.digitalhut.app/watch/calling-an-uber-visual-trip-guide",
+          "name": "Uber pickup visual guide | DigitalHut Watch Proof",
+          "description": "pickup context, route timing, source links, timeline proof, and watch route",
+          "additionalType": "push-next-deploy-proof",
+          "keywords": "Uber pickup visual guide, airport Uber pickup source map, rideshare pickup location explained, ride to airport visual route, taxi near me 3D pickup view, rideshare price spike explained, fast calling an Uber train station after work watch route, open now rideshare pickup suburb airport arrival source map"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "url": "https://www.digitalhut.app/watch/current-market-video-observatory",
+          "name": "Current Market Video Observatory: DigitalHut Proof | DigitalHut Watch Proof",
+          "description": "top stock lane, market highlights, connected video, connected podcast, GLB environment, and backlinkable company route",
+          "additionalType": "push-next-deploy-proof",
+          "keywords": "current market video observatory, stock market visual analysis 3D, AI stock video research dashboard, company video research source map, earnings video observatory, stock market visual analysis DigitalHut, stock market visual analysis Businesses, company video research DigitalHut"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "url": "https://www.digitalhut.app/watch/youtube-video-content-radar",
+          "name": "YouTube Video Content Radar: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+          "description": "video topic radar, changing timeline read, source links, podcast interrupt, and GLB model view",
+          "additionalType": "push-next-deploy-proof",
+          "keywords": "YouTube video content radar, video metadata visual analysis, AI video observatory system, funny grocery reel source map, TikTok clip explained with sources, what am I watching viral video radar, funny video explained DigitalHut, funny video explained Mainstream Streaming"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "url": "https://www.digitalhut.app/watch/home-project-3d-visual-planner",
+          "name": "Home Project 3D Visual Planner: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+          "description": "video radar, GLB proof dock, timeline, podcast/source moment, and shareable backlink",
+          "additionalType": "submit-watch-blog-pair",
+          "keywords": "home project 3D visual planner, home remodel 3D visualization, AI guided 3D room presentation, funny grocery reel source map, TikTok clip explained with sources, what am I watching viral video radar, funny video explained DigitalHut, funny video explained Mainstream Streaming"
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "url": "https://www.digitalhut.app/watch/grocery-shopping-3d-experience",
+          "name": "product reviews visual summary | DigitalHut Watch Proof",
+          "description": "review source links, product/place context, GLB proof, blog proof, and behavior signals",
+          "additionalType": "submit-watch-blog-pair",
+          "keywords": "product reviews visual summary, Reddit reviews source map, best deals near me visual guide, grocery near me source proof, pharmacy near me visual guide, should I buy this product video proof, grocery shopping 3D experience, funny grocery reel"
+        },
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "url": "https://www.digitalhut.app/watch/search-intent-radar-visual-experience",
+          "name": "Search Intent Radar Visual Experience: DigitalHut Proof | DigitalHut Watch Proof",
+          "description": "intent chip selection, category/video timing, proof keyword routing, GLB source phrase, market phrase, and Supabase behavior capture",
+          "additionalType": "submit-watch-blog-pair",
+          "keywords": "product reviews visual summary, Reddit reviews source map, best deals near me visual guide, grocery near me source proof, pharmacy near me visual guide, should I buy this product video proof, search intent radar visual experience, visual search intent chips"
+        },
+        {
+          "@type": "ListItem",
+          "position": 8,
+          "url": "https://www.digitalhut.app/blog/grocery-shopping-3d-experience",
+          "name": "product reviews visual summary | DigitalHut Proof",
+          "description": "review source links, product/place context, GLB proof, blog proof, and behavior signals",
+          "additionalType": "submit-watch-blog-pair",
+          "keywords": "product reviews visual summary, Reddit reviews source map, best deals near me visual guide, grocery near me source proof, pharmacy near me visual guide, should I buy this product video proof, grocery shopping 3D experience, funny grocery reel"
+        },
+        {
+          "@type": "ListItem",
+          "position": 9,
+          "url": "https://www.digitalhut.app/blog/full-view-episode-alternative",
+          "name": "Full-View Episode Alternative: DigitalHut Entertainment Observatory Proof | DigitalHut Proof",
+          "description": "video search, sound, autoplay, next/previous episode, 3D Model View, podcast/source moment, analytics, source proof, and backlink path",
+          "additionalType": "supabase-watch",
+          "keywords": "YouTube alternative full-view episode, full-view episode with 3D model view, video app with podcast moments and live analytics, dapp entertainment observatory episode, compact video 3D podcast interface, YouTube alternative full-view episode with 3D model view, full-view episode with podcast moments and live analytics, DigitalHut observatory experience"
+        },
+        {
+          "@type": "ListItem",
+          "position": 10,
+          "url": "https://www.digitalhut.app/blog/home-project-3d-visual-planner",
+          "name": "Home Project 3D Visual Planner: DigitalHut Observatory Proof | DigitalHut Proof",
+          "description": "video radar, GLB proof dock, timeline, podcast/source moment, and shareable backlink",
+          "additionalType": "supabase-watch",
+          "keywords": "home project 3D visual planner, home remodel 3D visualization, AI guided 3D room presentation, funny grocery reel source map, TikTok clip explained with sources, what am I watching viral video radar, funny video explained DigitalHut, funny video explained Mainstream Streaming"
+        },
+        {
+          "@type": "ListItem",
+          "position": 11,
+          "url": "https://www.digitalhut.app/blog/home-remodel-3d-visualization",
+          "name": "Home Remodel 3D Visualization: DigitalHut Observatory Proof | DigitalHut Proof",
+          "description": "video radar, GLB proof dock, timeline, podcast/source moment, and shareable backlink",
+          "additionalType": "supabase-watch",
+          "keywords": "home remodel 3D visualization, home project 3D visual planner, AI guided 3D room presentation, funny grocery reel source map, TikTok clip explained with sources, what am I watching viral video radar, funny video explained DigitalHut, funny video explained Mainstream Streaming"
+        },
+        {
+          "@type": "ListItem",
+          "position": 12,
+          "url": "https://www.digitalhut.app/watch/full-view-episode-alternative",
+          "name": "Full-View Episode Alternative: DigitalHut Entertainment Observatory Proof | DigitalHut Watch Proof",
+          "description": "video search, sound, autoplay, next/previous episode, 3D Model View, podcast/source moment, analytics, source proof, and backlink path",
+          "additionalType": "supabase-watch",
+          "keywords": "YouTube alternative full-view episode, full-view episode with 3D model view, video app with podcast moments and live analytics, dapp entertainment observatory episode, compact video 3D podcast interface, YouTube alternative full-view episode with 3D model view, full-view episode with podcast moments and live analytics, DigitalHut observatory experience"
+        }
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://www.digitalhut.app/digitalhut-deploy-proof-batch-packet.json#release-queue",
+      "name": "DigitalHut Current Release Queue",
+      "description": "Deploy/search-console release queue held until build tooling is verified.",
+      "numberOfItems": 8,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "url": "https://www.digitalhut.app/watch/looking-for-lunch-visual-observatory",
+          "name": "restaurants near me visual guide | DigitalHut Watch Proof",
+          "additionalType": "push-next-deploy-proof",
+          "keywords": "restaurants near me visual guide, food near me video map, lunch near me source-backed review, best restaurants near me 3D preview, menu near me visual observatory, food open now watch route, funny looking for lunch tourist district lunch break 3D preview, local what should I eat work district after work watch route"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "url": "https://www.digitalhut.app/watch/calling-an-uber-visual-trip-guide",
+          "name": "Uber pickup visual guide | DigitalHut Watch Proof",
+          "additionalType": "push-next-deploy-proof",
+          "keywords": "Uber pickup visual guide, airport Uber pickup source map, rideshare pickup location explained, ride to airport visual route, taxi near me 3D pickup view, rideshare price spike explained, fast calling an Uber train station after work watch route, open now rideshare pickup suburb airport arrival source map"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "url": "https://www.digitalhut.app/watch/current-market-video-observatory",
+          "name": "Current Market Video Observatory: DigitalHut Proof | DigitalHut Watch Proof",
+          "additionalType": "push-next-deploy-proof",
+          "keywords": "current market video observatory, stock market visual analysis 3D, AI stock video research dashboard, company video research source map, earnings video observatory, stock market visual analysis DigitalHut, stock market visual analysis Businesses, company video research DigitalHut"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "url": "https://www.digitalhut.app/watch/youtube-video-content-radar",
+          "name": "YouTube Video Content Radar: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+          "additionalType": "push-next-deploy-proof",
+          "keywords": "YouTube video content radar, video metadata visual analysis, AI video observatory system, funny grocery reel source map, TikTok clip explained with sources, what am I watching viral video radar, funny video explained DigitalHut, funny video explained Mainstream Streaming"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "url": "https://www.digitalhut.app/watch/home-project-3d-visual-planner",
+          "name": "Home Project 3D Visual Planner: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+          "additionalType": "submit-watch-blog-pair",
+          "keywords": "home project 3D visual planner, home remodel 3D visualization, AI guided 3D room presentation, funny grocery reel source map, TikTok clip explained with sources, what am I watching viral video radar, funny video explained DigitalHut, funny video explained Mainstream Streaming"
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "url": "https://www.digitalhut.app/watch/grocery-shopping-3d-experience",
+          "name": "product reviews visual summary | DigitalHut Watch Proof",
+          "additionalType": "submit-watch-blog-pair",
+          "keywords": "product reviews visual summary, Reddit reviews source map, best deals near me visual guide, grocery near me source proof, pharmacy near me visual guide, should I buy this product video proof, grocery shopping 3D experience, funny grocery reel"
+        },
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "url": "https://www.digitalhut.app/watch/search-intent-radar-visual-experience",
+          "name": "Search Intent Radar Visual Experience: DigitalHut Proof | DigitalHut Watch Proof",
+          "additionalType": "submit-watch-blog-pair",
+          "keywords": "product reviews visual summary, Reddit reviews source map, best deals near me visual guide, grocery near me source proof, pharmacy near me visual guide, should I buy this product video proof, search intent radar visual experience, visual search intent chips"
+        },
+        {
+          "@type": "ListItem",
+          "position": 8,
+          "url": "https://www.digitalhut.app/blog/grocery-shopping-3d-experience",
+          "name": "product reviews visual summary | DigitalHut Proof",
+          "additionalType": "submit-watch-blog-pair",
+          "keywords": "product reviews visual summary, Reddit reviews source map, best deals near me visual guide, grocery near me source proof, pharmacy near me visual guide, should I buy this product video proof, grocery shopping 3D experience, funny grocery reel"
+        }
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://www.digitalhut.app/digitalhut-ai-crawler-guidance-packet.json#crawler-guidance",
+      "headline": "DigitalHut AI Crawler Guidance",
+      "url": "https://www.digitalhut.app/digitalhut-ai-crawler-guidance-packet.json",
+      "about": [
+        "AI search discovery",
+        "3D observatory",
+        "GLB renderer proof",
+        "podcast source moments",
+        "market observatory",
+        "long-tail SEO"
+      ],
+      "publisher": {
+        "@id": "https://www.digitalhut.app/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.digitalhut.app/#website"
+      }
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.digitalhut.app/watch/looking-for-lunch-visual-observatory#proof",
+      "name": "restaurants near me visual guide | DigitalHut Watch Proof",
+      "headline": "restaurants near me visual guide | DigitalHut Watch Proof",
+      "url": "https://www.digitalhut.app/watch/looking-for-lunch-visual-observatory",
+      "description": "video context, local source links, GLB place context, watch proof, and backlink path",
+      "keywords": "restaurants near me visual guide, food near me video map, lunch near me source-backed review, best restaurants near me 3D preview, menu near me visual observatory, food open now watch route, funny looking for lunch tourist district lunch break 3D preview, local what should I eat work district after work watch route",
+      "isPartOf": {
+        "@id": "https://www.digitalhut.app/#website"
+      },
+      "publisher": {
+        "@id": "https://www.digitalhut.app/#organization"
+      },
+      "learningResourceType": "DigitalHut proof route",
+      "teaches": [
+        "restaurants near me visual guide",
+        "food near me video map",
+        "lunch near me source-backed review",
+        "best restaurants near me 3D preview",
+        "menu near me visual observatory"
+      ]
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.digitalhut.app/watch/calling-an-uber-visual-trip-guide#proof",
+      "name": "Uber pickup visual guide | DigitalHut Watch Proof",
+      "headline": "Uber pickup visual guide | DigitalHut Watch Proof",
+      "url": "https://www.digitalhut.app/watch/calling-an-uber-visual-trip-guide",
+      "description": "pickup context, route timing, source links, timeline proof, and watch route",
+      "keywords": "Uber pickup visual guide, airport Uber pickup source map, rideshare pickup location explained, ride to airport visual route, taxi near me 3D pickup view, rideshare price spike explained, fast calling an Uber train station after work watch route, open now rideshare pickup suburb airport arrival source map",
+      "isPartOf": {
+        "@id": "https://www.digitalhut.app/#website"
+      },
+      "publisher": {
+        "@id": "https://www.digitalhut.app/#organization"
+      },
+      "learningResourceType": "DigitalHut proof route",
+      "teaches": [
+        "Uber pickup visual guide",
+        "airport Uber pickup source map",
+        "rideshare pickup location explained",
+        "ride to airport visual route",
+        "taxi near me 3D pickup view"
+      ]
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.digitalhut.app/watch/current-market-video-observatory#proof",
+      "name": "Current Market Video Observatory: DigitalHut Proof | DigitalHut Watch Proof",
+      "headline": "Current Market Video Observatory: DigitalHut Proof | DigitalHut Watch Proof",
+      "url": "https://www.digitalhut.app/watch/current-market-video-observatory",
+      "description": "top stock lane, market highlights, connected video, connected podcast, GLB environment, and backlinkable company route",
+      "keywords": "current market video observatory, stock market visual analysis 3D, AI stock video research dashboard, company video research source map, earnings video observatory, stock market visual analysis DigitalHut, stock market visual analysis Businesses, company video research DigitalHut",
+      "isPartOf": {
+        "@id": "https://www.digitalhut.app/#website"
+      },
+      "publisher": {
+        "@id": "https://www.digitalhut.app/#organization"
+      },
+      "learningResourceType": "DigitalHut proof route",
+      "teaches": [
+        "current market video observatory",
+        "stock market visual analysis 3D",
+        "AI stock video research dashboard",
+        "company video research source map",
+        "earnings video observatory"
+      ]
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.digitalhut.app/watch/youtube-video-content-radar#proof",
+      "name": "YouTube Video Content Radar: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "headline": "YouTube Video Content Radar: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "url": "https://www.digitalhut.app/watch/youtube-video-content-radar",
+      "description": "video topic radar, changing timeline read, source links, podcast interrupt, and GLB model view",
+      "keywords": "YouTube video content radar, video metadata visual analysis, AI video observatory system, funny grocery reel source map, TikTok clip explained with sources, what am I watching viral video radar, funny video explained DigitalHut, funny video explained Mainstream Streaming",
+      "isPartOf": {
+        "@id": "https://www.digitalhut.app/#website"
+      },
+      "publisher": {
+        "@id": "https://www.digitalhut.app/#organization"
+      },
+      "learningResourceType": "DigitalHut proof route",
+      "teaches": [
+        "YouTube video content radar",
+        "video metadata visual analysis",
+        "AI video observatory system",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources"
+      ]
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.digitalhut.app/watch/home-project-3d-visual-planner#proof",
+      "name": "Home Project 3D Visual Planner: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "headline": "Home Project 3D Visual Planner: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "url": "https://www.digitalhut.app/watch/home-project-3d-visual-planner",
+      "description": "video radar, GLB proof dock, timeline, podcast/source moment, and shareable backlink",
+      "keywords": "home project 3D visual planner, home remodel 3D visualization, AI guided 3D room presentation, funny grocery reel source map, TikTok clip explained with sources, what am I watching viral video radar, funny video explained DigitalHut, funny video explained Mainstream Streaming",
+      "isPartOf": {
+        "@id": "https://www.digitalhut.app/#website"
+      },
+      "publisher": {
+        "@id": "https://www.digitalhut.app/#organization"
+      },
+      "learningResourceType": "DigitalHut proof route",
+      "teaches": [
+        "home project 3D visual planner",
+        "home remodel 3D visualization",
+        "AI guided 3D room presentation",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources"
+      ]
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.digitalhut.app/watch/grocery-shopping-3d-experience#proof",
+      "name": "product reviews visual summary | DigitalHut Watch Proof",
+      "headline": "product reviews visual summary | DigitalHut Watch Proof",
+      "url": "https://www.digitalhut.app/watch/grocery-shopping-3d-experience",
+      "description": "review source links, product/place context, GLB proof, blog proof, and behavior signals",
+      "keywords": "product reviews visual summary, Reddit reviews source map, best deals near me visual guide, grocery near me source proof, pharmacy near me visual guide, should I buy this product video proof, grocery shopping 3D experience, funny grocery reel",
+      "isPartOf": {
+        "@id": "https://www.digitalhut.app/#website"
+      },
+      "publisher": {
+        "@id": "https://www.digitalhut.app/#organization"
+      },
+      "learningResourceType": "DigitalHut proof route",
+      "teaches": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "best deals near me visual guide",
+        "grocery near me source proof",
+        "pharmacy near me visual guide"
+      ]
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.digitalhut.app/watch/search-intent-radar-visual-experience#proof",
+      "name": "Search Intent Radar Visual Experience: DigitalHut Proof | DigitalHut Watch Proof",
+      "headline": "Search Intent Radar Visual Experience: DigitalHut Proof | DigitalHut Watch Proof",
+      "url": "https://www.digitalhut.app/watch/search-intent-radar-visual-experience",
+      "description": "intent chip selection, category/video timing, proof keyword routing, GLB source phrase, market phrase, and Supabase behavior capture",
+      "keywords": "product reviews visual summary, Reddit reviews source map, best deals near me visual guide, grocery near me source proof, pharmacy near me visual guide, should I buy this product video proof, search intent radar visual experience, visual search intent chips",
+      "isPartOf": {
+        "@id": "https://www.digitalhut.app/#website"
+      },
+      "publisher": {
+        "@id": "https://www.digitalhut.app/#organization"
+      },
+      "learningResourceType": "DigitalHut proof route",
+      "teaches": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "best deals near me visual guide",
+        "grocery near me source proof",
+        "pharmacy near me visual guide"
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://www.digitalhut.app/blog/grocery-shopping-3d-experience#proof",
+      "name": "product reviews visual summary | DigitalHut Proof",
+      "headline": "product reviews visual summary | DigitalHut Proof",
+      "url": "https://www.digitalhut.app/blog/grocery-shopping-3d-experience",
+      "description": "review source links, product/place context, GLB proof, blog proof, and behavior signals",
+      "keywords": "product reviews visual summary, Reddit reviews source map, best deals near me visual guide, grocery near me source proof, pharmacy near me visual guide, should I buy this product video proof, grocery shopping 3D experience, funny grocery reel",
+      "isPartOf": {
+        "@id": "https://www.digitalhut.app/#website"
+      },
+      "publisher": {
+        "@id": "https://www.digitalhut.app/#organization"
+      },
+      "learningResourceType": "DigitalHut proof route",
+      "teaches": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "best deals near me visual guide",
+        "grocery near me source proof",
+        "pharmacy near me visual guide"
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://www.digitalhut.app/blog/full-view-episode-alternative#proof",
+      "name": "Full-View Episode Alternative: DigitalHut Entertainment Observatory Proof | DigitalHut Proof",
+      "headline": "Full-View Episode Alternative: DigitalHut Entertainment Observatory Proof | DigitalHut Proof",
+      "url": "https://www.digitalhut.app/blog/full-view-episode-alternative",
+      "description": "video search, sound, autoplay, next/previous episode, 3D Model View, podcast/source moment, analytics, source proof, and backlink path",
+      "keywords": "YouTube alternative full-view episode, full-view episode with 3D model view, video app with podcast moments and live analytics, dapp entertainment observatory episode, compact video 3D podcast interface, YouTube alternative full-view episode with 3D model view, full-view episode with podcast moments and live analytics, DigitalHut observatory experience",
+      "isPartOf": {
+        "@id": "https://www.digitalhut.app/#website"
+      },
+      "publisher": {
+        "@id": "https://www.digitalhut.app/#organization"
+      },
+      "learningResourceType": "DigitalHut proof route",
+      "teaches": [
+        "YouTube alternative full-view episode",
+        "full-view episode with 3D model view",
+        "video app with podcast moments and live analytics",
+        "dapp entertainment observatory episode",
+        "compact video 3D podcast interface"
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://www.digitalhut.app/blog/home-project-3d-visual-planner#proof",
+      "name": "Home Project 3D Visual Planner: DigitalHut Observatory Proof | DigitalHut Proof",
+      "headline": "Home Project 3D Visual Planner: DigitalHut Observatory Proof | DigitalHut Proof",
+      "url": "https://www.digitalhut.app/blog/home-project-3d-visual-planner",
+      "description": "video radar, GLB proof dock, timeline, podcast/source moment, and shareable backlink",
+      "keywords": "home project 3D visual planner, home remodel 3D visualization, AI guided 3D room presentation, funny grocery reel source map, TikTok clip explained with sources, what am I watching viral video radar, funny video explained DigitalHut, funny video explained Mainstream Streaming",
+      "isPartOf": {
+        "@id": "https://www.digitalhut.app/#website"
+      },
+      "publisher": {
+        "@id": "https://www.digitalhut.app/#organization"
+      },
+      "learningResourceType": "DigitalHut proof route",
+      "teaches": [
+        "home project 3D visual planner",
+        "home remodel 3D visualization",
+        "AI guided 3D room presentation",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources"
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://www.digitalhut.app/blog/home-remodel-3d-visualization#proof",
+      "name": "Home Remodel 3D Visualization: DigitalHut Observatory Proof | DigitalHut Proof",
+      "headline": "Home Remodel 3D Visualization: DigitalHut Observatory Proof | DigitalHut Proof",
+      "url": "https://www.digitalhut.app/blog/home-remodel-3d-visualization",
+      "description": "video radar, GLB proof dock, timeline, podcast/source moment, and shareable backlink",
+      "keywords": "home remodel 3D visualization, home project 3D visual planner, AI guided 3D room presentation, funny grocery reel source map, TikTok clip explained with sources, what am I watching viral video radar, funny video explained DigitalHut, funny video explained Mainstream Streaming",
+      "isPartOf": {
+        "@id": "https://www.digitalhut.app/#website"
+      },
+      "publisher": {
+        "@id": "https://www.digitalhut.app/#organization"
+      },
+      "learningResourceType": "DigitalHut proof route",
+      "teaches": [
+        "home remodel 3D visualization",
+        "home project 3D visual planner",
+        "AI guided 3D room presentation",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources"
+      ]
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.digitalhut.app/watch/full-view-episode-alternative#proof",
+      "name": "Full-View Episode Alternative: DigitalHut Entertainment Observatory Proof | DigitalHut Watch Proof",
+      "headline": "Full-View Episode Alternative: DigitalHut Entertainment Observatory Proof | DigitalHut Watch Proof",
+      "url": "https://www.digitalhut.app/watch/full-view-episode-alternative",
+      "description": "video search, sound, autoplay, next/previous episode, 3D Model View, podcast/source moment, analytics, source proof, and backlink path",
+      "keywords": "YouTube alternative full-view episode, full-view episode with 3D model view, video app with podcast moments and live analytics, dapp entertainment observatory episode, compact video 3D podcast interface, YouTube alternative full-view episode with 3D model view, full-view episode with podcast moments and live analytics, DigitalHut observatory experience",
+      "isPartOf": {
+        "@id": "https://www.digitalhut.app/#website"
+      },
+      "publisher": {
+        "@id": "https://www.digitalhut.app/#organization"
+      },
+      "learningResourceType": "DigitalHut proof route",
+      "teaches": [
+        "YouTube alternative full-view episode",
+        "full-view episode with 3D model view",
+        "video app with podcast moments and live analytics",
+        "dapp entertainment observatory episode",
+        "compact video 3D podcast interface"
+      ]
+    }
+  ]
+}

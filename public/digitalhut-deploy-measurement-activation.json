@@ -1,0 +1,278 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Deploy Measurement Activation",
+  "status": "measurement-activation-ready",
+  "purpose": "Convert accepted build proof into the first measured SEO/analytics cycle: watch routes, blog proof, Supabase reads, and FireCuda promote/rewrite/hold decisions.",
+  "guardrail": "This is not a deploy and not a traffic claim. It is the activation map that runs after build proof exists.",
+  "buildProofStatus": "build-proof-intake-ready",
+  "measurementProofStatus": "measurement-proof-ready",
+  "releasePairSubmissionStatus": "release-pair-submission-ready",
+  "supabaseRefinementStatus": "refinement-views-ready",
+  "firstWaveRouteCount": 12,
+  "firstWaveRoutes": [
+    {
+      "order": 1,
+      "route": "/watch/youtube-video-content-radar",
+      "type": "watch-proof",
+      "lane": "Mainstream Streaming",
+      "requiredSignals": [
+        "page_view",
+        "proof_route_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "activation": "activate-watch-first"
+    },
+    {
+      "order": 2,
+      "route": "/watch/search-intent-radar-visual-experience",
+      "type": "watch-proof",
+      "lane": "Automatic System Presentation",
+      "requiredSignals": [
+        "page_view",
+        "proof_route_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "activation": "activate-watch-first"
+    },
+    {
+      "order": 3,
+      "route": "/watch/looking-for-lunch-visual-observatory",
+      "type": "watch-proof",
+      "lane": "Lunch And Local Food",
+      "requiredSignals": [
+        "page_view",
+        "proof_route_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "activation": "activate-watch-first"
+    },
+    {
+      "order": 4,
+      "route": "/watch/calling-an-uber-visual-trip-guide",
+      "type": "watch-proof",
+      "lane": "Rideshare And Commute",
+      "requiredSignals": [
+        "page_view",
+        "proof_route_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "activation": "activate-watch-first"
+    },
+    {
+      "order": 5,
+      "route": "/watch/current-market-video-observatory",
+      "type": "watch-proof",
+      "lane": "Businesses",
+      "requiredSignals": [
+        "page_view",
+        "proof_route_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "activation": "activate-watch-first"
+    },
+    {
+      "order": 6,
+      "route": "/watch/home-project-3d-visual-planner",
+      "type": "watch-proof",
+      "lane": "Mainstream Streaming",
+      "requiredSignals": [
+        "page_view",
+        "proof_route_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "activation": "activate-watch-first"
+    },
+    {
+      "order": 7,
+      "route": "/blog/youtube-video-content-radar",
+      "type": "blog-proof",
+      "lane": "Mainstream Streaming",
+      "requiredSignals": [
+        "page_view",
+        "proof_route_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "activation": "activate-blog-support"
+    },
+    {
+      "order": 8,
+      "route": "/blog/search-intent-radar-visual-experience",
+      "type": "blog-proof",
+      "lane": "Automatic System Presentation",
+      "requiredSignals": [
+        "page_view",
+        "proof_route_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "activation": "activate-blog-support"
+    },
+    {
+      "order": 9,
+      "route": "/blog/looking-for-lunch-visual-observatory",
+      "type": "blog-proof",
+      "lane": "Lunch And Local Food",
+      "requiredSignals": [
+        "page_view",
+        "proof_route_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "activation": "activate-blog-support"
+    },
+    {
+      "order": 10,
+      "route": "/blog/calling-an-uber-visual-trip-guide",
+      "type": "blog-proof",
+      "lane": "Rideshare And Commute",
+      "requiredSignals": [
+        "page_view",
+        "proof_route_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "activation": "activate-blog-support"
+    },
+    {
+      "order": 11,
+      "route": "/blog/current-market-video-observatory",
+      "type": "blog-proof",
+      "lane": "Businesses",
+      "requiredSignals": [
+        "page_view",
+        "proof_route_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "activation": "activate-blog-support"
+    },
+    {
+      "order": 12,
+      "route": "/blog/home-project-3d-visual-planner",
+      "type": "blog-proof",
+      "lane": "Mainstream Streaming",
+      "requiredSignals": [
+        "page_view",
+        "proof_route_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "activation": "activate-blog-support"
+    }
+  ],
+  "activationSignals": [
+    {
+      "signal": "page_view",
+      "role": "baseline visibility",
+      "promoteUse": "Never promotes alone; it proves the route loaded and starts the comparison window."
+    },
+    {
+      "signal": "proof_route_open",
+      "role": "research intent",
+      "promoteUse": "Shows the visitor treated the page as a proof/research route rather than decorative content."
+    },
+    {
+      "signal": "glb_preview_play",
+      "role": "3D renderer value",
+      "promoteUse": "Raises priority for 3D experience, GLB source, and model-view keywords."
+    },
+    {
+      "signal": "podcast_interrupt_play",
+      "role": "source/audio value",
+      "promoteUse": "Raises priority for podcast-source, interview, and episode-context keywords."
+    },
+    {
+      "signal": "market_view_open",
+      "role": "market feed value",
+      "promoteUse": "Routes market-specific behavior into the market lane instead of the general video feed."
+    },
+    {
+      "signal": "search_intent_chip_select",
+      "role": "human keyword choice",
+      "promoteUse": "Turns FireCuda long-tail candidates into real chosen intent when users click the idea."
+    },
+    {
+      "signal": "search_run",
+      "role": "typed demand",
+      "promoteUse": "Promotes exact phrases typed by visitors into the master list and related proof pages."
+    },
+    {
+      "signal": "backlink_source_open",
+      "role": "authority proof",
+      "promoteUse": "Shows a visitor trusted the source/backlink layer enough to leave the main view."
+    }
+  ],
+  "activationWindows": [
+    {
+      "window": "0-15 minutes after stable build",
+      "job": "Confirm watch routes load and emit page/proof events.",
+      "decision": "Do not promote yet; only catch broken routes or missing event lanes."
+    },
+    {
+      "window": "15-60 minutes",
+      "job": "Compare watch routes against matching blog support routes.",
+      "decision": "Promote pairs only if page_view is joined by a second useful action."
+    },
+    {
+      "window": "1-6 hours",
+      "job": "Read Supabase route_refinement and keyword_refinement.",
+      "decision": "Send winners to FireCuda promote queue, quiet-but-loaded routes to rewrite, inactive routes to hold."
+    },
+    {
+      "window": "6-24 hours",
+      "job": "Compare route pair behavior against category lane and source/backlink behavior.",
+      "decision": "Expand only the lanes with measured proof, not the full 2.57M variation universe at once."
+    }
+  ],
+  "decisionOutputs": [
+    {
+      "output": "FireCuda promote",
+      "condition": "Route has page/proof visibility plus GLB, podcast, market, search, or backlink second action.",
+      "queueCount": 7
+    },
+    {
+      "output": "Metadata rewrite",
+      "condition": "Route loads or is crawled, but second useful action stays quiet.",
+      "queueCount": 7
+    },
+    {
+      "output": "FireCuda hold",
+      "condition": "Route receives no measured activity after stable deploy and inspection window.",
+      "queueCount": 7
+    }
+  ],
+  "activationRule": "After stable build proof, inspect watch routes first, pair each with its blog proof, wait for Supabase second-action evidence, then update FireCuda queues.",
+  "nextFireCudaMove": "Activate first-wave watch/blog measurement and route every pair to promote, rewrite, or hold.",
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  }
+}

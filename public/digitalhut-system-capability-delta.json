@@ -1,0 +1,93 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut System Capability Compare Delta",
+  "frontendLock": "Locked: no visible website changes unless live client behavior or an overdue system flaw proves the interface needs it.",
+  "baseline": "2026-07-07T16:22:39.731Z",
+  "current": "2026-07-07T16:24:02.278Z",
+  "movementScore": 0,
+  "primaryMovement": "steady-state",
+  "countChanges": {
+    "productReady": 0,
+    "sitemapUrls": 0,
+    "blogProofPosts": 0,
+    "watchProofRoutes": 0,
+    "categoryRoutes": 0,
+    "readyCapabilityAlerts": 0,
+    "systemCapabilityAlerts": 0,
+    "refinementActions": 0
+  },
+  "alertDelta": [
+    {
+      "id": "frontend-locked",
+      "lane": "Website Surface",
+      "currentLevel": "ready",
+      "previousLevel": "ready",
+      "changed": false
+    },
+    {
+      "id": "viral-first-source-ready",
+      "lane": "New Viral Video",
+      "currentLevel": "ready",
+      "previousLevel": "ready",
+      "changed": false
+    },
+    {
+      "id": "viral-first-source-packet-latest",
+      "lane": "New Viral Video",
+      "currentLevel": "ready",
+      "previousLevel": "ready",
+      "changed": false
+    },
+    {
+      "id": "buried-treasure-niche-ready",
+      "lane": "Claimable Niche",
+      "currentLevel": "ready",
+      "previousLevel": "ready",
+      "changed": false
+    },
+    {
+      "id": "mundane-off-time-experience-ready",
+      "lane": "Mundane Off-Time Experience",
+      "currentLevel": "ready",
+      "previousLevel": "ready",
+      "changed": false
+    },
+    {
+      "id": "codex-oversight-ready",
+      "lane": "Codex Oversight",
+      "currentLevel": "ready",
+      "previousLevel": "ready",
+      "changed": false
+    },
+    {
+      "id": "glb-proof-winner",
+      "lane": "GLB Renderer",
+      "currentLevel": "ready",
+      "previousLevel": "ready",
+      "changed": false
+    },
+    {
+      "id": "search-intent-watch",
+      "lane": "Search Intent",
+      "currentLevel": "watch",
+      "previousLevel": "watch",
+      "changed": false
+    },
+    {
+      "id": "proof-depth-ready",
+      "lane": "SEO Proof",
+      "currentLevel": "ready",
+      "previousLevel": "ready",
+      "changed": false
+    },
+    {
+      "id": "product-marker-gate",
+      "lane": "Deploy Gate",
+      "currentLevel": "ready",
+      "previousLevel": "ready",
+      "changed": false
+    }
+  ],
+  "compareRead": "System capability state is steady. Let behavior accumulate before changing the public interface.",
+  "nextSystemMove": "Current overseer call: YouTube category and search. Search has not proven active user intent yet. Next move: Make category switching and next-episode controls read as the main content radar, then map the first real searches back into FireCuda."
+}

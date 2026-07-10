@@ -1,0 +1,499 @@
+{
+  "generatedAt": "2026-07-09T04:17:22.630Z",
+  "status": "supabase-search-pixel-compare-ready",
+  "site": "https://www.digitalhut.app",
+  "source": "user-provided Supabase Search Pixel export plus production /api/insight-map read",
+  "guardrail": "Rows marked synthetic or Codex test are excluded from audience decisions. This report does not claim Google rank movement without Search Console rows.",
+  "exportRead": {
+    "inputPath": "C:\\Users\\Admin\\.codex\\attachments\\95c95521-1ca2-4aa5-8281-0d364148f02f\\pasted-text.txt",
+    "totalRows": 100,
+    "organicRows": 96,
+    "syntheticRows": 4,
+    "uniqueVisitors": 49,
+    "uniqueSessions": 62,
+    "firstSeen": "2026-06-29 20:31:12.18852+00",
+    "lastSeen": "2026-07-08 22:38:39.114175+00"
+  },
+  "exportSignalTotals": {
+    "pageViews": 49,
+    "uiClicks": 21,
+    "blogViews": 5,
+    "glbPreviewPlays": 13,
+    "podcastPlays": 4,
+    "autoplayStarts": 1,
+    "marketOpens": 1,
+    "searchRuns": 0,
+    "proofRouteOpens": 0,
+    "sourceOpens": 0
+  },
+  "productionRead": {
+    "ready": true,
+    "totalEvents": 532,
+    "pageViews": 315,
+    "uniqueVisitors": 115,
+    "blogViews": 28,
+    "glbPreviewPlays": 83,
+    "podcastInterrupts": 13,
+    "autoplayStarts": 5,
+    "searches": 2,
+    "marketOpens": 5,
+    "proofRouteOpens": 0,
+    "sourceOpens": 0,
+    "summaryLine": "315 page views, 2 searches, 0 intent selections, 5 autoplay starts, 83 GLB plays, 13 podcast interrupts, 0 proof route opens, 0 source opens, 5 market opens."
+  },
+  "countTables": {
+    "eventCounts": [
+      {
+        "value": "page_view",
+        "count": 49
+      },
+      {
+        "value": "ui_click",
+        "count": 21
+      },
+      {
+        "value": "glb_preview_play",
+        "count": 13
+      },
+      {
+        "value": "blog_view",
+        "count": 5
+      },
+      {
+        "value": "podcast_interrupt_play",
+        "count": 4
+      },
+      {
+        "value": "autoplay_pause",
+        "count": 1
+      },
+      {
+        "value": "autoplay_start",
+        "count": 1
+      },
+      {
+        "value": "market_view_open",
+        "count": 1
+      },
+      {
+        "value": "podcast_interrupt_end",
+        "count": 1
+      }
+    ],
+    "pathCounts": [
+      {
+        "value": "/",
+        "count": 75
+      },
+      {
+        "value": "/blog/automatic-3d-autoplay-system",
+        "count": 4
+      },
+      {
+        "value": "/insights",
+        "count": 4
+      },
+      {
+        "value": "/markets",
+        "count": 3
+      },
+      {
+        "value": "/runner",
+        "count": 2
+      },
+      {
+        "value": "/?codex-visible-check=1783111932714",
+        "count": 1
+      },
+      {
+        "value": "/?live-real-glb-panels=1783223240175",
+        "count": 1
+      },
+      {
+        "value": "/?ref=producthunt",
+        "count": 1
+      },
+      {
+        "value": "/blog",
+        "count": 1
+      },
+      {
+        "value": "/blog/full-view-episode-alternative",
+        "count": 1
+      },
+      {
+        "value": "/blog/home-remodel-3d-visualization",
+        "count": 1
+      },
+      {
+        "value": "/insights?fresh=scroll",
+        "count": 1
+      },
+      {
+        "value": "/rarible-live.html?ref=producthunt",
+        "count": 1
+      }
+    ],
+    "referrerCounts": [
+      {
+        "value": "direct-or-private",
+        "count": 59
+      },
+      {
+        "value": "https://vercel.com/",
+        "count": 35
+      },
+      {
+        "value": "https://www.digitalhut.app/",
+        "count": 2
+      }
+    ],
+    "timezoneCounts": [
+      {
+        "value": "America/New_York",
+        "count": 41
+      },
+      {
+        "value": "America/Los_Angeles",
+        "count": 27
+      },
+      {
+        "value": "UTC",
+        "count": 27
+      },
+      {
+        "value": "Europe/Kiev",
+        "count": 1
+      }
+    ],
+    "deviceCounts": [
+      {
+        "value": "desktop",
+        "count": 63
+      },
+      {
+        "value": "headless-or-crawler",
+        "count": 23
+      },
+      {
+        "value": "mobile",
+        "count": 10
+      }
+    ],
+    "titleCounts": [
+      {
+        "value": "DigitalHut - AI Guided 3D Observatory And GLB Renderer",
+        "count": 40
+      },
+      {
+        "value": "DigitalHut",
+        "count": 16
+      },
+      {
+        "value": "DigitalHut Observatory - Mainstream Streaming - Medieval City Pack Demo",
+        "count": 12
+      },
+      {
+        "value": "DigitalHut Observatory - Mainstream Streaming - Horror Corridor VR room [Baked]",
+        "count": 6
+      },
+      {
+        "value": "DigitalHut Observatory - Mainstream Streaming - Full Gameready City Buildings IV [HongKong]",
+        "count": 5
+      },
+      {
+        "value": "DigitalHut Observatory - Planetary - Saturn ring mission zone",
+        "count": 4
+      },
+      {
+        "value": "DigitalHut Observatory - Mainstream Streaming - 2026 Launch to the Moon",
+        "count": 3
+      },
+      {
+        "value": "DigitalHut Observatory - Mainstream Streaming - Sci Fi Modular Asset Pack (Sci Fi Corridor)",
+        "count": 3
+      },
+      {
+        "value": "DigitalHut Observatory - Mainstream Streaming - Neighbourhood City Modular lowpoly",
+        "count": 2
+      },
+      {
+        "value": "DigitalHut - 2026 Dapp Entertainment Observatory With 3D Model View",
+        "count": 1
+      },
+      {
+        "value": "DigitalHut Observatory - Gamer - Medieval City Pack Demo",
+        "count": 1
+      },
+      {
+        "value": "DigitalHut Observatory - Mainstream Streaming - Frontier AI: ChatGPT and Claude pushing limits",
+        "count": 1
+      }
+    ],
+    "keywordCounts": [
+      {
+        "value": "Horror podcast clip",
+        "count": 2
+      },
+      {
+        "value": "Frontier podcast clip",
+        "count": 1
+      },
+      {
+        "value": "Horror Corridor VR room [Baked]",
+        "count": 1
+      },
+      {
+        "value": "Medieval City Pack Demo",
+        "count": 1
+      },
+      {
+        "value": "NVDA NVIDIA",
+        "count": 1
+      },
+      {
+        "value": "Sci Fi Modular Asset Pack (Sci Fi Corridor)",
+        "count": 1
+      },
+      {
+        "value": "Sci podcast clip",
+        "count": 1
+      },
+      {
+        "value": "Time is NOT on your side",
+        "count": 1
+      }
+    ],
+    "categoryCounts": [
+      {
+        "value": "Mainstream Streaming",
+        "count": 8
+      },
+      {
+        "value": "Businesses",
+        "count": 1
+      }
+    ],
+    "blogCounts": [
+      {
+        "value": "automatic-3d-autoplay-system",
+        "count": 4
+      },
+      {
+        "value": "blog-index",
+        "count": 1
+      },
+      {
+        "value": "full-view-episode-alternative",
+        "count": 1
+      },
+      {
+        "value": "home-remodel-3d-visualization",
+        "count": 1
+      }
+    ]
+  },
+  "keyTrailRows": [
+    {
+      "eventName": "page_view",
+      "path": "/rarible-live.html?ref=producthunt",
+      "title": "DigitalHut - AI Guided 3D Observatory And GLB Renderer",
+      "search": "?ref=producthunt",
+      "language": "en-US",
+      "timezone": "UTC",
+      "seoClaim": null,
+      "entryTrail": null,
+      "createdAt": "2026-07-06 09:51:20.693723+00"
+    },
+    {
+      "eventName": "page_view",
+      "path": "/?ref=producthunt",
+      "title": "DigitalHut - 2026 Dapp Entertainment Observatory With 3D Model View",
+      "search": "?ref=producthunt",
+      "language": "en-GB",
+      "timezone": "Europe/Kiev",
+      "seoClaim": {
+        "lane": "Full Entertainment Dapp Alternative",
+        "rankUrl": "/watch/full-view-episode-alternative?dh_rank=152218&dh_global_rank=152218&dh_lane=full-entertainment-dapp-alternative",
+        "rankOwnershipMode": "counted-rank-slot",
+        "measurementSignals": [
+          "homepage entry",
+          "autoplay start",
+          "next episode",
+          "3D Model View open",
+          "podcast/source interrupt",
+          "live analytics read"
+        ]
+      },
+      "entryTrail": {
+        "routeType": "homepage-entry",
+        "sourceText": "DigitalHut - 2026 Dapp Entertainment Observatory With 3D Model View",
+        "sourceType": "interaction",
+        "referrerHost": "",
+        "trailTargets": [
+          "https://www.digitalhut.app/watch/full-view-episode-alternative",
+          "https://www.digitalhut.app/blog",
+          "https://www.digitalhut.app/digitalhut-seo-claim-coverage.json",
+          "https://www.digitalhut.app/sitemap.xml"
+        ],
+        "backlinkTrail": {
+          "lane": "Full Entertainment Dapp Alternative",
+          "mode": "counted-rank-slot",
+          "rankUrl": "/watch/full-view-episode-alternative?dh_rank=152218&dh_global_rank=152218&dh_lane=full-entertainment-dapp-alternative",
+          "backlinkTargets": [
+            "YouTube session tool discussion",
+            "AI video tool page",
+            "3D viewer source",
+            "podcast/source page",
+            "watch proof route"
+          ],
+          "measurementSignals": [
+            "homepage entry",
+            "autoplay start",
+            "next episode",
+            "3D Model View open",
+            "podcast/source interrupt",
+            "live analytics read"
+          ]
+        },
+        "ownedReturnPath": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=152218&dh_global_rank=152218&dh_lane=full-entertainment-dapp-alternative"
+      },
+      "createdAt": "2026-07-08 22:38:39.114175+00"
+    }
+  ],
+  "compareAndContrast": [
+    {
+      "lane": "Full Entertainment Dapp Alternative",
+      "evidence": "80 organic rows mention the DigitalHut full-system framing; 2 row(s) carry a producthunt-style pass-by trail.",
+      "decision": "duplicate-natural-pass-by-post-trail",
+      "nextAction": "Keep every external post anchored to video watching + 3D Model View + podcast/source moments + live analytics in one dapp, then route back to /watch/full-view-episode-alternative."
+    },
+    {
+      "lane": "Gaming And 3D Environment Viewer",
+      "evidence": "13 organic GLB preview plays plus 71 renderer/model-view rows in the export.",
+      "decision": "promote-as-strongest-second-action",
+      "nextAction": "Use GLB/model-view language as the strongest useful hook, but keep it attached to the whole entertainment system instead of individual model names."
+    },
+    {
+      "lane": "Podcast Source Moments",
+      "evidence": "4 podcast interrupt plays and 12 podcast-related rows.",
+      "decision": "support-but-do-not-lead",
+      "nextAction": "Use podcast as a trust/source moment after the video and GLB hook; do not let podcast replace the full system message."
+    },
+    {
+      "lane": "Market Observatory",
+      "evidence": "1 market open in the export and 1 market/NVDA-related rows.",
+      "decision": "keep-as-side-lane",
+      "nextAction": "Keep market as a connected proof arm, not the primary audience pull."
+    },
+    {
+      "lane": "Proof And Source Opens",
+      "evidence": "0 proof route opens and 0 source/backlink opens in this export.",
+      "decision": "missing-hit-marker",
+      "nextAction": "The next SEO posts need a visible reason to open proof/source routes; this is the conversion gap before expanding more keyword volume."
+    }
+  ],
+  "nextSystemMove": "Position DigitalHut posts where pass-by audiences already understand the full dapp framing, then measure whether they continue into GLB, podcast, autoplay, search, proof, or source actions before expanding more of the 200M universe.",
+  "latestOrganic": [
+    {
+      "eventName": "page_view",
+      "path": "/?ref=producthunt",
+      "title": "DigitalHut - 2026 Dapp Entertainment Observatory With 3D Model View",
+      "referrer": "direct-or-private",
+      "keywordHint": null,
+      "category": null,
+      "timezone": "Europe/Kiev",
+      "createdAt": "2026-07-08 22:38:39.114175+00"
+    },
+    {
+      "eventName": "blog_view",
+      "path": "/blog/home-remodel-3d-visualization",
+      "title": "DigitalHut - AI Guided 3D Observatory And GLB Renderer",
+      "referrer": "direct-or-private",
+      "keywordHint": null,
+      "category": null,
+      "timezone": "America/Los_Angeles",
+      "createdAt": "2026-07-07 16:25:50.534625+00"
+    },
+    {
+      "eventName": "blog_view",
+      "path": "/blog/full-view-episode-alternative",
+      "title": "DigitalHut - AI Guided 3D Observatory And GLB Renderer",
+      "referrer": "direct-or-private",
+      "keywordHint": null,
+      "category": null,
+      "timezone": "America/Los_Angeles",
+      "createdAt": "2026-07-07 16:25:35.661628+00"
+    },
+    {
+      "eventName": "page_view",
+      "path": "/",
+      "title": "DigitalHut - AI Guided 3D Observatory And GLB Renderer",
+      "referrer": "direct-or-private",
+      "keywordHint": null,
+      "category": null,
+      "timezone": "America/Los_Angeles",
+      "createdAt": "2026-07-07 15:08:32.630721+00"
+    },
+    {
+      "eventName": "ui_click",
+      "path": "/",
+      "title": "DigitalHut Observatory - Mainstream Streaming - Horror Corridor VR room [Baked]",
+      "referrer": "https://vercel.com/",
+      "keywordHint": null,
+      "category": null,
+      "timezone": "America/New_York",
+      "createdAt": "2026-07-07 08:27:56.91972+00"
+    },
+    {
+      "eventName": "autoplay_pause",
+      "path": "/",
+      "title": "DigitalHut Observatory - Mainstream Streaming - Horror Corridor VR room [Baked]",
+      "referrer": "https://vercel.com/",
+      "keywordHint": "Horror Corridor VR room [Baked]",
+      "category": "Mainstream Streaming",
+      "timezone": "America/New_York",
+      "createdAt": "2026-07-07 08:27:43.104416+00"
+    },
+    {
+      "eventName": "ui_click",
+      "path": "/",
+      "title": "DigitalHut Observatory - Mainstream Streaming - Full Gameready City Buildings IV [HongKong]",
+      "referrer": "https://vercel.com/",
+      "keywordHint": null,
+      "category": null,
+      "timezone": "America/New_York",
+      "createdAt": "2026-07-07 08:27:37.527673+00"
+    },
+    {
+      "eventName": "podcast_interrupt_end",
+      "path": "/",
+      "title": "DigitalHut Observatory - Mainstream Streaming - Full Gameready City Buildings IV [HongKong]",
+      "referrer": "https://vercel.com/",
+      "keywordHint": "Time is NOT on your side",
+      "category": "Mainstream Streaming",
+      "timezone": "America/New_York",
+      "createdAt": "2026-07-07 08:27:37.519551+00"
+    },
+    {
+      "eventName": "page_view",
+      "path": "/",
+      "title": "DigitalHut - AI Guided 3D Observatory And GLB Renderer",
+      "referrer": "direct-or-private",
+      "keywordHint": null,
+      "category": null,
+      "timezone": "UTC",
+      "createdAt": "2026-07-07 08:26:57.090262+00"
+    },
+    {
+      "eventName": "page_view",
+      "path": "/rarible-live.html?ref=producthunt",
+      "title": "DigitalHut - AI Guided 3D Observatory And GLB Renderer",
+      "referrer": "direct-or-private",
+      "keywordHint": null,
+      "category": null,
+      "timezone": "UTC",
+      "createdAt": "2026-07-06 09:51:20.693723+00"
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 import React, {useEffect, useMemo, useRef, useState} from "react"
 import {firecudaLibraryStatus} from "../lib/firecudaLibraryManifest"
+import {loadModelViewer} from "../lib/modelViewerRuntime"
 import "./DefensiveGuardian.css"
 
 const clientStorageKey = "digitalhut:guardianClient"
@@ -114,7 +115,7 @@ export default function DefensiveGuardian({children}){
 
   useEffect(() => {
     if(!open || modelReady) return
-    import("@google/model-viewer").then(() => setModelReady(true)).catch(() => setModelReady(false))
+    loadModelViewer().then(setModelReady).catch(() => setModelReady(false))
   }, [open, modelReady])
 
   useEffect(() => {

@@ -1,0 +1,156 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Niche Functionality Ladder Match",
+  "status": "niche-functionality-ladder-match-ready",
+  "purpose": "Prepare exact functionality-based niche claims and match DigitalHut only against competitors with comparable user intent before climbing rank ladders.",
+  "targetWinRatio": 77,
+  "baseFunctionalityScore": 66,
+  "cycleScore": 73,
+  "featureScore": 62,
+  "proofScore": 38,
+  "mapAuthorityScore": 69,
+  "glbRate": 27.6,
+  "blogRate": 6.2,
+  "nicheShouts": [
+    {
+      "id": "3d-video-source-observatory",
+      "exactShout": "DigitalHut turns a video into a source-backed 3D observatory: watch it, inspect the GLB, follow the podcast/source moment, and prove the niche with receipts.",
+      "niche": "3D visual proof over static pages",
+      "directFunctionality": [
+        "video presentation",
+        "Babylon/GLB inspection",
+        "podcast/source authority",
+        "watch/blog/category proof",
+        "FireCuda receipt mapping"
+      ],
+      "rankIntent": "3d visual proof for video explanation",
+      "publicPosture": "This is the lead claim because GLB opens are the strongest last-known behavior."
+    },
+    {
+      "id": "video-explained-with-research-map",
+      "exactShout": "DigitalHut explains what a video is about with a live research map, 3D model context, source links, and a proof route instead of leaving the viewer with a plain embed.",
+      "niche": "video explained with source proof",
+      "directFunctionality": [
+        "content radar",
+        "analytics map",
+        "source/backlink bridge",
+        "proof route",
+        "same-topic category lane"
+      ],
+      "rankIntent": "video explained with source map",
+      "publicPosture": "This claim supports the lead GLB lane and attacks single-medium video pages."
+    },
+    {
+      "id": "experience-cycle-seo-proof",
+      "exactShout": "DigitalHut ranks niches by completed experience cycles: autoplay, GLB open, rotate or zoom, podcast, search, category hop, and proof route behavior.",
+      "niche": "experience cycle SEO proof",
+      "directFunctionality": [
+        "cycle scoring",
+        "event receipts",
+        "competitor class matching",
+        "77 percent ladder gate",
+        "FireCuda promotion ledger"
+      ],
+      "rankIntent": "interactive observatory SEO proof system",
+      "publicPosture": "This is the enterprise engineering stance that separates DigitalHut from filler SEO."
+    }
+  ],
+  "ladderMatches": [
+    {
+      "rung": 1,
+      "competitorClass": "thin sales page",
+      "matchingFunctionality": "copy, images, form, maybe a blog",
+      "digitalhutEdge": "video + GLB inspection + source/podcast + proof route + receipt map",
+      "winRatio": 78,
+      "passReason": "DigitalHut has functional layers the competitor class usually does not offer.",
+      "nextWhenPassed": "Attack local operator and small-company proof pages.",
+      "status": "ladder-pass",
+      "requiredReceiptsToClimb": [
+        "same-niche route view",
+        "GLB open or rotate/zoom",
+        "source/backlink click",
+        "proof route continuation",
+        "Search Console or origin receipt"
+      ]
+    },
+    {
+      "rung": 2,
+      "competitorClass": "3D gallery or portfolio page",
+      "matchingFunctionality": "model preview, title, creator profile, asset page",
+      "digitalhutEdge": "GLB preview tied to a video topic, analytics explanation, source proof, and route receipts",
+      "winRatio": 74,
+      "passReason": "GLB preview rate is already the strongest behavior signal.",
+      "nextWhenPassed": "Attack Matterport-style tours, Sketchfab-adjacent creator pages, and niche 3D model explainers.",
+      "status": "hold-until-receipts",
+      "requiredReceiptsToClimb": [
+        "same-niche route view",
+        "GLB open or rotate/zoom",
+        "source/backlink click",
+        "proof route continuation",
+        "Search Console or origin receipt"
+      ]
+    },
+    {
+      "rung": 3,
+      "competitorClass": "single-medium video explainer",
+      "matchingFunctionality": "video embed, title, comments, basic description",
+      "digitalhutEdge": "video plus 3D context, research map, source/podcast moment, and crawlable proof route",
+      "winRatio": 68,
+      "passReason": "DigitalHut needs stronger source/backlink continuation before fully passing this rung.",
+      "nextWhenPassed": "Attack YouTube-result support pages and creator explainer blogs.",
+      "status": "hold-until-receipts",
+      "requiredReceiptsToClimb": [
+        "same-niche route view",
+        "GLB open or rotate/zoom",
+        "source/backlink click",
+        "proof route continuation",
+        "Search Console or origin receipt"
+      ]
+    },
+    {
+      "rung": 4,
+      "competitorClass": "static research or wiki-style page",
+      "matchingFunctionality": "article, citations, images, occasional video",
+      "digitalhutEdge": "research topic becomes an interactive observatory with GLB, timeline/bubble analytics, source moments, and route proof",
+      "winRatio": 65,
+      "passReason": "Blog proof exists, but source clicks and search usage need receipts before this becomes a clean win.",
+      "nextWhenPassed": "Attack niche research blogs and university-adjacent explainers.",
+      "status": "hold-until-receipts",
+      "requiredReceiptsToClimb": [
+        "same-niche route view",
+        "GLB open or rotate/zoom",
+        "source/backlink click",
+        "proof route continuation",
+        "Search Console or origin receipt"
+      ]
+    },
+    {
+      "rung": 5,
+      "competitorClass": "market dashboard or finance result",
+      "matchingFunctionality": "ticker, chart, news, stock list",
+      "digitalhutEdge": "company story plus video, GLB environment, podcast/source moment, and analytics highlight feed",
+      "winRatio": 48,
+      "passReason": "Held because market opens are still zero in the last-known snapshot.",
+      "nextWhenPassed": "Attack small finance blogs first, not enterprise finance portals.",
+      "status": "hold-until-receipts",
+      "requiredReceiptsToClimb": [
+        "same-niche route view",
+        "GLB open or rotate/zoom",
+        "source/backlink click",
+        "proof route continuation",
+        "Search Console or origin receipt"
+      ]
+    }
+  ],
+  "passedMatches": 1,
+  "heldMatches": 4,
+  "universalRankPush": {
+    "currentFloor": 236000000,
+    "firstEscapeTarget": 1000000,
+    "authorityTarget": 100000,
+    "rule": "DigitalHut only climbs the universal rank ladder when a same-function competitor class is beaten at 77% or better and the receipt map confirms the behavior.",
+    "nextRankMove": "Hold broad rank expansion and collect source, rotate/zoom, search, and category-hop receipts."
+  },
+  "leadExactShout": "DigitalHut turns a video into a source-backed 3D observatory: watch it, inspect the GLB, follow the podcast/source moment, and prove the niche with receipts.",
+  "nextSystemMove": "Use the lead exact shout for 3D visual proof over static pages, push only passed ladder matches, and keep market/static research rungs held until receipts lift the win ratio above 77%."
+}

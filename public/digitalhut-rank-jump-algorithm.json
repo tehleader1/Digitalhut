@@ -1,0 +1,700 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Rank Jump SEO Mapping Algorithm",
+  "status": "rank-jump-staged-live-proof-needed",
+  "purpose": "Move DigitalHut from the #236,000,000 search-universe floor toward real rank gains by prioritizing human-useful long-tail keywords, rejecting filler, and throttling publication to avoid spam behavior.",
+  "rankUniverseFloor": 236000000,
+  "guardrails": {
+    "maxBlogPostsPer24Hours": 4,
+    "emergencyBlogCeilingPer24Hours": 5,
+    "maxWatchRoutePushesPer24Hours": 8,
+    "maxCategoryRouteChangesPer24Hours": 3,
+    "minimumHumanReasoningScore": 70,
+    "minimumProofScore": 55,
+    "fillerRejectScore": 35,
+    "publishMode": "stage-first-measure-before-publication",
+    "rule": "Do not flood the site. Stage keyword clusters in FireCuda/Supabase, publish only a small proof batch, normally capped at 4 blog posts per 24 hours, then wait for Search Console, Supabase, Vercel, source/backlink, and route behavior."
+  },
+  "metricFreshnessStatus": "stale-live-refresh-needed",
+  "cloudDatabaseAlgorithm": {
+    "fireCuda": "holds the full keyword universe, rejected filler list, rewrite queue, and rank-jump history",
+    "supabase": "stores event receipts by keyword, route, search, GLB, podcast, market, backlink, and watch/blog behavior",
+    "googleCloud": "enriches allowed video metadata, source summaries, transcript/provided transcript reads, and media-intake packets",
+    "vercel": "serves only stable proof routes, public JSON packets, sitemap entries, and measured release batches",
+    "codexReasoning": "oversees whether keywords sound like real human searches and whether proof is strong enough to publish"
+  },
+  "counts": {
+    "scoredRows": 11,
+    "eligibleSmallProofBatch": 0,
+    "stagedWaitingLiveProof": 11,
+    "rewriteForHumanIntent": 0,
+    "eliminatedFiller": 0,
+    "blogProofBudgetRemaining": 4,
+    "nextBlogProofBatch": 0,
+    "freshClusterCount": 5
+  },
+  "nextBlogProofBatch": [],
+  "rewriteQueue": [],
+  "eliminatedFiller": [],
+  "stagedWaitingLiveProof": [
+    {
+      "id": "fresh-local-decision-loop",
+      "lane": "Everyday Local Decisions",
+      "source": "fresh-cluster-dump",
+      "keyword": "best lunch near me visual source map",
+      "humanReasoningScore": 100,
+      "proofScore": 94,
+      "fillerHits": [],
+      "humanHits": [
+        "near me",
+        "best",
+        "source",
+        "lunch"
+      ],
+      "verdict": "human-search-ready",
+      "currentEstimatedPosition": 236000000,
+      "targetPosition": 100000,
+      "jumpPotential": 235900000,
+      "action": "stage-only-wait-live-proof",
+      "mediaIntake": [
+        "search_run",
+        "backlink_source_open",
+        "watch_route_open"
+      ],
+      "proofRoutes": [
+        "/watch/looking-for-lunch-visual-observatory",
+        "/blog/grocery-shopping-3d-experience",
+        "/category/mundane-off-time-experience"
+      ],
+      "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+    },
+    {
+      "id": "errands-review-before-buying",
+      "lane": "Errands And Review Before Buying",
+      "source": "seo-master-list",
+      "keyword": "cheap grocery run near me visual guide",
+      "humanReasoningScore": 100,
+      "proofScore": 76,
+      "fillerHits": [],
+      "humanHits": [
+        "near me",
+        "cheap",
+        "review",
+        "guide",
+        "grocery"
+      ],
+      "verdict": "human-search-ready",
+      "currentEstimatedPosition": 242250000,
+      "targetPosition": 100000,
+      "jumpPotential": 242150000,
+      "action": "stage-only-wait-live-proof",
+      "mediaIntake": [
+        "watch route",
+        "blog proof",
+        "category lane",
+        "source/backlink proof",
+        "GLB or podcast support"
+      ],
+      "proofRoutes": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/search-intent-radar-visual-experience",
+        "blog": "/blog/search-intent-radar-visual-experience"
+      },
+      "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+    },
+    {
+      "id": "flight-travel-booking",
+      "lane": "Flight And Travel Booking",
+      "source": "seo-master-list",
+      "keyword": "cheap booking a flight ticket near me visual guide",
+      "humanReasoningScore": 100,
+      "proofScore": 76,
+      "fillerHits": [],
+      "humanHits": [
+        "near me",
+        "cheap",
+        "guide",
+        "ticket"
+      ],
+      "verdict": "human-search-ready",
+      "currentEstimatedPosition": 238500000,
+      "targetPosition": 100000,
+      "jumpPotential": 238400000,
+      "action": "stage-only-wait-live-proof",
+      "mediaIntake": [
+        "watch route",
+        "blog proof",
+        "category lane",
+        "source/backlink proof",
+        "GLB or podcast support"
+      ],
+      "proofRoutes": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/booking-flight-ticket-visual-guide",
+        "blog": "/blog/booking-flight-ticket-visual-guide"
+      },
+      "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+    },
+    {
+      "id": "lunch-local-food",
+      "lane": "Lunch And Local Food",
+      "source": "seo-master-list",
+      "keyword": "cheap looking for lunch near me visual guide",
+      "humanReasoningScore": 100,
+      "proofScore": 76,
+      "fillerHits": [],
+      "humanHits": [
+        "near me",
+        "cheap",
+        "guide",
+        "lunch"
+      ],
+      "verdict": "human-search-ready",
+      "currentEstimatedPosition": 236000000,
+      "targetPosition": 100000,
+      "jumpPotential": 235900000,
+      "action": "stage-only-wait-live-proof",
+      "mediaIntake": [
+        "watch route",
+        "blog proof",
+        "category lane",
+        "source/backlink proof",
+        "GLB or podcast support"
+      ],
+      "proofRoutes": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/looking-for-lunch-visual-observatory",
+        "blog": "/blog/looking-for-lunch-visual-observatory"
+      },
+      "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+    },
+    {
+      "id": "fresh-research-developer-loop",
+      "lane": "Research Developer Proof",
+      "source": "fresh-cluster-dump",
+      "keyword": "developer dapp analytics proof",
+      "humanReasoningScore": 92,
+      "proofScore": 94,
+      "fillerHits": [],
+      "humanHits": [
+        "proof",
+        "developer",
+        "research"
+      ],
+      "verdict": "human-search-ready",
+      "currentEstimatedPosition": 238500000,
+      "targetPosition": 100000,
+      "jumpPotential": 238400000,
+      "action": "stage-only-wait-live-proof",
+      "mediaIntake": [
+        "blog_view",
+        "source_route_open",
+        "search_intent_chip_select"
+      ],
+      "proofRoutes": [
+        "/watch/wiki-lookup-visual-research-hub",
+        "/blog/wiki-lookup-visual-research-hub",
+        "/category/system-presentation-proof"
+      ],
+      "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+    },
+    {
+      "id": "fresh-viral-first-source-loop",
+      "lane": "Viral First-Source Entertainment",
+      "source": "fresh-cluster-dump",
+      "keyword": "new viral video source map",
+      "humanReasoningScore": 92,
+      "proofScore": 94,
+      "fillerHits": [],
+      "humanHits": [
+        "source",
+        "viral",
+        "video"
+      ],
+      "verdict": "human-search-ready",
+      "currentEstimatedPosition": 237250000,
+      "targetPosition": 100000,
+      "jumpPotential": 237150000,
+      "action": "stage-only-wait-live-proof",
+      "mediaIntake": [
+        "autoplay_start",
+        "podcast_interrupt",
+        "proof_route_open"
+      ],
+      "proofRoutes": [
+        "/watch/funny-mainstream-video-explained",
+        "/blog/funny-mainstream-video-explained",
+        "/category/what-am-i-watching-observatory"
+      ],
+      "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+    },
+    {
+      "id": "funny-mainstream-video",
+      "lane": "Funny Mainstream Video",
+      "source": "seo-master-list",
+      "keyword": "funny funny video explained YouTube explained with sources",
+      "humanReasoningScore": 92,
+      "proofScore": 76,
+      "fillerHits": [],
+      "humanHits": [
+        "source",
+        "explained",
+        "video"
+      ],
+      "verdict": "human-search-ready",
+      "currentEstimatedPosition": 241000000,
+      "targetPosition": 100000,
+      "jumpPotential": 240900000,
+      "action": "stage-only-wait-live-proof",
+      "mediaIntake": [
+        "watch route",
+        "blog proof",
+        "category lane",
+        "source/backlink proof",
+        "GLB or podcast support"
+      ],
+      "proofRoutes": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/funny-mainstream-video-explained",
+        "blog": "/blog/funny-mainstream-video-explained"
+      },
+      "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+    },
+    {
+      "id": "fresh-market-company-loop",
+      "lane": "Market Company Story",
+      "source": "fresh-cluster-dump",
+      "keyword": "stock video analytics with sources",
+      "humanReasoningScore": 88,
+      "proofScore": 94,
+      "fillerHits": [],
+      "humanHits": [
+        "source",
+        "market",
+        "stock",
+        "video"
+      ],
+      "verdict": "human-search-ready",
+      "currentEstimatedPosition": 239750000,
+      "targetPosition": 100000,
+      "jumpPotential": 239650000,
+      "action": "stage-only-wait-live-proof",
+      "mediaIntake": [
+        "market_view_open",
+        "ticker_search",
+        "glb_preview_play"
+      ],
+      "proofRoutes": [
+        "/market",
+        "/watch/current-market-video-observatory",
+        "/blog/current-market-video-observatory"
+      ],
+      "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+    },
+    {
+      "id": "rideshare-commute",
+      "lane": "Rideshare And Commute",
+      "source": "seo-master-list",
+      "keyword": "safe calling an Uber near me visual trip guide",
+      "humanReasoningScore": 84,
+      "proofScore": 76,
+      "fillerHits": [],
+      "humanHits": [
+        "near me",
+        "guide"
+      ],
+      "verdict": "human-search-ready",
+      "currentEstimatedPosition": 237250000,
+      "targetPosition": 100000,
+      "jumpPotential": 237150000,
+      "action": "stage-only-wait-live-proof",
+      "mediaIntake": [
+        "watch route",
+        "blog proof",
+        "category lane",
+        "source/backlink proof",
+        "GLB or podcast support"
+      ],
+      "proofRoutes": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/calling-an-uber-visual-trip-guide",
+        "blog": "/blog/calling-an-uber-visual-trip-guide"
+      },
+      "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+    },
+    {
+      "id": "fresh-creator-3d-podcast-loop",
+      "lane": "Creator 3D Podcast Authority",
+      "source": "fresh-cluster-dump",
+      "keyword": "3d model video podcast observatory",
+      "humanReasoningScore": 64,
+      "proofScore": 94,
+      "fillerHits": [],
+      "humanHits": [
+        "video"
+      ],
+      "verdict": "stage-needs-more-human-intent",
+      "currentEstimatedPosition": 241000000,
+      "targetPosition": 5000000,
+      "jumpPotential": 236000000,
+      "action": "stage-only-wait-live-proof",
+      "mediaIntake": [
+        "glb_preview_play",
+        "podcast_source_open",
+        "search_run"
+      ],
+      "proofRoutes": [
+        "/watch/search-intent-radar-visual-experience",
+        "/blog/search-intent-radar-visual-experience",
+        "/category/3d-visual-experience"
+      ],
+      "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+    }
+  ],
+  "scoredRows": [
+    {
+      "id": "fresh-local-decision-loop",
+      "lane": "Everyday Local Decisions",
+      "source": "fresh-cluster-dump",
+      "keyword": "best lunch near me visual source map",
+      "humanReasoningScore": 100,
+      "proofScore": 94,
+      "fillerHits": [],
+      "humanHits": [
+        "near me",
+        "best",
+        "source",
+        "lunch"
+      ],
+      "verdict": "human-search-ready",
+      "currentEstimatedPosition": 236000000,
+      "targetPosition": 100000,
+      "jumpPotential": 235900000,
+      "action": "stage-only-wait-live-proof",
+      "mediaIntake": [
+        "search_run",
+        "backlink_source_open",
+        "watch_route_open"
+      ],
+      "proofRoutes": [
+        "/watch/looking-for-lunch-visual-observatory",
+        "/blog/grocery-shopping-3d-experience",
+        "/category/mundane-off-time-experience"
+      ],
+      "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+    },
+    {
+      "id": "errands-review-before-buying",
+      "lane": "Errands And Review Before Buying",
+      "source": "seo-master-list",
+      "keyword": "cheap grocery run near me visual guide",
+      "humanReasoningScore": 100,
+      "proofScore": 76,
+      "fillerHits": [],
+      "humanHits": [
+        "near me",
+        "cheap",
+        "review",
+        "guide",
+        "grocery"
+      ],
+      "verdict": "human-search-ready",
+      "currentEstimatedPosition": 242250000,
+      "targetPosition": 100000,
+      "jumpPotential": 242150000,
+      "action": "stage-only-wait-live-proof",
+      "mediaIntake": [
+        "watch route",
+        "blog proof",
+        "category lane",
+        "source/backlink proof",
+        "GLB or podcast support"
+      ],
+      "proofRoutes": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/search-intent-radar-visual-experience",
+        "blog": "/blog/search-intent-radar-visual-experience"
+      },
+      "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+    },
+    {
+      "id": "flight-travel-booking",
+      "lane": "Flight And Travel Booking",
+      "source": "seo-master-list",
+      "keyword": "cheap booking a flight ticket near me visual guide",
+      "humanReasoningScore": 100,
+      "proofScore": 76,
+      "fillerHits": [],
+      "humanHits": [
+        "near me",
+        "cheap",
+        "guide",
+        "ticket"
+      ],
+      "verdict": "human-search-ready",
+      "currentEstimatedPosition": 238500000,
+      "targetPosition": 100000,
+      "jumpPotential": 238400000,
+      "action": "stage-only-wait-live-proof",
+      "mediaIntake": [
+        "watch route",
+        "blog proof",
+        "category lane",
+        "source/backlink proof",
+        "GLB or podcast support"
+      ],
+      "proofRoutes": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/booking-flight-ticket-visual-guide",
+        "blog": "/blog/booking-flight-ticket-visual-guide"
+      },
+      "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+    },
+    {
+      "id": "lunch-local-food",
+      "lane": "Lunch And Local Food",
+      "source": "seo-master-list",
+      "keyword": "cheap looking for lunch near me visual guide",
+      "humanReasoningScore": 100,
+      "proofScore": 76,
+      "fillerHits": [],
+      "humanHits": [
+        "near me",
+        "cheap",
+        "guide",
+        "lunch"
+      ],
+      "verdict": "human-search-ready",
+      "currentEstimatedPosition": 236000000,
+      "targetPosition": 100000,
+      "jumpPotential": 235900000,
+      "action": "stage-only-wait-live-proof",
+      "mediaIntake": [
+        "watch route",
+        "blog proof",
+        "category lane",
+        "source/backlink proof",
+        "GLB or podcast support"
+      ],
+      "proofRoutes": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/looking-for-lunch-visual-observatory",
+        "blog": "/blog/looking-for-lunch-visual-observatory"
+      },
+      "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+    },
+    {
+      "id": "fresh-research-developer-loop",
+      "lane": "Research Developer Proof",
+      "source": "fresh-cluster-dump",
+      "keyword": "developer dapp analytics proof",
+      "humanReasoningScore": 92,
+      "proofScore": 94,
+      "fillerHits": [],
+      "humanHits": [
+        "proof",
+        "developer",
+        "research"
+      ],
+      "verdict": "human-search-ready",
+      "currentEstimatedPosition": 238500000,
+      "targetPosition": 100000,
+      "jumpPotential": 238400000,
+      "action": "stage-only-wait-live-proof",
+      "mediaIntake": [
+        "blog_view",
+        "source_route_open",
+        "search_intent_chip_select"
+      ],
+      "proofRoutes": [
+        "/watch/wiki-lookup-visual-research-hub",
+        "/blog/wiki-lookup-visual-research-hub",
+        "/category/system-presentation-proof"
+      ],
+      "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+    },
+    {
+      "id": "fresh-viral-first-source-loop",
+      "lane": "Viral First-Source Entertainment",
+      "source": "fresh-cluster-dump",
+      "keyword": "new viral video source map",
+      "humanReasoningScore": 92,
+      "proofScore": 94,
+      "fillerHits": [],
+      "humanHits": [
+        "source",
+        "viral",
+        "video"
+      ],
+      "verdict": "human-search-ready",
+      "currentEstimatedPosition": 237250000,
+      "targetPosition": 100000,
+      "jumpPotential": 237150000,
+      "action": "stage-only-wait-live-proof",
+      "mediaIntake": [
+        "autoplay_start",
+        "podcast_interrupt",
+        "proof_route_open"
+      ],
+      "proofRoutes": [
+        "/watch/funny-mainstream-video-explained",
+        "/blog/funny-mainstream-video-explained",
+        "/category/what-am-i-watching-observatory"
+      ],
+      "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+    },
+    {
+      "id": "funny-mainstream-video",
+      "lane": "Funny Mainstream Video",
+      "source": "seo-master-list",
+      "keyword": "funny funny video explained YouTube explained with sources",
+      "humanReasoningScore": 92,
+      "proofScore": 76,
+      "fillerHits": [],
+      "humanHits": [
+        "source",
+        "explained",
+        "video"
+      ],
+      "verdict": "human-search-ready",
+      "currentEstimatedPosition": 241000000,
+      "targetPosition": 100000,
+      "jumpPotential": 240900000,
+      "action": "stage-only-wait-live-proof",
+      "mediaIntake": [
+        "watch route",
+        "blog proof",
+        "category lane",
+        "source/backlink proof",
+        "GLB or podcast support"
+      ],
+      "proofRoutes": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/funny-mainstream-video-explained",
+        "blog": "/blog/funny-mainstream-video-explained"
+      },
+      "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+    },
+    {
+      "id": "fresh-market-company-loop",
+      "lane": "Market Company Story",
+      "source": "fresh-cluster-dump",
+      "keyword": "stock video analytics with sources",
+      "humanReasoningScore": 88,
+      "proofScore": 94,
+      "fillerHits": [],
+      "humanHits": [
+        "source",
+        "market",
+        "stock",
+        "video"
+      ],
+      "verdict": "human-search-ready",
+      "currentEstimatedPosition": 239750000,
+      "targetPosition": 100000,
+      "jumpPotential": 239650000,
+      "action": "stage-only-wait-live-proof",
+      "mediaIntake": [
+        "market_view_open",
+        "ticker_search",
+        "glb_preview_play"
+      ],
+      "proofRoutes": [
+        "/market",
+        "/watch/current-market-video-observatory",
+        "/blog/current-market-video-observatory"
+      ],
+      "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+    },
+    {
+      "id": "rideshare-commute",
+      "lane": "Rideshare And Commute",
+      "source": "seo-master-list",
+      "keyword": "safe calling an Uber near me visual trip guide",
+      "humanReasoningScore": 84,
+      "proofScore": 76,
+      "fillerHits": [],
+      "humanHits": [
+        "near me",
+        "guide"
+      ],
+      "verdict": "human-search-ready",
+      "currentEstimatedPosition": 237250000,
+      "targetPosition": 100000,
+      "jumpPotential": 237150000,
+      "action": "stage-only-wait-live-proof",
+      "mediaIntake": [
+        "watch route",
+        "blog proof",
+        "category lane",
+        "source/backlink proof",
+        "GLB or podcast support"
+      ],
+      "proofRoutes": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/calling-an-uber-visual-trip-guide",
+        "blog": "/blog/calling-an-uber-visual-trip-guide"
+      },
+      "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+    },
+    {
+      "id": "fresh-creator-3d-podcast-loop",
+      "lane": "Creator 3D Podcast Authority",
+      "source": "fresh-cluster-dump",
+      "keyword": "3d model video podcast observatory",
+      "humanReasoningScore": 64,
+      "proofScore": 94,
+      "fillerHits": [],
+      "humanHits": [
+        "video"
+      ],
+      "verdict": "stage-needs-more-human-intent",
+      "currentEstimatedPosition": 241000000,
+      "targetPosition": 5000000,
+      "jumpPotential": 236000000,
+      "action": "stage-only-wait-live-proof",
+      "mediaIntake": [
+        "glb_preview_play",
+        "podcast_source_open",
+        "search_run"
+      ],
+      "proofRoutes": [
+        "/watch/search-intent-radar-visual-experience",
+        "/blog/search-intent-radar-visual-experience",
+        "/category/3d-visual-experience"
+      ],
+      "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+    },
+    {
+      "id": "wiki-quick-research",
+      "lane": "Wiki And Quick Research",
+      "source": "seo-master-list",
+      "keyword": "beginner wiki lookup science visual research hub",
+      "humanReasoningScore": 64,
+      "proofScore": 76,
+      "fillerHits": [],
+      "humanHits": [
+        "research"
+      ],
+      "verdict": "stage-needs-more-human-intent",
+      "currentEstimatedPosition": 239750000,
+      "targetPosition": 5000000,
+      "jumpPotential": 234750000,
+      "action": "stage-only-wait-live-proof",
+      "mediaIntake": [
+        "watch route",
+        "blog proof",
+        "category lane",
+        "source/backlink proof",
+        "GLB or podcast support"
+      ],
+      "proofRoutes": {
+        "category": "/category/mundane-off-time-experience",
+        "watch": "/watch/wiki-lookup-visual-research-hub",
+        "blog": "/blog/wiki-lookup-visual-research-hub"
+      },
+      "numberOneRequirement": "indexed proof route + source backlinks + visitor behavior + same-topic video/GLB/podcast alignment"
+    }
+  ],
+  "nextSystemMove": "Do not publish new blog floods. Keep all rank-jump candidates staged, refresh live metrics/rank proof, then release at most 4 blog proof posts in 24 hours."
+}

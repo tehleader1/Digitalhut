@@ -1,0 +1,210 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Fresh SEO Cluster Dump",
+  "status": "fresh-clusters-staged-statistics-stale",
+  "purpose": "Double the backend update quality by staging fresh cluster universes while clearing repeated metric reads into a stale-read hold.",
+  "frontendLock": "No UI change. This is FireCuda, Supabase, Google Cloud, Vercel, and compare/refine backend routing only.",
+  "metricFreshnessStatus": "stale-live-refresh-needed",
+  "recentReadAction": "Clear repeated 24-hour statistics from promotion decisions; keep them visible only as last-known context.",
+  "clusterCount": 5,
+  "keywordSeedCount": 25,
+  "proofTargetCount": 15,
+  "clusters": [
+    {
+      "id": "fresh-local-decision-loop",
+      "lane": "Everyday Local Decisions",
+      "intent": "normal people choosing lunch, errands, stores, repairs, local services, or quick family plans",
+      "keywords": [
+        "best lunch near me visual source map",
+        "grocery deal visual observatory",
+        "local repair quote video proof",
+        "family weekend plan source-backed guide",
+        "nearby store review timeline"
+      ],
+      "proofTargets": [
+        "/watch/looking-for-lunch-visual-observatory",
+        "/blog/grocery-shopping-3d-experience",
+        "/category/mundane-off-time-experience"
+      ],
+      "requiredSignals": [
+        "search_run",
+        "backlink_source_open",
+        "watch_route_open"
+      ],
+      "priority": 1,
+      "status": "staged-waiting-fresh-statistics",
+      "fireCudaAction": "dump into FireCuda staging and hold public promotion until live evidence refreshes",
+      "routeAction": [
+        {
+          "route": "/watch/looking-for-lunch-visual-observatory",
+          "action": "hold-receipt-pending"
+        },
+        {
+          "route": "/blog/grocery-shopping-3d-experience",
+          "action": "hold-receipt-pending"
+        },
+        {
+          "route": "/category/mundane-off-time-experience",
+          "action": "hold-receipt-pending"
+        }
+      ]
+    },
+    {
+      "id": "fresh-viral-first-source-loop",
+      "lane": "Viral First-Source Entertainment",
+      "intent": "new video, reel, clip, or topic appears and DigitalHut can become a source-backed first observer",
+      "keywords": [
+        "new viral video source map",
+        "what is this viral clip about",
+        "funny video explained with backlinks",
+        "trending reel visual timeline",
+        "first source viral video observatory"
+      ],
+      "proofTargets": [
+        "/watch/funny-mainstream-video-explained",
+        "/blog/funny-mainstream-video-explained",
+        "/category/what-am-i-watching-observatory"
+      ],
+      "requiredSignals": [
+        "autoplay_start",
+        "podcast_interrupt",
+        "proof_route_open"
+      ],
+      "priority": 2,
+      "status": "staged-waiting-fresh-statistics",
+      "fireCudaAction": "dump into FireCuda staging and hold public promotion until live evidence refreshes",
+      "routeAction": [
+        {
+          "route": "/watch/funny-mainstream-video-explained",
+          "action": "hold-receipt-pending"
+        },
+        {
+          "route": "/blog/funny-mainstream-video-explained",
+          "action": "hold-receipt-pending"
+        },
+        {
+          "route": "/category/what-am-i-watching-observatory",
+          "action": "hold-receipt-pending"
+        }
+      ]
+    },
+    {
+      "id": "fresh-research-developer-loop",
+      "lane": "Research Developer Proof",
+      "intent": "developer, researcher, student, or analyst needs a sourced visual read instead of a loose summary",
+      "keywords": [
+        "developer dapp analytics proof",
+        "research topic 3d visual source map",
+        "AI video analysis timeline for researchers",
+        "backend analytics observatory proof",
+        "programmer research hub with source links"
+      ],
+      "proofTargets": [
+        "/watch/wiki-lookup-visual-research-hub",
+        "/blog/wiki-lookup-visual-research-hub",
+        "/category/system-presentation-proof"
+      ],
+      "requiredSignals": [
+        "blog_view",
+        "source_route_open",
+        "search_intent_chip_select"
+      ],
+      "priority": 3,
+      "status": "staged-waiting-fresh-statistics",
+      "fireCudaAction": "dump into FireCuda staging and hold public promotion until live evidence refreshes",
+      "routeAction": [
+        {
+          "route": "/watch/wiki-lookup-visual-research-hub",
+          "action": "hold-receipt-pending"
+        },
+        {
+          "route": "/blog/wiki-lookup-visual-research-hub",
+          "action": "hold-receipt-pending"
+        },
+        {
+          "route": "/category/system-presentation-proof",
+          "action": "hold-receipt-pending"
+        }
+      ]
+    },
+    {
+      "id": "fresh-market-company-loop",
+      "lane": "Market Company Story",
+      "intent": "market user searches company, ticker, video, podcast, and 3D context together",
+      "keywords": [
+        "stock video analytics with sources",
+        "company news 3d market observatory",
+        "top volume stock visual research",
+        "market podcast company source map",
+        "ticker search video timeline"
+      ],
+      "proofTargets": [
+        "/market",
+        "/watch/current-market-video-observatory",
+        "/blog/current-market-video-observatory"
+      ],
+      "requiredSignals": [
+        "market_view_open",
+        "ticker_search",
+        "glb_preview_play"
+      ],
+      "priority": 4,
+      "status": "staged-waiting-fresh-statistics",
+      "fireCudaAction": "dump into FireCuda staging and hold public promotion until live evidence refreshes",
+      "routeAction": [
+        {
+          "route": "/market",
+          "action": "hold-receipt-pending"
+        },
+        {
+          "route": "/watch/current-market-video-observatory",
+          "action": "hold-receipt-pending"
+        },
+        {
+          "route": "/blog/current-market-video-observatory",
+          "action": "hold-receipt-pending"
+        }
+      ]
+    },
+    {
+      "id": "fresh-creator-3d-podcast-loop",
+      "lane": "Creator 3D Podcast Authority",
+      "intent": "creator or viewer wants video, 3D model, and podcast/source moment to explain the same topic",
+      "keywords": [
+        "3d model video podcast observatory",
+        "creator reel source-backed 3d preview",
+        "podcast speaker moment video analytics",
+        "GLB model view for video research",
+        "interactive visual experience with podcast proof"
+      ],
+      "proofTargets": [
+        "/watch/search-intent-radar-visual-experience",
+        "/blog/search-intent-radar-visual-experience",
+        "/category/3d-visual-experience"
+      ],
+      "requiredSignals": [
+        "glb_preview_play",
+        "podcast_source_open",
+        "search_run"
+      ],
+      "priority": 5,
+      "status": "staged-waiting-fresh-statistics",
+      "fireCudaAction": "dump into FireCuda staging and hold public promotion until live evidence refreshes",
+      "routeAction": [
+        {
+          "route": "/watch/search-intent-radar-visual-experience",
+          "action": "hold-receipt-pending"
+        },
+        {
+          "route": "/blog/search-intent-radar-visual-experience",
+          "action": "hold-receipt-pending"
+        },
+        {
+          "route": "/category/3d-visual-experience",
+          "action": "hold-receipt-pending"
+        }
+      ]
+    }
+  ],
+  "nextSystemMove": "Run standby with fresh clusters staged, then wait for live Supabase/Vercel/Search Console evidence before claiming changed stats."
+}

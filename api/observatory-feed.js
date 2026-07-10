@@ -36,6 +36,10 @@ const environmentPools = {
   "DigitalHut Presentation": ["museum_of_ice_cream_singapore_-_welcome.glb", "international_space_elevator.glb", "low_poly_environments_01.glb"]
 }
 
+function envValue(key){
+  return String(process.env[key] || "").replace(/^['"]|['"]$/g, "").trim()
+}
+
 function isRejectedAssetBase(value){
   const source = String(value || "").trim()
   if(!source) return false
@@ -56,27 +60,27 @@ function isRejectedAssetBase(value){
 }
 
 function externalAssetBase(){
-  const direct = process.env.SUPABASE_FIRECUDA_ASSET_BASE || process.env.VITE_SUPABASE_FIRECUDA_ASSET_BASE || process.env.FIRECUDA_ASSET_BASE || process.env.VITE_FIRECUDA_ASSET_BASE || ""
+  const direct = envValue("SUPABASE_FIRECUDA_ASSET_BASE") || envValue("VITE_SUPABASE_FIRECUDA_ASSET_BASE") || envValue("FIRECUDA_ASSET_BASE") || envValue("VITE_FIRECUDA_ASSET_BASE")
   if(direct && !isRejectedAssetBase(direct)) return `${direct.replace(/\/+$/, "")}/`
-  const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || ""
+  const supabaseUrl = envValue("SUPABASE_URL") || envValue("VITE_SUPABASE_URL") || envValue("NEXT_PUBLIC_SUPABASE_URL")
   if(!supabaseUrl) return ""
-  const bucket = process.env.SUPABASE_ASSET_BUCKET || process.env.VITE_SUPABASE_ASSET_BUCKET || process.env.SUPABASE_STORAGE_BUCKET || "digitalhut-assets"
-  const folder = process.env.SUPABASE_FIRECUDA_FOLDER || process.env.VITE_SUPABASE_FIRECUDA_FOLDER || "firecuda-library"
+  const bucket = envValue("SUPABASE_ASSET_BUCKET") || envValue("VITE_SUPABASE_ASSET_BUCKET") || envValue("SUPABASE_STORAGE_BUCKET") || "digitalhut-assets"
+  const folder = envValue("SUPABASE_FIRECUDA_FOLDER") || envValue("VITE_SUPABASE_FIRECUDA_FOLDER") || "firecuda-library"
   const value = `${supabaseUrl.replace(/\/+$/, "")}/storage/v1/object/public/${bucket}/${folder}`
   return value ? `${value.replace(/\/+$/, "")}/` : ""
 }
 
 function assetBaseDiagnostics(){
-  const direct = process.env.SUPABASE_FIRECUDA_ASSET_BASE || process.env.VITE_SUPABASE_FIRECUDA_ASSET_BASE || process.env.FIRECUDA_ASSET_BASE || process.env.VITE_FIRECUDA_ASSET_BASE || ""
-  const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || ""
+  const direct = envValue("SUPABASE_FIRECUDA_ASSET_BASE") || envValue("VITE_SUPABASE_FIRECUDA_ASSET_BASE") || envValue("FIRECUDA_ASSET_BASE") || envValue("VITE_FIRECUDA_ASSET_BASE")
+  const supabaseUrl = envValue("SUPABASE_URL") || envValue("VITE_SUPABASE_URL") || envValue("NEXT_PUBLIC_SUPABASE_URL")
   const directRejected = Boolean(direct && isRejectedAssetBase(direct))
   return {
     mode: direct && !directRejected ? "direct-base" : supabaseUrl ? "derived-supabase-storage-base" : "local-backup-only",
     hasDirectBase: Boolean(direct),
     directBaseRejected: directRejected,
     hasSupabaseUrl: Boolean(supabaseUrl),
-    bucket: process.env.SUPABASE_ASSET_BUCKET || process.env.VITE_SUPABASE_ASSET_BUCKET || process.env.SUPABASE_STORAGE_BUCKET || "digitalhut-assets",
-    folder: process.env.SUPABASE_FIRECUDA_FOLDER || process.env.VITE_SUPABASE_FIRECUDA_FOLDER || "firecuda-library",
+    bucket: envValue("SUPABASE_ASSET_BUCKET") || envValue("VITE_SUPABASE_ASSET_BUCKET") || envValue("SUPABASE_STORAGE_BUCKET") || "digitalhut-assets",
+    folder: envValue("SUPABASE_FIRECUDA_FOLDER") || envValue("VITE_SUPABASE_FIRECUDA_FOLDER") || "firecuda-library",
     allowedFilesConfigured: allowedStorageFiles().size,
     requiredForFullProduction: [
       "SUPABASE_FIRECUDA_ASSET_BASE or VITE_SUPABASE_FIRECUDA_ASSET_BASE",
@@ -87,7 +91,7 @@ function assetBaseDiagnostics(){
 }
 
 function allowedStorageFiles(){
-  const raw = process.env.SUPABASE_FIRECUDA_AVAILABLE_FILES || process.env.VITE_SUPABASE_FIRECUDA_AVAILABLE_FILES || process.env.FIRECUDA_AVAILABLE_FILES || ""
+  const raw = envValue("SUPABASE_FIRECUDA_AVAILABLE_FILES") || envValue("VITE_SUPABASE_FIRECUDA_AVAILABLE_FILES") || envValue("FIRECUDA_AVAILABLE_FILES")
   return new Set(raw.split(",").map((item) => item.trim()).filter(Boolean))
 }
 

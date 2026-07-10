@@ -136,6 +136,16 @@ export default function InsightsPage(){
   const stack = insight?.stack || {providers: []}
   const status = insight?.status || {}
   const pixel = insight?.pixel || {}
+  const interactionTotals = pixel.interactionTotals || {}
+  const intentSelections = pixel.totalIntentSelections ?? interactionTotals.intentSelections ?? 0
+  const proofRouteOpens = pixel.totalProofRouteOpens ?? interactionTotals.proofRouteOpens ?? 0
+  const sourceOpens = pixel.totalSourceOpens ?? interactionTotals.sourceOpens ?? 0
+  const podcastInterrupts = pixel.totalPodcastInterrupts ?? interactionTotals.podcastInterrupts ?? 0
+  const marketOpens = pixel.totalMarketOpens ?? interactionTotals.marketOpens ?? 0
+  const timelineReads = pixel.totalTimelineScrubs ?? interactionTotals.timelineScrubs ?? 0
+  const seoRefinementRead = intentSelections || proofRouteOpens || sourceOpens
+    ? "Supabase is separating which visitor actions deserve FireCuda promotion, source links, and proof-route expansion."
+    : "Search and proof-route behavior is still quiet; hold broad keyword expansion until real intent appears."
 
   return <main className="dh-trust-page dh-insights-page">
     <header className="dh-trust-nav">
@@ -172,6 +182,12 @@ export default function InsightsPage(){
           ["GLB plays", pixel.totalGlbPreviewPlays ?? 0],
           ["Thumbnail renders", pixel.totalThumbnailRenderClicks ?? 0],
           ["Searches", pixel.totalSearchRuns ?? 0],
+          ["Intent selections", intentSelections],
+          ["Proof route opens", proofRouteOpens],
+          ["Source opens", sourceOpens],
+          ["Podcast interrupts", podcastInterrupts],
+          ["Market opens", marketOpens],
+          ["Timeline reads", timelineReads],
           ["Wallet clicks", pixel.totalWalletClicks ?? 0],
           ["Tier clicks", pixel.totalTierClicks ?? 0],
           ["Node clicks", pixel.totalNodeClicks ?? 0]
@@ -262,11 +278,20 @@ export default function InsightsPage(){
         <div className="dh-insight-kv"><span>Node API feeds</span><b>{localSignals.nodeApiFeeds}</b></div>
         <div className="dh-insight-kv"><span>Payment status</span><b>{localSignals.paymentStatus}</b></div>
       </article>
+
+      <article>
+        <h2>SEO Refinement Signals</h2>
+        <p>{seoRefinementRead}</p>
+        <div className="dh-insight-kv"><span>Intent selections</span><b>{intentSelections}</b></div>
+        <div className="dh-insight-kv"><span>Proof route opens</span><b>{proofRouteOpens}</b></div>
+        <div className="dh-insight-kv"><span>Source opens</span><b>{sourceOpens}</b></div>
+        <div className="dh-insight-kv"><span>Podcast / market</span><b>{podcastInterrupts} / {marketOpens}</b></div>
+      </article>
     </section>
 
     <section className="dh-insight-wide">
       <article>
-        <h2>Runner Discoveries</h2>
+        <h2>System Discoveries</h2>
         {(insight?.runnerDiscoveries || []).map((item) => <section key={item.id}>
           <span>{item.status}</span>
           <b>{item.title}</b>

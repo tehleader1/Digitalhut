@@ -1,0 +1,766 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Release Pair Submission Packet",
+  "status": "release-pair-submission-ready",
+  "purpose": "Create a narrow sitemap/Search Console queue for the strongest ranked blog/watch pairs so DigitalHut can promote proof without overpublishing weak long-tail pages.",
+  "guardrail": "Submit and inspect strongest existing proof URLs only after a stable deploy path. Keep FireCuda-held pairs out of the public push until Supabase behavior proves demand.",
+  "releasePairCount": 7,
+  "submissionTargetCount": 14,
+  "missingFromBroadQueueCount": 6,
+  "routeCoverageStatus": "pass",
+  "deployReadinessStatus": "deploy-ready-staged",
+  "aiCrawlerGuidanceStatus": "crawler-guidance-ready",
+  "submissionTargets": [
+    {
+      "priority": 100,
+      "pairSlug": "youtube-video-content-radar",
+      "url": "https://www.digitalhut.app/watch/youtube-video-content-radar",
+      "route": "/watch/youtube-video-content-radar",
+      "type": "watch-proof",
+      "launchLane": "Mainstream Streaming",
+      "existingSubmissionQueue": false,
+      "inspectionReason": "Watch proof is the first crawler target because it connects video, GLB, podcast/source, category, and backlink evidence.",
+      "keywords": [
+        "YouTube video content radar",
+        "video metadata visual analysis",
+        "AI video observatory system",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar",
+        "funny video explained DigitalHut",
+        "funny video explained Mainstream Streaming"
+      ],
+      "measurementEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play"
+      ],
+      "backlinkAnchors": [
+        "YouTube video content radar",
+        "video metadata visual analysis",
+        "Mainstream Streaming DigitalHut observatory proof",
+        "YouTube Video Content Radar: DigitalHut Observatory Proof source map"
+      ],
+      "fireCudaDecision": "ship with the next stable proof batch, then compare blog/watch behavior before expanding the cluster"
+    },
+    {
+      "priority": 95,
+      "pairSlug": "youtube-video-content-radar",
+      "url": "https://www.digitalhut.app/blog/youtube-video-content-radar",
+      "route": "/blog/youtube-video-content-radar",
+      "type": "blog-proof",
+      "launchLane": "Mainstream Streaming",
+      "existingSubmissionQueue": false,
+      "inspectionReason": "Blog proof backs the watch route with readable long-tail context, source language, and crawlable keyword proof.",
+      "keywords": [
+        "YouTube video content radar",
+        "video metadata visual analysis",
+        "AI video observatory system",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar",
+        "funny video explained DigitalHut",
+        "funny video explained Mainstream Streaming"
+      ],
+      "measurementEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play"
+      ],
+      "backlinkAnchors": [
+        "YouTube video content radar",
+        "video metadata visual analysis",
+        "Mainstream Streaming DigitalHut observatory proof",
+        "YouTube Video Content Radar: DigitalHut Observatory Proof source map"
+      ],
+      "fireCudaDecision": "ship with the next stable proof batch, then compare blog/watch behavior before expanding the cluster"
+    },
+    {
+      "priority": 99,
+      "pairSlug": "search-intent-radar-visual-experience",
+      "url": "https://www.digitalhut.app/watch/search-intent-radar-visual-experience",
+      "route": "/watch/search-intent-radar-visual-experience",
+      "type": "watch-proof",
+      "launchLane": "Automatic System Presentation",
+      "existingSubmissionQueue": true,
+      "inspectionReason": "Watch proof is the first crawler target because it connects video, GLB, podcast/source, category, and backlink evidence.",
+      "keywords": [
+        "search intent radar visual experience",
+        "visual search intent chips",
+        "same category video search timing",
+        "YouTube alternative full-view episode with 3D model view",
+        "full-view episode with podcast moments and live analytics",
+        "DigitalHut observatory experience",
+        "YouTube content radar with GLB proof",
+        "automatic 3D autoplay system"
+      ],
+      "measurementEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "market_view_open",
+        "search_intent_chip_select"
+      ],
+      "backlinkAnchors": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "Automatic System Presentation DigitalHut observatory proof",
+        "Search Intent Radar Visual Experience: DigitalHut Proof source map"
+      ],
+      "fireCudaDecision": "ship with the next stable proof batch, then compare blog/watch behavior before expanding the cluster"
+    },
+    {
+      "priority": 94,
+      "pairSlug": "search-intent-radar-visual-experience",
+      "url": "https://www.digitalhut.app/blog/search-intent-radar-visual-experience",
+      "route": "/blog/search-intent-radar-visual-experience",
+      "type": "blog-proof",
+      "launchLane": "Automatic System Presentation",
+      "existingSubmissionQueue": true,
+      "inspectionReason": "Blog proof backs the watch route with readable long-tail context, source language, and crawlable keyword proof.",
+      "keywords": [
+        "search intent radar visual experience",
+        "visual search intent chips",
+        "same category video search timing",
+        "YouTube alternative full-view episode with 3D model view",
+        "full-view episode with podcast moments and live analytics",
+        "DigitalHut observatory experience",
+        "YouTube content radar with GLB proof",
+        "automatic 3D autoplay system"
+      ],
+      "measurementEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "market_view_open",
+        "search_intent_chip_select"
+      ],
+      "backlinkAnchors": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "Automatic System Presentation DigitalHut observatory proof",
+        "Search Intent Radar Visual Experience: DigitalHut Proof source map"
+      ],
+      "fireCudaDecision": "ship with the next stable proof batch, then compare blog/watch behavior before expanding the cluster"
+    },
+    {
+      "priority": 98,
+      "pairSlug": "looking-for-lunch-visual-observatory",
+      "url": "https://www.digitalhut.app/watch/looking-for-lunch-visual-observatory",
+      "route": "/watch/looking-for-lunch-visual-observatory",
+      "type": "watch-proof",
+      "launchLane": "Lunch And Local Food",
+      "existingSubmissionQueue": true,
+      "inspectionReason": "Watch proof is the first crawler target because it connects video, GLB, podcast/source, category, and backlink evidence.",
+      "keywords": [
+        "restaurants near me visual guide",
+        "food near me video map",
+        "lunch near me source-backed review",
+        "best restaurants near me 3D preview",
+        "menu near me visual observatory",
+        "food open now watch route",
+        "looking for lunch near me visual guide",
+        "what should I eat today visual experience"
+      ],
+      "measurementEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "backlinkAnchors": [
+        "restaurants near me visual guide",
+        "food near me video map",
+        "Lunch And Local Food DigitalHut observatory proof",
+        "restaurants near me visual guide source map"
+      ],
+      "fireCudaDecision": "ship with the next stable proof batch, then compare blog/watch behavior before expanding the cluster"
+    },
+    {
+      "priority": 93,
+      "pairSlug": "looking-for-lunch-visual-observatory",
+      "url": "https://www.digitalhut.app/blog/looking-for-lunch-visual-observatory",
+      "route": "/blog/looking-for-lunch-visual-observatory",
+      "type": "blog-proof",
+      "launchLane": "Lunch And Local Food",
+      "existingSubmissionQueue": true,
+      "inspectionReason": "Blog proof backs the watch route with readable long-tail context, source language, and crawlable keyword proof.",
+      "keywords": [
+        "restaurants near me visual guide",
+        "food near me video map",
+        "lunch near me source-backed review",
+        "best restaurants near me 3D preview",
+        "menu near me visual observatory",
+        "food open now watch route",
+        "looking for lunch near me visual guide",
+        "what should I eat today visual experience"
+      ],
+      "measurementEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "backlinkAnchors": [
+        "restaurants near me visual guide",
+        "food near me video map",
+        "Lunch And Local Food DigitalHut observatory proof",
+        "restaurants near me visual guide source map"
+      ],
+      "fireCudaDecision": "ship with the next stable proof batch, then compare blog/watch behavior before expanding the cluster"
+    },
+    {
+      "priority": 97,
+      "pairSlug": "calling-an-uber-visual-trip-guide",
+      "url": "https://www.digitalhut.app/watch/calling-an-uber-visual-trip-guide",
+      "route": "/watch/calling-an-uber-visual-trip-guide",
+      "type": "watch-proof",
+      "launchLane": "Rideshare And Commute",
+      "existingSubmissionQueue": true,
+      "inspectionReason": "Watch proof is the first crawler target because it connects video, GLB, podcast/source, category, and backlink evidence.",
+      "keywords": [
+        "Uber pickup visual guide",
+        "airport Uber pickup source map",
+        "rideshare pickup location explained",
+        "ride to airport visual route",
+        "taxi near me 3D pickup view",
+        "rideshare price spike explained",
+        "calling an Uber visual trip guide",
+        "airport Uber pickup visual guide"
+      ],
+      "measurementEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "backlinkAnchors": [
+        "Uber pickup visual guide",
+        "airport Uber pickup source map",
+        "Rideshare And Commute DigitalHut observatory proof",
+        "Uber pickup visual guide source map"
+      ],
+      "fireCudaDecision": "ship with the next stable proof batch, then compare blog/watch behavior before expanding the cluster"
+    },
+    {
+      "priority": 92,
+      "pairSlug": "calling-an-uber-visual-trip-guide",
+      "url": "https://www.digitalhut.app/blog/calling-an-uber-visual-trip-guide",
+      "route": "/blog/calling-an-uber-visual-trip-guide",
+      "type": "blog-proof",
+      "launchLane": "Rideshare And Commute",
+      "existingSubmissionQueue": true,
+      "inspectionReason": "Blog proof backs the watch route with readable long-tail context, source language, and crawlable keyword proof.",
+      "keywords": [
+        "Uber pickup visual guide",
+        "airport Uber pickup source map",
+        "rideshare pickup location explained",
+        "ride to airport visual route",
+        "taxi near me 3D pickup view",
+        "rideshare price spike explained",
+        "calling an Uber visual trip guide",
+        "airport Uber pickup visual guide"
+      ],
+      "measurementEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "backlinkAnchors": [
+        "Uber pickup visual guide",
+        "airport Uber pickup source map",
+        "Rideshare And Commute DigitalHut observatory proof",
+        "Uber pickup visual guide source map"
+      ],
+      "fireCudaDecision": "ship with the next stable proof batch, then compare blog/watch behavior before expanding the cluster"
+    },
+    {
+      "priority": 96,
+      "pairSlug": "current-market-video-observatory",
+      "url": "https://www.digitalhut.app/watch/current-market-video-observatory",
+      "route": "/watch/current-market-video-observatory",
+      "type": "watch-proof",
+      "launchLane": "Businesses",
+      "existingSubmissionQueue": false,
+      "inspectionReason": "Watch proof is the first crawler target because it connects video, GLB, podcast/source, category, and backlink evidence.",
+      "keywords": [
+        "current market video observatory",
+        "stock market visual analysis 3D",
+        "AI stock video research dashboard",
+        "company video research source map",
+        "earnings video observatory",
+        "stock market visual analysis DigitalHut",
+        "stock market visual analysis Businesses",
+        "company video research DigitalHut"
+      ],
+      "measurementEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "market_view_open",
+        "search_intent_chip_select"
+      ],
+      "backlinkAnchors": [
+        "current market video observatory",
+        "stock market visual analysis 3D",
+        "Businesses DigitalHut observatory proof",
+        "Current Market Video Observatory: DigitalHut Proof source map"
+      ],
+      "fireCudaDecision": "ship with the next stable proof batch, then compare blog/watch behavior before expanding the cluster"
+    },
+    {
+      "priority": 91,
+      "pairSlug": "current-market-video-observatory",
+      "url": "https://www.digitalhut.app/blog/current-market-video-observatory",
+      "route": "/blog/current-market-video-observatory",
+      "type": "blog-proof",
+      "launchLane": "Businesses",
+      "existingSubmissionQueue": false,
+      "inspectionReason": "Blog proof backs the watch route with readable long-tail context, source language, and crawlable keyword proof.",
+      "keywords": [
+        "current market video observatory",
+        "stock market visual analysis 3D",
+        "AI stock video research dashboard",
+        "company video research source map",
+        "earnings video observatory",
+        "stock market visual analysis DigitalHut",
+        "stock market visual analysis Businesses",
+        "company video research DigitalHut"
+      ],
+      "measurementEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "market_view_open",
+        "search_intent_chip_select"
+      ],
+      "backlinkAnchors": [
+        "current market video observatory",
+        "stock market visual analysis 3D",
+        "Businesses DigitalHut observatory proof",
+        "Current Market Video Observatory: DigitalHut Proof source map"
+      ],
+      "fireCudaDecision": "ship with the next stable proof batch, then compare blog/watch behavior before expanding the cluster"
+    },
+    {
+      "priority": 95,
+      "pairSlug": "home-project-3d-visual-planner",
+      "url": "https://www.digitalhut.app/watch/home-project-3d-visual-planner",
+      "route": "/watch/home-project-3d-visual-planner",
+      "type": "watch-proof",
+      "launchLane": "Mainstream Streaming",
+      "existingSubmissionQueue": false,
+      "inspectionReason": "Watch proof is the first crawler target because it connects video, GLB, podcast/source, category, and backlink evidence.",
+      "keywords": [
+        "home project 3D visual planner",
+        "home remodel 3D visualization",
+        "AI guided 3D room presentation",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar",
+        "funny video explained DigitalHut",
+        "funny video explained Mainstream Streaming"
+      ],
+      "measurementEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "backlinkAnchors": [
+        "home project 3D visual planner",
+        "home remodel 3D visualization",
+        "Mainstream Streaming DigitalHut observatory proof",
+        "Home Project 3D Visual Planner: DigitalHut Observatory Proof source map"
+      ],
+      "fireCudaDecision": "ship with the next stable proof batch, then compare blog/watch behavior before expanding the cluster"
+    },
+    {
+      "priority": 90,
+      "pairSlug": "home-project-3d-visual-planner",
+      "url": "https://www.digitalhut.app/blog/home-project-3d-visual-planner",
+      "route": "/blog/home-project-3d-visual-planner",
+      "type": "blog-proof",
+      "launchLane": "Mainstream Streaming",
+      "existingSubmissionQueue": false,
+      "inspectionReason": "Blog proof backs the watch route with readable long-tail context, source language, and crawlable keyword proof.",
+      "keywords": [
+        "home project 3D visual planner",
+        "home remodel 3D visualization",
+        "AI guided 3D room presentation",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar",
+        "funny video explained DigitalHut",
+        "funny video explained Mainstream Streaming"
+      ],
+      "measurementEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "backlinkAnchors": [
+        "home project 3D visual planner",
+        "home remodel 3D visualization",
+        "Mainstream Streaming DigitalHut observatory proof",
+        "Home Project 3D Visual Planner: DigitalHut Observatory Proof source map"
+      ],
+      "fireCudaDecision": "ship with the next stable proof batch, then compare blog/watch behavior before expanding the cluster"
+    },
+    {
+      "priority": 94,
+      "pairSlug": "grocery-shopping-3d-experience",
+      "url": "https://www.digitalhut.app/watch/grocery-shopping-3d-experience",
+      "route": "/watch/grocery-shopping-3d-experience",
+      "type": "watch-proof",
+      "launchLane": "Errands And Review Before Buying",
+      "existingSubmissionQueue": true,
+      "inspectionReason": "Watch proof is the first crawler target because it connects video, GLB, podcast/source, category, and backlink evidence.",
+      "keywords": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "best deals near me visual guide",
+        "grocery near me source proof",
+        "pharmacy near me visual guide",
+        "should I buy this product video proof",
+        "grocery shopping 3D experience",
+        "funny grocery reel"
+      ],
+      "measurementEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "backlinkAnchors": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "Errands And Review Before Buying DigitalHut observatory proof",
+        "product reviews visual summary source map"
+      ],
+      "fireCudaDecision": "ship with the next stable proof batch, then compare blog/watch behavior before expanding the cluster"
+    },
+    {
+      "priority": 89,
+      "pairSlug": "grocery-shopping-3d-experience",
+      "url": "https://www.digitalhut.app/blog/grocery-shopping-3d-experience",
+      "route": "/blog/grocery-shopping-3d-experience",
+      "type": "blog-proof",
+      "launchLane": "Errands And Review Before Buying",
+      "existingSubmissionQueue": true,
+      "inspectionReason": "Blog proof backs the watch route with readable long-tail context, source language, and crawlable keyword proof.",
+      "keywords": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "best deals near me visual guide",
+        "grocery near me source proof",
+        "pharmacy near me visual guide",
+        "should I buy this product video proof",
+        "grocery shopping 3D experience",
+        "funny grocery reel"
+      ],
+      "measurementEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "backlinkAnchors": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "Errands And Review Before Buying DigitalHut observatory proof",
+        "product reviews visual summary source map"
+      ],
+      "fireCudaDecision": "ship with the next stable proof batch, then compare blog/watch behavior before expanding the cluster"
+    }
+  ],
+  "missingFromBroadQueue": [
+    {
+      "priority": 100,
+      "pairSlug": "youtube-video-content-radar",
+      "url": "https://www.digitalhut.app/watch/youtube-video-content-radar",
+      "route": "/watch/youtube-video-content-radar",
+      "type": "watch-proof",
+      "launchLane": "Mainstream Streaming",
+      "existingSubmissionQueue": false,
+      "inspectionReason": "Watch proof is the first crawler target because it connects video, GLB, podcast/source, category, and backlink evidence.",
+      "keywords": [
+        "YouTube video content radar",
+        "video metadata visual analysis",
+        "AI video observatory system",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar",
+        "funny video explained DigitalHut",
+        "funny video explained Mainstream Streaming"
+      ],
+      "measurementEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play"
+      ],
+      "backlinkAnchors": [
+        "YouTube video content radar",
+        "video metadata visual analysis",
+        "Mainstream Streaming DigitalHut observatory proof",
+        "YouTube Video Content Radar: DigitalHut Observatory Proof source map"
+      ],
+      "fireCudaDecision": "ship with the next stable proof batch, then compare blog/watch behavior before expanding the cluster"
+    },
+    {
+      "priority": 95,
+      "pairSlug": "youtube-video-content-radar",
+      "url": "https://www.digitalhut.app/blog/youtube-video-content-radar",
+      "route": "/blog/youtube-video-content-radar",
+      "type": "blog-proof",
+      "launchLane": "Mainstream Streaming",
+      "existingSubmissionQueue": false,
+      "inspectionReason": "Blog proof backs the watch route with readable long-tail context, source language, and crawlable keyword proof.",
+      "keywords": [
+        "YouTube video content radar",
+        "video metadata visual analysis",
+        "AI video observatory system",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar",
+        "funny video explained DigitalHut",
+        "funny video explained Mainstream Streaming"
+      ],
+      "measurementEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play"
+      ],
+      "backlinkAnchors": [
+        "YouTube video content radar",
+        "video metadata visual analysis",
+        "Mainstream Streaming DigitalHut observatory proof",
+        "YouTube Video Content Radar: DigitalHut Observatory Proof source map"
+      ],
+      "fireCudaDecision": "ship with the next stable proof batch, then compare blog/watch behavior before expanding the cluster"
+    },
+    {
+      "priority": 96,
+      "pairSlug": "current-market-video-observatory",
+      "url": "https://www.digitalhut.app/watch/current-market-video-observatory",
+      "route": "/watch/current-market-video-observatory",
+      "type": "watch-proof",
+      "launchLane": "Businesses",
+      "existingSubmissionQueue": false,
+      "inspectionReason": "Watch proof is the first crawler target because it connects video, GLB, podcast/source, category, and backlink evidence.",
+      "keywords": [
+        "current market video observatory",
+        "stock market visual analysis 3D",
+        "AI stock video research dashboard",
+        "company video research source map",
+        "earnings video observatory",
+        "stock market visual analysis DigitalHut",
+        "stock market visual analysis Businesses",
+        "company video research DigitalHut"
+      ],
+      "measurementEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "market_view_open",
+        "search_intent_chip_select"
+      ],
+      "backlinkAnchors": [
+        "current market video observatory",
+        "stock market visual analysis 3D",
+        "Businesses DigitalHut observatory proof",
+        "Current Market Video Observatory: DigitalHut Proof source map"
+      ],
+      "fireCudaDecision": "ship with the next stable proof batch, then compare blog/watch behavior before expanding the cluster"
+    },
+    {
+      "priority": 91,
+      "pairSlug": "current-market-video-observatory",
+      "url": "https://www.digitalhut.app/blog/current-market-video-observatory",
+      "route": "/blog/current-market-video-observatory",
+      "type": "blog-proof",
+      "launchLane": "Businesses",
+      "existingSubmissionQueue": false,
+      "inspectionReason": "Blog proof backs the watch route with readable long-tail context, source language, and crawlable keyword proof.",
+      "keywords": [
+        "current market video observatory",
+        "stock market visual analysis 3D",
+        "AI stock video research dashboard",
+        "company video research source map",
+        "earnings video observatory",
+        "stock market visual analysis DigitalHut",
+        "stock market visual analysis Businesses",
+        "company video research DigitalHut"
+      ],
+      "measurementEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "market_view_open",
+        "search_intent_chip_select"
+      ],
+      "backlinkAnchors": [
+        "current market video observatory",
+        "stock market visual analysis 3D",
+        "Businesses DigitalHut observatory proof",
+        "Current Market Video Observatory: DigitalHut Proof source map"
+      ],
+      "fireCudaDecision": "ship with the next stable proof batch, then compare blog/watch behavior before expanding the cluster"
+    },
+    {
+      "priority": 95,
+      "pairSlug": "home-project-3d-visual-planner",
+      "url": "https://www.digitalhut.app/watch/home-project-3d-visual-planner",
+      "route": "/watch/home-project-3d-visual-planner",
+      "type": "watch-proof",
+      "launchLane": "Mainstream Streaming",
+      "existingSubmissionQueue": false,
+      "inspectionReason": "Watch proof is the first crawler target because it connects video, GLB, podcast/source, category, and backlink evidence.",
+      "keywords": [
+        "home project 3D visual planner",
+        "home remodel 3D visualization",
+        "AI guided 3D room presentation",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar",
+        "funny video explained DigitalHut",
+        "funny video explained Mainstream Streaming"
+      ],
+      "measurementEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "backlinkAnchors": [
+        "home project 3D visual planner",
+        "home remodel 3D visualization",
+        "Mainstream Streaming DigitalHut observatory proof",
+        "Home Project 3D Visual Planner: DigitalHut Observatory Proof source map"
+      ],
+      "fireCudaDecision": "ship with the next stable proof batch, then compare blog/watch behavior before expanding the cluster"
+    },
+    {
+      "priority": 90,
+      "pairSlug": "home-project-3d-visual-planner",
+      "url": "https://www.digitalhut.app/blog/home-project-3d-visual-planner",
+      "route": "/blog/home-project-3d-visual-planner",
+      "type": "blog-proof",
+      "launchLane": "Mainstream Streaming",
+      "existingSubmissionQueue": false,
+      "inspectionReason": "Blog proof backs the watch route with readable long-tail context, source language, and crawlable keyword proof.",
+      "keywords": [
+        "home project 3D visual planner",
+        "home remodel 3D visualization",
+        "AI guided 3D room presentation",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar",
+        "funny video explained DigitalHut",
+        "funny video explained Mainstream Streaming"
+      ],
+      "measurementEvents": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "backlinkAnchors": [
+        "home project 3D visual planner",
+        "home remodel 3D visualization",
+        "Mainstream Streaming DigitalHut observatory proof",
+        "Home Project 3D Visual Planner: DigitalHut Observatory Proof source map"
+      ],
+      "fireCudaDecision": "ship with the next stable proof batch, then compare blog/watch behavior before expanding the cluster"
+    }
+  ],
+  "searchConsoleSteps": [
+    "Submit sitemap after the stable Vercel build/deploy path is confirmed.",
+    "Inspect watch URLs first because they prove the DigitalHut presentation system.",
+    "Inspect matching blog URLs second because they carry readable long-tail proof.",
+    "Compare Supabase route_refinement after traffic lands before promoting supporting keywords.",
+    "Hold non-release pairs in FireCuda until route behavior shows a second useful action."
+  ],
+  "compareRules": [
+    "Promote a pair when watch route and blog route both earn more than page_view.",
+    "Rewrite metadata when crawler proof exists but source/backlink/GLB behavior is quiet.",
+    "Keep the broad submission queue, but use this packet as the first tight proof pass.",
+    "Do not submit FireCuda-held pairs as if they are winners."
+  ],
+  "nextFireCudaMove": "After stable deploy and Search Console inspection, compare the 12 release-pair URLs against Supabase behavior and promote only the pairs with proof/source/GLB/podcast/search movement.",
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  }
+}

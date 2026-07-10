@@ -1,0 +1,31 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Metric Freshness Gate",
+  "status": "stale-live-refresh-needed",
+  "capturedAt": "unknown",
+  "ageHours": null,
+  "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+  "liveRefreshStatus": "not-live-refreshed-this-cycle",
+  "stale": true,
+  "guardrail": "Do not present repeated production numbers as new statistics. Treat them as last-known until Supabase, Vercel analytics, or another approved live source refreshes them.",
+  "currentRead": "The same production metric snapshot is being repeated. Keep it as last-known evidence, but clear it from promotion decisions until a live Supabase/Vercel refresh is captured.",
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  },
+  "requiredRefreshSources": [
+    "Supabase event rollup by page_view, search_run, autoplay_start, glb_preview_play, podcast_interrupt, market_view_open, blog_view",
+    "Vercel route/runtime read for deploy proof and public route stability",
+    "Search Console or crawler proof for watch/blog/category route discovery"
+  ],
+  "nextSystemMove": "Move current numbers into stale-read hold, stage fresh clusters, and wait for live measurement proof before promoting or rewriting rank lanes."
+}

@@ -1,0 +1,377 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Deploy Proof Batch Packet",
+  "status": "deploy-batch-ready",
+  "purpose": "Turn the unified proof-route board into a practical release queue: top proof routes, Search Console inspection targets, sitemap evidence, and build/deploy gate status.",
+  "currentRead": "Build tooling is present and the proof route batch can move toward deployment.",
+  "guardrail": "Do not deploy just because the packet exists. Deploy only after a meaningful stable batch and a passing build path.",
+  "buildGate": {
+    "status": "pass",
+    "read": "local Vite build binary present",
+    "nextAction": "Deploy only after a meaningful stable batch and final route/metadata check."
+  },
+  "sitemapProof": {
+    "coverageStatus": "pass",
+    "sitemapProofRoutes": 124,
+    "metadataRoutes": 124,
+    "missingMetadataRoutes": 0,
+    "extraMetadataRoutes": 0
+  },
+  "releaseRouteCount": 8,
+  "pushNextCount": 4,
+  "watchPairCount": 4,
+  "releaseRoutes": [
+    {
+      "order": 1,
+      "route": "/watch/looking-for-lunch-visual-observatory",
+      "canonical": "https://www.digitalhut.app/watch/looking-for-lunch-visual-observatory",
+      "type": "watch-proof",
+      "title": "restaurants near me visual guide | DigitalHut Watch Proof",
+      "score": 228,
+      "promotionStage": "push-next-deploy-proof",
+      "launchLane": "Lunch And Local Food",
+      "packets": [
+        "seo-submission",
+        "search-intent"
+      ],
+      "keywords": [
+        "restaurants near me visual guide",
+        "food near me video map",
+        "lunch near me source-backed review",
+        "best restaurants near me 3D preview",
+        "menu near me visual observatory",
+        "food open now watch route",
+        "funny looking for lunch tourist district lunch break 3D preview",
+        "local what should I eat work district after work watch route"
+      ],
+      "relatedRoutes": [
+        "/blog/looking-for-lunch-visual-observatory",
+        "/category/mundane-off-time-experience"
+      ],
+      "submissionAction": "Ready for deploy batch and Search Console URL inspection queue."
+    },
+    {
+      "order": 2,
+      "route": "/watch/calling-an-uber-visual-trip-guide",
+      "canonical": "https://www.digitalhut.app/watch/calling-an-uber-visual-trip-guide",
+      "type": "watch-proof",
+      "title": "Uber pickup visual guide | DigitalHut Watch Proof",
+      "score": 144,
+      "promotionStage": "push-next-deploy-proof",
+      "launchLane": "Rideshare And Commute",
+      "packets": [
+        "seo-submission",
+        "search-intent"
+      ],
+      "keywords": [
+        "Uber pickup visual guide",
+        "airport Uber pickup source map",
+        "rideshare pickup location explained",
+        "ride to airport visual route",
+        "taxi near me 3D pickup view",
+        "rideshare price spike explained",
+        "fast calling an Uber train station after work watch route",
+        "open now rideshare pickup suburb airport arrival source map"
+      ],
+      "relatedRoutes": [
+        "/blog/calling-an-uber-visual-trip-guide",
+        "/category/mundane-off-time-experience"
+      ],
+      "submissionAction": "Ready for deploy batch and Search Console URL inspection queue."
+    },
+    {
+      "order": 3,
+      "route": "/watch/current-market-video-observatory",
+      "canonical": "https://www.digitalhut.app/watch/current-market-video-observatory",
+      "type": "watch-proof",
+      "title": "Current Market Video Observatory: DigitalHut Proof | DigitalHut Watch Proof",
+      "score": 122,
+      "promotionStage": "push-next-deploy-proof",
+      "launchLane": "Businesses",
+      "packets": [
+        "market",
+        "podcast-source",
+        "glb-source"
+      ],
+      "keywords": [
+        "current market video observatory",
+        "stock market visual analysis 3D",
+        "AI stock video research dashboard",
+        "company video research source map",
+        "earnings video observatory",
+        "stock market visual analysis DigitalHut",
+        "stock market visual analysis Businesses",
+        "company video research DigitalHut"
+      ],
+      "relatedRoutes": [
+        "/blog/current-market-video-observatory",
+        "/category/businesses"
+      ],
+      "submissionAction": "Ready for deploy batch and Search Console URL inspection queue."
+    },
+    {
+      "order": 4,
+      "route": "/watch/youtube-video-content-radar",
+      "canonical": "https://www.digitalhut.app/watch/youtube-video-content-radar",
+      "type": "watch-proof",
+      "title": "YouTube Video Content Radar: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "score": 114,
+      "promotionStage": "push-next-deploy-proof",
+      "launchLane": "Mainstream Streaming",
+      "packets": [
+        "podcast-source",
+        "product-identity"
+      ],
+      "keywords": [
+        "YouTube video content radar",
+        "video metadata visual analysis",
+        "AI video observatory system",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar",
+        "funny video explained DigitalHut",
+        "funny video explained Mainstream Streaming"
+      ],
+      "relatedRoutes": [
+        "/blog/youtube-video-content-radar",
+        "/category/mainstream-streaming"
+      ],
+      "submissionAction": "Ready for deploy batch and Search Console URL inspection queue."
+    },
+    {
+      "order": 5,
+      "route": "/watch/home-project-3d-visual-planner",
+      "canonical": "https://www.digitalhut.app/watch/home-project-3d-visual-planner",
+      "type": "watch-proof",
+      "title": "Home Project 3D Visual Planner: DigitalHut Observatory Proof | DigitalHut Watch Proof",
+      "score": 82,
+      "promotionStage": "submit-watch-blog-pair",
+      "launchLane": "Mainstream Streaming",
+      "packets": [
+        "podcast-source",
+        "glb-source"
+      ],
+      "keywords": [
+        "home project 3D visual planner",
+        "home remodel 3D visualization",
+        "AI guided 3D room presentation",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources",
+        "what am I watching viral video radar",
+        "funny video explained DigitalHut",
+        "funny video explained Mainstream Streaming"
+      ],
+      "relatedRoutes": [
+        "/blog/home-project-3d-visual-planner",
+        "/category/mainstream-streaming"
+      ],
+      "submissionAction": "Ready for deploy batch and Search Console URL inspection queue."
+    },
+    {
+      "order": 6,
+      "route": "/watch/grocery-shopping-3d-experience",
+      "canonical": "https://www.digitalhut.app/watch/grocery-shopping-3d-experience",
+      "type": "watch-proof",
+      "title": "product reviews visual summary | DigitalHut Watch Proof",
+      "score": 66,
+      "promotionStage": "submit-watch-blog-pair",
+      "launchLane": "Errands And Review Before Buying",
+      "packets": [
+        "seo-submission",
+        "glb-source"
+      ],
+      "keywords": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "best deals near me visual guide",
+        "grocery near me source proof",
+        "pharmacy near me visual guide",
+        "should I buy this product video proof",
+        "grocery shopping 3D experience",
+        "funny grocery reel"
+      ],
+      "relatedRoutes": [
+        "/blog/grocery-shopping-3d-experience",
+        "/category/mainstream-streaming"
+      ],
+      "submissionAction": "Ready for deploy batch and Search Console URL inspection queue."
+    },
+    {
+      "order": 7,
+      "route": "/watch/search-intent-radar-visual-experience",
+      "canonical": "https://www.digitalhut.app/watch/search-intent-radar-visual-experience",
+      "type": "watch-proof",
+      "title": "Search Intent Radar Visual Experience: DigitalHut Proof | DigitalHut Watch Proof",
+      "score": 64,
+      "promotionStage": "submit-watch-blog-pair",
+      "launchLane": "Automatic System Presentation",
+      "packets": [
+        "seo-submission",
+        "podcast-source"
+      ],
+      "keywords": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "best deals near me visual guide",
+        "grocery near me source proof",
+        "pharmacy near me visual guide",
+        "should I buy this product video proof",
+        "search intent radar visual experience",
+        "visual search intent chips"
+      ],
+      "relatedRoutes": [
+        "/blog/search-intent-radar-visual-experience",
+        "/category/automatic-system-presentation"
+      ],
+      "submissionAction": "Ready for deploy batch and Search Console URL inspection queue."
+    },
+    {
+      "order": 8,
+      "route": "/blog/grocery-shopping-3d-experience",
+      "canonical": "https://www.digitalhut.app/blog/grocery-shopping-3d-experience",
+      "type": "blog-proof",
+      "title": "product reviews visual summary | DigitalHut Proof",
+      "score": 61,
+      "promotionStage": "submit-watch-blog-pair",
+      "launchLane": "Errands And Review Before Buying",
+      "packets": [
+        "seo-submission",
+        "glb-source"
+      ],
+      "keywords": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "best deals near me visual guide",
+        "grocery near me source proof",
+        "pharmacy near me visual guide",
+        "should I buy this product video proof",
+        "grocery shopping 3D experience",
+        "funny grocery reel"
+      ],
+      "relatedRoutes": [
+        "/watch/grocery-shopping-3d-experience",
+        "/category/mainstream-streaming"
+      ],
+      "submissionAction": "Ready for deploy batch and Search Console URL inspection queue."
+    }
+  ],
+  "searchConsoleQueue": [
+    {
+      "url": "https://www.digitalhut.app/watch/looking-for-lunch-visual-observatory",
+      "route": "/watch/looking-for-lunch-visual-observatory",
+      "inspectionReason": "push-next proof route from unified rank board",
+      "targetQueries": [
+        "restaurants near me visual guide",
+        "food near me video map",
+        "lunch near me source-backed review",
+        "best restaurants near me 3D preview",
+        "menu near me visual observatory"
+      ]
+    },
+    {
+      "url": "https://www.digitalhut.app/watch/calling-an-uber-visual-trip-guide",
+      "route": "/watch/calling-an-uber-visual-trip-guide",
+      "inspectionReason": "push-next proof route from unified rank board",
+      "targetQueries": [
+        "Uber pickup visual guide",
+        "airport Uber pickup source map",
+        "rideshare pickup location explained",
+        "ride to airport visual route",
+        "taxi near me 3D pickup view"
+      ]
+    },
+    {
+      "url": "https://www.digitalhut.app/watch/current-market-video-observatory",
+      "route": "/watch/current-market-video-observatory",
+      "inspectionReason": "push-next proof route from unified rank board",
+      "targetQueries": [
+        "current market video observatory",
+        "stock market visual analysis 3D",
+        "AI stock video research dashboard",
+        "company video research source map",
+        "earnings video observatory"
+      ]
+    },
+    {
+      "url": "https://www.digitalhut.app/watch/youtube-video-content-radar",
+      "route": "/watch/youtube-video-content-radar",
+      "inspectionReason": "push-next proof route from unified rank board",
+      "targetQueries": [
+        "YouTube video content radar",
+        "video metadata visual analysis",
+        "AI video observatory system",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources"
+      ]
+    },
+    {
+      "url": "https://www.digitalhut.app/watch/home-project-3d-visual-planner",
+      "route": "/watch/home-project-3d-visual-planner",
+      "inspectionReason": "watch/blog pair support route from unified rank board",
+      "targetQueries": [
+        "home project 3D visual planner",
+        "home remodel 3D visualization",
+        "AI guided 3D room presentation",
+        "funny grocery reel source map",
+        "TikTok clip explained with sources"
+      ]
+    },
+    {
+      "url": "https://www.digitalhut.app/watch/grocery-shopping-3d-experience",
+      "route": "/watch/grocery-shopping-3d-experience",
+      "inspectionReason": "watch/blog pair support route from unified rank board",
+      "targetQueries": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "best deals near me visual guide",
+        "grocery near me source proof",
+        "pharmacy near me visual guide"
+      ]
+    },
+    {
+      "url": "https://www.digitalhut.app/watch/search-intent-radar-visual-experience",
+      "route": "/watch/search-intent-radar-visual-experience",
+      "inspectionReason": "watch/blog pair support route from unified rank board",
+      "targetQueries": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "best deals near me visual guide",
+        "grocery near me source proof",
+        "pharmacy near me visual guide"
+      ]
+    },
+    {
+      "url": "https://www.digitalhut.app/blog/grocery-shopping-3d-experience",
+      "route": "/blog/grocery-shopping-3d-experience",
+      "inspectionReason": "watch/blog pair support route from unified rank board",
+      "targetQueries": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "best deals near me visual guide",
+        "grocery near me source proof",
+        "pharmacy near me visual guide"
+      ]
+    }
+  ],
+  "seoSubmissionContext": {
+    "status": "submission-staged",
+    "immediateSubmissionCount": 13,
+    "supportRouteCount": 18,
+    "heldRankSlots": 2572944,
+    "guardrail": "Do not create millions of thin pages. Submit the sitemap and strongest proof routes; materialize rank slots only when Supabase behavior separates real demand."
+  },
+  "nextFireCudaMove": "Deploy the batch, request inspection for release routes, then compare Supabase behavior against the unified board.",
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  }
+}

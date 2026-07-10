@@ -2,3 +2,5 @@ User-agent: *
 Allow: /
 
 Sitemap: https://www.digitalhut.app/sitemap.xml
+Sitemap: https://www.digitalhut.app/sitemap-index.xml
+Sitemap: https://www.digitalhut.app/sitemap-master-keyword-50000.xml

@@ -1,0 +1,664 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Receipt Evidence Intake Schema",
+  "status": "receipt-evidence-intake-ready-for-measurement",
+  "purpose": "Define the exact evidence fields and accepted values that fill FireCuda receipts after build proof and measurement.",
+  "guardrail": "This schema does not claim evidence. It only defines how evidence is accepted into pending receipt fields.",
+  "buildProofStatus": "build-proof-ready",
+  "receiptCount": 6,
+  "schemaCount": 6,
+  "supabaseRefinementStatus": "refinement-views-ready",
+  "separateLaneBridgeStatus": "separate-lane-receipt-bridge-staged-held",
+  "receiptStatus": "firecuda-promotion-receipts-ready",
+  "receiptSchemas": [
+    {
+      "pairSlug": "youtube-video-content-radar",
+      "lane": "Mainstream Streaming",
+      "receiptStatus": "receipt-ready-for-evidence",
+      "separateLaneBridge": "bridge-staged-receipt-held",
+      "intakeStatus": "intake-ready-for-measurement",
+      "fields": [
+        {
+          "field": "searchConsoleEvidence",
+          "source": "Google Search Console URL inspection",
+          "acceptedValues": [
+            "indexed",
+            "discovered",
+            "crawled-not-indexed",
+            "not-found",
+            "pending"
+          ],
+          "requiredForDecision": true,
+          "writesTo": "receiptFields.searchConsoleEvidence"
+        },
+        {
+          "field": "supabaseRouteRefinement",
+          "source": "public.digitalhut_seo_route_refinement",
+          "acceptedValues": [
+            "route-visible",
+            "route-visible-with-second-action",
+            "route-quiet",
+            "pending"
+          ],
+          "requiredForDecision": true,
+          "writesTo": "receiptFields.supabaseRouteRefinement"
+        },
+        {
+          "field": "supabaseKeywordRefinement",
+          "source": "public.digitalhut_seo_keyword_refinement",
+          "acceptedValues": [
+            "keyword-earned",
+            "keyword-quiet",
+            "keyword-not-seen",
+            "pending"
+          ],
+          "requiredForDecision": false,
+          "writesTo": "receiptFields.supabaseKeywordRefinement"
+        },
+        {
+          "field": "secondActionWinner",
+          "source": "Supabase second-action event family",
+          "acceptedValues": [
+            "proof_route_open",
+            "backlink_source_open",
+            "glb_preview_play",
+            "podcast_interrupt_play",
+            "none",
+            "pending"
+          ],
+          "requiredForDecision": true,
+          "writesTo": "receiptFields.secondActionWinner"
+        },
+        {
+          "field": "decision",
+          "source": "FireCuda decision queue",
+          "acceptedValues": [
+            "promote",
+            "rewrite",
+            "hold",
+            "pending"
+          ],
+          "requiredForDecision": true,
+          "writesTo": "receiptFields.decision"
+        },
+        {
+          "field": "masterListAction",
+          "source": "Separate lane receipt bridge",
+          "acceptedValues": [
+            "open-separate-lane-batch",
+            "rewrite-separate-lane-metadata",
+            "hold-separate-lane",
+            "pending"
+          ],
+          "requiredForDecision": false,
+          "writesTo": "receiptFields.masterListAction"
+        },
+        {
+          "field": "backlinkAction",
+          "source": "backlink_source_open or source behavior",
+          "acceptedValues": [
+            "strengthen-source-link",
+            "add-internal-support",
+            "hold-backlink",
+            "pending"
+          ],
+          "requiredForDecision": false,
+          "writesTo": "receiptFields.backlinkAction"
+        }
+      ],
+      "decisionLogic": [
+        "promote when route is visible and secondActionWinner is not none or pending",
+        "rewrite when route is visible but secondActionWinner stays none after the measurement window",
+        "hold when Search Console and Supabase both stay quiet after inspection",
+        "separate lane opens only after promote or rewrite"
+      ],
+      "nextAction": "Fill fields from Search Console and Supabase views, then choose promote, rewrite, or hold."
+    },
+    {
+      "pairSlug": "search-intent-radar-visual-experience",
+      "lane": "Automatic System Presentation",
+      "receiptStatus": "receipt-ready-for-evidence",
+      "separateLaneBridge": "bridge-staged-receipt-held",
+      "intakeStatus": "intake-ready-for-measurement",
+      "fields": [
+        {
+          "field": "searchConsoleEvidence",
+          "source": "Google Search Console URL inspection",
+          "acceptedValues": [
+            "indexed",
+            "discovered",
+            "crawled-not-indexed",
+            "not-found",
+            "pending"
+          ],
+          "requiredForDecision": true,
+          "writesTo": "receiptFields.searchConsoleEvidence"
+        },
+        {
+          "field": "supabaseRouteRefinement",
+          "source": "public.digitalhut_seo_route_refinement",
+          "acceptedValues": [
+            "route-visible",
+            "route-visible-with-second-action",
+            "route-quiet",
+            "pending"
+          ],
+          "requiredForDecision": true,
+          "writesTo": "receiptFields.supabaseRouteRefinement"
+        },
+        {
+          "field": "supabaseKeywordRefinement",
+          "source": "public.digitalhut_seo_keyword_refinement",
+          "acceptedValues": [
+            "keyword-earned",
+            "keyword-quiet",
+            "keyword-not-seen",
+            "pending"
+          ],
+          "requiredForDecision": false,
+          "writesTo": "receiptFields.supabaseKeywordRefinement"
+        },
+        {
+          "field": "secondActionWinner",
+          "source": "Supabase second-action event family",
+          "acceptedValues": [
+            "proof_route_open",
+            "backlink_source_open",
+            "glb_preview_play",
+            "podcast_interrupt_play",
+            "market_view_open",
+            "search_intent_chip_select",
+            "none",
+            "pending"
+          ],
+          "requiredForDecision": true,
+          "writesTo": "receiptFields.secondActionWinner"
+        },
+        {
+          "field": "decision",
+          "source": "FireCuda decision queue",
+          "acceptedValues": [
+            "promote",
+            "rewrite",
+            "hold",
+            "pending"
+          ],
+          "requiredForDecision": true,
+          "writesTo": "receiptFields.decision"
+        },
+        {
+          "field": "masterListAction",
+          "source": "Separate lane receipt bridge",
+          "acceptedValues": [
+            "open-separate-lane-batch",
+            "rewrite-separate-lane-metadata",
+            "hold-separate-lane",
+            "pending"
+          ],
+          "requiredForDecision": false,
+          "writesTo": "receiptFields.masterListAction"
+        },
+        {
+          "field": "backlinkAction",
+          "source": "backlink_source_open or source behavior",
+          "acceptedValues": [
+            "strengthen-source-link",
+            "add-internal-support",
+            "hold-backlink",
+            "pending"
+          ],
+          "requiredForDecision": false,
+          "writesTo": "receiptFields.backlinkAction"
+        }
+      ],
+      "decisionLogic": [
+        "promote when route is visible and secondActionWinner is not none or pending",
+        "rewrite when route is visible but secondActionWinner stays none after the measurement window",
+        "hold when Search Console and Supabase both stay quiet after inspection",
+        "separate lane opens only after promote or rewrite"
+      ],
+      "nextAction": "Fill fields from Search Console and Supabase views, then choose promote, rewrite, or hold."
+    },
+    {
+      "pairSlug": "looking-for-lunch-visual-observatory",
+      "lane": "Lunch And Local Food",
+      "receiptStatus": "receipt-ready-for-evidence",
+      "separateLaneBridge": "not-separate-lane",
+      "intakeStatus": "intake-ready-for-measurement",
+      "fields": [
+        {
+          "field": "searchConsoleEvidence",
+          "source": "Google Search Console URL inspection",
+          "acceptedValues": [
+            "indexed",
+            "discovered",
+            "crawled-not-indexed",
+            "not-found",
+            "pending"
+          ],
+          "requiredForDecision": true,
+          "writesTo": "receiptFields.searchConsoleEvidence"
+        },
+        {
+          "field": "supabaseRouteRefinement",
+          "source": "public.digitalhut_seo_route_refinement",
+          "acceptedValues": [
+            "route-visible",
+            "route-visible-with-second-action",
+            "route-quiet",
+            "pending"
+          ],
+          "requiredForDecision": true,
+          "writesTo": "receiptFields.supabaseRouteRefinement"
+        },
+        {
+          "field": "supabaseKeywordRefinement",
+          "source": "public.digitalhut_seo_keyword_refinement",
+          "acceptedValues": [
+            "keyword-earned",
+            "keyword-quiet",
+            "keyword-not-seen",
+            "pending"
+          ],
+          "requiredForDecision": false,
+          "writesTo": "receiptFields.supabaseKeywordRefinement"
+        },
+        {
+          "field": "secondActionWinner",
+          "source": "Supabase second-action event family",
+          "acceptedValues": [
+            "proof_route_open",
+            "backlink_source_open",
+            "glb_preview_play",
+            "podcast_interrupt_play",
+            "search_intent_chip_select",
+            "none",
+            "pending"
+          ],
+          "requiredForDecision": true,
+          "writesTo": "receiptFields.secondActionWinner"
+        },
+        {
+          "field": "decision",
+          "source": "FireCuda decision queue",
+          "acceptedValues": [
+            "promote",
+            "rewrite",
+            "hold",
+            "pending"
+          ],
+          "requiredForDecision": true,
+          "writesTo": "receiptFields.decision"
+        },
+        {
+          "field": "masterListAction",
+          "source": "Master list expansion gate",
+          "acceptedValues": [
+            "open-master-list-batch",
+            "rewrite-master-list-metadata",
+            "hold-master-list",
+            "pending"
+          ],
+          "requiredForDecision": false,
+          "writesTo": "receiptFields.masterListAction"
+        },
+        {
+          "field": "backlinkAction",
+          "source": "backlink_source_open or source behavior",
+          "acceptedValues": [
+            "strengthen-source-link",
+            "add-internal-support",
+            "hold-backlink",
+            "pending"
+          ],
+          "requiredForDecision": false,
+          "writesTo": "receiptFields.backlinkAction"
+        }
+      ],
+      "decisionLogic": [
+        "promote when route is visible and secondActionWinner is not none or pending",
+        "rewrite when route is visible but secondActionWinner stays none after the measurement window",
+        "hold when Search Console and Supabase both stay quiet after inspection",
+        "master list batch opens only after promote or rewrite"
+      ],
+      "nextAction": "Fill fields from Search Console and Supabase views, then choose promote, rewrite, or hold."
+    },
+    {
+      "pairSlug": "calling-an-uber-visual-trip-guide",
+      "lane": "Rideshare And Commute",
+      "receiptStatus": "receipt-ready-for-evidence",
+      "separateLaneBridge": "not-separate-lane",
+      "intakeStatus": "intake-ready-for-measurement",
+      "fields": [
+        {
+          "field": "searchConsoleEvidence",
+          "source": "Google Search Console URL inspection",
+          "acceptedValues": [
+            "indexed",
+            "discovered",
+            "crawled-not-indexed",
+            "not-found",
+            "pending"
+          ],
+          "requiredForDecision": true,
+          "writesTo": "receiptFields.searchConsoleEvidence"
+        },
+        {
+          "field": "supabaseRouteRefinement",
+          "source": "public.digitalhut_seo_route_refinement",
+          "acceptedValues": [
+            "route-visible",
+            "route-visible-with-second-action",
+            "route-quiet",
+            "pending"
+          ],
+          "requiredForDecision": true,
+          "writesTo": "receiptFields.supabaseRouteRefinement"
+        },
+        {
+          "field": "supabaseKeywordRefinement",
+          "source": "public.digitalhut_seo_keyword_refinement",
+          "acceptedValues": [
+            "keyword-earned",
+            "keyword-quiet",
+            "keyword-not-seen",
+            "pending"
+          ],
+          "requiredForDecision": false,
+          "writesTo": "receiptFields.supabaseKeywordRefinement"
+        },
+        {
+          "field": "secondActionWinner",
+          "source": "Supabase second-action event family",
+          "acceptedValues": [
+            "proof_route_open",
+            "backlink_source_open",
+            "glb_preview_play",
+            "podcast_interrupt_play",
+            "search_intent_chip_select",
+            "none",
+            "pending"
+          ],
+          "requiredForDecision": true,
+          "writesTo": "receiptFields.secondActionWinner"
+        },
+        {
+          "field": "decision",
+          "source": "FireCuda decision queue",
+          "acceptedValues": [
+            "promote",
+            "rewrite",
+            "hold",
+            "pending"
+          ],
+          "requiredForDecision": true,
+          "writesTo": "receiptFields.decision"
+        },
+        {
+          "field": "masterListAction",
+          "source": "Master list expansion gate",
+          "acceptedValues": [
+            "open-master-list-batch",
+            "rewrite-master-list-metadata",
+            "hold-master-list",
+            "pending"
+          ],
+          "requiredForDecision": false,
+          "writesTo": "receiptFields.masterListAction"
+        },
+        {
+          "field": "backlinkAction",
+          "source": "backlink_source_open or source behavior",
+          "acceptedValues": [
+            "strengthen-source-link",
+            "add-internal-support",
+            "hold-backlink",
+            "pending"
+          ],
+          "requiredForDecision": false,
+          "writesTo": "receiptFields.backlinkAction"
+        }
+      ],
+      "decisionLogic": [
+        "promote when route is visible and secondActionWinner is not none or pending",
+        "rewrite when route is visible but secondActionWinner stays none after the measurement window",
+        "hold when Search Console and Supabase both stay quiet after inspection",
+        "master list batch opens only after promote or rewrite"
+      ],
+      "nextAction": "Fill fields from Search Console and Supabase views, then choose promote, rewrite, or hold."
+    },
+    {
+      "pairSlug": "current-market-video-observatory",
+      "lane": "Businesses",
+      "receiptStatus": "receipt-ready-for-evidence",
+      "separateLaneBridge": "bridge-staged-receipt-held",
+      "intakeStatus": "intake-ready-for-measurement",
+      "fields": [
+        {
+          "field": "searchConsoleEvidence",
+          "source": "Google Search Console URL inspection",
+          "acceptedValues": [
+            "indexed",
+            "discovered",
+            "crawled-not-indexed",
+            "not-found",
+            "pending"
+          ],
+          "requiredForDecision": true,
+          "writesTo": "receiptFields.searchConsoleEvidence"
+        },
+        {
+          "field": "supabaseRouteRefinement",
+          "source": "public.digitalhut_seo_route_refinement",
+          "acceptedValues": [
+            "route-visible",
+            "route-visible-with-second-action",
+            "route-quiet",
+            "pending"
+          ],
+          "requiredForDecision": true,
+          "writesTo": "receiptFields.supabaseRouteRefinement"
+        },
+        {
+          "field": "supabaseKeywordRefinement",
+          "source": "public.digitalhut_seo_keyword_refinement",
+          "acceptedValues": [
+            "keyword-earned",
+            "keyword-quiet",
+            "keyword-not-seen",
+            "pending"
+          ],
+          "requiredForDecision": false,
+          "writesTo": "receiptFields.supabaseKeywordRefinement"
+        },
+        {
+          "field": "secondActionWinner",
+          "source": "Supabase second-action event family",
+          "acceptedValues": [
+            "proof_route_open",
+            "backlink_source_open",
+            "glb_preview_play",
+            "podcast_interrupt_play",
+            "market_view_open",
+            "search_intent_chip_select",
+            "none",
+            "pending"
+          ],
+          "requiredForDecision": true,
+          "writesTo": "receiptFields.secondActionWinner"
+        },
+        {
+          "field": "decision",
+          "source": "FireCuda decision queue",
+          "acceptedValues": [
+            "promote",
+            "rewrite",
+            "hold",
+            "pending"
+          ],
+          "requiredForDecision": true,
+          "writesTo": "receiptFields.decision"
+        },
+        {
+          "field": "masterListAction",
+          "source": "Separate lane receipt bridge",
+          "acceptedValues": [
+            "open-separate-lane-batch",
+            "rewrite-separate-lane-metadata",
+            "hold-separate-lane",
+            "pending"
+          ],
+          "requiredForDecision": false,
+          "writesTo": "receiptFields.masterListAction"
+        },
+        {
+          "field": "backlinkAction",
+          "source": "backlink_source_open or source behavior",
+          "acceptedValues": [
+            "strengthen-source-link",
+            "add-internal-support",
+            "hold-backlink",
+            "pending"
+          ],
+          "requiredForDecision": false,
+          "writesTo": "receiptFields.backlinkAction"
+        }
+      ],
+      "decisionLogic": [
+        "promote when route is visible and secondActionWinner is not none or pending",
+        "rewrite when route is visible but secondActionWinner stays none after the measurement window",
+        "hold when Search Console and Supabase both stay quiet after inspection",
+        "separate lane opens only after promote or rewrite"
+      ],
+      "nextAction": "Fill fields from Search Console and Supabase views, then choose promote, rewrite, or hold."
+    },
+    {
+      "pairSlug": "home-project-3d-visual-planner",
+      "lane": "Mainstream Streaming",
+      "receiptStatus": "receipt-ready-for-evidence",
+      "separateLaneBridge": "bridge-staged-receipt-held",
+      "intakeStatus": "intake-ready-for-measurement",
+      "fields": [
+        {
+          "field": "searchConsoleEvidence",
+          "source": "Google Search Console URL inspection",
+          "acceptedValues": [
+            "indexed",
+            "discovered",
+            "crawled-not-indexed",
+            "not-found",
+            "pending"
+          ],
+          "requiredForDecision": true,
+          "writesTo": "receiptFields.searchConsoleEvidence"
+        },
+        {
+          "field": "supabaseRouteRefinement",
+          "source": "public.digitalhut_seo_route_refinement",
+          "acceptedValues": [
+            "route-visible",
+            "route-visible-with-second-action",
+            "route-quiet",
+            "pending"
+          ],
+          "requiredForDecision": true,
+          "writesTo": "receiptFields.supabaseRouteRefinement"
+        },
+        {
+          "field": "supabaseKeywordRefinement",
+          "source": "public.digitalhut_seo_keyword_refinement",
+          "acceptedValues": [
+            "keyword-earned",
+            "keyword-quiet",
+            "keyword-not-seen",
+            "pending"
+          ],
+          "requiredForDecision": false,
+          "writesTo": "receiptFields.supabaseKeywordRefinement"
+        },
+        {
+          "field": "secondActionWinner",
+          "source": "Supabase second-action event family",
+          "acceptedValues": [
+            "proof_route_open",
+            "backlink_source_open",
+            "glb_preview_play",
+            "podcast_interrupt_play",
+            "search_intent_chip_select",
+            "none",
+            "pending"
+          ],
+          "requiredForDecision": true,
+          "writesTo": "receiptFields.secondActionWinner"
+        },
+        {
+          "field": "decision",
+          "source": "FireCuda decision queue",
+          "acceptedValues": [
+            "promote",
+            "rewrite",
+            "hold",
+            "pending"
+          ],
+          "requiredForDecision": true,
+          "writesTo": "receiptFields.decision"
+        },
+        {
+          "field": "masterListAction",
+          "source": "Separate lane receipt bridge",
+          "acceptedValues": [
+            "open-separate-lane-batch",
+            "rewrite-separate-lane-metadata",
+            "hold-separate-lane",
+            "pending"
+          ],
+          "requiredForDecision": false,
+          "writesTo": "receiptFields.masterListAction"
+        },
+        {
+          "field": "backlinkAction",
+          "source": "backlink_source_open or source behavior",
+          "acceptedValues": [
+            "strengthen-source-link",
+            "add-internal-support",
+            "hold-backlink",
+            "pending"
+          ],
+          "requiredForDecision": false,
+          "writesTo": "receiptFields.backlinkAction"
+        }
+      ],
+      "decisionLogic": [
+        "promote when route is visible and secondActionWinner is not none or pending",
+        "rewrite when route is visible but secondActionWinner stays none after the measurement window",
+        "hold when Search Console and Supabase both stay quiet after inspection",
+        "separate lane opens only after promote or rewrite"
+      ],
+      "nextAction": "Fill fields from Search Console and Supabase views, then choose promote, rewrite, or hold."
+    }
+  ],
+  "intakeOrder": [
+    "Confirm build proof",
+    "Record Search Console URL inspection for watch and blog routes",
+    "Read Supabase route_refinement",
+    "Read Supabase keyword_refinement",
+    "Pick secondActionWinner",
+    "Write FireCuda decision",
+    "Write masterListAction or separate-lane action",
+    "Write backlinkAction if source behavior supports it"
+  ],
+  "nextFireCudaMove": "Use this schema to fill receipts from Search Console and Supabase before opening any master-list or separate-lane expansion.",
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  }
+}

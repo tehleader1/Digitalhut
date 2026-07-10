@@ -1,0 +1,117 @@
+{
+  "generatedAt": "2026-07-10T02:01:55.678Z",
+  "status": "google-cloud-api-consumption-read-produced",
+  "site": "https://www.digitalhut.app",
+  "strongestLane": "DigitalHut 200M SEO Master List",
+  "dappProofEngine": "DigitalHut.app video + GLB + podcast/source + analytics + Supabase telemetry + sitemap/Search Console proof.",
+  "guardrail": "This is Google Cloud API consumption, not a Google ranking win. It proves which cloud services are being used by the DigitalHut proof loop.",
+  "sourceFile": "C:\\Users\\Admin\\Downloads\\Consumed_API_-_Request_count_(filtered)_[SUM].csv",
+  "exportWindow": {
+    "rows": 65,
+    "first": "Wed Jul 08 2026 21:10:00 GMT-0400 (Eastern Daylight Time)",
+    "last": "Thu Jul 09 2026 21:00:00 GMT-0400 (Eastern Daylight Time)"
+  },
+  "services": [
+    {
+      "service": "monitoring.googleapis.com",
+      "projectId": "supportrd-auth",
+      "role": "Google Cloud observability loop: cloud service read/monitoring confirmation.",
+      "decision": "minimal-cloud-observability-service",
+      "nonEmptyPoints": 1,
+      "total": 0.006667,
+      "average": 0.006667,
+      "min": 0.006667,
+      "max": 0.006667,
+      "maxTime": "Thu Jul 09 2026 02:25:00 GMT-0400 (Eastern Daylight Time)",
+      "firstTime": "Thu Jul 09 2026 02:25:00 GMT-0400 (Eastern Daylight Time)",
+      "lastTime": "Thu Jul 09 2026 02:25:00 GMT-0400 (Eastern Daylight Time)",
+      "rhythm": {
+        "status": "minimal-pulse",
+        "rises": 0,
+        "falls": 0,
+        "flats": 0,
+        "directionChanges": 0,
+        "read": "The service is present, but this export does not show enough points to judge rhythm."
+      }
+    },
+    {
+      "service": "searchconsole.googleapis.com",
+      "projectId": "supportrd-auth",
+      "role": "Search Console proof loop: sitemap status, query rows, impressions, clicks, and indexing comparisons.",
+      "decision": "active-master-list-proof-service",
+      "nonEmptyPoints": 59,
+      "total": 3.946555,
+      "average": 0.066891,
+      "min": 0.001667,
+      "max": 0.219778,
+      "maxTime": "Wed Jul 08 2026 22:35:00 GMT-0400 (Eastern Daylight Time)",
+      "firstTime": "Wed Jul 08 2026 21:10:00 GMT-0400 (Eastern Daylight Time)",
+      "lastTime": "Thu Jul 09 2026 21:00:00 GMT-0400 (Eastern Daylight Time)",
+      "rhythm": {
+        "status": "healthy-up-down-cycle",
+        "rises": 27,
+        "falls": 22,
+        "flats": 9,
+        "directionChanges": 30,
+        "read": "Usage is pulsing up and down, which looks like an active proof loop rather than a flatline or runaway poll."
+      }
+    },
+    {
+      "service": "youtube.googleapis.com",
+      "projectId": "supportrd-auth",
+      "role": "YouTube content input loop: video/category lookup and episode source discovery.",
+      "decision": "light-content-source-service",
+      "nonEmptyPoints": 9,
+      "total": 0.173333,
+      "average": 0.019259,
+      "min": 0.000167,
+      "max": 0.0465,
+      "maxTime": "Thu Jul 09 2026 16:50:00 GMT-0400 (Eastern Daylight Time)",
+      "firstTime": "Wed Jul 08 2026 22:20:00 GMT-0400 (Eastern Daylight Time)",
+      "lastTime": "Thu Jul 09 2026 19:25:00 GMT-0400 (Eastern Daylight Time)",
+      "rhythm": {
+        "status": "healthy-up-down-cycle",
+        "rises": 2,
+        "falls": 6,
+        "flats": 0,
+        "directionChanges": 3,
+        "read": "Usage is pulsing up and down, which looks like an active proof loop rather than a flatline or runaway poll."
+      }
+    }
+  ],
+  "systemRead": {
+    "searchConsole": "Search Console API is the active Google Cloud service for the 200M master-list proof loop.",
+    "youtube": "YouTube API is lightly active and should remain tied to video/category source discovery, not heavy polling.",
+    "monitoring": "Cloud Monitoring registered a minimal service read."
+  },
+  "cycleHealth": {
+    "status": "healthy-cloud-proof-loop",
+    "read": "Search Console API usage is moving up and down across the export window. That is the healthy rhythm we want: the cloud proof loop is active without looking like a runaway constant poll.",
+    "primaryRhythm": {
+      "status": "healthy-up-down-cycle",
+      "rises": 27,
+      "falls": 22,
+      "flats": 9,
+      "directionChanges": 30,
+      "read": "Usage is pulsing up and down, which looks like an active proof loop rather than a flatline or runaway poll."
+    },
+    "youtubeRhythm": {
+      "status": "healthy-up-down-cycle",
+      "rises": 2,
+      "falls": 6,
+      "flats": 0,
+      "directionChanges": 3,
+      "read": "Usage is pulsing up and down, which looks like an active proof loop rather than a flatline or runaway poll."
+    },
+    "monitoringRhythm": {
+      "status": "minimal-pulse",
+      "rises": 0,
+      "falls": 0,
+      "flats": 0,
+      "directionChanges": 0,
+      "read": "The service is present, but this export does not show enough points to judge rhythm."
+    }
+  },
+  "seoDecision": "Keep Search Console as the master-list proof service. Do not over-poll; use it for sitemap/index/query-row truth and push the dapp to produce proof/source behavior.",
+  "nextSystemMove": "Exploit the 200M SEO Master List through dapp-backed proof routes, then measure whether Google Cloud reads Search Console, YouTube source discovery, and user behavior in the same cycle."
+}

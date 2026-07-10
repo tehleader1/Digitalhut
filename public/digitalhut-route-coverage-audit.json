@@ -1,0 +1,13 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Route Coverage Audit",
+  "status": "pass",
+  "sitemapProofRoutes": 124,
+  "metadataRoutes": 124,
+  "missingMetadataRoutes": [],
+  "extraMetadataRoutes": [],
+  "duplicatedSitemapRoutes": [],
+  "duplicatedManifestRoutes": [],
+  "launchTargetRoutes": 33,
+  "read": "Every sitemap blog/watch/category proof route has a Digitalhut.app metadata manifest record, with no extras or duplicates."
+}

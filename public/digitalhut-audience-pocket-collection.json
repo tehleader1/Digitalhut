@@ -1,0 +1,507 @@
+{
+  "generatedAt": "2026-07-09T06:47:46.473Z",
+  "status": "audience-pocket-collection-ready",
+  "site": "https://www.digitalhut.app",
+  "rule": "The 317 page view / 116 visitor baseline is collected to the side. Fresh reads compare against that baseline; only new movement becomes main collection material.",
+  "sidePocketBaseline": {
+    "label": "side-pocket-baseline-20260709",
+    "capturedAt": "2026-07-09T06:45:00.000Z",
+    "pageViews": 317,
+    "uniqueVisitors": 116,
+    "totalEvents": 534,
+    "glbPreviewPlays": 83,
+    "podcastInterrupts": 13,
+    "autoplayStarts": 5,
+    "searches": 2,
+    "marketOpens": 5,
+    "proofRouteOpens": 0,
+    "sourceOpens": 0
+  },
+  "currentTotals": {
+    "pageViews": 317,
+    "uniqueVisitors": 116,
+    "totalEvents": 534,
+    "glbPreviewPlays": 83,
+    "podcastInterrupts": 13,
+    "autoplayStarts": 5,
+    "searches": 2,
+    "marketOpens": 5,
+    "proofRouteOpens": 0,
+    "sourceOpens": 0
+  },
+  "deltaSinceSideBaseline": {
+    "pageViews": 0,
+    "uniqueVisitors": 0,
+    "totalEvents": 0,
+    "glbPreviewPlays": 0,
+    "podcastInterrupts": 0,
+    "autoplayStarts": 0,
+    "searches": 0,
+    "marketOpens": 0,
+    "proofRouteOpens": 0,
+    "sourceOpens": 0
+  },
+  "sideCollection": [
+    {
+      "key": "direct-or-private-referrer::/::unassigned-lane",
+      "status": "side-collected",
+      "origin": "direct-or-private-referrer",
+      "path": "/",
+      "lane": "unassigned-lane",
+      "events": 227,
+      "visitors": 81,
+      "pageViews": 178,
+      "secondActions": 28,
+      "glbPreviewPlays": 28,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 1835,
+      "latest": "2026-07-09T04:38:27.091759+00:00",
+      "sampleEvents": [
+        "page_view",
+        "ui_click",
+        "glb_preview_play"
+      ],
+      "sampleQueries": [],
+      "sampleReferrers": []
+    },
+    {
+      "key": "vercel-preview-or-deploy::/::unassigned-lane",
+      "status": "side-collected",
+      "origin": "vercel-preview-or-deploy",
+      "path": "/",
+      "lane": "unassigned-lane",
+      "events": 160,
+      "visitors": 21,
+      "pageViews": 58,
+      "secondActions": 32,
+      "glbPreviewPlays": 32,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 1303,
+      "latest": "2026-07-07T08:29:13.571491+00:00",
+      "sampleEvents": [
+        "ui_click",
+        "page_view",
+        "glb_preview_play"
+      ],
+      "sampleQueries": [],
+      "sampleReferrers": [
+        "https://vercel.com/"
+      ]
+    },
+    {
+      "key": "vercel-preview-or-deploy::/::Mainstream Streaming",
+      "status": "side-collected",
+      "origin": "vercel-preview-or-deploy",
+      "path": "/",
+      "lane": "Mainstream Streaming",
+      "events": 36,
+      "visitors": 7,
+      "pageViews": 0,
+      "secondActions": 31,
+      "glbPreviewPlays": 16,
+      "podcastInterrupts": 12,
+      "autoplayStarts": 3,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 979,
+      "latest": "2026-07-07T08:27:43.104416+00:00",
+      "sampleEvents": [
+        "autoplay_pause",
+        "podcast_interrupt_end",
+        "podcast_interrupt_play",
+        "glb_preview_play",
+        "autoplay_episode_shift"
+      ],
+      "sampleQueries": [
+        "Horror Corridor VR room [Baked]",
+        "Time is NOT on your side",
+        "Full Gameready City Buildings IV [HongKong]"
+      ],
+      "sampleReferrers": [
+        "https://vercel.com/"
+      ]
+    },
+    {
+      "key": "direct-or-private-referrer::/blog/automatic-3d-autoplay-system::automatic-3d-autoplay-system",
+      "status": "side-collected",
+      "origin": "direct-or-private-referrer",
+      "path": "/blog/automatic-3d-autoplay-system",
+      "lane": "automatic-3d-autoplay-system",
+      "events": 13,
+      "visitors": 1,
+      "pageViews": 8,
+      "secondActions": 4,
+      "glbPreviewPlays": 4,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 157,
+      "latest": "2026-06-30T16:29:36.159596+00:00",
+      "sampleEvents": [
+        "blog_view",
+        "glb_preview_play",
+        "ui_click"
+      ],
+      "sampleQueries": [],
+      "sampleReferrers": []
+    },
+    {
+      "key": "vercel-preview-or-deploy::/::Businesses",
+      "status": "side-collected",
+      "origin": "vercel-preview-or-deploy",
+      "path": "/",
+      "lane": "Businesses",
+      "events": 5,
+      "visitors": 2,
+      "pageViews": 0,
+      "secondActions": 5,
+      "glbPreviewPlays": 0,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 0,
+      "marketOpens": 5,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 90,
+      "latest": "2026-07-07T08:29:13.628456+00:00",
+      "sampleEvents": [
+        "ticker_search",
+        "market_view_open"
+      ],
+      "sampleQueries": [
+        "NVDA NVIDIA market observatory",
+        "NVDA NVIDIA"
+      ],
+      "sampleReferrers": [
+        "https://vercel.com/"
+      ]
+    },
+    {
+      "key": "codex-overseer-test::/audience-test/gaming-glb::Gaming GLB Viewer",
+      "status": "side-collected",
+      "origin": "codex-overseer-test",
+      "path": "/audience-test/gaming-glb",
+      "lane": "Gaming GLB Viewer",
+      "events": 3,
+      "visitors": 1,
+      "pageViews": 1,
+      "secondActions": 2,
+      "glbPreviewPlays": 1,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 1,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 85,
+      "latest": "2026-07-07T12:41:02.525164+00:00",
+      "sampleEvents": [
+        "search_run",
+        "glb_preview_play",
+        "page_view"
+      ],
+      "sampleQueries": [
+        "gaming 3d environment viewer horror corridor vr room walkthrough"
+      ],
+      "sampleReferrers": [
+        "codex-overseer-multi-read-test"
+      ]
+    },
+    {
+      "key": "codex-overseer-test::/audience-test/research-podcast::Research Podcast Viewer",
+      "status": "side-collected",
+      "origin": "codex-overseer-test",
+      "path": "/audience-test/research-podcast",
+      "lane": "Research Podcast Viewer",
+      "events": 3,
+      "visitors": 1,
+      "pageViews": 1,
+      "secondActions": 2,
+      "glbPreviewPlays": 0,
+      "podcastInterrupts": 1,
+      "autoplayStarts": 0,
+      "searches": 1,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 83,
+      "latest": "2026-07-07T12:41:05.314418+00:00",
+      "sampleEvents": [
+        "search_run",
+        "podcast_interrupt_play",
+        "page_view"
+      ],
+      "sampleQueries": [
+        "video research observatory podcast source backed 3d renderer"
+      ],
+      "sampleReferrers": [
+        "codex-overseer-multi-read-test"
+      ]
+    },
+    {
+      "key": "direct-or-private-referrer::/insights::unassigned-lane",
+      "status": "side-collected",
+      "origin": "direct-or-private-referrer",
+      "path": "/insights",
+      "lane": "unassigned-lane",
+      "events": 18,
+      "visitors": 2,
+      "pageViews": 18,
+      "secondActions": 0,
+      "glbPreviewPlays": 0,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 64,
+      "latest": "2026-06-30T16:30:24.558912+00:00",
+      "sampleEvents": [
+        "page_view"
+      ],
+      "sampleQueries": [],
+      "sampleReferrers": []
+    },
+    {
+      "key": "codex-overseer-test::/audience-test/after-work-relax::After Work Relax Viewer",
+      "status": "side-collected",
+      "origin": "codex-overseer-test",
+      "path": "/audience-test/after-work-relax",
+      "lane": "After Work Relax Viewer",
+      "events": 3,
+      "visitors": 1,
+      "pageViews": 1,
+      "secondActions": 2,
+      "glbPreviewPlays": 1,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 1,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 64,
+      "latest": "2026-07-07T12:40:59.584417+00:00",
+      "sampleEvents": [
+        "glb_preview_play",
+        "autoplay_start",
+        "page_view"
+      ],
+      "sampleQueries": [
+        "youtube alternative autoplay 3d model podcast analytics"
+      ],
+      "sampleReferrers": [
+        "codex-overseer-multi-read-test"
+      ]
+    },
+    {
+      "key": "direct-or-private-referrer::/blog::unassigned-lane",
+      "status": "side-collected",
+      "origin": "direct-or-private-referrer",
+      "path": "/blog",
+      "lane": "unassigned-lane",
+      "events": 5,
+      "visitors": 2,
+      "pageViews": 4,
+      "secondActions": 1,
+      "glbPreviewPlays": 1,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 54,
+      "latest": "2026-07-07T15:50:24.294811+00:00",
+      "sampleEvents": [
+        "blog_view",
+        "glb_preview_play"
+      ],
+      "sampleQueries": [],
+      "sampleReferrers": []
+    },
+    {
+      "key": "digitalhut-internal-navigation::/markets::unassigned-lane",
+      "status": "side-collected",
+      "origin": "digitalhut-internal-navigation",
+      "path": "/markets",
+      "lane": "unassigned-lane",
+      "events": 10,
+      "visitors": 2,
+      "pageViews": 10,
+      "secondActions": 0,
+      "glbPreviewPlays": 0,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 40,
+      "latest": "2026-07-06T01:19:32.176855+00:00",
+      "sampleEvents": [
+        "page_view"
+      ],
+      "sampleQueries": [],
+      "sampleReferrers": [
+        "https://www.digitalhut.app/"
+      ]
+    },
+    {
+      "key": "vercel-preview-or-deploy::/::Gamer",
+      "status": "side-collected",
+      "origin": "vercel-preview-or-deploy",
+      "path": "/",
+      "lane": "Gamer",
+      "events": 2,
+      "visitors": 1,
+      "pageViews": 0,
+      "secondActions": 1,
+      "glbPreviewPlays": 0,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 1,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 29,
+      "latest": "2026-07-06T02:36:43.783798+00:00",
+      "sampleEvents": [
+        "autoplay_pause",
+        "autoplay_start"
+      ],
+      "sampleQueries": [
+        "Medieval City Pack Demo"
+      ],
+      "sampleReferrers": [
+        "https://vercel.com/"
+      ]
+    },
+    {
+      "key": "direct-or-private-referrer::/runner::unassigned-lane",
+      "status": "side-collected",
+      "origin": "direct-or-private-referrer",
+      "path": "/runner",
+      "lane": "unassigned-lane",
+      "events": 9,
+      "visitors": 1,
+      "pageViews": 5,
+      "secondActions": 0,
+      "glbPreviewPlays": 0,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 20,
+      "latest": "2026-06-30T00:40:28.488711+00:00",
+      "sampleEvents": [
+        "ui_click",
+        "page_view"
+      ],
+      "sampleQueries": [],
+      "sampleReferrers": []
+    },
+    {
+      "key": "direct-or-private-referrer::/markets::unassigned-lane",
+      "status": "side-collected",
+      "origin": "direct-or-private-referrer",
+      "path": "/markets",
+      "lane": "unassigned-lane",
+      "events": 7,
+      "visitors": 1,
+      "pageViews": 5,
+      "secondActions": 0,
+      "glbPreviewPlays": 0,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 20,
+      "latest": "2026-07-03T10:53:16.887058+00:00",
+      "sampleEvents": [
+        "page_view",
+        "ui_click"
+      ],
+      "sampleQueries": [],
+      "sampleReferrers": []
+    },
+    {
+      "key": "digitalhut-internal-navigation::/blog::unassigned-lane",
+      "status": "side-collected",
+      "origin": "digitalhut-internal-navigation",
+      "path": "/blog",
+      "lane": "unassigned-lane",
+      "events": 5,
+      "visitors": 1,
+      "pageViews": 3,
+      "secondActions": 0,
+      "glbPreviewPlays": 0,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 14,
+      "latest": "2026-06-30T15:28:42.123467+00:00",
+      "sampleEvents": [
+        "ui_click",
+        "blog_view"
+      ],
+      "sampleQueries": [],
+      "sampleReferrers": [
+        "https://www.digitalhut.app/"
+      ]
+    },
+    {
+      "key": "vercel-preview-or-deploy::/markets::unassigned-lane",
+      "status": "side-collected",
+      "origin": "vercel-preview-or-deploy",
+      "path": "/markets",
+      "lane": "unassigned-lane",
+      "events": 3,
+      "visitors": 1,
+      "pageViews": 3,
+      "secondActions": 0,
+      "glbPreviewPlays": 0,
+      "podcastInterrupts": 0,
+      "autoplayStarts": 0,
+      "searches": 0,
+      "marketOpens": 0,
+      "proofRouteOpens": 0,
+      "sourceOpens": 0,
+      "publicSignalScore": 14,
+      "latest": "2026-06-30T00:34:03.336054+00:00",
+      "sampleEvents": [
+        "page_view"
+      ],
+      "sampleQueries": [],
+      "sampleReferrers": [
+        "https://v0-nft-time-capsule-dapp.vercel.app/"
+      ]
+    }
+  ],
+  "mainCollection": [],
+  "freshCandidatesAdded": 0,
+  "decision": "no-new-group-yet-keep-reading-fresh",
+  "nextAction": "Keep current pocket to the side and keep the next read focused on new proof, source, search, autoplay, podcast, or non-preview GLB movement."
+}

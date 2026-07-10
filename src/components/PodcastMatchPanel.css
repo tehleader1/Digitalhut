@@ -23,6 +23,7 @@
 .dh-podcast-panel header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 10px;
 }
 
@@ -33,9 +34,83 @@
   text-transform: uppercase;
 }
 
-.dh-podcast-panel header b {
+.dh-podcast-panel header > b {
   color: #bef264;
   font-size: 9px;
+}
+
+.dh-podcast-speaker {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 28px;
+  border: 1px solid rgba(190,242,100,.32);
+  border-radius: 999px;
+  background: rgba(15,23,42,.86);
+  color: #ecfccb;
+  cursor: pointer;
+  padding: 4px 9px 4px 7px;
+}
+
+.dh-podcast-speaker::before {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border: 1px solid rgba(190,242,100,.28);
+  border-radius: 999px;
+  opacity: .32;
+  animation: dh-podcast-ring 1.8s ease-in-out infinite;
+}
+
+.dh-podcast-speaker i {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, #67e8f9, #bef264);
+  box-shadow: 0 0 18px rgba(103,232,249,.42);
+}
+
+.dh-podcast-speaker i::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 5px;
+  width: 5px;
+  height: 8px;
+  border-radius: 2px;
+  background: #020617;
+}
+
+.dh-podcast-speaker i::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 4px;
+  width: 7px;
+  height: 10px;
+  border: 2px solid #020617;
+  border-left: 0;
+  border-radius: 0 12px 12px 0;
+}
+
+.dh-podcast-speaker b {
+  position: relative;
+  color: #ecfccb;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.dh-podcast-speaker.playing,
+.dh-podcast-panel.special-moment .dh-podcast-speaker {
+  border-color: rgba(103,232,249,.74);
+  box-shadow: 0 0 24px rgba(103,232,249,.24);
+}
+
+.dh-podcast-panel.special-moment {
+  border-color: rgba(190,242,100,.52);
+  box-shadow: 0 0 34px rgba(103,232,249,.18), 0 0 28px rgba(190,242,100,.12);
 }
 
 .dh-podcast-status {
@@ -116,6 +191,18 @@
   text-align: center;
   text-decoration: none;
   cursor: pointer;
+}
+
+@keyframes dh-podcast-ring {
+  0%, 100% {
+    transform: scale(.94);
+    opacity: .18;
+  }
+
+  48% {
+    transform: scale(1.12);
+    opacity: .72;
+  }
 }
 
 @media (max-width: 900px) {

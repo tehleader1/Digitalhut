@@ -1,0 +1,400 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut FireCuda Promotion Receipt Packet",
+  "status": "firecuda-promotion-receipts-ready",
+  "purpose": "Create a structured receipt for each first-wave pair so DigitalHut records the evidence and final FireCuda promote/rewrite/hold decision before expanding SEO keywords.",
+  "guardrail": "Receipt slots are not decisions. They stay pending until build proof, Search Console inspection, and Supabase refinement evidence exist.",
+  "buildProofStatus": "build-proof-intake-ready",
+  "receiptCount": 6,
+  "receiptCounts": {
+    "receipt-ready-for-evidence": 6
+  },
+  "firstWaveActionQueueStatus": "first-wave-action-queue-ready",
+  "fireCudaDecisionQueueStatus": "firecuda-decision-queues-ready",
+  "routePairLedgerStatus": "route-pair-ledger-ready",
+  "receipts": [
+    {
+      "order": 1,
+      "pairSlug": "youtube-video-content-radar",
+      "launchLane": "Mainstream Streaming",
+      "status": "receipt-ready-for-evidence",
+      "watchRoute": "/watch/youtube-video-content-radar",
+      "blogRoute": "/blog/youtube-video-content-radar",
+      "actionCount": 4,
+      "requiredActionPhases": [
+        "inspect-watch-route",
+        "inspect-blog-route",
+        "wait-supabase-second-action",
+        "firecuda-decision"
+      ],
+      "coveredSignals": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play"
+      ],
+      "secondActionSignals": [
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play"
+      ],
+      "outcomeSlots": {
+        "promote": {
+          "fireCudaAction": "Move pair keywords into FireCuda winner list, strengthen internal links, and prepare supporting long-tail expansion."
+        },
+        "rewrite": {
+          "rewriteTargets": [
+            "title",
+            "description",
+            "proofAngle",
+            "internal link anchor",
+            "category route language"
+          ]
+        },
+        "hold": {
+          "fireCudaAction": "Return pair keywords to FireCuda backlog, keep canonical route crawlable, and do not expand supporting variations."
+        }
+      },
+      "receiptFields": {
+        "searchConsoleEvidence": "pending",
+        "supabaseRouteRefinement": "pending",
+        "supabaseKeywordRefinement": "pending",
+        "secondActionWinner": "pending",
+        "decision": "pending",
+        "masterListAction": "pending",
+        "backlinkAction": "pending",
+        "nextReviewWindow": "pending"
+      },
+      "expansionRule": "Allow master-list expansion only after promote or rewrite evidence; hold inactive pairs without adding more keyword surfaces.",
+      "nextAction": "Fill receipt fields from Search Console and Supabase evidence."
+    },
+    {
+      "order": 2,
+      "pairSlug": "search-intent-radar-visual-experience",
+      "launchLane": "Automatic System Presentation",
+      "status": "receipt-ready-for-evidence",
+      "watchRoute": "/watch/search-intent-radar-visual-experience",
+      "blogRoute": "/blog/search-intent-radar-visual-experience",
+      "actionCount": 4,
+      "requiredActionPhases": [
+        "inspect-watch-route",
+        "inspect-blog-route",
+        "wait-supabase-second-action",
+        "firecuda-decision"
+      ],
+      "coveredSignals": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "market_view_open",
+        "search_intent_chip_select"
+      ],
+      "secondActionSignals": [
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "market_view_open",
+        "search_intent_chip_select"
+      ],
+      "outcomeSlots": {
+        "promote": {
+          "fireCudaAction": "Move pair keywords into FireCuda winner list, strengthen internal links, and prepare supporting long-tail expansion."
+        },
+        "rewrite": {
+          "rewriteTargets": [
+            "title",
+            "description",
+            "proofAngle",
+            "internal link anchor",
+            "category route language"
+          ]
+        },
+        "hold": {
+          "fireCudaAction": "Return pair keywords to FireCuda backlog, keep canonical route crawlable, and do not expand supporting variations."
+        }
+      },
+      "receiptFields": {
+        "searchConsoleEvidence": "pending",
+        "supabaseRouteRefinement": "pending",
+        "supabaseKeywordRefinement": "pending",
+        "secondActionWinner": "pending",
+        "decision": "pending",
+        "masterListAction": "pending",
+        "backlinkAction": "pending",
+        "nextReviewWindow": "pending"
+      },
+      "expansionRule": "Allow master-list expansion only after promote or rewrite evidence; hold inactive pairs without adding more keyword surfaces.",
+      "nextAction": "Fill receipt fields from Search Console and Supabase evidence."
+    },
+    {
+      "order": 3,
+      "pairSlug": "looking-for-lunch-visual-observatory",
+      "launchLane": "Lunch And Local Food",
+      "status": "receipt-ready-for-evidence",
+      "watchRoute": "/watch/looking-for-lunch-visual-observatory",
+      "blogRoute": "/blog/looking-for-lunch-visual-observatory",
+      "actionCount": 4,
+      "requiredActionPhases": [
+        "inspect-watch-route",
+        "inspect-blog-route",
+        "wait-supabase-second-action",
+        "firecuda-decision"
+      ],
+      "coveredSignals": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "secondActionSignals": [
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "outcomeSlots": {
+        "promote": {
+          "fireCudaAction": "Move pair keywords into FireCuda winner list, strengthen internal links, and prepare supporting long-tail expansion."
+        },
+        "rewrite": {
+          "rewriteTargets": [
+            "title",
+            "description",
+            "proofAngle",
+            "internal link anchor",
+            "category route language"
+          ]
+        },
+        "hold": {
+          "fireCudaAction": "Return pair keywords to FireCuda backlog, keep canonical route crawlable, and do not expand supporting variations."
+        }
+      },
+      "receiptFields": {
+        "searchConsoleEvidence": "pending",
+        "supabaseRouteRefinement": "pending",
+        "supabaseKeywordRefinement": "pending",
+        "secondActionWinner": "pending",
+        "decision": "pending",
+        "masterListAction": "pending",
+        "backlinkAction": "pending",
+        "nextReviewWindow": "pending"
+      },
+      "expansionRule": "Allow master-list expansion only after promote or rewrite evidence; hold inactive pairs without adding more keyword surfaces.",
+      "nextAction": "Fill receipt fields from Search Console and Supabase evidence."
+    },
+    {
+      "order": 4,
+      "pairSlug": "calling-an-uber-visual-trip-guide",
+      "launchLane": "Rideshare And Commute",
+      "status": "receipt-ready-for-evidence",
+      "watchRoute": "/watch/calling-an-uber-visual-trip-guide",
+      "blogRoute": "/blog/calling-an-uber-visual-trip-guide",
+      "actionCount": 4,
+      "requiredActionPhases": [
+        "inspect-watch-route",
+        "inspect-blog-route",
+        "wait-supabase-second-action",
+        "firecuda-decision"
+      ],
+      "coveredSignals": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "secondActionSignals": [
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "outcomeSlots": {
+        "promote": {
+          "fireCudaAction": "Move pair keywords into FireCuda winner list, strengthen internal links, and prepare supporting long-tail expansion."
+        },
+        "rewrite": {
+          "rewriteTargets": [
+            "title",
+            "description",
+            "proofAngle",
+            "internal link anchor",
+            "category route language"
+          ]
+        },
+        "hold": {
+          "fireCudaAction": "Return pair keywords to FireCuda backlog, keep canonical route crawlable, and do not expand supporting variations."
+        }
+      },
+      "receiptFields": {
+        "searchConsoleEvidence": "pending",
+        "supabaseRouteRefinement": "pending",
+        "supabaseKeywordRefinement": "pending",
+        "secondActionWinner": "pending",
+        "decision": "pending",
+        "masterListAction": "pending",
+        "backlinkAction": "pending",
+        "nextReviewWindow": "pending"
+      },
+      "expansionRule": "Allow master-list expansion only after promote or rewrite evidence; hold inactive pairs without adding more keyword surfaces.",
+      "nextAction": "Fill receipt fields from Search Console and Supabase evidence."
+    },
+    {
+      "order": 5,
+      "pairSlug": "current-market-video-observatory",
+      "launchLane": "Businesses",
+      "status": "receipt-ready-for-evidence",
+      "watchRoute": "/watch/current-market-video-observatory",
+      "blogRoute": "/blog/current-market-video-observatory",
+      "actionCount": 4,
+      "requiredActionPhases": [
+        "inspect-watch-route",
+        "inspect-blog-route",
+        "wait-supabase-second-action",
+        "firecuda-decision"
+      ],
+      "coveredSignals": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "market_view_open",
+        "search_intent_chip_select"
+      ],
+      "secondActionSignals": [
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "market_view_open",
+        "search_intent_chip_select"
+      ],
+      "outcomeSlots": {
+        "promote": {
+          "fireCudaAction": "Move pair keywords into FireCuda winner list, strengthen internal links, and prepare supporting long-tail expansion."
+        },
+        "rewrite": {
+          "rewriteTargets": [
+            "title",
+            "description",
+            "proofAngle",
+            "internal link anchor",
+            "category route language"
+          ]
+        },
+        "hold": {
+          "fireCudaAction": "Return pair keywords to FireCuda backlog, keep canonical route crawlable, and do not expand supporting variations."
+        }
+      },
+      "receiptFields": {
+        "searchConsoleEvidence": "pending",
+        "supabaseRouteRefinement": "pending",
+        "supabaseKeywordRefinement": "pending",
+        "secondActionWinner": "pending",
+        "decision": "pending",
+        "masterListAction": "pending",
+        "backlinkAction": "pending",
+        "nextReviewWindow": "pending"
+      },
+      "expansionRule": "Allow master-list expansion only after promote or rewrite evidence; hold inactive pairs without adding more keyword surfaces.",
+      "nextAction": "Fill receipt fields from Search Console and Supabase evidence."
+    },
+    {
+      "order": 6,
+      "pairSlug": "home-project-3d-visual-planner",
+      "launchLane": "Mainstream Streaming",
+      "status": "receipt-ready-for-evidence",
+      "watchRoute": "/watch/home-project-3d-visual-planner",
+      "blogRoute": "/blog/home-project-3d-visual-planner",
+      "actionCount": 4,
+      "requiredActionPhases": [
+        "inspect-watch-route",
+        "inspect-blog-route",
+        "wait-supabase-second-action",
+        "firecuda-decision"
+      ],
+      "coveredSignals": [
+        "blog_view",
+        "page_view",
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "secondActionSignals": [
+        "proof_route_open",
+        "backlink_source_open",
+        "glb_preview_play",
+        "podcast_interrupt_play",
+        "search_intent_chip_select"
+      ],
+      "outcomeSlots": {
+        "promote": {
+          "fireCudaAction": "Move pair keywords into FireCuda winner list, strengthen internal links, and prepare supporting long-tail expansion."
+        },
+        "rewrite": {
+          "rewriteTargets": [
+            "title",
+            "description",
+            "proofAngle",
+            "internal link anchor",
+            "category route language"
+          ]
+        },
+        "hold": {
+          "fireCudaAction": "Return pair keywords to FireCuda backlog, keep canonical route crawlable, and do not expand supporting variations."
+        }
+      },
+      "receiptFields": {
+        "searchConsoleEvidence": "pending",
+        "supabaseRouteRefinement": "pending",
+        "supabaseKeywordRefinement": "pending",
+        "secondActionWinner": "pending",
+        "decision": "pending",
+        "masterListAction": "pending",
+        "backlinkAction": "pending",
+        "nextReviewWindow": "pending"
+      },
+      "expansionRule": "Allow master-list expansion only after promote or rewrite evidence; hold inactive pairs without adding more keyword surfaces.",
+      "nextAction": "Fill receipt fields from Search Console and Supabase evidence."
+    }
+  ],
+  "decisionRules": [
+    "Promote when visibility is joined by at least one second action.",
+    "Rewrite when visibility appears but second-action proof stays quiet.",
+    "Hold when no route_refinement or keyword_refinement movement appears after the inspection window.",
+    "Never expand the master SEO list from pending receipts.",
+    "Record backlink action only after the visitor/source behavior proves the route was useful."
+  ],
+  "nextFireCudaMove": "Fill receipts from Search Console and Supabase evidence, then update promote/rewrite/hold queues.",
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  }
+}

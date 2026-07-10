@@ -1,0 +1,436 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Market Promotion Packet",
+  "status": "measurement-covered",
+  "purpose": "Make Current Market useful as a measured extension of the observatory: ticker search, TradingView chart, options print feed, connected video, connected podcast, GLB environment, and source/backlink proof.",
+  "currentRead": "Market opens are still zero. Keep the market lane staged as a premium proof surface and let quick market pulses route users into it before expanding market SEO.",
+  "guardrail": "Do not turn DigitalHut into a trading site. Market is an observatory/research lane with source proof, not financial advice.",
+  "behaviorRead": {
+    "marketOpens": 0,
+    "searchInteractions": 0,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "blogViews": 14
+  },
+  "eventReadiness": [
+    {
+      "eventName": "market_view_open",
+      "status": "covered"
+    },
+    {
+      "eventName": "ticker_search",
+      "status": "covered"
+    },
+    {
+      "eventName": "search_intent_chip_select",
+      "status": "covered"
+    },
+    {
+      "eventName": "proof_route_open",
+      "status": "covered"
+    },
+    {
+      "eventName": "backlink_source_open",
+      "status": "covered"
+    },
+    {
+      "eventName": "glb_preview_play",
+      "status": "covered"
+    },
+    {
+      "eventName": "podcast_interrupt_play",
+      "status": "covered"
+    }
+  ],
+  "routeProof": {
+    "route": "/watch/current-market-video-observatory",
+    "canonical": "https://www.digitalhut.app/watch/current-market-video-observatory",
+    "title": "Current Market Video Observatory: DigitalHut Proof | DigitalHut Watch Proof",
+    "keywords": [
+      "current market video observatory",
+      "stock market visual analysis 3D",
+      "AI stock video research dashboard",
+      "company video research source map",
+      "earnings video observatory",
+      "stock market visual analysis DigitalHut",
+      "stock market visual analysis Businesses",
+      "company video research DigitalHut",
+      "company video research Businesses",
+      "AI data center market DigitalHut"
+    ],
+    "proofAngle": "top stock lane, market highlights, connected video, connected podcast, GLB environment, and backlinkable company route"
+  },
+  "marketLaneCount": 10,
+  "marketLanes": [
+    {
+      "rank": 1,
+      "symbol": "NVDA",
+      "company": "NVIDIA",
+      "lane": "AI chips",
+      "status": "market-open-needed",
+      "routeTarget": "/watch/current-market-video-observatory",
+      "videoSearch": "NVIDIA stock AI data center market analysis 2026",
+      "podcastSearch": "NVIDIA AI chip market podcast interview",
+      "glbSearch": "AI data center stock exchange 3D environment",
+      "keywords": [
+        "NVIDIA stock AI data center market analysis 2026",
+        "AI chip market visual observatory",
+        "GPU data center 3D stock view"
+      ],
+      "sourceBacklinkNeed": "NVIDIA source/backlink proof for AI chips market context",
+      "measurementPath": [
+        "market_view_open",
+        "ticker_search",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "supportSignals": [
+        "GLB proof is active",
+        "podcast interrupt proof is active",
+        "blog proof is active"
+      ]
+    },
+    {
+      "rank": 2,
+      "symbol": "TSLA",
+      "company": "Tesla",
+      "lane": "EV robotics",
+      "status": "market-open-needed",
+      "routeTarget": "/watch/current-market-video-observatory",
+      "videoSearch": "Tesla stock EV robotics market analysis 2026",
+      "podcastSearch": "Tesla EV robotics market podcast",
+      "glbSearch": "electric vehicle factory stock market 3D environment",
+      "keywords": [
+        "Tesla stock EV robotics market analysis 2026",
+        "electric vehicle factory 3D stock view",
+        "robotics market video observatory"
+      ],
+      "sourceBacklinkNeed": "Tesla source/backlink proof for EV robotics market context",
+      "measurementPath": [
+        "market_view_open",
+        "ticker_search",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "supportSignals": [
+        "GLB proof is active",
+        "podcast interrupt proof is active",
+        "blog proof is active"
+      ]
+    },
+    {
+      "rank": 3,
+      "symbol": "AAPL",
+      "company": "Apple",
+      "lane": "consumer tech",
+      "status": "market-open-needed",
+      "routeTarget": "/watch/current-market-video-observatory",
+      "videoSearch": "Apple stock product ecosystem market analysis 2026",
+      "podcastSearch": "Apple consumer technology market podcast",
+      "glbSearch": "consumer technology retail stock market 3D environment",
+      "keywords": [
+        "Apple stock product ecosystem market analysis 2026",
+        "Apple Vision Pro market observatory",
+        "consumer technology 3D retail stock view"
+      ],
+      "sourceBacklinkNeed": "Apple source/backlink proof for consumer tech market context",
+      "measurementPath": [
+        "market_view_open",
+        "ticker_search",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "supportSignals": [
+        "GLB proof is active",
+        "podcast interrupt proof is active",
+        "blog proof is active"
+      ]
+    },
+    {
+      "rank": 4,
+      "symbol": "MSFT",
+      "company": "Microsoft",
+      "lane": "cloud AI",
+      "status": "market-open-needed",
+      "routeTarget": "/watch/current-market-video-observatory",
+      "videoSearch": "Microsoft stock cloud AI market analysis 2026",
+      "podcastSearch": "Microsoft cloud AI market podcast",
+      "glbSearch": "cloud server campus stock market 3D environment",
+      "keywords": [
+        "Microsoft stock cloud AI market analysis 2026",
+        "Azure cloud market visual observatory",
+        "AI software infrastructure stock view"
+      ],
+      "sourceBacklinkNeed": "Microsoft source/backlink proof for cloud AI market context",
+      "measurementPath": [
+        "market_view_open",
+        "ticker_search",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "supportSignals": [
+        "GLB proof is active",
+        "podcast interrupt proof is active",
+        "blog proof is active"
+      ]
+    },
+    {
+      "rank": 5,
+      "symbol": "AMD",
+      "company": "AMD",
+      "lane": "semiconductors",
+      "status": "market-open-needed",
+      "routeTarget": "/watch/current-market-video-observatory",
+      "videoSearch": "AMD stock semiconductor GPU market analysis 2026",
+      "podcastSearch": "AMD semiconductor market podcast",
+      "glbSearch": "semiconductor lab stock market 3D environment",
+      "keywords": [
+        "AMD stock semiconductor GPU market analysis 2026",
+        "Radeon Ryzen market visual observatory",
+        "semiconductor lab 3D stock view"
+      ],
+      "sourceBacklinkNeed": "AMD source/backlink proof for semiconductors market context",
+      "measurementPath": [
+        "market_view_open",
+        "ticker_search",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "supportSignals": [
+        "GLB proof is active",
+        "podcast interrupt proof is active",
+        "blog proof is active"
+      ]
+    },
+    {
+      "rank": 6,
+      "symbol": "AMZN",
+      "company": "Amazon",
+      "lane": "commerce cloud",
+      "status": "market-open-needed",
+      "routeTarget": "/watch/current-market-video-observatory",
+      "videoSearch": "Amazon stock AWS commerce market analysis 2026",
+      "podcastSearch": "Amazon AWS commerce market podcast",
+      "glbSearch": "warehouse cloud logistics stock market 3D environment",
+      "keywords": [
+        "Amazon stock AWS commerce market analysis 2026",
+        "warehouse cloud logistics stock view",
+        "AWS commerce market visual observatory"
+      ],
+      "sourceBacklinkNeed": "Amazon source/backlink proof for commerce cloud market context",
+      "measurementPath": [
+        "market_view_open",
+        "ticker_search",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "supportSignals": [
+        "GLB proof is active",
+        "podcast interrupt proof is active",
+        "blog proof is active"
+      ]
+    },
+    {
+      "rank": 7,
+      "symbol": "META",
+      "company": "Meta",
+      "lane": "social AI",
+      "status": "market-open-needed",
+      "routeTarget": "/watch/current-market-video-observatory",
+      "videoSearch": "Meta stock social media AI market analysis 2026",
+      "podcastSearch": "Meta social media AI market podcast",
+      "glbSearch": "social media data hub stock market 3D environment",
+      "keywords": [
+        "Meta stock social media AI market analysis 2026",
+        "Instagram reels market visual observatory",
+        "social AI 3D stock view"
+      ],
+      "sourceBacklinkNeed": "Meta source/backlink proof for social AI market context",
+      "measurementPath": [
+        "market_view_open",
+        "ticker_search",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "supportSignals": [
+        "GLB proof is active",
+        "podcast interrupt proof is active",
+        "blog proof is active"
+      ]
+    },
+    {
+      "rank": 8,
+      "symbol": "GOOGL",
+      "company": "Alphabet",
+      "lane": "search cloud",
+      "status": "market-open-needed",
+      "routeTarget": "/watch/current-market-video-observatory",
+      "videoSearch": "Alphabet Google YouTube AI stock market analysis 2026",
+      "podcastSearch": "Google AI search cloud market podcast",
+      "glbSearch": "search engine cloud campus stock market 3D environment",
+      "keywords": [
+        "Alphabet Google YouTube AI stock market analysis 2026",
+        "YouTube search cloud market observatory",
+        "Google AI 3D stock view"
+      ],
+      "sourceBacklinkNeed": "Alphabet source/backlink proof for search cloud market context",
+      "measurementPath": [
+        "market_view_open",
+        "ticker_search",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "supportSignals": [
+        "GLB proof is active",
+        "podcast interrupt proof is active",
+        "blog proof is active"
+      ]
+    },
+    {
+      "rank": 9,
+      "symbol": "AVGO",
+      "company": "Broadcom",
+      "lane": "network chips",
+      "status": "market-open-needed",
+      "routeTarget": "/watch/current-market-video-observatory",
+      "videoSearch": "Broadcom stock AI networking chip market analysis 2026",
+      "podcastSearch": "Broadcom networking chips market podcast",
+      "glbSearch": "network chip data center stock market 3D environment",
+      "keywords": [
+        "Broadcom stock AI networking chip market analysis 2026",
+        "network chip data center stock view",
+        "AI networking market visual observatory"
+      ],
+      "sourceBacklinkNeed": "Broadcom source/backlink proof for network chips market context",
+      "measurementPath": [
+        "market_view_open",
+        "ticker_search",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "supportSignals": [
+        "GLB proof is active",
+        "podcast interrupt proof is active",
+        "blog proof is active"
+      ]
+    },
+    {
+      "rank": 10,
+      "symbol": "NFLX",
+      "company": "Netflix",
+      "lane": "streaming media",
+      "status": "market-open-needed",
+      "routeTarget": "/watch/current-market-video-observatory",
+      "videoSearch": "Netflix stock streaming ads market analysis 2026",
+      "podcastSearch": "Netflix streaming media market podcast",
+      "glbSearch": "streaming studio stock market 3D environment",
+      "keywords": [
+        "Netflix stock streaming ads market analysis 2026",
+        "streaming media market visual observatory",
+        "Netflix ad tier 3D stock view"
+      ],
+      "sourceBacklinkNeed": "Netflix source/backlink proof for streaming media market context",
+      "measurementPath": [
+        "market_view_open",
+        "ticker_search",
+        "proof_route_open",
+        "backlink_source_open"
+      ],
+      "supportSignals": [
+        "GLB proof is active",
+        "podcast interrupt proof is active",
+        "blog proof is active"
+      ]
+    }
+  ],
+  "regularFeedBridge": [
+    {
+      "symbol": "NVDA",
+      "label": "NVDA AI chips",
+      "regularFeedRole": "Quick market pulse in the regular feed; click routes into Current Market view.",
+      "observatoryReturn": "NVDA should return video, stock context, podcast/source moment, and GLB environment in the same DigitalHut presentation format."
+    },
+    {
+      "symbol": "TSLA",
+      "label": "TSLA EV robotics",
+      "regularFeedRole": "Quick market pulse in the regular feed; click routes into Current Market view.",
+      "observatoryReturn": "TSLA should return video, stock context, podcast/source moment, and GLB environment in the same DigitalHut presentation format."
+    },
+    {
+      "symbol": "AAPL",
+      "label": "AAPL consumer tech",
+      "regularFeedRole": "Quick market pulse in the regular feed; click routes into Current Market view.",
+      "observatoryReturn": "AAPL should return video, stock context, podcast/source moment, and GLB environment in the same DigitalHut presentation format."
+    }
+  ],
+  "searchBridge": [
+    {
+      "keyword": "funny looking for lunch tourist district lunch break 3D preview",
+      "marketConnection": "If a visitor turns this into a ticker/company query, route into Current Market instead of creating a duplicate entertainment lane.",
+      "marketEvents": [
+        "search_run",
+        "ticker_search",
+        "market_view_open"
+      ]
+    },
+    {
+      "keyword": "local what should I eat work district after work watch route",
+      "marketConnection": "If a visitor turns this into a ticker/company query, route into Current Market instead of creating a duplicate entertainment lane.",
+      "marketEvents": [
+        "search_run",
+        "ticker_search",
+        "market_view_open"
+      ]
+    },
+    {
+      "keyword": "open now best lunch near me international city downtown podcast source moment",
+      "marketConnection": "If a visitor turns this into a ticker/company query, route into Current Market instead of creating a duplicate entertainment lane.",
+      "marketEvents": [
+        "search_run",
+        "ticker_search",
+        "market_view_open"
+      ]
+    },
+    {
+      "keyword": "2026 cheap lunch spot near me near the office review observatory",
+      "marketConnection": "If a visitor turns this into a ticker/company query, route into Current Market instead of creating a duplicate entertainment lane.",
+      "marketEvents": [
+        "search_run",
+        "ticker_search",
+        "market_view_open"
+      ]
+    },
+    {
+      "keyword": "quick family lunch place city center while traveling backlink proof",
+      "marketConnection": "If a visitor turns this into a ticker/company query, route into Current Market instead of creating a duplicate entertainment lane.",
+      "marketEvents": [
+        "search_run",
+        "ticker_search",
+        "market_view_open"
+      ]
+    },
+    {
+      "keyword": "review-backed office lunch idea suburb before appointment decision guide",
+      "marketConnection": "If a visitor turns this into a ticker/company query, route into Current Market instead of creating a duplicate entertainment lane.",
+      "marketEvents": [
+        "search_run",
+        "ticker_search",
+        "market_view_open"
+      ]
+    }
+  ],
+  "nextFireCudaMove": "Stage the top 10 market lanes, keep regular-feed market pulses compact, and wait for market_view_open or ticker_search before expanding stock-specific SEO.",
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  }
+}

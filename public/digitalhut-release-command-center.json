@@ -1,0 +1,99 @@
+{
+    "generatedAt":  "2026-07-07T12:51:00-04:00",
+    "mode":  "DigitalHut Release Command Center",
+    "status":  "release-command-center-build-verified-deploy-auth-needed",
+    "purpose":  "Provide one compact backend command center for the next deploy moment: build gate, inspection order, measurement proof, FireCuda queues, and compare/refine handoff.",
+    "guardrail":  "This does not deploy or claim live rank movement. It records that local Vite build and metric verifier passed, while Vercel auth/CLI remains the deploy blocker.",
+    "commandLanes":  [
+                         {
+                             "lane":  "Build Gate",
+                             "status":  "local-vite-build-passed",
+                             "read":  "Metric contract verifier passed 19 checks and direct Vite production build completed successfully. npm command is blocked by missing bundled npm nopt dependency, not app code.",
+                             "nextAction":  "Use Vite direct build as local proof; restore Vercel CLI/auth for production deploy."
+                         },
+                         {
+                             "lane":  "Search Console Inspection",
+                             "status":  "measurement-proof-ready",
+                             "read":  "14 ordered steps / 14 release targets",
+                             "nextAction":  "Inspect watch routes first, matching blog routes second, then wait for Supabase refinement."
+                         },
+                         {
+                             "lane":  "Supabase Measurement",
+                             "status":  "measurement-proof-ready",
+                             "read":  "8 proof events / 3 delta decisions",
+                             "nextAction":  "Compare route_refinement and keyword_refinement before promoting FireCuda keywords."
+                         },
+                         {
+                             "lane":  "FireCuda Decisions",
+                             "status":  "firecuda-decision-queues-ready",
+                             "read":  "promote 7 / rewrite 7 / hold 7",
+                             "nextAction":  "Populate exactly one queue per release pair after real behavior lands."
+                         },
+                         {
+                             "lane":  "Post-Deploy Handoff",
+                             "status":  "post-deploy-compare-staged",
+                             "read":  "8 release routes / delta 3",
+                             "nextAction":  "After the next deployed traffic read, promote only routes with behavior and run Current Market/Home Project through the delta promote-rewrite-hold path before expanding supporting clusters."
+                         }
+                     ],
+    "buildProofAcceptanceChecklist":  [
+                                          {
+                                              "proof":  "local-build-proof",
+                                              "required":  [
+                                                               "node_modules/vite/bin/vite.js or node_modules/.bin/vite exists",
+                                                               "npm run build completes without timeout or missing npm dependency errors",
+                                                               "dist output is written for the current Vite/Vercel configuration"
+                                                           ],
+                                              "currentRead":  "Metric verifier passed 19 checks; direct Vite production build wrote dist successfully. npm wrapper is unhealthy because bundled npm is missing nopt."
+                                          },
+                                          {
+                                              "proof":  "vercel-build-proof",
+                                              "required":  [
+                                                               "Vercel npm ci --legacy-peer-deps completes from the committed package-lock",
+                                                               "Vercel npm run build completes with framework vite and output dist",
+                                                               "preview or production URL serves the same sitemap/watch/blog route set"
+                                                           ],
+                                              "currentRead":  "Project is linked to Vercel, but local user auth, VERCEL_TOKEN, and local/global Vercel CLI are not visible in this shell."
+                                          },
+                                          {
+                                              "proof":  "post-deploy-measurement-proof",
+                                              "required":  [
+                                                               "watch routes are inspectable before matching blog routes",
+                                                               "Supabase records page/search/autoplay/GLB/podcast/market/blog behavior",
+                                                               "FireCuda promotes, rewrites, or holds each route pair from behavior evidence"
+                                                           ],
+                                              "currentRead":  "Measurement layer is ready for the next deployed traffic read. Compare proof/source opens first, then GLB, podcast, autoplay, search, and market deltas."
+                                          }
+                                      ],
+    "launchSequence":  [
+                           "Local build proof is complete: metric verifier passed and direct Vite build wrote dist.",
+                           "Do not claim live rank movement until Search Console rows or post-deploy traffic deltas exist.",
+                           "Restore Vercel CLI/auth or VERCEL_TOKEN before production deployment.",
+                           "After deploy, compare proof/source hit markers against the 299 page view / 107 unique visitor floor.",
+                           "Move every release pair into promote, rewrite, or hold without expanding thin pages."
+                       ],
+    "currentBuildGate":  "local-vite-build-passed",
+    "releaseTargets":  14,
+    "orderedInspectionSteps":  14,
+    "proofEvents":  8,
+    "promoteQueue":  7,
+    "rewriteQueue":  7,
+    "holdQueue":  7,
+    "nextAction":  "Deploy only after Vercel CLI/auth or token is restored; then compare proof/source hit markers against the 299 page view / 107 unique visitor floor.",
+    "lastKnownMetrics":  {
+                             "pageViews":  299,
+                             "uniqueVisitors":  107,
+                             "searchInteractions":  2,
+                             "autoplayStarts":  5,
+                             "glbPreviewPlays":  83,
+                             "podcastInterrupts":  13,
+                             "marketOpens":  5,
+                             "blogViews":  14,
+                             "source":  "live production insight-map floor checked before local analytics-priority batch deploy",
+                             "capturedAt":  "2026-07-07T12:47:00-04:00",
+                             "liveRefreshStatus":  "live-floor-current-before-deploy",
+                             "totalEvents":  516,
+                             "proofRouteOpens":  0,
+                             "sourceBacklinkOpens":  0
+                         }
+}

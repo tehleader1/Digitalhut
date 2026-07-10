@@ -1,0 +1,1137 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut System Rendered Capabilities",
+  "frontendLock": "Locked: no visible website changes unless live client behavior or an overdue system flaw proves the interface needs it.",
+  "operatingStack": [
+    "FireCuda",
+    "Supabase",
+    "Google Cloud",
+    "Vercel",
+    "Compare & Contrast"
+  ],
+  "capabilityCounts": {
+    "productReady": 15,
+    "productTotal": 15,
+    "sitemapUrls": 137,
+    "blogProofPosts": 54,
+    "watchProofRoutes": 52,
+    "categoryRoutes": 20,
+    "systemCapabilityAlerts": 10,
+    "readyCapabilityAlerts": 9,
+    "refinementActions": 9
+  },
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  },
+  "product": {
+    "podcastClickSystem": "ready",
+    "podcastRetrySourceReady": "ready",
+    "glbCollapseControl": "ready",
+    "idlePausedGlbRemoved": "ready",
+    "marketFeed": "ready",
+    "youtubeCategoryQueue": "ready",
+    "contentAnalyzer": "ready",
+    "marketMeasurementReady": "ready",
+    "compactCategoryLock": "ready",
+    "liveProofRouteRail": "ready",
+    "platformCadenceRail": "ready",
+    "platformCadenceSeoProof": "ready",
+    "searchIntentRadar": "ready",
+    "searchIntentSeoProof": "ready",
+    "usefulnessLaneProof": "ready"
+  },
+  "seoProof": {
+    "blogProofPosts": 54,
+    "watchProofRoutes": 52,
+    "blogRoutes": 52,
+    "categoryRoutes": 20,
+    "sitemapUrls": 137,
+    "claimLanePosts": [
+      "what-am-i-watching-viral-video-explained",
+      "watch-video-with-3d-model-proof",
+      "podcast-source-moment-for-viral-video",
+      "funny-mainstream-video-explained"
+    ],
+    "systemDocs": [
+      {
+        "title": "manual-system-cycle-002",
+        "exists": true
+      },
+      {
+        "title": "tightened-publishing-stack-cycle-002",
+        "exists": true
+      },
+      {
+        "title": "ranked-blog-proof-system-cycle-002",
+        "exists": true
+      }
+    ]
+  },
+  "claimLaneSummary": {
+    "category": "What Am I Watching Observatory",
+    "proofPages": [
+      "what-am-i-watching-viral-video-explained",
+      "watch-video-with-3d-model-proof",
+      "podcast-source-moment-for-viral-video",
+      "funny-mainstream-video-explained"
+    ],
+    "proofPageCount": 4,
+    "route": "/category/what-am-i-watching-observatory"
+  },
+  "readyAlerts": {
+    "generatedAt": "2026-07-07T16:24:02.278Z",
+    "summary": "9 ready alerts / 10 total system capability alerts",
+    "alerts": [
+      {
+        "id": "frontend-locked",
+        "level": "ready",
+        "lane": "Website Surface",
+        "trigger": "User rule: no visual changes unless live data requires it.",
+        "read": "The observatory UI is locked for this cycle. Backend SEO analytics can move without adding new panels or changing the live visual surface.",
+        "nextAction": "Only propose a front-end change when client behavior, lag, or a missing implemented system proves it is needed."
+      },
+      {
+        "id": "viral-first-source-ready",
+        "level": "ready",
+        "lane": "New Viral Video",
+        "trigger": "A new viral video releases and DigitalHut needs to be ready as a first-source observatory feed without rushing a visual rewrite.",
+        "read": "FireCuda keywords, Supabase event names, Google media checks, GLB proof hooks, podcast/source hooks, and compare/refine gates are staged as a backend packet.",
+        "nextAction": "When a viral topic is selected, classify the topic, attach the first-source route, and measure watch/source/GLB/podcast/backlink movement before public expansion."
+      },
+      {
+        "id": "viral-first-source-packet-latest",
+        "level": "ready",
+        "lane": "New Viral Video",
+        "trigger": "new viral video / YouTube / Mainstream Streaming",
+        "read": "Backend packet generated for YouTube/Mainstream Streaming; 12 keywords, 6 event signals, and 5 proof gates staged. Latest packet: new-viral-video.",
+        "nextAction": "Use this system capability during backend SEO analysis, then promote only the phrases that earn source/watch/GLB/podcast/backlink behavior."
+      },
+      {
+        "id": "buried-treasure-niche-ready",
+        "level": "ready",
+        "lane": "Claimable Niche",
+        "trigger": "Own the 'what am I watching?' entertainment observatory lane: people do not only want a video, they want the video explained through source proof, 3D context, podcast/source moments, and useful long-tail paths.",
+        "read": "DigitalHut has a backend-ready niche map for the what-am-I-watching entertainment observatory lane, with long-tail clusters, proof signals, and expansion gates.",
+        "nextAction": "Claim the what-am-I-watching lane first, then let real interactions decide whether creator reels, 3D decision proof, podcast authority, or market story proof gets the next public route batch."
+      },
+      {
+        "id": "mundane-off-time-experience-ready",
+        "level": "ready",
+        "lane": "Mundane Off-Time Experience",
+        "trigger": "Own normal off-time searches before they vanish into single-use tabs: lunch, rideshare, flight booking, wiki lookup, funny videos, errands, quick reviews, and small daily decisions.",
+        "read": "DigitalHut now has a backend-ready map for ordinary off-time searches: lunch, rideshare, flight booking, wiki lookup, funny clips, errands, and review-before-buying behavior.",
+        "nextAction": "Stage the mundane off-time category as the next dapp experience, then let Supabase behavior decide whether lunch, rideshare, flight, wiki, funny video, or errands earns the next public expansion."
+      },
+      {
+        "id": "codex-oversight-ready",
+        "level": "ready",
+        "lane": "Codex Oversight",
+        "trigger": "Codex oversees the DigitalHut system capabilities during live work: I decide what matters, what to hold, what to claim, and what deserves code, SEO, proof, or deployment movement.",
+        "read": "The system is capability-ready and visually locked. The strongest owner move is to claim the what-am-I-watching entertainment observatory niche in backend SEO while waiting for search/source behavior before public expansion.",
+        "nextAction": "Only surface a visual update when capability delta, visitor behavior, or a confirmed system flaw proves the interface needs it."
+      },
+      {
+        "id": "glb-proof-winner",
+        "level": "ready",
+        "lane": "GLB Renderer",
+        "trigger": "62 GLB plays / 225 page views",
+        "read": "GLB remains the strongest proven engagement signal.",
+        "nextAction": "Use GLB as proof attached to the chosen topic, not as generic filler."
+      },
+      {
+        "id": "search-intent-watch",
+        "level": "watch",
+        "lane": "Search Intent",
+        "trigger": "0 search interactions",
+        "read": "Search is still quiet, so keyword movement should be staged carefully instead of assumed.",
+        "nextAction": "Let category, source, quick-panel, and watch-route signals help validate intent."
+      },
+      {
+        "id": "proof-depth-ready",
+        "level": "ready",
+        "lane": "SEO Proof",
+        "trigger": "137 sitemap URLs / 54 proof posts / 52 watch routes",
+        "read": "The crawlable proof layer is deep enough for compare-and-contrast refinement.",
+        "nextAction": "Compare behavior against proof depth before adding another visible content batch."
+      },
+      {
+        "id": "product-marker-gate",
+        "level": "ready",
+        "lane": "Deploy Gate",
+        "trigger": "15/15 product markers ready",
+        "read": "Stable backend/product markers can support a meaningful deploy batch.",
+        "nextAction": "Deploy only after a stable batch, not for small backend bookkeeping."
+      }
+    ]
+  },
+  "buriedTreasureNicheMap": {
+    "label": "Claimable Observatory Entertainment Niche",
+    "claim": "Own the 'what am I watching?' entertainment observatory lane: people do not only want a video, they want the video explained through source proof, 3D context, podcast/source moments, and useful long-tail paths.",
+    "status": "claimable-backend-system-capability",
+    "whyOpen": [
+      "YouTube, social feeds, podcasts, 3D asset sites, and market/news sources usually live in separate tabs instead of one useful entertainment observatory.",
+      "Most SEO pages explain a topic after the fact; DigitalHut can prepare the live proof structure first: video topic, GLB proof, podcast/source moment, backlink/source route, watch proof, and blog proof.",
+      "Everyday searches are messy: people ask about funny reels, face filters, home projects, gaming builds, local businesses, viral clips, and research topics before they know formal product keywords.",
+      "DigitalHut already has the rare combination needed to claim it: video renderer, GLB renderer, podcast/source interrupt, market panel, Supabase events, Google media readiness, and crawlable proof routes."
+    ],
+    "contentFormula": "Video topic read + GLB proof + podcast/source moment + backlink/source route + watch proof + blog proof + system capability alert.",
+    "longTailClusters": [
+      {
+        "id": "what-am-i-watching",
+        "lane": "Everyday viral explanation",
+        "role": "everyday viewer",
+        "formatFit": "main feed, watch proof, source route",
+        "keywords": [
+          "what am I watching viral video explained",
+          "viral video source map visual experience",
+          "funny reel explained with sources",
+          "new viral clip visual research hub",
+          "why is this video trending observatory"
+        ],
+        "proofSignal": "source opens + watch route opens + autoplay starts"
+      },
+      {
+        "id": "creator-proof-reels",
+        "lane": "Creator and social reel proof",
+        "role": "creator",
+        "formatFit": "search chip, podcast/source moment, blog proof",
+        "keywords": [
+          "ai reel visual experience proof",
+          "face filter reaction reel observatory",
+          "smiley face filter source moment",
+          "creator trend 3d evidence map",
+          "short video idea visual analytics"
+        ],
+        "proofSignal": "search intent chips + quick panel selections + blog route opens"
+      },
+      {
+        "id": "3d-decision-proof",
+        "lane": "3D decision support",
+        "role": "home buyer, gamer, traveler, researcher",
+        "formatFit": "GLB renderer, category lane, watch route",
+        "keywords": [
+          "watch video with 3d model proof",
+          "home project 3d video explanation",
+          "gaming build visual experience map",
+          "real estate video 3d model observatory",
+          "vacation place 3d source preview"
+        ],
+        "proofSignal": "GLB plays + GLB source clicks + watch proof opens"
+      },
+      {
+        "id": "podcast-source-moment",
+        "lane": "Podcast/source authority",
+        "role": "researcher, creator, developer",
+        "formatFit": "podcast interrupt, source panel, blog proof",
+        "keywords": [
+          "podcast source moment for viral video",
+          "apple podcast clip with video analysis",
+          "special guest source moment observatory",
+          "podcast backed video research hub",
+          "audio source proof for trending topic"
+        ],
+        "proofSignal": "podcast starts + podcast ends + backlink opens"
+      },
+      {
+        "id": "market-story-proof",
+        "lane": "Market and business story proof",
+        "role": "market watcher, local business owner",
+        "formatFit": "market panel, source route, watch proof",
+        "keywords": [
+          "stock video visual analysis with sources",
+          "company news 3d observatory",
+          "local business reel transformation proof",
+          "market story video source map",
+          "top volume stock video research hub"
+        ],
+        "proofSignal": "market opens + ticker searches + source opens"
+      }
+    ],
+    "systemPlacement": [
+      "FireCuda stores the phrase universe, niche movement, proof notes, and backlink targets.",
+      "Supabase records which cluster real visitors touch through search, autoplay, GLB, podcast, market, watch, blog, and source events.",
+      "Google Cloud prepares YouTube/media metadata, allowed transcript or provided transcript analysis, Speech/TTS readiness, and quota-safe fallback notes.",
+      "Vercel receives only stable crawlable proof: sitemap routes, watch/blog/category proof, public JSON packets, and deploy status.",
+      "Compare & Contrast promotes clusters that earn behavior and holds clusters that are only interesting ideas."
+    ],
+    "expansionGate": "Promote a cluster only when it has at least two supporting behavior lanes, such as search + watch, GLB + source, podcast + blog, market + ticker, or autoplay + backlink.",
+    "nextMove": "Claim the what-am-I-watching lane first, then let real interactions decide whether creator reels, 3D decision proof, podcast authority, or market story proof gets the next public route batch."
+  },
+  "mundaneOffTimeExperienceMap": {
+    "label": "Mundane Off-Time Experience",
+    "claim": "Own normal off-time searches before they vanish into single-use tabs: lunch, rideshare, flight booking, wiki lookup, funny videos, errands, quick reviews, and small daily decisions.",
+    "status": "backend-seo-system-capability",
+    "contentFormula": "Everyday intent + source/backlink proof + video topic read + GLB life-context preview + podcast/source moment + watch/blog/category proof.",
+    "whyOpen": [
+      "Normal people search constantly during breaks, commutes, errands, and planning windows, but most results stop at a list, review, or video.",
+      "DigitalHut can turn a small everyday search into a useful observatory page with video, GLB context, podcast/source authority, timeline proof, and backlinks.",
+      "This lane reaches people before they know technical words like dapp, GLB, observatory, or analytics."
+    ],
+    "clusters": [
+      {
+        "id": "lunch-local-food",
+        "lane": "Lunch And Local Food",
+        "role": "person on break",
+        "keywords": [
+          "looking for lunch near me visual guide",
+          "what should I eat today visual experience",
+          "local restaurant video review source proof",
+          "cheap lunch spot near me source map",
+          "family lunch place visual observatory"
+        ],
+        "variationDimensions": {
+          "intents": [
+            "looking for lunch",
+            "what should I eat",
+            "best lunch near me",
+            "cheap lunch spot",
+            "family lunch place",
+            "office lunch idea",
+            "quick food nearby",
+            "local restaurant review",
+            "healthy lunch option",
+            "late lunch place",
+            "food truck nearby",
+            "restaurant menu preview",
+            "lunch break meal",
+            "nearby cafe choice"
+          ],
+          "contexts": [
+            "lunch break",
+            "after work",
+            "family weekend",
+            "downtown",
+            "near the office",
+            "near home",
+            "while traveling",
+            "before appointment",
+            "between errands"
+          ],
+          "modifiers": [
+            "cheap",
+            "best",
+            "funny",
+            "local",
+            "open now",
+            "2026",
+            "quick",
+            "review-backed",
+            "source-backed"
+          ],
+          "formats": [
+            "visual guide",
+            "video map",
+            "source map",
+            "3D preview",
+            "watch route",
+            "podcast source moment",
+            "review observatory",
+            "backlink proof",
+            "decision guide"
+          ],
+          "proofAngles": [
+            "menu source",
+            "review source",
+            "local backlink",
+            "video proof",
+            "GLB place context",
+            "timeline decision",
+            "quick panel signal"
+          ],
+          "geoScopes": [
+            "near me",
+            "city center",
+            "suburb",
+            "airport area",
+            "college town",
+            "tourist district",
+            "work district",
+            "international city"
+          ]
+        },
+        "proofSignal": "search intent + backlink source open + watch route open"
+      },
+      {
+        "id": "rideshare-commute",
+        "lane": "Rideshare And Commute",
+        "role": "traveler or worker between places",
+        "keywords": [
+          "calling an Uber visual trip guide",
+          "rideshare pickup location explained",
+          "airport Uber pickup visual guide",
+          "commute delay visual observatory",
+          "rideshare price spike explained"
+        ],
+        "variationDimensions": {
+          "intents": [
+            "calling an Uber",
+            "rideshare pickup",
+            "airport Uber pickup",
+            "late night ride",
+            "commute delay",
+            "pickup location",
+            "rideshare price spike",
+            "Uber vs train",
+            "downtown pickup",
+            "safe pickup spot",
+            "ride after work",
+            "hotel pickup"
+          ],
+          "contexts": [
+            "after work",
+            "airport arrival",
+            "downtown event",
+            "late night",
+            "rainy commute",
+            "family trip",
+            "business travel",
+            "college campus"
+          ],
+          "modifiers": [
+            "safe",
+            "cheap",
+            "fast",
+            "open now",
+            "2026",
+            "local",
+            "source-backed",
+            "visual"
+          ],
+          "formats": [
+            "visual trip guide",
+            "route map",
+            "3D pickup view",
+            "watch route",
+            "source map",
+            "timeline guide",
+            "podcast source moment",
+            "backlink proof"
+          ],
+          "proofAngles": [
+            "pickup source",
+            "price signal",
+            "route timing",
+            "local guide",
+            "video proof",
+            "GLB location context",
+            "quick panel signal"
+          ],
+          "geoScopes": [
+            "near me",
+            "airport",
+            "downtown",
+            "hotel zone",
+            "stadium area",
+            "train station",
+            "suburb",
+            "international city"
+          ]
+        },
+        "proofSignal": "quick panel select + timeline read + source/backlink open"
+      },
+      {
+        "id": "flight-travel-booking",
+        "lane": "Flight And Travel Booking",
+        "role": "traveler comparing money, timing, and trust",
+        "keywords": [
+          "booking a flight ticket visual guide",
+          "cheap flight ticket 2026 source map",
+          "flight layover 3D map guide",
+          "airport delay visual observatory",
+          "travel booking source proof"
+        ],
+        "variationDimensions": {
+          "intents": [
+            "booking a flight ticket",
+            "cheap flight ticket",
+            "flight delay",
+            "airport layover",
+            "family vacation flight",
+            "last minute flight",
+            "airline ticket comparison",
+            "airport route",
+            "travel deal",
+            "flight change",
+            "best airport connection",
+            "international flight booking",
+            "airport delay update"
+          ],
+          "contexts": [
+            "family trip",
+            "business trip",
+            "vacation",
+            "holiday travel",
+            "same day booking",
+            "layover",
+            "airport delay",
+            "international route"
+          ],
+          "modifiers": [
+            "cheap",
+            "best",
+            "2026",
+            "last minute",
+            "source-backed",
+            "visual",
+            "family",
+            "safe"
+          ],
+          "formats": [
+            "visual guide",
+            "source map",
+            "3D map guide",
+            "watch route",
+            "timeline explainer",
+            "podcast source moment",
+            "travel observatory",
+            "backlink proof",
+            "decision guide"
+          ],
+          "proofAngles": [
+            "airline source",
+            "airport source",
+            "booking source",
+            "price signal",
+            "delay source",
+            "GLB airport context",
+            "video proof",
+            "timeline decision"
+          ],
+          "geoScopes": [
+            "near me",
+            "domestic",
+            "international",
+            "airport hub",
+            "vacation city",
+            "business city",
+            "family route"
+          ]
+        },
+        "proofSignal": "category lane select + GLB place preview + watch proof open"
+      },
+      {
+        "id": "wiki-quick-research",
+        "lane": "Wiki And Quick Research",
+        "role": "curious viewer looking something up",
+        "keywords": [
+          "wiki lookup visual research hub",
+          "what is this topic explained with sources",
+          "public information 3D observatory",
+          "beginner research visual observatory",
+          "topic timeline with source links"
+        ],
+        "variationDimensions": {
+          "intents": [
+            "wiki lookup",
+            "what is this topic",
+            "beginner research",
+            "public information",
+            "topic timeline",
+            "quick facts",
+            "source-backed summary",
+            "explained with sources",
+            "research before buying",
+            "history lookup",
+            "science lookup",
+            "technology lookup"
+          ],
+          "contexts": [
+            "lunch break",
+            "home research",
+            "student question",
+            "developer question",
+            "family question",
+            "news context",
+            "podcast context",
+            "video context"
+          ],
+          "modifiers": [
+            "beginner",
+            "quick",
+            "2026",
+            "source-backed",
+            "visual",
+            "simple",
+            "deep",
+            "trusted"
+          ],
+          "formats": [
+            "visual research hub",
+            "source map",
+            "3D observatory",
+            "watch route",
+            "timeline guide",
+            "podcast source moment",
+            "backlink proof",
+            "decision guide"
+          ],
+          "proofAngles": [
+            "wiki source",
+            "reference source",
+            "video proof",
+            "timeline source",
+            "GLB context",
+            "blog proof",
+            "source route",
+            "quick panel signal"
+          ],
+          "topicScopes": [
+            "science",
+            "business",
+            "technology",
+            "history",
+            "health context",
+            "travel context",
+            "local topic"
+          ]
+        },
+        "proofSignal": "blog proof open + source route open + search intent"
+      },
+      {
+        "id": "funny-mainstream-video",
+        "lane": "Funny Mainstream Video",
+        "role": "viewer killing time",
+        "keywords": [
+          "funny video explained with sources",
+          "mainstream website funny clip explained",
+          "what am I watching funny video",
+          "meme video timeline explained",
+          "viral clip source map"
+        ],
+        "variationDimensions": {
+          "intents": [
+            "funny video explained",
+            "mainstream funny clip",
+            "what am I watching funny video",
+            "meme video",
+            "viral clip",
+            "reaction reel",
+            "short video source",
+            "YouTube funny video",
+            "TikTok funny moment",
+            "Instagram reel moment",
+            "Reddit funny clip",
+            "family funny clip"
+          ],
+          "contexts": [
+            "off time",
+            "lunch break",
+            "late night",
+            "family room",
+            "after work",
+            "weekend",
+            "friend group",
+            "mainstream feed"
+          ],
+          "modifiers": [
+            "funny",
+            "viral",
+            "new",
+            "2026",
+            "source-backed",
+            "weird",
+            "quick",
+            "trending"
+          ],
+          "formats": [
+            "explained with sources",
+            "source map",
+            "timeline explained",
+            "watch route",
+            "3D context",
+            "podcast source moment",
+            "reaction observatory",
+            "backlink proof",
+            "visual guide"
+          ],
+          "proofAngles": [
+            "original source",
+            "creator source",
+            "comment source",
+            "video proof",
+            "podcast/source moment",
+            "GLB context",
+            "trend signal",
+            "watch proof"
+          ],
+          "platforms": [
+            "YouTube",
+            "TikTok",
+            "Instagram",
+            "Reddit",
+            "Facebook",
+            "mainstream website",
+            "shorts feed",
+            "podcast clip"
+          ]
+        },
+        "proofSignal": "autoplay start + watch route open + podcast/source interrupt"
+      },
+      {
+        "id": "errands-review-before-buying",
+        "lane": "Errands And Review Before Buying",
+        "role": "person making a small spending decision",
+        "keywords": [
+          "grocery run visual guide",
+          "closest store with best deals source map",
+          "should I buy this product video proof",
+          "Reddit review visual summary",
+          "trusted review map 2026"
+        ],
+        "variationDimensions": {
+          "intents": [
+            "grocery run",
+            "closest store",
+            "best deals",
+            "should I buy this product",
+            "Reddit review",
+            "trusted review",
+            "pharmacy run",
+            "weekend errands",
+            "home supply run",
+            "coffee shop stop",
+            "quick stop before work",
+            "family shopping",
+            "product comparison",
+            "local store review"
+          ],
+          "contexts": [
+            "after work",
+            "before work",
+            "weekend",
+            "family trip",
+            "near home",
+            "near office",
+            "while traveling",
+            "between errands",
+            "same day"
+          ],
+          "modifiers": [
+            "cheap",
+            "best",
+            "trusted",
+            "quick",
+            "2026",
+            "local",
+            "review-backed",
+            "source-backed"
+          ],
+          "formats": [
+            "visual guide",
+            "source map",
+            "video proof",
+            "3D preview",
+            "watch route",
+            "timeline guide",
+            "review observatory",
+            "backlink proof"
+          ],
+          "proofAngles": [
+            "store source",
+            "review source",
+            "product source",
+            "price signal",
+            "video proof",
+            "GLB product context",
+            "blog proof",
+            "quick panel signal"
+          ],
+          "geoScopes": [
+            "near me",
+            "suburb",
+            "downtown",
+            "mall area",
+            "airport area",
+            "college town",
+            "international city"
+          ]
+        },
+        "proofSignal": "source/backlink open + blog proof open + quick panel select"
+      }
+    ],
+    "systemPlacement": [
+      "FireCuda stores the broad phrase universe and separates lunch, rideshare, flight, wiki, funny-video, errand, and review clusters.",
+      "Supabase measures whether real people touch these normal lanes through search, category, autoplay, GLB, podcast, source, blog, and watch events.",
+      "Google Cloud can enrich allowed video metadata, source-safe descriptions, and future transcript/user-provided analysis for the everyday topic.",
+      "Vercel receives only stable proof routes and public status packets when a cluster is ready to be crawled.",
+      "Compare & Contrast promotes ordinary searches only when they show behavior, because this lane can grow huge fast."
+    ],
+    "expansionGate": "Promote an off-time cluster when it has at least one intent signal and one proof signal, such as search + watch, category + GLB, source + blog, autoplay + podcast, or quick panel + backlink.",
+    "nextMove": "Stage the mundane off-time category as the next dapp experience, then let Supabase behavior decide whether lunch, rideshare, flight, wiki, funny video, or errands earns the next public expansion."
+  },
+  "codexOversightCapabilities": {
+    "label": "Codex Oversight Capabilities",
+    "role": "Codex oversees the DigitalHut system capabilities during live work: I decide what matters, what to hold, what to claim, and what deserves code, SEO, proof, or deployment movement.",
+    "boundary": "DigitalHut system capabilities store, render, and measure. Codex oversight capabilities judge, connect, prioritize, and upgrade when active with the owner.",
+    "capabilities": [
+      {
+        "id": "claim-buried-niche",
+        "lane": "Niche Claiming",
+        "capability": "Spot underfilled entertainment/research lanes and turn them into structured long-tail packets instead of generic content.",
+        "evidenceUsed": [
+          "FireCuda keyword map",
+          "proof depth",
+          "source behavior",
+          "GLB engagement",
+          "podcast/source behavior",
+          "market gaps"
+        ],
+        "output": "claimable niche map, expansion gate, keyword cluster, proof route plan"
+      },
+      {
+        "id": "compare-and-hold",
+        "lane": "Compare And Hold",
+        "capability": "Decide when the system is already steady and should collect behavior instead of churning visual or SEO changes.",
+        "evidenceUsed": [
+          "capability delta",
+          "last-known metrics",
+          "alert movement",
+          "product markers",
+          "sitemap depth"
+        ],
+        "output": "hold/readiness call, next real movement target"
+      },
+      {
+        "id": "proof-over-filler",
+        "lane": "Proof Discipline",
+        "capability": "Reject filler phrases and only promote keywords that can live inside a video, GLB, podcast/source, backlink, watch, blog, market, or category proof surface.",
+        "evidenceUsed": [
+          "long-tail clusters",
+          "proof gates",
+          "route counts",
+          "Supabase event coverage"
+        ],
+        "output": "public-proof eligible phrases and withheld phrases"
+      },
+      {
+        "id": "frontend-lock-judgment",
+        "lane": "Interface Judgment",
+        "capability": "Keep the website visually locked unless live client behavior or an overdue implementation flaw proves a premium interface change is worth it.",
+        "evidenceUsed": [
+          "client behavior",
+          "active conditions",
+          "known visual blockers",
+          "feature readiness"
+        ],
+        "output": "no-change call or justified UI change target"
+      },
+      {
+        "id": "deploy-gate-judgment",
+        "lane": "Deploy Judgment",
+        "capability": "Separate deploy-worthy backend/proof batches from small local bookkeeping.",
+        "evidenceUsed": [
+          "product marker gate",
+          "proof route changes",
+          "public JSON packet changes",
+          "Vercel status",
+          "sitemap changes"
+        ],
+        "output": "deploy, hold, or stage call"
+      }
+    ],
+    "currentOversightRead": "The system is capability-ready and visually locked. The strongest owner move is to claim the what-am-I-watching entertainment observatory niche in backend SEO while waiting for search/source behavior before public expansion.",
+    "nextOwnerVisibleUpdate": "Only surface a visual update when capability delta, visitor behavior, or a confirmed system flaw proves the interface needs it."
+  },
+  "latestViralSourcePacket": {
+    "generatedAt": "2026-07-06T06:35:19.373Z",
+    "mode": "DigitalHut Viral First-Source System Capability",
+    "frontendLock": "No live observatory UI changes. This packet prepares backend SEO analytics, source proof, GLB proof, podcast/source moments, and compare/refine movement.",
+    "input": {
+      "topic": "new viral video",
+      "category": "Mainstream Streaming",
+      "platform": "YouTube",
+      "source": "first source feed",
+      "market": "United States",
+      "urgency": "ready"
+    },
+    "slug": "new-viral-video",
+    "stackFlow": [
+      {
+        "layer": "FireCuda",
+        "status": "ready",
+        "action": "Stage \"new viral video\" with first-source, international, backlink, category, and creator/research phrase variants."
+      },
+      {
+        "layer": "SEO Master List",
+        "status": "ready",
+        "action": "Queue 12 long-tail phrases for proof-route evaluation before publishing new pages."
+      },
+      {
+        "layer": "Supabase",
+        "status": "ready",
+        "action": "Measure source opens, watch opens, search intent, autoplay, GLB plays, podcast starts, backlink opens, and proof route use."
+      },
+      {
+        "layer": "Google Cloud",
+        "status": "ready",
+        "action": "Use YouTube metadata, allowed transcripts/user-provided transcripts, Speech/TTS readiness, and quota-safe discovery for the content read."
+      },
+      {
+        "layer": "Vercel",
+        "status": "ready",
+        "action": "Deploy only after a stable batch needs this packet public."
+      },
+      {
+        "layer": "Compare & Contrast",
+        "status": "ready",
+        "action": "Compare the viral packet against last-known GLB, podcast, search, blog, watch, source, and market behavior."
+      }
+    ],
+    "keywords": [
+      "new viral video first source feed",
+      "new viral video analytics 2026",
+      "new viral video DigitalHut observatory",
+      "new viral video GLB renderer proof",
+      "new viral video Apple Podcasts source moment",
+      "new viral video backlink source route",
+      "new viral video watch route proof",
+      "new viral video YouTube source verification",
+      "Mainstream Streaming viral first source observatory",
+      "United States new viral video visual research",
+      "first source feed viral source verification",
+      "breaking new viral video 3D evidence map"
+    ],
+    "eventSignals": [
+      {
+        "event": "viral_source_packet_ready",
+        "purpose": "System capability exists and can be attached to the next backend SEO analysis cycle."
+      },
+      {
+        "event": "viral_source_route_open",
+        "purpose": "Visitor opens the first-source route."
+      },
+      {
+        "event": "viral_source_backlink_open",
+        "purpose": "Visitor opens a related backlink/source reference."
+      },
+      {
+        "event": "viral_glb_proof_play",
+        "purpose": "Visitor plays the topic-linked 3D proof view."
+      },
+      {
+        "event": "viral_podcast_source_start",
+        "purpose": "Visitor starts the related podcast/source moment."
+      },
+      {
+        "event": "viral_watch_route_open",
+        "purpose": "Visitor opens the crawlable watch proof route."
+      }
+    ],
+    "proofGates": [
+      {
+        "gate": "source",
+        "status": "watch",
+        "action": "Attach a verified source URL before calling this a first-source feed."
+      },
+      {
+        "gate": "glb",
+        "status": "ready",
+        "action": "Use the GLB renderer as topic proof only when the model/source matches the topic."
+      },
+      {
+        "gate": "podcast",
+        "status": "ready",
+        "action": "Use podcast/source moment as support, not as a fake video replacement."
+      },
+      {
+        "gate": "seo-proof",
+        "status": "ready",
+        "action": "Promote to blog/watch/sitemap only when the angle is useful and not filler."
+      },
+      {
+        "gate": "deploy",
+        "status": "ready",
+        "action": "Deploy only as part of a stable backend SEO/proof batch."
+      }
+    ],
+    "compareSignals": [
+      {
+        "signal": "search",
+        "lastKnown": 0,
+        "read": "If search stays quiet, use source/watch/backlink behavior to validate the topic first."
+      },
+      {
+        "signal": "glb",
+        "lastKnown": 62,
+        "read": "GLB is the credibility winner; attach it to the topic only when it adds research value."
+      },
+      {
+        "signal": "podcast",
+        "lastKnown": 2,
+        "read": "Podcast/source moment should support the viral topic and return users to the video story."
+      },
+      {
+        "signal": "blog",
+        "lastKnown": 14,
+        "read": "Blog proof should display the system thinking after behavior proves the topic has value."
+      },
+      {
+        "signal": "sitemap",
+        "lastKnown": 117,
+        "read": "Crawlable depth is ready; avoid adding new routes until the topic earns a public proof angle."
+      }
+    ],
+    "readyAlert": {
+      "id": "viral-first-source-packet-latest",
+      "level": "ready",
+      "lane": "New Viral Video",
+      "trigger": "new viral video",
+      "read": "Backend packet generated for YouTube/Mainstream Streaming; 12 keywords, 6 event signals, and 5 proof gates staged.",
+      "nextAction": "Use this system capability during backend SEO analysis, then promote only the phrases that earn source/watch/GLB/podcast/backlink behavior."
+    }
+  },
+  "stackReads": [
+    {
+      "layer": "FireCuda",
+      "read": "Queue \"YouTube category and search\" as the next master-list movement while preserving GLB as the credibility winner.",
+      "proof": "keyword map, human roles, international side markets, backlink targets"
+    },
+    {
+      "layer": "Supabase",
+      "read": "Capture behavior before rewriting: search, autoplay, GLB, podcast, market, blog/watch, source, and wallet events.",
+      "proof": "event coverage and human-role analytics"
+    },
+    {
+      "layer": "Google Cloud",
+      "read": "Keep YouTube/media intelligence, Speech/TTS expansion, and fallback readiness visible so the dapp feels developer-grade.",
+      "proof": "media analysis packets, quota-safe fallbacks, cloud backup readiness"
+    },
+    {
+      "layer": "Vercel",
+      "read": "Stable product markers are deployable as a batch.",
+      "proof": "production route, status JSON, sitemap, watch/blog/category pages"
+    },
+    {
+      "layer": "Compare & Contrast",
+      "read": "Compare the next metrics snapshot against this packet before creating another keyword batch.",
+      "proof": "winner signals, lag signals, next FireCuda input"
+    }
+  ],
+  "activeConditions": [
+    {
+      "id": "search-intent-gap",
+      "active": true,
+      "severity": "high",
+      "lane": "YouTube category and search",
+      "reason": "Search has not proven active user intent yet.",
+      "nextMove": "Make category switching and next-episode controls read as the main content radar, then map the first real searches back into FireCuda."
+    },
+    {
+      "id": "market-entry-gap",
+      "active": true,
+      "severity": "high",
+      "lane": "Current Market",
+      "reason": "Market view is built but not earning opens yet.",
+      "nextMove": "Keep the regular-feed market teaser compact, but route ticker curiosity into the Current Market panel and watch proof routes."
+    },
+    {
+      "id": "podcast-proof-gap",
+      "active": true,
+      "severity": "medium",
+      "lane": "Podcast moments",
+      "reason": "Podcast interrupts are now functional but still need more measured use.",
+      "nextMove": "Track podcast interrupt, resume, source, and fallback clip events before adding more podcast UI."
+    },
+    {
+      "id": "blog-proof-gap",
+      "active": true,
+      "severity": "medium",
+      "lane": "Blog and watch proof",
+      "reason": "Blog proof exists but should receive more traffic from the live observatory.",
+      "nextMove": "Add tighter links from episode controls, category lanes, and watch routes into the ranked proof blog pages."
+    },
+    {
+      "id": "glb-strength",
+      "active": true,
+      "severity": "winner",
+      "lane": "GLB renderer",
+      "reason": "GLB plays are the strongest last-known engagement signal.",
+      "nextMove": "Use GLB proof as the lead credibility hook in category snippets, watch pages, and sponsor stack reads."
+    }
+  ],
+  "compareContrastActions": [
+    {
+      "id": "promote-glb-render-proof",
+      "lane": "GLB renderer",
+      "signal": "62 GLB plays / 225 page views",
+      "reading": "GLB proof is the strongest current engagement signal.",
+      "action": "Promote 3D Model View proof in watch pages, blog intros, and category snippets before adding more generic copy.",
+      "nextMetric": "GLB preview plays, source clicks, 3D Model View collapse/open rate"
+    },
+    {
+      "id": "repair-search-zero",
+      "lane": "YouTube/category search",
+      "signal": "0 recorded search interactions",
+      "reading": "Search is not yet proving user intent.",
+      "action": "Move category lane dropdown and quick panel wording toward obvious search intent: next episode stays in lane, search creates radar, market clicks route to market view.",
+      "nextMetric": "search interactions, quick panel clicks, same-category next episode plays"
+    },
+    {
+      "id": "prove-platform-cadence",
+      "lane": "Platform timing",
+      "signal": "1 autoplay starts / 225 page views",
+      "reading": "The live observatory now exposes queue, proof, analyzer, timing, and market cadence in the category-locked panel.",
+      "action": "Use the cadence rail to measure whether visitors understand the YouTube-style queue, same-category rotation, proof routes, and market/podcast routing before adding more pages.",
+      "nextMetric": "platform cadence reads, episode preview starts, proof route opens, same-category next episode plays"
+    },
+    {
+      "id": "expand-podcast-interrupt-proof",
+      "lane": "Podcast moments",
+      "signal": "2 podcast interrupts / 62 GLB plays",
+      "reading": "Podcast feature is underused compared with GLB interaction.",
+      "action": "Keep podcast as a click-to-interrupt moment with clearer speaker/source panel and return-to-YouTube state.",
+      "nextMetric": "podcast interrupts, podcast resume clicks, source page opens"
+    },
+    {
+      "id": "activate-market-entry",
+      "lane": "Current Market",
+      "signal": "0 market opens",
+      "reading": "Market view needs stronger entry from regular feed.",
+      "action": "Keep Market in the regular feed, but make the top 3 bullish/bearish options a compact teaser that routes to the full market view.",
+      "nextMetric": "market opens, ticker searches, TradingView panel opens"
+    },
+    {
+      "id": "tighten-blog-watch-chain",
+      "lane": "SEO proof",
+      "signal": "54 proof posts / 52 watch URLs / 137 sitemap URLs",
+      "reading": "Blog proof exists, but needs more movement from live experience to proof routes.",
+      "action": "Interlink standby, insights, blog, watch proof, and category pages so the crawler sees a complete DigitalHut observatory evidence loop.",
+      "nextMetric": "blog views, watch route views, category route views, sitemap indexed URL count"
+    },
+    {
+      "id": "balance-vacant-gap-keywords",
+      "lane": "FireCuda keyword tiering",
+      "signal": "Scenario input: exotic environments cool monthly while messy visual content, filters, reels, and quick transformations need more first-page capture.",
+      "reading": "The map should not delete exotic environments; it should move them into second-place backlink defense while promoting broader visual-content searches into the featured lane.",
+      "action": "Use FireCuda overseer groups to separate main-featured visual content, second-place exotic environment backlinks, developer/research trust, and market/local business conversion lanes.",
+      "nextMetric": "search intent chips, blog/watch route opens, backlink source opens, GLB source clicks by keyword group"
+    },
+    {
+      "id": "prepare-viral-first-source-packet",
+      "lane": "New viral video first-source feed",
+      "signal": "Scenario input: a fresh viral video needs DigitalHut ready across analytics, GLB proof, podcast/source moment, backlinks, and crawlable proof without changing the live UI.",
+      "reading": "The front-end stays locked. Backend SEO and analytics should be ready to classify the topic, capture source behavior, connect GLB/podcast proof, and decide whether the viral lane deserves a public proof route.",
+      "action": "Stage the viral first-source keyword packet, Supabase event names, source/backlink targets, Google media checks, and compare/refine gate before any visible product change.",
+      "nextMetric": "viral source route opens, viral GLB proof plays, viral podcast source starts, watch route opens, backlink opens, search intent chips"
+    },
+    {
+      "id": "deploy-stable-batch",
+      "lane": "Vercel/GitHub",
+      "signal": "15/15 product markers ready",
+      "reading": "Local code is ahead of production until the stable batch deploys.",
+      "action": "Deploy only after the GLB collapse, podcast click, standby proof page, and refinement board are in the same stable build.",
+      "nextMetric": "production page views, GLB plays, podcast interrupts, standby route views"
+    }
+  ],
+  "nextSystemMove": "Current overseer call: YouTube category and search. Search has not proven active user intent yet. Next move: Make category switching and next-episode controls read as the main content radar, then map the first real searches back into FireCuda."
+}

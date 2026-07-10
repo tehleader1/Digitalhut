@@ -1,0 +1,99 @@
+{
+  "generatedAt": "2026-07-07T06:08:00-04:00",
+  "mode": "DigitalHut Audience Target Shift GLB Mainstream 001",
+  "status": "active-traffic-opening-target",
+  "domain": "https://www.digitalhut.app",
+  "reasonForShift": {
+    "lastKnownPageViews": 278,
+    "lastKnownUniqueVisitors": 95,
+    "last48HourPageViews": 82,
+    "glbPreviewPlays": 81,
+    "podcastInterrupts": 12,
+    "marketOpens": 5,
+    "searchRuns": 0,
+    "proofRouteOpens": 0,
+    "sourceOpens": 0,
+    "read": "GLB interaction is the strongest real movement pool. Search and source pools are dry, so the next target should be a phrase lane that makes users want the GLB/video system, not a generic informational page."
+  },
+  "primaryAudienceTarget": {
+    "lane": "Gamer / GLB Environment / Mainstream Streaming Observatory",
+    "humanAudience": [
+      "gamers checking game worlds",
+      "creators looking for usable 3D scenes",
+      "YouTube viewers watching environment or horror/corridor content",
+      "developers evaluating Babylon/GLB rendering",
+      "streamers who want visual context for a clip"
+    ],
+    "corePromise": "DigitalHut turns a video topic into a playable 3D environment read with GLB proof, podcast/source moments, backlinks, and live analytics.",
+    "primaryRoute": "/watch/gaming-3d-environment-viewer",
+    "supportRoutes": [
+      "/watch/funny-mainstream-video-explained",
+      "/watch/glb-research-assistant",
+      "/watch/automatic-3d-autoplay-system",
+      "/category/mainstream-streaming"
+    ],
+    "currentProofAnchor": "Horror Corridor VR room [Baked]",
+    "whyThisLane": "The top measured asset is an immersive GLB environment, and the top measured category is Mainstream Streaming. This lane connects entertainment, research, and the renderer instead of competing as a normal blog."
+  },
+  "longTailTargets": [
+    {
+      "intent": "game-world context",
+      "phrases": [
+        "gaming 3D environment viewer",
+        "game world GLB presentation",
+        "horror corridor VR room walkthrough",
+        "creator safe 360 game world assets",
+        "interactive game environment video explainer",
+        "3D game map viewer with video context"
+      ]
+    },
+    {
+      "intent": "video plus renderer",
+      "phrases": [
+        "YouTube video with 3D model view",
+        "video topic GLB renderer",
+        "viral clip 3D environment analysis",
+        "mainstream video observatory with GLB proof",
+        "AI video radar with 3D scene",
+        "watch video with live 3D analytics"
+      ]
+    },
+    {
+      "intent": "developer/research proof",
+      "phrases": [
+        "Babylon GLB renderer research demo",
+        "GLB research assistant for video topics",
+        "3D model view research engine",
+        "source backed GLB video analysis",
+        "dapp entertainment observatory with 3D renderer",
+        "AI observatory for video and 3D assets"
+      ]
+    },
+    {
+      "intent": "podcast/source bridge",
+      "phrases": [
+        "video podcast source moment with 3D model",
+        "podcast interrupt for video analysis",
+        "speaker moment analytics with GLB scene",
+        "source backed podcast and 3D video explainer"
+      ]
+    }
+  ],
+  "trafficOpeningMoves": [
+    "Make GLB/Gaming the next audience target because GLB plays are real movement.",
+    "Use Mainstream Streaming as the broad top category, but anchor it to a specific playable environment phrase.",
+    "Hold generic home/remodel expansion until proof route opens or Search Console rows appear.",
+    "Do not expand mass keywords. Promote only route phrases that match video + GLB + source/podcast proof.",
+    "Watch for search_run, proof_route_open, source_open, and glb_preview_play as the next validation signals."
+  ],
+  "dryPoolFix": {
+    "searchRuns": "Use phrases that tell users what to search for: game world, GLB scene, horror corridor, video with 3D model.",
+    "proofRouteOpens": "Route the phrase lane to /watch/gaming-3d-environment-viewer and /category/mainstream-streaming.",
+    "sourceOpens": "Add source/backlink framing around GLB assets and video topics before creating more pages."
+  },
+  "successThreshold": {
+    "shortTerm": "Any increase above 81 GLB plays or first search/proof/source event.",
+    "mediumTerm": "Search Console impressions for GLB, gaming, video observatory, or 3D environment phrases.",
+    "guardrail": "No real rank movement claim until Search Console reports rows, impressions, clicks, or average position."
+  }
+}

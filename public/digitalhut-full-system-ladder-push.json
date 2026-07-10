@@ -1,0 +1,291 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Full System Ladder Push",
+  "status": "full-system-ladder-push-ready",
+  "liveRankDropStatus": "pending-live-rank-refresh",
+  "guardrail": "Live rank drops require refreshed Search Console, Supabase, Vercel, or analytics proof. This packet lines up the push; it does not fabricate movement.",
+  "rankUniverseFloor": 236000000,
+  "nextRankEscapeTarget": 1000000,
+  "nextVisitorTarget": 50000,
+  "fullSystemPushes": [
+    {
+      "system": "FireCuda human positioning map",
+      "currentRole": "Own the 2,572,944-slot universe while keeping expansion closed until real receipts unlock a lane.",
+      "currentStatus": "firecuda-innovation-map-artifact-ready",
+      "proofNeeded": "Human-role buckets: everyday viewer, researcher, developer, creator, market watcher, digital nomad.",
+      "nextPush": "Prioritize the 3D/GLB human role because it is closest to a 77% ladder win."
+    },
+    {
+      "system": "Supabase real human database",
+      "currentRole": "Store page views, GLB opens, rotate/zoom, source clicks, podcast completions, search runs, category hops, and market opens.",
+      "currentStatus": "measurement-ready",
+      "proofNeeded": "Live refreshed events by route, region, role, and second action.",
+      "nextPush": "Turn GLB preview plays into rotate/zoom/source-open rows."
+    },
+    {
+      "system": "Google Cloud and search proof",
+      "currentRole": "Provide API-backed discovery, YouTube/category context, source metadata, and Search Console proof when connected.",
+      "currentStatus": "not-live-refreshed-this-cycle",
+      "proofNeeded": "Search Console impressions, clicks, average position, query, country, and page.",
+      "nextPush": "Attach live rank deltas to the route-pair evidence ledger."
+    },
+    {
+      "system": "GitHub and Vercel deployment proof",
+      "currentRole": "Ship stable route metadata, public JSON boards, sitemap, llms.txt, structured data, and API-facing proof artifacts.",
+      "currentStatus": "deploy-ready-staged",
+      "proofNeeded": "Cloud build success plus production URL response after meaningful batches.",
+      "nextPush": "Deploy after this full-system ladder packet is generated cleanly."
+    },
+    {
+      "system": "Babylon rendering and GLB proof",
+      "currentRole": "Separate DigitalHut from thin pages by proving interactive 3D usefulness.",
+      "currentStatus": "62 last-known GLB preview plays",
+      "proofNeeded": "Rotate, zoom, orbit duration, source click, same-topic model reopen.",
+      "nextPush": "This is the closest rank lever: push the 3D gallery rung from 74% to 77%+."
+    },
+    {
+      "system": "Codex compare and contrast reasoning",
+      "currentRole": "Choose ladder fights based on compatibility, receipts, user usefulness, and rank movement evidence.",
+      "currentStatus": "active-overseer",
+      "proofNeeded": "Do not unlock broad SEO until live client behavior proves a lane.",
+      "nextPush": "Hold filler. Promote only receipt-backed exact niches."
+    }
+  ],
+  "ladderRows": [
+    {
+      "rung": 2,
+      "competitorClass": "3D gallery or portfolio page",
+      "currentWinRatio": 74,
+      "targetWinRatio": 77,
+      "gapToPass": 3,
+      "status": "near-pass-accelerate-now",
+      "proofStatus": "one-receipt-class-from-pass",
+      "requiredReceipts": [
+        "glb_rotated_or_zoomed",
+        "glb_source_opened",
+        "same_topic_model_reopened"
+      ],
+      "requiredSystemPush": [
+        "Babylon/GLB renderer receipt"
+      ],
+      "rankDropStatus": "pending-live-rank-refresh",
+      "pushDecision": "Push this first. It is the closest functionality-compatible ladder match."
+    },
+    {
+      "rung": 3,
+      "competitorClass": "single-medium video explainer",
+      "currentWinRatio": 68,
+      "targetWinRatio": 77,
+      "gapToPass": 9,
+      "status": "needs-receipt-buildout",
+      "proofStatus": "needs-second-action-proof",
+      "requiredReceipts": [
+        "source_backlink_click",
+        "watch_to_blog_continuation",
+        "podcast_source_completed"
+      ],
+      "requiredSystemPush": [
+        "Supabase source/backlink and continuation receipt"
+      ],
+      "rankDropStatus": "pending-live-rank-refresh",
+      "pushDecision": "Queue after GLB proof. Needs source and search behavior before rank expansion."
+    },
+    {
+      "rung": 4,
+      "competitorClass": "static research or wiki-style page",
+      "currentWinRatio": 65,
+      "targetWinRatio": 77,
+      "gapToPass": 12,
+      "status": "needs-receipt-buildout",
+      "proofStatus": "needs-second-action-proof",
+      "requiredReceipts": [
+        "proof_route_opened",
+        "source_backlink_click",
+        "observatory_search_used"
+      ],
+      "requiredSystemPush": [
+        "Search intent and proof-route receipt",
+        "Supabase source/backlink and continuation receipt"
+      ],
+      "rankDropStatus": "pending-live-rank-refresh",
+      "pushDecision": "Queue after GLB proof. Needs source and search behavior before rank expansion."
+    },
+    {
+      "rung": 5,
+      "competitorClass": "market dashboard or finance result",
+      "currentWinRatio": 48,
+      "targetWinRatio": 77,
+      "gapToPass": 29,
+      "status": "needs-receipt-buildout",
+      "proofStatus": "hold-until-core-events-fire",
+      "requiredReceipts": [
+        "market_view_open",
+        "ticker_search",
+        "market_source_click"
+      ],
+      "requiredSystemPush": [
+        "Market API and source-click receipt",
+        "Search intent and proof-route receipt",
+        "Supabase source/backlink and continuation receipt"
+      ],
+      "rankDropStatus": "pending-live-rank-refresh",
+      "pushDecision": "Hold. Do not spend broad SEO slots until real client behavior appears."
+    }
+  ],
+  "backlinkPush": [
+    {
+      "route": "/watch/looking-for-lunch-visual-observatory",
+      "stage": "push-next-deploy-proof",
+      "status": "authority-priority",
+      "authorityTargets": [
+        "local restaurant guides",
+        "food review blogs",
+        "city tourism directories",
+        "Google Business Profile posts",
+        "neighborhood newsletters"
+      ],
+      "anchorSet": [
+        "restaurants near me visual guide",
+        "food near me video map",
+        "Lunch And Local Food DigitalHut observatory proof",
+        "restaurants near me visual guide source map",
+        "video + GLB proof for restaurants near me visual guide"
+      ],
+      "measuredBy": [
+        "backlink_source_open",
+        "proof_route_open",
+        "watch_route_open",
+        "blog_route_open",
+        "glb_source_click"
+      ]
+    },
+    {
+      "route": "/watch/calling-an-uber-visual-trip-guide",
+      "stage": "push-next-deploy-proof",
+      "status": "authority-priority",
+      "authorityTargets": [
+        "airport travel guides",
+        "rideshare pickup explainers",
+        "local transportation blogs",
+        "hotel concierge pages",
+        "city mobility resources"
+      ],
+      "anchorSet": [
+        "Uber pickup visual guide",
+        "airport Uber pickup source map",
+        "Rideshare And Commute DigitalHut observatory proof",
+        "Uber pickup visual guide source map",
+        "video + GLB proof for Uber pickup visual guide"
+      ],
+      "measuredBy": [
+        "backlink_source_open",
+        "proof_route_open",
+        "watch_route_open",
+        "blog_route_open",
+        "glb_source_click"
+      ]
+    },
+    {
+      "route": "/watch/current-market-video-observatory",
+      "stage": "push-next-deploy-proof",
+      "status": "authority-priority",
+      "authorityTargets": [
+        "market research blogs",
+        "company analysis newsletters",
+        "developer finance communities",
+        "AI chip explainers",
+        "TradingView idea pages"
+      ],
+      "anchorSet": [
+        "current market video observatory",
+        "stock market visual analysis 3D",
+        "Businesses DigitalHut observatory proof",
+        "Current Market Video Observatory: DigitalHut Proof source map",
+        "video + GLB proof for current market video observatory"
+      ],
+      "measuredBy": [
+        "backlink_source_open",
+        "proof_route_open",
+        "watch_route_open",
+        "blog_route_open",
+        "glb_source_click"
+      ]
+    },
+    {
+      "route": "/watch/youtube-video-content-radar",
+      "stage": "push-next-deploy-proof",
+      "status": "authority-priority",
+      "authorityTargets": [
+        "consumer review blogs",
+        "shopping guides",
+        "local grocery resources",
+        "Reddit-style product roundups",
+        "deal research newsletters"
+      ],
+      "anchorSet": [
+        "YouTube video content radar",
+        "video metadata visual analysis",
+        "Mainstream Streaming DigitalHut observatory proof",
+        "YouTube Video Content Radar: DigitalHut Observatory Proof source map",
+        "video + GLB proof for YouTube video content radar"
+      ],
+      "measuredBy": [
+        "backlink_source_open",
+        "proof_route_open",
+        "watch_route_open",
+        "blog_route_open",
+        "glb_source_click"
+      ]
+    },
+    {
+      "route": "/watch/home-project-3d-visual-planner",
+      "stage": "submit-watch-blog-pair",
+      "status": "authority-support",
+      "authorityTargets": [
+        "home improvement blogs",
+        "contractor portfolios",
+        "DIY planning guides",
+        "real estate staging pages",
+        "interior design communities"
+      ],
+      "anchorSet": [
+        "home project 3D visual planner",
+        "home remodel 3D visualization",
+        "Mainstream Streaming DigitalHut observatory proof",
+        "Home Project 3D Visual Planner: DigitalHut Observatory Proof source map",
+        "video + GLB proof for home project 3D visual planner"
+      ],
+      "measuredBy": [
+        "backlink_source_open",
+        "proof_route_open",
+        "watch_route_open",
+        "blog_route_open",
+        "glb_source_click"
+      ]
+    }
+  ],
+  "apiAndRenderStack": {
+    "youtube": "category/content radar source",
+    "googleCloud": "speech/search/source infrastructure when live keys and services are connected",
+    "supabase": "human behavior and SEO receipt database",
+    "vercel": "production deployment and public proof artifact host",
+    "github": "versioned source and change history",
+    "babylon": "3D/GLB renderer proof layer",
+    "fireCuda": "local innovation map and rank universe staging layer"
+  },
+  "currentMetricRead": {
+    "status": "not-live-refreshed",
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  },
+  "nextSystemMove": "Deploy the full-system ladder packet after local generation, then wait for live receipts before claiming rank drops. First active match remains the 3D gallery/portfolio rung."
+}

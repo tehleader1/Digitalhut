@@ -1,0 +1,782 @@
+{
+  "batchId": "dh_360_orbit_full_system_20260709_01",
+  "createdAt": "2026-07-09T02:15:49.097Z",
+  "purpose": "360 orbit cast across full DigitalHut entertainment observatory angles after crawl shell deploy",
+  "audience": "full-system-entertainment-observatory-360",
+  "source": "codex-360-orbit-cycle",
+  "decision": "trail-planted-watch-for-proof-source-hit",
+  "receipts": [
+    {
+      "runId": "dh_360_orbit_full_system_20260709_01_1",
+      "createdAt": "2026-07-09T02:15:49.098Z",
+      "operator": "DigitalHut Codex Overseer",
+      "runType": "operator-search-and-backlink-trail",
+      "query": "2026 entertainment observatory alternative to youtube with 3d model view podcast source moments live analytics",
+      "audience": "full-system-entertainment-observatory-360",
+      "source": "codex-360-orbit-cycle",
+      "status": "trail-planted",
+      "decision": "trail-planted-watch-for-proof-source-hit",
+      "claim": {
+        "lane": "Full Entertainment Dapp Alternative",
+        "laneId": "full-entertainment-dapp-alternative",
+        "mode": "counted-rank-slot",
+        "globalRankNumber": 121740,
+        "totalIndividualRanks": 200572944,
+        "canonicalRoute": "/watch/full-view-episode-alternative",
+        "rankUrl": "/watch/full-view-episode-alternative?dh_rank=121740&dh_global_rank=121740&dh_lane=full-entertainment-dapp-alternative",
+        "ownedReturnPath": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=121740&dh_global_rank=121740&dh_lane=full-entertainment-dapp-alternative"
+      },
+      "trail": {
+        "searchPhrase": "2026 entertainment observatory alternative to youtube with 3d model view podcast source moments live analytics",
+        "proofRoute": "https://www.digitalhut.app/watch/full-view-episode-alternative",
+        "ownedReturnPath": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=121740&dh_global_rank=121740&dh_lane=full-entertainment-dapp-alternative",
+        "backlinkTargets": [
+          "YouTube session tool discussion",
+          "AI video tool page",
+          "3D viewer source",
+          "podcast/source page",
+          "watch proof route"
+        ],
+        "regeneratedBacklinks": {
+          "anchorText": "2026 entertainment observatory alternative to youtube with 3d model view podcast source moments live analytics",
+          "ownedReturnPath": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=121740&dh_global_rank=121740&dh_lane=full-entertainment-dapp-alternative",
+          "placements": [
+            {
+              "type": "watch-proof",
+              "label": "2026 entertainment observatory alternative to youtube with 3d model view podcast source moments live analytics watch proof",
+              "url": "https://www.digitalhut.app/watch/full-view-episode-alternative"
+            },
+            {
+              "type": "blog-proof",
+              "label": "2026 entertainment observatory alternative to youtube with 3d model view podcast source moments live analytics blog proof",
+              "url": "https://www.digitalhut.app/blog?dh_lane=full-entertainment-dapp-alternative"
+            },
+            {
+              "type": "category-proof",
+              "label": "Full Entertainment Dapp Alternative category proof",
+              "url": "https://www.digitalhut.app/category/full-entertainment-dapp-alternative"
+            },
+            {
+              "type": "source-backlink-target",
+              "label": "2026 entertainment observatory alternative to youtube with 3d model view podcast source moments live analytics source trail",
+              "url": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=121740&dh_global_rank=121740&dh_lane=full-entertainment-dapp-alternative"
+            },
+            {
+              "type": "crawler-receipt",
+              "label": "DigitalHut SEO claim coverage",
+              "url": "https://www.digitalhut.app/digitalhut-seo-claim-coverage.json"
+            },
+            {
+              "type": "operator-receipt",
+              "label": "DigitalHut operator search trail",
+              "url": "https://www.digitalhut.app/digitalhut-operator-search-trail-latest.json"
+            }
+          ],
+          "externalCandidateRules": [
+            "Only place a backlink where the answer is useful and human-readable.",
+            "Do not spam comments, profiles, or irrelevant directories.",
+            "Prefer source pages, community discussions, docs, creator pages, podcast pages, and GLB/source references that match the lane."
+          ]
+        },
+        "measurementSignals": [
+          "homepage entry",
+          "autoplay start",
+          "next episode",
+          "3D Model View open",
+          "podcast/source interrupt",
+          "live analytics read"
+        ],
+        "supabaseSignals": [
+          "search_run",
+          "proof_route_open",
+          "backlink_source_open",
+          "watch_route_open",
+          "category_proof_open"
+        ],
+        "sitemap": "https://www.digitalhut.app/sitemap.xml",
+        "publicReceipt": "https://www.digitalhut.app/digitalhut-operator-search-trail-latest.json"
+      },
+      "movement": {
+        "pageViewsDelta": 0,
+        "uniqueVisitorsDelta": 0,
+        "proofRouteOpens": 0,
+        "sourceBacklinkOpens": 0
+      },
+      "nextAction": "Keep full-system positioning; promote only when Search Console rows, proof route opens, source opens, or second-action deltas move."
+    },
+    {
+      "runId": "dh_360_orbit_full_system_20260709_01_2",
+      "createdAt": "2026-07-09T02:15:49.098Z",
+      "operator": "DigitalHut Codex Overseer",
+      "runType": "operator-search-and-backlink-trail",
+      "query": "video watching app with glb model viewer podcast interrupt and source backed analytics",
+      "audience": "full-system-entertainment-observatory-360",
+      "source": "codex-360-orbit-cycle",
+      "status": "trail-planted",
+      "decision": "trail-planted-watch-for-proof-source-hit",
+      "claim": {
+        "lane": "AI Video Podcast Source Explainer",
+        "laneId": "ai-video-podcast-source-explainer",
+        "mode": "counted-rank-slot",
+        "globalRankNumber": 78448924,
+        "totalIndividualRanks": 200572944,
+        "canonicalRoute": "/watch/ai-video-podcast-source-explainer",
+        "rankUrl": "/watch/ai-video-podcast-source-explainer?dh_rank=1448924&dh_global_rank=78448924&dh_lane=ai-video-podcast-source-explainer",
+        "ownedReturnPath": "https://www.digitalhut.app/watch/ai-video-podcast-source-explainer?dh_rank=1448924&dh_global_rank=78448924&dh_lane=ai-video-podcast-source-explainer"
+      },
+      "trail": {
+        "searchPhrase": "video watching app with glb model viewer podcast interrupt and source backed analytics",
+        "proofRoute": "https://www.digitalhut.app/watch/ai-video-podcast-source-explainer",
+        "ownedReturnPath": "https://www.digitalhut.app/watch/ai-video-podcast-source-explainer?dh_rank=1448924&dh_global_rank=78448924&dh_lane=ai-video-podcast-source-explainer",
+        "backlinkTargets": [
+          "podcast source",
+          "video source",
+          "summary proof",
+          "creator page",
+          "watch proof route"
+        ],
+        "regeneratedBacklinks": {
+          "anchorText": "video watching app with glb model viewer podcast interrupt and source backed analytics",
+          "ownedReturnPath": "https://www.digitalhut.app/watch/ai-video-podcast-source-explainer?dh_rank=1448924&dh_global_rank=78448924&dh_lane=ai-video-podcast-source-explainer",
+          "placements": [
+            {
+              "type": "watch-proof",
+              "label": "video watching app with glb model viewer podcast interrupt and source backed analytics watch proof",
+              "url": "https://www.digitalhut.app/watch/ai-video-podcast-source-explainer"
+            },
+            {
+              "type": "blog-proof",
+              "label": "video watching app with glb model viewer podcast interrupt and source backed analytics blog proof",
+              "url": "https://www.digitalhut.app/blog?dh_lane=ai-video-podcast-source-explainer"
+            },
+            {
+              "type": "category-proof",
+              "label": "AI Video Podcast Source Explainer category proof",
+              "url": "https://www.digitalhut.app/category/ai-video-podcast-source-explainer"
+            },
+            {
+              "type": "source-backlink-target",
+              "label": "video watching app with glb model viewer podcast interrupt and source backed analytics source trail",
+              "url": "https://www.digitalhut.app/watch/ai-video-podcast-source-explainer?dh_rank=1448924&dh_global_rank=78448924&dh_lane=ai-video-podcast-source-explainer"
+            },
+            {
+              "type": "crawler-receipt",
+              "label": "DigitalHut SEO claim coverage",
+              "url": "https://www.digitalhut.app/digitalhut-seo-claim-coverage.json"
+            },
+            {
+              "type": "operator-receipt",
+              "label": "DigitalHut operator search trail",
+              "url": "https://www.digitalhut.app/digitalhut-operator-search-trail-latest.json"
+            }
+          ],
+          "externalCandidateRules": [
+            "Only place a backlink where the answer is useful and human-readable.",
+            "Do not spam comments, profiles, or irrelevant directories.",
+            "Prefer source pages, community discussions, docs, creator pages, podcast pages, and GLB/source references that match the lane."
+          ]
+        },
+        "measurementSignals": [
+          "podcast/source interrupt",
+          "search intent",
+          "source/backlink open",
+          "autoplay start"
+        ],
+        "supabaseSignals": [
+          "search_run",
+          "proof_route_open",
+          "backlink_source_open",
+          "watch_route_open",
+          "category_proof_open"
+        ],
+        "sitemap": "https://www.digitalhut.app/sitemap.xml",
+        "publicReceipt": "https://www.digitalhut.app/digitalhut-operator-search-trail-latest.json"
+      },
+      "movement": {
+        "pageViewsDelta": 0,
+        "uniqueVisitorsDelta": 0,
+        "proofRouteOpens": 0,
+        "sourceBacklinkOpens": 0
+      },
+      "nextAction": "Keep full-system positioning; promote only when Search Console rows, proof route opens, source opens, or second-action deltas move."
+    },
+    {
+      "runId": "dh_360_orbit_full_system_20260709_01_3",
+      "createdAt": "2026-07-09T02:15:49.099Z",
+      "operator": "DigitalHut Codex Overseer",
+      "runType": "operator-search-and-backlink-trail",
+      "query": "ai video podcast source explainer with 3d model view and live research timeline",
+      "audience": "full-system-entertainment-observatory-360",
+      "source": "codex-360-orbit-cycle",
+      "status": "trail-planted",
+      "decision": "trail-planted-watch-for-proof-source-hit",
+      "claim": {
+        "lane": "AI Video Podcast Source Explainer",
+        "laneId": "ai-video-podcast-source-explainer",
+        "mode": "counted-rank-slot",
+        "globalRankNumber": 85835766,
+        "totalIndividualRanks": 200572944,
+        "canonicalRoute": "/watch/ai-video-podcast-source-explainer",
+        "rankUrl": "/watch/ai-video-podcast-source-explainer?dh_rank=8835766&dh_global_rank=85835766&dh_lane=ai-video-podcast-source-explainer",
+        "ownedReturnPath": "https://www.digitalhut.app/watch/ai-video-podcast-source-explainer?dh_rank=8835766&dh_global_rank=85835766&dh_lane=ai-video-podcast-source-explainer"
+      },
+      "trail": {
+        "searchPhrase": "ai video podcast source explainer with 3d model view and live research timeline",
+        "proofRoute": "https://www.digitalhut.app/watch/ai-video-podcast-source-explainer",
+        "ownedReturnPath": "https://www.digitalhut.app/watch/ai-video-podcast-source-explainer?dh_rank=8835766&dh_global_rank=85835766&dh_lane=ai-video-podcast-source-explainer",
+        "backlinkTargets": [
+          "podcast source",
+          "video source",
+          "summary proof",
+          "creator page",
+          "watch proof route"
+        ],
+        "regeneratedBacklinks": {
+          "anchorText": "ai video podcast source explainer with 3d model view and live research timeline",
+          "ownedReturnPath": "https://www.digitalhut.app/watch/ai-video-podcast-source-explainer?dh_rank=8835766&dh_global_rank=85835766&dh_lane=ai-video-podcast-source-explainer",
+          "placements": [
+            {
+              "type": "watch-proof",
+              "label": "ai video podcast source explainer with 3d model view and live research timeline watch proof",
+              "url": "https://www.digitalhut.app/watch/ai-video-podcast-source-explainer"
+            },
+            {
+              "type": "blog-proof",
+              "label": "ai video podcast source explainer with 3d model view and live research timeline blog proof",
+              "url": "https://www.digitalhut.app/blog?dh_lane=ai-video-podcast-source-explainer"
+            },
+            {
+              "type": "category-proof",
+              "label": "AI Video Podcast Source Explainer category proof",
+              "url": "https://www.digitalhut.app/category/ai-video-podcast-source-explainer"
+            },
+            {
+              "type": "source-backlink-target",
+              "label": "ai video podcast source explainer with 3d model view and live research timeline source trail",
+              "url": "https://www.digitalhut.app/watch/ai-video-podcast-source-explainer?dh_rank=8835766&dh_global_rank=85835766&dh_lane=ai-video-podcast-source-explainer"
+            },
+            {
+              "type": "crawler-receipt",
+              "label": "DigitalHut SEO claim coverage",
+              "url": "https://www.digitalhut.app/digitalhut-seo-claim-coverage.json"
+            },
+            {
+              "type": "operator-receipt",
+              "label": "DigitalHut operator search trail",
+              "url": "https://www.digitalhut.app/digitalhut-operator-search-trail-latest.json"
+            }
+          ],
+          "externalCandidateRules": [
+            "Only place a backlink where the answer is useful and human-readable.",
+            "Do not spam comments, profiles, or irrelevant directories.",
+            "Prefer source pages, community discussions, docs, creator pages, podcast pages, and GLB/source references that match the lane."
+          ]
+        },
+        "measurementSignals": [
+          "podcast/source interrupt",
+          "search intent",
+          "source/backlink open",
+          "autoplay start"
+        ],
+        "supabaseSignals": [
+          "search_run",
+          "proof_route_open",
+          "backlink_source_open",
+          "watch_route_open",
+          "category_proof_open"
+        ],
+        "sitemap": "https://www.digitalhut.app/sitemap.xml",
+        "publicReceipt": "https://www.digitalhut.app/digitalhut-operator-search-trail-latest.json"
+      },
+      "movement": {
+        "pageViewsDelta": 0,
+        "uniqueVisitorsDelta": 0,
+        "proofRouteOpens": 0,
+        "sourceBacklinkOpens": 0
+      },
+      "nextAction": "Keep full-system positioning; promote only when Search Console rows, proof route opens, source opens, or second-action deltas move."
+    },
+    {
+      "runId": "dh_360_orbit_full_system_20260709_01_4",
+      "createdAt": "2026-07-09T02:15:49.099Z",
+      "operator": "DigitalHut Codex Overseer",
+      "runType": "operator-search-and-backlink-trail",
+      "query": "research summary video observatory with sources backlinks 3d visual proof and podcast moments",
+      "audience": "full-system-entertainment-observatory-360",
+      "source": "codex-360-orbit-cycle",
+      "status": "trail-planted",
+      "decision": "trail-planted-watch-for-proof-source-hit",
+      "claim": {
+        "lane": "AI Video Podcast Source Explainer",
+        "laneId": "ai-video-podcast-source-explainer",
+        "mode": "counted-rank-slot",
+        "globalRankNumber": 78652879,
+        "totalIndividualRanks": 200572944,
+        "canonicalRoute": "/watch/ai-video-podcast-source-explainer",
+        "rankUrl": "/watch/ai-video-podcast-source-explainer?dh_rank=1652879&dh_global_rank=78652879&dh_lane=ai-video-podcast-source-explainer",
+        "ownedReturnPath": "https://www.digitalhut.app/watch/ai-video-podcast-source-explainer?dh_rank=1652879&dh_global_rank=78652879&dh_lane=ai-video-podcast-source-explainer"
+      },
+      "trail": {
+        "searchPhrase": "research summary video observatory with sources backlinks 3d visual proof and podcast moments",
+        "proofRoute": "https://www.digitalhut.app/watch/ai-video-podcast-source-explainer",
+        "ownedReturnPath": "https://www.digitalhut.app/watch/ai-video-podcast-source-explainer?dh_rank=1652879&dh_global_rank=78652879&dh_lane=ai-video-podcast-source-explainer",
+        "backlinkTargets": [
+          "podcast source",
+          "video source",
+          "summary proof",
+          "creator page",
+          "watch proof route"
+        ],
+        "regeneratedBacklinks": {
+          "anchorText": "research summary video observatory with sources backlinks 3d visual proof and podcast moments",
+          "ownedReturnPath": "https://www.digitalhut.app/watch/ai-video-podcast-source-explainer?dh_rank=1652879&dh_global_rank=78652879&dh_lane=ai-video-podcast-source-explainer",
+          "placements": [
+            {
+              "type": "watch-proof",
+              "label": "research summary video observatory with sources backlinks 3d visual proof and podcast moments watch proof",
+              "url": "https://www.digitalhut.app/watch/ai-video-podcast-source-explainer"
+            },
+            {
+              "type": "blog-proof",
+              "label": "research summary video observatory with sources backlinks 3d visual proof and podcast moments blog proof",
+              "url": "https://www.digitalhut.app/blog?dh_lane=ai-video-podcast-source-explainer"
+            },
+            {
+              "type": "category-proof",
+              "label": "AI Video Podcast Source Explainer category proof",
+              "url": "https://www.digitalhut.app/category/ai-video-podcast-source-explainer"
+            },
+            {
+              "type": "source-backlink-target",
+              "label": "research summary video observatory with sources backlinks 3d visual proof and podcast moments source trail",
+              "url": "https://www.digitalhut.app/watch/ai-video-podcast-source-explainer?dh_rank=1652879&dh_global_rank=78652879&dh_lane=ai-video-podcast-source-explainer"
+            },
+            {
+              "type": "crawler-receipt",
+              "label": "DigitalHut SEO claim coverage",
+              "url": "https://www.digitalhut.app/digitalhut-seo-claim-coverage.json"
+            },
+            {
+              "type": "operator-receipt",
+              "label": "DigitalHut operator search trail",
+              "url": "https://www.digitalhut.app/digitalhut-operator-search-trail-latest.json"
+            }
+          ],
+          "externalCandidateRules": [
+            "Only place a backlink where the answer is useful and human-readable.",
+            "Do not spam comments, profiles, or irrelevant directories.",
+            "Prefer source pages, community discussions, docs, creator pages, podcast pages, and GLB/source references that match the lane."
+          ]
+        },
+        "measurementSignals": [
+          "podcast/source interrupt",
+          "search intent",
+          "source/backlink open",
+          "autoplay start"
+        ],
+        "supabaseSignals": [
+          "search_run",
+          "proof_route_open",
+          "backlink_source_open",
+          "watch_route_open",
+          "category_proof_open"
+        ],
+        "sitemap": "https://www.digitalhut.app/sitemap.xml",
+        "publicReceipt": "https://www.digitalhut.app/digitalhut-operator-search-trail-latest.json"
+      },
+      "movement": {
+        "pageViewsDelta": 0,
+        "uniqueVisitorsDelta": 0,
+        "proofRouteOpens": 0,
+        "sourceBacklinkOpens": 0
+      },
+      "nextAction": "Keep full-system positioning; promote only when Search Console rows, proof route opens, source opens, or second-action deltas move."
+    },
+    {
+      "runId": "dh_360_orbit_full_system_20260709_01_5",
+      "createdAt": "2026-07-09T02:15:49.099Z",
+      "operator": "DigitalHut Codex Overseer",
+      "runType": "operator-search-and-backlink-trail",
+      "query": "spatial virtual experience video platform with glb preview source links and autoplay episodes",
+      "audience": "full-system-entertainment-observatory-360",
+      "source": "codex-360-orbit-cycle",
+      "status": "trail-planted",
+      "decision": "trail-planted-watch-for-proof-source-hit",
+      "claim": {
+        "lane": "Full Entertainment Dapp Alternative",
+        "laneId": "full-entertainment-dapp-alternative",
+        "mode": "counted-rank-slot",
+        "globalRankNumber": 10252692,
+        "totalIndividualRanks": 200572944,
+        "canonicalRoute": "/watch/full-view-episode-alternative",
+        "rankUrl": "/watch/full-view-episode-alternative?dh_rank=10252692&dh_global_rank=10252692&dh_lane=full-entertainment-dapp-alternative",
+        "ownedReturnPath": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=10252692&dh_global_rank=10252692&dh_lane=full-entertainment-dapp-alternative"
+      },
+      "trail": {
+        "searchPhrase": "spatial virtual experience video platform with glb preview source links and autoplay episodes",
+        "proofRoute": "https://www.digitalhut.app/watch/full-view-episode-alternative",
+        "ownedReturnPath": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=10252692&dh_global_rank=10252692&dh_lane=full-entertainment-dapp-alternative",
+        "backlinkTargets": [
+          "YouTube session tool discussion",
+          "AI video tool page",
+          "3D viewer source",
+          "podcast/source page",
+          "watch proof route"
+        ],
+        "regeneratedBacklinks": {
+          "anchorText": "spatial virtual experience video platform with glb preview source links and autoplay episodes",
+          "ownedReturnPath": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=10252692&dh_global_rank=10252692&dh_lane=full-entertainment-dapp-alternative",
+          "placements": [
+            {
+              "type": "watch-proof",
+              "label": "spatial virtual experience video platform with glb preview source links and autoplay episodes watch proof",
+              "url": "https://www.digitalhut.app/watch/full-view-episode-alternative"
+            },
+            {
+              "type": "blog-proof",
+              "label": "spatial virtual experience video platform with glb preview source links and autoplay episodes blog proof",
+              "url": "https://www.digitalhut.app/blog?dh_lane=full-entertainment-dapp-alternative"
+            },
+            {
+              "type": "category-proof",
+              "label": "Full Entertainment Dapp Alternative category proof",
+              "url": "https://www.digitalhut.app/category/full-entertainment-dapp-alternative"
+            },
+            {
+              "type": "source-backlink-target",
+              "label": "spatial virtual experience video platform with glb preview source links and autoplay episodes source trail",
+              "url": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=10252692&dh_global_rank=10252692&dh_lane=full-entertainment-dapp-alternative"
+            },
+            {
+              "type": "crawler-receipt",
+              "label": "DigitalHut SEO claim coverage",
+              "url": "https://www.digitalhut.app/digitalhut-seo-claim-coverage.json"
+            },
+            {
+              "type": "operator-receipt",
+              "label": "DigitalHut operator search trail",
+              "url": "https://www.digitalhut.app/digitalhut-operator-search-trail-latest.json"
+            }
+          ],
+          "externalCandidateRules": [
+            "Only place a backlink where the answer is useful and human-readable.",
+            "Do not spam comments, profiles, or irrelevant directories.",
+            "Prefer source pages, community discussions, docs, creator pages, podcast pages, and GLB/source references that match the lane."
+          ]
+        },
+        "measurementSignals": [
+          "homepage entry",
+          "autoplay start",
+          "next episode",
+          "3D Model View open",
+          "podcast/source interrupt",
+          "live analytics read"
+        ],
+        "supabaseSignals": [
+          "search_run",
+          "proof_route_open",
+          "backlink_source_open",
+          "watch_route_open",
+          "category_proof_open"
+        ],
+        "sitemap": "https://www.digitalhut.app/sitemap.xml",
+        "publicReceipt": "https://www.digitalhut.app/digitalhut-operator-search-trail-latest.json"
+      },
+      "movement": {
+        "pageViewsDelta": 0,
+        "uniqueVisitorsDelta": 0,
+        "proofRouteOpens": 0,
+        "sourceBacklinkOpens": 0
+      },
+      "nextAction": "Keep full-system positioning; promote only when Search Console rows, proof route opens, source opens, or second-action deltas move."
+    },
+    {
+      "runId": "dh_360_orbit_full_system_20260709_01_6",
+      "createdAt": "2026-07-09T02:15:49.099Z",
+      "operator": "DigitalHut Codex Overseer",
+      "runType": "operator-search-and-backlink-trail",
+      "query": "daily relax watch session alternative with video 3d model podcast and analytics in one view",
+      "audience": "full-system-entertainment-observatory-360",
+      "source": "codex-360-orbit-cycle",
+      "status": "trail-planted",
+      "decision": "trail-planted-watch-for-proof-source-hit",
+      "claim": {
+        "lane": "AI Video Podcast Source Explainer",
+        "laneId": "ai-video-podcast-source-explainer",
+        "mode": "counted-rank-slot",
+        "globalRankNumber": 84712131,
+        "totalIndividualRanks": 200572944,
+        "canonicalRoute": "/watch/ai-video-podcast-source-explainer",
+        "rankUrl": "/watch/ai-video-podcast-source-explainer?dh_rank=7712131&dh_global_rank=84712131&dh_lane=ai-video-podcast-source-explainer",
+        "ownedReturnPath": "https://www.digitalhut.app/watch/ai-video-podcast-source-explainer?dh_rank=7712131&dh_global_rank=84712131&dh_lane=ai-video-podcast-source-explainer"
+      },
+      "trail": {
+        "searchPhrase": "daily relax watch session alternative with video 3d model podcast and analytics in one view",
+        "proofRoute": "https://www.digitalhut.app/watch/ai-video-podcast-source-explainer",
+        "ownedReturnPath": "https://www.digitalhut.app/watch/ai-video-podcast-source-explainer?dh_rank=7712131&dh_global_rank=84712131&dh_lane=ai-video-podcast-source-explainer",
+        "backlinkTargets": [
+          "podcast source",
+          "video source",
+          "summary proof",
+          "creator page",
+          "watch proof route"
+        ],
+        "regeneratedBacklinks": {
+          "anchorText": "daily relax watch session alternative with video 3d model podcast and analytics in one view",
+          "ownedReturnPath": "https://www.digitalhut.app/watch/ai-video-podcast-source-explainer?dh_rank=7712131&dh_global_rank=84712131&dh_lane=ai-video-podcast-source-explainer",
+          "placements": [
+            {
+              "type": "watch-proof",
+              "label": "daily relax watch session alternative with video 3d model podcast and analytics in one view watch proof",
+              "url": "https://www.digitalhut.app/watch/ai-video-podcast-source-explainer"
+            },
+            {
+              "type": "blog-proof",
+              "label": "daily relax watch session alternative with video 3d model podcast and analytics in one view blog proof",
+              "url": "https://www.digitalhut.app/blog?dh_lane=ai-video-podcast-source-explainer"
+            },
+            {
+              "type": "category-proof",
+              "label": "AI Video Podcast Source Explainer category proof",
+              "url": "https://www.digitalhut.app/category/ai-video-podcast-source-explainer"
+            },
+            {
+              "type": "source-backlink-target",
+              "label": "daily relax watch session alternative with video 3d model podcast and analytics in one view source trail",
+              "url": "https://www.digitalhut.app/watch/ai-video-podcast-source-explainer?dh_rank=7712131&dh_global_rank=84712131&dh_lane=ai-video-podcast-source-explainer"
+            },
+            {
+              "type": "crawler-receipt",
+              "label": "DigitalHut SEO claim coverage",
+              "url": "https://www.digitalhut.app/digitalhut-seo-claim-coverage.json"
+            },
+            {
+              "type": "operator-receipt",
+              "label": "DigitalHut operator search trail",
+              "url": "https://www.digitalhut.app/digitalhut-operator-search-trail-latest.json"
+            }
+          ],
+          "externalCandidateRules": [
+            "Only place a backlink where the answer is useful and human-readable.",
+            "Do not spam comments, profiles, or irrelevant directories.",
+            "Prefer source pages, community discussions, docs, creator pages, podcast pages, and GLB/source references that match the lane."
+          ]
+        },
+        "measurementSignals": [
+          "podcast/source interrupt",
+          "search intent",
+          "source/backlink open",
+          "autoplay start"
+        ],
+        "supabaseSignals": [
+          "search_run",
+          "proof_route_open",
+          "backlink_source_open",
+          "watch_route_open",
+          "category_proof_open"
+        ],
+        "sitemap": "https://www.digitalhut.app/sitemap.xml",
+        "publicReceipt": "https://www.digitalhut.app/digitalhut-operator-search-trail-latest.json"
+      },
+      "movement": {
+        "pageViewsDelta": 0,
+        "uniqueVisitorsDelta": 0,
+        "proofRouteOpens": 0,
+        "sourceBacklinkOpens": 0
+      },
+      "nextAction": "Keep full-system positioning; promote only when Search Console rows, proof route opens, source opens, or second-action deltas move."
+    },
+    {
+      "runId": "dh_360_orbit_full_system_20260709_01_7",
+      "createdAt": "2026-07-09T02:15:49.099Z",
+      "operator": "DigitalHut Codex Overseer",
+      "runType": "operator-search-and-backlink-trail",
+      "query": "game world glb presentation with youtube style autoplay podcast source and live analytics",
+      "audience": "full-system-entertainment-observatory-360",
+      "source": "codex-360-orbit-cycle",
+      "status": "trail-planted",
+      "decision": "trail-planted-watch-for-proof-source-hit",
+      "claim": {
+        "lane": "Gaming 3D World Observatory",
+        "laneId": "gaming-3d-world-observatory",
+        "mode": "counted-rank-slot",
+        "globalRankNumber": 12371081,
+        "totalIndividualRanks": 200572944,
+        "canonicalRoute": "/watch/game-world-glb-presentation",
+        "rankUrl": "/watch/game-world-glb-presentation?dh_rank=1371081&dh_global_rank=12371081&dh_lane=gaming-3d-world-observatory",
+        "ownedReturnPath": "https://www.digitalhut.app/watch/game-world-glb-presentation?dh_rank=1371081&dh_global_rank=12371081&dh_lane=gaming-3d-world-observatory"
+      },
+      "trail": {
+        "searchPhrase": "game world glb presentation with youtube style autoplay podcast source and live analytics",
+        "proofRoute": "https://www.digitalhut.app/watch/game-world-glb-presentation",
+        "ownedReturnPath": "https://www.digitalhut.app/watch/game-world-glb-presentation?dh_rank=1371081&dh_global_rank=12371081&dh_lane=gaming-3d-world-observatory",
+        "backlinkTargets": [
+          "game build source",
+          "mod page",
+          "3D model source",
+          "server guide",
+          "watch proof route"
+        ],
+        "regeneratedBacklinks": {
+          "anchorText": "game world glb presentation with youtube style autoplay podcast source and live analytics",
+          "ownedReturnPath": "https://www.digitalhut.app/watch/game-world-glb-presentation?dh_rank=1371081&dh_global_rank=12371081&dh_lane=gaming-3d-world-observatory",
+          "placements": [
+            {
+              "type": "watch-proof",
+              "label": "game world glb presentation with youtube style autoplay podcast source and live analytics watch proof",
+              "url": "https://www.digitalhut.app/watch/game-world-glb-presentation"
+            },
+            {
+              "type": "blog-proof",
+              "label": "game world glb presentation with youtube style autoplay podcast source and live analytics blog proof",
+              "url": "https://www.digitalhut.app/blog?dh_lane=gaming-3d-world-observatory"
+            },
+            {
+              "type": "category-proof",
+              "label": "Gaming 3D World Observatory category proof",
+              "url": "https://www.digitalhut.app/category/gaming-3d-world-observatory"
+            },
+            {
+              "type": "source-backlink-target",
+              "label": "game world glb presentation with youtube style autoplay podcast source and live analytics source trail",
+              "url": "https://www.digitalhut.app/watch/game-world-glb-presentation?dh_rank=1371081&dh_global_rank=12371081&dh_lane=gaming-3d-world-observatory"
+            },
+            {
+              "type": "crawler-receipt",
+              "label": "DigitalHut SEO claim coverage",
+              "url": "https://www.digitalhut.app/digitalhut-seo-claim-coverage.json"
+            },
+            {
+              "type": "operator-receipt",
+              "label": "DigitalHut operator search trail",
+              "url": "https://www.digitalhut.app/digitalhut-operator-search-trail-latest.json"
+            }
+          ],
+          "externalCandidateRules": [
+            "Only place a backlink where the answer is useful and human-readable.",
+            "Do not spam comments, profiles, or irrelevant directories.",
+            "Prefer source pages, community discussions, docs, creator pages, podcast pages, and GLB/source references that match the lane."
+          ]
+        },
+        "measurementSignals": [
+          "GLB Model View open",
+          "autoplay start",
+          "watch route open",
+          "source/backlink open"
+        ],
+        "supabaseSignals": [
+          "search_run",
+          "proof_route_open",
+          "backlink_source_open",
+          "watch_route_open",
+          "category_proof_open"
+        ],
+        "sitemap": "https://www.digitalhut.app/sitemap.xml",
+        "publicReceipt": "https://www.digitalhut.app/digitalhut-operator-search-trail-latest.json"
+      },
+      "movement": {
+        "pageViewsDelta": 0,
+        "uniqueVisitorsDelta": 0,
+        "proofRouteOpens": 0,
+        "sourceBacklinkOpens": 0
+      },
+      "nextAction": "Keep full-system positioning; promote only when Search Console rows, proof route opens, source opens, or second-action deltas move."
+    },
+    {
+      "runId": "dh_360_orbit_full_system_20260709_01_8",
+      "createdAt": "2026-07-09T02:15:49.099Z",
+      "operator": "DigitalHut Codex Overseer",
+      "runType": "operator-search-and-backlink-trail",
+      "query": "home project 3d visual planner video observatory with source backed timeline and model view",
+      "audience": "full-system-entertainment-observatory-360",
+      "source": "codex-360-orbit-cycle",
+      "status": "trail-planted",
+      "decision": "trail-planted-watch-for-proof-source-hit",
+      "claim": {
+        "lane": "Home Project DIY Visual",
+        "laneId": "home-project-diy-visual",
+        "mode": "counted-rank-slot",
+        "globalRankNumber": 157072420,
+        "totalIndividualRanks": 200572944,
+        "canonicalRoute": "/watch/home-project-diy-visual",
+        "rankUrl": "/watch/home-project-diy-visual?dh_rank=3072420&dh_global_rank=157072420&dh_lane=home-project-diy-visual",
+        "ownedReturnPath": "https://www.digitalhut.app/watch/home-project-diy-visual?dh_rank=3072420&dh_global_rank=157072420&dh_lane=home-project-diy-visual"
+      },
+      "trail": {
+        "searchPhrase": "home project 3d visual planner video observatory with source backed timeline and model view",
+        "proofRoute": "https://www.digitalhut.app/watch/home-project-diy-visual",
+        "ownedReturnPath": "https://www.digitalhut.app/watch/home-project-diy-visual?dh_rank=3072420&dh_global_rank=157072420&dh_lane=home-project-diy-visual",
+        "backlinkTargets": [
+          "DIY guide",
+          "tool source",
+          "room model",
+          "project checklist",
+          "watch proof route"
+        ],
+        "regeneratedBacklinks": {
+          "anchorText": "home project 3d visual planner video observatory with source backed timeline and model view",
+          "ownedReturnPath": "https://www.digitalhut.app/watch/home-project-diy-visual?dh_rank=3072420&dh_global_rank=157072420&dh_lane=home-project-diy-visual",
+          "placements": [
+            {
+              "type": "watch-proof",
+              "label": "home project 3d visual planner video observatory with source backed timeline and model view watch proof",
+              "url": "https://www.digitalhut.app/watch/home-project-diy-visual"
+            },
+            {
+              "type": "blog-proof",
+              "label": "home project 3d visual planner video observatory with source backed timeline and model view blog proof",
+              "url": "https://www.digitalhut.app/blog?dh_lane=home-project-diy-visual"
+            },
+            {
+              "type": "category-proof",
+              "label": "Home Project DIY Visual category proof",
+              "url": "https://www.digitalhut.app/category/home-project-diy-visual"
+            },
+            {
+              "type": "source-backlink-target",
+              "label": "home project 3d visual planner video observatory with source backed timeline and model view source trail",
+              "url": "https://www.digitalhut.app/watch/home-project-diy-visual?dh_rank=3072420&dh_global_rank=157072420&dh_lane=home-project-diy-visual"
+            },
+            {
+              "type": "crawler-receipt",
+              "label": "DigitalHut SEO claim coverage",
+              "url": "https://www.digitalhut.app/digitalhut-seo-claim-coverage.json"
+            },
+            {
+              "type": "operator-receipt",
+              "label": "DigitalHut operator search trail",
+              "url": "https://www.digitalhut.app/digitalhut-operator-search-trail-latest.json"
+            }
+          ],
+          "externalCandidateRules": [
+            "Only place a backlink where the answer is useful and human-readable.",
+            "Do not spam comments, profiles, or irrelevant directories.",
+            "Prefer source pages, community discussions, docs, creator pages, podcast pages, and GLB/source references that match the lane."
+          ]
+        },
+        "measurementSignals": [
+          "GLB structure preview",
+          "source route open",
+          "search intent",
+          "watch route open"
+        ],
+        "supabaseSignals": [
+          "search_run",
+          "proof_route_open",
+          "backlink_source_open",
+          "watch_route_open",
+          "category_proof_open"
+        ],
+        "sitemap": "https://www.digitalhut.app/sitemap.xml",
+        "publicReceipt": "https://www.digitalhut.app/digitalhut-operator-search-trail-latest.json"
+      },
+      "movement": {
+        "pageViewsDelta": 0,
+        "uniqueVisitorsDelta": 0,
+        "proofRouteOpens": 0,
+        "sourceBacklinkOpens": 0
+      },
+      "nextAction": "Keep full-system positioning; promote only when Search Console rows, proof route opens, source opens, or second-action deltas move."
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "generatedAt": "2026-07-07T05:42:00-04:00",
+  "mode": "DigitalHut Traffic Pool Sort 002",
+  "status": "standby-active",
+  "standbyMinutes": 30,
+  "movementPools": {
+    "pageViews": 278,
+    "last48PageViews": 82,
+    "uniqueVisitors": 95,
+    "glbPreviewPlays": 81,
+    "podcastInterrupts": 12,
+    "marketOpens": 5,
+    "topPage": "/",
+    "topCategory": "Mainstream Streaming",
+    "topAsset": "Horror Corridor VR room [Baked]"
+  },
+  "dryPools": {
+    "searchRuns": 0,
+    "proofRouteOpens": 0,
+    "sourceOpens": 0,
+    "searchConsoleRows": 0,
+    "searchConsoleClicks": 0,
+    "searchConsoleImpressions": 0
+  },
+  "googleStatus": {
+    "homepage": "Submitted and indexed",
+    "watchHomeProject": "Discovered - currently not indexed",
+    "categoryMainstreamStreaming": "Discovered - currently not indexed",
+    "rankingMovementClaim": "not-available-until-search-console-rows-exist"
+  },
+  "nextDecisionRules": [
+    "Promote GLB/Gaming and Home/Remodel 3D utility if GLB plays rise again.",
+    "Make search prompts clearer inside the existing system if search stays zero.",
+    "Tighten homepage/category route links if proof route opens stay zero.",
+    "Use Search Console query rows only after impressions or clicks appear."
+  ],
+  "deployDecision": "no-deploy-needed-for-standby-packet"
+}

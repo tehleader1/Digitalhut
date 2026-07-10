@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react"
-import "@google/model-viewer"
 import {ConnectButton} from "../wallet"
+import {loadModelViewer} from "../lib/modelViewerRuntime"
 import "./FullscreenObservatory.css"
 import "./FullscreenObservatory.api.css"
 
@@ -403,6 +403,7 @@ export default function FullscreenObservatory(){
 
   useEffect(() => {
     if(typeof window === "undefined") return
+    loadModelViewer()
     setTier(window.localStorage.getItem("digitalhut:tier") || "guest")
     setUsername(window.localStorage.getItem("digitalhut:username") || "")
     setEntryOpen(!freshEntry())

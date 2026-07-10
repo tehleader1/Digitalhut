@@ -1,0 +1,41 @@
+{
+  "generatedAt": "2026-07-07",
+  "mode": "DigitalHut Google Search Console Baseline",
+  "status": "real-google-baseline-connected",
+  "property": "https://www.digitalhut.app/",
+  "access": "verified",
+  "googleApiDiagnostics": {
+    "sites": {
+      "ok": true
+    },
+    "sitemaps": {
+      "ok": true
+    },
+    "searchAnalytics": {
+      "ok": true
+    }
+  },
+  "sitemap": {
+    "path": "https://www.digitalhut.app/sitemap.xml",
+    "visibleInSearchConsole": true,
+    "isPending": false,
+    "isSitemapsIndex": false,
+    "warnings": 0,
+    "errors": 0
+  },
+  "searchAnalyticsBaseline": {
+    "rowCount": 0,
+    "totalClicks": 0,
+    "totalImpressions": 0,
+    "averagePosition": null,
+    "topRows": []
+  },
+  "rankHigherStatus": "not-claimed-until-search-console-comparison",
+  "proofRule": {
+    "visibility": "More impressions on a route proves Google visibility expanded.",
+    "traffic": "More clicks proves search traffic arrived.",
+    "ranking": "A lower average position number for the same query and page proves ranking improved.",
+    "coverage": "New query rows prove new search-language coverage."
+  },
+  "nextSystemMove": "Request indexing for https://www.digitalhut.app/ and keep https://www.digitalhut.app/sitemap.xml stable, then compare future Search Console rows against this baseline."
+}

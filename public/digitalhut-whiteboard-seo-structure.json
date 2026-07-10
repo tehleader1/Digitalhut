@@ -1,0 +1,77 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Whiteboard SEO Structure Contract",
+  "status": "whiteboard-structure-locked",
+  "sourceImage": "C:\\Users\\Admin\\Downloads\\7362.jpg",
+  "purpose": "Convert the owner's whiteboard SEO structure into the backend operating contract for FireCuda, Supabase, Google Cloud, Vercel, and Codex reasoning.",
+  "normalBlogCap24h": 4,
+  "emergencyBlogCeiling24h": 5,
+  "metricFreshnessStatus": "stale-live-refresh-needed",
+  "rankJumpStatus": "rank-jump-staged-live-proof-needed",
+  "rankBenchmarkStatus": "rank-benchmark-staged-waiting-live-rank-proof",
+  "freshClusterStatus": "fresh-clusters-staged-statistics-stale",
+  "stages": [
+    {
+      "id": "blog-cadence",
+      "label": "x4 Blog / 24 Hours",
+      "job": "Limit public blog proof movement to four meaningful posts in a 24-hour period, with a fifth only for a clear proof emergency.",
+      "guardrail": "No post flood. Every blog must connect to a watch route, backlink/source path, and measurable Supabase event."
+    },
+    {
+      "id": "intertwine-backlinks",
+      "label": "Intertwine Backlinks",
+      "job": "Backlinks are not separate decoration. They must connect to the exact video topic, GLB/source proof, podcast/source moment, watch route, and category lane.",
+      "guardrail": "Reject backlinks that do not explain the same human intent as the keyword."
+    },
+    {
+      "id": "compare-master-list",
+      "label": "Compare Against Master List",
+      "job": "Every candidate keyword is compared against the FireCuda master list, rank universe floor, filler filter, and human reasoning score before it can move.",
+      "guardrail": "Do not add duplicate or generic long-tail rows just to increase volume."
+    },
+    {
+      "id": "database-confirmation",
+      "label": "Supabase / Google Cloud Database Confirmation",
+      "job": "Supabase confirms behavior; Google Cloud confirms allowed media metadata, source processing, and cloud-readiness lanes.",
+      "guardrail": "No fresh statistics or rank claims without a live measurement receipt."
+    },
+    {
+      "id": "firecuda-mapping",
+      "label": "FireCuda Mapping",
+      "job": "FireCuda is the staging ground for category groups, rejected filler, backlink candidates, international markets, secondary markets, and variation formulas.",
+      "guardrail": "FireCuda can hold millions of variations; the public site only gets measured proof batches."
+    },
+    {
+      "id": "category-rides",
+      "label": "Category Rides",
+      "job": "Each category lane rides across video, watch proof, blog proof, GLB context, podcast/source authority, backlink proof, and sitemap metadata.",
+      "guardrail": "A category does not publish unless the cluster has a useful visitor role and a proof route."
+    },
+    {
+      "id": "international-secondary-market",
+      "label": "International / Secondary Market",
+      "job": "Build side-market keyword variations for local language, city, country, travel, service, creator, research, and market intent.",
+      "guardrail": "Secondary markets stay staged until primary proof shows which human intent is real."
+    },
+    {
+      "id": "codex-reasoning",
+      "label": "Codex Reasoning",
+      "job": "Codex only performs final judgment: human realism, trend/backlink fit, compare/contrast, rank-jump readiness, and whether to publish, rewrite, or hold.",
+      "guardrail": "Codex does not replace the database. It oversees the database and rejects filler."
+    }
+  ],
+  "currentRead": [
+    "The whiteboard structure is now the operating map for DigitalHut SEO.",
+    "Rank jumping starts from the #236,000,000 floor, but public publishing stays throttled.",
+    "Fresh clusters are staged until live Supabase/Vercel/Search Console proof refreshes stale metrics.",
+    "The system should create human-search keywords, not abstract filler phrases."
+  ],
+  "databaseHumanReasoningLoop": [
+    "Collect real human trend, source, backlink, route, search, and media-intake signals.",
+    "Compare those signals against the master list and the rank-jump benchmark.",
+    "Eliminate filler long-tail keywords that only sound technical but do not match a human search.",
+    "Add long-tail keywords that match real daily searches, creator behavior, research needs, market decisions, and video-source questions.",
+    "Publish only a small proof batch, then measure before the next batch."
+  ],
+  "nextSystemMove": "Use this whiteboard contract before every standby run: FireCuda map first, confirm with Supabase/Google, compare against master list, apply Codex reasoning, and publish at most four blog proof posts per 24 hours."
+}

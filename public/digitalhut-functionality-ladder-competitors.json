@@ -1,0 +1,153 @@
+{
+  "generatedAt": "2026-07-09T03:05:00.000Z",
+  "status": "functionality-ladder-competitors-produced",
+  "owner": "Digitalhut.app",
+  "purpose": "Prevent the first visible query from being mistaken for a functionality win. Cyberhut is treated as a brand-adjacent search doorway only; real ladder matches must compare DigitalHut against websites and platforms with overlapping product functionality.",
+  "currentSearchConsoleDoorway": {
+    "firstVisibleQuery": "cyberhut",
+    "visibleSearchLink": "https://www.digitalhut.app/",
+    "classification": "brand-adjacent-noise-until-repeated",
+    "reason": "The public search neighborhood for cyberhut is mostly cybersecurity, identity research, business agency, and ISP language. It is useful as an early homepage visibility signal, but it is not proof that Google understands DigitalHut's entertainment observatory functionality."
+  },
+  "digitalhutFunctionalClaim": {
+    "corePhrase": "video watching plus 3D Model View plus podcast/source moments plus live analytics in one 2026 dapp entertainment observatory",
+    "proofActions": [
+      "homepage entry",
+      "autoplay start",
+      "next episode",
+      "3D Model View open",
+      "GLB rotate or play",
+      "podcast/source interrupt",
+      "search run",
+      "proof route open",
+      "source/backlink open"
+    ],
+    "currentProofState": {
+      "pageViews": 315,
+      "uniqueVisitors": 115,
+      "glbPreviewPlays": 83,
+      "podcastInterrupts": 13,
+      "autoplayStarts": 5,
+      "searches": 2,
+      "proofRouteOpens": 0,
+      "sourceBacklinkOpens": 0
+    }
+  },
+  "ladderRules": [
+    "Do not count cyberhut as a direct competitor match unless Search Console repeats it with DigitalHut-branded or observatory-intent variants.",
+    "Compete against platforms with real overlapping functionality, not thin websites that only share a word.",
+    "Promote a lane only when Search Console rows, proof route opens, source opens, GLB plays, podcast interrupts, search runs, or autoplay starts move.",
+    "A ladder win requires DigitalHut to prove a combined experience that normal single-purpose tools do not provide."
+  ],
+  "realFunctionalityCompetitorLanes": [
+    {
+      "lane": "3D model web viewer",
+      "whyItMatters": "DigitalHut must be compared against real 3D model viewers because the GLB renderer is the strongest behavior signal so far.",
+      "knownPlatforms": [
+        {
+          "name": "Sketchfab",
+          "url": "https://sketchfab.com/",
+          "observedOverlap": "publish, share, discover, and embed interactive 3D content"
+        },
+        {
+          "name": "model-viewer",
+          "url": "https://modelviewer.dev/",
+          "observedOverlap": "web component for interactive 3D models and AR"
+        },
+        {
+          "name": "VNTANA",
+          "url": "https://www.vntana.com/the-ultimate-guide-to-3d-viewers/",
+          "observedOverlap": "browser-based 3D viewer and product visualization"
+        }
+      ],
+      "digitalhutDifference": "DigitalHut attaches the 3D model view to a video episode, podcast/source moment, live analytics, and route-level SEO proof instead of presenting the model as a standalone viewer.",
+      "nextMeasurement": "Raise GLB plays above 83 and produce one GLB source/backlink open."
+    },
+    {
+      "lane": "interactive spatial media",
+      "whyItMatters": "DigitalHut's observatory view needs to compete with interactive tours and spatial pages, not just video players.",
+      "knownPlatforms": [
+        {
+          "name": "SeekBeak",
+          "url": "https://seekbeak.com/interactive-3d-models/",
+          "observedOverlap": "interactive 3D models, hotspots, material swaps, flythroughs, and embeddable 3D experiences"
+        },
+        {
+          "name": "AVEVA 3D Viewer OMI App",
+          "url": "https://www.aveva.com/en/products/3d-viewer-for-omi-app/",
+          "observedOverlap": "3D model visualization for operational and spatial context"
+        }
+      ],
+      "digitalhutDifference": "DigitalHut is consumer-facing and entertainment/research-oriented, combining video, 3D, podcast, and analytics in one active screen.",
+      "nextMeasurement": "Produce proof route opens for /watch/full-view-episode-alternative or /watch/home-project-3d-visual-planner."
+    },
+    {
+      "lane": "podcast and video analytics",
+      "whyItMatters": "The podcast/source moment must compete with tools that join video performance and audio analytics.",
+      "knownPlatforms": [
+        {
+          "name": "Simplecast",
+          "url": "https://blog.simplecast.com/grow-your-audience-everywhere-simplecast-adds-youtube-publishing-and-unified-podcast-analytics",
+          "observedOverlap": "unified podcast and YouTube analytics across video and audio performance"
+        }
+      ],
+      "digitalhutDifference": "DigitalHut turns podcast/source moments into an interruptible observatory feature inside the same episode interface instead of a separate analytics dashboard.",
+      "nextMeasurement": "Raise podcast interrupts above 13 and produce one podcast source open."
+    },
+    {
+      "lane": "3D research and model interrogation",
+      "whyItMatters": "DigitalHut's useful side is strongest when it feels like a research system, not a decorative media page.",
+      "knownPlatforms": [
+        {
+          "name": "CoLab",
+          "url": "https://www.colabsoftware.com/product/model-interrogation-analysis",
+          "observedOverlap": "browser-based CAD model viewing, model browser, and analysis"
+        },
+        {
+          "name": "Arc 3D Model Viewer",
+          "url": "https://www.rchsd.org/programs-services/3d-innovations-lab/research-projects/arc3dmodelviewer/",
+          "observedOverlap": "3D datasets and anatomical or non-medical 3D viewing"
+        }
+      ],
+      "digitalhutDifference": "DigitalHut blends research source explanation with video context, GLB visualization, and live behavior analytics.",
+      "nextMeasurement": "Create Search Console rows for research/source queries and get source/backlink opens above zero."
+    },
+    {
+      "lane": "full entertainment observatory",
+      "whyItMatters": "This is the strongest DigitalHut ladder lane because it combines all subsystems instead of copying one product category.",
+      "knownPlatforms": [
+        {
+          "name": "YouTube",
+          "url": "https://www.youtube.com/",
+          "observedOverlap": "video watching, search, autoplay, and episode/session behavior"
+        },
+        {
+          "name": "Sketchfab",
+          "url": "https://sketchfab.com/",
+          "observedOverlap": "3D model discovery and interactive model presentation"
+        },
+        {
+          "name": "Simplecast",
+          "url": "https://blog.simplecast.com/grow-your-audience-everywhere-simplecast-adds-youtube-publishing-and-unified-podcast-analytics",
+          "observedOverlap": "podcast and video analytics"
+        }
+      ],
+      "digitalhutDifference": "DigitalHut's claim is the combined system: video watching, 3D Model View, podcast/source moments, live analytics, watch routes, category lanes, and sitemap/Search Console proof in one interface.",
+      "nextMeasurement": "The first real ladder hit is one proof route open or one source/backlink open from the homepage."
+    }
+  ],
+  "nextSeoCast": {
+    "primaryTarget": "full entertainment observatory",
+    "secondaryTargets": [
+      "3D model web viewer",
+      "interactive spatial media",
+      "podcast and video analytics",
+      "3D research and model interrogation"
+    ],
+    "hold": [
+      "cyberhut-only expansion",
+      "unrelated cybersecurity ranking claims",
+      "thin keyword pages without feature proof"
+    ]
+  }
+}

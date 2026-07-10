@@ -115,6 +115,23 @@ function pressureSummary(row){
   return options?.pressure || stock?.pressure || "queued-pressure"
 }
 
+function trackMarketPixel(eventName, data = {}){
+  try {
+    window.digitalhutPixel?.track?.(eventName, {
+      category: "Current Market Observatory",
+      keywordHint: data.keywordHint || "current market video observatory",
+      search: data.search || "",
+      assetId: data.assetId || "",
+      metadata: {
+        source: "market-page",
+        ...data.metadata
+      }
+    })
+  } catch {
+    // Market analytics must never interrupt the market feed.
+  }
+}
+
 function rotateUniverse(seed = Date.now(), count = 28){
   const scored = marketUniverse.map((symbol, index) => {
     const wave = Math.sin((seed / 1000) + index * 2.31)
@@ -195,6 +212,11 @@ export default function MarketPage(){
 
   async function runScan(nextSymbols = symbols){
     const activeSymbols = nextSymbols.length ? nextSymbols : defaultSymbols
+    trackMarketPixel("ticker_search", {
+      search: activeSymbols.join(","),
+      keywordHint: `${activeSymbols.slice(0, 4).join(" ")} market visual analysis`,
+      metadata: {symbolCount: activeSymbols.length, control: "market-scan"}
+    })
     setLoading(true)
     setError("")
     setRows(activeSymbols.map(pendingRow))
@@ -215,11 +237,68 @@ export default function MarketPage(){
   useEffect(() => {
     if(started.current) return
     started.current = true
+    trackMarketPixel("market_view_open", {
+      search: defaultSymbols.join(","),
+      keywordHint: "preloaded market print feed",
+      metadata: {symbolCount: defaultSymbols.length, control: "initial-market-page-load"}
+    })
     runScan(defaultSymbols)
+  }, [])
+
+  useEffect(() => {
+    const title = "Current Market Video Observatory | DigitalHut Market Intelligence"
+    const description = "DigitalHut Current Market connects stock and options print flow, bullish and bearish pressure, company search, source proof, 3D observatory context, and watch routes."
+    document.title = title
+    let meta = document.querySelector('meta[name="description"]')
+    if(!meta){
+      meta = document.createElement("meta")
+      meta.name = "description"
+      document.head.appendChild(meta)
+    }
+    meta.content = description
+    let canonical = document.querySelector('link[rel="canonical"]')
+    if(!canonical){
+      canonical = document.createElement("link")
+      canonical.rel = "canonical"
+      document.head.appendChild(canonical)
+    }
+    canonical.href = "https://www.digitalhut.app/markets"
+    let script = document.getElementById("dh-market-jsonld")
+    if(!script){
+      script = document.createElement("script")
+      script.id = "dh-market-jsonld"
+      script.type = "application/ld+json"
+      document.head.appendChild(script)
+    }
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Dataset",
+      name: title,
+      description,
+      url: canonical.href,
+      keywords: [
+        "current market video observatory",
+        "stock market visual analysis 3D",
+        "top volume stock video research hub",
+        "options flow visual research",
+        "market feed with source proof"
+      ],
+      creator: {
+        "@type": "Organization",
+        name: "DigitalHut"
+      },
+      isAccessibleForFree: true,
+      dateModified: new Date().toISOString()
+    })
   }, [])
 
   function reloadPressureFeed(){
     const rotated = rotateUniverse(Date.now(), 32)
+    trackMarketPixel("market_view_open", {
+      search: rotated.join(","),
+      keywordHint: "reload pressure feed market observatory",
+      metadata: {symbolCount: rotated.length, control: "reload-pressure-feed"}
+    })
     setInput(rotated.join(", "))
     runScan(rotated)
   }
@@ -298,8 +377,8 @@ export default function MarketPage(){
             </section>
           </div>
           <footer>
-            <Link to={`/?market=${encodeURIComponent(row.symbol)}`}>Open In Observatory</Link>
-            {row.candidate?.contract && <a href={`/api/options-flow?symbol=${encodeURIComponent(row.symbol)}&contract=${encodeURIComponent(row.candidate.contract)}`} target="_blank" rel="noreferrer">Run Option JSON</a>}
+            <Link to={`/?market=${encodeURIComponent(row.symbol)}`} onClick={() => trackMarketPixel("market_view_open", {search: row.symbol, keywordHint: `${row.symbol} market observatory`, assetId: row.symbol, metadata: {control: "open-in-observatory", pressure: pressureSummary(row)}})}>Open In Observatory</Link>
+            {row.candidate?.contract && <a href={`/api/options-flow?symbol=${encodeURIComponent(row.symbol)}&contract=${encodeURIComponent(row.candidate.contract)}`} target="_blank" rel="noreferrer" onClick={() => trackMarketPixel("backlink_source_open", {search: row.symbol, keywordHint: `${row.symbol} options flow source`, assetId: row.symbol, metadata: {control: "run-option-json", contract: row.candidate.contract}})}>Run Option JSON</a>}
           </footer>
         </article>
       })}

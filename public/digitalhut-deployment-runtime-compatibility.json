@@ -1,0 +1,77 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Deployment Runtime Compatibility",
+  "status": "runtime-compatibility-local-ready-cloud-confirmation-needed",
+  "purpose": "Make runtime and deploy-config risk visible before DigitalHut treats the Vercel path as production proof.",
+  "guardrail": "This packet does not verify Vercel externally and does not deploy. It only records local evidence and the cloud confirmations still needed.",
+  "nodeEngine": "24.x",
+  "vercelFramework": "vite",
+  "installCommand": "npm ci --legacy-peer-deps",
+  "buildCommand": "node tools/verify-metric-contract.mjs && vite build",
+  "outputDirectory": "dist",
+  "lockfileVersion": 3,
+  "checks": [
+    {
+      "id": "node-engine-cloud-confirmation",
+      "status": "needs-cloud-confirmation",
+      "read": "package.json declares node 24.x",
+      "releaseRisk": "Confirm the Vercel build environment accepts this engine before claiming production build proof."
+    },
+    {
+      "id": "lockfile-npm-ci",
+      "status": "pass",
+      "read": "package-lock lockfileVersion 3",
+      "releaseRisk": "npm ci needs a readable lockfile."
+    },
+    {
+      "id": "vite-build-entry",
+      "status": "pass",
+      "read": "build script vite build",
+      "releaseRisk": "Vite build must stay aligned with Vercel outputDirectory dist."
+    },
+    {
+      "id": "react-vite-plugin",
+      "status": "pass",
+      "read": "React Vite plugin declared",
+      "releaseRisk": "React build pipeline needs plugin dependency available during install."
+    },
+    {
+      "id": "serverless-api-rewrite",
+      "status": "pass",
+      "read": "Vercel API rewrite checked",
+      "releaseRisk": "API routes should remain reachable after SPA fallback rewrites."
+    },
+    {
+      "id": "spa-fallback-rewrite",
+      "status": "pass",
+      "read": "SPA fallback rewrite checked",
+      "releaseRisk": "Watch/blog/category proof routes need SPA fallback for crawlable rendering."
+    },
+    {
+      "id": "local-dependency-proof",
+      "status": "pass",
+      "read": "local Vite binary present",
+      "releaseRisk": "Local build proof is unavailable until dependencies are restored."
+    }
+  ],
+  "statusCounts": {
+    "needs-cloud-confirmation": 1,
+    "pass": 6
+  },
+  "releaseCommandCenterStatus": "release-command-center-ready",
+  "releaseDecision": "Local dependencies look closer, but local proof still requires a completed npm run build result before release.",
+  "nextAction": "Local build proof is ready; next proof is Vercel cloud build confirmation for the declared Node/runtime path.",
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  }
+}

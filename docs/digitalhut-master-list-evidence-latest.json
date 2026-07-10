@@ -1,0 +1,408 @@
+{
+  "generatedAt": "2026-07-10T11:30:42.652Z",
+  "status": "master-list-evidence-connected",
+  "truthBoundary": "The 200,572,944 value is deterministic internal variation capacity. Public search ownership requires indexed canonical routes, impressions, clicks, and user conversions.",
+  "storageMode": "healthy-system-drive-and-cloud-evidence",
+  "fireCudaStatus": "quarantined-after-confirmed-bad-block-readback",
+  "masterList": {
+    "internalVariationCapacity": 200572944,
+    "countedLanes": 24,
+    "internalSelectionWindow": 50000,
+    "publicCanonicalRoutes": 50,
+    "publicQueryParameterRows": 0
+  },
+  "production": {
+    "generatedAt": "2026-07-10T11:30:43.176Z",
+    "pageViews": 323,
+    "uniqueVisitors": 119,
+    "totalEvents": 540,
+    "secondActions": 108,
+    "proofOpens": 0,
+    "sourceOpens": 0,
+    "masterKeywordDoorEvents": 72,
+    "unassignedEvents": 423,
+    "unassignedShare": 0.7833
+  },
+  "searchConsole": {
+    "freshRows": 0,
+    "freshImpressions": 0,
+    "freshClicks": 0,
+    "source": "no-current-search-console-receipt"
+  },
+  "routeContract": {
+    "status": "pass",
+    "metadataRoutes": 165,
+    "sitemapProofRoutes": 165,
+    "missingRoutes": []
+  },
+  "laneEvidence": [
+    {
+      "id": "full-entertainment-dapp-alternative",
+      "lane": "Full Entertainment Dapp Alternative",
+      "variationCapacity": 11000000,
+      "proofRoute": "/watch/full-view-episode-alternative",
+      "evidenceScore": 137,
+      "evidenceState": "behavior-evidence",
+      "observedAliases": [
+        "Mainstream Streaming",
+        "Full Entertainment Dapp Alternative",
+        "After Work Relax Viewer"
+      ],
+      "events": 47,
+      "pageViews": 9,
+      "secondActions": 29,
+      "proofOpens": 0,
+      "sourceOpens": 0
+    },
+    {
+      "id": "gaming-3d-world-observatory",
+      "lane": "Gaming 3D World Observatory",
+      "variationCapacity": 11000000,
+      "proofRoute": "/watch/game-world-glb-presentation",
+      "evidenceScore": 35,
+      "evidenceState": "behavior-evidence",
+      "observedAliases": [
+        "automatic 3d autoplay system",
+        "Gaming GLB Viewer"
+      ],
+      "events": 16,
+      "pageViews": 9,
+      "secondActions": 6,
+      "proofOpens": 0,
+      "sourceOpens": 0
+    },
+    {
+      "id": "market-company-observatory",
+      "lane": "Market Company Observatory",
+      "variationCapacity": 11000000,
+      "proofRoute": "/watch/market-company-observatory",
+      "evidenceScore": 18,
+      "evidenceState": "behavior-evidence",
+      "observedAliases": [
+        "Market Observatory"
+      ],
+      "events": 20,
+      "pageViews": 18,
+      "secondActions": 0,
+      "proofOpens": 0,
+      "sourceOpens": 0
+    },
+    {
+      "id": "ai-video-podcast-source-explainer",
+      "lane": "AI Video Podcast Source Explainer",
+      "variationCapacity": 11000000,
+      "proofRoute": "/watch/ai-video-podcast-source-explainer",
+      "evidenceScore": 12,
+      "evidenceState": "behavior-evidence",
+      "observedAliases": [
+        "Research Podcast Viewer"
+      ],
+      "events": 3,
+      "pageViews": 1,
+      "secondActions": 2,
+      "proofOpens": 0,
+      "sourceOpens": 0
+    },
+    {
+      "id": "local-life-errands-companion",
+      "lane": "Local Life Errands Companion",
+      "variationCapacity": 11000000,
+      "proofRoute": "/watch/local-life-errands-companion",
+      "evidenceScore": 8,
+      "evidenceState": "behavior-evidence",
+      "observedAliases": [
+        "Errands And Review Before Buying"
+      ],
+      "events": 8,
+      "pageViews": 8,
+      "secondActions": 0,
+      "proofOpens": 0,
+      "sourceOpens": 0
+    },
+    {
+      "id": "errands-review-before-buying",
+      "lane": "Errands And Review Before Buying",
+      "variationCapacity": 451584,
+      "proofRoute": "/watch/search-intent-radar-visual-experience",
+      "evidenceScore": 8,
+      "evidenceState": "behavior-evidence",
+      "observedAliases": [
+        "Errands And Review Before Buying"
+      ],
+      "events": 8,
+      "pageViews": 8,
+      "secondActions": 0,
+      "proofOpens": 0,
+      "sourceOpens": 0
+    },
+    {
+      "id": "real-estate-3d-tour-observatory",
+      "lane": "Real Estate 3D Tour Observatory",
+      "variationCapacity": 11000000,
+      "proofRoute": "/watch/real-estate-3d-tour-observatory",
+      "evidenceScore": 0,
+      "evidenceState": "unobserved-candidate",
+      "observedAliases": [],
+      "events": 0,
+      "pageViews": 0,
+      "secondActions": 0,
+      "proofOpens": 0,
+      "sourceOpens": 0
+    },
+    {
+      "id": "planetary-space-observatory",
+      "lane": "Planetary And Space Observatory",
+      "variationCapacity": 11000000,
+      "proofRoute": "/watch/planetary-space-visual-observatory",
+      "evidenceScore": 0,
+      "evidenceState": "unobserved-candidate",
+      "observedAliases": [],
+      "events": 0,
+      "pageViews": 0,
+      "secondActions": 0,
+      "proofOpens": 0,
+      "sourceOpens": 0
+    },
+    {
+      "id": "exotic-environment-visual-experience",
+      "lane": "Exotic Environment Visual Experience",
+      "variationCapacity": 11000000,
+      "proofRoute": "/watch/exotic-environment-visual-experience",
+      "evidenceScore": 0,
+      "evidenceState": "unobserved-candidate",
+      "observedAliases": [],
+      "events": 0,
+      "pageViews": 0,
+      "secondActions": 0,
+      "proofOpens": 0,
+      "sourceOpens": 0
+    },
+    {
+      "id": "architecture-structure-engineering",
+      "lane": "Architecture Structure Engineering",
+      "variationCapacity": 11000000,
+      "proofRoute": "/watch/architecture-structure-engineering-visual",
+      "evidenceScore": 0,
+      "evidenceState": "unobserved-candidate",
+      "observedAliases": [],
+      "events": 0,
+      "pageViews": 0,
+      "secondActions": 0,
+      "proofOpens": 0,
+      "sourceOpens": 0
+    },
+    {
+      "id": "developer-programmer-research",
+      "lane": "Developer Programmer Research",
+      "variationCapacity": 11000000,
+      "proofRoute": "/watch/developer-programmer-research-observatory",
+      "evidenceScore": 0,
+      "evidenceState": "unobserved-candidate",
+      "observedAliases": [],
+      "events": 0,
+      "pageViews": 0,
+      "secondActions": 0,
+      "proofOpens": 0,
+      "sourceOpens": 0
+    },
+    {
+      "id": "social-reel-meme-analysis",
+      "lane": "Social Reel Meme Analysis",
+      "variationCapacity": 11000000,
+      "proofRoute": "/watch/social-reel-meme-analysis",
+      "evidenceScore": 0,
+      "evidenceState": "unobserved-candidate",
+      "observedAliases": [],
+      "events": 0,
+      "pageViews": 0,
+      "secondActions": 0,
+      "proofOpens": 0,
+      "sourceOpens": 0
+    },
+    {
+      "id": "virtual-travel-resort-vacation",
+      "lane": "Virtual Travel Resort Vacation",
+      "variationCapacity": 11000000,
+      "proofRoute": "/watch/virtual-travel-resort-vacation",
+      "evidenceScore": 0,
+      "evidenceState": "unobserved-candidate",
+      "observedAliases": [],
+      "events": 0,
+      "pageViews": 0,
+      "secondActions": 0,
+      "proofOpens": 0,
+      "sourceOpens": 0
+    },
+    {
+      "id": "workforce-training-visual-system",
+      "lane": "Workforce Training Visual System",
+      "variationCapacity": 11000000,
+      "proofRoute": "/watch/workforce-training-visual-system",
+      "evidenceScore": 0,
+      "evidenceState": "unobserved-candidate",
+      "observedAliases": [],
+      "events": 0,
+      "pageViews": 0,
+      "secondActions": 0,
+      "proofOpens": 0,
+      "sourceOpens": 0
+    },
+    {
+      "id": "education-study-visual-research",
+      "lane": "Education Study Visual Research",
+      "variationCapacity": 11000000,
+      "proofRoute": "/watch/education-study-visual-research",
+      "evidenceScore": 0,
+      "evidenceState": "unobserved-candidate",
+      "observedAliases": [],
+      "events": 0,
+      "pageViews": 0,
+      "secondActions": 0,
+      "proofOpens": 0,
+      "sourceOpens": 0
+    },
+    {
+      "id": "home-project-diy-visual",
+      "lane": "Home Project DIY Visual",
+      "variationCapacity": 11000000,
+      "proofRoute": "/watch/home-project-diy-visual",
+      "evidenceScore": 0,
+      "evidenceState": "unobserved-candidate",
+      "observedAliases": [],
+      "events": 0,
+      "pageViews": 0,
+      "secondActions": 0,
+      "proofOpens": 0,
+      "sourceOpens": 0
+    },
+    {
+      "id": "lifestyle-event-visual-experience",
+      "lane": "Lifestyle Event Visual Experience",
+      "variationCapacity": 11000000,
+      "proofRoute": "/watch/lifestyle-event-visual-experience",
+      "evidenceScore": 0,
+      "evidenceState": "unobserved-candidate",
+      "observedAliases": [],
+      "events": 0,
+      "pageViews": 0,
+      "secondActions": 0,
+      "proofOpens": 0,
+      "sourceOpens": 0
+    },
+    {
+      "id": "creator-brand-product-showcase",
+      "lane": "Creator Brand Product Showcase",
+      "variationCapacity": 11000000,
+      "proofRoute": "/watch/creator-brand-product-showcase",
+      "evidenceScore": 0,
+      "evidenceState": "unobserved-candidate",
+      "observedAliases": [],
+      "events": 0,
+      "pageViews": 0,
+      "secondActions": 0,
+      "proofOpens": 0,
+      "sourceOpens": 0
+    },
+    {
+      "id": "international-language-side-markets",
+      "lane": "International Language Side Markets",
+      "variationCapacity": 11000000,
+      "proofRoute": "/watch/international-language-side-markets",
+      "evidenceScore": 0,
+      "evidenceState": "unobserved-candidate",
+      "observedAliases": [],
+      "events": 0,
+      "pageViews": 0,
+      "secondActions": 0,
+      "proofOpens": 0,
+      "sourceOpens": 0
+    },
+    {
+      "id": "lunch-local-food",
+      "lane": "Lunch And Local Food",
+      "variationCapacity": 571536,
+      "proofRoute": "/watch/looking-for-lunch-visual-observatory",
+      "evidenceScore": 0,
+      "evidenceState": "unobserved-candidate",
+      "observedAliases": [],
+      "events": 0,
+      "pageViews": 0,
+      "secondActions": 0,
+      "proofOpens": 0,
+      "sourceOpens": 0
+    },
+    {
+      "id": "rideshare-commute",
+      "lane": "Rideshare And Commute",
+      "variationCapacity": 344064,
+      "proofRoute": "/watch/calling-an-uber-visual-trip-guide",
+      "evidenceScore": 0,
+      "evidenceState": "unobserved-candidate",
+      "observedAliases": [],
+      "events": 0,
+      "pageViews": 0,
+      "secondActions": 0,
+      "proofOpens": 0,
+      "sourceOpens": 0
+    },
+    {
+      "id": "flight-travel-booking",
+      "lane": "Flight And Travel Booking",
+      "variationCapacity": 419328,
+      "proofRoute": "/watch/booking-flight-ticket-visual-guide",
+      "evidenceScore": 0,
+      "evidenceState": "unobserved-candidate",
+      "observedAliases": [],
+      "events": 0,
+      "pageViews": 0,
+      "secondActions": 0,
+      "proofOpens": 0,
+      "sourceOpens": 0
+    },
+    {
+      "id": "wiki-quick-research",
+      "lane": "Wiki And Quick Research",
+      "variationCapacity": 344064,
+      "proofRoute": "/watch/wiki-lookup-visual-research-hub",
+      "evidenceScore": 0,
+      "evidenceState": "unobserved-candidate",
+      "observedAliases": [],
+      "events": 0,
+      "pageViews": 0,
+      "secondActions": 0,
+      "proofOpens": 0,
+      "sourceOpens": 0
+    },
+    {
+      "id": "funny-mainstream-video",
+      "lane": "Funny Mainstream Video",
+      "variationCapacity": 442368,
+      "proofRoute": "/watch/funny-mainstream-video-explained",
+      "evidenceScore": 0,
+      "evidenceState": "unobserved-candidate",
+      "observedAliases": [],
+      "events": 0,
+      "pageViews": 0,
+      "secondActions": 0,
+      "proofOpens": 0,
+      "sourceOpens": 0
+    }
+  ],
+  "decisions": [
+    {
+      "priority": 1,
+      "action": "assign-future-generic-events-to-master-list",
+      "reason": "423 of 540 events are historically unassigned; the pixel contract now defaults future generic controls to the full-system lane."
+    },
+    {
+      "priority": 2,
+      "action": "convert-behavior-to-proof-and-source",
+      "reason": "0 proof opens and 0 source opens remain the missing public authority signals."
+    },
+    {
+      "priority": 3,
+      "action": "hold-canonical-route-shape",
+      "reason": "Retune internal selection weights from observed behavior and Search Console evidence; do not publish millions of thin or parameter-duplicate URLs."
+    }
+  ]
+}

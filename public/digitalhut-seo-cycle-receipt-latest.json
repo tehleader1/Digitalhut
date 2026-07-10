@@ -1,0 +1,234 @@
+{
+  "generatedAt": "2026-07-10T02:01:55.786Z",
+  "status": "seo-cycle-receipt-produced",
+  "owner": "Digitalhut.app",
+  "runnerId": "digitalhut-seo-overseer",
+  "cycle": "seo-main-website-intertwine-and-database-write",
+  "guardrail": "This receipt records SEO cycle reasoning and measured public signals. It is not counted as page views, unique visitors, searches, GLB plays, podcast interrupts, proof opens, or source opens.",
+  "traffic": {
+    "pageViews": 323,
+    "uniqueVisitors": 119,
+    "totalEvents": 540,
+    "glbPreviewPlays": 83,
+    "podcastInterrupts": 13,
+    "autoplayStarts": 5,
+    "searches": 2,
+    "marketOpens": 5,
+    "proofRouteOpens": 0,
+    "sourceBacklinkOpens": 0,
+    "topPages": [
+      {
+        "count": 226,
+        "value": "/"
+      },
+      {
+        "count": 18,
+        "value": "/markets"
+      },
+      {
+        "count": 11,
+        "value": "/insights"
+      },
+      {
+        "count": 8,
+        "value": "/blog/automatic-3d-autoplay-system"
+      },
+      {
+        "count": 7,
+        "value": "/blog"
+      },
+      {
+        "count": 7,
+        "value": "/insights?fresh=scroll"
+      },
+      {
+        "count": 5,
+        "value": "/runner"
+      },
+      {
+        "count": 4,
+        "value": "/?ref=producthunt"
+      }
+    ],
+    "topContentPulls": [
+      {
+        "contentPull": "Full Entertainment Observatory Alternative",
+        "count": 455,
+        "sampleHints": [
+          "DigitalHut Search Pixel health check"
+        ]
+      },
+      {
+        "contentPull": "Gaming And 3D Environment Viewer",
+        "count": 53,
+        "sampleHints": [
+          "video research observatory podcast source backed 3d renderer",
+          "gaming 3d environment viewer horror corridor vr room walkthrough",
+          "youtube alternative autoplay 3d model podcast analytics",
+          "Horror Corridor VR room [Baked]"
+        ]
+      },
+      {
+        "contentPull": "AI Video Podcast Source Explainer",
+        "count": 16,
+        "sampleHints": [
+          "2026 video 3d renderer podcast dapp entertainment alternative"
+        ]
+      },
+      {
+        "contentPull": "Research Developer Source Observatory",
+        "count": 7,
+        "sampleHints": []
+      },
+      {
+        "contentPull": "Market Observatory",
+        "count": 5,
+        "sampleHints": [
+          "NVDA NVIDIA market observatory",
+          "NVDA NVIDIA"
+        ]
+      },
+      {
+        "contentPull": "Spatial Home Travel And Real Estate Experience",
+        "count": 4,
+        "sampleHints": []
+      }
+    ],
+    "originBuckets": [
+      {
+        "bucket": "direct-or-private-referrer",
+        "events": 303,
+        "visitors": 95
+      },
+      {
+        "bucket": "vercel-preview-or-deploy",
+        "events": 208,
+        "visitors": 22
+      },
+      {
+        "bucket": "digitalhut-internal-navigation",
+        "events": 17,
+        "visitors": 3
+      },
+      {
+        "bucket": "codex-overseer-test",
+        "events": 10,
+        "visitors": 4
+      },
+      {
+        "bucket": "crawler-or-search-inspection",
+        "events": 2,
+        "visitors": 1
+      }
+    ],
+    "exploitableMovement": {
+      "decision": "duplicate-full-system-movement",
+      "strongestPublicPull": "Full Entertainment Observatory Alternative",
+      "publicCandidate": {
+        "events": 320,
+        "visitors": 95,
+        "pageViews": 256,
+        "glbPreviewPlays": 33,
+        "podcastInterrupts": 0,
+        "autoplayStarts": 0,
+        "searches": 0,
+        "marketOpens": 0,
+        "proofRouteOpens": 0,
+        "sourceOpens": 0
+      },
+      "previewOrTest": {
+        "events": 220,
+        "visitors": 27,
+        "pageViews": 67,
+        "glbPreviewPlays": 50,
+        "podcastInterrupts": 13,
+        "autoplayStarts": 5,
+        "searches": 2,
+        "marketOpens": 5,
+        "proofRouteOpens": 0,
+        "sourceOpens": 0
+      },
+      "nextMeasure": "Track whether direct/private or external visitors repeat GLB, podcast, autoplay, search, proof, or source actions after the generalized full-system pull is deployed."
+    },
+    "rawKeywordDiagnostics": [
+      {
+        "value": "Medieval City Pack Demo",
+        "count": 9
+      },
+      {
+        "value": "Horror Corridor VR room [Baked]",
+        "count": 6
+      },
+      {
+        "value": "video research observatory podcast source backed 3d renderer",
+        "count": 3
+      },
+      {
+        "value": "gaming 3d environment viewer horror corridor vr room walkthrough",
+        "count": 3
+      },
+      {
+        "value": "youtube alternative autoplay 3d model podcast analytics",
+        "count": 3
+      },
+      {
+        "value": "NVDA NVIDIA",
+        "count": 3
+      },
+      {
+        "value": "Full Gameready City Buildings IV [HongKong]",
+        "count": 3
+      },
+      {
+        "value": "Horror podcast clip",
+        "count": 3
+      }
+    ]
+  },
+  "searchConsole": {
+    "freshRows": 1,
+    "freshClicks": 0,
+    "freshImpressions": 1,
+    "finalRows": 1,
+    "finalClicks": 0,
+    "finalImpressions": 1,
+    "sitemapSurfacesVisible": 3,
+    "sitemapSurfacesPending": 2,
+    "indexedInspectionTargets": 2,
+    "discoveredInspectionTargets": 4,
+    "rankingTruth": "Search Console has query rows; rank movement can be compared against saved snapshots."
+  },
+  "sitemap": {
+    "masterKeywordRows": 50000,
+    "totalRows": 50228,
+    "masterKeywordUniverse": 200572944,
+    "routeCrawlShellCount": 181
+  },
+  "seoIntertwine": {
+    "websiteLayer": "system-proof, master-keyword-coverage, watch routes, category lanes, blog routes, public JSON artifacts, sitemap index, 50k master keyword sitemap",
+    "proofArtifacts": [
+      "digitalhut-competition-seo-pull-package.json",
+      "digitalhut-functionality-ladder-competitors.json",
+      "digitalhut-master-keyword-coverage.json",
+      "digitalhut-seo-cycle-receipt-latest.json"
+    ],
+    "strongestPull": "full-entertainment-observatory",
+    "currentLadderFocus": "full entertainment observatory"
+  },
+  "decisions": [
+    "Keep UI locked unless behavior data proves a visible change is needed.",
+    "Use GLB as the strongest current behavior signal while keeping the full entertainment observatory as the anchor.",
+    "Treat cyberhut as a weak homepage doorway until repeated DigitalHut or observatory-intent query rows appear.",
+    "Promote only lanes that create Search Console rows, proof route opens, source opens, searches, autoplay starts, GLB plays, or podcast interrupts."
+  ],
+  "nextAction": "Watch for proof route opens and source/backlink opens; keep content pull decisions at the general audience-lane level instead of promoting individual GLB asset names.",
+  "score": 98,
+  "summary": "SEO cycle receipt: 323 page views, 119 unique visitors, 83 GLB plays, 13 podcast interrupts, Search Console fresh rows 1, sitemap rows 50228.",
+  "database": {
+    "target": "public.digitalhut_runner_reports",
+    "writeType": "seo-cycle-receipt",
+    "saved": false,
+    "reason": "supabase-runner-report-network-failed",
+    "detail": "ENOTFOUND"
+  }
+}

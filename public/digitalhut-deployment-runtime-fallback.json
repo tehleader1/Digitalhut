@@ -1,0 +1,66 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Deployment Runtime Fallback Plan",
+  "status": "runtime-fallback-staged",
+  "purpose": "Stage the safe response if the declared runtime cannot be confirmed by local proof or Vercel build proof.",
+  "guardrail": "Do not change package.json engine preemptively. Runtime fallback requires explicit build evidence.",
+  "currentNodeEngine": "24.x",
+  "compatibilityStatus": "runtime-compatibility-local-ready-cloud-confirmation-needed",
+  "releaseCommandCenterStatus": "release-command-center-ready",
+  "fallbackTriggers": [
+    {
+      "trigger": "Vercel rejects declared Node engine",
+      "active": true,
+      "evidenceNeeded": "Cloud build log that names the unsupported engine or runtime mismatch.",
+      "response": "Do not guess locally. Change engine only after Vercel provides rejection evidence."
+    },
+    {
+      "trigger": "Local build proof is required before deploy",
+      "active": false,
+      "evidenceNeeded": "node_modules/vite/bin/vite.js present and a completed local build result.",
+      "response": "Restore dependencies before claiming local build proof."
+    },
+    {
+      "trigger": "Cloud build passes",
+      "active": true,
+      "evidenceNeeded": "Vercel build success for the current commit/config.",
+      "response": "Keep package engine as declared and move into ordered inspection sequence."
+    }
+  ],
+  "fallbackOrder": [
+    {
+      "order": 1,
+      "action": "Keep current package engine unchanged until a build result exists.",
+      "reason": "The repo declares node 24.x, but local evidence cannot prove Vercel support or failure."
+    },
+    {
+      "order": 2,
+      "action": "If Vercel build passes, mark runtime confirmed and continue release command center.",
+      "reason": "Cloud build success is the authoritative evidence for this staged path."
+    },
+    {
+      "order": 3,
+      "action": "If Vercel build rejects the engine, change only the engine declaration in a controlled follow-up patch.",
+      "reason": "A narrow engine-only change keeps SEO, UI, and generated packets stable."
+    },
+    {
+      "order": 4,
+      "action": "After any engine fallback patch, regenerate standby packets and rerun build proof.",
+      "reason": "Runtime decisions must flow back into release gate, measurement proof, and command center."
+    }
+  ],
+  "nextAction": "Wait for local dependency proof or Vercel build proof; only apply runtime fallback after concrete build evidence.",
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  }
+}

@@ -17,6 +17,10 @@ const categoryFallbackQueries = {
   "Orbital Compute": ["space station", "satellite 3d", "orbital platform", "space observatory"]
 }
 
+function envValue(key){
+  return String(process.env[key] || "").replace(/^['"]|['"]$/g, "").trim()
+}
+
 function uniqueQueries(category, query){
   const fallback = categoryFallbackQueries[category] || ["environment 3d", "city environment", "low poly environment"]
   return [query, ...fallback, `${category} environment`]
@@ -46,8 +50,8 @@ function environmentScore(item){
 }
 
 async function captureApiResults(category, query, results){
-  const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || ""
-  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.DIGITALHUT_SUPABASE_SERVICE_ROLE_KEY || ""
+  const supabaseUrl = envValue("SUPABASE_URL") || envValue("VITE_SUPABASE_URL") || envValue("NEXT_PUBLIC_SUPABASE_URL")
+  const serviceKey = envValue("SUPABASE_SERVICE_ROLE_KEY") || envValue("DIGITALHUT_SUPABASE_SERVICE_ROLE_KEY") || envValue("SUPABASE_SECRET_KEY")
   if(!supabaseUrl || !serviceKey || !results.length) return {enabled: false, saved: 0}
 
   const endpoint = `${supabaseUrl.replace(/\/+$/, "")}/rest/v1/digitalhut_live_feed`

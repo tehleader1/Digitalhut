@@ -1,0 +1,320 @@
+{
+  "generatedAt": "2026-07-10T02:01:53.145Z",
+  "status": "proof-source-conversion-bridge-ready",
+  "site": "https://www.digitalhut.app",
+  "currentRead": {
+    "pageViews": 323,
+    "uniqueVisitors": 119,
+    "totalEvents": 540,
+    "glbPreviewPlays": 83,
+    "podcastInterrupts": 13,
+    "autoplayStarts": 5,
+    "searches": 2,
+    "marketOpens": 5,
+    "proofRouteOpens": 0,
+    "sourceOpens": 0
+  },
+  "rule": "Do not call traffic duplicated until proofRouteOpens or sourceOpens rises above zero. This bridge treats the DigitalHut 200M SEO Master List as the strongest lane; categories, competitor reads, and route tests are facets that must feed the same dapp-backed proof/source path.",
+  "primaryBridge": {
+    "id": "digitalhut-200m-seo-master-list",
+    "lane": "DigitalHut 200M SEO Master List",
+    "proofRoute": "/system-proof",
+    "sourceBridgeUrl": "/digitalhut-proof-source-conversion-bridge.json#digitalhut-200m-seo-master-list",
+    "sourceIntentLabel": "DigitalHut 200M SEO Master List proof and source bridge",
+    "role": "Convert any entry from the 200M SEO Master List into one measurable DigitalHut dapp action, not a separate category win.",
+    "dappProofEngine": {
+      "modules": [
+        "video watching",
+        "3D Model View",
+        "podcast/source moments",
+        "live analytics",
+        "search/category routing",
+        "Supabase telemetry",
+        "Search Console proof"
+      ],
+      "rule": "Every longtail facet must have a useful dapp behavior behind it before promotion."
+    },
+    "currentPageViews": 323,
+    "currentUniqueVisitors": 119,
+    "currentEvents": 540,
+    "currentSecondActions": 108,
+    "currentProofOpens": 0,
+    "currentSourceOpens": 0,
+    "conversionGoal": "Move whole-system visitors from page view into GLB Model View, podcast/source, autoplay, search, market, proof route, or source/backlink open.",
+    "nextPrompt": "Stay in the full DigitalHut observatory: open the 3D Model View, play a podcast/source moment, use search, or open the system proof/source trail.",
+    "measurementSignals": [
+      "GLB Model View open",
+      "podcast/source interrupt",
+      "autoplay start",
+      "search intent",
+      "market open",
+      "proof route open",
+      "source/backlink open"
+    ],
+    "internalRotationArms": [
+      {
+        "id": "digitalhut-200m-seo-master-list",
+        "lane": "DigitalHut 200M SEO Master List",
+        "proofRoute": "/system-proof",
+        "role": "facet feeding the same 200M SEO Master List bridge"
+      },
+      {
+        "id": "mainstream-streaming",
+        "lane": "Mainstream Streaming",
+        "proofRoute": "/watch/mainstream-streaming",
+        "role": "facet feeding the same 200M SEO Master List bridge"
+      },
+      {
+        "id": "businesses",
+        "lane": "Businesses",
+        "proofRoute": "/watch/businesses",
+        "role": "facet feeding the same 200M SEO Master List bridge"
+      },
+      {
+        "id": "automatic-3d-autoplay-system",
+        "lane": "automatic 3d autoplay system",
+        "proofRoute": "/blog/automatic-3d-autoplay-system",
+        "role": "facet feeding the same 200M SEO Master List bridge"
+      },
+      {
+        "id": "after-work-relax-viewer",
+        "lane": "After Work Relax Viewer",
+        "proofRoute": "/audience-test/after-work-relax",
+        "role": "facet feeding the same 200M SEO Master List bridge"
+      },
+      {
+        "id": "gaming-glb-viewer",
+        "lane": "Gaming GLB Viewer",
+        "proofRoute": "/audience-test/gaming-glb",
+        "role": "facet feeding the same 200M SEO Master List bridge"
+      },
+      {
+        "id": "research-podcast-viewer",
+        "lane": "Research Podcast Viewer",
+        "proofRoute": "/audience-test/research-podcast",
+        "role": "facet feeding the same 200M SEO Master List bridge"
+      },
+      {
+        "id": "gamer",
+        "lane": "Gamer",
+        "proofRoute": "/watch/gamer",
+        "role": "facet feeding the same 200M SEO Master List bridge"
+      }
+    ]
+  },
+  "priorityTargets": [
+    {
+      "id": "digitalhut-200m-seo-master-list",
+      "lane": "DigitalHut 200M SEO Master List",
+      "origin": "direct-or-private-referrer",
+      "proofRoute": "/system-proof",
+      "sourceBridgeUrl": "/digitalhut-proof-source-conversion-bridge.json#digitalhut-200m-seo-master-list",
+      "sourceIntentLabel": "DigitalHut 200M SEO Master List source bridge",
+      "currentVisitors": 104,
+      "currentPageViews": 247,
+      "currentSecondActions": 61,
+      "currentGlbPlays": 61,
+      "currentPodcastInterrupts": 0,
+      "currentAutoplayStarts": 0,
+      "currentProofOpens": 0,
+      "currentSourceOpens": 0,
+      "conversionGoal": "Move from GLB/podcast/autoplay interest into proof_route_open and backlink_source_open.",
+      "nextPrompt": "Open DigitalHut 200M SEO Master List proof, then open the source bridge so the system can measure a useful source-backed continuation."
+    },
+    {
+      "id": "mainstream-streaming",
+      "lane": "Mainstream Streaming",
+      "origin": "vercel-preview-or-deploy",
+      "proofRoute": "/watch/mainstream-streaming",
+      "sourceBridgeUrl": "/digitalhut-proof-source-conversion-bridge.json#mainstream-streaming",
+      "sourceIntentLabel": "Mainstream Streaming source bridge",
+      "currentVisitors": 7,
+      "currentPageViews": 0,
+      "currentSecondActions": 31,
+      "currentGlbPlays": 16,
+      "currentPodcastInterrupts": 12,
+      "currentAutoplayStarts": 3,
+      "currentProofOpens": 0,
+      "currentSourceOpens": 0,
+      "conversionGoal": "Move from GLB/podcast/autoplay interest into proof_route_open and backlink_source_open.",
+      "nextPrompt": "Open Mainstream Streaming proof, then open the source bridge so the system can measure a useful source-backed continuation."
+    },
+    {
+      "id": "businesses",
+      "lane": "Businesses",
+      "origin": "vercel-preview-or-deploy",
+      "proofRoute": "/watch/businesses",
+      "sourceBridgeUrl": "/digitalhut-proof-source-conversion-bridge.json#businesses",
+      "sourceIntentLabel": "Businesses source bridge",
+      "currentVisitors": 2,
+      "currentPageViews": 0,
+      "currentSecondActions": 5,
+      "currentGlbPlays": 0,
+      "currentPodcastInterrupts": 0,
+      "currentAutoplayStarts": 0,
+      "currentProofOpens": 0,
+      "currentSourceOpens": 0,
+      "conversionGoal": "Move from GLB/podcast/autoplay interest into proof_route_open and backlink_source_open.",
+      "nextPrompt": "Open Businesses proof, then open the source bridge so the system can measure a useful source-backed continuation."
+    },
+    {
+      "id": "automatic-3d-autoplay-system",
+      "lane": "automatic 3d autoplay system",
+      "origin": "direct-or-private-referrer",
+      "proofRoute": "/blog/automatic-3d-autoplay-system",
+      "sourceBridgeUrl": "/digitalhut-proof-source-conversion-bridge.json#automatic-3d-autoplay-system",
+      "sourceIntentLabel": "automatic 3d autoplay system source bridge",
+      "currentVisitors": 1,
+      "currentPageViews": 8,
+      "currentSecondActions": 4,
+      "currentGlbPlays": 4,
+      "currentPodcastInterrupts": 0,
+      "currentAutoplayStarts": 0,
+      "currentProofOpens": 0,
+      "currentSourceOpens": 0,
+      "conversionGoal": "Move from GLB/podcast/autoplay interest into proof_route_open and backlink_source_open.",
+      "nextPrompt": "Open automatic 3d autoplay system proof, then open the source bridge so the system can measure a useful source-backed continuation."
+    },
+    {
+      "id": "after-work-relax-viewer",
+      "lane": "After Work Relax Viewer",
+      "origin": "external-referrer",
+      "proofRoute": "/audience-test/after-work-relax",
+      "sourceBridgeUrl": "/digitalhut-proof-source-conversion-bridge.json#after-work-relax-viewer",
+      "sourceIntentLabel": "After Work Relax Viewer source bridge",
+      "currentVisitors": 1,
+      "currentPageViews": 1,
+      "currentSecondActions": 2,
+      "currentGlbPlays": 1,
+      "currentPodcastInterrupts": 0,
+      "currentAutoplayStarts": 1,
+      "currentProofOpens": 0,
+      "currentSourceOpens": 0,
+      "conversionGoal": "Move from GLB/podcast/autoplay interest into proof_route_open and backlink_source_open.",
+      "nextPrompt": "Open After Work Relax Viewer proof, then open the source bridge so the system can measure a useful source-backed continuation."
+    },
+    {
+      "id": "gaming-glb-viewer",
+      "lane": "Gaming GLB Viewer",
+      "origin": "external-referrer",
+      "proofRoute": "/audience-test/gaming-glb",
+      "sourceBridgeUrl": "/digitalhut-proof-source-conversion-bridge.json#gaming-glb-viewer",
+      "sourceIntentLabel": "Gaming GLB Viewer source bridge",
+      "currentVisitors": 1,
+      "currentPageViews": 1,
+      "currentSecondActions": 2,
+      "currentGlbPlays": 1,
+      "currentPodcastInterrupts": 0,
+      "currentAutoplayStarts": 0,
+      "currentProofOpens": 0,
+      "currentSourceOpens": 0,
+      "conversionGoal": "Move from GLB/podcast/autoplay interest into proof_route_open and backlink_source_open.",
+      "nextPrompt": "Open Gaming GLB Viewer proof, then open the source bridge so the system can measure a useful source-backed continuation."
+    },
+    {
+      "id": "research-podcast-viewer",
+      "lane": "Research Podcast Viewer",
+      "origin": "external-referrer",
+      "proofRoute": "/audience-test/research-podcast",
+      "sourceBridgeUrl": "/digitalhut-proof-source-conversion-bridge.json#research-podcast-viewer",
+      "sourceIntentLabel": "Research Podcast Viewer source bridge",
+      "currentVisitors": 1,
+      "currentPageViews": 1,
+      "currentSecondActions": 2,
+      "currentGlbPlays": 0,
+      "currentPodcastInterrupts": 1,
+      "currentAutoplayStarts": 0,
+      "currentProofOpens": 0,
+      "currentSourceOpens": 0,
+      "conversionGoal": "Move from GLB/podcast/autoplay interest into proof_route_open and backlink_source_open.",
+      "nextPrompt": "Open Research Podcast Viewer proof, then open the source bridge so the system can measure a useful source-backed continuation."
+    },
+    {
+      "id": "gamer",
+      "lane": "Gamer",
+      "origin": "vercel-preview-or-deploy",
+      "proofRoute": "/watch/gamer",
+      "sourceBridgeUrl": "/digitalhut-proof-source-conversion-bridge.json#gamer",
+      "sourceIntentLabel": "Gamer source bridge",
+      "currentVisitors": 1,
+      "currentPageViews": 0,
+      "currentSecondActions": 1,
+      "currentGlbPlays": 0,
+      "currentPodcastInterrupts": 0,
+      "currentAutoplayStarts": 1,
+      "currentProofOpens": 0,
+      "currentSourceOpens": 0,
+      "conversionGoal": "Move from GLB/podcast/autoplay interest into proof_route_open and backlink_source_open.",
+      "nextPrompt": "Open Gamer proof, then open the source bridge so the system can measure a useful source-backed continuation."
+    },
+    {
+      "id": "market-observatory",
+      "lane": "Market Observatory",
+      "origin": "digitalhut-internal-navigation",
+      "proofRoute": "/markets",
+      "sourceBridgeUrl": "/digitalhut-proof-source-conversion-bridge.json#market-observatory",
+      "sourceIntentLabel": "Market Observatory source bridge",
+      "currentVisitors": 3,
+      "currentPageViews": 15,
+      "currentSecondActions": 0,
+      "currentGlbPlays": 0,
+      "currentPodcastInterrupts": 0,
+      "currentAutoplayStarts": 0,
+      "currentProofOpens": 0,
+      "currentSourceOpens": 0,
+      "conversionGoal": "Move from GLB/podcast/autoplay interest into proof_route_open and backlink_source_open.",
+      "nextPrompt": "Open Market Observatory proof, then open the source bridge so the system can measure a useful source-backed continuation."
+    },
+    {
+      "id": "full-entertainment-dapp-alternative",
+      "lane": "Full Entertainment Dapp Alternative",
+      "origin": "direct-or-private-referrer",
+      "proofRoute": "/watch/full-entertainment-dapp-alternative",
+      "sourceBridgeUrl": "/digitalhut-proof-source-conversion-bridge.json#full-entertainment-dapp-alternative",
+      "sourceIntentLabel": "Full Entertainment Dapp Alternative source bridge",
+      "currentVisitors": 3,
+      "currentPageViews": 6,
+      "currentSecondActions": 0,
+      "currentGlbPlays": 0,
+      "currentPodcastInterrupts": 0,
+      "currentAutoplayStarts": 0,
+      "currentProofOpens": 0,
+      "currentSourceOpens": 0,
+      "conversionGoal": "Move from GLB/podcast/autoplay interest into proof_route_open and backlink_source_open.",
+      "nextPrompt": "Open Full Entertainment Dapp Alternative proof, then open the source bridge so the system can measure a useful source-backed continuation."
+    }
+  ],
+  "firstConversionCast": [
+    {
+      "lane": "DigitalHut 200M SEO Master List",
+      "proofRoute": "/system-proof",
+      "sourceBridgeUrl": "/digitalhut-proof-source-conversion-bridge.json#digitalhut-200m-seo-master-list",
+      "reason": "Move whole-system visitors from page view into GLB Model View, podcast/source, autoplay, search, market, proof route, or source/backlink open."
+    },
+    {
+      "lane": "DigitalHut 200M SEO Master List",
+      "proofRoute": "/system-proof",
+      "sourceBridgeUrl": "/digitalhut-proof-source-conversion-bridge.json#digitalhut-200m-seo-master-list",
+      "reason": "Move from GLB/podcast/autoplay interest into proof_route_open and backlink_source_open."
+    },
+    {
+      "lane": "Mainstream Streaming",
+      "proofRoute": "/watch/mainstream-streaming",
+      "sourceBridgeUrl": "/digitalhut-proof-source-conversion-bridge.json#mainstream-streaming",
+      "reason": "Move from GLB/podcast/autoplay interest into proof_route_open and backlink_source_open."
+    },
+    {
+      "lane": "Businesses",
+      "proofRoute": "/watch/businesses",
+      "sourceBridgeUrl": "/digitalhut-proof-source-conversion-bridge.json#businesses",
+      "reason": "Move from GLB/podcast/autoplay interest into proof_route_open and backlink_source_open."
+    },
+    {
+      "lane": "automatic 3d autoplay system",
+      "proofRoute": "/blog/automatic-3d-autoplay-system",
+      "sourceBridgeUrl": "/digitalhut-proof-source-conversion-bridge.json#automatic-3d-autoplay-system",
+      "reason": "Move from GLB/podcast/autoplay interest into proof_route_open and backlink_source_open."
+    }
+  ],
+  "nextAction": "Keep the 200M SEO Master List bridge as the public conversion path. Use facets only to decide which doorway gets more sitemap pressure."
+}

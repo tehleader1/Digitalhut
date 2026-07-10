@@ -1,0 +1,99 @@
+{
+  "generatedAt": "2026-07-09T02:33:00.000Z",
+  "status": "search-visible-homepage-focus",
+  "owner": "Digitalhut.app",
+  "visibleSearchLink": "https://www.digitalhut.app/",
+  "reason": "The first real Search Console impression is for the homepage. DigitalHut should treat the homepage as the umbrella doorway for the 200,572,944 longtail search-route universe, then route interested visitors into watch, category, blog, GLB, podcast/source, and analytics proof pages.",
+  "currentGoogleRead": {
+    "freshRows": 1,
+    "freshClicks": 0,
+    "freshImpressions": 1,
+    "firstFreshQuery": "cyberhut",
+    "firstFreshPage": "https://www.digitalhut.app/",
+    "firstFreshCountry": "esp",
+    "homepageCoverage": "Submitted and indexed",
+    "homepageLastCrawl": "2026-07-09T02:13:17Z"
+  },
+  "currentArtifactRead": {
+    "operatorSearchTrail": "Discovered - currently not indexed",
+    "homepageFocusArtifact": "Discovered - currently not indexed",
+    "canonicalProofInspections": 10,
+    "discoveredInspectionTargets": 8,
+    "unknownInspectionTargets": 2,
+    "meaning": "Google has moved from only seeing the homepage into discovering the public proof artifacts and route shells. The next movement to watch is indexing, impressions, clicks, proof route opens, or source opens."
+  },
+  "visibleQueryFamily": {
+    "firstVisibleQuery": "cyberhut",
+    "interpretation": "Google is testing brand-adjacent language first. Cyberhut is not treated as a functionality win by itself; it is a weak homepage doorway until repeated with DigitalHut-branded or observatory-intent variants.",
+    "homepageVariationTargets": [
+      "cyberhut",
+      "cyber hut",
+      "digitalhut",
+      "digital hut",
+      "digital hut app",
+      "digitalhut app",
+      "cyber hut entertainment observatory",
+      "digital hut 3d observatory",
+      "digitalhut 2026 dapp entertainment observatory",
+      "digital hut video 3d podcast analytics",
+      "digitalhut youtube alternative 3d model view",
+      "digital hut glb podcast source analytics"
+    ],
+    "routingRule": "Keep these variations anchored to the homepage because that is the indexed visible link, then route interested users into /watch/full-view-episode-alternative, /system-proof, and /master-keyword-coverage while benchmarking real functionality competitors separately."
+  },
+  "currentTrafficRead": {
+    "pageViews": 315,
+    "uniqueVisitors": 115,
+    "totalEvents": 532,
+    "glbPreviewPlays": 83,
+    "podcastInterrupts": 13,
+    "autoplayStarts": 5,
+    "searches": 2,
+    "marketOpens": 5,
+    "proofRouteOpens": 0,
+    "sourceBacklinkOpens": 0
+  },
+  "homepageListingAngle": {
+    "primaryPhrase": "DigitalHut 2026 dapp entertainment observatory",
+    "plainLanguage": "video watching plus 3D Model View plus podcast/source moments plus live analytics in one full-screen entertainment observatory",
+    "whyThisLinkMatters": "The homepage is the link Google is already willing to show. It should carry the broad promise and then let proof routes carry specific longtail keyword variations.",
+    "snippetGoal": "A human seeing the homepage in search should immediately understand that DigitalHut is not a normal blog, not a plain video page, and not only a 3D viewer. It is a full entertainment/research interface."
+  },
+  "variationRouting": [
+    {
+      "cluster": "full entertainment alternative",
+      "homepageIntent": "plain YouTube session alternative with autoplay, next episode, 3D Model View, podcast/source moments, and live analytics",
+      "nextProofRoute": "https://www.digitalhut.app/watch/full-view-episode-alternative",
+      "successSignal": "homepage entry followed by autoplay, GLB play, podcast interrupt, proof route open, or source open"
+    },
+    {
+      "cluster": "AI video and podcast source explainer",
+      "homepageIntent": "what is this video saying and where are the sources",
+      "nextProofRoute": "https://www.digitalhut.app/watch/ai-video-podcast-source-explainer",
+      "successSignal": "search run, podcast interrupt, source open, or proof route open"
+    },
+    {
+      "cluster": "gaming and GLB world viewer",
+      "homepageIntent": "game world, build, map, VR room, horror corridor, and GLB model presentation",
+      "nextProofRoute": "https://www.digitalhut.app/watch/game-world-glb-presentation",
+      "successSignal": "GLB preview play, GLB source click, watch route open, or category route open"
+    },
+    {
+      "cluster": "home project 3D visual planner",
+      "homepageIntent": "home project, room, structure, renovation, and visual planner with source-backed context",
+      "nextProofRoute": "https://www.digitalhut.app/watch/home-project-diy-visual",
+      "successSignal": "GLB structure preview, search intent, watch proof open, or source open"
+    },
+    {
+      "cluster": "research summary and source explainer",
+      "homepageIntent": "study, wiki, coral reef, climate, technology, or source-backed visual research",
+      "nextProofRoute": "https://www.digitalhut.app/watch/wiki-lookup-visual-research-hub",
+      "successSignal": "blog proof open, source open, search run, or watch route open"
+    }
+  ],
+  "decision": {
+    "promoteNow": "Focus the next comparisons around the homepage as the search-visible doorway.",
+    "doNotOverclaim": "Do not claim first-place ranking from sitemap exposure. Search Console currently proves one fresh impression for the homepage and crawl discovery for supporting routes.",
+    "nextHitMarker": "The next important movement is either another homepage Search Console row, one proof route open, or one source/backlink open."
+  }
+}

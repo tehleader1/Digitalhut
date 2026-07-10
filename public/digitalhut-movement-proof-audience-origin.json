@@ -1,0 +1,253 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Movement Proof And Audience Origin",
+  "status": "movement-proof-contract-ready-live-receipts-needed",
+  "movementProofStatus": "movement-proof-contract-ready-live-receipts-needed",
+  "originProofStatus": "origin-proof-missing-live-capture-needed",
+  "purpose": "Prove movement by connecting rank, origin, route behavior, feature usage, and cluster pushes instead of only counting page views.",
+  "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+  "lastKnownMetrics": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  },
+  "lastKnownAudienceRead": {
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "strongestLane": "GLB preview proof",
+    "weakestLanes": [
+      "search interaction",
+      "market open"
+    ],
+    "conclusion": "The first audience appears to be inspecting the system visually before using search or market tools. The next push should extract more visitors from GLB/video/source proof neighborhoods."
+  },
+  "currentAudienceSignals": [
+    {
+      "signal": "GLB preview",
+      "value": 62,
+      "rate": "27.6% of page views",
+      "read": "Strongest last-known behavior. This is where the next rank push should extract more similar visitors.",
+      "push": "Feature 3D proof, source routes, and Babylon system language in proof pages before expanding broad generic keywords."
+    },
+    {
+      "signal": "Blog proof",
+      "value": 14,
+      "rate": "6.2% of page views",
+      "read": "Useful but still early. Blog should prove the system, not act like filler content.",
+      "push": "Intertwine blog posts with exact watch routes, backlinks, GLB proof, and source authority."
+    },
+    {
+      "signal": "Podcast interrupt",
+      "value": 2,
+      "rate": "0.9% of page views",
+      "read": "Support lane. It should build trust when a source moment matters, not lead the whole campaign yet.",
+      "push": "Attach podcast moments to source proof and topic authority after GLB/video interest is proven."
+    },
+    {
+      "signal": "Autoplay",
+      "value": 1,
+      "rate": "0.4% of page views",
+      "read": "Very low. The system must create stronger human entry points before assuming visitors want a full autoplay presentation.",
+      "push": "Make SEO language promise useful proof first: what the video is about, why the 3D model matters, and what source backs it."
+    },
+    {
+      "signal": "Search interaction",
+      "value": 0,
+      "rate": "0 active searches",
+      "read": "Search is not yet a user behavior. Do not overbuild around typed search until the route language earns it.",
+      "push": "Seed pages with natural everyday questions so visitors understand what they can ask the observatory."
+    },
+    {
+      "signal": "Market open",
+      "value": 0,
+      "rate": "0 market opens",
+      "read": "Market should stay an optional category until actual interest appears.",
+      "push": "Keep market proof tied to quick stock signals and source-backed examples, not broad finance spam."
+    }
+  ],
+  "originBuckets": [
+    {
+      "bucket": "direct",
+      "proofField": "referrer empty or direct",
+      "currentStatus": "not-present-in-local-snapshot",
+      "extractionMove": "Tie direct sessions to first route, dwell events, GLB plays, and return visits before treating them as brand demand."
+    },
+    {
+      "bucket": "organic-search",
+      "proofField": "Search Console query plus landing route",
+      "currentStatus": "not-present-in-local-snapshot",
+      "extractionMove": "Promote only keywords that gain impressions, clicks, or position movement against a DigitalHut proof route."
+    },
+    {
+      "bucket": "social-video",
+      "proofField": "utm_source, referrer, shared video route",
+      "currentStatus": "not-present-in-local-snapshot",
+      "extractionMove": "Map viral or funny video interest into watch/blog/category proof pages with the same media subject."
+    },
+    {
+      "bucket": "referral-backlink",
+      "proofField": "external referrer and backlink target route",
+      "currentStatus": "not-present-in-local-snapshot",
+      "extractionMove": "Keep backlinks only when they send route behavior, GLB inspection, source clicks, or blog continuation."
+    },
+    {
+      "bucket": "local-dev",
+      "proofField": "local host, preview host, internal test route",
+      "currentStatus": "not-present-in-local-snapshot",
+      "extractionMove": "Separate testing traffic from public proof so rank decisions do not chase false audience signals."
+    },
+    {
+      "bucket": "unknown",
+      "proofField": "missing referrer/country/device fields",
+      "currentStatus": "dominant-until-live-origin-capture-exists",
+      "extractionMove": "Treat unknown traffic as useful only after it produces route-level behavior like GLB preview, podcast interrupt, search, market, or source click."
+    }
+  ],
+  "originBucketCount": 6,
+  "movementProofLadder": [
+    {
+      "layer": "FireCuda",
+      "proves": "master-list delta, cluster added, filler rejected, backlink receipt staged, keyword variation owner",
+      "currentState": "cluster and rank contracts staged locally",
+      "nextPush": "Keep the 2,572,944-slot universe gated and promote only clusters with route behavior or Search Console movement."
+    },
+    {
+      "layer": "Supabase",
+      "proves": "page view, unique visitor, event type, route, session, referrer, source click, GLB play, podcast interrupt, search, market open",
+      "currentState": "measurement-ready, origin proof not present in the local snapshot",
+      "nextPush": "Capture origin fields and feature events so the first 200-view neighborhood becomes repeatable audience knowledge."
+    },
+    {
+      "layer": "Google Cloud and Search Console",
+      "proves": "query impressions, clicks, average position, index status, source metadata enrichment",
+      "currentState": "API/cloud path staged, live rank proof not in this local packet",
+      "nextPush": "Use query movement to decide which long-tail clusters graduate from staged to pushed."
+    },
+    {
+      "layer": "Vercel",
+      "proves": "stable route delivery, public crawl path, deployment health, live proof packet availability",
+      "currentState": "deploy readiness still held by local build tooling status",
+      "nextPush": "Do not claim deployment movement until build/deploy proof is clean."
+    },
+    {
+      "layer": "Codex overseer",
+      "proves": "compare and contrast reasoning, no fake metrics, no filler expansion, next rank target chosen",
+      "currentState": "overseer packet active",
+      "nextPush": "Use the strongest observed behavior, GLB proof, to pull neighboring audiences before broad expansion."
+    }
+  ],
+  "rankEscapePlan": [
+    {
+      "band": "deep floor",
+      "target": "#236,000,000 starting assumption",
+      "proofToLeave": "index proof plus one real query impression or measured referrer route",
+      "action": "Do not flood. Publish route proof and record receipts."
+    },
+    {
+      "band": "first escape",
+      "target": "top 1,000,000 long-tail proof band",
+      "proofToLeave": "repeat route behavior, GLB/source click behavior, or Search Console position movement",
+      "action": "Push the winning cluster into watch/blog/category pairs and backlink targets."
+    },
+    {
+      "band": "visible proof",
+      "target": "top 100,000 narrow human-intent phrases",
+      "proofToLeave": "clicks, source opens, backlinks, and non-test visitors from the same intent lane",
+      "action": "Increase content depth and source authority around the exact phrase family."
+    },
+    {
+      "band": "traffic target",
+      "target": "50,000+ unique visitors",
+      "proofToLeave": "cluster repeatability across organic, referral, and social-video origins",
+      "action": "Scale only clusters that show audience pull, not keyword volume alone."
+    }
+  ],
+  "clusterPushes": [
+    {
+      "priority": 1,
+      "lane": "3D Proof Beats Sales Page",
+      "estimatedRank": 236000000,
+      "nextTargetRank": 1000000,
+      "authorityTargetRank": 100000,
+      "whyThisPush": "It matches the strongest last-known behavior: GLB preview interest.",
+      "extractMoreFromAudience": "Lead with GLB/source proof because last-known behavior favors GLB previews.",
+      "requiredReceiptBeforeScaling": [
+        "origin/referrer bucket",
+        "landing route",
+        "feature event",
+        "source/backlink click",
+        "Search Console query or index proof"
+      ]
+    },
+    {
+      "priority": 2,
+      "lane": "Video Source Observatory",
+      "estimatedRank": 237250000,
+      "nextTargetRank": 1000000,
+      "authorityTargetRank": 100000,
+      "whyThisPush": "It becomes a follow-up push only after origin and behavior receipts confirm the lane.",
+      "extractMoreFromAudience": "Attach every entertainment/video cluster to backlinks and watch/blog proof before public promotion.",
+      "requiredReceiptBeforeScaling": [
+        "origin/referrer bucket",
+        "landing route",
+        "feature event",
+        "source/backlink click",
+        "Search Console query or index proof"
+      ]
+    },
+    {
+      "priority": 3,
+      "lane": "Everyday Decision Map",
+      "estimatedRank": 236000000,
+      "nextTargetRank": 1000000,
+      "authorityTargetRank": 100000,
+      "whyThisPush": "It becomes a follow-up push only after origin and behavior receipts confirm the lane.",
+      "extractMoreFromAudience": "Use everyday language first because search is quiet and typed behavior needs clearer entry points.",
+      "requiredReceiptBeforeScaling": [
+        "origin/referrer bucket",
+        "landing route",
+        "feature event",
+        "source/backlink click",
+        "Search Console query or index proof"
+      ]
+    },
+    {
+      "priority": 4,
+      "lane": "Developer Research Proof",
+      "estimatedRank": 238500000,
+      "nextTargetRank": 1000000,
+      "authorityTargetRank": 100000,
+      "whyThisPush": "It becomes a follow-up push only after origin and behavior receipts confirm the lane.",
+      "extractMoreFromAudience": "Use build/system proof to show DigitalHut has real infrastructure behind the media presentation.",
+      "requiredReceiptBeforeScaling": [
+        "origin/referrer bucket",
+        "landing route",
+        "feature event",
+        "source/backlink click",
+        "Search Console query or index proof"
+      ]
+    }
+  ],
+  "competitionNeighborhoodStatus": "competition-neighborhood-staged-live-rank-proof-needed",
+  "rankBenchmarkStatus": "rank-benchmark-staged-waiting-live-rank-proof",
+  "rankUniverseFloor": 236000000,
+  "firstEscapeTarget": 1000000,
+  "visibleProofTarget": 100000,
+  "nextVisitorTarget": 50000,
+  "fifteenMinuteSystemJob": [
+    "Refresh packet timestamps and staged cluster decisions.",
+    "Keep GLB/source proof as the lead extraction lane until live origin receipts say otherwise.",
+    "Hold search and market expansion until behavior appears.",
+    "Prepare Supabase/Vercel/Search Console origin fields for the next live verification cycle.",
+    "Compare each cluster against the competition neighborhood before promotion."
+  ],
+  "nextSystemMove": "Reset the 15-minute standby with movement proof active. The next real unlock is origin/referrer/query proof so DigitalHut can push the exact neighborhoods that produced the first audience."
+}

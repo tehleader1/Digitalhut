@@ -2,6 +2,10 @@ function cleanText(value, fallback = ""){
   return String(value || fallback).replace(/\s+/g, " ").trim().slice(0, 800)
 }
 
+function cleanEnv(name){
+  return String(process.env[name] || "").replace(/^['"]|['"]$/g, "").trim()
+}
+
 function thumbnailFrom(asset){
   return asset.thumbnailUrl || asset.thumbnail?.images?.[0]?.url || asset.thumbnail?.images?.[1]?.url || ""
 }
@@ -16,19 +20,22 @@ async function readJson(req){
 
 export default async function handler(req, res){
   if(req.method === "GET"){
-    const ready = Boolean((process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL) && (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.DIGITALHUT_SUPABASE_SERVICE_ROLE_KEY))
+    const ready = Boolean(
+      (cleanEnv("SUPABASE_URL") || cleanEnv("VITE_SUPABASE_URL") || cleanEnv("NEXT_PUBLIC_SUPABASE_URL")) &&
+      (cleanEnv("SUPABASE_SERVICE_ROLE_KEY") || cleanEnv("DIGITALHUT_SUPABASE_SERVICE_ROLE_KEY") || cleanEnv("SUPABASE_SECRET_KEY"))
+    )
     return res.status(200).json({
       ready,
       target: "digitalhut_live_feed",
-      required: ["SUPABASE_URL", "SUPABASE_SERVICE_ROLE_KEY"],
+      required: ["SUPABASE_URL or NEXT_PUBLIC_SUPABASE_URL", "SUPABASE_SERVICE_ROLE_KEY or SUPABASE_SECRET_KEY"],
       purpose: "Capture API GLB/viewer discoveries into the DigitalHut backend feed for review, SEO, ratings, backlinks, and later conversion."
     })
   }
 
   if(req.method !== "POST") return res.status(405).json({error: "Method not allowed"})
 
-  const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || ""
-  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.DIGITALHUT_SUPABASE_SERVICE_ROLE_KEY || ""
+  const supabaseUrl = cleanEnv("SUPABASE_URL") || cleanEnv("VITE_SUPABASE_URL") || cleanEnv("NEXT_PUBLIC_SUPABASE_URL")
+  const serviceKey = cleanEnv("SUPABASE_SERVICE_ROLE_KEY") || cleanEnv("DIGITALHUT_SUPABASE_SERVICE_ROLE_KEY") || cleanEnv("SUPABASE_SECRET_KEY")
   if(!supabaseUrl || !serviceKey){
     return res.status(200).json({saved: false, reason: "Supabase service credentials are not configured in this runtime."})
   }

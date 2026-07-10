@@ -1,41 +1,41 @@
 {
-  "generatedAt": "2026-07-07T00:00:00-04:00",
-  "status": "frontend-priority-guard-added",
-  "purpose": "Verify DigitalHut proof/source hit-marker wiring before deploy.",
-  "verifiedProofRouteNames": [
-    "watch_route_open",
-    "blog_route_open",
-    "category_proof_open"
-  ],
-  "verifiedSourceNames": [
-    "backlink_source_open",
-    "glb_source_click",
-    "podcast_source_open",
-    "viral_source_backlink_open"
-  ],
-  "frontendPriorityGuards": [
-    "linkContext",
-    "proofEvent",
-    "sourceIntent",
-    "podcastControl",
-    "genericPreviewGuard"
-  ],
-  "correctedRisk": [
-    "Generic play/preview text no longer overwrites proof route clicks.",
-    "External source/backlink links no longer get overwritten by wallet/tier/node labels.",
-    "Podcast Play/Stop controls no longer count as GLB preview plays."
-  ],
-  "currentLiveFloor": {
-    "pageViews": 299,
-    "uniqueVisitors": 107,
-    "totalEvents": 516,
-    "glbPreviewPlays": 83,
-    "podcastInterrupts": 13,
-    "autoplayStarts": 5,
-    "searches": 2,
-    "marketOpens": 5,
-    "proofRouteOpens": 0,
-    "sourceBacklinkOpens": 0
-  },
-  "deployDecision": "ready-for-build-check-not-browser-verified"
+    "generatedAt":  "2026-07-07T00:00:00-04:00",
+    "status":  "frontend-priority-guard-added",
+    "purpose":  "Verify DigitalHut proof/source hit-marker wiring before deploy.",
+    "verifiedProofRouteNames":  [
+                                    "watch_route_open",
+                                    "blog_route_open",
+                                    "category_proof_open"
+                                ],
+    "verifiedSourceNames":  [
+                                "backlink_source_open",
+                                "glb_source_click",
+                                "podcast_source_open",
+                                "viral_source_backlink_open"
+                            ],
+    "frontendPriorityGuards":  [
+                                   "linkContext",
+                                   "proofEvent",
+                                   "sourceIntent",
+                                   "podcastControl",
+                                   "genericPreviewGuard"
+                               ],
+    "correctedRisk":  [
+                          "Generic play/preview text no longer overwrites proof route clicks.",
+                          "External source/backlink links no longer get overwritten by wallet/tier/node labels.",
+                          "Podcast Play/Stop controls no longer count as GLB preview plays."
+                      ],
+    "currentLiveFloor":  {
+                             "pageViews":  299,
+                             "uniqueVisitors":  107,
+                             "totalEvents":  516,
+                             "glbPreviewPlays":  83,
+                             "podcastInterrupts":  13,
+                             "autoplayStarts":  5,
+                             "searches":  2,
+                             "marketOpens":  5,
+                             "proofRouteOpens":  0,
+                             "sourceBacklinkOpens":  0
+                         },
+    "deployDecision":  "ready-for-build-check-not-browser-verified"
 }

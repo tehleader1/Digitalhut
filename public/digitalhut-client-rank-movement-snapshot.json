@@ -1,0 +1,358 @@
+{
+  "generatedAt": "2026-07-07T16:24:02.278Z",
+  "mode": "DigitalHut Client Rank Movement Snapshot",
+  "status": "client-rank-movement-board-ready",
+  "guardrail": "Page views, regions, clicks, and ladder lifts are separated between last-known local receipts and live-refreshed proof. Do not claim live movement without Supabase, Vercel, Search Console, or analytics refresh evidence.",
+  "refreshedPageViews": {
+    "status": "not-live-refreshed",
+    "pageViews": 225,
+    "uniqueVisitors": 72,
+    "searchInteractions": 0,
+    "autoplayStarts": 1,
+    "glbPreviewPlays": 62,
+    "podcastInterrupts": 2,
+    "marketOpens": 0,
+    "blogViews": 14,
+    "source": "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
+    "capturedAt": null,
+    "liveRefreshStatus": "not-live-refreshed-this-cycle"
+  },
+  "interactionRates": {
+    "autoplayRatePct": 0.44,
+    "glbPreviewRatePct": 27.56,
+    "podcastInterruptRatePct": 0.89,
+    "blogProofRatePct": 6.22,
+    "searchRatePct": 0,
+    "marketOpenRatePct": 0
+  },
+  "seoMasterListRole": {
+    "totalRankSlots": 2572944,
+    "openSlots": 0,
+    "heldSlots": 2572944,
+    "gateStatus": "master-list-expansion-gated-closed",
+    "systemRole": "FireCuda owns the full variation universe, but only receipt-backed watch/blog/category/source/GLB/podcast/market routes should unlock public ranking expansion."
+  },
+  "regionMarketTargets": [
+    {
+      "regionMarket": "local city food and lunch intent",
+      "route": "/watch/looking-for-lunch-visual-observatory",
+      "liveHitStatus": "targeted-not-live-region-refreshed",
+      "authorityCategories": [
+        "local restaurant guides",
+        "food review blogs",
+        "city tourism directories",
+        "neighborhood newsletters"
+      ],
+      "role": "Capture everyday off-time searches and move them into watch/blog/source proof."
+    },
+    {
+      "regionMarket": "airport, rideshare, hotel, and commuter intent",
+      "route": "/watch/calling-an-uber-visual-trip-guide",
+      "liveHitStatus": "targeted-not-live-region-refreshed",
+      "authorityCategories": [
+        "airport travel guides",
+        "rideshare pickup explainers",
+        "hotel concierge pages",
+        "city mobility resources"
+      ],
+      "role": "Turn trip planning into a visual observatory route with second-action proof."
+    },
+    {
+      "regionMarket": "developer finance and market research intent",
+      "route": "/watch/current-market-video-observatory",
+      "liveHitStatus": "targeted-not-live-region-refreshed",
+      "authorityCategories": [
+        "market research blogs",
+        "company analysis newsletters",
+        "developer finance communities",
+        "TradingView idea pages"
+      ],
+      "role": "Keep market queries in market view until ticker/source behavior proves expansion."
+    },
+    {
+      "regionMarket": "home project, real estate, contractor, and DIY planning intent",
+      "route": "/watch/home-project-3d-visual-planner",
+      "liveHitStatus": "targeted-not-live-region-refreshed",
+      "authorityCategories": [
+        "home improvement blogs",
+        "contractor portfolios",
+        "DIY planning guides",
+        "real estate staging pages"
+      ],
+      "role": "Use GLB/3D source proof to compete beyond a normal home project article."
+    },
+    {
+      "regionMarket": "grocery, review, deal, and buying-research intent",
+      "route": "/watch/grocery-shopping-3d-experience",
+      "liveHitStatus": "targeted-not-live-region-refreshed",
+      "authorityCategories": [
+        "consumer review blogs",
+        "shopping guides",
+        "local grocery resources",
+        "deal research newsletters"
+      ],
+      "role": "Turn mundane product research into a ranked DigitalHut proof loop."
+    }
+  ],
+  "backlinkSystem": [
+    {
+      "route": "/watch/looking-for-lunch-visual-observatory",
+      "canonical": "https://www.digitalhut.app/watch/looking-for-lunch-visual-observatory",
+      "stage": "push-next-deploy-proof",
+      "status": "authority-priority",
+      "authorityCategories": [
+        "local restaurant guides",
+        "food review blogs",
+        "city tourism directories",
+        "Google Business Profile posts",
+        "neighborhood newsletters"
+      ],
+      "anchors": [
+        "restaurants near me visual guide",
+        "food near me video map",
+        "Lunch And Local Food DigitalHut observatory proof",
+        "restaurants near me visual guide source map",
+        "video + GLB proof for restaurants near me visual guide"
+      ],
+      "eventsToProve": [
+        "backlink_source_open",
+        "proof_route_open",
+        "watch_route_open",
+        "blog_route_open",
+        "glb_source_click"
+      ]
+    },
+    {
+      "route": "/watch/calling-an-uber-visual-trip-guide",
+      "canonical": "https://www.digitalhut.app/watch/calling-an-uber-visual-trip-guide",
+      "stage": "push-next-deploy-proof",
+      "status": "authority-priority",
+      "authorityCategories": [
+        "airport travel guides",
+        "rideshare pickup explainers",
+        "local transportation blogs",
+        "hotel concierge pages",
+        "city mobility resources"
+      ],
+      "anchors": [
+        "Uber pickup visual guide",
+        "airport Uber pickup source map",
+        "Rideshare And Commute DigitalHut observatory proof",
+        "Uber pickup visual guide source map",
+        "video + GLB proof for Uber pickup visual guide"
+      ],
+      "eventsToProve": [
+        "backlink_source_open",
+        "proof_route_open",
+        "watch_route_open",
+        "blog_route_open",
+        "glb_source_click"
+      ]
+    },
+    {
+      "route": "/watch/current-market-video-observatory",
+      "canonical": "https://www.digitalhut.app/watch/current-market-video-observatory",
+      "stage": "push-next-deploy-proof",
+      "status": "authority-priority",
+      "authorityCategories": [
+        "market research blogs",
+        "company analysis newsletters",
+        "developer finance communities",
+        "AI chip explainers",
+        "TradingView idea pages"
+      ],
+      "anchors": [
+        "current market video observatory",
+        "stock market visual analysis 3D",
+        "Businesses DigitalHut observatory proof",
+        "Current Market Video Observatory: DigitalHut Proof source map",
+        "video + GLB proof for current market video observatory"
+      ],
+      "eventsToProve": [
+        "backlink_source_open",
+        "proof_route_open",
+        "watch_route_open",
+        "blog_route_open",
+        "glb_source_click"
+      ]
+    },
+    {
+      "route": "/watch/youtube-video-content-radar",
+      "canonical": "https://www.digitalhut.app/watch/youtube-video-content-radar",
+      "stage": "push-next-deploy-proof",
+      "status": "authority-priority",
+      "authorityCategories": [
+        "consumer review blogs",
+        "shopping guides",
+        "local grocery resources",
+        "Reddit-style product roundups",
+        "deal research newsletters"
+      ],
+      "anchors": [
+        "YouTube video content radar",
+        "video metadata visual analysis",
+        "Mainstream Streaming DigitalHut observatory proof",
+        "YouTube Video Content Radar: DigitalHut Observatory Proof source map",
+        "video + GLB proof for YouTube video content radar"
+      ],
+      "eventsToProve": [
+        "backlink_source_open",
+        "proof_route_open",
+        "watch_route_open",
+        "blog_route_open",
+        "glb_source_click"
+      ]
+    },
+    {
+      "route": "/watch/home-project-3d-visual-planner",
+      "canonical": "https://www.digitalhut.app/watch/home-project-3d-visual-planner",
+      "stage": "submit-watch-blog-pair",
+      "status": "authority-support",
+      "authorityCategories": [
+        "home improvement blogs",
+        "contractor portfolios",
+        "DIY planning guides",
+        "real estate staging pages",
+        "interior design communities"
+      ],
+      "anchors": [
+        "home project 3D visual planner",
+        "home remodel 3D visualization",
+        "Mainstream Streaming DigitalHut observatory proof",
+        "Home Project 3D Visual Planner: DigitalHut Observatory Proof source map",
+        "video + GLB proof for home project 3D visual planner"
+      ],
+      "eventsToProve": [
+        "backlink_source_open",
+        "proof_route_open",
+        "watch_route_open",
+        "blog_route_open",
+        "glb_source_click"
+      ]
+    },
+    {
+      "route": "/watch/grocery-shopping-3d-experience",
+      "canonical": "https://www.digitalhut.app/watch/grocery-shopping-3d-experience",
+      "stage": "submit-watch-blog-pair",
+      "status": "authority-support",
+      "authorityCategories": [
+        "consumer review blogs",
+        "shopping guides",
+        "local grocery resources",
+        "Reddit-style product roundups",
+        "deal research newsletters"
+      ],
+      "anchors": [
+        "product reviews visual summary",
+        "Reddit reviews source map",
+        "Errands And Review Before Buying DigitalHut observatory proof",
+        "product reviews visual summary source map",
+        "video + GLB proof for product reviews visual summary"
+      ],
+      "eventsToProve": [
+        "backlink_source_open",
+        "proof_route_open",
+        "watch_route_open",
+        "blog_route_open",
+        "glb_source_click"
+      ]
+    }
+  ],
+  "affectedSectors": [
+    {
+      "sector": "3D gallery and portfolio pages",
+      "currentSignal": "62 GLB preview plays in the last-known packet",
+      "seoEffect": "Strongest current sales node; needs rotate/zoom/source-open receipts to pass the 77% ladder gate.",
+      "status": "near-pass"
+    },
+    {
+      "sector": "video explainer and creator support pages",
+      "currentSignal": "1 autoplay start and 2 podcast/source interrupts in the last-known packet",
+      "seoEffect": "Needs watch-to-blog and source/backlink continuation before broader ranking expansion.",
+      "status": "build-receipts"
+    },
+    {
+      "sector": "research/wiki-style pages",
+      "currentSignal": "0 search interactions in the last-known packet",
+      "seoEffect": "Search intent is not proven yet, so research expansion stays gated.",
+      "status": "held"
+    },
+    {
+      "sector": "market and finance dashboards",
+      "currentSignal": "0 market opens in the last-known packet",
+      "seoEffect": "Market SEO stays held until market view, ticker search, and market source-click receipts exist.",
+      "status": "held"
+    },
+    {
+      "sector": "blog/watch proof routes",
+      "currentSignal": "14 blog views and 18 route pairs staged",
+      "seoEffect": "Proof pages exist as the display proof; expansion waits for Search Console and Supabase evidence.",
+      "status": "staged"
+    }
+  ],
+  "ladderMatches": [
+    {
+      "rung": 2,
+      "competitorClass": "3D gallery or portfolio page",
+      "currentWinRatio": 74,
+      "targetWinRatio": 77,
+      "gapToPass": 3,
+      "status": "near-pass-accelerate-now",
+      "primaryReceipts": [
+        "glb_rotated_or_zoomed",
+        "glb_source_opened",
+        "same_topic_model_reopened"
+      ],
+      "exactAction": "Prioritize this rung in the next measurement cycle because one strong receipt class can push it over 77%.",
+      "seoUseWhenPassed": "Attack Matterport-style tours, Sketchfab-adjacent creator pages, and niche 3D model explainers."
+    },
+    {
+      "rung": 3,
+      "competitorClass": "single-medium video explainer",
+      "currentWinRatio": 68,
+      "targetWinRatio": 77,
+      "gapToPass": 9,
+      "status": "needs-receipt-buildout",
+      "primaryReceipts": [
+        "source_backlink_click",
+        "watch_to_blog_continuation",
+        "podcast_source_completed"
+      ],
+      "exactAction": "Hold broad SEO push and build the missing interaction/source receipts first.",
+      "seoUseWhenPassed": "Attack YouTube-result support pages and creator explainer blogs."
+    },
+    {
+      "rung": 4,
+      "competitorClass": "static research or wiki-style page",
+      "currentWinRatio": 65,
+      "targetWinRatio": 77,
+      "gapToPass": 12,
+      "status": "needs-receipt-buildout",
+      "primaryReceipts": [
+        "proof_route_opened",
+        "source_backlink_click",
+        "observatory_search_used"
+      ],
+      "exactAction": "Hold broad SEO push and build the missing interaction/source receipts first.",
+      "seoUseWhenPassed": "Attack niche research blogs and university-adjacent explainers."
+    },
+    {
+      "rung": 5,
+      "competitorClass": "market dashboard or finance result",
+      "currentWinRatio": 48,
+      "targetWinRatio": 77,
+      "gapToPass": 29,
+      "status": "needs-receipt-buildout",
+      "primaryReceipts": [
+        "market_view_open",
+        "ticker_search",
+        "market_source_click"
+      ],
+      "exactAction": "Hold broad SEO push and build the missing interaction/source receipts first.",
+      "seoUseWhenPassed": "Attack small finance blogs first, not enterprise finance portals."
+    }
+  ],
+  "movementProofStatus": "movement-proof-contract-ready-live-receipts-needed",
+  "originProofStatus": "origin-proof-missing-live-capture-needed",
+  "nextSystemMove": "Wire a live Supabase/Vercel/Search Console refresh into this board, then promote only the sectors where second-action receipts prove users are doing more than opening the page."
+}

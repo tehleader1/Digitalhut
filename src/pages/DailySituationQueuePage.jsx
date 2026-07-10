@@ -1,6 +1,6 @@
 import {useEffect, useMemo, useState} from "react"
 import {Link} from "react-router-dom"
-import "@google/model-viewer"
+import {loadModelViewer} from "../lib/modelViewerRuntime"
 import {
   createDiscoveryQueue,
   discoveryCategories,
@@ -99,6 +99,10 @@ export default function DailySituationQueuePage(){
   const [code, setCode] = useState("")
   const [unlocked, setUnlocked] = useState(() => window.localStorage.getItem(accessKey) === "yes")
   const active = items.find((item) => item.id === activeId) || items[0]
+
+  useEffect(() => {
+    loadModelViewer()
+  }, [])
 
   useEffect(() => writeQueue(items), [items])
 

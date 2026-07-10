@@ -1,0 +1,238 @@
+{
+  "generatedAt": "2026-07-09T04:33:04.134Z",
+  "status": "traffic-avenue-lock-ready",
+  "site": "https://www.digitalhut.app",
+  "purpose": "Secure the 200,572,944 longtail universe while Search Console catches up by mapping every traffic avenue to proof routes, source trails, Supabase behavior, and promote/hold decisions.",
+  "guardrails": [
+    "Do not publish 200M thin pages.",
+    "Do not claim Google rank movement until Search Console rows, impressions, clicks, and indexed routes prove it.",
+    "Do not expand a lane because it sounds exciting; expand only after Supabase/Search Console shows behavior.",
+    "Use external posts only where the answer is useful, relevant, and human-readable."
+  ],
+  "currentPressureRead": {
+    "totalEvents": 532,
+    "pageViews": 315,
+    "uniqueVisitors": 115,
+    "glbPreviewPlays": 83,
+    "podcastInterrupts": 13,
+    "autoplayStarts": 5,
+    "searches": 2,
+    "marketOpens": 5,
+    "proofRouteOpens": 0,
+    "sourceOpens": 0
+  },
+  "searchConsoleRead": {
+    "sitemapVisible": true,
+    "sitemapSurfacesVisible": 3,
+    "sitemapSurfacesPending": 1,
+    "totalSitemapRows": 50168,
+    "masterKeywordRows": 50000,
+    "routeCrawlShellCount": 155,
+    "finalRows": 0,
+    "finalClicks": 0,
+    "finalImpressions": 0,
+    "freshRows": 1,
+    "freshImpressions": 0
+  },
+  "masterKeywordLock": {
+    "totalIndividualRanks": 200572944,
+    "publicRouteRows": 168,
+    "representativeKeywordRows": 50000,
+    "coverageRows": 24,
+    "policy": "DigitalHut reads the 200M longtail universe as full-system claim lanes. Google receives crawlable proof routes, a 50,000 URL discovery sitemap, and public JSON coverage instead of millions of duplicate thin URLs."
+  },
+  "supabaseCompareRead": {
+    "organicRows": 96,
+    "exportUniqueVisitors": 49,
+    "exportGlbPreviewPlays": 13,
+    "exportPodcastPlays": 4,
+    "decision": "duplicate-natural-pass-by-post-trail"
+  },
+  "scoredAvenues": [
+    {
+      "id": "full-system-pass-by-post",
+      "label": "Full-System Pass-By Post",
+      "matchPull": "Full Entertainment",
+      "publicRoute": "/watch/full-view-episode-alternative",
+      "sourceTargets": [
+        "ProductHunt-style launch pages",
+        "AI video tool discussions",
+        "YouTube alternative comparisons",
+        "3D viewer roundups"
+      ],
+      "exactPostAngle": "2026 dapp entertainment observatory: video watching + 3D Model View + podcast/source moments + live analytics in one interface.",
+      "signalKeys": [
+        "totalPageViews",
+        "uniqueVisitors",
+        "totalGlbPreviewPlays",
+        "totalAutoplayStarts"
+      ],
+      "requiredMissing": [
+        "totalProofRouteOpens",
+        "totalSourceOpens"
+      ],
+      "action": "Lead with the full dapp alternative, then push people to proof/source routes instead of only the homepage.",
+      "score": 106,
+      "evidence": [
+        "447 content-pull events",
+        "315 totalPageViews",
+        "115 uniqueVisitors",
+        "83 totalGlbPreviewPlays",
+        "5 totalAutoplayStarts",
+        "missing totalProofRouteOpens, totalSourceOpens"
+      ],
+      "status": "active-avenue"
+    },
+    {
+      "id": "glb-model-view-communities",
+      "label": "GLB And 3D Model View Communities",
+      "matchPull": "Gaming And 3D",
+      "publicRoute": "/watch/game-world-glb-presentation",
+      "sourceTargets": [
+        "3D model viewer communities",
+        "game asset discussions",
+        "Sketchfab-style source pages",
+        "VR room walkthrough searches"
+      ],
+      "exactPostAngle": "Watch a video session while the 3D Model View opens, rotates, zooms, and explains the model as part of the episode.",
+      "signalKeys": [
+        "totalGlbPreviewPlays",
+        "totalAutoplayStarts"
+      ],
+      "requiredMissing": [
+        "totalSourceOpens"
+      ],
+      "action": "Use GLB as the strongest second-action hook, but keep every trail tied to the full DigitalHut system.",
+      "score": 56,
+      "evidence": [
+        "53 content-pull events",
+        "83 totalGlbPreviewPlays",
+        "5 totalAutoplayStarts",
+        "missing totalSourceOpens"
+      ],
+      "status": "active-avenue"
+    },
+    {
+      "id": "mundane-life-searches",
+      "label": "Mundane Life Search Capture",
+      "matchPull": "Full Entertainment",
+      "publicRoute": "/watch/local-life-errands-companion",
+      "sourceTargets": [
+        "lunch searches",
+        "rideshare searches",
+        "flight booking searches",
+        "wiki/research lookups",
+        "funny reel searches",
+        "review-before-buying searches"
+      ],
+      "exactPostAngle": "Everyday searches can become a useful video + source + 3D context session instead of a dead tab.",
+      "signalKeys": [
+        "totalSearchRuns",
+        "totalPageViews"
+      ],
+      "requiredMissing": [
+        "totalProofRouteOpens",
+        "totalSourceOpens"
+      ],
+      "action": "Promote only the mundane lanes that earn search or proof events; hold filler variants until behavior appears.",
+      "score": 54,
+      "evidence": [
+        "447 content-pull events",
+        "2 totalSearchRuns",
+        "315 totalPageViews",
+        "missing totalProofRouteOpens, totalSourceOpens"
+      ],
+      "status": "active-avenue"
+    },
+    {
+      "id": "podcast-source-trust",
+      "label": "Podcast Source Trust Moments",
+      "matchPull": "AI Video Podcast",
+      "publicRoute": "/watch/ai-video-podcast-source-explainer",
+      "sourceTargets": [
+        "podcast clip pages",
+        "AI summary tool discussions",
+        "source explainer pages",
+        "creator/source pages"
+      ],
+      "exactPostAngle": "Podcast/source moments interrupt the video only when they add authority, then return the viewer to the observatory session.",
+      "signalKeys": [
+        "totalPodcastInterrupts",
+        "totalAutoplayStarts"
+      ],
+      "requiredMissing": [
+        "totalSourceOpens"
+      ],
+      "action": "Use podcast as trust proof after the video/GLB hook; avoid making it the lead lane until source opens appear.",
+      "score": 14,
+      "evidence": [
+        "16 content-pull events",
+        "13 totalPodcastInterrupts",
+        "5 totalAutoplayStarts",
+        "missing totalSourceOpens"
+      ],
+      "status": "hold-until-signal"
+    },
+    {
+      "id": "research-developer-proof",
+      "label": "Research And Developer Proof",
+      "matchPull": "Research Developer",
+      "publicRoute": "/watch/developer-programmer-research-observatory",
+      "sourceTargets": [
+        "developer dapp comparisons",
+        "API/source proof pages",
+        "research-summary systems",
+        "cloud-backed app discussions"
+      ],
+      "exactPostAngle": "DigitalHut is not a static site: it has Vercel, Supabase, Google, sitemap packets, GLB rendering, podcast/source moments, and measurable event receipts.",
+      "signalKeys": [
+        "totalBlogViews",
+        "totalSearchRuns"
+      ],
+      "requiredMissing": [
+        "totalProofRouteOpens",
+        "totalSourceOpens"
+      ],
+      "action": "Use developer proof to win credibility, then wait for Search Console rows before expanding technical keywords.",
+      "score": 10,
+      "evidence": [
+        "7 content-pull events",
+        "28 totalBlogViews",
+        "2 totalSearchRuns",
+        "missing totalProofRouteOpens, totalSourceOpens"
+      ],
+      "status": "hold-until-signal"
+    },
+    {
+      "id": "market-business-side-lane",
+      "label": "Market And Business Side Lane",
+      "matchPull": "Market",
+      "publicRoute": "/watch/market-company-observatory",
+      "sourceTargets": [
+        "company source pages",
+        "market visualizer discussions",
+        "business-media searches",
+        "stock video explainers"
+      ],
+      "exactPostAngle": "Market topics become a company video/source/3D environment read, but remain a side arm of the entertainment observatory.",
+      "signalKeys": [
+        "totalMarketOpens",
+        "totalSearchRuns"
+      ],
+      "requiredMissing": [
+        "totalSourceOpens"
+      ],
+      "action": "Keep market available; do not let it pull the system away from the full entertainment dapp lane.",
+      "score": 0,
+      "evidence": [
+        "5 content-pull events",
+        "5 totalMarketOpens",
+        "2 totalSearchRuns",
+        "missing totalSourceOpens"
+      ],
+      "status": "hold-until-signal"
+    }
+  ],
+  "nextBestAction": "Use the full-system pass-by post and GLB model-view communities as the next natural traffic positions, but the first real explosion trigger is proof/source opens or new Search Console query rows.",
+  "promotionRule": "Promote a lane only when at least one of these moves: Search Console impressions, proof route opens, source/backlink opens, search runs, GLB plays from non-preview origins, podcast source plays, or autoplay starts from public candidates."
+}

@@ -1,0 +1,1264 @@
+{
+  "generatedAt": "2026-07-10T03:35:38.415Z",
+  "status": "master-keyword-coverage-produced",
+  "site": "https://www.digitalhut.app",
+  "totalIndividualRanks": 200572944,
+  "materializedSitemapUrlRows": 229,
+  "coverageRows": 24,
+  "countedFireCudaRows": 6,
+  "universalClaimRows": 24,
+  "expansionRows": 18,
+  "heldReserveRows": 0,
+  "coveragePolicy": "DigitalHut reads the 200M longtail universe as full-system claim lanes. Google receives crawlable proof routes, a 50,000 URL discovery sitemap, and public JSON coverage instead of millions of duplicate thin URLs.",
+  "googleSitemapGuardrail": "Sitemaps are URL discovery files. The 200M universe is represented through lane coverage rows, canonical proof routes, and a capped 50,000 URL sitemap, while Search Console query rows appear only after Google crawls, indexes, and serves the pages.",
+  "lanes": [
+    {
+      "id": "full-entertainment-dapp-alternative",
+      "lane": "Full Entertainment Dapp Alternative",
+      "category": "Full Entertainment Dapp Alternative",
+      "role": "viewer looking for a complete alternative to a plain YouTube session",
+      "type": "universal-claim-lane",
+      "variationCapacity": 11000000,
+      "globalRankStart": 1,
+      "globalRankEnd": 11000000,
+      "proofRoute": "/watch/full-view-episode-alternative",
+      "measurementSignals": [
+        "homepage entry",
+        "autoplay start",
+        "next episode",
+        "3D Model View open",
+        "podcast/source interrupt",
+        "live analytics read"
+      ],
+      "backlinkTargets": [
+        "YouTube session tool discussion",
+        "AI video tool page",
+        "3D viewer source",
+        "podcast/source page",
+        "watch proof route"
+      ],
+      "queryFamilies": [
+        "Full Entertainment Dapp Alternative",
+        "viewer looking for a complete alternative to a plain YouTube session",
+        "homepage entry",
+        "autoplay start",
+        "next episode",
+        "3D Model View open",
+        "podcast/source interrupt",
+        "live analytics read",
+        "YouTube session tool discussion",
+        "AI video tool page",
+        "3D viewer source",
+        "podcast/source page"
+      ],
+      "searchConsoleIntent": "Create query/page rows through canonical proof routes, then promote only when Supabase and Search Console show behavior."
+    },
+    {
+      "id": "gaming-3d-world-observatory",
+      "lane": "Gaming 3D World Observatory",
+      "category": "Gaming 3D World Observatory",
+      "role": "gamer searching builds, worlds, servers, maps, walkthroughs, and 3D previews",
+      "type": "universal-claim-lane",
+      "variationCapacity": 11000000,
+      "globalRankStart": 11000001,
+      "globalRankEnd": 22000000,
+      "proofRoute": "/watch/game-world-glb-presentation",
+      "measurementSignals": [
+        "GLB Model View open",
+        "autoplay start",
+        "watch route open",
+        "source/backlink open"
+      ],
+      "backlinkTargets": [
+        "game build source",
+        "mod page",
+        "3D model source",
+        "server guide",
+        "watch proof route"
+      ],
+      "queryFamilies": [
+        "Gaming 3D World Observatory",
+        "gamer searching builds, worlds, servers, maps, walkthroughs, and 3D previews",
+        "GLB Model View open",
+        "autoplay start",
+        "watch route open",
+        "source/backlink open",
+        "game build source",
+        "mod page",
+        "3D model source",
+        "server guide",
+        "watch proof route",
+        "Gaming 3D World Observatory 3D Model View"
+      ],
+      "searchConsoleIntent": "Create query/page rows through canonical proof routes, then promote only when Supabase and Search Console show behavior."
+    },
+    {
+      "id": "real-estate-3d-tour-observatory",
+      "lane": "Real Estate 3D Tour Observatory",
+      "category": "Real Estate 3D Tour Observatory",
+      "role": "buyer, agent, or client comparing homes, agencies, resorts, rentals, and property models",
+      "type": "universal-claim-lane",
+      "variationCapacity": 11000000,
+      "globalRankStart": 22000001,
+      "globalRankEnd": 33000000,
+      "proofRoute": "/watch/real-estate-3d-tour-observatory",
+      "measurementSignals": [
+        "GLB place preview",
+        "category lane select",
+        "source/backlink open",
+        "watch proof open"
+      ],
+      "backlinkTargets": [
+        "agency listing",
+        "property page",
+        "virtual tour source",
+        "local market guide",
+        "watch proof route"
+      ],
+      "queryFamilies": [
+        "Real Estate 3D Tour Observatory",
+        "buyer, agent, or client comparing homes, agencies, resorts, rentals, and property models",
+        "GLB place preview",
+        "category lane select",
+        "source/backlink open",
+        "watch proof open",
+        "agency listing",
+        "property page",
+        "virtual tour source",
+        "local market guide",
+        "watch proof route",
+        "Real Estate 3D Tour Observatory 3D Model View"
+      ],
+      "searchConsoleIntent": "Create query/page rows through canonical proof routes, then promote only when Supabase and Search Console show behavior."
+    },
+    {
+      "id": "planetary-space-observatory",
+      "lane": "Planetary And Space Observatory",
+      "category": "Planetary And Space Observatory",
+      "role": "viewer researching planets, launches, telescopes, orbital visuals, and space explainers",
+      "type": "universal-claim-lane",
+      "variationCapacity": 11000000,
+      "globalRankStart": 33000001,
+      "globalRankEnd": 44000000,
+      "proofRoute": "/watch/planetary-space-visual-observatory",
+      "measurementSignals": [
+        "research source open",
+        "GLB environment preview",
+        "timeline read",
+        "blog proof open"
+      ],
+      "backlinkTargets": [
+        "space agency source",
+        "launch article",
+        "research dataset",
+        "orbital model source",
+        "watch proof route"
+      ],
+      "queryFamilies": [
+        "Planetary And Space Observatory",
+        "viewer researching planets, launches, telescopes, orbital visuals, and space explainers",
+        "research source open",
+        "GLB environment preview",
+        "timeline read",
+        "blog proof open",
+        "space agency source",
+        "launch article",
+        "research dataset",
+        "orbital model source",
+        "watch proof route",
+        "Planetary And Space Observatory 3D Model View"
+      ],
+      "searchConsoleIntent": "Create query/page rows through canonical proof routes, then promote only when Supabase and Search Console show behavior."
+    },
+    {
+      "id": "exotic-environment-visual-experience",
+      "lane": "Exotic Environment Visual Experience",
+      "category": "Exotic Environment Visual Experience",
+      "role": "traveler, gamer, or researcher exploring unusual environments, caves, reefs, islands, ruins, and resorts",
+      "type": "universal-claim-lane",
+      "variationCapacity": 11000000,
+      "globalRankStart": 44000001,
+      "globalRankEnd": 55000000,
+      "proofRoute": "/watch/exotic-environment-visual-experience",
+      "measurementSignals": [
+        "GLB environment preview",
+        "source/backlink open",
+        "autoplay start",
+        "watch proof open"
+      ],
+      "backlinkTargets": [
+        "environment source",
+        "travel guide",
+        "research article",
+        "3D environment source",
+        "watch proof route"
+      ],
+      "queryFamilies": [
+        "Exotic Environment Visual Experience",
+        "traveler, gamer, or researcher exploring unusual environments, caves, reefs, islands, ruins, and resorts",
+        "GLB environment preview",
+        "source/backlink open",
+        "autoplay start",
+        "watch proof open",
+        "environment source",
+        "travel guide",
+        "research article",
+        "3D environment source",
+        "watch proof route",
+        "Exotic Environment Visual Experience 3D Model View"
+      ],
+      "searchConsoleIntent": "Create query/page rows through canonical proof routes, then promote only when Supabase and Search Console show behavior."
+    },
+    {
+      "id": "architecture-structure-engineering",
+      "lane": "Architecture Structure Engineering",
+      "category": "Architecture Structure Engineering",
+      "role": "builder, engineer, student, or owner studying structures, layouts, materials, and 3D models",
+      "type": "universal-claim-lane",
+      "variationCapacity": 11000000,
+      "globalRankStart": 55000001,
+      "globalRankEnd": 66000000,
+      "proofRoute": "/watch/architecture-structure-engineering-visual",
+      "measurementSignals": [
+        "GLB structure preview",
+        "source route open",
+        "timeline read",
+        "search intent"
+      ],
+      "backlinkTargets": [
+        "engineering source",
+        "architecture model",
+        "building code explainer",
+        "project guide",
+        "watch proof route"
+      ],
+      "queryFamilies": [
+        "Architecture Structure Engineering",
+        "builder, engineer, student, or owner studying structures, layouts, materials, and 3D models",
+        "GLB structure preview",
+        "source route open",
+        "timeline read",
+        "search intent",
+        "engineering source",
+        "architecture model",
+        "building code explainer",
+        "project guide",
+        "watch proof route",
+        "Architecture Structure Engineering 3D Model View"
+      ],
+      "searchConsoleIntent": "Create query/page rows through canonical proof routes, then promote only when Supabase and Search Console show behavior."
+    },
+    {
+      "id": "developer-programmer-research",
+      "lane": "Developer Programmer Research",
+      "category": "Developer Programmer Research",
+      "role": "developer, programmer, or technical researcher studying tools, APIs, code, docs, and demos",
+      "type": "universal-claim-lane",
+      "variationCapacity": 11000000,
+      "globalRankStart": 66000001,
+      "globalRankEnd": 77000000,
+      "proofRoute": "/watch/developer-programmer-research-observatory",
+      "measurementSignals": [
+        "documentation source open",
+        "blog proof open",
+        "search intent",
+        "watch proof open",
+        "Supabase event read",
+        "Search Console row"
+      ],
+      "backlinkTargets": [
+        "official documentation",
+        "GitHub source",
+        "API guide",
+        "developer article",
+        "cloud architecture note",
+        "watch proof route"
+      ],
+      "queryFamilies": [
+        "Developer Programmer Research",
+        "developer, programmer, or technical researcher studying tools, APIs, code, docs, and demos",
+        "documentation source open",
+        "blog proof open",
+        "search intent",
+        "watch proof open",
+        "Supabase event read",
+        "Search Console row",
+        "official documentation",
+        "GitHub source",
+        "API guide",
+        "developer article"
+      ],
+      "searchConsoleIntent": "Create query/page rows through canonical proof routes, then promote only when Supabase and Search Console show behavior."
+    },
+    {
+      "id": "ai-video-podcast-source-explainer",
+      "lane": "AI Video Podcast Source Explainer",
+      "category": "AI Video Podcast Source Explainer",
+      "role": "viewer asking what a video or podcast is saying and wanting source-backed context",
+      "type": "universal-claim-lane",
+      "variationCapacity": 11000000,
+      "globalRankStart": 77000001,
+      "globalRankEnd": 88000000,
+      "proofRoute": "/watch/ai-video-podcast-source-explainer",
+      "measurementSignals": [
+        "podcast/source interrupt",
+        "search intent",
+        "source/backlink open",
+        "autoplay start"
+      ],
+      "backlinkTargets": [
+        "podcast source",
+        "video source",
+        "summary proof",
+        "creator page",
+        "watch proof route"
+      ],
+      "queryFamilies": [
+        "AI Video Podcast Source Explainer",
+        "viewer asking what a video or podcast is saying and wanting source-backed context",
+        "podcast/source interrupt",
+        "search intent",
+        "source/backlink open",
+        "autoplay start",
+        "podcast source",
+        "video source",
+        "summary proof",
+        "creator page",
+        "watch proof route",
+        "AI Video Podcast Source Explainer 3D Model View"
+      ],
+      "searchConsoleIntent": "Create query/page rows through canonical proof routes, then promote only when Supabase and Search Console show behavior."
+    },
+    {
+      "id": "social-reel-meme-analysis",
+      "lane": "Social Reel Meme Analysis",
+      "category": "Social Reel Meme Analysis",
+      "role": "viewer decoding reels, shorts, memes, funny clips, trends, and social moments",
+      "type": "universal-claim-lane",
+      "variationCapacity": 11000000,
+      "globalRankStart": 88000001,
+      "globalRankEnd": 99000000,
+      "proofRoute": "/watch/social-reel-meme-analysis",
+      "measurementSignals": [
+        "autoplay start",
+        "watch route open",
+        "podcast/source interrupt",
+        "source/backlink open"
+      ],
+      "backlinkTargets": [
+        "creator page",
+        "trend source",
+        "mainstream video source",
+        "podcast/source moment",
+        "watch proof route"
+      ],
+      "queryFamilies": [
+        "Social Reel Meme Analysis",
+        "viewer decoding reels, shorts, memes, funny clips, trends, and social moments",
+        "autoplay start",
+        "watch route open",
+        "podcast/source interrupt",
+        "source/backlink open",
+        "creator page",
+        "trend source",
+        "mainstream video source",
+        "podcast/source moment",
+        "watch proof route",
+        "Social Reel Meme Analysis 3D Model View"
+      ],
+      "searchConsoleIntent": "Create query/page rows through canonical proof routes, then promote only when Supabase and Search Console show behavior."
+    },
+    {
+      "id": "virtual-travel-resort-vacation",
+      "lane": "Virtual Travel Resort Vacation",
+      "category": "Virtual Travel Resort Vacation",
+      "role": "traveler comparing vacation ideas, resorts, rentals, places, and visual previews before booking",
+      "type": "universal-claim-lane",
+      "variationCapacity": 11000000,
+      "globalRankStart": 99000001,
+      "globalRankEnd": 110000000,
+      "proofRoute": "/watch/virtual-travel-resort-vacation",
+      "measurementSignals": [
+        "GLB place preview",
+        "category lane select",
+        "source/backlink open",
+        "watch proof open"
+      ],
+      "backlinkTargets": [
+        "resort page",
+        "travel guide",
+        "map source",
+        "vacation review",
+        "watch proof route"
+      ],
+      "queryFamilies": [
+        "Virtual Travel Resort Vacation",
+        "traveler comparing vacation ideas, resorts, rentals, places, and visual previews before booking",
+        "GLB place preview",
+        "category lane select",
+        "source/backlink open",
+        "watch proof open",
+        "resort page",
+        "travel guide",
+        "map source",
+        "vacation review",
+        "watch proof route",
+        "Virtual Travel Resort Vacation 3D Model View"
+      ],
+      "searchConsoleIntent": "Create query/page rows through canonical proof routes, then promote only when Supabase and Search Console show behavior."
+    },
+    {
+      "id": "market-company-observatory",
+      "lane": "Market Company Observatory",
+      "category": "Market Company Observatory",
+      "role": "viewer checking companies, stocks, business signals, charts, products, and source-backed market context",
+      "type": "universal-claim-lane",
+      "variationCapacity": 11000000,
+      "globalRankStart": 110000001,
+      "globalRankEnd": 121000000,
+      "proofRoute": "/watch/market-company-observatory",
+      "measurementSignals": [
+        "market open",
+        "source/backlink open",
+        "search intent",
+        "watch proof open"
+      ],
+      "backlinkTargets": [
+        "company source",
+        "market chart",
+        "financial source",
+        "product page",
+        "watch proof route"
+      ],
+      "queryFamilies": [
+        "Market Company Observatory",
+        "viewer checking companies, stocks, business signals, charts, products, and source-backed market context",
+        "market open",
+        "source/backlink open",
+        "search intent",
+        "watch proof open",
+        "company source",
+        "market chart",
+        "financial source",
+        "product page",
+        "watch proof route",
+        "Market Company Observatory 3D Model View"
+      ],
+      "searchConsoleIntent": "Create query/page rows through canonical proof routes, then promote only when Supabase and Search Console show behavior."
+    },
+    {
+      "id": "workforce-training-visual-system",
+      "lane": "Workforce Training Visual System",
+      "category": "Workforce Training Visual System",
+      "role": "worker, trainer, or team lead using visual media to understand jobs, safety, tools, and workflows",
+      "type": "universal-claim-lane",
+      "variationCapacity": 11000000,
+      "globalRankStart": 121000001,
+      "globalRankEnd": 132000000,
+      "proofRoute": "/watch/workforce-training-visual-system",
+      "measurementSignals": [
+        "watch route open",
+        "source route open",
+        "timeline read",
+        "search intent"
+      ],
+      "backlinkTargets": [
+        "training source",
+        "workflow guide",
+        "tool documentation",
+        "safety article",
+        "watch proof route"
+      ],
+      "queryFamilies": [
+        "Workforce Training Visual System",
+        "worker, trainer, or team lead using visual media to understand jobs, safety, tools, and workflows",
+        "watch route open",
+        "source route open",
+        "timeline read",
+        "search intent",
+        "training source",
+        "workflow guide",
+        "tool documentation",
+        "safety article",
+        "watch proof route",
+        "Workforce Training Visual System 3D Model View"
+      ],
+      "searchConsoleIntent": "Create query/page rows through canonical proof routes, then promote only when Supabase and Search Console show behavior."
+    },
+    {
+      "id": "education-study-visual-research",
+      "lane": "Education Study Visual Research",
+      "category": "Education Study Visual Research",
+      "role": "student, teacher, parent, or researcher seeking visual explainers, studies, facts, and source trails",
+      "type": "universal-claim-lane",
+      "variationCapacity": 11000000,
+      "globalRankStart": 132000001,
+      "globalRankEnd": 143000000,
+      "proofRoute": "/watch/education-study-visual-research",
+      "measurementSignals": [
+        "blog proof open",
+        "source route open",
+        "search intent",
+        "watch route open"
+      ],
+      "backlinkTargets": [
+        "education source",
+        "dataset",
+        "research article",
+        "reference page",
+        "watch proof route"
+      ],
+      "queryFamilies": [
+        "Education Study Visual Research",
+        "student, teacher, parent, or researcher seeking visual explainers, studies, facts, and source trails",
+        "blog proof open",
+        "source route open",
+        "search intent",
+        "watch route open",
+        "education source",
+        "dataset",
+        "research article",
+        "reference page",
+        "watch proof route",
+        "Education Study Visual Research 3D Model View"
+      ],
+      "searchConsoleIntent": "Create query/page rows through canonical proof routes, then promote only when Supabase and Search Console show behavior."
+    },
+    {
+      "id": "local-life-errands-companion",
+      "lane": "Local Life Errands Companion",
+      "category": "Local Life Errands Companion",
+      "role": "everyday person searching local food, stores, rides, chores, deals, schedules, and decisions",
+      "type": "universal-claim-lane",
+      "variationCapacity": 11000000,
+      "globalRankStart": 143000001,
+      "globalRankEnd": 154000000,
+      "proofRoute": "/watch/local-life-errands-companion",
+      "measurementSignals": [
+        "search intent",
+        "quick panel select",
+        "source/backlink open",
+        "watch route open"
+      ],
+      "backlinkTargets": [
+        "local source",
+        "store page",
+        "review source",
+        "map source",
+        "watch proof route"
+      ],
+      "queryFamilies": [
+        "Local Life Errands Companion",
+        "everyday person searching local food, stores, rides, chores, deals, schedules, and decisions",
+        "search intent",
+        "quick panel select",
+        "source/backlink open",
+        "watch route open",
+        "local source",
+        "store page",
+        "review source",
+        "map source",
+        "watch proof route",
+        "Local Life Errands Companion 3D Model View"
+      ],
+      "searchConsoleIntent": "Create query/page rows through canonical proof routes, then promote only when Supabase and Search Console show behavior."
+    },
+    {
+      "id": "home-project-diy-visual",
+      "lane": "Home Project DIY Visual",
+      "category": "Home Project DIY Visual",
+      "role": "homeowner or renter planning repairs, projects, rooms, furniture, tools, and visual walkthroughs",
+      "type": "universal-claim-lane",
+      "variationCapacity": 11000000,
+      "globalRankStart": 154000001,
+      "globalRankEnd": 165000000,
+      "proofRoute": "/watch/home-project-diy-visual",
+      "measurementSignals": [
+        "GLB structure preview",
+        "source route open",
+        "search intent",
+        "watch route open"
+      ],
+      "backlinkTargets": [
+        "DIY guide",
+        "tool source",
+        "room model",
+        "project checklist",
+        "watch proof route"
+      ],
+      "queryFamilies": [
+        "Home Project DIY Visual",
+        "homeowner or renter planning repairs, projects, rooms, furniture, tools, and visual walkthroughs",
+        "GLB structure preview",
+        "source route open",
+        "search intent",
+        "watch route open",
+        "DIY guide",
+        "tool source",
+        "room model",
+        "project checklist",
+        "watch proof route",
+        "Home Project DIY Visual 3D Model View"
+      ],
+      "searchConsoleIntent": "Create query/page rows through canonical proof routes, then promote only when Supabase and Search Console show behavior."
+    },
+    {
+      "id": "lifestyle-event-visual-experience",
+      "lane": "Lifestyle Event Visual Experience",
+      "category": "Lifestyle Event Visual Experience",
+      "role": "viewer exploring family events, concerts, sports, fitness, food, culture, and lifestyle media",
+      "type": "universal-claim-lane",
+      "variationCapacity": 11000000,
+      "globalRankStart": 165000001,
+      "globalRankEnd": 176000000,
+      "proofRoute": "/watch/lifestyle-event-visual-experience",
+      "measurementSignals": [
+        "autoplay start",
+        "watch route open",
+        "source/backlink open",
+        "podcast/source interrupt"
+      ],
+      "backlinkTargets": [
+        "event source",
+        "creator page",
+        "venue guide",
+        "lifestyle article",
+        "watch proof route"
+      ],
+      "queryFamilies": [
+        "Lifestyle Event Visual Experience",
+        "viewer exploring family events, concerts, sports, fitness, food, culture, and lifestyle media",
+        "autoplay start",
+        "watch route open",
+        "source/backlink open",
+        "podcast/source interrupt",
+        "event source",
+        "creator page",
+        "venue guide",
+        "lifestyle article",
+        "watch proof route",
+        "Lifestyle Event Visual Experience 3D Model View"
+      ],
+      "searchConsoleIntent": "Create query/page rows through canonical proof routes, then promote only when Supabase and Search Console show behavior."
+    },
+    {
+      "id": "creator-brand-product-showcase",
+      "lane": "Creator Brand Product Showcase",
+      "category": "Creator Brand Product Showcase",
+      "role": "creator, client, or buyer comparing products, brands, demos, reviews, and social proof",
+      "type": "universal-claim-lane",
+      "variationCapacity": 11000000,
+      "globalRankStart": 176000001,
+      "globalRankEnd": 187000000,
+      "proofRoute": "/watch/creator-brand-product-showcase",
+      "measurementSignals": [
+        "source/backlink open",
+        "watch route open",
+        "search intent",
+        "GLB Model View open"
+      ],
+      "backlinkTargets": [
+        "brand page",
+        "product source",
+        "creator page",
+        "review source",
+        "watch proof route"
+      ],
+      "queryFamilies": [
+        "Creator Brand Product Showcase",
+        "creator, client, or buyer comparing products, brands, demos, reviews, and social proof",
+        "source/backlink open",
+        "watch route open",
+        "search intent",
+        "GLB Model View open",
+        "brand page",
+        "product source",
+        "creator page",
+        "review source",
+        "watch proof route",
+        "Creator Brand Product Showcase 3D Model View"
+      ],
+      "searchConsoleIntent": "Create query/page rows through canonical proof routes, then promote only when Supabase and Search Console show behavior."
+    },
+    {
+      "id": "international-language-side-markets",
+      "lane": "International Language Side Markets",
+      "category": "International Language Side Markets",
+      "role": "global viewer searching local-language entertainment, research, travel, products, and visual media context",
+      "type": "universal-claim-lane",
+      "variationCapacity": 11000000,
+      "globalRankStart": 187000001,
+      "globalRankEnd": 198000000,
+      "proofRoute": "/watch/international-language-side-markets",
+      "measurementSignals": [
+        "referral entry",
+        "search intent",
+        "source/backlink open",
+        "watch proof open"
+      ],
+      "backlinkTargets": [
+        "regional source",
+        "translated guide",
+        "local market source",
+        "international community",
+        "watch proof route"
+      ],
+      "queryFamilies": [
+        "International Language Side Markets",
+        "global viewer searching local-language entertainment, research, travel, products, and visual media context",
+        "referral entry",
+        "search intent",
+        "source/backlink open",
+        "watch proof open",
+        "regional source",
+        "translated guide",
+        "local market source",
+        "international community",
+        "watch proof route",
+        "International Language Side Markets 3D Model View"
+      ],
+      "searchConsoleIntent": "Create query/page rows through canonical proof routes, then promote only when Supabase and Search Console show behavior."
+    },
+    {
+      "id": "lunch-local-food",
+      "lane": "Lunch And Local Food",
+      "category": "Lunch And Local Food",
+      "role": "everyday person choosing food, lunch, menu, or local reviews during off time",
+      "type": "universal-claim-lane",
+      "variationCapacity": 571536,
+      "globalRankStart": 198000001,
+      "globalRankEnd": 198571536,
+      "proofRoute": "/watch/looking-for-lunch-visual-observatory",
+      "measurementSignals": [
+        "search intent",
+        "backlink source open",
+        "watch route open"
+      ],
+      "backlinkTargets": [
+        "restaurant/menu source",
+        "local review source",
+        "food map source",
+        "watch proof route"
+      ],
+      "queryFamilies": [
+        "Lunch And Local Food",
+        "everyday person choosing food, lunch, menu, or local reviews during off time",
+        "search intent",
+        "backlink source open",
+        "watch route open",
+        "restaurant/menu source",
+        "local review source",
+        "food map source",
+        "watch proof route",
+        "Lunch And Local Food 3D Model View",
+        "Lunch And Local Food video observatory",
+        "Lunch And Local Food category proof"
+      ],
+      "searchConsoleIntent": "Create query/page rows through canonical proof routes, then promote only when Supabase and Search Console show behavior."
+    },
+    {
+      "id": "rideshare-commute",
+      "lane": "Rideshare And Commute",
+      "category": "Rideshare And Commute",
+      "role": "traveler or commuter checking pickup, traffic, airport, or late-night route context",
+      "type": "universal-claim-lane",
+      "variationCapacity": 344064,
+      "globalRankStart": 198571537,
+      "globalRankEnd": 198915600,
+      "proofRoute": "/watch/calling-an-uber-visual-trip-guide",
+      "measurementSignals": [
+        "quick panel select",
+        "timeline read",
+        "source/backlink open"
+      ],
+      "backlinkTargets": [
+        "rideshare/travel guide",
+        "airport source",
+        "traffic source",
+        "watch proof route"
+      ],
+      "queryFamilies": [
+        "Rideshare And Commute",
+        "traveler or commuter checking pickup, traffic, airport, or late-night route context",
+        "quick panel select",
+        "timeline read",
+        "source/backlink open",
+        "rideshare/travel guide",
+        "airport source",
+        "traffic source",
+        "watch proof route",
+        "Rideshare And Commute 3D Model View",
+        "Rideshare And Commute video observatory",
+        "Rideshare And Commute category proof"
+      ],
+      "searchConsoleIntent": "Create query/page rows through canonical proof routes, then promote only when Supabase and Search Console show behavior."
+    },
+    {
+      "id": "flight-travel-booking",
+      "lane": "Flight And Travel Booking",
+      "category": "Flight And Travel Booking",
+      "role": "traveler comparing flights, airports, delays, layovers, and booking decisions",
+      "type": "universal-claim-lane",
+      "variationCapacity": 419328,
+      "globalRankStart": 198915601,
+      "globalRankEnd": 199334928,
+      "proofRoute": "/watch/booking-flight-ticket-visual-guide",
+      "measurementSignals": [
+        "category lane select",
+        "GLB place preview",
+        "watch proof open"
+      ],
+      "backlinkTargets": [
+        "airline or airport source",
+        "flight status source",
+        "travel guide",
+        "watch proof route"
+      ],
+      "queryFamilies": [
+        "Flight And Travel Booking",
+        "traveler comparing flights, airports, delays, layovers, and booking decisions",
+        "category lane select",
+        "GLB place preview",
+        "watch proof open",
+        "airline or airport source",
+        "flight status source",
+        "travel guide",
+        "watch proof route",
+        "Flight And Travel Booking 3D Model View",
+        "Flight And Travel Booking video observatory",
+        "Flight And Travel Booking category proof"
+      ],
+      "searchConsoleIntent": "Create query/page rows through canonical proof routes, then promote only when Supabase and Search Console show behavior."
+    },
+    {
+      "id": "wiki-quick-research",
+      "lane": "Wiki And Quick Research",
+      "category": "Wiki And Quick Research",
+      "role": "student, parent, researcher, or developer looking for a source-backed quick explanation",
+      "type": "universal-claim-lane",
+      "variationCapacity": 344064,
+      "globalRankStart": 199334929,
+      "globalRankEnd": 199678992,
+      "proofRoute": "/watch/wiki-lookup-visual-research-hub",
+      "measurementSignals": [
+        "blog proof open",
+        "source route open",
+        "search intent"
+      ],
+      "backlinkTargets": [
+        "reference page",
+        "dataset",
+        "official documentation",
+        "research article"
+      ],
+      "queryFamilies": [
+        "Wiki And Quick Research",
+        "student, parent, researcher, or developer looking for a source-backed quick explanation",
+        "blog proof open",
+        "source route open",
+        "search intent",
+        "reference page",
+        "dataset",
+        "official documentation",
+        "research article",
+        "Wiki And Quick Research 3D Model View",
+        "Wiki And Quick Research video observatory",
+        "Wiki And Quick Research category proof"
+      ],
+      "searchConsoleIntent": "Create query/page rows through canonical proof routes, then promote only when Supabase and Search Console show behavior."
+    },
+    {
+      "id": "funny-mainstream-video",
+      "lane": "Funny Mainstream Video",
+      "category": "Funny Mainstream Video",
+      "role": "viewer trying to understand a funny, viral, reel, shorts, meme, or mainstream video moment",
+      "type": "universal-claim-lane",
+      "variationCapacity": 442368,
+      "globalRankStart": 199678993,
+      "globalRankEnd": 200121360,
+      "proofRoute": "/watch/funny-mainstream-video-explained",
+      "measurementSignals": [
+        "autoplay start",
+        "watch route open",
+        "podcast/source interrupt"
+      ],
+      "backlinkTargets": [
+        "creator/source page",
+        "first-source article",
+        "mainstream video source",
+        "podcast/source moment"
+      ],
+      "queryFamilies": [
+        "Funny Mainstream Video",
+        "viewer trying to understand a funny, viral, reel, shorts, meme, or mainstream video moment",
+        "autoplay start",
+        "watch route open",
+        "podcast/source interrupt",
+        "creator/source page",
+        "first-source article",
+        "mainstream video source",
+        "podcast/source moment",
+        "Funny Mainstream Video 3D Model View",
+        "Funny Mainstream Video video observatory",
+        "Funny Mainstream Video category proof"
+      ],
+      "searchConsoleIntent": "Create query/page rows through canonical proof routes, then promote only when Supabase and Search Console show behavior."
+    },
+    {
+      "id": "errands-review-before-buying",
+      "lane": "Errands And Review Before Buying",
+      "category": "Errands And Review Before Buying",
+      "role": "buyer checking groceries, stores, product reviews, deals, and local errands before spending",
+      "type": "universal-claim-lane",
+      "variationCapacity": 451584,
+      "globalRankStart": 200121361,
+      "globalRankEnd": 200572944,
+      "proofRoute": "/watch/search-intent-radar-visual-experience",
+      "measurementSignals": [
+        "source/backlink open",
+        "blog proof open",
+        "quick panel select"
+      ],
+      "backlinkTargets": [
+        "review source",
+        "product source",
+        "local store source",
+        "watch proof route"
+      ],
+      "queryFamilies": [
+        "Errands And Review Before Buying",
+        "buyer checking groceries, stores, product reviews, deals, and local errands before spending",
+        "source/backlink open",
+        "blog proof open",
+        "quick panel select",
+        "review source",
+        "product source",
+        "local store source",
+        "watch proof route",
+        "Errands And Review Before Buying 3D Model View",
+        "Errands And Review Before Buying video observatory",
+        "Errands And Review Before Buying category proof"
+      ],
+      "searchConsoleIntent": "Create query/page rows through canonical proof routes, then promote only when Supabase and Search Console show behavior."
+    }
+  ],
+  "masterKeywordSitemapUrlRows": 50000,
+  "masterKeywordSitemapUrl": "https://www.digitalhut.app/sitemap-master-keyword-50000.xml",
+  "sitemapIndexUrl": "https://www.digitalhut.app/sitemap-index.xml",
+  "sitemapSampleRows": [
+    {
+      "lane": "Full Entertainment Dapp Alternative",
+      "query": "best Full Entertainment Dapp Alternative after work 3D Model View",
+      "loc": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=685&dh_global_rank=685&dh_lane=full-entertainment-dapp-alternative&dh_query=best%20Full%20Entertainment%20Dapp%20Alternative%20after%20work%203D%20Model%20View",
+      "globalRankNumber": 685
+    },
+    {
+      "lane": "Full Entertainment Dapp Alternative",
+      "query": "best viewer looking for a complete alternative to a plain YouTube session after work 3D Model View",
+      "loc": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=2057&dh_global_rank=2057&dh_lane=full-entertainment-dapp-alternative&dh_query=best%20viewer%20looking%20for%20a%20complete%20alternative%20to%20a%20plain%20YouTube%20session%20after%20work%203D%20Model%20View",
+      "globalRankNumber": 2057
+    },
+    {
+      "lane": "Full Entertainment Dapp Alternative",
+      "query": "best homepage entry after work 3D Model View",
+      "loc": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=3429&dh_global_rank=3429&dh_lane=full-entertainment-dapp-alternative&dh_query=best%20homepage%20entry%20after%20work%203D%20Model%20View",
+      "globalRankNumber": 3429
+    },
+    {
+      "lane": "Full Entertainment Dapp Alternative",
+      "query": "best autoplay start after work 3D Model View",
+      "loc": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=4801&dh_global_rank=4801&dh_lane=full-entertainment-dapp-alternative&dh_query=best%20autoplay%20start%20after%20work%203D%20Model%20View",
+      "globalRankNumber": 4801
+    },
+    {
+      "lane": "Full Entertainment Dapp Alternative",
+      "query": "best next episode after work 3D Model View",
+      "loc": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=6173&dh_global_rank=6173&dh_lane=full-entertainment-dapp-alternative&dh_query=best%20next%20episode%20after%20work%203D%20Model%20View",
+      "globalRankNumber": 6173
+    },
+    {
+      "lane": "Full Entertainment Dapp Alternative",
+      "query": "best 3D Model View open after work 3D Model View",
+      "loc": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=7545&dh_global_rank=7545&dh_lane=full-entertainment-dapp-alternative&dh_query=best%203D%20Model%20View%20open%20after%20work%203D%20Model%20View",
+      "globalRankNumber": 7545
+    },
+    {
+      "lane": "Full Entertainment Dapp Alternative",
+      "query": "best podcast/source interrupt after work 3D Model View",
+      "loc": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=8917&dh_global_rank=8917&dh_lane=full-entertainment-dapp-alternative&dh_query=best%20podcast%2Fsource%20interrupt%20after%20work%203D%20Model%20View",
+      "globalRankNumber": 8917
+    },
+    {
+      "lane": "Full Entertainment Dapp Alternative",
+      "query": "best live analytics read after work 3D Model View",
+      "loc": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=10289&dh_global_rank=10289&dh_lane=full-entertainment-dapp-alternative&dh_query=best%20live%20analytics%20read%20after%20work%203D%20Model%20View",
+      "globalRankNumber": 10289
+    },
+    {
+      "lane": "Full Entertainment Dapp Alternative",
+      "query": "best YouTube session tool discussion after work 3D Model View",
+      "loc": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=11661&dh_global_rank=11661&dh_lane=full-entertainment-dapp-alternative&dh_query=best%20YouTube%20session%20tool%20discussion%20after%20work%203D%20Model%20View",
+      "globalRankNumber": 11661
+    },
+    {
+      "lane": "Full Entertainment Dapp Alternative",
+      "query": "best AI video tool page after work 3D Model View",
+      "loc": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=13033&dh_global_rank=13033&dh_lane=full-entertainment-dapp-alternative&dh_query=best%20AI%20video%20tool%20page%20after%20work%203D%20Model%20View",
+      "globalRankNumber": 13033
+    },
+    {
+      "lane": "Full Entertainment Dapp Alternative",
+      "query": "best 3D viewer source after work 3D Model View",
+      "loc": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=14405&dh_global_rank=14405&dh_lane=full-entertainment-dapp-alternative&dh_query=best%203D%20viewer%20source%20after%20work%203D%20Model%20View",
+      "globalRankNumber": 14405
+    },
+    {
+      "lane": "Full Entertainment Dapp Alternative",
+      "query": "best podcast/source page after work 3D Model View",
+      "loc": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=15777&dh_global_rank=15777&dh_lane=full-entertainment-dapp-alternative&dh_query=best%20podcast%2Fsource%20page%20after%20work%203D%20Model%20View",
+      "globalRankNumber": 15777
+    },
+    {
+      "lane": "Full Entertainment Dapp Alternative",
+      "query": "best watch proof route after work 3D Model View",
+      "loc": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=17148&dh_global_rank=17148&dh_lane=full-entertainment-dapp-alternative&dh_query=best%20watch%20proof%20route%20after%20work%203D%20Model%20View",
+      "globalRankNumber": 17148
+    },
+    {
+      "lane": "Full Entertainment Dapp Alternative",
+      "query": "best Full Entertainment Dapp Alternative 3D Model View after work 3D Model View",
+      "loc": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=18520&dh_global_rank=18520&dh_lane=full-entertainment-dapp-alternative&dh_query=best%20Full%20Entertainment%20Dapp%20Alternative%203D%20Model%20View%20after%20work%203D%20Model%20View",
+      "globalRankNumber": 18520
+    },
+    {
+      "lane": "Full Entertainment Dapp Alternative",
+      "query": "best Full Entertainment Dapp Alternative video observatory after work 3D Model View",
+      "loc": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=19892&dh_global_rank=19892&dh_lane=full-entertainment-dapp-alternative&dh_query=best%20Full%20Entertainment%20Dapp%20Alternative%20video%20observatory%20after%20work%203D%20Model%20View",
+      "globalRankNumber": 19892
+    },
+    {
+      "lane": "Full Entertainment Dapp Alternative",
+      "query": "best Full Entertainment Dapp Alternative category proof after work 3D Model View",
+      "loc": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=21264&dh_global_rank=21264&dh_lane=full-entertainment-dapp-alternative&dh_query=best%20Full%20Entertainment%20Dapp%20Alternative%20category%20proof%20after%20work%203D%20Model%20View",
+      "globalRankNumber": 21264
+    },
+    {
+      "lane": "Full Entertainment Dapp Alternative",
+      "query": "2026 Full Entertainment Dapp Alternative after work 3D Model View",
+      "loc": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=22636&dh_global_rank=22636&dh_lane=full-entertainment-dapp-alternative&dh_query=2026%20Full%20Entertainment%20Dapp%20Alternative%20after%20work%203D%20Model%20View",
+      "globalRankNumber": 22636
+    },
+    {
+      "lane": "Full Entertainment Dapp Alternative",
+      "query": "2026 viewer looking for a complete alternative to a plain YouTube session after work 3D Model View",
+      "loc": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=24008&dh_global_rank=24008&dh_lane=full-entertainment-dapp-alternative&dh_query=2026%20viewer%20looking%20for%20a%20complete%20alternative%20to%20a%20plain%20YouTube%20session%20after%20work%203D%20Model%20View",
+      "globalRankNumber": 24008
+    },
+    {
+      "lane": "Full Entertainment Dapp Alternative",
+      "query": "2026 homepage entry after work 3D Model View",
+      "loc": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=25380&dh_global_rank=25380&dh_lane=full-entertainment-dapp-alternative&dh_query=2026%20homepage%20entry%20after%20work%203D%20Model%20View",
+      "globalRankNumber": 25380
+    },
+    {
+      "lane": "Full Entertainment Dapp Alternative",
+      "query": "2026 autoplay start after work 3D Model View",
+      "loc": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=26752&dh_global_rank=26752&dh_lane=full-entertainment-dapp-alternative&dh_query=2026%20autoplay%20start%20after%20work%203D%20Model%20View",
+      "globalRankNumber": 26752
+    },
+    {
+      "lane": "Full Entertainment Dapp Alternative",
+      "query": "2026 next episode after work 3D Model View",
+      "loc": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=28124&dh_global_rank=28124&dh_lane=full-entertainment-dapp-alternative&dh_query=2026%20next%20episode%20after%20work%203D%20Model%20View",
+      "globalRankNumber": 28124
+    },
+    {
+      "lane": "Full Entertainment Dapp Alternative",
+      "query": "2026 3D Model View open after work 3D Model View",
+      "loc": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=29496&dh_global_rank=29496&dh_lane=full-entertainment-dapp-alternative&dh_query=2026%203D%20Model%20View%20open%20after%20work%203D%20Model%20View",
+      "globalRankNumber": 29496
+    },
+    {
+      "lane": "Full Entertainment Dapp Alternative",
+      "query": "2026 podcast/source interrupt after work 3D Model View",
+      "loc": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=30868&dh_global_rank=30868&dh_lane=full-entertainment-dapp-alternative&dh_query=2026%20podcast%2Fsource%20interrupt%20after%20work%203D%20Model%20View",
+      "globalRankNumber": 30868
+    },
+    {
+      "lane": "Full Entertainment Dapp Alternative",
+      "query": "2026 live analytics read after work 3D Model View",
+      "loc": "https://www.digitalhut.app/watch/full-view-episode-alternative?dh_rank=32239&dh_global_rank=32239&dh_lane=full-entertainment-dapp-alternative&dh_query=2026%20live%20analytics%20read%20after%20work%203D%20Model%20View",
+      "globalRankNumber": 32239
+    }
+  ],
+  "sitemapAllocation": [
+    {
+      "id": "full-entertainment-dapp-alternative",
+      "lane": "Full Entertainment Dapp Alternative",
+      "count": 8018,
+      "weight": 123,
+      "variationCapacity": 11000000
+    },
+    {
+      "id": "gaming-3d-world-observatory",
+      "lane": "Gaming 3D World Observatory",
+      "count": 5410,
+      "weight": 83,
+      "variationCapacity": 11000000
+    },
+    {
+      "id": "real-estate-3d-tour-observatory",
+      "lane": "Real Estate 3D Tour Observatory",
+      "count": 3324,
+      "weight": 51,
+      "variationCapacity": 11000000
+    },
+    {
+      "id": "planetary-space-observatory",
+      "lane": "Planetary And Space Observatory",
+      "count": 1043,
+      "weight": 16,
+      "variationCapacity": 11000000
+    },
+    {
+      "id": "exotic-environment-visual-experience",
+      "lane": "Exotic Environment Visual Experience",
+      "count": 2216,
+      "weight": 34,
+      "variationCapacity": 11000000
+    },
+    {
+      "id": "architecture-structure-engineering",
+      "lane": "Architecture Structure Engineering",
+      "count": 2216,
+      "weight": 34,
+      "variationCapacity": 11000000
+    },
+    {
+      "id": "developer-programmer-research",
+      "lane": "Developer Programmer Research",
+      "count": 4954,
+      "weight": 76,
+      "variationCapacity": 11000000
+    },
+    {
+      "id": "ai-video-podcast-source-explainer",
+      "lane": "AI Video Podcast Source Explainer",
+      "count": 5215,
+      "weight": 80,
+      "variationCapacity": 11000000
+    },
+    {
+      "id": "social-reel-meme-analysis",
+      "lane": "Social Reel Meme Analysis",
+      "count": 391,
+      "weight": 6,
+      "variationCapacity": 11000000
+    },
+    {
+      "id": "virtual-travel-resort-vacation",
+      "lane": "Virtual Travel Resort Vacation",
+      "count": 1043,
+      "weight": 16,
+      "variationCapacity": 11000000
+    },
+    {
+      "id": "market-company-observatory",
+      "lane": "Market Company Observatory",
+      "count": 2542,
+      "weight": 39,
+      "variationCapacity": 11000000
+    },
+    {
+      "id": "workforce-training-visual-system",
+      "lane": "Workforce Training Visual System",
+      "count": 1043,
+      "weight": 16,
+      "variationCapacity": 11000000
+    },
+    {
+      "id": "education-study-visual-research",
+      "lane": "Education Study Visual Research",
+      "count": 2216,
+      "weight": 34,
+      "variationCapacity": 11000000
+    },
+    {
+      "id": "local-life-errands-companion",
+      "lane": "Local Life Errands Companion",
+      "count": 3129,
+      "weight": 48,
+      "variationCapacity": 11000000
+    },
+    {
+      "id": "home-project-diy-visual",
+      "lane": "Home Project DIY Visual",
+      "count": 1956,
+      "weight": 30,
+      "variationCapacity": 11000000
+    },
+    {
+      "id": "lifestyle-event-visual-experience",
+      "lane": "Lifestyle Event Visual Experience",
+      "count": 1043,
+      "weight": 16,
+      "variationCapacity": 11000000
+    },
+    {
+      "id": "creator-brand-product-showcase",
+      "lane": "Creator Brand Product Showcase",
+      "count": 1304,
+      "weight": 20,
+      "variationCapacity": 11000000
+    },
+    {
+      "id": "international-language-side-markets",
+      "lane": "International Language Side Markets",
+      "count": 2673,
+      "weight": 41,
+      "variationCapacity": 11000000
+    },
+    {
+      "id": "lunch-local-food",
+      "lane": "Lunch And Local Food",
+      "count": 54,
+      "weight": 16,
+      "variationCapacity": 571536
+    },
+    {
+      "id": "rideshare-commute",
+      "lane": "Rideshare And Commute",
+      "count": 33,
+      "weight": 16,
+      "variationCapacity": 344064
+    },
+    {
+      "id": "flight-travel-booking",
+      "lane": "Flight And Travel Booking",
+      "count": 40,
+      "weight": 16,
+      "variationCapacity": 419328
+    },
+    {
+      "id": "wiki-quick-research",
+      "lane": "Wiki And Quick Research",
+      "count": 57,
+      "weight": 28,
+      "variationCapacity": 344064
+    },
+    {
+      "id": "funny-mainstream-video",
+      "lane": "Funny Mainstream Video",
+      "count": 16,
+      "weight": 6,
+      "variationCapacity": 442368
+    },
+    {
+      "id": "errands-review-before-buying",
+      "lane": "Errands And Review Before Buying",
+      "count": 64,
+      "weight": 24,
+      "variationCapacity": 451584
+    }
+  ]
+}

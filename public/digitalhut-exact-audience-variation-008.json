@@ -1,0 +1,69 @@
+{
+  "generatedAt": "2026-07-07T12:55:00.000Z",
+  "status": "production-deployed",
+  "deployedAt": "2026-07-07T13:21:00.000Z",
+  "deploymentUrl": "https://v0-nft-time-capsule-dapp-1elrkjzf9-zzzanthony123-9168s-projects.vercel.app",
+  "canonicalAliases": [
+    "https://www.digitalhut.app",
+    "https://digitalhut.app"
+  ],
+  "liveRead": {
+    "totalEvents": 499,
+    "pageViews": 282,
+    "uniqueVisitors": 99,
+    "searchRuns": 2,
+    "autoplayStarts": 5,
+    "glbPreviewPlays": 83,
+    "podcastInterrupts": 13,
+    "marketOpens": 5,
+    "note": "Latest movement includes Codex-labeled synthetic counter tests. Treat as pipeline proof, not organic traffic proof."
+  },
+  "diagnosis": "The analytics pipe is working, but the public audience lane is dry. Isolated feature phrases such as GLB viewer, podcast clip, or 3D analytics are too narrow. DigitalHut needs a full-session phrase that matches why a normal video viewer would choose the dapp.",
+  "primaryCrowdPhrase": "YouTube alternative full-view episode with 3D model view, podcast moments, and live analytics",
+  "primaryTrafficPool": "full-view episode alternative",
+  "crowdBands": [
+    {
+      "range": "10000-view lane",
+      "searcherState": "Wants a different way to watch a topic after YouTube/TikTok fatigue.",
+      "digitalhutPromise": "Same video rhythm plus 3D model view, podcast moment, and readable analytics.",
+      "testSignals": ["page_view", "autoplay_start", "autoplay_episode_shift"]
+    },
+    {
+      "range": "100000-view lane",
+      "searcherState": "Wants an explained video, not just a video.",
+      "digitalhutPromise": "The episode explains the topic with source links, timeline, GLB context, and podcast interruption.",
+      "testSignals": ["search_run", "proof_route_open", "backlink_source_open"]
+    },
+    {
+      "range": "1000000-view lane",
+      "searcherState": "Wants an all-in-one media interface for any topic.",
+      "digitalhutPromise": "Video, sound, next episode, 3D, podcast, and analytics in one dapp interface.",
+      "testSignals": ["return_visit", "glb_preview_play", "podcast_interrupt_play", "source_open"]
+    }
+  ],
+  "expansionTemplate": "{topic} full-view episode with 3D model view, podcast moments, and live analytics",
+  "categoryExamples": [
+    "gaming full-view episode with 3D model view podcast moments and live analytics",
+    "viral video full-view episode with 3D model view podcast moments and live analytics",
+    "real estate walkthrough full-view episode with 3D model view podcast moments and live analytics",
+    "coral reef study full-view episode with 3D model view podcast moments and live analytics",
+    "stock market video full-view episode with 3D model view podcast moments and live analytics",
+    "AI coding tutorial full-view episode with 3D model view podcast moments and live analytics",
+    "travel destination full-view episode with 3D model view podcast moments and live analytics",
+    "family vlog full-view episode with 3D model view podcast moments and live analytics"
+  ],
+  "ladderMatchFilter": {
+    "skipSingleFeatureSites": ["plain video", "plain podcast", "plain 3D model viewer", "plain blog post", "plain market chart", "plain search result list"],
+    "onlyCompareWhenAtLeastThreeMatch": ["watch session", "autoplay next episode behavior", "search by topic", "visual explanation", "source proof backlinks", "3D GLB environment context", "podcast source moment", "analytics timeline"]
+  },
+  "nextRealHitConditions": {
+    "pageViewsAbove": 282,
+    "searchRunsAbove": 2,
+    "proofRouteOpensAbove": 0,
+    "sourceBacklinkOpensAbove": 0,
+    "autoplayStartsAbove": 5,
+    "glbPreviewPlaysAbove": 83,
+    "podcastInterruptsAbove": 13,
+    "searchConsoleRowsAbove": 0
+  }
+}
