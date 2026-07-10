@@ -77,6 +77,7 @@ async function productionRead(){
 
 function searchConsoleRead(){
   const candidates = [
+    readJson(resolve(repoRoot, "docs", "digitalhut-search-console-ranking-test-latest.json")),
     readJson(resolve(repoRoot, "docs", "digitalhut-search-console-ranking-test-20260707.json")),
     readJson(resolve(repoRoot, "public", "digitalhut-search-console-ranking-test.json")),
     readJson(resolve(repoRoot, "public", "digitalhut-indexing-push-status.json")),

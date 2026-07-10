@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-10T22:41:56.711Z",
+  "generatedAt": "2026-07-10T23:17:36.199Z",
   "status": "master-list-compare-complete",
   "truthBoundary": "The 200,572,944 value is deterministic internal variation capacity. Public search ownership requires indexed canonical routes, impressions, clicks, and user conversions.",
   "masterList": {
@@ -10,7 +10,7 @@
     "publicQueryParameterRows": 0
   },
   "compareAndContrast": {
-    "previousGeneratedAt": "2026-07-10T22:41:23.712Z",
+    "previousGeneratedAt": "2026-07-10T22:41:56.711Z",
     "productionDelta": {
       "pageViews": 0,
       "uniqueVisitors": 0,
@@ -21,8 +21,8 @@
       "masterKeywordDoorEvents": 0
     },
     "searchConsoleDelta": {
-      "rows": 1,
-      "impressions": 1,
+      "rows": 0,
+      "impressions": 0,
       "clicks": 0,
       "indexedRepresentatives": 0,
       "discoveredRepresentatives": 0

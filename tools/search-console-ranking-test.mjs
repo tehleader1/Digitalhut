@@ -350,10 +350,13 @@ async function main(){
   }
 
   await mkdir(docsDir, {recursive: true})
-  const jsonPath = path.join(docsDir, "digitalhut-search-console-ranking-test-20260707.json")
-  const mdPath = path.join(docsDir, "digitalhut-search-console-ranking-test-20260707.md")
-  await writeFile(jsonPath, JSON.stringify(result, null, 2))
-  await writeFile(mdPath, `# DigitalHut Search Console Ranking Test
+  const dateStamp = generatedAt.slice(0, 10).replaceAll("-", "")
+  const jsonPath = path.join(docsDir, `digitalhut-search-console-ranking-test-${dateStamp}.json`)
+  const mdPath = path.join(docsDir, `digitalhut-search-console-ranking-test-${dateStamp}.md`)
+  const latestJsonPath = path.join(docsDir, "digitalhut-search-console-ranking-test-latest.json")
+  const latestMdPath = path.join(docsDir, "digitalhut-search-console-ranking-test-latest.md")
+  const jsonReceipt = JSON.stringify(result, null, 2)
+  const markdownReceipt = `# DigitalHut Search Console Ranking Test
 
 Generated: ${generatedAt}
 
@@ -432,11 +435,19 @@ ${result.rankingTruth}
 - Route crawl shell count: ${compareAndContrast.routeCrawlShellCount}
 - Search Console rows: ${compareAndContrast.searchConsoleRows}
 - Next action: ${compareAndContrast.nextAction}
-`)
+`
+  await Promise.all([
+    writeFile(jsonPath, jsonReceipt),
+    writeFile(mdPath, markdownReceipt),
+    writeFile(latestJsonPath, jsonReceipt),
+    writeFile(latestMdPath, markdownReceipt)
+  ])
   console.log(JSON.stringify({
     ok: true,
     jsonPath,
     mdPath,
+    latestJsonPath,
+    latestMdPath,
     sitemapVisible: Boolean(matchingSitemap),
     sitemapSubmit: sitemapSubmit || {ok: null, status: "not-requested"},
     sitemapSurfacesVisible: compareAndContrast.sitemapSurfacesVisible,
