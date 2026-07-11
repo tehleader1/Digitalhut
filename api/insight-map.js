@@ -152,6 +152,17 @@ async function readPixelSummaryLayer(url, key){
   }
 }
 
+async function readLegacyMasterListAttribution(url, key){
+  try {
+    return await supabaseRestJson(url, key, "rpc/digitalhut_search_pixel_master_list_legacy_read", {
+      method: "POST",
+      body: {p_location_limit: 24}
+    })
+  } catch (error) {
+    return {ready: false, reason: error?.message || "legacy-master-list-attribution-read-failed"}
+  }
+}
+
 function numberValue(value){
   return Number(value || 0)
 }
@@ -1232,6 +1243,7 @@ async function pixelSummary(){
     marketOpens: countEvents(events, ["market_view_open", "market_panel_open", "ticker_search"])
   }
   const summaryLayer = await readPixelSummaryLayer(url, key)
+  const legacyMasterListAttribution = await readLegacyMasterListAttribution(url, key)
   const hasSummaryLayer = summaryLayer && summaryLayer.global && summaryLayer.ready !== false
   const interactionTotals = hasSummaryLayer ? totalsFromSummaryLayer(summaryLayer, rawInteractionTotals) : rawInteractionTotals
   const totalEvents = hasSummaryLayer ? numberValue(summaryLayer.global.total_events) : events.length
@@ -1252,6 +1264,7 @@ async function pixelSummary(){
     summarySource: hasSummaryLayer ? "supabase-rollup-layer" : "recent-raw-events-fallback",
     summaryLayerReady: Boolean(hasSummaryLayer),
     summaryLayerReason: hasSummaryLayer ? "" : summaryLayer?.reason || "",
+    legacyMasterListAttribution,
     totalEvents,
     totalPageViews: interactionTotals.pageViews,
     totalBlogViews: interactionTotals.blogViews,
