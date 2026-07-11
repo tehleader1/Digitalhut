@@ -5,6 +5,7 @@ import {originalLongTailKeywordsFor, seoMarketGearMap} from "../src/lib/seoConte
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 const firecudaRoot = process.env.DIGITALHUT_FIRECUDA_AGENT_ROOT || "D:\\DigitalHutAgent"
+const localQueueRoot = path.join(repoRoot, "docs", "digitalhut-firecuda-local-queue")
 const cycleId = "cycle-002"
 const generatedAt = new Date().toISOString()
 
@@ -706,7 +707,7 @@ Every winning keyword is staged for:
 `
 }
 
-async function ensureRunnerFolders(){
+async function ensureRunnerFolders(root){
   const folders = [
     "00-control-room",
     "01-original-captures\\phone-s25-fe",
@@ -734,11 +735,26 @@ async function ensureRunnerFolders(){
     "10-manual-runner-reports",
     "11-visual-upgrade-ledger"
   ]
-  await Promise.all(folders.map((folder) => mkdir(path.join(firecudaRoot, folder), {recursive: true})))
+  await Promise.all(folders.map((folder) => mkdir(path.join(root, folder), {recursive: true})))
+}
+
+async function resolveRunnerStorage(){
+  try {
+    await ensureRunnerFolders(firecudaRoot)
+    return {root: firecudaRoot, mode: "firecuda-mirror"}
+  } catch(error) {
+    await ensureRunnerFolders(localQueueRoot)
+    return {
+      root: localQueueRoot,
+      mode: "system-drive-local-queue",
+      reason: String(error?.message || error)
+    }
+  }
 }
 
 async function main(){
-  await ensureRunnerFolders()
+  const storage = await resolveRunnerStorage()
+  const runnerRoot = storage.root
 
   const records = buildMasterRecords()
   const regionalMap = buildRegionalMap(records)
@@ -762,14 +778,14 @@ async function main(){
     checkWindows: ["instant", "6h", "12h", "24h", "7d"],
     status: "waiting-for-live-traffic"
   }))
-  const systemMap = {cycleId, generatedAt, firecudaRoot, repoRoot, systems}
+  const systemMap = {cycleId, generatedAt, firecudaRoot, runnerRoot, storage, repoRoot, systems}
   const report = markdownReport({records, regionalMap, episodeInjection})
   const publishingReport = markdownPublishingStack(tightStack, proofLedger)
   const blogProofReport = markdownRankedBlogProofSystem(blogProofSystem)
 
-  const longtailRoot = path.join(firecudaRoot, "04-seo-keyword-map", "longtail-foundation")
-  const blogRoot = path.join(firecudaRoot, "05-blog-week-runs")
-  await writeFile(path.join(firecudaRoot, "00-control-room", "system-map-cycle-002.json"), JSON.stringify(systemMap, null, 2))
+  const longtailRoot = path.join(runnerRoot, "04-seo-keyword-map", "longtail-foundation")
+  const blogRoot = path.join(runnerRoot, "05-blog-week-runs")
+  await writeFile(path.join(runnerRoot, "00-control-room", "system-map-cycle-002.json"), JSON.stringify(systemMap, null, 2))
   await writeFile(path.join(longtailRoot, "master-keyword-cycle-002.json"), JSON.stringify(records, null, 2))
   await writeFile(path.join(longtailRoot, "master-keyword-cycle-002.csv"), writeCsv(records))
   await writeFile(path.join(longtailRoot, "master-keyword-tightened-cycle-002.json"), JSON.stringify(tightStack, null, 2))
@@ -782,12 +798,12 @@ async function main(){
   await writeFile(path.join(blogRoot, "long-tail-placement-lanes", "long-tail-website-targets-cycle-002.json"), JSON.stringify(blogProofSystem.longTailWebsiteTargets, null, 2))
   await writeFile(path.join(longtailRoot, "episode-injection-cycle-002.json"), JSON.stringify(episodeInjection, null, 2))
   await writeFile(path.join(longtailRoot, "episode-injection-cycle-002.md"), report)
-  await writeFile(path.join(firecudaRoot, "04-seo-keyword-map", "off-tier-markets", "regional-market-cycle-002.json"), JSON.stringify(regionalMap, null, 2))
-  await writeFile(path.join(firecudaRoot, "06-backlink-tests", "pending", "backlink-targets-cycle-002.json"), JSON.stringify(backlinkTargets, null, 2))
-  await writeFile(path.join(firecudaRoot, "08-pixel-and-analytics", "instant-6h-12h-24h-7d", "pixel-targets-cycle-002.json"), JSON.stringify(pixelTargets, null, 2))
-  await writeFile(path.join(firecudaRoot, "11-visual-upgrade-ledger", "glb-proof-dock-cycle-002.json"), JSON.stringify(proofLedger, null, 2))
-  await writeFile(path.join(firecudaRoot, "11-visual-upgrade-ledger", "glb-proof-dock-cycle-002.md"), publishingReport)
-  await writeFile(path.join(firecudaRoot, "10-manual-runner-reports", "cycle-002-report.md"), report)
+  await writeFile(path.join(runnerRoot, "04-seo-keyword-map", "off-tier-markets", "regional-market-cycle-002.json"), JSON.stringify(regionalMap, null, 2))
+  await writeFile(path.join(runnerRoot, "06-backlink-tests", "pending", "backlink-targets-cycle-002.json"), JSON.stringify(backlinkTargets, null, 2))
+  await writeFile(path.join(runnerRoot, "08-pixel-and-analytics", "instant-6h-12h-24h-7d", "pixel-targets-cycle-002.json"), JSON.stringify(pixelTargets, null, 2))
+  await writeFile(path.join(runnerRoot, "11-visual-upgrade-ledger", "glb-proof-dock-cycle-002.json"), JSON.stringify(proofLedger, null, 2))
+  await writeFile(path.join(runnerRoot, "11-visual-upgrade-ledger", "glb-proof-dock-cycle-002.md"), publishingReport)
+  await writeFile(path.join(runnerRoot, "10-manual-runner-reports", "cycle-002-report.md"), report)
   await writeFile(path.join(repoRoot, "docs", "digitalhut-manual-runner-cycle-002.md"), report)
   await writeFile(path.join(repoRoot, "docs", "digitalhut-tightened-publishing-stack-cycle-002.md"), publishingReport)
   await writeFile(path.join(repoRoot, "docs", "digitalhut-ranked-blog-proof-system-cycle-002.md"), blogProofReport)
@@ -797,6 +813,8 @@ async function main(){
     cycleId,
     generatedAt,
     firecudaRoot,
+    runnerRoot,
+    storage,
     recordCount: records.length,
     highPriorityCount: records.filter((record) => record.priority === "high").length,
     tightenedRecordCount: tightStack.tightenedRecords.length,
@@ -810,7 +828,7 @@ async function main(){
     visualUpgrade: proofLedger.currentUpgrade,
     topKeywords: tightStack.week001.slice(0, 12).map((record) => record.primaryKeyword),
     files: {
-      systemMap: path.join(firecudaRoot, "00-control-room", "system-map-cycle-002.json"),
+      systemMap: path.join(runnerRoot, "00-control-room", "system-map-cycle-002.json"),
       masterJson: path.join(longtailRoot, "master-keyword-cycle-002.json"),
       masterCsv: path.join(longtailRoot, "master-keyword-cycle-002.csv"),
       tightenedJson: path.join(longtailRoot, "master-keyword-tightened-cycle-002.json"),
@@ -819,8 +837,8 @@ async function main(){
       featuredBlogPosts: path.join(blogRoot, "featured-proof-posts", "featured-blog-posts-cycle-002.json"),
       longTailWebsiteTargets: path.join(blogRoot, "long-tail-placement-lanes", "long-tail-website-targets-cycle-002.json"),
       injection: path.join(longtailRoot, "episode-injection-cycle-002.json"),
-      visualLedger: path.join(firecudaRoot, "11-visual-upgrade-ledger", "glb-proof-dock-cycle-002.md"),
-      report: path.join(firecudaRoot, "10-manual-runner-reports", "cycle-002-report.md"),
+      visualLedger: path.join(runnerRoot, "11-visual-upgrade-ledger", "glb-proof-dock-cycle-002.md"),
+      report: path.join(runnerRoot, "10-manual-runner-reports", "cycle-002-report.md"),
       repoReport: path.join(repoRoot, "docs", "digitalhut-manual-runner-cycle-002.md"),
       repoPublishingReport: path.join(repoRoot, "docs", "digitalhut-tightened-publishing-stack-cycle-002.md"),
       repoBlogProofReport: path.join(repoRoot, "docs", "digitalhut-ranked-blog-proof-system-cycle-002.md")

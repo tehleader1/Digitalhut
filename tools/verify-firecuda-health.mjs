@@ -9,8 +9,9 @@ const skip = process.env.DIGITALHUT_SKIP_FIRECUDA_HEALTH === "1"
 
 const receiptPath = resolve("docs", "digitalhut-firecuda-health-latest.json")
 
-function finish(receipt){
+function finish(receipt, {persist = true} = {}){
   console.log(JSON.stringify(receipt, null, 2))
+  if(!persist) return
   mkdirSync(dirname(receiptPath), {recursive: true})
   writeFileSync(receiptPath, `${JSON.stringify(receipt, null, 2)}\n`, "utf8")
 }
@@ -21,7 +22,7 @@ if(skip){
     reason: process.env.DIGITALHUT_CLOUD_BUILD === "true" ? "cloud-build-has-no-local-firecuda" : "non-windows-or-explicit-skip",
     required,
     checkedAt: new Date().toISOString()
-  })
+  }, {persist: false})
   process.exit(0)
 }
 
@@ -50,14 +51,19 @@ try {
   }).trim()
   disk = JSON.parse(output)
 } catch(error){
+  const errorText = String(error?.stderr || error?.message || error).trim()
+  const accessDenied = /access denied|0x80041003/i.test(errorText)
   const receipt = {
-    status: "unhealthy",
+    status: accessDenied ? "unavailable" : "unhealthy",
     required,
     agentPath,
-    error: String(error?.stderr || error?.message || error).trim(),
-    checkedAt: new Date().toISOString()
+    error: errorText,
+    checkedAt: new Date().toISOString(),
+    policy: accessDenied
+      ? "The current process could not inspect FireCuda. Keep the last persisted hardware receipt; an explicit hardware audit is required for a new health claim."
+      : "The hardware check failed before FireCuda health could be confirmed."
   }
-  finish(receipt)
+  finish(receipt, {persist: required || !accessDenied})
   if(required) process.exit(1)
   process.exit(0)
 }

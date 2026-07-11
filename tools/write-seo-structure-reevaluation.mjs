@@ -82,6 +82,29 @@ function totalsFromInsight(insight = {}){
   }
 }
 
+function cachedInsightFromEvidence(masterEvidence = {}, sectorCycle = {}, pixelCompare = {}){
+  const production = masterEvidence.production || {}
+  const behavior = sectorCycle.measuredBehavior || {}
+  const exportSignals = pixelCompare.exportSignalTotals || {}
+  return {
+    cachedEvidence: true,
+    pixel: {
+      totalPageViews: numberValue(behavior.pageViews || production.pageViews),
+      uniqueVisitors: numberValue(behavior.uniqueVisitors || production.uniqueVisitors),
+      totalEvents: numberValue(production.totalEvents),
+      totalBlogViews: numberValue(production.blogViews),
+      totalGlbPreviewPlays: numberValue(exportSignals.glbPreviewPlays),
+      totalPodcastInterrupts: numberValue(exportSignals.podcastPlays),
+      totalAutoplayStarts: numberValue(exportSignals.autoplayStarts || production.autoplayStarts),
+      totalSearchRuns: numberValue(exportSignals.searchRuns || production.searches),
+      totalMarketOpens: numberValue(exportSignals.marketOpens || production.marketOpens),
+      totalProofRouteOpens: numberValue(behavior.proofOpens || production.proofOpens),
+      totalSourceOpens: numberValue(behavior.sourceOpens || production.sourceOpens),
+      totalMasterKeywordDoorEvents: numberValue(production.masterKeywordDoorEvents)
+    }
+  }
+}
+
 function searchConsoleSummary(searchConsole = {}){
   const compare = searchConsole.compareAndContrast || {}
   const publicProof = searchConsole.masterKeywordPublicProof || {}
@@ -215,7 +238,7 @@ function decide({traffic, search, layers}){
 }
 
 const [
-  insight,
+  liveInsight,
   searchConsole,
   rowPush,
   rotation,
@@ -223,7 +246,10 @@ const [
   clientRouter,
   bridge,
   contract,
-  receipt
+  receipt,
+  masterEvidence,
+  sectorCycle,
+  pixelCompare
 ] = await Promise.all([
   fetchJson(`${site}/api/insight-map?reevaluation=${Date.now()}`, {}),
   Promise.resolve(readJson("docs/digitalhut-search-console-ranking-test-20260707.json", {})),
@@ -233,10 +259,17 @@ const [
   Promise.resolve(readJson("public/digitalhut-client-attempt-router.json", {})),
   Promise.resolve(readJson("public/digitalhut-proof-source-conversion-bridge.json", {})),
   Promise.resolve(readJson("public/digitalhut-supabase-measurement-contract.json", {})),
-  Promise.resolve(readJson("public/digitalhut-seo-cycle-receipt-latest.json", {}))
+  Promise.resolve(readJson("public/digitalhut-seo-cycle-receipt-latest.json", {})),
+  Promise.resolve(readJson("public/digitalhut-master-list-evidence-latest.json", {})),
+  Promise.resolve(readJson("public/digitalhut-sector-expansion-cycle.json", {})),
+  Promise.resolve(readJson("public/digitalhut-supabase-search-pixel-compare.json", {}))
 ])
 
+const insight = Object.keys(liveInsight || {}).length
+  ? liveInsight
+  : cachedInsightFromEvidence(masterEvidence, sectorCycle, pixelCompare)
 const traffic = totalsFromInsight(insight)
+traffic.readSource = insight.cachedEvidence ? "cached-verified-evidence" : "production-insight-map"
 const search = searchConsoleSummary(searchConsole)
 const universeState = clientRouter.wholeSystemAttempt || clientRouter.strongestAttempt || active.strongestAttempt || {}
 const universeArm = universeState.internalRotationArm || universeState.strongestRotationArm || active.internalRotationArm || active.strongestAttempt?.internalRotationArm || null

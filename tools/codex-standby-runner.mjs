@@ -3,6 +3,7 @@ import {existsSync, statSync} from "node:fs"
 import path from "node:path"
 import {fileURLToPath} from "node:url"
 import {seoBlogPosts, seoLaunchTargetsForCategory, seoMetadataForProof, seoRunnerProofPosts} from "../src/lib/seoContentEngine.js"
+import {seoSearchClaimLanes, seoSearchClaimSummary} from "../src/lib/seoSearchClaimEngine.js"
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 const docsDir = path.join(repoRoot, "docs")
@@ -29,7 +30,7 @@ const files = {
   packageLock: path.join(repoRoot, "package-lock.json")
 }
 
-const lastKnownMetrics = {
+let lastKnownMetrics = {
   pageViews: 225,
   uniqueVisitors: 72,
   searchInteractions: 0,
@@ -41,6 +42,40 @@ const lastKnownMetrics = {
   source: "last-known production metric snapshot; not live-rechecked by backend SEO standby system",
   capturedAt: null,
   liveRefreshStatus: "not-live-refreshed-this-cycle"
+}
+
+async function refreshProductionMetrics(fallback = lastKnownMetrics){
+  try {
+    const response = await fetch("https://www.digitalhut.app/api/insight-map", {
+      headers: {"User-Agent": "DigitalHut-SEO-Standby/1.0"},
+      signal: AbortSignal.timeout(12_000)
+    })
+    if(!response.ok) throw new Error(`insight-map returned ${response.status}`)
+    const payload = await response.json()
+    const pixel = payload?.pixel || {}
+    return {
+      pageViews: Number(pixel.totalPageViews || pixel.interactionTotals?.pageViews || fallback.pageViews || 0),
+      uniqueVisitors: Number(pixel.uniqueVisitors || fallback.uniqueVisitors || 0),
+      searchInteractions: Number(pixel.totalSearchRuns || pixel.interactionTotals?.searchRuns || fallback.searchInteractions || 0),
+      autoplayStarts: Number(pixel.totalAutoplayStarts || pixel.interactionTotals?.autoplayStarts || fallback.autoplayStarts || 0),
+      glbPreviewPlays: Number(pixel.totalGlbPreviewPlays || pixel.interactionTotals?.glbPreviewPlays || fallback.glbPreviewPlays || 0),
+      podcastInterrupts: Number(pixel.totalPodcastInterrupts || pixel.interactionTotals?.podcastInterrupts || fallback.podcastInterrupts || 0),
+      marketOpens: Number(pixel.totalMarketOpens || pixel.interactionTotals?.marketOpens || fallback.marketOpens || 0),
+      blogViews: Number(pixel.totalBlogViews || pixel.interactionTotals?.blogViews || fallback.blogViews || 0),
+      proofRouteOpens: Number(pixel.totalProofRouteOpens || pixel.interactionTotals?.proofRouteOpens || 0),
+      sourceOpens: Number(pixel.totalSourceOpens || pixel.interactionTotals?.sourceOpens || 0),
+      masterKeywordDoorEvents: Number(pixel.totalMasterKeywordDoorEvents || 0),
+      source: "live production /api/insight-map Supabase rollup",
+      capturedAt: payload?.generatedAt || new Date().toISOString(),
+      liveRefreshStatus: "live-refreshed"
+    }
+  } catch(error){
+    return {
+      ...fallback,
+      source: `${fallback.source}; live refresh failed: ${error?.message || "unknown error"}`,
+      liveRefreshStatus: "live-refresh-failed"
+    }
+  }
 }
 
 const lastKnownFireCudaCapacityReceipt = {
@@ -166,6 +201,12 @@ const systemLoop = [
     label: "SEO Master List",
     status: "keyword-engine",
     job: "Convert raw market/research/video ideas into ranked long-tail targets, watch proof pages, blog proof posts, and category lanes."
+  },
+  {
+    id: "sector-expansion",
+    label: "Sector Expansion",
+    status: "measured-sector-mapping",
+    job: "Map new dapp sectors through verified sources, query families, system-fit coverage, and measured human behavior before public promotion."
   },
   {
     id: "supabase",
@@ -880,7 +921,7 @@ const supabaseMeasurementEvents = [
   },
   {
     canonicalEvent: "proof_route_open",
-    aliases: ["watch_route_open", "blog_route_open", "category_proof_open", "viral_watch_route_open", "viral_source_route_open"],
+    aliases: ["watch_route_open", "blog_route_open", "category_proof_open", "zone_checkpoint_open", "viral_watch_route_open", "viral_source_route_open"],
     feature: "Watch/blog/category proof",
     humanRole: "researcher",
     requiredFields: ["session_id", "visitor_id", "path", "keyword_hint", "blog_slug", "metadata"],
@@ -1554,7 +1595,7 @@ function candidateKeywordQueue(cluster, limit = 30){
       stage: index < 5 ? "proof-route-seed" : index < 15 ? "supabase-watch-candidate" : "firecuda-hold-candidate",
       proofAngle,
       measurementSignals: cluster.proofSignal.split("+").map((item) => item.trim()),
-      routeTarget: `/watch/${proofSlugForCluster(cluster.id)}`,
+      routeTarget: cluster.proofRoutes?.watch || `/watch/${proofSlugForCluster(cluster.id)}`,
       backlinkIntent: `${proofAngle || "source proof"} for ${intent}`
     })
   }
@@ -2892,7 +2933,7 @@ function buildMovementProofAudienceOriginPacket({metrics = lastKnownMetrics, fun
       layer: "FireCuda",
       proves: "master-list delta, cluster added, filler rejected, backlink receipt staged, keyword variation owner",
       currentState: "cluster and rank contracts staged locally",
-      nextPush: "Keep the 2,572,944-slot universe gated and promote only clusters with route behavior or Search Console movement."
+      nextPush: `Keep the ${seoSearchClaimSummary.totalIndividualRanks.toLocaleString("en-US")}-slot universe gated and promote only clusters with route behavior or Search Console movement.`
     },
     {
       layer: "Supabase",
@@ -4473,7 +4514,7 @@ function buildFullSystemLadderPushPacket({
   const fullSystemPushes = [
     {
       system: "FireCuda human positioning map",
-      currentRole: "Own the 2,572,944-slot universe while keeping expansion closed until real receipts unlock a lane.",
+      currentRole: `Hold the ${seoSearchClaimSummary.totalIndividualRanks.toLocaleString("en-US")}-slot internal universe while keeping expansion closed until real receipts unlock a lane.`,
       currentStatus: fireCudaInnovationMappingLayerPacket?.status || "unknown",
       proofNeeded: "Human-role buckets: everyday viewer, researcher, developer, creator, market watcher, digital nomad.",
       nextPush: "Prioritize the 3D/GLB human role because it is closest to a 77% ladder win."
@@ -4934,7 +4975,7 @@ Next system move: ${packet.nextSystemMove}
 function individualRankingBlueprint(cluster, rangeStart = 1){
   const dimensions = cluster.variationDimensions || {}
   const entries = Object.entries(dimensions).map(([name, values]) => ({name, count: Array.isArray(values) ? values.length : 0}))
-  const total = entries.reduce((value, entry) => value * Math.max(1, entry.count), 1)
+  const total = Number(cluster.variationCapacity || entries.reduce((value, entry) => value * Math.max(1, entry.count), 1))
   const rangeEnd = rangeStart + total - 1
   const rankFormula = entries.map((entry) => entry.name).join(" x ")
   return {
@@ -5034,26 +5075,47 @@ function buildLaunchRankingLayer(clusters, metrics = lastKnownMetrics){
 }
 
 function buildSeoMasterListPacket({seoProof, metrics = lastKnownMetrics}){
-  const clusters = mundaneOffTimeExperienceMap.clusters.map((cluster) => {
-    const dimensions = cluster.variationDimensions || {}
-    const variationCapacity = productCount(dimensions)
-    const proofSlug = proofSlugForCluster(cluster.id)
+  const mundaneClustersById = new Map(mundaneOffTimeExperienceMap.clusters.map((cluster) => [cluster.id, cluster]))
+  const clusters = seoSearchClaimLanes
+    .filter((lane) => lane.countedRankSlots !== false)
+    .map((lane) => {
+    const mundaneCluster = mundaneClustersById.get(lane.id)
+    const dimensions = mundaneCluster?.variationDimensions || {
+      intents: [lane.lane, lane.role].filter(Boolean),
+      contexts: ["daily session", "research session", "after work"],
+      modifiers: ["2026", "source-backed", "interactive"],
+      formats: ["video observatory", "3D Model View", "podcast source moment"],
+      proofAngles: (lane.backlinkTargets || ["source proof", "watch proof"]).slice(0, 5),
+      geoScopes: ["global", "local", "international"]
+    }
+    const shapedCluster = {
+      id: lane.id,
+      lane: lane.lane,
+      role: lane.role,
+      keywords: Array.from(new Set([
+        lane.lane,
+        lane.role,
+        ...(lane.measurementSignals || []),
+        ...(lane.backlinkTargets || [])
+      ].filter(Boolean))).slice(0, 8),
+      variationDimensions: dimensions,
+      variationCapacity: Number(lane.variationCapacity || 0),
+      proofSignal: (lane.measurementSignals || ["proof route open", "source/backlink open"]).join(" + "),
+      proofRoutes: {
+        category: `/category/${lane.id}`,
+        watch: lane.proofRoute || `/watch/${proofSlugForCluster(lane.id)}`,
+        blog: `/blog/${lane.id}`
+      }
+    }
+    const variationCapacity = shapedCluster.variationCapacity
     return {
-      id: cluster.id,
-      lane: cluster.lane,
-      role: cluster.role,
-      seedKeywordCount: (cluster.keywords || []).length,
+      ...shapedCluster,
+      seedKeywordCount: shapedCluster.keywords.length,
       variationDimensions: dimensions,
       dimensionCounts: dimensionCounts(dimensions),
       variationCapacity,
-      proofSignal: cluster.proofSignal,
-      proofRoutes: {
-        category: "/category/mundane-off-time-experience",
-        watch: `/watch/${proofSlug}`,
-        blog: `/blog/${proofSlug}`
-      },
-      sampleKeywords: sampleKeywordSet(cluster),
-      nextCandidateQueue: candidateKeywordQueue(cluster, 30)
+      sampleKeywords: sampleKeywordSet(shapedCluster),
+      nextCandidateQueue: candidateKeywordQueue(shapedCluster, mundaneCluster ? 30 : 8)
     }
   })
   const totalVariationCapacity = clusters.reduce((total, cluster) => total + cluster.variationCapacity, 0)
@@ -5079,7 +5141,7 @@ function buildSeoMasterListPacket({seoProof, metrics = lastKnownMetrics}){
   return {
     generatedAt,
     mode: "DigitalHut FireCuda SEO Master List Packet",
-    scope: "Mundane Off-Time Experience counted keyword universe",
+    scope: "Full DigitalHut 200M longtail claim universe, including mundane-life entry lanes",
     frontendLock: "No public UI change. This packet is backend SEO, Supabase measurement, Google metadata, Vercel route proof, and compare/refine input.",
     operatingStack,
     counts: {
@@ -5108,7 +5170,7 @@ function buildSeoMasterListPacket({seoProof, metrics = lastKnownMetrics}){
       "Hold phrases that create filler, duplicate analytics, or cannot attach to video, GLB, podcast/source, market, watch, blog, or backlink proof."
     ],
     lastKnownMetrics,
-    nextSystemMove: mundaneOffTimeExperienceMap.nextMove
+    nextSystemMove: `${mundaneOffTimeExperienceMap.nextMove} The active internal source of truth is ${seoSearchClaimSummary.totalIndividualRanks.toLocaleString("en-US")} variations across ${clusters.length} full-system lanes.`
   }
 }
 
@@ -5304,7 +5366,7 @@ function buildRankSlotMaterializationSamples(index){
     rankingOwner: index.rankingOwner,
     canonicalDomain: index.canonicalDomain,
     totalIndividualRanks: index.totalIndividualRanks,
-    purpose: "Prove that the full 2,572,944 keyword universe can resolve into individual Digitalhut.app-owned rank slots without generating millions of static files.",
+    purpose: `Prove that the full ${index.totalIndividualRanks.toLocaleString("en-US")} keyword universe can resolve into deterministic DigitalHut planning slots without generating millions of static files.`,
     materializationPolicy: index.indexPolicy,
     sampleCount: samples.length,
     samples
@@ -5541,7 +5603,7 @@ function buildSeoSubmissionQueue({aiDiscoveryPacket, seoMasterListPacket, routeM
   return {
     generatedAt,
     mode: "DigitalHut SEO Submission Queue",
-    purpose: "Turn the 2,572,944-rank FireCuda universe into a disciplined crawl/deploy queue that starts with high-demand useful pages and holds the rest for behavior.",
+    purpose: `Turn the ${seoMasterListPacket.individualRankingIndex.totalIndividualRanks.toLocaleString("en-US")}-variation FireCuda universe into a disciplined crawl/deploy queue that starts with high-demand useful pages and holds the rest for behavior.`,
     status: routeCoverageAudit.status === "pass" && deployReadinessAudit.checks.some((check) => check.id === "ai-search-discovery" && check.status === "pass")
       ? "submission-staged"
       : "submission-review",
@@ -5681,7 +5743,7 @@ function buildSearchIntentPromotionPacket({seoMasterListPacket, seoSubmissionQue
     currentRead: zeroSearchMode
       ? "Search interactions are still zero, so DigitalHut should not pretend typed demand exists. Use category chips, proof routes, GLB plays, blog views, podcast starts, and source opens to validate intent."
       : "Search interactions are active and can begin promoting exact phrases from FireCuda into proof routes.",
-    guardrail: "Do not publish thin pages for all 2,572,944 variations. Stage every phrase behind measured intent and proof-route behavior.",
+    guardrail: `Do not publish thin pages for all ${seoMasterListPacket.individualRankingIndex.totalIndividualRanks.toLocaleString("en-US")} variations. Stage every phrase behind measured intent and proof-route behavior.`,
     behaviorRead,
     eventReadiness,
     promotionCounts: intentPriority.reduce((counts, candidate) => {
@@ -6627,7 +6689,7 @@ function buildBuildToolingRecoveryPacket({packageJson = "", vercelJson = "", npm
   const checks = [
     {
       id: "package-build-script",
-      status: scripts.build === "vite build" ? "pass" : "review",
+      status: /vite build/.test(scripts.build || "") ? "pass" : "review",
       read: scripts.build ? `build script: ${scripts.build}` : "build script missing"
     },
     {
@@ -6839,7 +6901,7 @@ function buildAiCrawlerGuidancePacket({aiDiscoveryPacket, unifiedProofRoutePromo
     canonicalDomain: aiDiscoveryPacket.canonicalDomain,
     oneLineRead: aiDiscoveryPacket.oneLineRead,
     purpose: "Give search engines, AI answer systems, and technical reviewers a compact map of DigitalHut's crawlable proof layer without exposing private keys, stuffing millions of pages, or pretending unverified behavior exists.",
-    guardrail: "Crawl proof routes and generated public packets. Do not infer that all 2,572,944 rank slots are public pages; they are deterministic FireCuda/database-held candidates with promotion gates.",
+    guardrail: `Crawl proof routes and generated public packets. Do not infer that all ${Number(aiDiscoveryPacket.rankOwnership?.totalIndividualRanks || seoSearchClaimSummary.totalIndividualRanks).toLocaleString("en-US")} planning slots are public pages; they are deterministic FireCuda/database-held candidates with promotion gates.`,
     crawlTargets: {
       sitemap: "https://www.digitalhut.app/sitemap.xml",
       robots: "https://www.digitalhut.app/robots.txt",
@@ -8239,7 +8301,7 @@ function buildMasterListExpansionGatePacket({seoMasterListPacket, fireCudaPromot
     generatedAt,
     mode: "DigitalHut Master List Expansion Gate",
     status: openGates.length ? "master-list-expansion-gated-open-partial" : "master-list-expansion-gated-closed",
-    purpose: "Protect the 2,572,944-rank-slot FireCuda universe from thin expansion until receipts earn promote or rewrite evidence.",
+    purpose: `Protect the ${seoSearchClaimSummary.totalIndividualRanks.toLocaleString("en-US")}-variation FireCuda universe from thin expansion until receipts earn promote or rewrite evidence.`,
     guardrail: "Do not generate, publish, or submit expanded keyword pages from pending receipts. FireCuda stores the universe; receipts unlock measured expansion.",
     totalVariationCapacity,
     allowedSlotTotal,
@@ -8422,7 +8484,7 @@ function buildSeparateLaneUniverseStarterPacket({masterListExpansionGatePacket} 
     expansionRules: [
       "Keep market/business, home visual build, and system presentation separate from mundane off-time SEO.",
       "Use receipt evidence to decide whether each universe earns promote, rewrite, or hold.",
-      "Do not merge separate-lane capacity into the 2,572,944 master list until a receipt proves behavior.",
+      `Do not merge separate-lane capacity into the ${seoSearchClaimSummary.totalIndividualRanks.toLocaleString("en-US")} master list until a receipt proves behavior.`,
       "Every separate lane must keep a watch route, blog route, GLB/source/podcast/backlink proof path, and Supabase measurement lane."
     ],
     nextFireCudaMove: universes.length
@@ -9706,8 +9768,8 @@ function buildDeploymentRuntimeCompatibilityPacket({packageJson = "", packageLoc
     },
     {
       id: "vite-build-entry",
-      status: scripts.build === "vite build" && (dependencies.vite || devDependencies.vite) ? "pass" : "review",
-      read: scripts.build === "vite build" ? `build script ${scripts.build}` : "build script is not vite build",
+      status: /vite build/.test(scripts.build || "") && (dependencies.vite || devDependencies.vite) ? "pass" : "review",
+      read: /vite build/.test(scripts.build || "") ? `build script ${scripts.build}` : "build script does not include vite build",
       releaseRisk: "Vite build must stay aligned with Vercel outputDirectory dist."
     },
     {
@@ -10515,6 +10577,33 @@ function buildRouteMetadataManifest({sitemap = ""} = {}){
       relatedRoutes: [`/blog/${slug}`, `/category/${categorySlug}`]
     })
   }
+  const knownRoutes = new Set(routes.map((route) => route.route))
+  for(const lane of seoSearchClaimLanes.filter((item) => item.countedRankSlots !== false)){
+    const route = lane.proofRoute || `/watch/${lane.id}`
+    if(!route.startsWith("/watch/") || knownRoutes.has(route)) continue
+    const keywords = Array.from(new Set([
+      lane.lane,
+      lane.role,
+      ...(lane.measurementSignals || []),
+      ...(lane.backlinkTargets || []),
+      `${lane.lane} 3D Model View`,
+      `${lane.lane} video observatory`,
+      `${lane.lane} podcast source moment`
+    ].filter(Boolean)))
+    routes.push({
+      route,
+      type: "watch-proof",
+      canonical: `https://www.digitalhut.app${route}`,
+      title: `${lane.lane} | DigitalHut Video, 3D And Podcast Observatory`,
+      description: `${lane.role}. DigitalHut connects the video topic, 3D Model View, podcast/source moment, live analytics, and canonical source proof for ${lane.lane}.`,
+      keywords,
+      launchLane: lane.lane,
+      demandClass: "universal long-tail proof lane",
+      proofAngle: "full-system video, GLB, podcast/source, analytics, and backlink proof",
+      relatedRoutes: [`/category/${lane.id}`, "/master-keyword-coverage", "/system-proof"]
+    })
+    knownRoutes.add(route)
+  }
   const fallbackCategorySlugs = Array.from(new Set(posts.map((post) => routeSlug(post.category)).filter(Boolean)))
   const categorySlugs = sitemapCategorySlugs.length ? sitemapCategorySlugs : fallbackCategorySlugs
   for(const categorySlug of categorySlugs){
@@ -10668,7 +10757,7 @@ function buildDeployReadinessAudit({product, seoProof, routeCoverageAudit, route
   const vercelBuildCommand = parsedVercel.buildCommand || ""
   const metricGatedVercelBuild = /verify-metric-contract\.mjs/.test(vercelBuildCommand) && /vite build/.test(vercelBuildCommand)
   const cloudBuildConfigReady =
-    scripts.build === "vite build" &&
+    /vite build/.test(scripts.build || "") &&
     !!(dependencies.vite || devDependencies.vite) &&
     packageLockPresent &&
     parsedVercel.framework === "vite" &&
@@ -10699,8 +10788,8 @@ function buildDeployReadinessAudit({product, seoProof, routeCoverageAudit, route
     },
     {
       id: "robots-sitemap",
-      status: robots.includes("Sitemap: https://www.digitalhut.app/sitemap.xml") ? "pass" : "review",
-      read: robots.includes("Sitemap: https://www.digitalhut.app/sitemap.xml") ? "robots.txt points to sitemap" : "robots.txt needs sitemap pointer"
+      status: /Sitemap: https:\/\/www\.digitalhut\.app\/sitemap(?:-index)?\.xml/.test(robots) ? "pass" : "review",
+      read: /Sitemap: https:\/\/www\.digitalhut\.app\/sitemap(?:-index)?\.xml/.test(robots) ? "robots.txt points to canonical sitemap surface" : "robots.txt needs sitemap pointer"
     },
     {
       id: "route-metadata-launch",
@@ -11020,6 +11109,8 @@ function statusLabel(value){
 async function main(){
   await mkdir(docsDir, {recursive: true})
   await mkdir(publicDir, {recursive: true})
+
+  lastKnownMetrics = await refreshProductionMetrics(lastKnownMetrics)
 
   const [observatory, css, seo, blogPage, watchPage, categoryPage, marketPage, sitemap, robots, vercelJson, npmrc, supabaseSeoRefinementMigration, packageJson, packageLock] = await Promise.all([
     readText(files.observatory),

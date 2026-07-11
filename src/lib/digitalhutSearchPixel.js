@@ -162,6 +162,17 @@ function routeSlugForPath(pathname){
   return match ? decodeURIComponent(match[1]) : ""
 }
 
+function routeLaneForPath(pathname, slug){
+  if(pathname.startsWith("/markets")) return "Market Observatory"
+  if(!slug) return ""
+  const acronyms = {ai: "AI", api: "API", dapp: "Dapp", glb: "GLB", seo: "SEO", "3d": "3D", vr: "VR"}
+  return slug
+    .split("-")
+    .filter(Boolean)
+    .map((word) => acronyms[word.toLowerCase()] || `${word.slice(0, 1).toUpperCase()}${word.slice(1)}`)
+    .join(" ")
+}
+
 function masterKeywordParams(){
   const params = new URLSearchParams(location.search || "")
   const lane = params.get("dh_lane") || ""
@@ -180,8 +191,10 @@ function masterKeywordParams(){
 function masterListTrailForPath(pathname, masterKeyword = {}){
   const slug = routeSlugForPath(pathname)
   const title = typeof document !== "undefined" ? document.title || "" : ""
+  const routeLane = routeLaneForPath(pathname, slug)
   return {
-    lane: masterKeyword.lane || digitalhutMasterListBridge.lane,
+    lane: masterKeyword.lane || routeLane || digitalhutMasterListBridge.lane,
+    routeLane,
     globalRank: masterKeyword.globalRank || "",
     rank: masterKeyword.rank || "",
     query: masterKeyword.query || inferKeywordHint(`${slug} ${title}`) || "DigitalHut full entertainment dapp observatory",

@@ -14,6 +14,11 @@ function requireText(name, text, needle){
 
 const pixel = read("src/lib/digitalhutSearchPixel.js")
 const insightMap = read("api/insight-map.js")
+const legacyAttributionMigration = read("supabase/migrations/202607110001_digitalhut_master_list_legacy_attribution.sql")
+const masterListEvidence = read("tools/rebuild-master-list-evidence.mjs")
+const sectorExpansion = read("src/lib/seoSectorExpansion.js")
+const sectorCycle = read("tools/write-sector-expansion-cycle.mjs")
+const firecudaRunner = read("tools/firecuda-seo-runner-cycle-002.mjs")
 const vercelConfig = JSON.parse(read("vercel.json"))
 const vercelIgnore = read(".vercelignore")
 const contract = JSON.parse(read("public/digitalhut-supabase-measurement-contract.json"))
@@ -32,6 +37,35 @@ for(const eventName of ["backlink_source_open", "glb_source_click", "podcast_sou
 
 for(const eventName of sourceNames){
   requireText("insight-map.js", insightMap, eventName)
+}
+
+for(const attributionContract of [
+  "masterListTrail",
+  "routeLaneForPath",
+  "digitalhut_search_pixel_master_list_legacy_read",
+  "raw-event-deterministic-attribution",
+  "legacyMasterListAttribution",
+  "legacyAttributionTopLanes"
+]){
+  const source = attributionContract === "masterListTrail" || attributionContract === "routeLaneForPath"
+    ? pixel
+    : attributionContract === "digitalhut_search_pixel_master_list_legacy_read"
+      ? `${insightMap}\n${legacyAttributionMigration}`
+      : attributionContract === "raw-event-deterministic-attribution"
+        ? legacyAttributionMigration
+        : attributionContract === "legacyMasterListAttribution"
+          ? insightMap
+          : masterListEvidence
+  requireText("master-list attribution contract", source, attributionContract)
+}
+
+for(const sectorGuard of ["seoSectorExpansionCandidates", "sourceReferences", "requiredSystemFit", "measuredBehavior", "promotionRule"]){
+  const source = ["measuredBehavior", "promotionRule"].includes(sectorGuard) ? sectorCycle : sectorExpansion
+  requireText("sector expansion contract", source, sectorGuard)
+}
+
+for(const runnerGuard of ["localQueueRoot", "resolveRunnerStorage", "system-drive-local-queue"]){
+  requireText("FireCuda runner fallback contract", firecudaRunner, runnerGuard)
 }
 
 for(const frontendGuard of ["function linkContext(href)", "const proofEvent = routeProofEventForPath(link.path)", "const sourceIntent =", "!proofEvent && !sourceIntent", "isPodcastControl"]){
@@ -70,5 +104,8 @@ console.log(JSON.stringify({
   vercelBuildGate: vercelConfig.buildCommand,
   proofRouteNames,
   sourceNames,
+  masterListAttributionGuards: ["client-masterListTrail", "route-lane-attribution", "supabase-read-only-attribution", "insight-map-exposure", "evidence-receipt"],
+  sectorExpansionGuards: ["source references", "query families", "system fit", "measured behavior", "promotion gate"],
+  fireCudaRunnerGuards: ["quarantined mirror", "system-drive local queue", "same cycle artifacts"],
   frontendPriorityGuards: ["linkContext", "proofEvent", "sourceIntent", "podcastControl", "genericPreviewGuard"]
 }, null, 2))
