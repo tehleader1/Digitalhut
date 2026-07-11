@@ -200,6 +200,7 @@ async function main(){
   }).sort((left, right) => right.evidenceScore - left.evidenceScore)
 
   const previousProduction = previousReceipt.production || {}
+  const legacyAttribution = livePayload.pixel?.legacyMasterListAttribution || {}
   const productionDelta = {
     pageViews: number(pixel.totalPageViews) - number(previousProduction.pageViews),
     uniqueVisitors: number(pixel.uniqueVisitors) - number(previousProduction.uniqueVisitors),
@@ -241,7 +242,10 @@ async function main(){
       sourceOpens: number(pixel.totalSourceOpens),
       masterKeywordDoorEvents: number(pixel.totalMasterKeywordDoorEvents),
       unassignedEvents: number(unassigned.events),
-      unassignedShare: totalEvents ? Number((number(unassigned.events) / totalEvents).toFixed(4)) : 0
+      unassignedShare: totalEvents ? Number((number(unassigned.events) / totalEvents).toFixed(4)) : 0,
+      legacyAttributionStatus: legacyAttribution.ready ? "deterministic-read-ready" : "unavailable",
+      legacyAttributionLaneCount: Array.isArray(legacyAttribution.lanes) ? legacyAttribution.lanes.length : 0,
+      legacyAttributionTopLanes: Array.isArray(legacyAttribution.lanes) ? legacyAttribution.lanes.slice(0, 8) : []
     },
     searchConsole,
     routeContract: {
