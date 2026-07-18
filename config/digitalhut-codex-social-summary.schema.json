@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DigitalHut Codex Session Social Summary",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "createdAt", "expiresAt", "repoHeadAtCapture", "source", "audience", "problem", "solution", "value", "proof", "destination", "tone"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "id": {"type": "string", "format": "uuid"},
+    "createdAt": {"type": "string", "format": "date-time"},
+    "expiresAt": {"type": "string", "format": "date-time"},
+    "repoHeadAtCapture": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+    "source": {"const": "active-codex-anthony-session"},
+    "audience": {"type": "string", "minLength": 8, "maxLength": 500},
+    "problem": {"type": "string", "minLength": 8, "maxLength": 500},
+    "solution": {"type": "string", "minLength": 8, "maxLength": 500},
+    "value": {"type": "string", "minLength": 8, "maxLength": 500},
+    "proof": {"type": "string", "minLength": 8, "maxLength": 500},
+    "destination": {"type": "string", "pattern": "^https://(www\\.)?digitalhut\\.app/"},
+    "tone": {"const": "Anthony-DigitalHut-welcoming-direct-honest-family-respect"}
+  }
+}

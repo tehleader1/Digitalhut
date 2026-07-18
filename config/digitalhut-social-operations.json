@@ -84,6 +84,14 @@
     "unprovenFinancialOutcomeMustNotBeClaimed": true,
     "honestFallback": "state-the-proven-operational-value-and-link-the-most-relevant-working-route"
   },
+  "codexSessionHandoff": {
+    "liveChatDetectionClaimed": false,
+    "mechanism": "short-lived-release-bound-codex-summary",
+    "summaryConsumedOnce": true,
+    "maximumTtlMinutes": 240,
+    "fallbackWhenAbsent": "deterministic-niche-problem-solution-rules",
+    "privateConversationTranscriptStored": false
+  },
   "communityFeatures": [
     "comment-and-mention-inbox-when-provider-supported",
     "reply-and-moderation-policy",
