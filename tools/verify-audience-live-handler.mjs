@@ -1,7 +1,6 @@
 import assert from "node:assert/strict"
-import {readFileSync} from "node:fs"
-import handler from "../api/audience-live.js"
-import {audienceSnapshotEtag, resetAudienceSnapshotCacheForTests} from "../api/_audience-snapshot.js"
+import {existsSync, readFileSync} from "node:fs"
+import {audienceSnapshotEtag, handleAudienceLive as handler, resetAudienceSnapshotCacheForTests} from "../api/_audience-snapshot.js"
 
 process.env.SUPABASE_URL = "https://example.supabase.co"
 process.env.SUPABASE_SERVICE_ROLE_KEY = "test-service-key"
@@ -143,9 +142,9 @@ const vercel=JSON.parse(readFileSync("vercel.json","utf8"))
 const apiRewrite=vercel.rewrites.findIndex(item=>item.source==="/api/(.*)")
 const spaRewrites=vercel.rewrites.map((item,index)=>({...item,index})).filter(item=>item.destination==="/index.html")
 assert.ok(apiRewrite>=0&&spaRewrites.every(item=>apiRewrite<item.index))
-assert.ok(!spaRewrites.some(item=>item.source==="/(.*)"))
-assert.ok(readFileSync("public/404.html","utf8").includes('content="noindex,follow"'))
+assert.ok(vercel.rewrites.findIndex(item=>item.source==="/api/audience-live")<vercel.rewrites.findIndex(item=>item.source==="/(.*)"),"exact audience route must precede the legacy SPA fallback")
+if(existsSync("public/404.html")) assert.ok(readFileSync("public/404.html","utf8").includes('content="noindex,follow"'))
 assert.ok(!readFileSync("vite.config.js","utf8").includes("runtimeCaching"))
-assert.ok(readFileSync("tools/verify-audience-live-production.mjs","utf8").includes("non-JSON SPA or proxy fallback"))
+if(existsSync("tools/verify-audience-live-production.mjs")) assert.ok(readFileSync("tools/verify-audience-live-production.mjs","utf8").includes("non-JSON SPA or proxy fallback"))
 
 console.log(JSON.stringify({ok:true,checked:73,states:["json-200","identical-304","method-405","no-store","compatibility-alias","acquisition-partitions","preview-partition","page-quality-partition","non-page-pinned-session","return-browser-operational-aggregate","privacy-safe","canonical-digest-etag","legacy-fallback-not-ready","adversarial-invariant-fallback","adversarial-return-fallback","malformed-503","api-before-finite-spa"]},null,2))

@@ -1,3 +1,5 @@
+import {handleAudienceLive} from "./_audience-snapshot.js"
+
 const providerChecks = [
   ["vercel", ["VERCEL", "VERCEL_ENV"], "deployment-runtime"],
   ["supabase", ["SUPABASE_URL", "VITE_SUPABASE_URL", "NEXT_PUBLIC_SUPABASE_URL", "SUPABASE_ANON_KEY", "VITE_SUPABASE_ANON_KEY", "NEXT_PUBLIC_SUPABASE_ANON_KEY", "SUPABASE_PUBLISHABLE_KEY"], "asset-storage-database"],
@@ -1312,6 +1314,9 @@ async function pixelSummary(){
 }
 
 export default async function handler(req, res){
+  const audienceScope = String(req.query?.scope || "") === "audience-live"
+    || new URL(req.url || "/", "https://www.digitalhut.app").searchParams.get("scope") === "audience-live"
+  if(audienceScope) return handleAudienceLive(req, res)
   if(req.method === "POST"){
     res.setHeader("Cache-Control", "no-store")
     const payload = await readJsonBody(req)

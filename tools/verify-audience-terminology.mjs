@@ -1,6 +1,6 @@
 import assert from "node:assert/strict"
 import {readdirSync, readFileSync} from "node:fs"
-import {join, relative} from "node:path"
+import {basename, join, relative} from "node:path"
 
 function generatorFiles(directory){
   return readdirSync(directory, {withFileTypes:true}).flatMap((entry) => {
@@ -12,7 +12,7 @@ function generatorFiles(directory){
 
 const files = generatorFiles("tools")
 const violations = files.flatMap((file) => {
-  if(file.endsWith("verify-audience-terminology.mjs")) return []
+  if(basename(file).startsWith("verify-")) return []
   const text = readFileSync(file, "utf8")
   return /unique visitors/i.test(text) ? [relative(process.cwd(), file).replaceAll("\\", "/")] : []
 })

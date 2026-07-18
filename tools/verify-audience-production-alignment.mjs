@@ -3,7 +3,6 @@ import {execFileSync} from "node:child_process"
 import {existsSync, readFileSync} from "node:fs"
 
 const requiredFiles = [
-  "api/audience-live.js",
   "api/_audience-snapshot.js",
   "api/insight-map.js",
   "supabase/migrations/20260714220000_digitalhut_pixel_event_idempotency.sql",
@@ -16,7 +15,7 @@ const requiredFiles = [
 
 for(const file of requiredFiles) assert.equal(existsSync(file), true, `missing audience alignment source: ${file}`)
 
-const audience = readFileSync("api/audience-live.js", "utf8")
+const audience = readFileSync("api/_audience-snapshot.js", "utf8")
 const insight = readFileSync("api/insight-map.js", "utf8")
 const vercel = JSON.parse(readFileSync("vercel.json", "utf8"))
 
@@ -24,15 +23,19 @@ assert.match(audience, /res\.setHeader\("Cache-Control", "private, no-store, max
 assert.match(audience, /res\.setHeader\("CDN-Cache-Control", "no-store"\)/)
 assert.match(audience, /res\.status\(200\)\.json\(\{ok: true/)
 assert.match(audience, /readAudienceSnapshot\(\)/)
-assert.match(insight, /digitalhut_search_pixel_acquisition_read/)
-assert.match(insight, /acquisitionLandingRollup:/)
-assert.match(insight, /res\.setHeader\("CDN-Cache-Control", "no-store"\)/)
+assert.match(audience, /digitalhut_search_pixel_acquisition_read/)
+assert.match(audience, /digitalhut_search_pixel_return_cohort_read/)
+assert.match(insight, /handleAudienceLive/)
 
 const rewrites = Array.isArray(vercel.rewrites) ? vercel.rewrites : []
 assert.equal(
   rewrites.some(rule => rule.source === "/api/audience-live" && rule.destination === "/index.html"),
   false,
   "audience-live must never rewrite to the SPA"
+)
+assert.ok(
+  rewrites.some(rule => rule.source === "/api/audience-live" && rule.destination === "/api/insight-map?scope=audience-live"),
+  "audience-live must route through the existing insight-map function"
 )
 assert.ok(
   rewrites.some(rule => rule.source === "/api/(.*)" && rule.destination === "/api/$1"),
@@ -58,7 +61,7 @@ if(deployedSha){
 
 console.log(JSON.stringify({
   ok:true,
-  checks:requiredFiles.length + 9,
+  checks:requiredFiles.length + 10,
   requiredFiles:requiredFiles.length,
   sourceReady:true,
   deployedSha:deployedSha || null,
