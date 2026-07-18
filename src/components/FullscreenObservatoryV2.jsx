@@ -9,6 +9,7 @@ import {originalLongTailKeywordsFor, seoBacklinkBrief, seoNarrationLine, seoReve
 import {digitalhutMasterListBridge, digitalhutSourceBridgePath, masterListBridgePixel} from "../lib/digitalhutMasterListBridge"
 import {applySystemPerformanceProfile, getSystemPerformanceProfile} from "../lib/systemPerformanceProfile"
 import PodcastMatchPanel from "./PodcastMatchPanel"
+import SocialPressureDrawer from "./SocialPressureDrawer"
 import "./FullscreenObservatory.css"
 import "./FullscreenObservatory.api.css"
 import "./FullscreenObservatory.sequence.css"
@@ -6731,6 +6732,7 @@ export default function FullscreenObservatoryV2(){
         </div>
       </section>}
       {modelOpen && !entryOpen && !analyticsStarted && <PodcastMatchPanel feed={sceneFeed} compact={mechanicMode} specialMoment={presentationChapter.id === "podcast"} />}
+      <SocialPressureDrawer />
 
       <div className="dh-top" style={{opacity: awake ? 1 : 0.08}}>
         <div className="dh-search">
