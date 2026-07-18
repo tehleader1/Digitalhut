@@ -61,7 +61,7 @@ export default function SocialPressureDrawer(){
       <section aria-label="Social command readiness">
         <article><span>Site layer</span><b>Ready</b><small>Canonical announcements and matched share receipts</small></article>
         <article><span>Mixpost server</span><b>Live</b><small>Private owner operations through social.digitalhut.app</small></article>
-        <article><span>Automatic publishing</span><b>Approved</b><small>Approved content only, with rate limits, duplicate prevention, receipts, and emergency pause</small></article>
+        <article><span>Automatic publishing</span><b>Bounded + active</b><small>Verified niche problem-and-solution releases only; owner pause, duplicate protection, speed limits, and receipts remain enforced</small></article>
       </section>
       <nav aria-label="Social command destinations">
         <a href="https://social.digitalhut.app/mixpost" className="dh-social-operations-link">Open Social Operations <span aria-hidden="true">→</span></a>
