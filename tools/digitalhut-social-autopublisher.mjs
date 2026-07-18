@@ -6,6 +6,7 @@ import process from "node:process"
 
 const root = path.resolve(new URL("..", import.meta.url).pathname.replace(/^\/(?:[A-Za-z]:)/, value => value.slice(1)))
 const statePath = path.join(root, ".cache", "digitalhut-social-autopublisher.json")
+const sessionSummaryPath = path.join(root, ".cache", "digitalhut-codex-session-summary.json")
 const git = process.env.DIGITALHUT_GIT || "git"
 const maxDaily = 6
 const maxHalfHour = 2
@@ -29,6 +30,20 @@ function readState(){
   try { return JSON.parse(fs.readFileSync(statePath, "utf8")) } catch { return {receipts:[], paused:false} }
 }
 
+function readSessionSummary(releaseSha, now){
+  try {
+    const summary = JSON.parse(fs.readFileSync(sessionSummaryPath, "utf8"))
+    const fields = ["id", "audience", "problem", "solution", "value", "proof", "destination", "repoHeadAtCapture"]
+    if(summary.schemaVersion !== 1 || fields.some(field => typeof summary[field] !== "string" || summary[field].length < 8)) return null
+    if(Date.parse(summary.expiresAt) <= now || state.consumedSummaryIds?.includes(summary.id)) return null
+    const destination = new URL(summary.destination)
+    if(!["digitalhut.app", "www.digitalhut.app"].includes(destination.hostname)) return null
+    run(git, ["merge-base", "--is-ancestor", summary.repoHeadAtCapture, releaseSha])
+    if(forbidden.test(fields.map(field => summary[field]).join(" "))) return null
+    return summary
+  } catch { return null }
+}
+
 function siteIsHealthy(){
   return new Promise(resolve => {
     const request = https.get("https://www.digitalhut.app/updates", {timeout:15000}, response => {
@@ -50,9 +65,10 @@ const sha = run(git, ["rev-parse", "origin/main"])
 const shortSha = sha.slice(0, 12)
 const subject = run(git, ["log", "-1", "--format=%s", sha]).replace(/\s+/g, " ").trim()
 const changedPaths = run(git, ["diff-tree", "--no-commit-id", "--name-only", "-r", sha])
-const niche = nicheRules.find(rule => rule.match.test(`${subject}\n${changedPaths}`))
 const authoredAt = Number(run(git, ["log", "-1", "--format=%ct", sha])) * 1000
 const now = Date.now()
+const sessionSummary = readSessionSummary(sha, now)
+const niche = sessionSummary || nicheRules.find(rule => rule.match.test(`${subject}\n${changedPaths}`))
 const today = new Date(now).toISOString().slice(0, 10)
 const todaysReceipts = state.receipts.filter(item => item.day === today)
 const recentReceipts = state.receipts.filter(item => now - item.queuedAt < 30 * 60 * 1000)
@@ -70,11 +86,13 @@ else if(!(await siteIsHealthy())) reason = "production-health-check-failed"
 
 if(reason){ console.log(JSON.stringify({ok:false,reason,sha:shortSha,subject})); process.exit(0) }
 
-const body = `For ${niche.audience}: ${niche.problem}. DigitalHut ${niche.solution}. ${niche.value || "Economic impact is not claimed until independent receipts prove it"}. Explore the most relevant working route at ${niche.destination || "https://www.digitalhut.app/updates"}\n\n#DigitalHut #BuildInPublic`
+const proofLine = sessionSummary ? ` Working proof: ${sessionSummary.proof}.` : ""
+const body = `Welcome to DigitalHut. For ${niche.audience}: ${niche.problem}. DigitalHut ${niche.solution}. ${niche.value || "Economic impact is not claimed until independent receipts prove it"}.${proofLine} Explore the most relevant working route at ${niche.destination || "https://www.digitalhut.app/updates"}\n\n#DigitalHut #BuildInPublic`
 const evidence = `git:${shortSha}`
 const output = run("docker", ["exec", "-e", `DIGITALHUT_POST_BODY=${body}`, "-e", `DIGITALHUT_EVIDENCE_ID=${evidence}`, "-e", "DIGITALHUT_SCHEDULE_DELAY_MINUTES=5", "digitalhut-social", "php", "/var/www/html/digitalhut-auto-enqueue.php"])
 const receipt = JSON.parse(output.split(/\r?\n/).at(-1))
 state.receipts.push({sha, day:today, subject, queuedAt:now, mixpost:receipt})
+if(sessionSummary) state.consumedSummaryIds = [...(state.consumedSummaryIds || []), sessionSummary.id].slice(-200)
 state.receipts = state.receipts.slice(-200)
 fs.mkdirSync(path.dirname(statePath), {recursive:true})
 fs.writeFileSync(statePath, JSON.stringify(state, null, 2)+"\n")
