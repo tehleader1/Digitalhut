@@ -263,7 +263,7 @@ Generated: ${generatedAt}
 
 Definition: ${packet.definition}
 
-Current read: ${metrics.pageViews} page views, ${metrics.uniqueVisitors} unique visitors, ${metrics.totalEvents} events.
+Current read: ${metrics.pageViews} page views, ${metrics.uniqueVisitors} participating browser IDs, ${metrics.totalEvents} events.
 
 Second actions: GLB ${metrics.glb}, podcast ${metrics.podcast}, autoplay ${metrics.autoplay}, search ${metrics.searches}, market ${metrics.market}.
 

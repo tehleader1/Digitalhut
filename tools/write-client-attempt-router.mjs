@@ -311,7 +311,7 @@ const md = `# DigitalHut Client Attempt Router
 
 Generated: ${report.generatedAt}
 
-Fresh delta: +${delta.pageViews} page views, +${delta.uniqueVisitors} unique visitors, +${delta.totalEvents} events.
+Fresh delta: +${delta.pageViews} page views, +${delta.uniqueVisitors} participating browser IDs, +${delta.totalEvents} events.
 
 Search Console: ${searchConsole.freshRows} fresh rows, ${searchConsole.freshImpressions} impressions, ${searchConsole.freshClicks} clicks.
 

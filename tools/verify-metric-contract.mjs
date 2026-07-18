@@ -1,4 +1,5 @@
 import fs from "node:fs"
+import "./verify-audience-terminology.mjs"
 
 const checks = []
 

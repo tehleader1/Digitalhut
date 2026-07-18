@@ -205,7 +205,7 @@ Generated: ${report.generatedAt}
 ## Current Pressure
 
 - Page views: ${report.currentPressureRead.pageViews}
-- Unique visitors: ${report.currentPressureRead.uniqueVisitors}
+- Participating browser IDs: ${report.currentPressureRead.uniqueVisitors}
 - GLB plays: ${report.currentPressureRead.glbPreviewPlays}
 - Podcast interrupts: ${report.currentPressureRead.podcastInterrupts}
 - Autoplay starts: ${report.currentPressureRead.autoplayStarts}

@@ -412,7 +412,7 @@ Reason: ${decision.reason}
 ## Current Read
 
 - Page views: ${traffic.pageViews}
-- Unique visitors: ${traffic.uniqueVisitors}
+- Participating browser IDs: ${traffic.uniqueVisitors}
 - Total events: ${traffic.totalEvents}
 - GLB: ${traffic.glb}
 - Podcast: ${traffic.podcast}

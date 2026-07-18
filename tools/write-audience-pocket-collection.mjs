@@ -166,11 +166,11 @@ const md = `# DigitalHut Audience Pocket Collection
 
 Generated: ${report.generatedAt}
 
-Side baseline: ${sideBaseline.pageViews} page views, ${sideBaseline.uniqueVisitors} unique visitors, ${sideBaseline.totalEvents} events.
+Side baseline: ${sideBaseline.pageViews} page views, ${sideBaseline.uniqueVisitors} participating browser IDs, ${sideBaseline.totalEvents} events.
 
-Current read: ${currentTotals.pageViews} page views, ${currentTotals.uniqueVisitors} unique visitors, ${currentTotals.totalEvents} events.
+Current read: ${currentTotals.pageViews} page views, ${currentTotals.uniqueVisitors} participating browser IDs, ${currentTotals.totalEvents} events.
 
-Delta: ${deltas.pageViews} page views, ${deltas.uniqueVisitors} unique visitors, ${deltas.totalEvents} events.
+Delta: ${deltas.pageViews} page views, ${deltas.uniqueVisitors} participating browser IDs, ${deltas.totalEvents} events.
 
 Decision: ${report.decision}
 

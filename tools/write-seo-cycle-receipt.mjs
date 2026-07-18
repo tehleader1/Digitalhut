@@ -168,7 +168,7 @@ async function main(){
     owner: "Digitalhut.app",
     runnerId: "digitalhut-seo-overseer",
     cycle: "seo-main-website-intertwine-and-database-write",
-    guardrail: "This receipt records SEO cycle reasoning and measured public signals. It is not counted as page views, unique visitors, searches, GLB plays, podcast interrupts, proof opens, or source opens.",
+    guardrail: "This receipt records SEO cycle reasoning and measured public signals. It is not counted as page views, participating browser IDs, searches, GLB plays, podcast interrupts, proof opens, or source opens.",
     traffic,
     searchConsole: {
       freshRows: Number(searchConsole?.searchAnalyticsFresh?.rowCount || 0),
@@ -209,7 +209,7 @@ async function main(){
     nextAction: "Watch for proof route opens and source/backlink opens; keep content pull decisions at the general audience-lane level instead of promoting individual GLB asset names."
   }
   receipt.score = readinessScore({traffic, searchConsole, competitionPackage})
-  receipt.summary = `SEO cycle receipt: ${traffic.pageViews} page views, ${traffic.uniqueVisitors} unique visitors, ${traffic.glbPreviewPlays} GLB plays, ${traffic.podcastInterrupts} podcast interrupts, Search Console fresh rows ${receipt.searchConsole.freshRows}, sitemap rows ${receipt.sitemap.totalRows || receipt.sitemap.masterKeywordRows}.`
+  receipt.summary = `SEO cycle receipt: ${traffic.pageViews} page views, ${traffic.uniqueVisitors} participating browser IDs, ${traffic.glbPreviewPlays} GLB plays, ${traffic.podcastInterrupts} podcast interrupts, Search Console fresh rows ${receipt.searchConsole.freshRows}, sitemap rows ${receipt.sitemap.totalRows || receipt.sitemap.masterKeywordRows}.`
 
   const supabase = await writeSupabaseReceipt(env, receipt)
   receipt.database = {

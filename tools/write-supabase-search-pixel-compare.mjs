@@ -222,7 +222,7 @@ Generated: ${report.generatedAt}
 - Total rows: ${report.exportRead.totalRows}
 - Organic rows used: ${report.exportRead.organicRows}
 - Synthetic/Codex test rows excluded: ${report.exportRead.syntheticRows}
-- Unique visitors: ${report.exportRead.uniqueVisitors}
+- Participating browser IDs: ${report.exportRead.uniqueVisitors}
 - Unique sessions: ${report.exportRead.uniqueSessions}
 - Window: ${report.exportRead.firstSeen} to ${report.exportRead.lastSeen}
 

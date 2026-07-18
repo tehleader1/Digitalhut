@@ -103,7 +103,7 @@ const zones = lanes.map((lane, index) => {
     featureStack: ["video watching", "Auto Play", "Next Episode", "3D Model View", "zoom/rotate model", "podcast/source moment", "live analytics", "search", "proof/source trail"],
     measuringSignals: lane.measurementSignals || [],
     backlinkAngles: lane.backlinkTargets || [],
-    promotionRule: "If page views, unique visitors, GLB plays, podcast interrupts, autoplay, search, proof opens, source opens, or Search Console rows move here, this zone earns more of the next 50,000 sitemap window."
+    promotionRule: "If page views, participating browser IDs, GLB plays, podcast interrupts, autoplay, search, proof opens, source opens, or Search Console rows move here, this zone earns more of the next 50,000 sitemap window."
   }
 })
 

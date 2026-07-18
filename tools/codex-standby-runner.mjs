@@ -2981,7 +2981,7 @@ function buildMovementProofAudienceOriginPacket({metrics = lastKnownMetrics, fun
     },
     {
       band: "traffic target",
-      target: "50,000+ unique visitors",
+      target: "50,000+ participating browser IDs",
       proofToLeave: "cluster repeatability across organic, referral, and social-video origins",
       action: "Scale only clusters that show audience pull, not keyword volume alone."
     }
@@ -3068,12 +3068,12 @@ First escape target: top ${packet.firstEscapeTarget.toLocaleString("en-US")}
 
 Visible proof target: top ${packet.visibleProofTarget.toLocaleString("en-US")}
 
-Next visitor target: ${packet.nextVisitorTarget.toLocaleString("en-US")}+ unique visitors
+Next visitor target: ${packet.nextVisitorTarget.toLocaleString("en-US")}+ participating browser IDs
 
 ## Last Known Audience Read
 
 - Page views: ${packet.lastKnownAudienceRead.pageViews}
-- Unique visitors: ${packet.lastKnownAudienceRead.uniqueVisitors}
+- Participating browser IDs: ${packet.lastKnownAudienceRead.uniqueVisitors}
 - Strongest lane: ${packet.lastKnownAudienceRead.strongestLane}
 - Weakest lanes: ${packet.lastKnownAudienceRead.weakestLanes.join(", ")}
 - Conclusion: ${packet.lastKnownAudienceRead.conclusion}
@@ -3640,7 +3640,7 @@ function buildFireCudaInnovationMappingLayerPacket({metrics = lastKnownMetrics, 
     {
       table: "experience_cycle_receipts",
       purpose: "Stores completed visitor stages: autoplay, GLB open, GLB rotate/zoom, podcast, search, category hop, proof route, backlink/source click.",
-      currentCardinality: `${metrics.pageViews} page views / ${metrics.uniqueVisitors} unique visitors last-known`,
+      currentCardinality: `${metrics.pageViews} page views / ${metrics.uniqueVisitors} participating browser IDs last-known`,
       enterpriseScaleRole: "Turns a few real full cycles into proof that DigitalHut outperforms static competitor frameworks."
     },
     {
@@ -4385,7 +4385,7 @@ Status: ${packet.refreshedPageViews.status}
 
 Page views: ${packet.refreshedPageViews.pageViews}
 
-Unique visitors: ${packet.refreshedPageViews.uniqueVisitors}
+Participating browser IDs: ${packet.refreshedPageViews.uniqueVisitors}
 
 Search interactions: ${packet.refreshedPageViews.searchInteractions}
 
@@ -5277,7 +5277,7 @@ ${packet.promotionRules.map((rule) => `- ${rule}`).join("\n")}
 ## Last Known Metrics
 
 - Page views: ${packet.lastKnownMetrics.pageViews}
-- Unique visitors: ${packet.lastKnownMetrics.uniqueVisitors}
+- Participating browser IDs: ${packet.lastKnownMetrics.uniqueVisitors}
 - Search interactions: ${packet.lastKnownMetrics.searchInteractions}
 - Autoplay starts: ${packet.lastKnownMetrics.autoplayStarts}
 - GLB preview plays: ${packet.lastKnownMetrics.glbPreviewPlays}
@@ -5507,7 +5507,7 @@ ${packet.launchRoutes.slice(0, 16).map((route) => `- **${route.route}** (${route
 ## Last Known Metrics
 
 - Page views: ${packet.lastKnownMetrics.pageViews}
-- Unique visitors: ${packet.lastKnownMetrics.uniqueVisitors}
+- Participating browser IDs: ${packet.lastKnownMetrics.uniqueVisitors}
 - Search interactions: ${packet.lastKnownMetrics.searchInteractions}
 - Autoplay starts: ${packet.lastKnownMetrics.autoplayStarts}
 - GLB preview plays: ${packet.lastKnownMetrics.glbPreviewPlays}
@@ -5650,7 +5650,7 @@ ${batch.routes.length ? batch.routes.map((route) => `- **${route.route}** (${rou
 ## Last Known Metrics
 
 - Page views: ${queue.lastKnownMetrics.pageViews}
-- Unique visitors: ${queue.lastKnownMetrics.uniqueVisitors}
+- Participating browser IDs: ${queue.lastKnownMetrics.uniqueVisitors}
 - Search interactions: ${queue.lastKnownMetrics.searchInteractions}
 - Autoplay starts: ${queue.lastKnownMetrics.autoplayStarts}
 - GLB preview plays: ${queue.lastKnownMetrics.glbPreviewPlays}
@@ -7001,7 +7001,7 @@ DigitalHut owns ${packet.rankOwnership.totalIndividualRanks.toLocaleString("en-U
 ## Measurement Read
 
 - Page views: ${packet.lastKnownMetrics.pageViews}
-- Unique visitors: ${packet.lastKnownMetrics.uniqueVisitors}
+- Participating browser IDs: ${packet.lastKnownMetrics.uniqueVisitors}
 - Search interactions: ${packet.lastKnownMetrics.searchInteractions}
 - Autoplay starts: ${packet.lastKnownMetrics.autoplayStarts}
 - GLB preview plays: ${packet.lastKnownMetrics.glbPreviewPlays}
@@ -7513,7 +7513,7 @@ ${packet.firstCompareQuestions.map((item) => `- ${item}`).join("\n")}
 ## Last Known Metrics
 
 Page views: ${packet.lastKnownMetrics.pageViews}
-Unique visitors: ${packet.lastKnownMetrics.uniqueVisitors}
+Participating browser IDs: ${packet.lastKnownMetrics.uniqueVisitors}
 Search interactions: ${packet.lastKnownMetrics.searchInteractions}
 Autoplay starts: ${packet.lastKnownMetrics.autoplayStarts}
 GLB preview plays: ${packet.lastKnownMetrics.glbPreviewPlays}
@@ -7633,7 +7633,7 @@ ${packet.activationRules.map((rule) => `- ${rule}`).join("\n")}
 ## Last Known Metrics
 
 Page views: ${packet.lastKnownMetrics.pageViews}
-Unique visitors: ${packet.lastKnownMetrics.uniqueVisitors}
+Participating browser IDs: ${packet.lastKnownMetrics.uniqueVisitors}
 Search interactions: ${packet.lastKnownMetrics.searchInteractions}
 Autoplay starts: ${packet.lastKnownMetrics.autoplayStarts}
 GLB preview plays: ${packet.lastKnownMetrics.glbPreviewPlays}
@@ -7786,7 +7786,7 @@ ${packet.compareRules.map((rule) => `- ${rule}`).join("\n")}
 ## Last Known Metrics
 
 Page views: ${packet.lastKnownMetrics.pageViews}
-Unique visitors: ${packet.lastKnownMetrics.uniqueVisitors}
+Participating browser IDs: ${packet.lastKnownMetrics.uniqueVisitors}
 Search interactions: ${packet.lastKnownMetrics.searchInteractions}
 Autoplay starts: ${packet.lastKnownMetrics.autoplayStarts}
 GLB preview plays: ${packet.lastKnownMetrics.glbPreviewPlays}
@@ -7938,7 +7938,7 @@ ${packet.compareInstructions.map((instruction) => `- ${instruction}`).join("\n")
 ## Last Known Metrics
 
 Page views: ${packet.lastKnownMetrics.pageViews}
-Unique visitors: ${packet.lastKnownMetrics.uniqueVisitors}
+Participating browser IDs: ${packet.lastKnownMetrics.uniqueVisitors}
 Search interactions: ${packet.lastKnownMetrics.searchInteractions}
 Autoplay starts: ${packet.lastKnownMetrics.autoplayStarts}
 GLB preview plays: ${packet.lastKnownMetrics.glbPreviewPlays}
@@ -8095,7 +8095,7 @@ ${packet.operatingRules.map((rule) => `- ${rule}`).join("\n")}
 ## Last Known Metrics
 
 Page views: ${packet.lastKnownMetrics.pageViews}
-Unique visitors: ${packet.lastKnownMetrics.uniqueVisitors}
+Participating browser IDs: ${packet.lastKnownMetrics.uniqueVisitors}
 Search interactions: ${packet.lastKnownMetrics.searchInteractions}
 Autoplay starts: ${packet.lastKnownMetrics.autoplayStarts}
 GLB preview plays: ${packet.lastKnownMetrics.glbPreviewPlays}
@@ -8237,7 +8237,7 @@ ${packet.receipts.slice(0, 6).map((receipt) => `- **${receipt.pairSlug}**: Searc
 ## Last Known Metrics
 
 Page views: ${packet.lastKnownMetrics.pageViews}
-Unique visitors: ${packet.lastKnownMetrics.uniqueVisitors}
+Participating browser IDs: ${packet.lastKnownMetrics.uniqueVisitors}
 Search interactions: ${packet.lastKnownMetrics.searchInteractions}
 Autoplay starts: ${packet.lastKnownMetrics.autoplayStarts}
 GLB preview plays: ${packet.lastKnownMetrics.glbPreviewPlays}
@@ -8361,7 +8361,7 @@ ${packet.expansionRules.map((rule) => `- ${rule}`).join("\n")}
 ## Last Known Metrics
 
 Page views: ${packet.lastKnownMetrics.pageViews}
-Unique visitors: ${packet.lastKnownMetrics.uniqueVisitors}
+Participating browser IDs: ${packet.lastKnownMetrics.uniqueVisitors}
 Search interactions: ${packet.lastKnownMetrics.searchInteractions}
 Autoplay starts: ${packet.lastKnownMetrics.autoplayStarts}
 GLB preview plays: ${packet.lastKnownMetrics.glbPreviewPlays}
@@ -8538,7 +8538,7 @@ ${packet.expansionRules.map((rule) => `- ${rule}`).join("\n")}
 ## Last Known Metrics
 
 Page views: ${packet.lastKnownMetrics.pageViews}
-Unique visitors: ${packet.lastKnownMetrics.uniqueVisitors}
+Participating browser IDs: ${packet.lastKnownMetrics.uniqueVisitors}
 Search interactions: ${packet.lastKnownMetrics.searchInteractions}
 Autoplay starts: ${packet.lastKnownMetrics.autoplayStarts}
 GLB preview plays: ${packet.lastKnownMetrics.glbPreviewPlays}
@@ -8652,7 +8652,7 @@ ${packet.bridgeRules.map((rule) => `- ${rule}`).join("\n")}
 ## Last Known Metrics
 
 Page views: ${packet.lastKnownMetrics.pageViews}
-Unique visitors: ${packet.lastKnownMetrics.uniqueVisitors}
+Participating browser IDs: ${packet.lastKnownMetrics.uniqueVisitors}
 Search interactions: ${packet.lastKnownMetrics.searchInteractions}
 Autoplay starts: ${packet.lastKnownMetrics.autoplayStarts}
 GLB preview plays: ${packet.lastKnownMetrics.glbPreviewPlays}
@@ -8815,7 +8815,7 @@ ${schema.decisionLogic.map((rule) => `- ${rule}`).join("\n")}`).join("\n\n")}
 ## Last Known Metrics
 
 Page views: ${packet.lastKnownMetrics.pageViews}
-Unique visitors: ${packet.lastKnownMetrics.uniqueVisitors}
+Participating browser IDs: ${packet.lastKnownMetrics.uniqueVisitors}
 Search interactions: ${packet.lastKnownMetrics.searchInteractions}
 Autoplay starts: ${packet.lastKnownMetrics.autoplayStarts}
 GLB preview plays: ${packet.lastKnownMetrics.glbPreviewPlays}
@@ -8947,7 +8947,7 @@ ${packet.compareRules.map((rule) => `- ${rule}`).join("\n")}
 ## Last Known Metrics
 
 Page views: ${packet.lastKnownMetrics.pageViews}
-Unique visitors: ${packet.lastKnownMetrics.uniqueVisitors}
+Participating browser IDs: ${packet.lastKnownMetrics.uniqueVisitors}
 Search interactions: ${packet.lastKnownMetrics.searchInteractions}
 Autoplay starts: ${packet.lastKnownMetrics.autoplayStarts}
 GLB preview plays: ${packet.lastKnownMetrics.glbPreviewPlays}
@@ -9062,7 +9062,7 @@ ${packet.catchupOrder.map((item) => `- ${item}`).join("\n")}
 ## Last Known Metrics
 
 Page views: ${packet.lastKnownMetrics.pageViews}
-Unique visitors: ${packet.lastKnownMetrics.uniqueVisitors}
+Participating browser IDs: ${packet.lastKnownMetrics.uniqueVisitors}
 Search interactions: ${packet.lastKnownMetrics.searchInteractions}
 Autoplay starts: ${packet.lastKnownMetrics.autoplayStarts}
 GLB preview plays: ${packet.lastKnownMetrics.glbPreviewPlays}
@@ -9189,7 +9189,7 @@ ${packet.globalCompareActions.map((action) => `- **${action.lane}** (${action.si
 ## Last Known Metrics
 
 Page views: ${packet.lastKnownMetrics.pageViews}
-Unique visitors: ${packet.lastKnownMetrics.uniqueVisitors}
+Participating browser IDs: ${packet.lastKnownMetrics.uniqueVisitors}
 Search interactions: ${packet.lastKnownMetrics.searchInteractions}
 Autoplay starts: ${packet.lastKnownMetrics.autoplayStarts}
 GLB preview plays: ${packet.lastKnownMetrics.glbPreviewPlays}
@@ -9389,7 +9389,7 @@ ${packet.decisionMatrix.map((item) => `- **${item.outcome}**: ${item.condition}.
 ## Last Known Metrics
 
 Page views: ${packet.lastKnownMetrics.pageViews}
-Unique visitors: ${packet.lastKnownMetrics.uniqueVisitors}
+Participating browser IDs: ${packet.lastKnownMetrics.uniqueVisitors}
 Search interactions: ${packet.lastKnownMetrics.searchInteractions}
 Autoplay starts: ${packet.lastKnownMetrics.autoplayStarts}
 GLB preview plays: ${packet.lastKnownMetrics.glbPreviewPlays}
@@ -9538,7 +9538,7 @@ ${packet.queueDecisionRules.map((rule) => `- ${rule}`).join("\n")}
 ## Last Known Metrics
 
 Page views: ${packet.lastKnownMetrics.pageViews}
-Unique visitors: ${packet.lastKnownMetrics.uniqueVisitors}
+Participating browser IDs: ${packet.lastKnownMetrics.uniqueVisitors}
 Search interactions: ${packet.lastKnownMetrics.searchInteractions}
 Autoplay starts: ${packet.lastKnownMetrics.autoplayStarts}
 GLB preview plays: ${packet.lastKnownMetrics.glbPreviewPlays}
@@ -9727,7 +9727,7 @@ ${packet.launchSequence.map((step) => `- ${step}`).join("\n")}
 ## Last Known Metrics
 
 Page views: ${packet.lastKnownMetrics.pageViews}
-Unique visitors: ${packet.lastKnownMetrics.uniqueVisitors}
+Participating browser IDs: ${packet.lastKnownMetrics.uniqueVisitors}
 Search interactions: ${packet.lastKnownMetrics.searchInteractions}
 Autoplay starts: ${packet.lastKnownMetrics.autoplayStarts}
 GLB preview plays: ${packet.lastKnownMetrics.glbPreviewPlays}
@@ -9864,7 +9864,7 @@ ${packet.checks.map((check) => `| ${check.id} | ${check.status} | ${check.read} 
 ## Last Known Metrics
 
 Page views: ${packet.lastKnownMetrics.pageViews}
-Unique visitors: ${packet.lastKnownMetrics.uniqueVisitors}
+Participating browser IDs: ${packet.lastKnownMetrics.uniqueVisitors}
 Search interactions: ${packet.lastKnownMetrics.searchInteractions}
 Autoplay starts: ${packet.lastKnownMetrics.autoplayStarts}
 GLB preview plays: ${packet.lastKnownMetrics.glbPreviewPlays}
@@ -9968,7 +9968,7 @@ ${packet.fallbackOrder.map((item) => `- **${item.order}.** ${item.action} Reason
 ## Last Known Metrics
 
 Page views: ${packet.lastKnownMetrics.pageViews}
-Unique visitors: ${packet.lastKnownMetrics.uniqueVisitors}
+Participating browser IDs: ${packet.lastKnownMetrics.uniqueVisitors}
 Search interactions: ${packet.lastKnownMetrics.searchInteractions}
 Autoplay starts: ${packet.lastKnownMetrics.autoplayStarts}
 GLB preview plays: ${packet.lastKnownMetrics.glbPreviewPlays}
@@ -10192,7 +10192,7 @@ ${packet.affectedPackets.map((item) => `- **${item.packet}** (${item.currentStat
 ## Last Known Metrics
 
 Page views: ${packet.lastKnownMetrics.pageViews}
-Unique visitors: ${packet.lastKnownMetrics.uniqueVisitors}
+Participating browser IDs: ${packet.lastKnownMetrics.uniqueVisitors}
 Search interactions: ${packet.lastKnownMetrics.searchInteractions}
 Autoplay starts: ${packet.lastKnownMetrics.autoplayStarts}
 GLB preview plays: ${packet.lastKnownMetrics.glbPreviewPlays}
@@ -10376,7 +10376,7 @@ ${packet.decisionOutputs.map((output) => `- **${output.output}** (${output.queue
 ## Last Known Metrics
 
 Page views: ${packet.lastKnownMetrics.pageViews}
-Unique visitors: ${packet.lastKnownMetrics.uniqueVisitors}
+Participating browser IDs: ${packet.lastKnownMetrics.uniqueVisitors}
 Search interactions: ${packet.lastKnownMetrics.searchInteractions}
 Autoplay starts: ${packet.lastKnownMetrics.autoplayStarts}
 GLB preview plays: ${packet.lastKnownMetrics.glbPreviewPlays}
@@ -10531,7 +10531,7 @@ ${contract.immediateGaps.length ? contract.immediateGaps.map((gap) => `- **${gap
 ## Last Known Metrics
 
 - Page views: ${contract.lastKnownMetrics.pageViews}
-- Unique visitors: ${contract.lastKnownMetrics.uniqueVisitors}
+- Participating browser IDs: ${contract.lastKnownMetrics.uniqueVisitors}
 - Search interactions: ${contract.lastKnownMetrics.searchInteractions}
 - Autoplay starts: ${contract.lastKnownMetrics.autoplayStarts}
 - GLB preview plays: ${contract.lastKnownMetrics.glbPreviewPlays}
@@ -11021,7 +11021,7 @@ ${capabilities.activeConditions.map((item) => `- **${item.lane}** (${item.severi
 ## Last Known Metrics
 
 - Page views: ${capabilities.lastKnownMetrics.pageViews}
-- Unique visitors: ${capabilities.lastKnownMetrics.uniqueVisitors}
+- Participating browser IDs: ${capabilities.lastKnownMetrics.uniqueVisitors}
 - Search interactions: ${capabilities.lastKnownMetrics.searchInteractions}
 - Autoplay starts: ${capabilities.lastKnownMetrics.autoplayStarts}
 - GLB preview plays: ${capabilities.lastKnownMetrics.glbPreviewPlays}
@@ -12603,7 +12603,7 @@ Rank ownership summary: ${status.rankOwnershipSummary.totalIndividualRanks.toLoc
 ## Last Known Metrics
 
 Page views: ${lastKnownMetrics.pageViews}
-Unique visitors: ${lastKnownMetrics.uniqueVisitors}
+Participating browser IDs: ${lastKnownMetrics.uniqueVisitors}
 Search interactions: ${lastKnownMetrics.searchInteractions}
 Autoplay starts: ${lastKnownMetrics.autoplayStarts}
 GLB preview plays: ${lastKnownMetrics.glbPreviewPlays}

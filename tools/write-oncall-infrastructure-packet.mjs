@@ -218,7 +218,7 @@ ${verifiedVideoContext.creatorDescriptionExamples.map((item) => `- ${item}`).joi
 ## Current Read
 
 - Page views: ${currentRead.pageViews}
-- Unique visitors: ${currentRead.uniqueVisitors}
+- Participating browser IDs: ${currentRead.uniqueVisitors}
 - Total events: ${currentRead.totalEvents}
 - GLB plays: ${currentRead.glbPreviewPlays}
 - Podcast interrupts: ${currentRead.podcastInterrupts}

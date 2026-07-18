@@ -256,7 +256,7 @@ Generated: ${generatedAt}
 
 Mode: ${packet.mode}
 
-Live read: ${packet.liveRead.pageViews} page views, ${packet.liveRead.uniqueVisitors} unique visitors, ${packet.liveRead.totalEvents} events.
+Live read: ${packet.liveRead.pageViews} page views, ${packet.liveRead.uniqueVisitors} participating browser IDs, ${packet.liveRead.totalEvents} events.
 
 ## Top Allocations
 

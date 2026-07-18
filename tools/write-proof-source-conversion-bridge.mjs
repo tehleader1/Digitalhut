@@ -160,7 +160,7 @@ const md = `# DigitalHut Proof Source Conversion Bridge
 
 Generated: ${report.generatedAt}
 
-Current read: ${report.currentRead.pageViews} page views, ${report.currentRead.uniqueVisitors} unique visitors, ${report.currentRead.totalEvents} events.
+Current read: ${report.currentRead.pageViews} page views, ${report.currentRead.uniqueVisitors} participating browser IDs, ${report.currentRead.totalEvents} events.
 
 Proof opens: ${report.currentRead.proofRouteOpens}
 Source opens: ${report.currentRead.sourceOpens}

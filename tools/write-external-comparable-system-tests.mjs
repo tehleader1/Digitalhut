@@ -515,7 +515,7 @@ Guardrail: ${packet.guardrail}
 
 DigitalHut position: ${packet.digitalhutPositioning}
 
-Current telemetry: ${metrics.pageViews} page views, ${metrics.uniqueVisitors} unique visitors, ${metrics.totalEvents} events, GLB ${metrics.glb}, podcast ${metrics.podcast}, autoplay ${metrics.autoplay}, searches ${metrics.searches}, proof/source ${metrics.proof}/${metrics.source}.
+Current telemetry: ${metrics.pageViews} page views, ${metrics.uniqueVisitors} participating browser IDs, ${metrics.totalEvents} events, GLB ${metrics.glb}, podcast ${metrics.podcast}, autoplay ${metrics.autoplay}, searches ${metrics.searches}, proof/source ${metrics.proof}/${metrics.source}.
 
 Search Console rows/impressions/clicks: ${packet.searchConsole.rows}/${packet.searchConsole.impressions}/${packet.searchConsole.clicks}
 

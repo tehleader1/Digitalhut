@@ -230,7 +230,7 @@ Mode: ${report.mode}
 
 Decision: ${report.decision}
 
-Fresh delta: +${freshDelta.pageViews} page views, +${freshDelta.uniqueVisitors} unique visitors, +${freshDelta.totalEvents} events.
+Fresh delta: +${freshDelta.pageViews} page views, +${freshDelta.uniqueVisitors} participating browser IDs, +${freshDelta.totalEvents} events.
 
 Second actions: GLB +${freshDelta.glb}, podcast +${freshDelta.podcast}, autoplay +${freshDelta.autoplay}, search +${freshDelta.searches}, market +${freshDelta.market}, proof +${freshDelta.proof}, source +${freshDelta.source}.
 

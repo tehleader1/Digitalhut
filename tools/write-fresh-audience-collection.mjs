@@ -125,7 +125,7 @@ async function main(){
     "## Fresh Delta",
     "",
     `- Page views: ${freshDelta.pageViews}`,
-    `- Unique visitors: ${freshDelta.uniqueVisitors}`,
+    `- Participating browser IDs: ${freshDelta.uniqueVisitors}`,
     `- Total events: ${freshDelta.totalEvents}`,
     `- GLB: ${freshDelta.glb}`,
     `- Podcast: ${freshDelta.podcast}`,

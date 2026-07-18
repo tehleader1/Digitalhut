@@ -62,7 +62,7 @@ const md = `# DigitalHut Client Question Queue
 
 Generated: ${report.generatedAt}
 
-Current read: ${report.currentRead.pageViews} page views, ${report.currentRead.uniqueVisitors} unique visitors, ${report.currentRead.searches} searches.
+Current read: ${report.currentRead.pageViews} page views, ${report.currentRead.uniqueVisitors} participating browser IDs, ${report.currentRead.searches} searches.
 
 Unanswered questions: ${report.unansweredCount}
 

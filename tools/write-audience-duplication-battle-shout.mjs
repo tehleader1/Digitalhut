@@ -92,14 +92,14 @@ const report = {
   sideBaseline,
   competitorBattleShout,
   duplicationTargets,
-  nextAction: "Keep the 117 unique visitors collected to the side. Treat broad homepage/direct movement as the 200M whole-system entry, then duplicate only pockets that create second actions or proof/source opens."
+  nextAction: "Keep the 117 participating browser IDs collected to the side. Treat broad homepage/direct movement as the 200M whole-system entry, then duplicate only pockets that create second actions or proof/source opens."
 }
 
 const md = `# DigitalHut Audience Duplication Battle Shout
 
 Generated: ${report.generatedAt}
 
-Side pocket: ${sideBaseline.uniqueVisitors} unique visitors, ${sideBaseline.pageViews} page views, ${sideBaseline.totalEvents} events.
+Side pocket: ${sideBaseline.uniqueVisitors} participating browser IDs, ${sideBaseline.pageViews} page views, ${sideBaseline.totalEvents} events.
 
 ## Battle Shout
 
