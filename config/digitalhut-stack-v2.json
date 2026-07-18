@@ -1,0 +1,85 @@
+{
+  "contractVersion": 2,
+  "stackId": "digitalhut-company-stack-v2",
+  "status": "local-candidate-not-deployed",
+  "predecessor": {
+    "contractVersion": 1,
+    "architecturePath": "config/digitalhut-system-architecture.json",
+    "architectureSha256": "2843d695b4b1522d55e0c82eadcdfbd85771a3f10d9707c5e7721edd63446f71",
+    "protectedRegistryPath": "config/protected-upgrades.json",
+    "protectedRegistrySha256": "5c54b807f3ec86fe3c51e17e3b9dbeae709b9a195614a2e8bc9707b1de625dde",
+    "productionDeploymentId": "dpl_C8P3hk1ixeNNCuPReoB7EmK5Gt9u",
+    "recoveryMeaning": "Version 1 remains the last deployed recovery baseline until a separately verified Version 2 production receipt exists."
+  },
+  "principles": [
+    "Advance the existing authoritative system instead of copying it into a competing implementation.",
+    "Every source change declares extend, replace, migrate, retire, or guard before editing begins.",
+    "A replacement must name its predecessor, preserve required behavior, and prove rollback before the old path can retire.",
+    "Source, build, deployment, provider observation, audience movement, and commercial outcome remain separate states.",
+    "No build, synthetic action, system worker, or deployment manufactures audience, ranking, revenue, review, rating, or backlink evidence.",
+    "A successful product can be serious without losing DigitalHut's human voice, free-first access, or observatory character."
+  ],
+  "changeProtocol": {
+    "requiredDeclaration": ["changeId", "ownerSystem", "operation", "touchedPaths", "predecessorPaths", "expectedBehaviorDelta", "preservedBehaviors", "verifiers", "rollback"],
+    "allowedOperations": ["extend", "replace", "migrate", "retire", "guard"],
+    "confusionCheckpointMinutes": 15,
+    "checkpointQuestions": [
+      "Which authoritative system owns this behavior?",
+      "Does a working implementation already exist?",
+      "Are we extending it or accidentally rebuilding it?",
+      "What exact user-visible or operational delta should appear?",
+      "Which focused verifier will fail if the delta is absent?",
+      "Can the prior behavior be restored without deleting evidence?"
+    ],
+    "stopConditions": [
+      "owner-system-unknown",
+      "existing-path-not-inspected",
+      "duplicate-authority-detected",
+      "expected-delta-unclear",
+      "rollback-unproven",
+      "unrelated-gate-regression",
+      "deployment-state-confused-with-outcome"
+    ],
+    "operatorChallenge": {
+      "required": true,
+      "rule": "Codex must plainly challenge Anthony when a requested connection, metric, provider capability, release state, or business claim conflicts with inspected system truth.",
+      "response": ["name-the-mismatch", "show-current-authority", "explain-the-risk", "offer-the-smallest-correct-path"],
+      "politeImplementationOfKnownConfusionAllowed": false
+    }
+  },
+  "releaseStates": ["source-proposed", "source-verified", "build-verified", "deployment-created", "alias-promoted", "postdeploy-verified", "outcome-observed"],
+  "releaseRule": "States advance in order and remain individually receipted; no later label is inferred from an earlier state.",
+  "authority": {
+    "systemCount": 15,
+    "source": "config/digitalhut-system-architecture.json",
+    "duplicateSystemOwnershipAllowed": false,
+    "sharedHandlerRule": "Shared files are capability-scoped by method or explicit scope; filename overlap never implies shared authority.",
+    "audienceWriter": "audience-ingestion-and-first-touch",
+    "releaseAuthority": "release-and-movement-control",
+    "databaseAuthority": "database-authority"
+  },
+  "recovery": {
+    "source": {"required": true, "mechanism": "version-control-plus-independent-remote-mirror", "currentProof": "not-asserted-by-this-contract"},
+    "database": {"required": true, "mechanism": "managed-backup-or-pitr-plus-migration-history", "currentProof": "not-asserted-by-this-contract"},
+    "objects": {"required": true, "mechanism": "versioned-object-inventory-plus-separate-backup", "currentProof": "not-asserted-by-this-contract"},
+    "secrets": {"required": true, "mechanism": "provider-secret-store-plus-rotation-record", "repositoryStorageAllowed": false},
+    "release": {"required": true, "mechanism": "immutable-deployment-id-plus-alias-and-postdeploy-receipt"},
+    "restoreDrillRequired": true,
+    "unverifiedBackupMayBeCalledProtected": false
+  },
+  "socialServerBoundary": {
+    "mixpost": "separate PHP Laravel application with its own database, Redis queue, scheduler, credentials, and server lifecycle",
+    "supabase": "may store reviewed DigitalHut social evidence only after an explicit adapter and schema are verified",
+    "googleCloudBuild": "may verify and release DigitalHut adapter source but does not operate Mixpost posting by implication",
+    "digitalhutFrontend": "owns the pressured drawer, announcement preview, canonical destination, and deliberate operator action",
+    "automaticCrossSystemSyncProven": false
+  },
+  "version2Milestones": [
+    {"id": "v2-foundation", "definition": "Version contract, authority map, confusion guard, and recovery truth are executable.", "status": "source-candidate"},
+    {"id": "v2-social-control", "definition": "Pressured social drawer and Social Observatory compile behind deliberate human posting.", "status": "source-verified"},
+    {"id": "v2-social-server", "definition": "Private Mixpost scheduler is connected through reviewed credentials and account-specific approvals.", "status": "blocked-docker-and-server-not-ready"},
+    {"id": "v2-analytics-hotpath", "definition": "Full insight map returns within a reviewed operational latency budget without removing durable truth.", "status": "pending"},
+    {"id": "v2-recovery-proof", "definition": "Source, database, object, and deployment restoration are independently rehearsed.", "status": "pending"},
+    {"id": "v2-production", "definition": "One cumulative build, deployment, alias, postdeploy, and rollback receipt proves Version 2 live.", "status": "not-deployed"}
+  ]
+}
