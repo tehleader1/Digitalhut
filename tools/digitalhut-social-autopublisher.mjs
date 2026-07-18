@@ -13,7 +13,7 @@ const expectedSha = process.argv.find(value => value.startsWith("--expected-sha=
 const eligible = /^(deploy|release|publish|launch|complete|promote|add|update|fix)\b/i
 const forbidden = /\b(password|secret|token|credential|private key|seed phrase|customer|email|phone|address|lawsuit|guarantee|million|revenue|hack|exploit)\b/i
 const nicheRules = [
-  {match:/social|mixpost|campaign|share/i,audience:"creators and small teams",problem:"publishing across disconnected tools makes it difficult to keep releases consistent and verifiable",solution:"connects approved production releases to a bounded social workflow with duplicate protection, speed limits, pause control, and delivery receipts"},
+  {match:/social|mixpost|campaign|share/i,audience:"creators and small teams",problem:"publishing across disconnected tools makes it difficult to keep releases consistent and verifiable",solution:"connects approved production releases to a bounded social workflow with duplicate protection, speed limits, pause control, and delivery receipts",value:"The proven value is fewer manual publishing handoffs; no money-saved or revenue claim is made without receipts",destination:"https://www.digitalhut.app/updates"},
   {match:/glb|3d|asset|renderer/i,audience:"3D creators and visual researchers",problem:"interactive models are often separated from the sources and explanations that make them useful",solution:"places interactive 3D models beside watch, podcast, source, and proof paths in one free-first observatory"},
   {match:/podcast|video|watch|media/i,audience:"viewers, researchers, and podcast teams",problem:"important media moments get scattered across tabs without a useful continuation path",solution:"connects video and podcast moments to related visuals, sources, and stable routes"},
   {match:/seo|search|sitemap|canonical|crawl/i,audience:"independent publishers and site owners",problem:"valuable work can remain invisible when search routes lack clear structure and source-backed answers",solution:"builds crawlable, canonical discovery routes around specific audience questions without inventing ranking claims"},
@@ -70,7 +70,7 @@ else if(!(await siteIsHealthy())) reason = "production-health-check-failed"
 
 if(reason){ console.log(JSON.stringify({ok:false,reason,sha:shortSha,subject})); process.exit(0) }
 
-const body = `For ${niche.audience}: ${niche.problem}. DigitalHut ${niche.solution}. Explore the verified working experience at https://www.digitalhut.app/updates\n\n#DigitalHut #BuildInPublic`
+const body = `For ${niche.audience}: ${niche.problem}. DigitalHut ${niche.solution}. ${niche.value || "Economic impact is not claimed until independent receipts prove it"}. Explore the most relevant working route at ${niche.destination || "https://www.digitalhut.app/updates"}\n\n#DigitalHut #BuildInPublic`
 const evidence = `git:${shortSha}`
 const output = run("docker", ["exec", "-e", `DIGITALHUT_POST_BODY=${body}`, "-e", `DIGITALHUT_EVIDENCE_ID=${evidence}`, "-e", "DIGITALHUT_SCHEDULE_DELAY_MINUTES=5", "digitalhut-social", "php", "/var/www/html/digitalhut-auto-enqueue.php"])
 const receipt = JSON.parse(output.split(/\r?\n/).at(-1))
