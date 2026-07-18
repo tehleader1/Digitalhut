@@ -78,6 +78,12 @@
     "unmappedReleaseAction": "quarantine-client-problem-not-proven",
     "principle": "a-confused-buyer-never-buys"
   },
+  "economicValueGate": {
+    "goldenRule": "does-it-save-money-or-make-money",
+    "financialOutcomeRequiresIndependentReceipt": true,
+    "unprovenFinancialOutcomeMustNotBeClaimed": true,
+    "honestFallback": "state-the-proven-operational-value-and-link-the-most-relevant-working-route"
+  },
   "communityFeatures": [
     "comment-and-mention-inbox-when-provider-supported",
     "reply-and-moderation-policy",

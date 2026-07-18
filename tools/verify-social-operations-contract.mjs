@@ -12,6 +12,8 @@ ok(contract.standingOwnerApproval.unfinishedWorkIsNotPublishable === true, "unfi
 ok(contract.audienceProblemGate.requiredForAutomaticPublishing === true, "automatic posts require an audience problem")
 ok(contract.audienceProblemGate["developer-centered-releaseNoteAloneIsPublishable"] === false, "developer-only updates are quarantined")
 ok(contract.audienceProblemGate.requiredFields.includes("concrete-digitalhut-solution"), "posts require a concrete solution")
+ok(contract.economicValueGate.financialOutcomeRequiresIndependentReceipt === true, "financial outcomes require receipts")
+ok(contract.economicValueGate.unprovenFinancialOutcomeMustNotBeClaimed === true, "unproven ROI is forbidden")
 ok(contract.publicDrawerRequiresLogin === false, "public drawer remains free")
 ok(contract.operatorConsoleRequiresServerSession === true, "operator console requires server session")
 ok(contract.googleProfileAloneAuthorizesPublishing === false, "Google profile is not publishing authority")
