@@ -1,0 +1,96 @@
+{
+  "contractVersion": "digitalhut-major-reaction-candidates-v1",
+  "generatedAt": "2026-07-16T00:00:00.000Z",
+  "scope": "major-company-systems-only",
+  "smallFeatureRankingForbidden": true,
+  "components": [
+    {
+      "componentId": "free-first-multimedia-observatory",
+      "label": "Free-First Multimedia Observatory",
+      "provisionalRank": 3,
+      "authoritativeSurfaces": ["src/main.jsx", "src/components/FullscreenObservatoryV2.jsx", "src/lib/digitalhutRenderableRoutes.js"],
+      "currentEvidence": ["renderable-route-contract", "free-first-access-contract", "production-shell-observed"],
+      "promotionMissing": ["complete-longtail-survival-ceremony", "multimedia-performance-reaction-series", "accessibility-reaction-series"]
+    },
+    {
+      "componentId": "audience-and-acquisition",
+      "label": "Audience and Acquisition System",
+      "provisionalRank": 4,
+      "authoritativeSurfaces": ["src/lib/digitalhutSearchPixel.js", "api/insight-map.js", "api/audience-live.js", "supabase/migrations/20260715022500_digitalhut_page_view_quality_rollup.sql"],
+      "currentEvidence": ["production-arrival-advanced-all-three-units", "duplicate-protection", "preview-test-partition", "source-attribution"],
+      "promotionMissing": ["five-complete-survival-reactions", "sanitized-permanent-rejection-observability", "independent-day-reaction-series"]
+    },
+    {
+      "componentId": "search-and-longtail-discovery",
+      "label": "Search and Long-Tail Discovery System",
+      "provisionalRank": 3,
+      "authoritativeSurfaces": ["config/digitalhut-search-pilot.json", "agents/google_seo_agent/tools.py", "agents/microsoft_bing_seo_agent/tools.py", "tools/write-discovery-feeds.mjs"],
+      "currentEvidence": ["signed-25-route-pilot", "google-provider-receipt-stale", "bing-provider-read-no-query-rows", "feed-and-sitemap-contracts"],
+      "promotionMissing": ["fresh-provider-reaction-series", "attributed-provider-to-landing-chain", "complete-longtail-survival-ceremony"]
+    },
+    {
+      "componentId": "multimedia-intelligence",
+      "label": "Multimedia Intelligence System",
+      "provisionalRank": 3,
+      "authoritativeSurfaces": ["api/sketchfab.js", "api/youtube-search.js", "api/podcast-search.js", "src/server/market-flow-handler.js"],
+      "currentEvidence": ["provider-contracts", "bounded-timeout-contracts", "rights-and-source-boundaries"],
+      "promotionMissing": ["completed-rights-safe-creation-reactions", "cross-provider-outage-series", "return-and-continuation-evidence"]
+    },
+    {
+      "componentId": "supabase-data-authority",
+      "label": "Supabase Data Authority",
+      "provisionalRank": 4,
+      "authoritativeSurfaces": ["supabase/migrations", "api/insight-map.js", "api/_audience-snapshot.js"],
+      "currentEvidence": ["durable-event-rollup-equality", "page-session-state", "service-only-boundaries", "idempotent-event-index"],
+      "promotionMissing": ["five-complete-survival-reactions", "restore-reaction-receipt", "concurrent-failure-recovery-series"]
+    },
+    {
+      "componentId": "vercel-api-control-plane",
+      "label": "Vercel API and Control Plane",
+      "provisionalRank": 4,
+      "authoritativeSurfaces": ["api", "vercel.json"],
+      "currentEvidence": ["production-api-200", "no-store-audience-reads", "bounded-provider-timeouts", "rate-and-origin-guards"],
+      "promotionMissing": ["five-complete-survival-reactions", "cross-instance-boundary-receipt", "rollback-reaction-series"]
+    },
+    {
+      "componentId": "release-and-verification",
+      "label": "Release and Verification System",
+      "provisionalRank": 3,
+      "authoritativeSurfaces": ["cloudbuild.yaml", "package.json", "config/protected-upgrades.json", "tools/verify-protected-upgrade-registry.mjs"],
+      "currentEvidence": ["protected-upgrade-registry", "source-gate-receipts", "production-deployment-history"],
+      "promotionMissing": ["complete-release-reaction-series", "tested-rollback-receipt", "source-to-deploy-hash-binding"]
+    },
+    {
+      "componentId": "security-privacy-trust",
+      "label": "Security, Privacy, and Trust System",
+      "provisionalRank": 3,
+      "authoritativeSurfaces": ["api/insight-map.js", "api/provider-status.js", "config/protected-upgrades.json"],
+      "currentEvidence": ["cross-site-rejection", "known-automation-exclusion", "credential-response-redaction", "privacy-unit-boundaries"],
+      "promotionMissing": ["named-threat-reaction-matrix", "supported-environment-security-tests", "incident-recovery-reaction"]
+    },
+    {
+      "componentId": "social-external-distribution",
+      "label": "Social and External Distribution System",
+      "provisionalRank": 4,
+      "authoritativeSurfaces": ["src/components/SocialPressureDrawer.jsx", "src/components/SocialPressureDrawer.css", "src/pages/UpdatesPage.jsx", "config/digitalhut-external-positioning.json"],
+      "currentEvidence": ["production-pressure-slide-deployment", "authenticated-cloudflare-tunnel", "mixpost-owner-login", "mastodon-oauth", "manual-provider-receipt-116937841979484875", "automatic-provider-receipt-116938228592904325", "application-restart-survival", "redis-restart-survival", "mysql-restart-survival", "tunnel-restart-survival", "duplicate-rejection", "emergency-pause-and-resume"],
+      "promotionMissing": ["cloudflare-access-enforcement", "source-rebuilt-container-reaction", "five-independent-automatic-release-receipts", "attributed-external-return-reactions"]
+    },
+    {
+      "componentId": "commerce-business-authority",
+      "label": "Commerce and Business Authority",
+      "provisionalRank": 2,
+      "authoritativeSurfaces": ["api/_google-pay-order.js", "src/lib/googlePayViaPaypal.js"],
+      "currentEvidence": ["checkout-contract", "server-verification-boundary"],
+      "promotionMissing": ["verified-live-commerce-receipt", "refund-dispute-recovery-reactions", "contract-authority-workflow"]
+    },
+    {
+      "componentId": "hybrid-compute-rack-operations",
+      "label": "Hybrid Compute and Rack Operations",
+      "provisionalRank": 1,
+      "authoritativeSurfaces": ["config/digitalhut-worker-capacity-contract.json", "tools/simulate-hybrid-worker-queue.mjs"],
+      "currentEvidence": ["local-stage-zero-simulation"],
+      "promotionMissing": ["real-worker-runtime", "lease-fencing-reaction-series", "energy-and-thermal-reaction-series"]
+    }
+  ]
+}

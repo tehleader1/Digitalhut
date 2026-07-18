@@ -1,0 +1,166 @@
+{
+  "contractVersion": "digitalhut-social-operations-v1",
+  "defaultMode": "bounded-automatic",
+  "standingOwnerApproval": {
+    "enabled": true,
+    "scope": "verified-production-evidence-only",
+    "manualIntervention": ["flag", "pause", "delete", "revoke"],
+    "privateBrowsingOrConversationSurveillanceForbidden": true,
+    "unfinishedWorkIsNotPublishable": true
+  },
+  "operatorAccountAuthority": "digitalhut-owner-connected-accounts-only",
+  "visitorAutonomyRequired": true,
+  "automaticControlOfVisitorsForbidden": true,
+  "publicDrawerRequiresLogin": false,
+  "operatorConsoleRequiresServerSession": true,
+  "googleProfileAloneAuthorizesPublishing": false,
+  "platformOAuthRequiredPerAccount": true,
+  "organization": {
+    "organizationId": "digitalhut-app",
+    "primaryOwnerEmail": "developer-anthony@digitalhut.app",
+    "ownerEmailIsPublishingAuthorityByItself": false,
+    "accountOwnershipModel": "organization-owned-integrations",
+    "collaboratorModel": "scoped-role-membership",
+    "sharedMasterCredentialAllowed": false
+  },
+  "integrationClasses": {
+    "social": {
+      "connectionMethod": "provider-oauth-or-provider-issued-token",
+      "examples": ["youtube", "facebook", "instagram", "linkedin", "tiktok", "pinterest", "bluesky", "mastodon"],
+      "authority": "organization-owner-approved",
+      "credentialStorage": "encrypted-server-side"
+    },
+    "database": {
+      "connectionMethod": "server-workload-identity-or-narrow-service-credential",
+      "examples": ["supabase"],
+      "authority": "managed-data-plane",
+      "credentialStorage": "server-secret-store-only"
+    },
+    "cloudAndRelease": {
+      "connectionMethod": "provider-oauth-or-workload-identity",
+      "examples": ["vercel", "google-cloud-build", "google-search-console", "bing-webmaster"],
+      "authority": "release-and-evidence-plane",
+      "credentialStorage": "server-secret-store-only"
+    }
+  },
+  "accessRoles": [
+    {"id": "visitor", "can": ["read-public-updates", "share-canonical-route", "view-participation-options"]},
+    {"id": "member", "can": ["save-preferences", "submit-explicit-feedback", "request-participation"]},
+    {"id": "creator", "can": ["create-draft", "upload-owned-media", "request-review"]},
+    {"id": "reviewer", "can": ["review-draft", "approve-schedule", "reject-draft"]},
+    {"id": "operator", "can": ["connect-account", "schedule-approved-post", "pause-automation", "read-provider-metrics"]},
+    {"id": "owner", "can": ["set-policy", "revoke-account", "authorize-automation-stage", "resolve-incident"]}
+  ],
+  "automationStages": ["off", "draft-only", "approval-required", "scheduled-approved", "bounded-automatic", "paused"],
+  "publishingFeatures": [
+    "connected-account-inventory",
+    "platform-specific-post-versions",
+    "drafts-and-templates",
+    "media-library",
+    "monthly-and-weekly-calendar",
+    "queue-and-schedule",
+    "timezone-and-daypart",
+    "hashtags-tags-and-campaigns",
+    "preview-before-publish",
+    "approval-workflow",
+    "duplicate-and-frequency-guard",
+    "failed-post-retry-and-quarantine",
+    "delete-restore-and-audit-receipt",
+    "canonical-destination-and-utm-policy",
+    "rights-provenance-and-expiry",
+    "alt-text-caption-and-accessibility",
+    "emergency-pause-and-account-revocation"
+  ],
+  "audienceProblemGate": {
+    "requiredForAutomaticPublishing": true,
+    "requiredFields": ["niche", "recognizable-problem", "concrete-digitalhut-solution", "verified-destination"],
+    "developer-centered-releaseNoteAloneIsPublishable": false,
+    "unmappedReleaseAction": "quarantine-client-problem-not-proven",
+    "principle": "a-confused-buyer-never-buys"
+  },
+  "communityFeatures": [
+    "comment-and-mention-inbox-when-provider-supported",
+    "reply-and-moderation-policy",
+    "response-status-and-owner-assignment",
+    "constructive-feedback-capture",
+    "community-question-and-participation-path",
+    "giveaway-rules-and-expiration",
+    "abuse-spam-and-impersonation-reporting",
+    "escalation-without-private-emotion-inference"
+  ],
+  "metricFamilies": {
+    "account": ["authorization-status", "follower-count", "follower-change", "account-health", "provider-rate-limit"],
+    "distribution": ["posts-published", "posts-failed", "impressions", "reach", "video-views"],
+    "engagement": ["reactions", "comments", "shares", "reposts", "saves", "mentions"],
+    "traffic": ["outbound-link-clicks", "attributed-digitalhut-landings", "recorded-page-views", "participating-browser-ids", "page-sessions"],
+    "continuation": ["deliberate-next-action", "source-open", "media-control", "completed-rights-safe-creation"],
+    "commercial": ["verified-lead", "approved-contract", "server-verified-purchase", "cost", "revenue"],
+    "operations": ["queue-depth", "publish-latency", "webhook-latency", "error-rate", "retry-count", "token-expiry"]
+  },
+  "balanceInputs": [
+    "platform-format-and-policy",
+    "authorized-audience-context",
+    "content-family-mix",
+    "posting-frequency-and-fatigue",
+    "timezone-and-calendar",
+    "provider-rate-limit",
+    "media-rights-and-accessibility",
+    "verified-performance-history",
+    "comment-response-capacity",
+    "incident-and-reputation-risk",
+    "cost-and-resource-ceiling"
+  ],
+  "contributionAccounting": {
+    "allowedContributorEvents": [
+      "draft-created",
+      "draft-submitted-for-review",
+      "review-completed",
+      "approved-post-scheduled",
+      "approved-post-published",
+      "comment-response-completed",
+      "community-feedback-submitted",
+      "rights-proof-attached",
+      "attributed-landing-recorded",
+      "deliberate-continuation-recorded"
+    ],
+    "actorReference": "pseudonymous-membership-id",
+    "rawEmailInMetricRows": false,
+    "contributionIsNotAudienceIdentity": true,
+    "contributionIsNotFollower": true,
+    "contributionIsNotPageView": true,
+    "contributionIsNotPurchase": true,
+    "contributionIsNotProviderRankingSignal": true,
+    "externalOutcomeRequiresIndependentProviderOrAudienceReceipt": true
+  },
+  "security": {
+    "tokensStoredInBrowser": false,
+    "tokensReturnedToDigitalhutFrontend": false,
+    "tokensEncryptedServerSide": true,
+    "exactOAuthCallbackAllowlist": true,
+    "webhookSignatureVerification": true,
+    "leastPrivilegeScopes": true,
+    "reauthForSensitiveActions": true,
+    "immutableActionReceipts": true,
+    "accountRevocationSupported": true,
+    "automaticPublishingDefault": true,
+    "automaticPublishingRequiresVerifiedReleaseEvidence": true,
+    "automaticPublishingDailyCap": 6,
+    "automaticPublishingAdaptiveSpeedLimit": "maximum-two-release-posts-per-rolling-thirty-minutes",
+    "automaticPublishingTrigger": "verified-main-branch-release-event-not-fixed-clock",
+    "automaticPublishingEmergencyPause": true
+  },
+  "truthBoundaries": [
+    "server-request-is-normal-traffic-not-human-identity",
+    "connected-owner-account-does-not-authorize-actions-on-visitors",
+    "impression-is-not-click",
+    "click-is-not-attributed-landing",
+    "landing-is-not-page-view-until-recorded",
+    "browser-id-is-not-verified-person",
+    "page-session-is-not-provider-click",
+    "follower-is-not-active-community-member",
+    "reaction-is-not-purchase",
+    "checkout-intent-is-not-revenue",
+    "dwell-is-not-emotion",
+    "missing-provider-metric-is-unknown-not-zero"
+  ]
+}
