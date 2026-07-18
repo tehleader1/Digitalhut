@@ -21,12 +21,14 @@ const forbidden = /\b(password|secret|token|credential|private key|seed phrase|g
 if(forbidden.test(Object.values(args).join(" "))) throw new Error("summary-contains-forbidden-content")
 const now = Date.now()
 const ttl = Math.max(15, Math.min(240, Number(args["ttl-minutes"] || 120)))
+const targetRef = args["release-ref"] || "HEAD"
+const repoHeadAtCapture = execFileSync(git, ["rev-parse", targetRef], {cwd:root, encoding:"utf8", windowsHide:true}).trim()
 const summary = {
   schemaVersion:1,
   id:randomUUID(),
   createdAt:new Date(now).toISOString(),
   expiresAt:new Date(now + ttl * 60 * 1000).toISOString(),
-  repoHeadAtCapture:execFileSync(git, ["rev-parse", "HEAD"], {cwd:root, encoding:"utf8", windowsHide:true}).trim(),
+  repoHeadAtCapture,
   source:"active-codex-anthony-session",
   audience:args.audience,
   problem:args.problem,

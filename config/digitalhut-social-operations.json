@@ -85,6 +85,7 @@
     "honestFallback": "state-the-proven-operational-value-and-link-the-most-relevant-working-route"
   },
   "codexSessionHandoff": {
+    "status": "active",
     "liveChatDetectionClaimed": false,
     "mechanism": "short-lived-release-bound-codex-summary",
     "summaryConsumedOnce": true,
