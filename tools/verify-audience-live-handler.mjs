@@ -12,12 +12,14 @@ function responseHarness(){
 const summary = {global:{page_views:2202,total_events:3813,latest_event_at:"2026-07-17T22:12:46.114101Z"},uniqueVisitors:253}
 const acquisition = {ready:true,sourceUnit:"first-recorded-page-source-evidence",sourceAttributionVerified:false,coverage:{recordedBrowserIds:253,pageBearingBrowserIds:252,pinnedSessions:439,pageSessions:430,firstLandingViews:430,laterNavigationViews:30,repeatedSameRouteViews:1742,previewOrTestPageViews:442,nonPreviewRecordedPageViews:1760},rows:[{source:"direct-or-private-referrer",landingPath:"/",events:3000,pageViews:1650,uniqueVisitors:189,pinnedSessions:317,pageSessions:317,viewsPerPinnedSession:5.21,viewsPerPageSession:5.21,firstLandingViews:317,laterNavigationViews:20,repeatedSameRouteViews:1313,secondActions:12,proofOpens:3,checkoutIntents:0,verifiedConversions:0,firstSeenAt:"2026-06-29T19:54:32Z",latest:"2026-07-17T22:12:46Z",visitor_id:"must-not-leak",sessionHash:"must-not-leak",secretUnexpected:"must-not-leak",nested:{identifier:"must-not-leak"}}]}
 const returns = {ready:true,observedVisitors:253,repeatSessionVisitors:22,multiDayVisitors:12,repeatSessionRatePercent:8.7,multiDayRatePercent:4.7,observedEvents:3808,firstSeen:"2026-06-29T19:54:32Z",latestSeen:"2026-07-17T22:12:46Z",truthBoundary:"Aggregate browser return evidence; not people or accounts."}
+const pageReceipts = {ready:true,classificationVersion:"page-receipt-v1",unit:"accepted-page-receipts",countsPeople:false,grossRecordedPageViews:2202,qualifiedPageViews:1720,qualifiedDefinition:"gross-minus-preview-test-and-known-automatic; exact duplicates are suppressed before insertion; unknown remains included",classes:{firstRecordedArrival:211,sameSessionRefreshRemount:900,sameSessionDeliberateReturn:15,newSessionReturn:22,newDayReturn:12,previewTest:442,knownAutomaticActivity:40,unknownClassification:560},duplicates:{suppressedByClientEventIdUniqueIndex:true,durableDuplicateGroups:0},deliberateContinuations:{contractReady:true,count:28,sameSessionDeliberatePageReturns:15,identityCreated:false},interruptionRecovery:{contractReady:true,observed:false,count:0,missingReason:"no-recovery-receipt-observed"},unknown:{count:560,includedInQualified:true,historicalMissingReason:"historical-navigation-evidence-unavailable"}}
 
-function rpcFetch({summaryValue=summary,acquisitionValue=acquisition,returnValue=returns}={}){
+function rpcFetch({summaryValue=summary,acquisitionValue=acquisition,returnValue=returns,pageReceiptValue=pageReceipts}={}){
   return async (url) => {
     if(String(url).includes("summary_read")) return new Response(JSON.stringify(summaryValue),{status:200,headers:{"content-type":"application/json"}})
     if(String(url).includes("acquisition_read")) return new Response(JSON.stringify(acquisitionValue),{status:200,headers:{"content-type":"application/json"}})
     if(String(url).includes("return_cohort_read")) return new Response(JSON.stringify(returnValue),{status:200,headers:{"content-type":"application/json"}})
+    if(String(url).includes("page_receipt_read")) return new Response(JSON.stringify(pageReceiptValue),{status:200,headers:{"content-type":"application/json"}})
     throw new Error("unexpected-rpc")
   }
 }
@@ -33,13 +35,21 @@ assert.equal(live.body.audience.pageBearingBrowserIds,252)
 assert.equal(live.body.audience.pinnedSessions,439)
 assert.equal(live.body.audience.pageSessions,430)
 assert.equal(live.body.audience.nonPageOnlyPinnedSessions,9)
+assert.equal(live.body.audience.grossRecordedPageViews,2202)
+assert.equal(live.body.audience.qualifiedPageViews,1720)
+assert.equal(Object.values(live.body.audience.acquisitionPartitions.pageReceiptClassification.classes).reduce((sum,value)=>sum+value,0),2202)
+assert.equal(live.body.audience.acquisitionPartitions.pageReceiptClassification.partitionExact,true)
+assert.equal(live.body.audience.acquisitionPartitions.pageReceiptClassification.duplicatesSuppressed,true)
 assert.equal(live.body.audience.acquisitionPartitions.previewOrTestPageViews+live.body.audience.acquisitionPartitions.nonPreviewRecordedPageViews,2202)
 assert.equal(live.body.audience.acquisitionPartitions.firstLandingViews+live.body.audience.acquisitionPartitions.laterNavigationViews+live.body.audience.acquisitionPartitions.repeatedSameRouteViews,2202)
 assert.equal(live.body.audience.pinnedSessions-live.body.audience.pageSessions,live.body.audience.nonPageOnlyPinnedSessions)
 assert.ok(live.body.audience.pageBearingBrowserIds<=live.body.audience.pageSessions)
-assert.equal(live.body.audience.acquisitionPartitions.unknownOrUnclassified.ready,false)
-assert.equal(live.body.audience.acquisitionPartitions.deliberateContinuations.ready,false)
+assert.equal(live.body.audience.acquisitionPartitions.unknownOrUnclassified.ready,true)
+assert.equal(live.body.audience.acquisitionPartitions.unknownOrUnclassified.value,560)
+assert.equal(live.body.audience.acquisitionPartitions.deliberateContinuations.ready,true)
+assert.equal(live.body.audience.acquisitionPartitions.deliberateContinuations.value,28)
 assert.equal(live.body.audience.acquisitionPartitions.interruptionRecovery.ready,false)
+assert.equal(live.body.audience.acquisitionPartitions.interruptionRecovery.contractReady,true)
 assert.equal(live.body.audience.returnBehavior.repeatSessionBrowserIds,22)
 assert.equal(live.body.audience.returnBehavior.window,"all-recorded-history")
 assert.equal(live.body.audience.returnBehavior.previewTestExcluded,false)
@@ -49,7 +59,7 @@ assert.equal(live.body.audience.uniqueVisitorUnit,"pseudonymous-browser-ids")
 assert.equal(live.body.audience.humanCountVerified,false)
 assert.equal(live.headers["Cache-Control"],"private, no-store, max-age=0")
 assert.equal(live.headers["CDN-Cache-Control"],"no-store")
-assert.equal(fetchCount,3)
+assert.equal(fetchCount,4)
 assert.doesNotMatch(JSON.stringify(live.body),/(visitor_id|session_id|visitorHash|sessionHash)/i)
 assert.equal(live.body.audience.acquisitionPartitions.rows[0].secretUnexpected,undefined)
 assert.equal(live.body.audience.acquisitionPartitions.rows[0].nested,undefined)
@@ -60,7 +70,7 @@ const unchanged=responseHarness()
 await handler({method:"GET",headers:{"if-none-match":live.headers.ETag}},unchanged)
 assert.equal(unchanged.statusCode,304)
 assert.equal(unchanged.ended,true)
-assert.equal(fetchCount,3)
+assert.equal(fetchCount,4)
 
 const stableAudience=live.body.audience
 assert.equal(audienceSnapshotEtag(structuredClone(stableAudience)),live.headers.ETag,"identical deep clones must preserve the ETag")
@@ -72,8 +82,12 @@ const etagMutations=[
   ["source row events",value=>{value.acquisitionPartitions.rows[0].events+=1}],
   ["source row secondActions",value=>{value.acquisitionPartitions.rows[0].secondActions=1}],
   ["acquisition readiness",value=>{value.acquisitionPartitions.ready=false}],
-  ["unknown readiness",value=>{value.acquisitionPartitions.unknownOrUnclassified.ready=true}],
+  ["unknown readiness",value=>{value.acquisitionPartitions.unknownOrUnclassified.ready=false}],
   ["unknown reason",value=>{value.acquisitionPartitions.unknownOrUnclassified.missingReason="changed"}],
+  ["qualified page views",value=>{value.qualifiedPageViews-=1}],
+  ["receipt class",value=>{value.acquisitionPartitions.pageReceiptClassification.classes.unknownClassification-=1}],
+  ["deliberate continuation",value=>{value.acquisitionPartitions.deliberateContinuations.value+=1}],
+  ["recovery readiness",value=>{value.acquisitionPartitions.interruptionRecovery.ready=true}],
   ["return observed IDs",value=>{value.returnBehavior.observedBrowserIds+=1}],
   ["return repeat rate",value=>{value.returnBehavior.repeatSessionRatePercent=9}],
   ["return multi-day rate",value=>{value.returnBehavior.multiDayRatePercent=5}],
@@ -111,6 +125,20 @@ await invalidAcquisitionFallback(value=>{value.pageBearingBrowserIds=value.pageS
 await invalidAcquisitionFallback(value=>{value.pageBearingBrowserIds=value.recordedBrowserIds+1})
 await invalidAcquisitionFallback(value=>{value.firstLandingViews=value.pageSessions-1;value.laterNavigationViews+=1})
 await invalidAcquisitionFallback(value=>{value.previewOrTestPageViews+=1})
+
+async function invalidPageReceiptFallback(change){
+  resetAudienceSnapshotCacheForTests()
+  const invalid=structuredClone(pageReceipts)
+  change(invalid)
+  globalThis.fetch=rpcFetch({pageReceiptValue:invalid})
+  const response=responseHarness()
+  await handler({method:"GET",headers:{}},response)
+  assert.equal(response.body.audience.qualifiedPageViews,null)
+  assert.equal(response.body.audience.acquisitionPartitions.pageReceiptClassification.ready,false)
+}
+await invalidPageReceiptFallback(value=>{value.classes.unknownClassification+=1})
+await invalidPageReceiptFallback(value=>{value.qualifiedPageViews+=1})
+await invalidPageReceiptFallback(value=>{value.duplicates.durableDuplicateGroups=1})
 resetAudienceSnapshotCacheForTests()
 const invalidRowAcquisition=structuredClone(acquisition)
 invalidRowAcquisition.rows.push({...invalidRowAcquisition.rows[0],source:"external-referrer",events:1.5})

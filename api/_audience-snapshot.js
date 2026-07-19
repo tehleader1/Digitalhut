@@ -102,10 +102,11 @@ async function readAudienceSnapshotUncached(){
   const key = serviceKey()
   if(!url || !key) return {ready: false, reason: "missing-supabase-service-config"}
 
-  const [summaryResult, acquisitionResult, returnResult] = await Promise.all([
+  const [summaryResult, acquisitionResult, returnResult, pageReceiptResult] = await Promise.all([
     readRpc(url, key, "digitalhut_search_pixel_summary_read", {p_location_limit: 1}),
     readRpc(url, key, "digitalhut_search_pixel_acquisition_read", {p_limit: 24}),
-    readRpc(url, key, "digitalhut_search_pixel_return_cohort_read", {})
+    readRpc(url, key, "digitalhut_search_pixel_return_cohort_read", {}),
+    readRpc(url, key, "digitalhut_search_pixel_page_receipt_read", {})
   ])
   if(!summaryResult.ok) return {ready: false, reason: summaryResult.reason.replace("digitalhut_search_pixel_summary_read", "audience-read")}
   const summary = summaryResult.value
@@ -172,9 +173,38 @@ async function readAudienceSnapshotUncached(){
     && repeatSessionRatePercent === expectedRepeatRate
     && multiDayRatePercent === expectedMultiDayRate
     && (observedReturnBrowserIds === 0 || (returnFirstSeenAt !== "" && returnLatestSeenAt !== ""))
+  const pageReceipt = pageReceiptResult.ok && pageReceiptResult.value?.ready === true ? pageReceiptResult.value : null
+  const grossRecordedPageViews = countValue(pageReceipt?.grossRecordedPageViews)
+  const qualifiedPageViews = countValue(pageReceipt?.qualifiedPageViews)
+  const receiptClasses = {
+    firstRecordedArrival: countValue(pageReceipt?.classes?.firstRecordedArrival),
+    sameSessionRefreshRemount: countValue(pageReceipt?.classes?.sameSessionRefreshRemount),
+    sameSessionDeliberateReturn: countValue(pageReceipt?.classes?.sameSessionDeliberateReturn),
+    newSessionReturn: countValue(pageReceipt?.classes?.newSessionReturn),
+    newDayReturn: countValue(pageReceipt?.classes?.newDayReturn),
+    previewTest: countValue(pageReceipt?.classes?.previewTest),
+    knownAutomaticActivity: countValue(pageReceipt?.classes?.knownAutomaticActivity),
+    unknownClassification: countValue(pageReceipt?.classes?.unknownClassification)
+  }
+  const receiptClassSum = Object.values(receiptClasses).every(value => value !== null)
+    ? Object.values(receiptClasses).reduce((sum, value) => sum + value, 0)
+    : null
+  const duplicateGroups = countValue(pageReceipt?.duplicates?.durableDuplicateGroups)
+  const deliberateContinuationCount = countValue(pageReceipt?.deliberateContinuations?.count)
+  const deliberatePageReturnCount = countValue(pageReceipt?.deliberateContinuations?.sameSessionDeliberatePageReturns)
+  const recoveryCount = countValue(pageReceipt?.interruptionRecovery?.count)
+  const pageReceiptReady = pageReceipt !== null
+    && [grossRecordedPageViews, qualifiedPageViews, receiptClassSum, duplicateGroups,
+      deliberateContinuationCount, deliberatePageReturnCount, recoveryCount].every(value => value !== null)
+    && grossRecordedPageViews === pageViews
+    && receiptClassSum === grossRecordedPageViews
+    && qualifiedPageViews === grossRecordedPageViews - receiptClasses.previewTest - receiptClasses.knownAutomaticActivity
+    && duplicateGroups === 0
   return {
     ready: true,
     pageViews,
+    grossRecordedPageViews: pageReceiptReady ? grossRecordedPageViews : pageViews,
+    qualifiedPageViews: pageReceiptReady ? qualifiedPageViews : null,
     uniqueVisitors,
     recordedBrowserIds: acquisitionReady ? recordedBrowserIds : uniqueVisitors,
     pageBearingBrowserIds: acquisitionReady ? pageBearingBrowserIds : null,
@@ -193,9 +223,39 @@ async function readAudienceSnapshotUncached(){
       previewOrTestPageViews,
       nonPreviewRecordedPageViews,
       rows: sanitizedAcquisitionRows,
-      unknownOrUnclassified: {ready: false, value: null, missingReason: "global-unknown-source-total-not-exposed"},
-      deliberateContinuations: {ready: false, value: null, missingReason: "global-session-bound-continuation-total-not-exposed"},
-      interruptionRecovery: {ready: false, value: null, missingReason: "recovery-receipt-contract-not-defined"}
+      pageReceiptClassification: pageReceiptReady ? {
+        ready: true,
+        version: "page-receipt-v1",
+        unit: "accepted-page-receipts",
+        countsPeople: false,
+        classes: receiptClasses,
+        partitionExact: receiptClassSum === grossRecordedPageViews,
+        qualifiedDefinition: pageReceipt.qualifiedDefinition,
+        duplicatesSuppressed: pageReceipt.duplicates?.suppressedByClientEventIdUniqueIndex === true,
+        unknown: {
+          count: receiptClasses.unknownClassification,
+          includedInQualified: true,
+          historicalMissingReason: "historical-navigation-evidence-unavailable"
+        }
+      } : {ready: false, missingReason: pageReceiptResult.reason || "page-receipt-classification-incomplete"},
+      unknownOrUnclassified: pageReceiptReady
+        ? {ready: true, value: receiptClasses.unknownClassification, unit: "accepted-page-receipts", includedInQualified: true}
+        : {ready: false, value: null, missingReason: pageReceiptResult.reason || "page-receipt-classification-incomplete"},
+      deliberateContinuations: pageReceiptReady ? {
+        ready: pageReceipt.deliberateContinuations?.contractReady === true,
+        value: deliberateContinuationCount,
+        sameSessionDeliberatePageReturns: deliberatePageReturnCount,
+        unit: "accepted-explicit-action-receipts-with-prior-page-in-session",
+        identityCreated: false
+      } : {ready: false, value: null, missingReason: pageReceiptResult.reason || "page-receipt-classification-incomplete"},
+      interruptionRecovery: pageReceiptReady ? {
+        ready: pageReceipt.interruptionRecovery?.contractReady === true && pageReceipt.interruptionRecovery?.observed === true,
+        contractReady: pageReceipt.interruptionRecovery?.contractReady === true,
+        observed: pageReceipt.interruptionRecovery?.observed === true,
+        value: recoveryCount,
+        unit: "accepted-page-receipts-recovered-after-bounded-delivery-failure",
+        missingReason: pageReceipt.interruptionRecovery?.observed === true ? "" : "no-recovery-receipt-observed"
+      } : {ready: false, value: null, missingReason: pageReceiptResult.reason || "page-receipt-classification-incomplete"}
     } : {
       ready: false,
       missingReason: acquisitionResult.reason || acquisition?.reason || "acquisition-partitions-incomplete"

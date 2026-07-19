@@ -1,8 +1,9 @@
 ﻿import {seoEntryTrailForEvent, seoSearchClaimForQuery} from "./seoSearchClaimEngine"
 import {digitalhutMasterListBridge} from "./digitalhutMasterListBridge"
-const pixelEndpoint = "/api/insight-map"
+import {deliverPixelWithRetry, pixelEndpoint} from "./digitalhutPixelDelivery"
 const sessionKey = "digitalhut_pixel_session_id"
 const visitorKey = "digitalhut_pixel_visitor_id"
+const pendingNavigationKey = "digitalhut_pending_navigation_evidence"
 
 function randomId(prefix){
   const cryptoValue = typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2)
@@ -18,6 +19,39 @@ function storageId(key, prefix, storage = sessionStorage){
     return value
   } catch {
     return randomId(prefix)
+  }
+}
+
+function safePath(value){
+  try { return new URL(String(value || ""), location.origin).pathname }
+  catch { return "" }
+}
+
+function rememberNavigationEvidence(path, kind = "internal-link-click"){
+  if(!path || !path.startsWith("/")) return
+  try {
+    sessionStorage.setItem(pendingNavigationKey, JSON.stringify({path, kind, observedAt: Date.now()}))
+  } catch {}
+}
+
+function takeNavigationEvidence(pathname, reason){
+  let pending = null
+  try {
+    pending = JSON.parse(sessionStorage.getItem(pendingNavigationKey) || "null")
+    sessionStorage.removeItem(pendingNavigationKey)
+  } catch {}
+  const ageMs = pending && Number.isFinite(Number(pending.observedAt)) ? Date.now() - Number(pending.observedAt) : null
+  const pendingMatches = pending?.path === pathname && ageMs >= 0 && ageMs <= 30000
+  const navigationEntry = typeof performance !== "undefined" ? performance.getEntriesByType?.("navigation")?.[0] : null
+  const browserNavigationType = ["navigate", "reload", "back_forward", "prerender"].includes(navigationEntry?.type)
+    ? navigationEntry.type
+    : "unknown"
+  return {
+    reason,
+    browserNavigationType,
+    evidenceType: pendingMatches ? pending.kind : reason === "popstate" ? "history-pop" : "none",
+    evidenceTargetPath: pendingMatches ? pathname : "",
+    evidenceAgeMs: pendingMatches ? ageMs : null
   }
 }
 
@@ -88,6 +122,7 @@ function sendPixel(eventName, data = {}){
         measurementSignals: entryTrail.backlinkTrail.measurementSignals
       }
       : null
+  const clientEventId = String(data.metadata?.clientEventId || randomId("dh_e")).slice(0, 120)
   const body = {
     eventName,
     ...currentContext(pixelData),
@@ -100,6 +135,9 @@ function sendPixel(eventName, data = {}){
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "",
       seoClaim,
       entryTrail,
+      clientEventId,
+      deliveryAttempt: 1,
+      deliveryRecoveredAfterFailure: false,
       ...data.metadata
     }
   }
@@ -108,12 +146,7 @@ function sendPixel(eventName, data = {}){
     const blob = new Blob([json], {type: "application/json"})
     if(navigator.sendBeacon(pixelEndpoint, blob)) return
   }
-  fetch(pixelEndpoint, {
-    method: "POST",
-    headers: {"content-type": "application/json"},
-    body: json,
-    keepalive: true
-  }).catch(() => {})
+  void deliverPixelWithRetry(body)
 }
 
 const searchEventCache = new Map()
@@ -229,6 +262,7 @@ function trackPageView(reason = "route"){
     category: masterListTrail.lane,
     metadata: {
       reason,
+      pageReceipt: takeNavigationEvidence(pathname, reason),
       masterKeyword: masterListTrail,
       masterListTrail
     }
@@ -285,6 +319,8 @@ function installClickTracking(){
   document.addEventListener("click", (event) => {
     const click = classifyClick(event.target)
     if(!click) return
+    const targetPath = safePath(click.href)
+    if(targetPath && !linkContext(click.href).isExternal) rememberNavigationEvidence(targetPath)
     sendPixel(click.eventName, {
       category: click.category,
       assetId: click.assetId,
