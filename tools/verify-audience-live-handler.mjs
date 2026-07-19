@@ -99,6 +99,9 @@ const wrongMethod=responseHarness()
 await handler({method:"POST",headers:{}},wrongMethod)
 assert.equal(wrongMethod.statusCode,405)
 assert.equal(wrongMethod.headers.Allow,"GET")
+assert.equal(wrongMethod.headers["Cache-Control"],"private, no-store, max-age=0")
+assert.equal(wrongMethod.headers["CDN-Cache-Control"],"no-store")
+assert.equal(wrongMethod.headers.Vary,"If-None-Match")
 
 resetAudienceSnapshotCacheForTests()
 globalThis.fetch=rpcFetch({acquisitionValue:{ready:false,reason:"not-ready"},returnValue:{ready:false}})
@@ -175,4 +178,4 @@ if(existsSync("public/404.html")) assert.ok(readFileSync("public/404.html","utf8
 assert.ok(!readFileSync("vite.config.js","utf8").includes("runtimeCaching"))
 if(existsSync("tools/verify-audience-live-production.mjs")) assert.ok(readFileSync("tools/verify-audience-live-production.mjs","utf8").includes("non-JSON SPA or proxy fallback"))
 
-console.log(JSON.stringify({ok:true,checked:73,states:["json-200","identical-304","method-405","no-store","compatibility-alias","acquisition-partitions","preview-partition","page-quality-partition","non-page-pinned-session","return-browser-operational-aggregate","privacy-safe","canonical-digest-etag","legacy-fallback-not-ready","adversarial-invariant-fallback","adversarial-return-fallback","malformed-503","api-before-finite-spa"]},null,2))
+console.log(JSON.stringify({ok:true,checked:76,states:["json-200","identical-304","method-405","all-response-no-store","compatibility-alias","acquisition-partitions","preview-partition","page-quality-partition","non-page-pinned-session","return-browser-operational-aggregate","privacy-safe","canonical-digest-etag","legacy-fallback-not-ready","adversarial-invariant-fallback","adversarial-return-fallback","malformed-503","api-before-finite-spa"]},null,2))

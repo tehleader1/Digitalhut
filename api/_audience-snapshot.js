@@ -326,13 +326,13 @@ export function audienceSnapshotEtag(snapshot){
 }
 
 export async function handleAudienceLive(req, res){
+  res.setHeader("Cache-Control", "private, no-store, max-age=0")
+  res.setHeader("CDN-Cache-Control", "no-store")
+  res.setHeader("Vary", "If-None-Match")
   if(req.method !== "GET"){
     res.setHeader("Allow", "GET")
     return res.status(405).json({ok: false, reason: "method-not-allowed"})
   }
-  res.setHeader("Cache-Control", "private, no-store, max-age=0")
-  res.setHeader("CDN-Cache-Control", "no-store")
-  res.setHeader("Vary", "If-None-Match")
   const audience = await readAudienceSnapshot()
   if(!audience.ready) return res.status(503).json({ok: false, audience})
   const etag = audienceSnapshotEtag(audience)
