@@ -27,5 +27,7 @@ assert.match(componentSource, /Current conditions via Open-Meteo/)
 assert.match(componentSource, /dh-weather-location-status" role="status" aria-live="polite" aria-atomic="true"/)
 const drawerSource = readFileSync(new URL("../src/components/SocialPressureDrawer.jsx", import.meta.url), "utf8")
 assert.match(drawerSource, /requestAnimationFrame\(\(\) => handleRef\.current\?\.focus\(\)\)/)
+assert.match(drawerSource, /suppressClick\.current = current\.moved/)
+assert.match(drawerSource, /if\(suppressClick\.current\)/)
 
-console.log(JSON.stringify({ok:true, checks:19, units:{temperature:"fahrenheit", precipitation:"inch"}, approximateLocationOnly:true, flashFloodClaimed:false}, null, 2))
+console.log(JSON.stringify({ok:true, checks:21, units:{temperature:"fahrenheit", precipitation:"inch"}, approximateLocationOnly:true, flashFloodClaimed:false}, null, 2))
