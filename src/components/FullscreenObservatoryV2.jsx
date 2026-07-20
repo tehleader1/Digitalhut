@@ -9,6 +9,8 @@ import {originalLongTailKeywordsFor, seoBacklinkBrief, seoNarrationLine, seoReve
 import {digitalhutMasterListBridge, digitalhutSourceBridgePath, masterListBridgePixel} from "../lib/digitalhutMasterListBridge"
 import {applySystemPerformanceProfile, getSystemPerformanceProfile} from "../lib/systemPerformanceProfile"
 import PodcastMatchPanel from "./PodcastMatchPanel"
+import SocialPressureDrawer from "./SocialPressureDrawer"
+import WeatherTimeGauge from "./WeatherTimeGauge"
 import "./FullscreenObservatory.css"
 import "./FullscreenObservatory.api.css"
 import "./FullscreenObservatory.sequence.css"
@@ -6798,7 +6800,10 @@ export default function FullscreenObservatoryV2(){
         <div className="dh-state-badges"><span>{category}</span><span>{mode}</span><span>{sceneFeed.apiStatus || "api"}</span><span>{activeTour.icon}</span></div>
       </div>
 
-      <div className="dh-media dh-movie-controls" style={{opacity: awake || autoPresent ? 1 : 0.42}}>
+      <SocialPressureDrawer />
+      <WeatherTimeGauge />
+
+      <div id="digitalhut-entertainment" className="dh-media dh-movie-controls" style={{opacity: awake || autoPresent ? 1 : 0.42}}>
         <div className="dh-movie-head">
           <span>{documentaryTitle(category, tier)}</span>
           <b>{presentationChapter.label}</b>
