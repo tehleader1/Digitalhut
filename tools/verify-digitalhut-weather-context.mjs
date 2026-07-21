@@ -42,6 +42,7 @@ assert.match(observatorySource, /dh-media dh-movie-controls[^>]*>\s*<WeatherTime
 const weatherCss = readFileSync(new URL("../src/components/WeatherTimeGauge.css", import.meta.url), "utf8")
 assert.match(weatherCss, /\.dh-weather-gauge\{position:relative/)
 assert.doesNotMatch(weatherCss, /\.dh-weather-gauge\{position:fixed/)
-assert.match(weatherCss, /max-width:760px[^}]*\{body:has\(\.dh-youtube-story-renderer\) \.dh-media\.dh-movie-controls\{top:128px/)
+const observatoryCss = readFileSync(new URL("../src/components/FullscreenObservatory.css", import.meta.url), "utf8")
+assert.match(observatoryCss.slice(-500), /max-width: 760px[\s\S]*top: 128px/)
 
 console.log(JSON.stringify({ok:true, checks:30, units:{temperature:"fahrenheit", precipitation:"inch"}, approximateLocationOnly:true, nonOverlayPlacement:true, cancelledDragPreservesNextClick:true, flashFloodClaimed:false}, null, 2))

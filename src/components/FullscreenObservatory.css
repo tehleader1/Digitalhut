@@ -14015,3 +14015,10 @@ body:has(.dh-youtube-story-renderer) .dh-episode-preview-dock .dh-platform-caden
     max-height: 132px !important;
   }
 }
+
+/* Final mobile placement: keep weather/control flow below the category dock. */
+@media (max-width: 760px) {
+  body:has(.dh-youtube-story-renderer) .dh-media.dh-movie-controls {
+    top: 128px;
+  }
+}
