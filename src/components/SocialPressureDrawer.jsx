@@ -7,6 +7,7 @@ import "./SocialPressureDrawer.css"
 const OPEN_THRESHOLD = .42
 const DRAG_RESISTANCE = .78
 const PANEL_WIDTH = 360
+const MEMBER_REDIRECT_URL = "https://www.digitalhut.app"
 
 export default function SocialPressureDrawer(){
   const [open, setOpen] = useState(false)
@@ -66,9 +67,17 @@ export default function SocialPressureDrawer(){
     if(memberSubmitting) return
     setMemberSubmitting(true)
     setMemberStatus("Sending your secure email link...")
-    const {error} = await supabase.auth.signInWithOtp({email:memberEmail.trim()})
-    setMemberSubmitting(false)
-    setMemberStatus(error ? "We could not send the link. Check the email and try again." : "Check your email to finish joining DigitalHut.")
+    try {
+      const {error} = await supabase.auth.signInWithOtp({
+        email:memberEmail.trim(),
+        options:{shouldCreateUser:true, emailRedirectTo:MEMBER_REDIRECT_URL},
+      })
+      setMemberStatus(error ? "We could not send the link. Check the email and try again." : "Email sent. Membership completes only after you use the one-time link.")
+    } catch {
+      setMemberStatus("We could not send the link. Check the email and try again.")
+    } finally {
+      setMemberSubmitting(false)
+    }
   }
 
   return <aside className={`dh-social-pressure ${open ? "is-open" : ""} ${dragProgress !== null ? "is-dragging" : ""}`} style={{transform:`translateX(${(1-progress)*100}%)`}} aria-label="DigitalHut social layer">
@@ -84,6 +93,7 @@ export default function SocialPressureDrawer(){
           <input id="digitalhut-social-member-email" type="email" autoComplete="email" placeholder="Email address" value={memberEmail} onChange={(event) => setMemberEmail(event.target.value)} required />
           <button type="submit" disabled={memberSubmitting}>{memberSubmitting ? "Sending..." : "Sign up"}</button>
         </div>
+        <small>Your email is sent to Supabase only for DigitalHut account access. By continuing, you accept our <Link to="/privacy">Privacy Policy</Link> and <Link to="/terms">Terms</Link>. This member account never grants Mixpost or publishing-admin access.</small>
         <p role="status" aria-live="polite">{memberStatus}</p>
       </form>
       <nav aria-label="Social destinations">
