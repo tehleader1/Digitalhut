@@ -93,7 +93,7 @@ export default function SocialPressureDrawer(){
           <input id="digitalhut-social-member-email" type="email" autoComplete="email" placeholder="Email address" value={memberEmail} onChange={(event) => setMemberEmail(event.target.value)} required />
           <button type="submit" disabled={memberSubmitting}>{memberSubmitting ? "Sending..." : "Sign up"}</button>
         </div>
-        <small>Your email is sent to Supabase only for DigitalHut account access. By continuing, you accept our <Link to="/privacy">Privacy Policy</Link> and <Link to="/terms">Terms</Link>. This member account never grants Mixpost or publishing-admin access.</small>
+        <small>Your email is sent to Supabase only for DigitalHut account access. Review our <Link to="/privacy">Privacy Policy</Link> before continuing. This member account never grants Mixpost or publishing-admin access.</small>
         <p role="status" aria-live="polite">{memberStatus}</p>
       </form>
       <nav aria-label="Social destinations">

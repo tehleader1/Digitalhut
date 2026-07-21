@@ -39,6 +39,7 @@ assert.match(drawerSource, /Owner \/ Operator Login/)
 assert.match(drawerSource, /Mixpost remains the protected publishing workspace/)
 assert.match(drawerSource, /Membership completes only after you use the one-time link/)
 assert.match(drawerSource, /Privacy Policy/)
+assert.doesNotMatch(drawerSource, /to="\/terms"/)
 assert.match(drawerSource, /never grants Mixpost or publishing-admin access/)
 const cancelledDrag = settleSocialPressureGesture({cancelled:true, moved:true, startProgress:0, progress:.8})
 assert.deepEqual(cancelledDrag, {open:false, suppressNextClick:false})
@@ -56,4 +57,4 @@ const observatoryCss = readFileSync(new URL("../src/components/FullscreenObserva
 assert.match(observatoryCss.slice(-500), /max-width: 760px[\s\S]*top: 128px/)
 assert.match(observatoryCss.slice(-800), /min-width: 981px[\s\S]*regular-pulse[\s\S]*margin-right: clamp\(180px, 11vw, 220px\)/)
 
-console.log(JSON.stringify({ok:true, checks:42, units:{temperature:"fahrenheit", precipitation:"inch"}, approximateLocationOnly:true, nonOverlayPlacement:true, marketTransportSeparated:true, memberSignupMounted:true, membershipRequiresLinkConsumption:true, productionRedirectExplicit:true, mixpostAdminProtected:true, cancelledDragPreservesNextClick:true, flashFloodClaimed:false}, null, 2))
+console.log(JSON.stringify({ok:true, checks:43, units:{temperature:"fahrenheit", precipitation:"inch"}, approximateLocationOnly:true, nonOverlayPlacement:true, marketTransportSeparated:true, memberSignupMounted:true, membershipRequiresLinkConsumption:true, productionRedirectExplicit:true, privacyPolicyLinked:true, mixpostAdminProtected:true, cancelledDragPreservesNextClick:true, flashFloodClaimed:false}, null, 2))
