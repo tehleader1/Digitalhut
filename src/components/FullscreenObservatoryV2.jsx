@@ -6604,7 +6604,8 @@ export default function FullscreenObservatoryV2(){
           {categories.map((item) => <button key={item.id} className={item.id === category ? "active" : ""} type="button" onClick={() => selectCategory(item.id)}><span>{item.icon}</span><b>{item.id}</b></button>)}
         </nav>
 
-        <form className="dh-mechanic-search" onSubmit={(event) => {event.preventDefault(); runSearch()}}>
+        <form className="dh-mechanic-search" aria-label="DigitalHut system search" onSubmit={(event) => {event.preventDefault(); runSearch()}}>
+          <span className="dh-system-search-label">System Search</span>
           <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search any GLB, feed, place, game, research, house project..." />
           <button type="submit">Search</button>
           <button type="button" onClick={() => setMainLobbyOpen(true)}>Main Lobby</button>
