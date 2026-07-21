@@ -37,5 +37,11 @@ const committedDrag = settleSocialPressureGesture({moved:true, startProgress:0, 
 assert.deepEqual(committedDrag, {open:true, suppressNextClick:true})
 assert.deepEqual(applySocialPressureClick(committedDrag), {open:true, suppressNextClick:false})
 assert.deepEqual(applySocialPressureClick({open:true, suppressNextClick:false}), {open:false, suppressNextClick:false})
+const observatorySource = readFileSync(new URL("../src/components/FullscreenObservatoryV2.jsx", import.meta.url), "utf8")
+assert.match(observatorySource, /dh-media dh-movie-controls[^>]*>\s*<WeatherTimeGauge/)
+const weatherCss = readFileSync(new URL("../src/components/WeatherTimeGauge.css", import.meta.url), "utf8")
+assert.match(weatherCss, /\.dh-weather-gauge\{position:relative/)
+assert.doesNotMatch(weatherCss, /\.dh-weather-gauge\{position:fixed/)
+assert.match(weatherCss, /max-width:760px[^}]*\{body:has\(\.dh-youtube-story-renderer\) \.dh-media\.dh-movie-controls\{top:128px/)
 
-console.log(JSON.stringify({ok:true, checks:26, units:{temperature:"fahrenheit", precipitation:"inch"}, approximateLocationOnly:true, cancelledDragPreservesNextClick:true, flashFloodClaimed:false}, null, 2))
+console.log(JSON.stringify({ok:true, checks:30, units:{temperature:"fahrenheit", precipitation:"inch"}, approximateLocationOnly:true, nonOverlayPlacement:true, cancelledDragPreservesNextClick:true, flashFloodClaimed:false}, null, 2))

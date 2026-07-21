@@ -6801,9 +6801,9 @@ export default function FullscreenObservatoryV2(){
       </div>
 
       <SocialPressureDrawer />
-      <WeatherTimeGauge />
 
       <div id="digitalhut-entertainment" className="dh-media dh-movie-controls" style={{opacity: awake || autoPresent ? 1 : 0.42}}>
+        <WeatherTimeGauge />
         <div className="dh-movie-head">
           <span>{documentaryTitle(category, tier)}</span>
           <b>{presentationChapter.label}</b>
