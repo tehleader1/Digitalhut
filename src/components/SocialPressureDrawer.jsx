@@ -1,6 +1,7 @@
 import {useEffect, useRef, useState} from "react"
 import {Link} from "react-router-dom"
 import {applySocialPressureClick, settleSocialPressureGesture} from "../lib/socialPressureGesture"
+import {supabase} from "../lib/supabaseClient"
 import "./SocialPressureDrawer.css"
 
 const OPEN_THRESHOLD = .42
@@ -10,6 +11,9 @@ const PANEL_WIDTH = 360
 export default function SocialPressureDrawer(){
   const [open, setOpen] = useState(false)
   const [dragProgress, setDragProgress] = useState(null)
+  const [memberEmail, setMemberEmail] = useState("")
+  const [memberStatus, setMemberStatus] = useState("")
+  const [memberSubmitting, setMemberSubmitting] = useState(false)
   const gesture = useRef(null)
   const handleRef = useRef(null)
   const suppressClick = useRef(false)
@@ -57,14 +61,33 @@ export default function SocialPressureDrawer(){
     setOpen(settled.open)
   }
 
+  async function requestMemberLink(event){
+    event.preventDefault()
+    if(memberSubmitting) return
+    setMemberSubmitting(true)
+    setMemberStatus("Sending your secure email link...")
+    const {error} = await supabase.auth.signInWithOtp({email:memberEmail.trim()})
+    setMemberSubmitting(false)
+    setMemberStatus(error ? "We could not send the link. Check the email and try again." : "Check your email to finish joining DigitalHut.")
+  }
+
   return <aside className={`dh-social-pressure ${open ? "is-open" : ""} ${dragProgress !== null ? "is-dragging" : ""}`} style={{transform:`translateX(${(1-progress)*100}%)`}} aria-label="DigitalHut social layer">
     <button ref={handleRef} className="dh-social-pressure-handle" type="button" aria-expanded={open} aria-controls="digitalhut-social-pressure-panel" aria-label={open ? "Close DigitalHut social layer" : "Open DigitalHut social layer"} onClick={() => {const next = applySocialPressureClick({open, suppressNextClick:suppressClick.current}); suppressClick.current = next.suppressNextClick; setOpen(next.open)}} onPointerDown={begin} onPointerMove={move} onPointerUp={finish} onPointerCancel={cancel}>
       <span aria-hidden="true">{open ? "›" : "‹"}</span><b>Social</b><small>{open ? "close" : "slide"}</small>
     </button>
     {(open || dragProgress !== null) && <div id="digitalhut-social-pressure-panel" className="dh-social-pressure-panel">
-      <header><span>DigitalHut Social Layer</span><strong>Move from observatory to owner operations.</strong><p>The main experience stays public. Mixpost remains the protected publishing workspace.</p></header>
+      <header><span>DigitalHut Social Layer</span><strong>Join the public experience or open owner operations.</strong><p>Members receive a secure email sign-in link. Mixpost remains the protected publishing workspace.</p></header>
+      <form className="dh-social-member-signup" onSubmit={requestMemberLink}>
+        <label htmlFor="digitalhut-social-member-email">Join DigitalHut</label>
+        <span>Create or enter your member account with a secure email link.</span>
+        <div>
+          <input id="digitalhut-social-member-email" type="email" autoComplete="email" placeholder="Email address" value={memberEmail} onChange={(event) => setMemberEmail(event.target.value)} required />
+          <button type="submit" disabled={memberSubmitting}>{memberSubmitting ? "Sending..." : "Sign up"}</button>
+        </div>
+        <p role="status" aria-live="polite">{memberStatus}</p>
+      </form>
       <nav aria-label="Social destinations">
-        <a href="https://social.digitalhut.app/mixpost">Open Social Operations <span aria-hidden="true">→</span></a>
+        <a href="https://social.digitalhut.app/mixpost">Owner / Operator Login <span aria-hidden="true">→</span></a>
         <Link to="/updates">Open DigitalHut Updates</Link>
         <Link to="/system-proof">See System Proof</Link>
       </nav>

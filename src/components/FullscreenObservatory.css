@@ -14022,3 +14022,10 @@ body:has(.dh-youtube-story-renderer) .dh-episode-preview-dock .dh-platform-caden
     top: 128px;
   }
 }
+
+/* Keep the compact market pulse clear of the right-side transport controls. */
+@media (min-width: 981px) {
+  body:has(.dh-youtube-story-renderer) .dh-current-market-feed.regular-pulse {
+    margin-right: clamp(180px, 11vw, 220px);
+  }
+}
