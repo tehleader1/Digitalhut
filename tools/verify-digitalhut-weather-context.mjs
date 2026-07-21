@@ -1,5 +1,6 @@
 import assert from "node:assert/strict"
 import {weatherConditionFor} from "../src/lib/digitalhutWeatherContext.js"
+import {applySocialPressureClick, settleSocialPressureGesture} from "../src/lib/socialPressureGesture.js"
 import {readFileSync} from "node:fs"
 
 const fixtures = [
@@ -27,7 +28,14 @@ assert.match(componentSource, /Current conditions via Open-Meteo/)
 assert.match(componentSource, /dh-weather-location-status" role="status" aria-live="polite" aria-atomic="true"/)
 const drawerSource = readFileSync(new URL("../src/components/SocialPressureDrawer.jsx", import.meta.url), "utf8")
 assert.match(drawerSource, /requestAnimationFrame\(\(\) => handleRef\.current\?\.focus\(\)\)/)
-assert.match(drawerSource, /suppressClick\.current = current\.moved/)
-assert.match(drawerSource, /if\(suppressClick\.current\)/)
+assert.match(drawerSource, /function cancel\(event\)/)
+assert.match(drawerSource, /onPointerCancel=\{cancel\}/)
+const cancelledDrag = settleSocialPressureGesture({cancelled:true, moved:true, startProgress:0, progress:.8})
+assert.deepEqual(cancelledDrag, {open:false, suppressNextClick:false})
+assert.deepEqual(applySocialPressureClick(cancelledDrag), {open:true, suppressNextClick:false})
+const committedDrag = settleSocialPressureGesture({moved:true, startProgress:0, progress:.8})
+assert.deepEqual(committedDrag, {open:true, suppressNextClick:true})
+assert.deepEqual(applySocialPressureClick(committedDrag), {open:true, suppressNextClick:false})
+assert.deepEqual(applySocialPressureClick({open:true, suppressNextClick:false}), {open:false, suppressNextClick:false})
 
-console.log(JSON.stringify({ok:true, checks:21, units:{temperature:"fahrenheit", precipitation:"inch"}, approximateLocationOnly:true, flashFloodClaimed:false}, null, 2))
+console.log(JSON.stringify({ok:true, checks:26, units:{temperature:"fahrenheit", precipitation:"inch"}, approximateLocationOnly:true, cancelledDragPreservesNextClick:true, flashFloodClaimed:false}, null, 2))

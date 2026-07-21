@@ -1,5 +1,6 @@
 import {useEffect, useRef, useState} from "react"
 import {Link} from "react-router-dom"
+import {applySocialPressureClick, settleSocialPressureGesture} from "../lib/socialPressureGesture"
 import "./SocialPressureDrawer.css"
 
 const OPEN_THRESHOLD = .42
@@ -40,15 +41,24 @@ export default function SocialPressureDrawer(){
   function finish(event){
     const current = gesture.current
     if(!current || current.pointerId !== event.pointerId) return
-    const nextOpen = current.moved ? (dragProgress ?? current.startProgress) >= OPEN_THRESHOLD : open
-    suppressClick.current = current.moved
+    const settled = settleSocialPressureGesture({moved:current.moved, startProgress:current.startProgress, progress:dragProgress ?? current.startProgress, openThreshold:OPEN_THRESHOLD})
+    suppressClick.current = settled.suppressNextClick
     gesture.current = null
     setDragProgress(null)
-    setOpen(nextOpen)
+    setOpen(settled.open)
+  }
+  function cancel(event){
+    const current = gesture.current
+    if(!current || current.pointerId !== event.pointerId) return
+    gesture.current = null
+    const settled = settleSocialPressureGesture({cancelled:true, moved:current.moved, startProgress:current.startProgress, progress:dragProgress ?? current.startProgress, openThreshold:OPEN_THRESHOLD})
+    suppressClick.current = settled.suppressNextClick
+    setDragProgress(null)
+    setOpen(settled.open)
   }
 
   return <aside className={`dh-social-pressure ${open ? "is-open" : ""} ${dragProgress !== null ? "is-dragging" : ""}`} style={{transform:`translateX(${(1-progress)*100}%)`}} aria-label="DigitalHut social layer">
-    <button ref={handleRef} className="dh-social-pressure-handle" type="button" aria-expanded={open} aria-controls="digitalhut-social-pressure-panel" aria-label={open ? "Close DigitalHut social layer" : "Open DigitalHut social layer"} onClick={() => {if(suppressClick.current){suppressClick.current = false; return} setOpen(value => !value)}} onPointerDown={begin} onPointerMove={move} onPointerUp={finish} onPointerCancel={finish}>
+    <button ref={handleRef} className="dh-social-pressure-handle" type="button" aria-expanded={open} aria-controls="digitalhut-social-pressure-panel" aria-label={open ? "Close DigitalHut social layer" : "Open DigitalHut social layer"} onClick={() => {const next = applySocialPressureClick({open, suppressNextClick:suppressClick.current}); suppressClick.current = next.suppressNextClick; setOpen(next.open)}} onPointerDown={begin} onPointerMove={move} onPointerUp={finish} onPointerCancel={cancel}>
       <span aria-hidden="true">{open ? "›" : "‹"}</span><b>Social</b><small>{open ? "close" : "slide"}</small>
     </button>
     {(open || dragProgress !== null) && <div id="digitalhut-social-pressure-panel" className="dh-social-pressure-panel">
