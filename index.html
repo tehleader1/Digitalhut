@@ -15,6 +15,59 @@
     <meta property="og:url" content="https://www.digitalhut.app/" />
     <meta property="og:image" content="https://www.digitalhut.app/seo-thumbnails/automatic-3d-autoplay-system.svg" />
     <meta name="twitter:card" content="summary_large_image" />
+    <script>
+      (() => {
+        const GA4_MEASUREMENT_ID = "G-L6XLB5NYJ0"
+        const productionHosts = new Set(["digitalhut.app", "www.digitalhut.app"])
+        const isProductionHost = productionHosts.has(window.location.hostname)
+        let googleTagLoaded = false
+
+        window.dataLayer = window.dataLayer || []
+        window.gtag = window.gtag || function gtag(){ window.dataLayer.push(arguments) }
+        window.gtag("consent", "default", {
+          analytics_storage: "denied",
+          ad_storage: "denied",
+          ad_user_data: "denied",
+          ad_personalization: "denied",
+          wait_for_update: 500,
+        })
+
+        const loadExternalScript = ({id, src, crossorigin = false}) => {
+          if(document.getElementById(id)) return
+          const script = document.createElement("script")
+          script.id = id
+          script.async = true
+          script.src = src
+          if(crossorigin) script.crossOrigin = "anonymous"
+          document.head.appendChild(script)
+        }
+
+        window.addEventListener("digitalhut:google-consent", (event) => {
+          if(!isProductionHost) return
+          const consent = event.detail || {}
+          const analyticsGranted = consent.analytics === true
+          window.gtag("consent", "update", {
+            analytics_storage: analyticsGranted ? "granted" : "denied",
+            ad_storage: consent.ads === true ? "granted" : "denied",
+            ad_user_data: consent.ads === true ? "granted" : "denied",
+            ad_personalization: consent.ads === true ? "granted" : "denied",
+          })
+
+          if(analyticsGranted && !googleTagLoaded){
+            googleTagLoaded = true
+            loadExternalScript({id:"digitalhut-ga4", src:`https://www.googletagmanager.com/gtag/js?id=${GA4_MEASUREMENT_ID}`})
+            window.gtag("js", new Date())
+            window.gtag("config", GA4_MEASUREMENT_ID, {send_page_view:true})
+          }
+
+        })
+      })()
+    </script>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5543431802438722"
+      crossorigin="anonymous"
+    ></script>
     <style>
       html,
       body,
