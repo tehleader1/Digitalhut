@@ -1,0 +1,199 @@
+import React, {useEffect, useMemo, useRef} from "react"
+import "./SemanticAnalyticsPanel.css"
+
+const palette = ["#50f2ff", "#8b7cff", "#ffca6a", "#ff6ea9", "#69f0ae", "#ff806b"]
+
+function clean(value, fallback = "Context pending"){
+  const text = String(value || "").replace(/\s+/g, " ").trim()
+  return text || fallback
+}
+
+function parseClock(value, fallback = 0){
+  const parts = String(value || "").split(":").map(Number)
+  if(parts.some((part) => !Number.isFinite(part))) return fallback
+  return parts.length === 2 ? parts[0] * 60 + parts[1] : parts[0] || fallback
+}
+
+function compact(value, max = 72){
+  const text = clean(value)
+  return text.length > max ? `${text.slice(0, max - 1)}…` : text
+}
+
+function semanticFamily(value){
+  const text = String(value || "").toLowerCase()
+  if(/finance|market|stock|money|bank|trade|crypto/.test(text)) return "market"
+  if(/nature|earth|climate|animal|plant|ocean|forest/.test(text)) return "nature"
+  if(/robot|ai|model|data|software|code|technology|computer/.test(text)) return "technology"
+  if(/music|podcast|audio|artist|film|video|creator/.test(text)) return "media"
+  if(/science|research|space|health|medical|history/.test(text)) return "research"
+  return "general"
+}
+
+function buildSegments({analysis, title, category, duration = 120}){
+  const timeline = Array.isArray(analysis?.timeline) ? analysis.timeline : []
+  const entities = Array.isArray(analysis?.entities) ? analysis.entities : []
+  const base = timeline.length ? timeline : [
+    {at: "0:00", label: "Opening context", summary: title, entity: entities[0] || category},
+    {at: "0:24", label: "Primary subject", summary: analysis?.currentRead || title, entity: entities[1] || analysis?.focus || category},
+    {at: "0:48", label: "Evidence branch", summary: analysis?.researchUse || `Contextual analysis for ${title}`, entity: entities[2] || "Evidence"},
+    {at: "1:12", label: "Visual synthesis", summary: analysis?.nextQuestion || `What should the next source confirm?`, entity: entities[3] || "Synthesis"},
+  ]
+  return base.slice(0, 7).map((item, index) => {
+    const start = Math.min(Math.max(0, parseClock(item.at, index * 24)), Math.max(1, duration - 1))
+    const nextStart = index < base.length - 1 ? parseClock(base[index + 1]?.at, start + 24) : duration
+    const end = Math.max(start + 1, Math.min(duration, nextStart))
+    const topic = compact(item.entity || item.label || analysis?.focus || title, 46)
+    return {
+      id: item.id || `semantic-${index}`,
+      start,
+      end,
+      topic,
+      label: compact(item.label || `Topic ${index + 1}`, 34),
+      summary: compact(item.summary || analysis?.currentRead || title, 116),
+      family: semanticFamily(`${topic} ${item.summary || ""}`),
+      color: palette[index % palette.length],
+    }
+  })
+}
+
+function formatTime(seconds){
+  const safe = Math.max(0, Math.round(Number(seconds) || 0))
+  return `${Math.floor(safe / 60)}:${String(safe % 60).padStart(2, "0")}`
+}
+
+export default function SemanticAnalyticsPanel({
+  video = {},
+  analysis = null,
+  analyzerMode = "metadata-only",
+  analyzerStatus = "waiting",
+  category = "General",
+  seconds = 0,
+  duration = 120,
+  playing = false,
+  onSeek,
+  embedUrl = "",
+  controls = {},
+}){
+  const segments = useMemo(() => buildSegments({
+    analysis,
+    title: clean(video.title, category),
+    category,
+    duration,
+  }), [analysis, video.title, category, duration])
+  const activeIndex = Math.max(0, segments.findIndex((segment) => seconds >= segment.start && seconds < segment.end))
+  const active = segments[activeIndex] || segments[0]
+  const lastTrackedRef = useRef("")
+  const basis = analyzerMode === "google-speech"
+    ? "Google Speech transcript"
+    : analyzerMode === "provided-text"
+      ? "provided transcript"
+      : "video metadata context"
+  const ga4Ready = typeof window !== "undefined" && typeof window.gtag === "function"
+  const confidence = analyzerMode === "google-speech" ? 92 : analyzerMode === "provided-text" ? 84 : analysis ? 68 : 42
+
+  useEffect(() => {
+    if(!active || !video.videoId) return
+    const eventKey = `${video.videoId}:${active.id}`
+    if(lastTrackedRef.current === eventKey) return
+    lastTrackedRef.current = eventKey
+    try {
+      window.gtag?.("event", "video_topic_shift", {
+        video_id: String(video.videoId).slice(0, 64),
+        video_title: clean(video.title).slice(0, 100),
+        current_topic: active.topic.slice(0, 100),
+        topic_index: activeIndex + 1,
+        topic_start_seconds: active.start,
+        semantic_source: analyzerMode,
+      })
+      window.digitalhutPixel?.track?.("video_topic_shift", {
+        category,
+        keywordHint: active.topic,
+        metadata: {
+          videoId: video.videoId,
+          topicIndex: activeIndex + 1,
+          topicStartSeconds: active.start,
+          semanticSource: analyzerMode,
+        },
+      })
+    } catch {
+      // Measurement must never interrupt playback.
+    }
+  }, [active?.id, active?.topic, active?.start, activeIndex, analyzerMode, category, video.videoId, video.title])
+
+  const entities = (Array.isArray(analysis?.entities) ? analysis.entities : [])
+    .slice(0, 6)
+  const particleLabels = entities.length ? entities : segments.map((segment) => segment.topic).slice(0, 6)
+  const currentProgress = Math.max(0, Math.min(100, ((seconds - active.start) / Math.max(1, active.end - active.start)) * 100))
+
+  return <section className={`dh-semantic-suite family-${active.family} ${playing ? "is-playing" : "is-paused"}`} style={{"--semantic-color": active.color}} aria-label="Content-aware video analytics">
+    <header className="dh-semantic-head">
+      <div>
+        <span>Content-aware analytics</span>
+        <h2>{active.topic}</h2>
+        <p>{active.summary}</p>
+      </div>
+      <div className="dh-semantic-health" aria-label="Analytics connection status">
+        <span><i className={ga4Ready ? "online" : "waiting"} /> GA4 {ga4Ready ? "collection ready" : "waiting"}</span>
+        <span><i className={analysis ? "online" : "waiting"} /> Semantic {analysis ? "context ready" : "building"}</span>
+        <strong>{confidence}% context confidence</strong>
+      </div>
+    </header>
+
+    <div className="dh-semantic-grid">
+      <article className="dh-semantic-field dh-semantic-video" aria-label={`${active.topic} video with semantic object field`}>
+        <div className="dh-semantic-field-label"><span>Current YouTube source</span><b>{active.family}</b></div>
+        <div className="dh-semantic-orbit" aria-hidden="true">
+          <span className="core"><i /><b>{compact(active.topic, 18)}</b></span>
+          {particleLabels.map((label, index) => <span key={`${label}-${index}`} className={`particle p-${index + 1}`} style={{"--particle-index": index}}><i />{compact(label, 16)}</span>)}
+        </div>
+        {embedUrl ? <iframe title={`YouTube source: ${clean(video.title, active.topic)}`} src={embedUrl} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen /> : <div className="dh-semantic-video-waiting">Video source loading</div>}
+        <small>Subtle objects follow the active subject—not audience behavior.</small>
+      </article>
+
+      <article className="dh-topic-readout">
+        <div className="dh-topic-kicker"><span>Now analyzing</span><code>{formatTime(seconds)}</code></div>
+        <h3>{active.label}</h3>
+        <p>{active.summary}</p>
+        <div className="dh-topic-progress"><i style={{width: `${currentProgress}%`}} /></div>
+        <dl>
+          <div><dt>Source</dt><dd>{basis}</dd></div>
+          <div><dt>Channel</dt><dd>{clean(video.channelTitle || analysis?.channel, "Source channel")}</dd></div>
+          <div><dt>Event</dt><dd><code>video_topic_shift</code></dd></div>
+          <div><dt>Status</dt><dd>{compact(analyzerStatus, 34)}</dd></div>
+        </dl>
+      </article>
+
+      <article className="dh-topic-affinity" aria-label="Topic affinity visualization">
+        <div className="dh-affinity-title"><span>Topic affinity</span><b>Context preview</b></div>
+        <div className="dh-affinity-map" aria-hidden="true">
+          {segments.slice(0, 6).map((segment, index) => <span key={segment.id} className={index === activeIndex ? "active" : ""} style={{"--x": `${18 + ((index * 29) % 68)}%`, "--y": `${20 + ((index * 37) % 62)}%`, "--size": `${34 + (index % 3) * 12}px`, "--node-color": segment.color}}><i />{compact(segment.topic, 11)}</span>)}
+        </div>
+        <small>Not geographic audience data. Connect the GA4 Data API server-side to enable measured regional engagement.</small>
+      </article>
+      <aside className="dh-semantic-controls" aria-label="Video and analytics controls">
+        <span>Side controls</span>
+        <button type="button" className={playing ? "active" : ""} onClick={controls.onTogglePlay}>{playing ? "Pause Video" : "Play Video"}</button>
+        <button type="button" onClick={controls.onPrevious}>Previous Video</button>
+        <button type="button" onClick={controls.onNext}>Next Video</button>
+        <button type="button" onClick={controls.onGlb}>3D / GLB Evidence</button>
+        <button type="button" onClick={controls.onPodcast}>Podcast Evidence</button>
+        <button type="button" className={controls.isFullscreen ? "active" : ""} onClick={controls.onFullscreen}>{controls.isFullscreen ? "× Exit Full Screen" : "[] Full Screen"}</button>
+      </aside>
+    </div>
+
+    <nav className="dh-semantic-timeline" aria-label="Semantic video timeline">
+      <div className="dh-timeline-track" aria-hidden="true"><i style={{width: `${Math.min(100, (seconds / Math.max(1, duration)) * 100)}%`}} /></div>
+      {segments.map((segment, index) => <button key={segment.id} type="button" className={index === activeIndex ? "active" : ""} style={{"--segment-color": segment.color, flex: Math.max(1, segment.end - segment.start)}} onClick={() => onSeek?.(segment.start)} aria-label={`Seek to ${segment.label} at ${formatTime(segment.start)}`}>
+        <code>{formatTime(segment.start)}</code>
+        <b>{segment.topic}</b>
+        <span>{segment.label}</span>
+      </button>)}
+    </nav>
+
+    <footer className="dh-semantic-foot">
+      <span>GA4 event contract</span>
+      <code>video_id · current_topic · topic_index · topic_start_seconds · semantic_source</code>
+      <b>{analyzerMode === "metadata-only" ? "Metadata context—no transcript claim" : "Timestamped semantic context"}</b>
+    </footer>
+  </section>
+}

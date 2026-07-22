@@ -11,6 +11,7 @@ import {applySystemPerformanceProfile, getSystemPerformanceProfile} from "../lib
 import PodcastMatchPanel from "./PodcastMatchPanel"
 import SocialPressureDrawer from "./SocialPressureDrawer"
 import WeatherTimeGauge from "./WeatherTimeGauge"
+import SemanticAnalyticsPanel from "./SemanticAnalyticsPanel"
 import "./FullscreenObservatory.css"
 import "./FullscreenObservatory.api.css"
 import "./FullscreenObservatory.sequence.css"
@@ -3514,6 +3515,7 @@ export default function FullscreenObservatoryV2(){
   const [entryOpen, setEntryOpen] = useState(false)
   const [entryLoading, setEntryLoading] = useState(false)
   const [awake, setAwake] = useState(true)
+  const [isFullscreen, setIsFullscreen] = useState(() => typeof document !== "undefined" && Boolean(document.fullscreenElement))
   const [playing, setPlaying] = useState(true)
   const [layer, setLayer] = useState("Base")
   const [layerOpen, setLayerOpen] = useState(false)
@@ -4512,9 +4514,10 @@ export default function FullscreenObservatoryV2(){
   }, [])
 
   useEffect(() => {
-    armIdleModelTimer()
-    return () => window.clearTimeout(idleModelTimer.current)
-  }, [entryOpen, podcastFeatureOpen, glbPlayViewOpen, autoPresent, playing, sceneFeed.id, sceneFeed.title, sceneFeed.modelUrl, sceneFeed.embedUrl, sceneFeed.sourceEmbedUrl, category, active])
+    const syncFullscreen = () => setIsFullscreen(Boolean(document.fullscreenElement))
+    document.addEventListener("fullscreenchange", syncFullscreen)
+    return () => document.removeEventListener("fullscreenchange", syncFullscreen)
+  }, [])
 
   useEffect(() => {
     const connection = navigator.connection
@@ -4871,35 +4874,6 @@ export default function FullscreenObservatoryV2(){
   }, [autoPresent, runtimePaused, demoMode, tier, category, active, sceneFeed.id, sceneFeed.title, sceneVisualKey, visualReadyKey, feeds, autoDelay, presentationChapter.id, presentationChapter.feedOffset, activeTour])
 
   useEffect(() => {
-    window.clearTimeout(presentationIdleTimer.current)
-    if(!autoPresent || runtimePaused || !modelOpen || sceneVisualKey === visualReadyKey) return undefined
-    presentationIdleTimer.current = window.setTimeout(() => {
-      const nextIndex = feeds.length > 1 ? (active + 1) % feeds.length : active
-      const nextItem = feeds[nextIndex] || sceneFeed
-      setDirectorStatus({phase: "Advancing idle renderer", detail: nextItem.title, status: "Preview stayed idle too long. DigitalHut is moving the presentation forward."})
-      recordDirectorMessage("ai", `Renderer stayed idle, so I am advancing to ${nextItem.title} and keeping the presentation moving.`, "Auto recovery")
-      setInteractionPulse(true)
-      window.clearTimeout(pulseTimer.current)
-      pulseTimer.current = window.setTimeout(() => setInteractionPulse(false), 900)
-      if(feeds.length > 1){
-        setActive(nextIndex)
-        setStageIndex(0)
-        setGuideDepth(0)
-        setModelOpen(true)
-        speakAfterVisual(`Renderer idle recovery. ${concisePresentationLine({feed: nextItem, category: nextItem.category || category, stage: stages[0]})}`, visualKeyFor(nextItem, stages[0]), 700)
-        return
-      }
-      loadFeeds(category, sceneFeed.query || query, {silent: true, keepOpen: true}).then((next) => {
-        const loaded = next[0] || sceneFeed
-        setActive(0)
-        setModelOpen(true)
-        speakAfterVisual(`Renderer idle recovery. I found a fresh option. ${concisePresentationLine({feed: loaded, category, stage: stages[0]})}`, visualKeyFor(loaded, stages[0]), 700)
-      })
-    }, PRESENTATION_IDLE_MS)
-    return () => window.clearTimeout(presentationIdleTimer.current)
-  }, [autoPresent, runtimePaused, modelOpen, sceneVisualKey, visualReadyKey, active, feeds, sceneFeed, category, query])
-
-  useEffect(() => {
     const pending = pendingSpeechRef.current
     if(!pending || pending.key !== visualReadyKey) return
     window.clearTimeout(pendingSpeechTimer.current)
@@ -4942,35 +4916,25 @@ export default function FullscreenObservatoryV2(){
   }
 
   function openIdleModelView(){
-    setAwake(false)
-    setGlbDockExpanded(false)
-    setGlbPlayViewOpen(false)
-    setSelectedGlbPlayAsset(null)
-    setModelOpen(false)
-    setDirectorStatus({
-      phase: "3D Model View waiting",
-      detail: sceneFeed.title,
-      status: "Timeout no longer opens a paused GLB. Press 3D Model View when you want the live renderer."
-    })
+    setAwake(true)
   }
 
   function armIdleModelTimer(){
     window.clearTimeout(idleModelTimer.current)
-    if(entryOpen || podcastFeatureOpen || glbPlayViewOpen || autoPresent || playing) return
-    idleModelTimer.current = window.setTimeout(openIdleModelView, 5000)
   }
 
   function wake(){
     setAwake(true)
     window.clearTimeout(hideTimer.current)
-    hideTimer.current = window.setTimeout(() => {
-      if(!autoPresent && !playing && !podcastFeatureOpen && !glbPlayViewOpen) {
-        openIdleModelView()
-        return
-      }
-      setAwake(false)
-    }, 2800)
-    armIdleModelTimer()
+  }
+
+  async function toggleFullscreen(){
+    try {
+      if(document.fullscreenElement) await document.exitFullscreen()
+      else await document.documentElement.requestFullscreen()
+    } catch {
+      setDirectorStatus({phase: "Full screen unavailable", detail: "Browser permission required", status: "Use the browser full-screen command if this control is blocked."})
+    }
   }
 
   function saveAssetReview(rating){
@@ -6827,7 +6791,7 @@ export default function FullscreenObservatoryV2(){
           {documentaryTimeline.map((item) => <button key={item.id} type="button" className={presentationChapter.id === item.id ? "active" : ""} onClick={() => scrubPresentation(item.at)}>{item.label}</button>)}
         </div>
         <p className="dh-movie-caption">{presentationChapter.media}: {presentationCaption}</p>
-        <section className={`dh-youtube-story-renderer meaning-${liveMeaning.id} matrix-${matrixConstruction.mode} visual-${matrixConstruction.visualFamily} ${presentationChapter.id === "podcast" ? "podcast-pulse" : ""} ${podcastFeatureOpen ? "podcast-feature-open" : ""} ${analyticsStarted ? "is-constructing" : "is-awaiting-build"} ${adResetWindow ? "ad-cycle-reset" : ""}`} style={{"--signal-beat": youtubeSignalField.beat, "--stream-pace": streamAnalytics.pace, "--scene-tempo": sceneMotionTempo, "--scene-light": sceneLightPulse, "--stat-resolve": `${Math.round(statResolveRatio * 100)}%`, "--motion-progress": `${Math.round(liveAnalyticsProgress)}%`, "--construction-progress": `${Math.round(observatoryConstructionProgress)}%`, "--scene-shift": sceneShiftIndex, "--analytics-clock": analyticsClock, "--story-hero-image": `url("${storyHeroImage}")`, "--story-hero-shift": storyHeroIndex, "--story-hero-opacity": analyticsStarted ? String(.2 + sceneLightPulse * .28) : ".12"}}>
+        <section className={`dh-youtube-story-renderer meaning-${liveMeaning.id} matrix-${matrixConstruction.mode} visual-${matrixConstruction.visualFamily} ${presentationChapter.id === "podcast" ? "podcast-pulse" : ""} ${podcastFeatureOpen ? "podcast-feature-open" : ""} ${glbPlayViewOpen ? "glb-feature-open" : ""} ${analyticsStarted ? "is-constructing" : "is-awaiting-build"} ${adResetWindow ? "ad-cycle-reset" : ""}`} style={{"--signal-beat": youtubeSignalField.beat, "--stream-pace": streamAnalytics.pace, "--scene-tempo": sceneMotionTempo, "--scene-light": sceneLightPulse, "--stat-resolve": `${Math.round(statResolveRatio * 100)}%`, "--motion-progress": `${Math.round(liveAnalyticsProgress)}%`, "--construction-progress": `${Math.round(observatoryConstructionProgress)}%`, "--scene-shift": sceneShiftIndex, "--analytics-clock": analyticsClock, "--story-hero-image": `url("${storyHeroImage}")`, "--story-hero-shift": storyHeroIndex, "--story-hero-opacity": analyticsStarted ? String(.2 + sceneLightPulse * .28) : ".12"}}>
           <header>
             <div>
               <span>DigitalHut Observatory Experience</span>
@@ -6835,6 +6799,31 @@ export default function FullscreenObservatoryV2(){
             </div>
             <a href={youtubeStory.searchUrl} target="_blank" rel="noreferrer">Open YouTube Search</a>
           </header>
+          <SemanticAnalyticsPanel
+            video={{
+              videoId: youtubeVideoIdFor(youtubeStory.primaryVideo),
+              title: youtubeStory.primaryVideo?.title || youtubeStory.episodeName,
+              channelTitle: youtubeStory.primaryVideo?.channelTitle || contentRadar.channel,
+            }}
+            analysis={contentAnalyzer?.analysis}
+            analyzerMode={contentAnalyzer?.mode || "metadata-only"}
+            analyzerStatus={contentAnalyzer?.status || "waiting"}
+            category={category}
+            seconds={youtubeSeekSeconds}
+            duration={120}
+            playing={youtubeShouldPlay}
+            onSeek={(targetSeconds) => scrubPresentation(Math.max(0, Math.min(100, (targetSeconds / 120) * 100)))}
+            embedUrl={youtubePlayerUrl}
+            controls={{
+              isFullscreen,
+              onTogglePlay: toggleMoviePlayback,
+              onPrevious: previousFeed,
+              onNext: nextFeed,
+              onGlb: glbPlayViewOpen ? minimizeGlbRenderer : openContainedModel,
+              onPodcast: openPodcastFeatureInterrupt,
+              onFullscreen: toggleFullscreen,
+            }}
+          />
           <div className={`dh-digitalhut-presents ${analyticsStarted ? "is-building" : "is-waiting"}`} aria-label="DigitalHut Presents system state">
             <span>DigitalHut Presents</span>
             <b>{analyticsStarted ? "Creating Observatory Experience" : "System waiting for Play"}</b>
@@ -7618,6 +7607,7 @@ export default function FullscreenObservatoryV2(){
               <button type="button" className={podcastFeatureOpen ? "active" : ""} onClick={openPodcastFeatureInterrupt}>Podcast Clip</button>
               <button type="button" onClick={() => scrubPresentation(76)}>Sponsor Stack</button>
               <button type="button" onClick={() => setGlbDockExpanded((value) => !value)}>{glbDockExpanded ? "Collapse GLBs" : "Expand 3 GLBs"}</button>
+              <button type="button" className={isFullscreen ? "active" : ""} onClick={toggleFullscreen}>{isFullscreen ? "× Exit Full Screen" : "[] Full Screen"}</button>
               <div className="dh-proof-bridge-controls" aria-label="DigitalHut 200M proof and source bridge">
                 <a href={digitalhutMasterListBridge.proofRoute} onClick={() => trackObservatoryPixel("proof_route_open", masterListBridgePixel("transport-proof-bridge", {category, metadata: {route: digitalhutMasterListBridge.proofRoute}}))}>{digitalhutMasterListBridge.proofLabel}</a>
                 <a href={digitalhutMasterListBridge.sourceBridgePath} onClick={() => trackObservatoryPixel("backlink_source_open", masterListBridgePixel("transport-proof-bridge", {category, keywordHint: digitalhutMasterListBridge.sourceKeywordHint, metadata: {route: digitalhutMasterListBridge.sourceBridgePath}}))}>{digitalhutMasterListBridge.sourceLabel}</a>
