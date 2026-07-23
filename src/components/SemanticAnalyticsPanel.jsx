@@ -32,12 +32,13 @@ function semanticFamily(value){
 function buildSegments({analysis, title, category, duration = 120}){
   const timeline = Array.isArray(analysis?.timeline) ? analysis.timeline : []
   const entities = Array.isArray(analysis?.entities) ? analysis.entities : []
-  const base = timeline.length ? timeline : [
+  const fallbacks = [
     {at: "0:00", label: "Opening context", summary: title, entity: entities[0] || category},
     {at: "0:24", label: "Primary subject", summary: analysis?.currentRead || title, entity: entities[1] || analysis?.focus || category},
     {at: "0:48", label: "Evidence branch", summary: analysis?.researchUse || `Contextual analysis for ${title}`, entity: entities[2] || "Evidence"},
     {at: "1:12", label: "Visual synthesis", summary: analysis?.nextQuestion || `What should the next source confirm?`, entity: entities[3] || "Synthesis"},
   ]
+  const base = timeline.length >= 4 ? timeline : [...timeline, ...fallbacks.slice(timeline.length)]
   return base.slice(0, 7).map((item, index) => {
     const start = Math.min(Math.max(0, parseClock(item.at, index * 24)), Math.max(1, duration - 1))
     const nextStart = index < base.length - 1 ? parseClock(base[index + 1]?.at, start + 24) : duration
@@ -75,6 +76,8 @@ export default function SemanticAnalyticsPanel({
   controls = {},
 }){
   const [reproductionClock, setReproductionClock] = useState(0)
+  const [videoFullscreen, setVideoFullscreen] = useState(false)
+  const iframeRef = useRef(null)
   const segments = useMemo(() => buildSegments({
     analysis,
     title: clean(video.title, category),
@@ -96,6 +99,21 @@ export default function SemanticAnalyticsPanel({
     const timer = window.setInterval(() => setReproductionClock((current) => (current + 1) % 100000), 520)
     return () => window.clearInterval(timer)
   }, [])
+
+  useEffect(() => {
+    const sync = () => setVideoFullscreen(document.fullscreenElement === iframeRef.current)
+    document.addEventListener("fullscreenchange", sync)
+    return () => document.removeEventListener("fullscreenchange", sync)
+  }, [])
+
+  async function toggleVideoFullscreen(){
+    try {
+      if(document.fullscreenElement) await document.exitFullscreen()
+      else await iframeRef.current?.requestFullscreen?.()
+    } catch {
+      controls.onFullscreen?.()
+    }
+  }
 
   useEffect(() => {
     if(!active || !video.videoId) return
@@ -131,6 +149,7 @@ export default function SemanticAnalyticsPanel({
   const particleLabels = entities.length ? entities : segments.map((segment) => segment.topic).slice(0, 6)
   const reproductionSignals = [active.topic, active.label, ...particleLabels].filter(Boolean)
   const reproductionSignal = reproductionSignals[reproductionClock % Math.max(1, reproductionSignals.length)] || active.topic
+  const reproductionCycle = Math.floor(reproductionClock / 2)
   const currentProgress = Math.max(0, Math.min(100, ((seconds - active.start) / Math.max(1, active.end - active.start)) * 100))
 
   return <section className={`dh-semantic-suite family-${active.family} ${playing ? "is-playing" : "is-paused"}`} style={{"--semantic-color": active.color, "--reproduction-step": reproductionClock % 12}} aria-label="Content-aware video analytics">
@@ -155,28 +174,28 @@ export default function SemanticAnalyticsPanel({
           <span className="core"><i /><b>{compact(active.topic, 18)}</b></span>
           {particleLabels.map((label, index) => <span key={`${label}-${index}`} className={`particle p-${index + 1}`} style={{"--particle-index": index}}><i />{compact(label, 16)}</span>)}
         </div>
-        {embedUrl ? <iframe title={`YouTube source: ${clean(video.title, active.topic)}`} src={embedUrl} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen /> : <div className="dh-semantic-video-waiting">Video source loading</div>}
+        {embedUrl ? <iframe ref={iframeRef} title={`YouTube source: ${clean(video.title, active.topic)}`} src={embedUrl} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" allowFullScreen /> : <div className="dh-semantic-video-waiting">Video source loading</div>}
         <small>Subtle objects follow the active subject—not audience behavior.</small>
       </article>
 
       <article className="dh-topic-readout">
-        <div className="dh-topic-kicker"><span>Now analyzing</span><code>{formatTime(seconds)}</code></div>
-        <h3>{active.label}</h3>
-        <p>{active.summary}</p>
+        <div className="dh-topic-kicker" key={`kicker-${reproductionCycle}`}><span>Now analyzing</span><code>{formatTime(seconds)}</code></div>
+        <h3 key={`title-${reproductionCycle}`}>{active.label}</h3>
+        <p key={`summary-${reproductionCycle}`}>{active.summary}</p>
         <div className="dh-reproduction-read"><span>Reproduction frame</span><b key={`${reproductionSignal}-${reproductionClock}`}>{reproductionSignal}</b><code>LIVE {String(reproductionClock % 1000).padStart(3, "0")}</code></div>
-        <div className="dh-topic-progress"><i style={{width: `${currentProgress}%`}} /></div>
-        <dl>
-          <div><dt>Source</dt><dd>{basis}</dd></div>
-          <div><dt>Channel</dt><dd>{clean(video.channelTitle || analysis?.channel, "Source channel")}</dd></div>
-          <div><dt>Event</dt><dd><code>video_topic_shift</code></dd></div>
-          <div><dt>Status</dt><dd>{compact(analyzerStatus, 34)}</dd></div>
+        <div className="dh-topic-progress replaying" key={`progress-${reproductionCycle}`}><i style={{width: `${Math.max(8, currentProgress)}%`}} /></div>
+        <dl key={`facts-${reproductionCycle}`}>
+          <div style={{"--fact-index":0}}><dt>Source</dt><dd>{basis}</dd></div>
+          <div style={{"--fact-index":1}}><dt>Channel</dt><dd>{clean(video.channelTitle || analysis?.channel, "Source channel")}</dd></div>
+          <div style={{"--fact-index":2}}><dt>Event</dt><dd><code>video_topic_shift</code></dd></div>
+          <div style={{"--fact-index":3}}><dt>Status</dt><dd>{compact(analyzerStatus, 34)}</dd></div>
         </dl>
       </article>
 
       <article className="dh-topic-affinity" aria-label="Topic affinity visualization">
         <div className="dh-affinity-title"><span>Topic affinity</span><b>Context preview</b></div>
         <div className="dh-affinity-map" aria-hidden="true">
-          {segments.slice(0, 6).map((segment, index) => <span key={segment.id} className={index === activeIndex ? "active" : ""} style={{"--x": `${18 + ((index * 29) % 68)}%`, "--y": `${20 + ((index * 37) % 62)}%`, "--size": `${34 + (index % 3) * 12}px`, "--node-color": segment.color}}><i />{compact(segment.topic, 11)}</span>)}
+          {segments.slice(0, 6).map((segment, index) => <span key={segment.id} className={index === activeIndex ? "active" : ""} style={{"--x": `${18 + ((index * 29) % 68)}%`, "--y": `${20 + ((index * 37) % 62)}%`, "--size": `${34 + (index % 3) * 12}px`, "--node-color": segment.color, "--node-index":index}}><i />{compact(segment.topic, 11)}</span>)}
         </div>
         <small>Not geographic audience data. Connect the GA4 Data API server-side to enable measured regional engagement.</small>
       </article>
@@ -187,6 +206,7 @@ export default function SemanticAnalyticsPanel({
         <button type="button" onClick={controls.onNext}>Next Video</button>
         <button type="button" onClick={controls.onGlb}>3D / GLB Evidence</button>
         <button type="button" onClick={controls.onPodcast}>Podcast Evidence</button>
+        <button type="button" className={videoFullscreen ? "active dh-video-fullscreen-control" : "dh-video-fullscreen-control"} onClick={toggleVideoFullscreen}>{videoFullscreen ? "Exit Video Full Screen" : "[] Video Full Screen"}</button>
         <button type="button" className={controls.isFullscreen ? "active" : ""} onClick={controls.onFullscreen}>{controls.isFullscreen ? "× Exit Full Screen" : "[] Full Screen"}</button>
       </aside>
     </div>
@@ -199,6 +219,7 @@ export default function SemanticAnalyticsPanel({
         <span>{segment.label}</span>
       </button>)}
     </nav>
+    <div className="dh-timeline-flyway" aria-hidden="true">{particleLabels.concat(segments.map((segment) => segment.topic)).slice(0, 10).map((label, index) => <span key={`flyway-${label}-${index}`} style={{"--fly-index":index,"--fly-color":palette[index % palette.length]}}><i />{compact(label, 14)}</span>)}</div>
 
     <footer className="dh-semantic-foot">
       <span>GA4 event contract</span>
