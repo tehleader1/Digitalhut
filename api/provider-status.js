@@ -12,7 +12,9 @@ const providers = [
   ["google-cloud", ["GOOGLE_SERVICE_ACCOUNT_JSON", "GOOGLE_APPLICATION_CREDENTIALS", "GOOGLE_CLOUD_PROJECT"], "speech-tts-backup-worker"],
   ["google-search-console", ["GOOGLE_SERVICE_ACCOUNT_JSON", "GOOGLE_SEARCH_CONSOLE_SITE_URL", "GOOGLE_CLOUD_PROJECT"], "real-google-sitemap-rank-read"],
   ["openai-billing", ["OPENAI_ADMIN_KEY", "OPENAI_ORG_ADMIN_KEY"], "api-cost-verification"],
-  ["firecuda-storage", ["SUPABASE_FIRECUDA_ASSET_BASE", "VITE_SUPABASE_FIRECUDA_ASSET_BASE", "SUPABASE_FIRECUDA_AVAILABLE_FILES"], "verified-glb-storage"]
+  ["firecuda-storage", ["SUPABASE_FIRECUDA_ASSET_BASE", "VITE_SUPABASE_FIRECUDA_ASSET_BASE", "SUPABASE_FIRECUDA_AVAILABLE_FILES"], "verified-glb-storage"],
+  ["paypal", ["PAYPAL_CLIENT_ID", "PAYPAL_CLIENT_SECRET", "PAYPAL_PLAN_STANDARD_ID", "PAYPAL_PLAN_PREMIUM_ID", "PAYPAL_PLAN_PRO_ID"], "subscription-checkout"],
+  ["google-analytics-data", ["GA4_SERVICE_ACCOUNT_EMAIL", "GA4_PROPERTY_ID"], "provider-native-analytics-read"]
 ]
 
 function envValue(key){
@@ -21,6 +23,298 @@ function envValue(key){
 
 function configured(keys){
   return keys.filter((key) => Boolean(envValue(key)))
+}
+
+const paypalRateWindows = new Map()
+let ga4Cache = null
+
+function requestPayload(req){
+  if(req.body && typeof req.body === "object") return req.body
+  if(typeof req.body !== "string") return {}
+  try { return JSON.parse(req.body) } catch { return {} }
+}
+
+function consumePaypalRate(req, now = Date.now()){
+  const forwarded = String(req.headers?.["x-forwarded-for"] || "").split(",")[0].trim()
+  const key = forwarded || String(req.socket?.remoteAddress || "unknown")
+  const windowMs = 15 * 60 * 1000
+  const current = paypalRateWindows.get(key)
+  if(!current || current.resetAt <= now){
+    paypalRateWindows.set(key, {count:1, resetAt:now + windowMs})
+    return {allowed:true, retryAfterSeconds:0}
+  }
+  current.count += 1
+  if(paypalRateWindows.size > 2000) paypalRateWindows.delete(paypalRateWindows.keys().next().value)
+  return {allowed:current.count <= 20, retryAfterSeconds:Math.max(1, Math.ceil((current.resetAt - now) / 1000))}
+}
+
+function paypalSettings(){
+  const environment = envValue("PAYPAL_ENV").toLowerCase() === "sandbox" ? "sandbox" : "live"
+  return {
+    environment,
+    apiBase: environment === "sandbox" ? "https://api-m.sandbox.paypal.com" : "https://api-m.paypal.com",
+    clientId: envValue("PAYPAL_CLIENT_ID"),
+    clientSecret: envValue("PAYPAL_CLIENT_SECRET"),
+    plans: {
+      "tier-standard": envValue("PAYPAL_PLAN_STANDARD_ID"),
+      "tier-premium": envValue("PAYPAL_PLAN_PREMIUM_ID"),
+      "tier-pro": envValue("PAYPAL_PLAN_PRO_ID")
+    }
+  }
+}
+
+function publicPaypalStatus(){
+  const settings = paypalSettings()
+  const plans = Object.fromEntries(Object.entries(settings.plans).filter(([, value]) => Boolean(value)))
+  const missingPlanTiers = ["tier-standard", "tier-premium", "tier-pro"].filter((tier) => !plans[tier])
+  return {
+    configured:Boolean(settings.clientId && settings.clientSecret),
+    environment:settings.environment,
+    clientId:settings.clientId || null,
+    plans,
+    missingPlanTiers,
+    subscriptionReady:Boolean(settings.clientId && settings.clientSecret && missingPlanTiers.length === 0),
+    receiptCaptureReady:Boolean((envValue("SUPABASE_SERVICE_ROLE_KEY") || envValue("DIGITALHUT_SUPABASE_SERVICE_ROLE_KEY") || envValue("SUPABASE_SECRET_KEY"))),
+    note:"Secrets remain server-side. Paid access requires an ACTIVE PayPal subscription and an idempotent server receipt."
+  }
+}
+
+async function paypalAccessToken(){
+  const settings = paypalSettings()
+  if(!settings.clientId || !settings.clientSecret) return {ok:false, reason:"missing-paypal-client-credentials"}
+  try {
+    const response = await fetch(`${settings.apiBase}/v1/oauth2/token`, {
+      method:"POST",
+      headers:{Authorization:`Basic ${Buffer.from(`${settings.clientId}:${settings.clientSecret}`).toString("base64")}`, "Content-Type":"application/x-www-form-urlencoded"},
+      body:"grant_type=client_credentials",
+      signal:AbortSignal.timeout(8000)
+    })
+    const payload = await response.json().catch(() => ({}))
+    if(!response.ok || !payload.access_token) return {ok:false, reason:`paypal-oauth-${response.status || "failed"}`}
+    return {ok:true, accessToken:payload.access_token, settings}
+  } catch { return {ok:false, reason:"paypal-oauth-request-failed"} }
+}
+
+async function validatePaypalPlan(payload){
+  const planId = String(payload?.planId || "").trim()
+  const tierId = String(payload?.tierId || "").trim()
+  if(!/^tier-(standard|premium|pro)$/.test(tierId) || !planId || planId.length > 180) return {active:false, reason:"invalid-paypal-plan-selection"}
+  const token = await paypalAccessToken()
+  if(!token.ok) return {active:false, reason:token.reason}
+  if(token.settings.plans[tierId] !== planId) return {active:false, reason:"plan-does-not-match-selected-tier"}
+  try {
+    const response = await fetch(`${token.settings.apiBase}/v1/billing/plans/${encodeURIComponent(planId)}`, {
+      headers:{Authorization:`Bearer ${token.accessToken}`},
+      signal:AbortSignal.timeout(8000)
+    })
+    const plan = await response.json().catch(() => ({}))
+    const status = String(plan.status || "").toUpperCase()
+    return {active:response.ok && status === "ACTIVE", status, reason:response.ok ? (status === "ACTIVE" ? "" : "paypal-plan-not-active") : `paypal-plan-read-${response.status}`}
+  } catch { return {active:false, reason:"paypal-plan-read-request-failed"} }
+}
+
+function paypalReceiptSupabaseConfig(){
+  const configuredUrl = envValue("SUPABASE_URL") || envValue("VITE_SUPABASE_URL") || envValue("NEXT_PUBLIC_SUPABASE_URL")
+  const url = configuredUrl.includes("fzloxqgzihxiqqrlmyoz.supabase.co")
+    ? configuredUrl
+    : "https://fzloxqgzihxiqqrlmyoz.supabase.co"
+  const serviceKey = envValue("SUPABASE_SERVICE_ROLE_KEY") || envValue("DIGITALHUT_SUPABASE_SERVICE_ROLE_KEY") || envValue("SUPABASE_SECRET_KEY")
+  return {url:url.replace(/\/+$/, ""), serviceKey}
+}
+
+async function recordPaypalReceipt({subscriptionId, tierId, planId, status, environment}){
+  const {url, serviceKey} = paypalReceiptSupabaseConfig()
+  if(!serviceKey) return {recorded:false, reason:"supabase-server-receipt-not-configured"}
+  const receiptHash = crypto.createHash("sha256").update(subscriptionId).digest("hex")
+  const clientEventId = `paypal-subscription-${receiptHash}`
+  const row = {
+    event_name:"paypal_subscription_verified",
+    session_id:`paypal-${receiptHash.slice(0, 32)}`,
+    path:"/checkout/paypal",
+    referrer:"paypal-subscription",
+    title:"DigitalHut PayPal subscription verified",
+    source:"paypal-provider-status",
+    tier_key:tierId,
+    metadata:{
+      status,
+      environment,
+      subscriptionId,
+      planId,
+      clientEventId,
+      providerVerified:true,
+      receiptType:"paypal-subscription-verification"
+    }
+  }
+  const headers = {apikey:serviceKey, authorization:`Bearer ${serviceKey}`, "content-type":"application/json"}
+  try {
+    const response = await fetch(`${url}/rest/v1/digitalhut_search_pixel_events`, {
+      method:"POST",
+      headers:{...headers, Prefer:"return=minimal"},
+      body:JSON.stringify(row),
+      signal:AbortSignal.timeout(8000)
+    })
+    if(response.ok) return {recorded:true, duplicate:false}
+    if(response.status !== 409) return {recorded:false, reason:`supabase-receipt-write-${response.status}`}
+    const query = new URLSearchParams({select:"id", "metadata->>clientEventId":`eq.${clientEventId}`, limit:"1"})
+    const existing = await fetch(`${url}/rest/v1/digitalhut_search_pixel_events?${query}`, {
+      headers,
+      signal:AbortSignal.timeout(8000)
+    })
+    const rows = await existing.json().catch(() => [])
+    return existing.ok && Array.isArray(rows) && rows.length
+      ? {recorded:true, duplicate:true}
+      : {recorded:false, reason:"supabase-receipt-conflict-not-confirmed"}
+  } catch { return {recorded:false, reason:"supabase-receipt-write-request-failed"} }
+}
+
+async function verifyPaypalSubscription(payload){
+  const subscriptionId = String(payload?.subscriptionId || "").trim()
+  const tierId = String(payload?.tierId || "").trim()
+  if(!/^[A-Z0-9-]{8,160}$/i.test(subscriptionId) || !/^tier-(standard|premium|pro)$/.test(tierId)) return {verified:false, reason:"invalid-subscription-selection"}
+  const token = await paypalAccessToken()
+  if(!token.ok) return {verified:false, reason:token.reason}
+  try {
+    const response = await fetch(`${token.settings.apiBase}/v1/billing/subscriptions/${encodeURIComponent(subscriptionId)}`, {
+      headers:{Authorization:`Bearer ${token.accessToken}`},
+      signal:AbortSignal.timeout(8000)
+    })
+    const subscription = await response.json().catch(() => ({}))
+    const status = String(subscription.status || "").toUpperCase()
+    const planMatches = Boolean(token.settings.plans[tierId] && subscription.plan_id === token.settings.plans[tierId])
+    if(!response.ok || status !== "ACTIVE" || !planMatches) return {
+      verified:false,
+      status,
+      planMatches,
+      reason:!response.ok ? "paypal-subscription-read-failed" : !planMatches ? "plan-does-not-match-tier" : "subscription-not-active"
+    }
+    const receipt = await recordPaypalReceipt({
+      subscriptionId:subscription.id || subscriptionId,
+      tierId,
+      planId:subscription.plan_id,
+      status,
+      environment:token.settings.environment
+    })
+    return {
+      verified:receipt.recorded,
+      providerVerified:true,
+      status,
+      planMatches:true,
+      receiptRecorded:receipt.recorded,
+      receiptDuplicate:receipt.duplicate === true,
+      reason:receipt.recorded ? "" : receipt.reason
+    }
+  } catch { return {verified:false, reason:"paypal-subscription-read-request-failed"} }
+}
+
+async function providerJson(response, label){
+  const body = await response.json().catch(() => ({}))
+  if(!response.ok) throw new Error(`${label}:${response.status}:${body?.error?.status || "request-failed"}`)
+  return body
+}
+
+async function ga4FederatedToken(req){
+  const oidcToken = String(req.headers?.["x-vercel-oidc-token"] || "").trim()
+  const audience = envValue("GOOGLE_WIF_AUDIENCE") || "//iam.googleapis.com/projects/648891242266/locations/global/workloadIdentityPools/vercel-digitalhut-prod/providers/vercel"
+  if(!oidcToken) throw new Error("vercel-oidc-token-missing")
+  const response = await fetch("https://sts.googleapis.com/v1/token", {
+    method:"POST",
+    headers:{"Content-Type":"application/x-www-form-urlencoded"},
+    body:new URLSearchParams({
+      audience,
+      grant_type:"urn:ietf:params:oauth:grant-type:token-exchange",
+      requested_token_type:"urn:ietf:params:oauth:token-type:access_token",
+      scope:"https://www.googleapis.com/auth/cloud-platform",
+      subject_token:oidcToken,
+      subject_token_type:"urn:ietf:params:oauth:token-type:jwt"
+    }),
+    signal:AbortSignal.timeout(10000)
+  })
+  return providerJson(response, "sts")
+}
+
+async function ga4ServiceAccountToken(federatedAccessToken){
+  const serviceAccountEmail = envValue("GA4_SERVICE_ACCOUNT_EMAIL") || "digitalhut-ga4-reader@digitalhut-503212.iam.gserviceaccount.com"
+  const target = encodeURIComponent(serviceAccountEmail)
+  const response = await fetch(`https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/${target}:generateAccessToken`, {
+    method:"POST",
+    headers:{Authorization:`Bearer ${federatedAccessToken}`, "Content-Type":"application/json"},
+    body:JSON.stringify({scope:["https://www.googleapis.com/auth/analytics.readonly"], lifetime:"900s"}),
+    signal:AbortSignal.timeout(10000)
+  })
+  return providerJson(response, "iam")
+}
+
+function ga4MetricMap(report){
+  const names = report?.metricHeaders?.map((item) => item.name) || []
+  const values = report?.totals?.[0]?.metricValues || report?.rows?.[0]?.metricValues || []
+  return Object.fromEntries(names.map((name, index) => [name, Number(values[index]?.value || 0)]))
+}
+
+function ga4EventRows(report){
+  return (report?.rows || []).map((row) => ({
+    eventName:String(row.dimensionValues?.[0]?.value || "unknown").slice(0, 80),
+    eventCount:Number(row.metricValues?.[0]?.value || 0)
+  }))
+}
+
+async function googleAnalyticsStatus(req){
+  const propertyId = envValue("GA4_PROPERTY_ID") || "546662169"
+  if(!privateStatusAllowed(req)){
+    return {
+      ok:false,
+      configured:true,
+      access:"admin-token-required",
+      provider:"Google Analytics Data API",
+      propertyId,
+      truthBoundary:"Provider-native GA4 statistics are private and are never substituted with DigitalHut internal counters."
+    }
+  }
+  if(ga4Cache && Date.now() - ga4Cache.at < 120000) return ga4Cache.value
+  try {
+    const federated = await ga4FederatedToken(req)
+    const serviceAccount = await ga4ServiceAccountToken(federated.access_token)
+    const headers = {Authorization:`Bearer ${serviceAccount.accessToken}`, "Content-Type":"application/json"}
+    const [standardResponse, realtimeResponse] = await Promise.all([
+      fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${propertyId}:batchRunReports`, {
+        method:"POST",
+        headers,
+        body:JSON.stringify({requests:[
+          {dateRanges:[{startDate:"today",endDate:"today"}],metrics:[{name:"activeUsers"},{name:"sessions"},{name:"screenPageViews"},{name:"eventCount"},{name:"keyEvents"}],metricAggregations:["TOTAL"]},
+          {dateRanges:[{startDate:"today",endDate:"today"}],dimensions:[{name:"eventName"}],metrics:[{name:"eventCount"}],orderBys:[{metric:{metricName:"eventCount"},desc:true}],limit:20}
+        ]}),
+        signal:AbortSignal.timeout(12000)
+      }),
+      fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${propertyId}:runRealtimeReport`, {
+        method:"POST",
+        headers,
+        body:JSON.stringify({metrics:[{name:"activeUsers"},{name:"eventCount"}],dimensions:[{name:"eventName"}],metricAggregations:["TOTAL"],orderBys:[{metric:{metricName:"eventCount"},desc:true}],limit:20}),
+        signal:AbortSignal.timeout(12000)
+      })
+    ])
+    const [standardPayload, realtimePayload] = await Promise.all([
+      providerJson(standardResponse, "analytics-data-standard"),
+      providerJson(realtimeResponse, "analytics-data-realtime")
+    ])
+    const reports = standardPayload.reports || []
+    const value = {
+      ok:true,
+      provider:"Google Analytics Data API",
+      propertyId,
+      today:{dateRange:{start:"today",end:"today"}, totals:ga4MetricMap(reports[0]), events:ga4EventRows(reports[1])},
+      realtime:{totals:ga4MetricMap(realtimePayload), events:ga4EventRows(realtimePayload)},
+      generatedAt:new Date().toISOString(),
+      truthBoundary:"Google-recorded GA4 aggregates. Active users are not a claim of unique people."
+    }
+    ga4Cache = {at:Date.now(), value}
+    return value
+  } catch(error){
+    return {
+      ok:false,
+      provider:"Google Analytics Data API",
+      propertyId,
+      error:String(error?.message || "").includes("vercel-oidc-token-missing") ? "production-vercel-oidc-token-missing" : "provider-read-failed"
+    }
+  }
 }
 
 function unixDaysAgo(days){
@@ -322,6 +616,25 @@ async function googleSearchConsoleStatus(req){
 }
 
 export default async function handler(req, res){
+  if(req.query?.scope === "paypal"){
+    res.setHeader("Cache-Control", "no-store")
+    if(req.method === "GET") return res.status(200).json(publicPaypalStatus())
+    if(req.method !== "POST") return res.status(405).json({verified:false, reason:"method-not-allowed"})
+    const rate = consumePaypalRate(req)
+    if(!rate.allowed){
+      res.setHeader("Retry-After", String(rate.retryAfterSeconds))
+      return res.status(429).json({verified:false, reason:"paypal-verification-rate-limited", retryAfterSeconds:rate.retryAfterSeconds})
+    }
+    const payload = requestPayload(req)
+    if(payload.action === "validate-plan") return res.status(200).json(await validatePaypalPlan(payload))
+    if(payload.action === "verify-subscription") return res.status(200).json(await verifyPaypalSubscription(payload))
+    return res.status(400).json({verified:false, reason:"unsupported-paypal-action"})
+  }
+  if(req.query?.scope === "ga4"){
+    res.setHeader("Cache-Control", "no-store")
+    if(req.method !== "GET") return res.status(405).json({ok:false, error:"method-not-allowed"})
+    return res.status(200).json(await googleAnalyticsStatus(req))
+  }
   if(req.query?.scope === "openai-billing"){
     res.setHeader("Cache-Control", "no-store")
     return res.status(200).json(await openAiBillingStatus(req))

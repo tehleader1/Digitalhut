@@ -41,21 +41,36 @@ export default function AccountSubscriptionPanel({onSession, onOpenTiers, onOpen
   async function continueWithGoogle(){
     setBusy(true)
     setStatus("Opening secure Google sign in...")
-    const {error} = await supabase.auth.signInWithOAuth({provider:"google", options:{redirectTo:redirectUrl()}})
-    if(error){ setStatus(error.message || "Google sign in could not start."); setBusy(false) }
+    try {
+      const {error} = await supabase.auth.signInWithOAuth({provider:"google", options:{redirectTo:redirectUrl()}})
+      if(error) throw error
+    } catch(error){
+      setStatus(error?.message || "Google sign in could not start. Check the connection and try again.")
+      setBusy(false)
+    }
   }
 
   async function submitEmail(event){
     event.preventDefault()
     if(busy) return
     setBusy(true)
-    setStatus(mode === "signup" ? "Sending your confirmation email..." : "Signing in...")
+    setStatus(mode === "signup" ? "Creating your secure account..." : "Signing in...")
     try {
+      if(mode === "signup" && password.length < 8) throw new Error("Use at least 8 characters for your password.")
+      if(mode === "signup" && password !== confirmPassword) throw new Error("The passwords do not match.")
       const result = mode === "signup"
-        ? await supabase.auth.signInWithOtp({email:email.trim(), options:{shouldCreateUser:true, emailRedirectTo:redirectUrl()}})
+        ? await supabase.auth.signUp({
+          email:email.trim(),
+          password,
+          options:{emailRedirectTo:redirectUrl(), data:{password_created:true}}
+        })
         : await supabase.auth.signInWithPassword({email:email.trim(), password})
       if(result.error) throw result.error
-      setStatus(mode === "signup" ? "Confirmation sent. Open the email to return here and create your password." : "Signed in.")
+      setStatus(mode === "signup"
+        ? result.data?.session
+          ? "Account created and signed in."
+          : "Account created. Open the confirmation email to finish signing in."
+        : "Signed in.")
     } catch(error){
       setStatus(error?.message || "That account could not be opened. Check the details and try again.")
     } finally { setBusy(false) }
@@ -82,8 +97,9 @@ export default function AccountSubscriptionPanel({onSession, onOpenTiers, onOpen
       <div className="dh-auth-tabs"><button type="button" className={mode === "signin" ? "active" : ""} onClick={() => setMode("signin")}>Sign in</button><button type="button" className={mode === "signup" ? "active" : ""} onClick={() => setMode("signup")}>Sign up</button></div>
       <form onSubmit={submitEmail}>
         <label>Email<input type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="you@example.com" required /></label>
-        {mode === "signin" && <label>Password<input type="password" autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} required /></label>}
-        <button className="dh-email-login" type="submit" disabled={busy}>{busy ? "Please wait..." : mode === "signup" ? "Confirm email and sign up" : "Sign in with email"}</button>
+        <label>Password<input type="password" autoComplete={mode === "signup" ? "new-password" : "current-password"} value={password} onChange={(event) => setPassword(event.target.value)} minLength={mode === "signup" ? 8 : undefined} required /></label>
+        {mode === "signup" && <label>Confirm password<input type="password" autoComplete="new-password" value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} minLength="8" required /></label>}
+        <button className="dh-email-login" type="submit" disabled={busy}>{busy ? "Please wait..." : mode === "signup" ? "Create account" : "Sign in with email"}</button>
       </form>
       <button className="dh-tier-signup" type="button" onClick={onOpenTiers}>View tiers + create account</button>
       <p className="dh-auth-status" role="status" aria-live="polite">{status}</p>

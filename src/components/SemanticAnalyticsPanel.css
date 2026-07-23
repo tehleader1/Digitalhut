@@ -23,8 +23,6 @@
 .dh-semantic-controls>span{text-transform:uppercase;letter-spacing:.14em;font-size:9px;color:#71879d;margin-bottom:2px}
 .dh-semantic-controls button{flex:1;min-height:30px;border:1px solid #2b4058;border-radius:8px;background:#0d1828;color:#d9e7f3;font-size:10px;font-weight:750;cursor:pointer}
 .dh-semantic-controls button:hover,.dh-semantic-controls button.active{border-color:var(--semantic-color);background:color-mix(in srgb,var(--semantic-color) 13%,#0d1828);color:white}
-.dh-semantic-controls button:last-child{display:none}
-
 /* Default to the readable command view. Legacy visual layers remain available through evidence controls. */
 body:has(.dh-semantic-suite) .dh-youtube-story-renderer>.dh-digitalhut-presents,
 body:has(.dh-semantic-suite) .dh-youtube-story-renderer>.dh-construction-status,
@@ -61,7 +59,8 @@ body:has(.dh-semantic-suite) .dh-movie-head,body:has(.dh-semantic-suite) .dh-mov
 @keyframes semantic-reproduce{0%{opacity:.15;transform:translateY(8px);filter:blur(2px)}55%{opacity:1;filter:none}100%{transform:none}}@keyframes semantic-progress-replay{from{transform:scaleX(0);filter:brightness(2)}to{transform:scaleX(1);filter:none}}@keyframes semantic-fact-replay{from{opacity:.1;transform:translateX(-9px)}to{opacity:1;transform:none}}@keyframes semantic-affinity-sweep{to{transform:rotate(360deg)}}@keyframes semantic-affinity-flight{from{transform:translate(-50%,-50%) translate(-7px,5px)}to{transform:translate(-50%,-50%) translate(9px,-7px)}}@keyframes semantic-flyway{0%{left:-20%;transform:translateY(4px) scale(.75);opacity:0}12%{opacity:1}50%{transform:translateY(-5px) scale(1)}88%{opacity:1}100%{left:108%;transform:translateY(3px) scale(.8);opacity:0}}
 
 /* DigitalHut is a fixed system renderer: no page-like scrollbars or border arrows. */
-body:has(.dh-semantic-suite) .dh-media.dh-movie-controls,body:has(.dh-semantic-suite) .dh-youtube-story-renderer{overflow:hidden!important;scrollbar-width:none!important}
+html:has(.dh-semantic-suite),body:has(.dh-semantic-suite){overflow:hidden!important;overscroll-behavior:none!important}
+body:has(.dh-semantic-suite) .dh-media.dh-movie-controls,body:has(.dh-semantic-suite) .dh-youtube-story-renderer{overflow:hidden!important;overscroll-behavior:none!important;scrollbar-width:none!important;scrollbar-gutter:auto!important}
 body:has(.dh-semantic-suite) .dh-media.dh-movie-controls::-webkit-scrollbar,body:has(.dh-semantic-suite) .dh-youtube-story-renderer::-webkit-scrollbar{display:none!important;width:0!important;height:0!important}
 body:has(.dh-semantic-suite) .dh-youtube-story-renderer{box-sizing:border-box;width:100%;max-width:100%}
 .dh-semantic-suite{box-sizing:border-box;width:100%;max-width:100%}.dh-semantic-grid,.dh-semantic-grid>*{min-width:0}.dh-semantic-timeline{max-width:100%;overflow:hidden}.dh-semantic-timeline button{min-width:0}
@@ -71,3 +70,20 @@ body:has(.dh-semantic-suite) .dh-current-market-feed{display:block!important}
 .dh-current-market-feed.retracted>header{margin-bottom:0!important}
 .dh-market-retract{border:1px solid #36506a;border-radius:7px;background:#0b1929;color:#bfefff;padding:7px 10px;cursor:pointer}
 .dh-voice-search.listening{border-color:#50f2ff!important;box-shadow:0 0 16px rgba(80,242,255,.38);color:#50f2ff!important}
+
+/* Readable provider-evidence pacing and fullscreen playback feedback. */
+.dh-affinity-map span{max-width:92px;color:#a9bbcd;font-size:8px}
+.dh-affinity-map span b{overflow:hidden;max-width:92px;color:inherit;font-size:8px;line-height:1.05;text-overflow:ellipsis;white-space:nowrap}
+.dh-affinity-map span em{color:#698299;font-size:6px;font-style:normal;letter-spacing:.08em;text-transform:uppercase}
+.dh-affinity-evidence{position:absolute;left:12px;right:12px;bottom:27px;display:flex;gap:6px;overflow:hidden}
+.dh-affinity-evidence a,.dh-affinity-evidence span{overflow:hidden;border:1px solid #263a52;border-radius:5px;padding:3px 5px;color:#8cdfee;font-size:7px;text-decoration:none;text-overflow:ellipsis;white-space:nowrap}
+.dh-affinity-evidence a:hover{border-color:var(--semantic-color);color:white}
+.dh-video-playback-notice{margin:0;border:1px solid #2a415a;border-radius:7px;padding:6px;color:#9fc1d8;font-size:8px;line-height:1.25}
+.dh-semantic-suite::before{animation-duration:4.8s}
+.dh-semantic-health i.live{animation-duration:1.8s}
+.dh-semantic-orbit .particle{animation-duration:calc(7s + var(--particle-index)*.75s);animation-delay:calc(var(--particle-index)*-1.1s)}
+.dh-affinity-map span i{animation-duration:calc(3.2s + var(--node-index)*.2s)}
+.dh-reproduction-read::after{animation-duration:4.2s}
+.dh-affinity-map::after{animation-duration:7s}
+.dh-affinity-map span{animation-duration:calc(4.8s + var(--node-index)*.35s);animation-delay:calc(var(--node-index)*-.44s)}
+.dh-timeline-flyway span{animation-duration:calc(7s + var(--fly-index)*.35s);animation-delay:calc(var(--fly-index)*-.72s)}

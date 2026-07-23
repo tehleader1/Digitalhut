@@ -782,6 +782,8 @@ function currentMarketHighlightsFor({feed, stock, youtubeStory, podcastClip, glb
   const tradeCount = Number(latest.tradeCount || latest.printCount || 0)
   const volume = Number(latest.totalVolume || 0)
   const notional = Number(latest.totalNotional || 0)
+  const deltaNotional = Number(latest.deltaNotional || 0)
+  const technical = latest.technical || {}
   const pressure = latest.pressure || market.pressure || "market read building"
   const totalLine = notional ? `$${Math.round(notional).toLocaleString()} notional` : volume ? `${volume.toLocaleString()} shares` : market.notional || "waiting for provider print"
   const provider = market.sourceProvider || feed?.apiSource || providerLine || "market provider"
@@ -803,6 +805,40 @@ function currentMarketHighlightsFor({feed, stock, youtubeStory, podcastClip, glb
       detail: `${tradeCount.toLocaleString()} prints / ${totalLine}`,
       tone: pressure.toLowerCase().includes("sell") ? "sell" : pressure.toLowerCase().includes("buy") ? "buy" : "market",
       fill: Math.max(36, Math.min(99, tradeCount ? 58 + (tradeCount % 38) : strengthBase))
+    },
+    {
+      id: "volume",
+      label: "Visible volume",
+      value: volume ? `${volume.toLocaleString()} shares` : "volume waiting",
+      detail: technical.volumeRatio ? `${technical.volumeRatio}x recent/base volume ratio` : "provider volume window is building",
+      tone: "flow",
+      fill: volume ? 84 : Math.max(24, strengthBase - 10)
+    },
+    {
+      id: "delta",
+      label: "Inferred delta",
+      value: deltaNotional > 0 ? `+$${Math.round(deltaNotional).toLocaleString()}` : deltaNotional < 0 ? `-$${Math.abs(Math.round(deltaNotional)).toLocaleString()}` : "flat / unavailable",
+      detail: latest.deltaBasis || "tick-direction inference; not exchange aggressor labeling",
+      tone: deltaNotional > 0 ? "buy" : deltaNotional < 0 ? "sell" : "flow",
+      fill: deltaNotional ? 82 : Math.max(22, strengthBase - 12)
+    },
+    {
+      id: "ichimoku",
+      label: "Ichimoku cloud",
+      value: technical.ichimokuSignal || "cloud building",
+      detail: technical.cloudSpanA !== null && technical.cloudSpanA !== undefined
+        ? `Span A ${technical.cloudSpanA} / Span B ${technical.cloudSpanB ?? "building"}`
+        : "requires enough provider OHLCV bars",
+      tone: "chart",
+      fill: technical.ichimokuSignal && !String(technical.ichimokuSignal).includes("building") ? 86 : Math.max(20, strengthBase - 14)
+    },
+    {
+      id: "engulfing",
+      label: "Engulfing candle",
+      value: technical.engulfingPattern || "not detected",
+      detail: technical.indicatorBasis || "provider OHLCV bars",
+      tone: String(technical.engulfingPattern || "").includes("bullish") ? "buy" : String(technical.engulfingPattern || "").includes("bearish") ? "sell" : "chart",
+      fill: technical.engulfingPattern && technical.engulfingPattern !== "not-detected" ? 88 : Math.max(18, strengthBase - 16)
     },
     {
       id: "largest",
@@ -3518,7 +3554,6 @@ export default function FullscreenObservatoryV2(){
   const [entryLoading, setEntryLoading] = useState(false)
   const [accountSession, setAccountSession] = useState(null)
   const [awake, setAwake] = useState(true)
-  const [isFullscreen, setIsFullscreen] = useState(() => typeof document !== "undefined" && Boolean(document.fullscreenElement))
   const [playing, setPlaying] = useState(true)
   const [layer, setLayer] = useState("Base")
   const [layerOpen, setLayerOpen] = useState(false)
@@ -3526,6 +3561,7 @@ export default function FullscreenObservatoryV2(){
   const [guideDepth, setGuideDepth] = useState(0)
   const [aiOpen, setAiOpen] = useState(false)
   const [aiListening, setAiListening] = useState(false)
+  const [voiceSearchStatus, setVoiceSearchStatus] = useState("Voice search ready")
   const [aiCommand, setAiCommand] = useState("")
   const [notesOpen, setNotesOpen] = useState(false)
   const [smartNote, setSmartNote] = useState("")
@@ -3567,6 +3603,7 @@ export default function FullscreenObservatoryV2(){
   const [reviewDraft, setReviewDraft] = useState("")
   const [reviewNonce, setReviewNonce] = useState(0)
   const [purchaseOpen, setPurchaseOpen] = useState(false)
+  const [paypalCheckout, setPaypalCheckout] = useState({status:"idle", configured:false, environment:"", clientId:"", plans:{}, planStatus:"idle", planMessage:"", validatedPlanId:"", message:""})
   const [displayCollapsed, setDisplayCollapsed] = useState(false)
   const [selectedOptionPrint, setSelectedOptionPrint] = useState(null)
   const [selectedPurchaseIds, setSelectedPurchaseIds] = useState(["tier-premium"])
@@ -3609,6 +3646,8 @@ export default function FullscreenObservatoryV2(){
   const previewCommentaryTimer = useRef(null)
   const preMechanicCategoryRef = useRef("Mainstream Streaming")
   const mechanicMotionFrameRef = useRef(null)
+  const paypalButtonHostRef = useRef(null)
+  const paypalPlanValidationRef = useRef("")
   const {address: connectedWallet, isConnected} = useAccount()
   const {sendTransaction, data: paymentHash, isPending: paymentPending, error: paymentError} = useSendTransaction()
   const {isSuccess: paymentConfirmed} = useWaitForTransactionReceipt({hash: paymentHash})
@@ -3872,9 +3911,7 @@ export default function FullscreenObservatoryV2(){
     progress: observatoryConstructionProgress,
     clock: analyticsClock
   })
-  const visibleCurrentMarketHighlights = currentMarketActive
-    ? currentMarketHighlights.slice(0, Math.max(1, Math.min(currentMarketHighlights.length, Math.floor(Math.max(0, observatoryConstructionProgress - 4) / 10) + 1)))
-    : []
+  const visibleCurrentMarketHighlights = currentMarketActive ? currentMarketHighlights : []
   const quickMarketOptionPicks = quickMarketOptionPicksFor({feed: sceneFeed, stock: activeCurrentMarketStock, freshSeed: freshnessSeed})
   const platformCadence = platformCadenceFor({
     category,
@@ -4316,7 +4353,8 @@ export default function FullscreenObservatoryV2(){
   const writeLimit = analyticsStarted ? Math.max(4, Math.min(liveMeaning.caption.length, 4 + Math.floor(observatoryCycleClock * .28))) : 0
   const liveWritingText = liveMeaning.caption.slice(0, writeLimit)
   const youtubeShouldPlay = autoPresent && !podcastFeatureOpen
-  const youtubePlayerUrl = `${youtubeStory.embedUrl}&start=${youtubeSeekAnchor}&autoplay=${youtubeShouldPlay ? 1 : 0}&mute=0&controls=0&disablekb=1&playsinline=1&modestbranding=1&enablejsapi=1`
+  const youtubePlayerOrigin = typeof window !== "undefined" ? encodeURIComponent(window.location.origin) : encodeURIComponent("https://www.digitalhut.app")
+  const youtubePlayerUrl = `${youtubeStory.embedUrl}&start=${youtubeSeekAnchor}&autoplay=${youtubeShouldPlay ? 1 : 0}&mute=0&controls=1&disablekb=0&playsinline=1&modestbranding=1&enablejsapi=1&origin=${youtubePlayerOrigin}`
   const activeApiFeeds = apiCategoryFeeds.filter((item) => item.category === category)
   const quickDisplayFeeds = sortRendererFeeds([...activeApiFeeds, ...feeds]).slice(0, 5)
   const lobbyFeedPool = sortRendererFeeds([...apiCategoryFeeds, ...feeds])
@@ -4380,6 +4418,8 @@ export default function FullscreenObservatoryV2(){
   const currentReview = assetReviews[currentReviewKey] || {rating: 0, review: "", backlink: backlinkForFeed(sceneFeed), count: 0}
   const selectedPurchaseOptions = purchaseOptionsBase.filter((item) => selectedPurchaseIds.includes(item.id))
   const selectedPurchaseLabel = selectedPurchaseOptions.map((item) => item.title).join(" + ") || "Choose package"
+  const selectedPaypalTier = selectedPurchaseOptions.find((item) => item.type === "tier") || purchaseOptionsBase.find((item) => item.id === "tier-premium")
+  const selectedPaypalPlanId = selectedPaypalTier ? paypalCheckout.plans?.[selectedPaypalTier.id] || "" : ""
   const observatoryClassName = [
     "dh-observatory",
     performanceProfile.className,
@@ -4404,6 +4444,110 @@ export default function FullscreenObservatoryV2(){
     media.addEventListener?.("change", syncDisplay)
     return () => media.removeEventListener?.("change", syncDisplay)
   }, [])
+
+  useEffect(() => {
+    if(!entryOpen) return undefined
+    let cancelled = false
+    setPaypalCheckout((current) => ({...current, status:"loading", planStatus:"idle", planMessage:"", validatedPlanId:"", message:"Checking secure PayPal subscription availability."}))
+    fetchWithTimeout("/api/provider-status?scope=paypal", {headers:{Accept:"application/json"}}, 10000)
+      .then(async (response) => {
+        const payload = await response.json().catch(() => ({}))
+        if(cancelled) return
+        setPaypalCheckout({
+          status:response.ok && payload.subscriptionReady ? "ready" : "unavailable",
+          configured:Boolean(payload.configured),
+          environment:payload.environment || "",
+          clientId:payload.clientId || "",
+          plans:payload.plans || {},
+          planStatus:"idle",
+          planMessage:"",
+          validatedPlanId:"",
+          message:response.ok && payload.subscriptionReady
+            ? "Choose a plan, then continue with the official PayPal subscription control."
+            : "PayPal needs its three active plan IDs before checkout can open."
+        })
+      })
+      .catch(() => !cancelled && setPaypalCheckout((current) => ({...current, status:"unavailable", message:"PayPal subscriptions are temporarily unavailable."})))
+    return () => { cancelled = true }
+  }, [entryOpen])
+
+  useEffect(() => {
+    if(!entryOpen || paypalCheckout.status !== "ready" || !selectedPaypalTier || !selectedPaypalPlanId) return undefined
+    const validationKey = `${selectedPaypalTier.id}:${selectedPaypalPlanId}`
+    if(paypalCheckout.validatedPlanId === selectedPaypalPlanId || paypalPlanValidationRef.current === validationKey) return undefined
+    let cancelled = false
+    paypalPlanValidationRef.current = validationKey
+    setPaypalCheckout((current) => ({...current, planStatus:"checking", planMessage:"Confirming the selected PayPal plan."}))
+    fetchWithTimeout("/api/provider-status?scope=paypal", {
+      method:"POST",
+      headers:{"Content-Type":"application/json", Accept:"application/json"},
+      body:JSON.stringify({action:"validate-plan", planId:selectedPaypalPlanId, tierId:selectedPaypalTier.id})
+    }, 10000).then(async (response) => {
+      const payload = await response.json().catch(() => ({}))
+      if(cancelled) return
+      if(!response.ok || !payload.active) throw new Error("plan-unavailable")
+      setPaypalCheckout((current) => ({...current, planStatus:"active", planMessage:"Plan verified. Continue using the official PayPal control.", validatedPlanId:selectedPaypalPlanId}))
+    }).catch(() => {
+      if(cancelled) return
+      paypalPlanValidationRef.current = ""
+      setPaypalCheckout((current) => ({...current, planStatus:"error", planMessage:"This PayPal plan is not active yet.", validatedPlanId:""}))
+    })
+    return () => { cancelled = true }
+  }, [entryOpen, paypalCheckout.status, paypalCheckout.validatedPlanId, selectedPaypalTier?.id, selectedPaypalPlanId])
+
+  useEffect(() => {
+    const host = paypalButtonHostRef.current
+    if(!host) return undefined
+    host.replaceChildren()
+    if(!entryOpen || paypalCheckout.status !== "ready" || paypalCheckout.planStatus !== "active" || paypalCheckout.validatedPlanId !== selectedPaypalPlanId || !paypalCheckout.clientId || !selectedPaypalTier || !selectedPaypalPlanId) return undefined
+    let cancelled = false
+    const renderButtons = () => {
+      if(cancelled || !window.paypal?.Buttons || !paypalButtonHostRef.current) return
+      paypalButtonHostRef.current.replaceChildren()
+      const buttons = window.paypal.Buttons({
+        style:{layout:"vertical", color:"gold", shape:"rect", label:"subscribe"},
+        createSubscription:(_data, actions) => actions.subscription.create({plan_id:selectedPaypalPlanId}),
+        onApprove:async (data) => {
+          setPaypalCheckout((current) => ({...current, status:"verifying", message:"PayPal approved the request. DigitalHut is verifying the active subscription."}))
+          trackObservatoryPixel("paypal_subscription_client_confirmed", {category, keywordHint:selectedPaypalTier.title, metadata:{tierId:selectedPaypalTier.id, provisional:true}})
+          try {
+            const response = await fetchWithTimeout("/api/provider-status?scope=paypal", {
+              method:"POST",
+              headers:{"Content-Type":"application/json", Accept:"application/json"},
+              body:JSON.stringify({action:"verify-subscription", subscriptionId:data.subscriptionID, tierId:selectedPaypalTier.id})
+            }, 12000)
+            const payload = await response.json().catch(() => ({}))
+            if(!response.ok || !payload.verified || !payload.receiptRecorded) throw new Error("verification-failed")
+            const verifiedTier = selectedPaypalTier.id.replace("tier-", "")
+            setTier(verifiedTier)
+            writeStorage("digitalhut:tier", verifiedTier)
+            setPaypalCheckout((current) => ({...current, status:"verified", message:payload.receiptDuplicate ? "Subscription was already verified." : "Subscription verified securely. Paid access is active."}))
+          } catch {
+            setPaypalCheckout((current) => ({...current, status:"error", message:"PayPal approval could not be verified. No paid access was granted."}))
+          }
+        },
+        onCancel:() => setPaypalCheckout((current) => ({...current, status:"ready", message:"PayPal checkout was cancelled. No conversion or paid access was recorded."})),
+        onError:() => setPaypalCheckout((current) => ({...current, status:"error", message:"PayPal checkout could not open. No conversion or paid access was recorded."}))
+      })
+      buttons.render(paypalButtonHostRef.current).catch(() => !cancelled && setPaypalCheckout((current) => ({...current, status:"error", message:"PayPal checkout could not render safely."})))
+    }
+    if(window.paypal?.Buttons) renderButtons()
+    else {
+      const scriptId = "digitalhut-paypal-subscriptions-sdk"
+      const existing = document.getElementById(scriptId)
+      if(existing) existing.addEventListener("load", renderButtons, {once:true})
+      else {
+        const script = document.createElement("script")
+        script.id = scriptId
+        script.async = true
+        script.src = `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(paypalCheckout.clientId)}&vault=true&intent=subscription&components=buttons`
+        script.addEventListener("load", renderButtons, {once:true})
+        script.addEventListener("error", () => !cancelled && setPaypalCheckout((current) => ({...current, status:"error", message:"PayPal checkout could not load safely."})), {once:true})
+        document.head.appendChild(script)
+      }
+    }
+    return () => { cancelled = true }
+  }, [entryOpen, paypalCheckout.status, paypalCheckout.clientId, paypalCheckout.planStatus, paypalCheckout.validatedPlanId, selectedPaypalTier?.id, selectedPaypalPlanId, category])
 
   useEffect(() => {
     if(typeof window === "undefined") return undefined
@@ -4531,12 +4675,6 @@ export default function FullscreenObservatoryV2(){
       window.clearTimeout(hideTimer.current)
       window.clearTimeout(idleModelTimer.current)
     }
-  }, [])
-
-  useEffect(() => {
-    const syncFullscreen = () => setIsFullscreen(Boolean(document.fullscreenElement))
-    document.addEventListener("fullscreenchange", syncFullscreen)
-    return () => document.removeEventListener("fullscreenchange", syncFullscreen)
   }, [])
 
   useEffect(() => {
@@ -4946,15 +5084,6 @@ export default function FullscreenObservatoryV2(){
   function wake(){
     setAwake(true)
     window.clearTimeout(hideTimer.current)
-  }
-
-  async function toggleFullscreen(){
-    try {
-      if(document.fullscreenElement) await document.exitFullscreen()
-      else await document.documentElement.requestFullscreen()
-    } catch {
-      setDirectorStatus({phase: "Full screen unavailable", detail: "Browser permission required", status: "Use the browser full-screen command if this control is blocked."})
-    }
   }
 
   function saveAssetReview(rating){
@@ -6333,6 +6462,45 @@ export default function FullscreenObservatoryV2(){
     recognition.start()
   }
 
+  function startVoiceSearch(){
+    const Engine = speechEngine()
+    if(!Engine){
+      setVoiceSearchStatus("Voice search is unavailable in this browser. Type the search instead.")
+      return
+    }
+    const recognition = new Engine()
+    recognition.lang = "en-US"
+    recognition.interimResults = true
+    recognition.maxAlternatives = 1
+    recognition.onstart = () => {
+      setAiListening(true)
+      setVoiceSearchStatus("Listening for a system search...")
+    }
+    recognition.onend = () => setAiListening(false)
+    recognition.onerror = (event) => {
+      setAiListening(false)
+      const reason = event?.error === "not-allowed" || event?.error === "service-not-allowed"
+        ? "Microphone permission was denied. Allow microphone access or type the search."
+        : event?.error === "no-speech"
+          ? "No speech was detected. Try again or type the search."
+          : "Voice search could not start. Type the search and continue."
+      setVoiceSearchStatus(reason)
+    }
+    recognition.onresult = (event) => {
+      const transcript = Array.from(event.results || []).map((result) => result?.[0]?.transcript || "").join(" ").trim()
+      if(!transcript) return
+      setQuery(transcript)
+      const finalResult = Boolean(event.results?.[event.results.length - 1]?.isFinal)
+      setVoiceSearchStatus(finalResult ? `Searching: ${transcript}` : `Heard: ${transcript}`)
+      if(finalResult) runSearch(transcript)
+    }
+    recognitionRef.current = recognition
+    try { recognition.start() } catch {
+      setAiListening(false)
+      setVoiceSearchStatus("Voice search is already active or unavailable. Try again in a moment.")
+    }
+  }
+
   function startHostVoice(){
     const Engine = speechEngine()
     setLiveStageOpen(true)
@@ -6561,28 +6729,6 @@ export default function FullscreenObservatoryV2(){
       <div className="dh-vignette" />
       {layer === "Architect" && <div className="dh-architect"><b>Architect Layer</b><span>builders / developers / researchers / AIs / experimental</span></div>}
       <>
-        <aside className={`dh-wallet-package ${purchaseOpen ? "open" : ""}`} aria-label="DigitalHut wallet purchase package">
-          <button className="dh-wallet-package-toggle" type="button" onClick={() => setPurchaseOpen((value) => !value)}>
-            <span>Treasury / Packages</span><b>{selectedPurchaseLabel}</b>
-          </button>
-          {purchaseOpen && <div className="dh-wallet-package-menu">
-            <div className="dh-wallet-connect-row"><ConnectButton /></div>
-            <small>Main wallet</small>
-            <code>{DIGITALHUT_MAIN_WALLET}</code>
-            <small>Subscriptions are one route only. Sponsors, commissions, reports, conversion credits, licenses, support, tiers, and nodes can all prepare a verified treasury package.</small>
-            <div className="dh-wallet-options">
-              {purchaseOptionsBase.map((item) => <button key={item.id} type="button" className={selectedPurchaseIds.includes(item.id) ? "selected" : ""} onClick={() => togglePurchaseOption(item.id)}>
-                <span>{item.type}</span><b>{item.title}</b><small>{item.price}</small><em>{item.unlock}</em>
-              </button>)}
-            </div>
-            <button className="dh-wallet-prepare" type="button" onClick={prepareWalletPurchase}>Prepare Package</button>
-            <button className="dh-wallet-prepare" type="button" onClick={startBaseEthCheckout} disabled={paymentPending}>{paymentPending ? "Waiting For Wallet" : "Pay With Base ETH"}</button>
-            <small>{DIGITALHUT_BASE_ETH_AMOUNT ? `Base ETH amount: ${DIGITALHUT_BASE_ETH_AMOUNT}` : "Base ETH amount env not set. Package preparation is active; live payment request is staged."}</small>
-            {DIGITALHUT_BASE_USDC_RECEIVER && <small>USDC Base receiver staged. Token checkout verification comes next.</small>}
-            {paymentHash && <small>Tx: {paymentHash}</small>}
-            {paymentError && <small>Wallet error: {paymentError.message}</small>}
-          </div>}
-        </aside>
         <div className="dh-cockpit-frame" aria-hidden="true"><span>DigitalHut Observatory</span><b>Verified GLB / public feeds / source status</b></div>
         <nav className="dh-mechanic-categories" aria-label="DigitalHut categories">
           {categories.map((item) => <button key={item.id} className={item.id === category ? "active" : ""} type="button" onClick={() => selectCategory(item.id)}><span>{item.icon}</span><b>{item.id}</b></button>)}
@@ -6591,9 +6737,10 @@ export default function FullscreenObservatoryV2(){
         <form className="dh-mechanic-search" aria-label="DigitalHut system search" onSubmit={(event) => {event.preventDefault(); runSearch()}}>
           <span className="dh-system-search-label">System Search</span>
           <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search any GLB, feed, place, game, research, house project..." />
-          <button className={`dh-voice-search ${aiListening ? "listening" : ""}`} type="button" onClick={startVoiceCommand} aria-label={aiListening ? "Listening for search" : "Search by voice"} title="Search by voice">{aiListening ? "Listening…" : "Mic"}</button>
+          <button className={`dh-voice-search ${aiListening ? "listening" : ""}`} type="button" onClick={startVoiceSearch} aria-label={aiListening ? "Listening for system search" : "Search by voice"} title="Search by voice">{aiListening ? "Listening…" : "Mic"}</button>
           <button type="submit">Search</button>
           <button type="button" onClick={() => setMainLobbyOpen(true)}>Main Lobby</button>
+          <span className="dh-voice-search-status" role="status">{voiceSearchStatus}</span>
         </form>
 
         <aside className="dh-mechanic-controls" aria-label="DigitalHut observatory playback controls">
@@ -6826,6 +6973,9 @@ export default function FullscreenObservatoryV2(){
               videoId: youtubeVideoIdFor(youtubeStory.primaryVideo),
               title: youtubeStory.primaryVideo?.title || youtubeStory.episodeName,
               channelTitle: youtubeStory.primaryVideo?.channelTitle || contentRadar.channel,
+              provider: youtubeStory.provider || "YouTube",
+              apiStatus: youtubeStory.primaryVideo?.apiStatus || youtubeStory.apiStatus,
+              sourceUrl: youtubeStory.primaryVideo?.url || youtubeStory.searchUrl,
             }}
             analysis={contentAnalyzer?.analysis}
             analyzerMode={contentAnalyzer?.mode || "metadata-only"}
@@ -6837,13 +6987,14 @@ export default function FullscreenObservatoryV2(){
             onSeek={(targetSeconds) => scrubPresentation(Math.max(0, Math.min(100, (targetSeconds / 120) * 100)))}
             embedUrl={youtubePlayerUrl}
             controls={{
-              isFullscreen,
               onTogglePlay: toggleMoviePlayback,
+              onEnsurePlaying: () => {
+                if(!autoPresent) toggleMoviePlayback()
+              },
               onPrevious: previousFeed,
               onNext: nextFeed,
               onGlb: glbPlayViewOpen ? minimizeGlbRenderer : openContainedModel,
               onPodcast: openPodcastFeatureInterrupt,
-              onFullscreen: toggleFullscreen,
             }}
           />
           <div className={`dh-digitalhut-presents ${analyticsStarted ? "is-building" : "is-waiting"}`} aria-label="DigitalHut Presents system state">
@@ -6905,6 +7056,7 @@ export default function FullscreenObservatoryV2(){
                 <b>{item.symbol}</b>
                 <small>{item.contract}</small>
                 <em>{item.value}</em>
+                <small className="dh-market-quick-detail">{item.detail}</small>
               </button>)}
             </div>}
             {!currentMarketRetracted && currentMarketActive && <div className="dh-market-view-body">
@@ -7630,7 +7782,6 @@ export default function FullscreenObservatoryV2(){
               <button type="button" className={podcastFeatureOpen ? "active" : ""} onClick={openPodcastFeatureInterrupt}>Podcast Clip</button>
               <button type="button" onClick={() => scrubPresentation(76)}>Sponsor Stack</button>
               <button type="button" onClick={() => setGlbDockExpanded((value) => !value)}>{glbDockExpanded ? "Collapse GLBs" : "Expand 3 GLBs"}</button>
-              <button type="button" className={isFullscreen ? "active" : ""} onClick={toggleFullscreen}>{isFullscreen ? "× Exit Full Screen" : "[] Full Screen"}</button>
               <div className="dh-proof-bridge-controls" aria-label="DigitalHut 200M proof and source bridge">
                 <a href={digitalhutMasterListBridge.proofRoute} onClick={() => trackObservatoryPixel("proof_route_open", masterListBridgePixel("transport-proof-bridge", {category, metadata: {route: digitalhutMasterListBridge.proofRoute}}))}>{digitalhutMasterListBridge.proofLabel}</a>
                 <a href={digitalhutMasterListBridge.sourceBridgePath} onClick={() => trackObservatoryPixel("backlink_source_open", masterListBridgePixel("transport-proof-bridge", {category, keywordHint: digitalhutMasterListBridge.sourceKeywordHint, metadata: {route: digitalhutMasterListBridge.sourceBridgePath}}))}>{digitalhutMasterListBridge.sourceLabel}</a>
@@ -7865,14 +8016,6 @@ export default function FullscreenObservatoryV2(){
 
       <div className="dh-utility" style={{opacity: awake ? 1 : 0.1}}>{["Save", "Share", "Live", "Embed", "Download", "Related", "Refresh", "FAQ"].map((label) => <button key={label} className="dh-btn" onClick={() => action(label)}>{label}</button>)}</div>
 
-      <div className="dh-layer-dock" style={{opacity: awake ? 1 : 0.12}}>
-        <button className={`dh-btn ${paid ? "" : "locked"}`} onClick={() => paid ? setLayerOpen((value) => !value) : setEntryOpen(true)}>{paid ? `Smart Layers: ${layer}` : "Smart Layers: Premium / Pro"}</button>
-        {layerOpen && paid && <div className="dh-layer-menu">{layers.map((item) => <button key={item} className={`dh-btn ${item === layer ? "active" : ""}`} onClick={() => {setLayer(item); setLayerOpen(false)}}>{item}</button>)}</div>}
-      </div>
-
-      {false && <button className={`dh-ai-space ${aiListening ? "listening" : ""} dock-${aiDock}`} type="button" onClick={startVoiceCommand}>
-        <span>DigitalHut AI</span><b>{aiListening ? "Listening" : "Interact"}</b>
-      </button>}
       <div className={`dh-director-panel ${directorPanelOpen ? "open" : "collapsed"}`} data-dh-director>
         <button className="dh-director-mini-toggle" type="button" onClick={() => setDirectorPanelOpen((value) => !value)} aria-expanded={directorPanelOpen}>
           <span>AI Director</span>
@@ -8092,10 +8235,20 @@ export default function FullscreenObservatoryV2(){
         </div>
         <div className="dh-payment-rails"><span>DigitalHut sponsored payment rails</span><b>Provider confirmation required</b></div>
         <div className="dh-tier-cards">{[
-          {id:"standard",price:"$12/month",tag:"",copy:"Longer saved history, core AI Director controls, category growth tracking",features:["Full video observatory","Interactive 3D model view","Podcast source moments","Core session controls"]},
-          {id:"premium",price:"$25/month",tag:"Most complete",copy:"Premium AI detail, stronger session memory, node progress visibility",features:["Full video observatory","Interactive 3D model view","Podcast source moments","Extended session memory"]},
-          {id:"pro",price:"$60/month",tag:"",copy:"Deep research, expanded backend controls, unlimited AI presentation power",features:["Full video observatory","Interactive 3D model view","Podcast source moments","Deep research access"]}
-        ].map((plan) => <article key={plan.id} className={plan.id === "premium" ? "featured" : ""}>{plan.tag && <em>{plan.tag}</em>}<h3>{plan.id[0].toUpperCase()+plan.id.slice(1)}</h3><strong>{plan.price}</strong><p>{plan.copy}</p><ul>{plan.features.map((feature) => <li key={feature}>+ {feature}</li>)}</ul><button type="button" onClick={() => {setSelectedPurchaseIds([`tier-${plan.id}`]); setEntryOpen(false); setPurchaseOpen(true)}}>Choose {plan.id[0].toUpperCase()+plan.id.slice(1)}</button></article>)}</div>
+          {id:"standard",price:"$12/month",tag:"",copy:"Longer saved history, core AI Director controls, category growth tracking",eligibility:"DigitalHut account required; individual use.",terms:"Recurring monthly PayPal subscription. Cancel in PayPal; access starts only after DigitalHut verifies an ACTIVE provider receipt.",features:["Full video observatory","Interactive 3D model view","Podcast source moments","Core session controls"]},
+          {id:"premium",price:"$25/month",tag:"Most complete",copy:"Premium AI detail, stronger session memory, node progress visibility",eligibility:"DigitalHut account required; creator or researcher use.",terms:"Recurring monthly PayPal subscription. Cancel in PayPal; access starts only after DigitalHut verifies an ACTIVE provider receipt.",features:["Full video observatory","Interactive 3D model view","Podcast source moments","Extended session memory"]},
+          {id:"pro",price:"$60/month",tag:"",copy:"Deep research, expanded backend controls, unlimited AI presentation power",eligibility:"DigitalHut account required; advanced individual use.",terms:"Recurring monthly PayPal subscription. Cancel in PayPal; access starts only after DigitalHut verifies an ACTIVE provider receipt.",features:["Full video observatory","Interactive 3D model view","Podcast source moments","Deep research access"]}
+        ].map((plan) => {
+          const tierId = `tier-${plan.id}`
+          const selected = selectedPaypalTier?.id === tierId
+          return <article key={plan.id} className={`${plan.id === "premium" ? "featured" : ""} ${selected ? "selected" : ""}`}>{plan.tag && <em>{plan.tag}</em>}<h3>{plan.id[0].toUpperCase()+plan.id.slice(1)}</h3><strong>{plan.price}</strong><p>{plan.copy}</p><ul>{plan.features.map((feature) => <li key={feature}>+ {feature}</li>)}</ul><small><b>Eligibility:</b> {plan.eligibility}</small><small><b>Terms:</b> {plan.terms}</small><button type="button" aria-pressed={selected} onClick={() => setSelectedPurchaseIds([tierId])}>{selected ? `${plan.id[0].toUpperCase()+plan.id.slice(1)} selected for PayPal` : `Select ${plan.id[0].toUpperCase()+plan.id.slice(1)} for PayPal`}</button></article>
+        })}</div>
+        <section className="dh-subscription-paypal" aria-label="Official PayPal subscription checkout">
+          <div><span>Secure recurring checkout</span><b>{selectedPaypalTier?.title || "Choose a tier"} · {selectedPaypalTier?.price || ""}</b></div>
+          <p>{paypalCheckout.planMessage || paypalCheckout.message || "Checking secure PayPal checkout availability."}</p>
+          <div ref={paypalButtonHostRef} className="dh-paypal-button-host" aria-live="polite" />
+          {paypalCheckout.status === "error" && <button type="button" onClick={() => setPaypalCheckout((current) => ({...current, status:"ready"}))}>Retry PayPal checkout</button>}
+        </section>
         {!accountSession && <p className="dh-entry-small">Use Google or email in the familiar sign-in panel on the left, or choose a tier to open the signup and purchase combination. Paid access is never activated without a finalized provider receipt.</p>}
       </>}
     </div></section>}

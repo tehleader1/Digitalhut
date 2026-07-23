@@ -62,6 +62,12 @@ function formatTime(seconds){
   return `${Math.floor(safe / 60)}:${String(safe % 60).padStart(2, "0")}`
 }
 
+function playbackMessageData(value){
+  if(value && typeof value === "object") return value
+  if(typeof value !== "string") return null
+  try { return JSON.parse(value) } catch { return null }
+}
+
 export default function SemanticAnalyticsPanel({
   video = {},
   analysis = null,
@@ -77,6 +83,7 @@ export default function SemanticAnalyticsPanel({
 }){
   const [reproductionClock, setReproductionClock] = useState(0)
   const [videoFullscreen, setVideoFullscreen] = useState(false)
+  const [playbackNotice, setPlaybackNotice] = useState("")
   const iframeRef = useRef(null)
   const segments = useMemo(() => buildSegments({
     analysis,
@@ -87,16 +94,24 @@ export default function SemanticAnalyticsPanel({
   const activeIndex = Math.max(0, segments.findIndex((segment) => seconds >= segment.start && seconds < segment.end))
   const active = segments[activeIndex] || segments[0]
   const lastTrackedRef = useRef("")
+  const channelName = clean(video.channelTitle, "Channel not returned")
+  const providerName = clean(video.provider, "YouTube")
+  const seededFallback = /digitalhut seeded|prefilled youtube|seeded youtube/i.test(`${channelName} ${video.apiStatus || ""}`)
   const basis = analyzerMode === "google-speech"
-    ? "Google Speech transcript"
+    ? `${providerName} video + Google Speech transcript`
     : analyzerMode === "provided-text"
-      ? "provided transcript"
-      : "video metadata context"
+      ? `${providerName} video + supplied transcript`
+      : seededFallback
+        ? "Fallback seed metadata; live provider metadata not confirmed"
+        : `${providerName} metadata for ${compact(video.title, 42)}`
+  const truthfulStatus = seededFallback
+    ? "Fallback seed active; provider result unavailable"
+    : `${providerName}: ${compact(analyzerStatus, 38)}`
   const ga4Ready = typeof window !== "undefined" && typeof window.gtag === "function"
   const confidence = analyzerMode === "google-speech" ? 92 : analyzerMode === "provided-text" ? 84 : analysis ? 68 : 42
 
   useEffect(() => {
-    const timer = window.setInterval(() => setReproductionClock((current) => (current + 1) % 100000), 520)
+    const timer = window.setInterval(() => setReproductionClock((current) => (current + 1) % 100000), 2600)
     return () => window.clearInterval(timer)
   }, [])
 
@@ -106,12 +121,47 @@ export default function SemanticAnalyticsPanel({
     return () => document.removeEventListener("fullscreenchange", sync)
   }, [])
 
+  useEffect(() => {
+    const listen = (event) => {
+      let hostname = ""
+      try { hostname = new URL(event.origin).hostname } catch { return }
+      if(!/youtube(?:-nocookie)?\.com$/i.test(hostname)) return
+      const payload = playbackMessageData(event.data)
+      if(payload?.event !== "onStateChange") return
+      if(Number(payload.info) === 1) setPlaybackNotice("Video is playing in the fullscreen player.")
+      if(Number(payload.info) === 2) setPlaybackNotice("Video is paused. Use Play Video to continue.")
+    }
+    window.addEventListener("message", listen)
+    return () => window.removeEventListener("message", listen)
+  }, [])
+
+  function requestYoutubePlayback(){
+    const frame = iframeRef.current
+    if(!frame?.contentWindow) return false
+    let targetOrigin = "https://www.youtube.com"
+    try { targetOrigin = new URL(embedUrl).origin } catch {}
+    frame.contentWindow.postMessage(JSON.stringify({event:"command", func:"playVideo", args:[]}), targetOrigin)
+    return true
+  }
+
   async function toggleVideoFullscreen(){
     try {
-      if(document.fullscreenElement) await document.exitFullscreen()
-      else await iframeRef.current?.requestFullscreen?.()
+      if(document.fullscreenElement){
+        await document.exitFullscreen()
+        setPlaybackNotice("")
+        return
+      }
+      if(!iframeRef.current?.requestFullscreen) throw new Error("fullscreen-unavailable")
+      setPlaybackNotice("Opening the video player and requesting playbackâ€¦")
+      if(!playing) controls.onEnsurePlaying?.()
+      requestYoutubePlayback()
+      await iframeRef.current.requestFullscreen()
+      window.setTimeout(requestYoutubePlayback, 120)
+      window.setTimeout(() => setPlaybackNotice((current) => current.includes("playing")
+        ? current
+        : "Fullscreen is open. If playback remains paused, use Play Video."), 1800)
     } catch {
-      controls.onFullscreen?.()
+      setPlaybackNotice("Video fullscreen could not open. Use the visible player controls and try again.")
     }
   }
 
@@ -147,6 +197,28 @@ export default function SemanticAnalyticsPanel({
   const entities = (Array.isArray(analysis?.entities) ? analysis.entities : [])
     .slice(0, 6)
   const particleLabels = entities.length ? entities : segments.map((segment) => segment.topic).slice(0, 6)
+  const affinityNodes = useMemo(() => {
+    const supplied = Array.isArray(analysis?.bubbleMap) ? analysis.bubbleMap : []
+    if(supplied.length) return supplied.slice(0, 7).map((node, index) => ({
+      id:node.id || `affinity-${index}`,
+      label:compact(node.label || node.value || segments[index % Math.max(1, segments.length)]?.topic, 24),
+      detail:compact(node.value || "Metadata relationship", 78),
+      kind:clean(node.kind, "context"),
+      connectsTo:Array.isArray(node.connectsTo) ? node.connectsTo.slice(0, 4) : [],
+      color:palette[index % palette.length]
+    }))
+    return segments.slice(0, 6).map((segment, index) => ({
+      id:segment.id,
+      label:segment.topic,
+      detail:segment.summary,
+      kind:"timeline",
+      connectsTo:index < segments.length - 1 ? [segments[index + 1].id] : [],
+      color:segment.color
+    }))
+  }, [analysis?.bubbleMap, segments])
+  const evidenceLinks = (Array.isArray(analysis?.backlinks) ? analysis.backlinks : [])
+    .filter((item) => /^https?:\/\//i.test(String(item?.url || "")))
+    .slice(0, 2)
   const reproductionSignals = [active.topic, active.label, ...particleLabels].filter(Boolean)
   const reproductionSignal = reproductionSignals[reproductionClock % Math.max(1, reproductionSignals.length)] || active.topic
   const reproductionCycle = Math.floor(reproductionClock / 2)
@@ -186,18 +258,19 @@ export default function SemanticAnalyticsPanel({
         <div className="dh-topic-progress replaying" key={`progress-${reproductionCycle}`}><i style={{width: `${Math.max(8, currentProgress)}%`}} /></div>
         <dl key={`facts-${reproductionCycle}`}>
           <div style={{"--fact-index":0}}><dt>Source</dt><dd>{basis}</dd></div>
-          <div style={{"--fact-index":1}}><dt>Channel</dt><dd>{clean(video.channelTitle || analysis?.channel, "Source channel")}</dd></div>
-          <div style={{"--fact-index":2}}><dt>Event</dt><dd><code>video_topic_shift</code></dd></div>
-          <div style={{"--fact-index":3}}><dt>Status</dt><dd>{compact(analyzerStatus, 34)}</dd></div>
+          <div style={{"--fact-index":1}}><dt>Channel</dt><dd>{seededFallback ? "Provider channel unavailable (fallback seed)" : clean(video.channelTitle || analysis?.channel, "Channel not returned")}</dd></div>
+          <div style={{"--fact-index":2}}><dt>Event</dt><dd><code>{playing ? "active video playback â†’ topic shift" : "active video paused â†’ context held"}</code></dd></div>
+          <div style={{"--fact-index":3}}><dt>Status</dt><dd>{truthfulStatus}</dd></div>
         </dl>
       </article>
 
       <article className="dh-topic-affinity" aria-label="Topic affinity visualization">
         <div className="dh-affinity-title"><span>Topic affinity</span><b>Context preview</b></div>
-        <div className="dh-affinity-map" aria-hidden="true">
-          {segments.slice(0, 6).map((segment, index) => <span key={segment.id} className={index === activeIndex ? "active" : ""} style={{"--x": `${18 + ((index * 29) % 68)}%`, "--y": `${20 + ((index * 37) % 62)}%`, "--size": `${34 + (index % 3) * 12}px`, "--node-color": segment.color, "--node-index":index}}><i />{compact(segment.topic, 11)}</span>)}
+        <div className="dh-affinity-map">
+          {affinityNodes.map((node, index) => <span key={node.id} className={index === activeIndex ? "active" : ""} style={{"--x": `${18 + ((index * 29) % 68)}%`, "--y": `${20 + ((index * 37) % 62)}%`, "--size": `${42 + (index % 3) * 12}px`, "--node-color": node.color, "--node-index":index}} title={`${node.kind}: ${node.detail}${node.connectsTo.length ? `; linked to ${node.connectsTo.join(", ")}` : ""}`}><i /><b>{compact(node.label, 18)}</b><em>{compact(node.kind, 10)}</em></span>)}
         </div>
-        <small>Not geographic audience data. Connect the GA4 Data API server-side to enable measured regional engagement.</small>
+        <div className="dh-affinity-evidence">{evidenceLinks.length ? evidenceLinks.map((item, index) => <a key={`${item.url}-${index}`} href={item.url} target="_blank" rel="noreferrer">{compact(item.label || `Evidence ${index + 1}`, 20)}</a>) : <span>Evidence links pending provider metadata</span>}</div>
+        <small>Metadata/content relationships onlyâ€”not audience or geographic conclusions.</small>
       </article>
       <aside className="dh-semantic-controls" aria-label="Video and analytics controls">
         <span>Side controls</span>
@@ -206,8 +279,8 @@ export default function SemanticAnalyticsPanel({
         <button type="button" onClick={controls.onNext}>Next Video</button>
         <button type="button" onClick={controls.onGlb}>3D / GLB Evidence</button>
         <button type="button" onClick={controls.onPodcast}>Podcast Evidence</button>
-        <button type="button" className={videoFullscreen ? "active dh-video-fullscreen-control" : "dh-video-fullscreen-control"} onClick={toggleVideoFullscreen}>{videoFullscreen ? "Exit Video Full Screen" : "[] Video Full Screen"}</button>
-        <button type="button" className={controls.isFullscreen ? "active" : ""} onClick={controls.onFullscreen}>{controls.isFullscreen ? "× Exit Full Screen" : "[] Full Screen"}</button>
+        <button type="button" className={videoFullscreen ? "active dh-video-fullscreen-control" : "dh-video-fullscreen-control"} onClick={toggleVideoFullscreen}>{videoFullscreen ? "Exit Video Full Screen" : "Video Full Screen"}</button>
+        {playbackNotice && <p className="dh-video-playback-notice" role="status">{playbackNotice}</p>}
       </aside>
     </div>
 

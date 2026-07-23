@@ -219,13 +219,23 @@ function average(values){
 }
 
 function summarizeTechnicalTiming(bars){
-  const closes = bars.map((bar) => Number(bar.c || bar.close || 0)).filter(Boolean)
-  const volumes = bars.map((bar) => Number(bar.v || bar.volume || 0)).filter(Boolean)
-  if(closes.length < 6){
+  const normalizedBars = bars.map((bar) => ({
+    open:Number(bar.o || bar.open || 0),
+    high:Number(bar.h || bar.high || 0),
+    low:Number(bar.l || bar.low || 0),
+    close:Number(bar.c || bar.close || 0),
+    volume:Number(bar.v || bar.volume || 0)
+  })).filter((bar) => bar.close > 0)
+  const closes = normalizedBars.map((bar) => bar.close)
+  const volumes = normalizedBars.map((bar) => bar.volume).filter(Boolean)
+  if(normalizedBars.length < 6){
     return {
       timingScore: 0,
       timingSignal: "insufficient-chart-context",
-      chartContext: "Not enough recent bars to judge timing."
+      chartContext: "Not enough recent bars to judge timing.",
+      ichimokuSignal:"insufficient-bars",
+      engulfingPattern:"not-detected",
+      indicatorBasis:"provider OHLCV bars"
     }
   }
 
@@ -239,6 +249,33 @@ function summarizeTechnicalTiming(bars){
   const volumeRatio = recentVolume / baseVolume
   const dayMovePct = dayOpen ? ((last - dayOpen) / dayOpen) * 100 : 0
   const lastMovePct = previous ? ((last - previous) / previous) * 100 : 0
+  const midpointFor = (count) => {
+    const sample = normalizedBars.slice(-count)
+    if(sample.length < Math.min(count, 6)) return null
+    const high = Math.max(...sample.map((bar) => bar.high || bar.close))
+    const low = Math.min(...sample.map((bar) => bar.low || bar.close))
+    return Number(((high + low) / 2).toFixed(2))
+  }
+  const conversionLine = midpointFor(9)
+  const baseLine = midpointFor(26)
+  const cloudSpanA = conversionLine !== null && baseLine !== null ? Number(((conversionLine + baseLine) / 2).toFixed(2)) : null
+  const cloudSpanB = normalizedBars.length >= 52 ? midpointFor(52) : null
+  const cloudTop = cloudSpanA !== null && cloudSpanB !== null ? Math.max(cloudSpanA, cloudSpanB) : null
+  const cloudBottom = cloudSpanA !== null && cloudSpanB !== null ? Math.min(cloudSpanA, cloudSpanB) : null
+  const ichimokuSignal = cloudTop === null
+    ? "building-52-bar-cloud"
+    : last > cloudTop
+      ? "price-above-cloud"
+      : last < cloudBottom
+        ? "price-below-cloud"
+        : "price-inside-cloud"
+  const priorBar = normalizedBars[normalizedBars.length - 2]
+  const lastBar = normalizedBars[normalizedBars.length - 1]
+  const priorBullish = priorBar.close > priorBar.open
+  const lastBullish = lastBar.close > lastBar.open
+  const bullishEngulfing = !priorBullish && lastBullish && lastBar.open <= priorBar.close && lastBar.close >= priorBar.open
+  const bearishEngulfing = priorBullish && !lastBullish && lastBar.open >= priorBar.close && lastBar.close <= priorBar.open
+  const engulfingPattern = bullishEngulfing ? "bullish-engulfing" : bearishEngulfing ? "bearish-engulfing" : "not-detected"
 
   let timingScore = 0
   if(last > shortSma) timingScore += 18
@@ -264,7 +301,14 @@ function summarizeTechnicalTiming(bars){
     dayMovePct: Number(dayMovePct.toFixed(2)),
     lastMovePct: Number(lastMovePct.toFixed(2)),
     volumeRatio: Number(volumeRatio.toFixed(2)),
-    chartContext: `Last $${last.toFixed(2)}, ${dayMovePct.toFixed(2)}% window move, ${volumeRatio.toFixed(2)}x recent volume, ${shortSma > longSma ? "short trend above long trend" : "short trend below long trend"}.`
+    conversionLine,
+    baseLine,
+    cloudSpanA,
+    cloudSpanB,
+    ichimokuSignal,
+    engulfingPattern,
+    indicatorBasis:"provider OHLCV bars",
+    chartContext: `Last $${last.toFixed(2)}, ${dayMovePct.toFixed(2)}% window move, ${volumeRatio.toFixed(2)}x recent volume, ${shortSma > longSma ? "short trend above long trend" : "short trend below long trend"}, ${ichimokuSignal}, ${engulfingPattern}.`
   }
 }
 
@@ -300,6 +344,7 @@ function summarizeWindow(symbol, id, trades, bars = []){
   const sellPrints = classified.filter((item) => item.side === "sell-pressure")
   const buyNotional = buyPrints.reduce((sum, item) => sum + item.notional, 0)
   const sellNotional = sellPrints.reduce((sum, item) => sum + item.notional, 0)
+  const deltaNotional = buyNotional - sellNotional
   const totalNotional = classified.reduce((sum, item) => sum + item.notional, 0)
   const totalVolume = classified.reduce((sum, item) => sum + item.size, 0)
   const biggestBuy = [...buyPrints].sort((a, b) => b.notional - a.notional).slice(0, 5)
@@ -322,6 +367,9 @@ function summarizeWindow(symbol, id, trades, bars = []){
     totalNotional: Number(totalNotional.toFixed(2)),
     buyPressureNotional: Number(buyNotional.toFixed(2)),
     sellPressureNotional: Number(sellNotional.toFixed(2)),
+    deltaNotional: Number(deltaNotional.toFixed(2)),
+    deltaSignal: deltaNotional > 0 ? "inferred-positive-delta" : deltaNotional < 0 ? "inferred-negative-delta" : "inferred-flat-delta",
+    deltaBasis: "tick-direction inference, not exchange aggressor labeling",
     largestPrintAmount: Number((largestPrint?.notional || 0).toFixed(2)),
     largestPrintSide: largestPrint?.side || "neutral",
     pressure,
