@@ -66,3 +66,4 @@ body:has(.dh-semantic-suite) .dh-media.dh-movie-controls,body:has(.dh-semantic-s
 body:has(.dh-semantic-suite) .dh-media.dh-movie-controls::-webkit-scrollbar,body:has(.dh-semantic-suite) .dh-youtube-story-renderer::-webkit-scrollbar{display:none!important;width:0!important;height:0!important}
 body:has(.dh-semantic-suite) .dh-youtube-story-renderer{box-sizing:border-box;width:100%;max-width:100%}
 .dh-semantic-suite{box-sizing:border-box;width:100%;max-width:100%}.dh-semantic-grid,.dh-semantic-grid>*{min-width:0}.dh-semantic-timeline{max-width:100%;overflow:hidden}.dh-semantic-timeline button{min-width:0}
+body:has(.dh-semantic-suite) .dh-layer-dock{display:none!important}
