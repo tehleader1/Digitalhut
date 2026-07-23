@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef} from "react"
+import React, {useEffect, useMemo, useRef, useState} from "react"
 import "./SemanticAnalyticsPanel.css"
 
 const palette = ["#50f2ff", "#8b7cff", "#ffca6a", "#ff6ea9", "#69f0ae", "#ff806b"]
@@ -74,6 +74,7 @@ export default function SemanticAnalyticsPanel({
   embedUrl = "",
   controls = {},
 }){
+  const [reproductionClock, setReproductionClock] = useState(0)
   const segments = useMemo(() => buildSegments({
     analysis,
     title: clean(video.title, category),
@@ -90,6 +91,11 @@ export default function SemanticAnalyticsPanel({
       : "video metadata context"
   const ga4Ready = typeof window !== "undefined" && typeof window.gtag === "function"
   const confidence = analyzerMode === "google-speech" ? 92 : analyzerMode === "provided-text" ? 84 : analysis ? 68 : 42
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setReproductionClock((current) => (current + 1) % 100000), 520)
+    return () => window.clearInterval(timer)
+  }, [])
 
   useEffect(() => {
     if(!active || !video.videoId) return
@@ -123,9 +129,11 @@ export default function SemanticAnalyticsPanel({
   const entities = (Array.isArray(analysis?.entities) ? analysis.entities : [])
     .slice(0, 6)
   const particleLabels = entities.length ? entities : segments.map((segment) => segment.topic).slice(0, 6)
+  const reproductionSignals = [active.topic, active.label, ...particleLabels].filter(Boolean)
+  const reproductionSignal = reproductionSignals[reproductionClock % Math.max(1, reproductionSignals.length)] || active.topic
   const currentProgress = Math.max(0, Math.min(100, ((seconds - active.start) / Math.max(1, active.end - active.start)) * 100))
 
-  return <section className={`dh-semantic-suite family-${active.family} ${playing ? "is-playing" : "is-paused"}`} style={{"--semantic-color": active.color}} aria-label="Content-aware video analytics">
+  return <section className={`dh-semantic-suite family-${active.family} ${playing ? "is-playing" : "is-paused"}`} style={{"--semantic-color": active.color, "--reproduction-step": reproductionClock % 12}} aria-label="Content-aware video analytics">
     <header className="dh-semantic-head">
       <div>
         <span>Content-aware analytics</span>
@@ -134,6 +142,7 @@ export default function SemanticAnalyticsPanel({
       </div>
       <div className="dh-semantic-health" aria-label="Analytics connection status">
         <span><i className={ga4Ready ? "online" : "waiting"} /> GA4 {ga4Ready ? "collection ready" : "waiting"}</span>
+        <span><i className="online live" /> Reproducing continuously</span>
         <span><i className={analysis ? "online" : "waiting"} /> Semantic {analysis ? "context ready" : "building"}</span>
         <strong>{confidence}% context confidence</strong>
       </div>
@@ -154,6 +163,7 @@ export default function SemanticAnalyticsPanel({
         <div className="dh-topic-kicker"><span>Now analyzing</span><code>{formatTime(seconds)}</code></div>
         <h3>{active.label}</h3>
         <p>{active.summary}</p>
+        <div className="dh-reproduction-read"><span>Reproduction frame</span><b key={`${reproductionSignal}-${reproductionClock}`}>{reproductionSignal}</b><code>LIVE {String(reproductionClock % 1000).padStart(3, "0")}</code></div>
         <div className="dh-topic-progress"><i style={{width: `${currentProgress}%`}} /></div>
         <dl>
           <div><dt>Source</dt><dd>{basis}</dd></div>

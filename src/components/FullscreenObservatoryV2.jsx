@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react"
+import React, {useCallback, useEffect, useRef, useState} from "react"
 import {ConnectButton} from "../wallet"
 import {useAccount, useSendTransaction, useWaitForTransactionReceipt} from "wagmi"
 import {parseEther} from "viem"
@@ -12,6 +12,8 @@ import PodcastMatchPanel from "./PodcastMatchPanel"
 import SocialPressureDrawer from "./SocialPressureDrawer"
 import WeatherTimeGauge from "./WeatherTimeGauge"
 import SemanticAnalyticsPanel from "./SemanticAnalyticsPanel"
+import AccountSubscriptionPanel from "./AccountSubscriptionPanel"
+import {supabase} from "../lib/supabaseClient"
 import "./FullscreenObservatory.css"
 import "./FullscreenObservatory.api.css"
 import "./FullscreenObservatory.sequence.css"
@@ -3514,6 +3516,7 @@ export default function FullscreenObservatoryV2(){
   const [username, setUsername] = useState(() => readStorage("digitalhut:username", ""))
   const [entryOpen, setEntryOpen] = useState(false)
   const [entryLoading, setEntryLoading] = useState(false)
+  const [accountSession, setAccountSession] = useState(null)
   const [awake, setAwake] = useState(true)
   const [isFullscreen, setIsFullscreen] = useState(() => typeof document !== "undefined" && Boolean(document.fullscreenElement))
   const [playing, setPlaying] = useState(true)
@@ -3608,6 +3611,22 @@ export default function FullscreenObservatoryV2(){
   const {address: connectedWallet, isConnected} = useAccount()
   const {sendTransaction, data: paymentHash, isPending: paymentPending, error: paymentError} = useSendTransaction()
   const {isSuccess: paymentConfirmed} = useWaitForTransactionReceipt({hash: paymentHash})
+
+  const handleAccountSession = useCallback((nextSession) => {
+    setAccountSession(nextSession || null)
+    const nextEmail = nextSession?.user?.email || ""
+    if(nextEmail){
+      const displayName = nextSession.user.user_metadata?.full_name || nextSession.user.user_metadata?.name || nextEmail.split("@")[0]
+      setUsername(displayName)
+      window.localStorage.setItem("digitalhut:username", displayName)
+    }
+  }, [])
+
+  async function signOutAccount(){
+    await supabase.auth.signOut()
+    setAccountSession(null)
+    setEntryOpen(false)
+  }
 
   const activeTours = toursFor(category)
   const activeTour = activeTours.find((item) => item.id === tour) || activeTours[0]
@@ -6713,7 +6732,7 @@ export default function FullscreenObservatoryV2(){
         </div>
         <div className="dh-account-cluster">
           <button className="dh-btn dh-backend-top" onClick={() => window.location.href = "/asset-lab"}>Backend</button>
-          <button className="dh-btn dh-account" onClick={() => setEntryOpen(true)}>{username || "Choose account"} / {tier}</button>
+          <button className="dh-btn dh-account" onClick={() => setEntryOpen(true)}>{accountSession?.user?.email ? `${accountSession.user.email} / ${tier}` : `${username || "Sign in"} / ${tier}`}</button>
         </div>
       </div>
 
@@ -6765,6 +6784,7 @@ export default function FullscreenObservatoryV2(){
         <div className="dh-state-badges"><span>{category}</span><span>{mode}</span><span>{sceneFeed.apiStatus || "api"}</span><span>{activeTour.icon}</span></div>
       </div>
 
+      <AccountSubscriptionPanel onSession={handleAccountSession} onOpenTiers={() => setEntryOpen(true)} onOpenProfile={() => setEntryOpen(true)} />
       <SocialPressureDrawer />
 
       <div id="digitalhut-entertainment" className="dh-media dh-movie-controls" style={{opacity: awake || autoPresent ? 1 : 0.42}}>
@@ -8059,6 +8079,6 @@ export default function FullscreenObservatoryV2(){
       <a href="/faq">FAQ</a>
     </nav>
 
-    {entryOpen && <section className="dh-entry"><div className="dh-entry-panel">{entryLoading ? <><div className="dh-logo">DigitalHut</div><div className="dh-load"><span /></div><p>Loading your observatory system</p></> : <><p className="dh-eyebrow">Choose profile</p><h2 className="dh-welcome">Welcome!</h2><input className="dh-entry-input" value={username} onChange={(event) => setUsername(event.target.value)} placeholder="Username Account" /><div className="dh-account-grid">{accounts.map((item) => <button key={item} className={`dh-btn ${tier === item ? "active" : ""}`} onClick={() => enter(item)}>{item.toUpperCase()}</button>)}</div><div className="dh-wallet"><ConnectButton /></div><p className="dh-entry-small">Guest and wallet-connected users get unlimited viewing and AutoPlay. Paid tiers expand saved history, storage, backend controls, nodes, and deep research.</p></>}</div></section>}
+    {entryOpen && <section className="dh-entry"><div className="dh-entry-panel">{entryLoading ? <><div className="dh-logo">DigitalHut</div><div className="dh-load"><span /></div><p>Loading your observatory system</p></> : accountSession ? <><p className="dh-eyebrow">Backend profile / subscription</p><h2 className="dh-welcome">Your DigitalHut</h2><div className="dh-profile-summary"><span>Signed in</span><b>{accountSession.user.email}</b><small>{accountSession.user.app_metadata?.provider === "google" ? "Google account" : "Verified email account"}</small></div><input className="dh-entry-input" value={username} onChange={(event) => setUsername(event.target.value)} placeholder="Display name" /><div className="dh-account-grid">{accounts.map((item) => <button key={item} className={`dh-btn ${tier === item ? "active" : ""}`} onClick={() => item === "guest" ? enter(item) : (setSelectedPurchaseIds([`tier-${item}`]), setEntryOpen(false), setPurchaseOpen(true))}>{item.toUpperCase()}</button>)}</div><button className="dh-btn hot" type="button" onClick={() => {setEntryOpen(false); setPurchaseOpen(true)}}>Open tier purchase</button><button className="dh-btn" type="button" onClick={signOutAccount}>Sign out</button><p className="dh-entry-small">Paid access activates only after a finalized provider receipt. Selecting a tier opens the purchase package.</p></> : <><p className="dh-eyebrow">Subscription / account</p><h2 className="dh-welcome">Choose a tier</h2><input className="dh-entry-input" value={username} onChange={(event) => setUsername(event.target.value)} placeholder="Display name (optional)" /><div className="dh-account-grid">{accounts.map((item) => <button key={item} className={`dh-btn ${tier === item ? "active" : ""}`} onClick={() => item === "guest" ? enter(item) : (setSelectedPurchaseIds([`tier-${item}`]), setEntryOpen(false), setPurchaseOpen(true))}>{item.toUpperCase()}</button>)}</div><p className="dh-entry-small">Sign up with Google or email in the left account panel, or select a paid tier to open the combined purchase path. Paid access requires a finalized provider receipt.</p></>}</div></section>}
   </main>
 }

@@ -44,3 +44,13 @@ body:has(.dh-semantic-suite) .dh-media.dh-movie-controls{inset:72px 14px 14px 22
 body:has(.dh-semantic-suite) .dh-movie-head,body:has(.dh-semantic-suite) .dh-movie-buttons,body:has(.dh-semantic-suite) .dh-movie-slider,body:has(.dh-semantic-suite) .dh-movie-ticks,body:has(.dh-semantic-suite) .dh-movie-caption{display:none!important}
 @media(max-width:1180px){.dh-semantic-grid{grid-template-columns:1.2fr 1fr 150px}.dh-topic-affinity{display:none}}
 @media(max-width:980px){.dh-semantic-grid{grid-template-columns:1fr 1fr}.dh-semantic-controls{grid-column:1/-1;flex-direction:row;flex-wrap:wrap}.dh-semantic-controls button{min-width:120px}}
+
+/* The semantic engine stays visibly alive even when playback is paused. */
+.dh-semantic-suite::before{animation:semantic-breathe 2.2s ease-in-out infinite alternate}
+.dh-semantic-health i.live{animation:semantic-status .8s ease-in-out infinite alternate}
+.dh-semantic-orbit .particle{animation-duration:calc(2.6s + var(--particle-index)*.38s);animation-delay:calc(var(--particle-index)*-.62s)}
+.dh-affinity-map span i{animation:semantic-node 1.8s ease-in-out infinite alternate}
+.dh-reproduction-read{position:relative;display:grid;grid-template-columns:1fr auto;gap:3px 8px;margin:10px 0 13px;padding:9px 10px;border:1px solid color-mix(in srgb,var(--semantic-color) 38%,#1e3046);border-radius:8px;background:linear-gradient(90deg,color-mix(in srgb,var(--semantic-color) 10%,#091321),#091321);overflow:hidden}
+.dh-reproduction-read::after{content:"";position:absolute;top:0;bottom:0;width:30%;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--semantic-color) 20%,transparent),transparent);animation:semantic-scan 1.1s linear infinite}
+.dh-reproduction-read span{grid-column:1/-1;color:#738ba2;font-size:8px;text-transform:uppercase;letter-spacing:.12em}.dh-reproduction-read b{overflow:hidden;color:#fff;font-size:11px;text-overflow:ellipsis;white-space:nowrap;animation:semantic-signal .52s ease-out}.dh-reproduction-read code{font-size:8px}
+@keyframes semantic-scan{from{left:-35%}to{left:105%}}@keyframes semantic-signal{from{opacity:.2;transform:translateY(5px)}to{opacity:1;transform:none}}@keyframes semantic-node{to{transform:scale(1.12);filter:brightness(1.3)}}@keyframes semantic-status{to{transform:scale(1.45);opacity:.55}}@keyframes semantic-breathe{to{transform:translateX(18%) scale(1.12)}}
