@@ -152,7 +152,7 @@ export default function SemanticAnalyticsPanel({
         return
       }
       if(!iframeRef.current?.requestFullscreen) throw new Error("fullscreen-unavailable")
-      setPlaybackNotice("Opening the video player and requesting playbackâ€¦")
+      setPlaybackNotice("Opening the video player and requesting playback...")
       if(!playing) controls.onEnsurePlaying?.()
       requestYoutubePlayback()
       await iframeRef.current.requestFullscreen()
@@ -259,7 +259,7 @@ export default function SemanticAnalyticsPanel({
         <dl key={`facts-${reproductionCycle}`}>
           <div style={{"--fact-index":0}}><dt>Source</dt><dd>{basis}</dd></div>
           <div style={{"--fact-index":1}}><dt>Channel</dt><dd>{seededFallback ? "Provider channel unavailable (fallback seed)" : clean(video.channelTitle || analysis?.channel, "Channel not returned")}</dd></div>
-          <div style={{"--fact-index":2}}><dt>Event</dt><dd><code>{playing ? "active video playback â†’ topic shift" : "active video paused â†’ context held"}</code></dd></div>
+          <div style={{"--fact-index":2}}><dt>Event</dt><dd><code>{playing ? "active video playback -> topic shift" : "active video paused -> context held"}</code></dd></div>
           <div style={{"--fact-index":3}}><dt>Status</dt><dd>{truthfulStatus}</dd></div>
         </dl>
       </article>
@@ -270,7 +270,7 @@ export default function SemanticAnalyticsPanel({
           {affinityNodes.map((node, index) => <span key={node.id} className={index === activeIndex ? "active" : ""} style={{"--x": `${18 + ((index * 29) % 68)}%`, "--y": `${20 + ((index * 37) % 62)}%`, "--size": `${42 + (index % 3) * 12}px`, "--node-color": node.color, "--node-index":index}} title={`${node.kind}: ${node.detail}${node.connectsTo.length ? `; linked to ${node.connectsTo.join(", ")}` : ""}`}><i /><b>{compact(node.label, 18)}</b><em>{compact(node.kind, 10)}</em></span>)}
         </div>
         <div className="dh-affinity-evidence">{evidenceLinks.length ? evidenceLinks.map((item, index) => <a key={`${item.url}-${index}`} href={item.url} target="_blank" rel="noreferrer">{compact(item.label || `Evidence ${index + 1}`, 20)}</a>) : <span>Evidence links pending provider metadata</span>}</div>
-        <small>Metadata/content relationships onlyâ€”not audience or geographic conclusions.</small>
+        <small>Metadata/content relationships only - not audience or geographic conclusions.</small>
       </article>
       <aside className="dh-semantic-controls" aria-label="Video and analytics controls">
         <span>Side controls</span>
