@@ -41,7 +41,7 @@ async function serviceAccountToken(federatedAccessToken){
 
 function metricMap(report){
   const names = report?.metricHeaders?.map((item) => item.name) || []
-  const values = report?.rows?.[0]?.metricValues || []
+  const values = report?.totals?.[0]?.metricValues || report?.rows?.[0]?.metricValues || []
   return Object.fromEntries(names.map((name, index) => [name, Number(values[index]?.value || 0)]))
 }
 
@@ -55,23 +55,33 @@ function eventRows(report){
 async function googleAnalyticsReport(){
   const federated = await federatedToken()
   const serviceAccount = await serviceAccountToken(federated.access_token)
-  const response = await fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${PROPERTY_ID}:batchRunReports`, {
+  const authHeaders = {Authorization:`Bearer ${serviceAccount.accessToken}`, "Content-Type":"application/json"}
+  const [standardResponse, realtimeResponse] = await Promise.all([
+    fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${PROPERTY_ID}:batchRunReports`, {
     method:"POST",
-    headers:{Authorization:`Bearer ${serviceAccount.accessToken}`, "Content-Type":"application/json"},
+    headers:authHeaders,
     body:JSON.stringify({requests:[
-      {dateRanges:[{startDate:"7daysAgo",endDate:"today"}],metrics:[{name:"activeUsers"},{name:"sessions"},{name:"screenPageViews"},{name:"eventCount"},{name:"keyEvents"}]},
-      {dateRanges:[{startDate:"7daysAgo",endDate:"today"}],dimensions:[{name:"eventName"}],metrics:[{name:"eventCount"}],orderBys:[{metric:{metricName:"eventCount"},desc:true}],limit:20},
+      {dateRanges:[{startDate:"today",endDate:"today"}],metrics:[{name:"activeUsers"},{name:"sessions"},{name:"screenPageViews"},{name:"eventCount"},{name:"keyEvents"}]},
+      {dateRanges:[{startDate:"today",endDate:"today"}],dimensions:[{name:"eventName"}],metrics:[{name:"eventCount"}],orderBys:[{metric:{metricName:"eventCount"},desc:true}],limit:20},
     ]}),
-  })
-  const payload = await readJson(response, "analytics-data")
-  const reports = payload.reports || []
+  }),
+    fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${PROPERTY_ID}:runRealtimeReport`, {
+      method:"POST",
+      headers:authHeaders,
+      body:JSON.stringify({metrics:[{name:"activeUsers"},{name:"eventCount"}],dimensions:[{name:"eventName"}],orderBys:[{metric:{metricName:"eventCount"},desc:true}],limit:20}),
+    }),
+  ])
+  const [standardPayload, realtimePayload] = await Promise.all([
+    readJson(standardResponse, "analytics-data-standard"),
+    readJson(realtimeResponse, "analytics-data-realtime"),
+  ])
+  const reports = standardPayload.reports || []
   return {
     ok:true,
     provider:"Google Analytics Data API",
     propertyId:PROPERTY_ID,
-    dateRange:{start:"7daysAgo",end:"today"},
-    totals:metricMap(reports[0]),
-    events:eventRows(reports[1]),
+    today:{dateRange:{start:"today",end:"today"},totals:metricMap(reports[0]),events:eventRows(reports[1])},
+    realtime:{totals:metricMap(realtimePayload),events:eventRows(realtimePayload)},
     generatedAt:new Date().toISOString(),
     truthBoundary:"Google-recorded GA4 aggregates. These are not DigitalHut internal counters and activeUsers are not a claim of unique people.",
   }
