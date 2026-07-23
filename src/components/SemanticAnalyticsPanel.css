@@ -30,7 +30,6 @@ body:has(.dh-semantic-suite) .dh-youtube-story-renderer>.dh-digitalhut-presents,
 body:has(.dh-semantic-suite) .dh-youtube-story-renderer>.dh-construction-status,
 body:has(.dh-semantic-suite) .dh-youtube-story-renderer>.dh-top-design-renderer,
 body:has(.dh-semantic-suite) .dh-youtube-story-renderer>.dh-source-preview-card,
-body:has(.dh-semantic-suite) .dh-youtube-story-renderer>.dh-current-market-feed,
 body:has(.dh-semantic-suite) .dh-youtube-story-renderer>.dh-story-control,
 body:has(.dh-semantic-suite) .dh-youtube-story-renderer>.dh-cutscene-tracker,
 body:has(.dh-semantic-suite) .dh-youtube-story-renderer>.dh-story-analytics,
@@ -67,3 +66,8 @@ body:has(.dh-semantic-suite) .dh-media.dh-movie-controls::-webkit-scrollbar,body
 body:has(.dh-semantic-suite) .dh-youtube-story-renderer{box-sizing:border-box;width:100%;max-width:100%}
 .dh-semantic-suite{box-sizing:border-box;width:100%;max-width:100%}.dh-semantic-grid,.dh-semantic-grid>*{min-width:0}.dh-semantic-timeline{max-width:100%;overflow:hidden}.dh-semantic-timeline button{min-width:0}
 body:has(.dh-semantic-suite) .dh-layer-dock{display:none!important}
+body:has(.dh-semantic-suite) .dh-current-market-feed{display:block!important}
+.dh-current-market-feed.retracted{min-height:0!important;padding-bottom:0!important}
+.dh-current-market-feed.retracted>header{margin-bottom:0!important}
+.dh-market-retract{border:1px solid #36506a;border-radius:7px;background:#0b1929;color:#bfefff;padding:7px 10px;cursor:pointer}
+.dh-voice-search.listening{border-color:#50f2ff!important;box-shadow:0 0 16px rgba(80,242,255,.38);color:#50f2ff!important}

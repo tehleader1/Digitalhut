@@ -3579,6 +3579,7 @@ export default function FullscreenObservatoryV2(){
   const [directorPanelOpen, setDirectorPanelOpen] = useState(false)
   const [categoryPanelOpen, setCategoryPanelOpen] = useState(false)
   const [currentMarketOpen, setCurrentMarketOpen] = useState(false)
+  const [currentMarketRetracted, setCurrentMarketRetracted] = useState(false)
   const [currentMarketInput, setCurrentMarketInput] = useState("NVDA")
   const [podcastFeatureOpen, setPodcastFeatureOpen] = useState(false)
   const [youtubeVideoIndex, setYoutubeVideoIndex] = useState(0)
@@ -6590,6 +6591,7 @@ export default function FullscreenObservatoryV2(){
         <form className="dh-mechanic-search" aria-label="DigitalHut system search" onSubmit={(event) => {event.preventDefault(); runSearch()}}>
           <span className="dh-system-search-label">System Search</span>
           <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search any GLB, feed, place, game, research, house project..." />
+          <button className={`dh-voice-search ${aiListening ? "listening" : ""}`} type="button" onClick={startVoiceCommand} aria-label={aiListening ? "Listening for search" : "Search by voice"} title="Search by voice">{aiListening ? "Listening…" : "Mic"}</button>
           <button type="submit">Search</button>
           <button type="button" onClick={() => setMainLobbyOpen(true)}>Main Lobby</button>
         </form>
@@ -6878,33 +6880,34 @@ export default function FullscreenObservatoryV2(){
             <small>{sourcePreviewHost} / {sourcePreview?.signal || "live reference"}</small>
             <i aria-hidden="true"><em /><em /><em /></i>
           </a>
-          <section className={`dh-current-market-feed dh-build-module ${currentMarketActive ? "market-view" : "regular-pulse"} ${analyticsStarted ? "is-constructing" : "is-waiting"}`} aria-label="DigitalHut Current Market feed">
+          <section className={`dh-current-market-feed dh-build-module ${currentMarketActive ? "market-view" : "regular-pulse"} ${currentMarketRetracted ? "retracted" : ""} ${analyticsStarted ? "is-constructing" : "is-waiting"}`} aria-label="DigitalHut Current Market feed">
             <header>
               <div>
                 <span>{currentMarketActive ? "Current Market View" : "Market Pulse"}</span>
                 <b>{activeCurrentMarketStock.symbol} {activeCurrentMarketStock.company}</b>
                 <small>{currentMarketActive ? "stock data / video / podcast / GLB" : "quick 3 option pressure lanes"}</small>
               </div>
-              {currentMarketActive ? <form onSubmit={(event) => {event.preventDefault(); runCurrentMarket(currentMarketInput, "market-view-ticker-form")}}>
+              <button className="dh-market-retract" type="button" onClick={() => setCurrentMarketRetracted((value) => !value)}>{currentMarketRetracted ? "Expand" : "Retract"}</button>
+              {currentMarketActive ? <form onSubmit={(event) => {event.preventDefault(); setCurrentMarketRetracted(false); runCurrentMarket(currentMarketInput, "market-view-ticker-form")}}>
                 <input value={currentMarketInput} onChange={(event) => setCurrentMarketInput(event.target.value.toUpperCase())} placeholder="Ticker or company" />
                 <button type="submit">Market</button>
               </form> : <button className="dh-market-mini-open" type="button" onClick={() => runCurrentMarket(activeCurrentMarketStock.symbol, "regular-feed-market-mini-open")}>Open Market</button>}
             </header>
-            {currentMarketActive && <div className="dh-current-market-top10" aria-label="Top 10 current market stocks">
+            {!currentMarketRetracted && currentMarketActive && <div className="dh-current-market-top10" aria-label="Top 10 current market stocks">
               {currentMarketStocks.map((item) => <button key={item.symbol} type="button" className={item.symbol === activeCurrentMarketStock.symbol ? "active" : ""} onClick={() => runCurrentMarket(item.symbol, "market-top10-stock-button")}>
                 <b>{item.symbol}</b>
                 <span>{item.company}</span>
               </button>)}
             </div>}
-            <div className={`dh-market-option-pulse ${currentMarketActive ? "full" : "compact"}`} aria-label="Top 3 stock option pressure reads">
+            {!currentMarketRetracted && <div className={`dh-market-option-pulse ${currentMarketActive ? "full" : "compact"}`} aria-label="Top 3 stock option pressure reads">
               {quickMarketOptionPicks.map((item, index) => <button key={item.id} type="button" className={`${item.direction} ${item.live ? "live" : "queued"}`} style={{"--option-order": index}} onClick={() => openMarketQuickPick(item)}>
                 <span>{item.direction}</span>
                 <b>{item.symbol}</b>
                 <small>{item.contract}</small>
                 <em>{item.value}</em>
               </button>)}
-            </div>
-            {currentMarketActive && <div className="dh-market-view-body">
+            </div>}
+            {!currentMarketRetracted && currentMarketActive && <div className="dh-market-view-body">
               {sceneFeed.market?.chartUrl && <iframe className="dh-market-chart-frame" title={`${activeCurrentMarketStock.symbol} TradingView chart`} src={sceneFeed.market.chartUrl} loading="lazy" />}
               <div className="dh-market-transcript-build" aria-label="Constructing market data transcript">
                 {visibleCurrentMarketHighlights.map((item, index) => <article key={item.id} className={`tone-${item.tone}`} style={{"--highlight-fill": `${item.fill}%`, "--highlight-order": index, "--highlight-pulse": `${item.pulse}%`}}>
@@ -7867,9 +7870,9 @@ export default function FullscreenObservatoryV2(){
         {layerOpen && paid && <div className="dh-layer-menu">{layers.map((item) => <button key={item} className={`dh-btn ${item === layer ? "active" : ""}`} onClick={() => {setLayer(item); setLayerOpen(false)}}>{item}</button>)}</div>}
       </div>
 
-      <button className={`dh-ai-space ${aiListening ? "listening" : ""} dock-${aiDock}`} type="button" onClick={startVoiceCommand}>
+      {false && <button className={`dh-ai-space ${aiListening ? "listening" : ""} dock-${aiDock}`} type="button" onClick={startVoiceCommand}>
         <span>DigitalHut AI</span><b>{aiListening ? "Listening" : "Interact"}</b>
-      </button>
+      </button>}
       <div className={`dh-director-panel ${directorPanelOpen ? "open" : "collapsed"}`} data-dh-director>
         <button className="dh-director-mini-toggle" type="button" onClick={() => setDirectorPanelOpen((value) => !value)} aria-expanded={directorPanelOpen}>
           <span>AI Director</span>
@@ -8079,6 +8082,22 @@ export default function FullscreenObservatoryV2(){
       <a href="/faq">FAQ</a>
     </nav>
 
-    {entryOpen && <section className="dh-entry"><div className="dh-entry-panel">{entryLoading ? <><div className="dh-logo">DigitalHut</div><div className="dh-load"><span /></div><p>Loading your observatory system</p></> : accountSession ? <><p className="dh-eyebrow">Backend profile / subscription</p><h2 className="dh-welcome">Your DigitalHut</h2><div className="dh-profile-summary"><span>Signed in</span><b>{accountSession.user.email}</b><small>{accountSession.user.app_metadata?.provider === "google" ? "Google account" : "Verified email account"}</small></div><input className="dh-entry-input" value={username} onChange={(event) => setUsername(event.target.value)} placeholder="Display name" /><div className="dh-account-grid">{accounts.map((item) => <button key={item} className={`dh-btn ${tier === item ? "active" : ""}`} onClick={() => item === "guest" ? enter(item) : (setSelectedPurchaseIds([`tier-${item}`]), setEntryOpen(false), setPurchaseOpen(true))}>{item.toUpperCase()}</button>)}</div><button className="dh-btn hot" type="button" onClick={() => {setEntryOpen(false); setPurchaseOpen(true)}}>Open tier purchase</button><button className="dh-btn" type="button" onClick={signOutAccount}>Sign out</button><p className="dh-entry-small">Paid access activates only after a finalized provider receipt. Selecting a tier opens the purchase package.</p></> : <><p className="dh-eyebrow">Subscription / account</p><h2 className="dh-welcome">Choose a tier</h2><input className="dh-entry-input" value={username} onChange={(event) => setUsername(event.target.value)} placeholder="Display name (optional)" /><div className="dh-account-grid">{accounts.map((item) => <button key={item} className={`dh-btn ${tier === item ? "active" : ""}`} onClick={() => item === "guest" ? enter(item) : (setSelectedPurchaseIds([`tier-${item}`]), setEntryOpen(false), setPurchaseOpen(true))}>{item.toUpperCase()}</button>)}</div><p className="dh-entry-small">Sign up with Google or email in the left account panel, or select a paid tier to open the combined purchase path. Paid access requires a finalized provider receipt.</p></>}</div></section>}
+    {entryOpen && <section className="dh-entry dh-subscription-entry"><div className="dh-entry-panel dh-subscription-screen">
+      <button className="dh-subscription-close" type="button" onClick={() => setEntryOpen(false)}>Close</button>
+      {entryLoading ? <><div className="dh-logo">DigitalHut</div><div className="dh-load"><span /></div><p>Loading your account system</p></> : <>
+        <p className="dh-eyebrow">DigitalHut account and access</p><h2 className="dh-welcome">Choose how you explore.</h2><p className="dh-subscription-lead">One observatory, with more saved context and research depth at each level.</p>
+        <div className="dh-subscription-summary">
+          <section><span>My DigitalHut Account</span><h3>Personal details</h3><p>Keep these details with your service account and payment receipt.</p><div className="dh-personal-fields"><label>Account holder<input value={username} onChange={(event) => setUsername(event.target.value)} placeholder="Display name" /></label><label>Email address<input value={accountSession?.user?.email || "Sign in from the left account panel"} readOnly /></label><button type="button" onClick={() => {window.localStorage.setItem("digitalhut:displayName", username); if(accountSession) supabase.auth.updateUser({data:{display_name:username}}).catch(() => null)}}>Save account details</button></div></section>
+          <section><span>Current subscription</span><h3>{paid ? `${tier[0].toUpperCase()}${tier.slice(1)} active` : "No active subscription"}</h3><p>{paid ? "Access is tied to a finalized provider receipt." : "Choose a service below to start. A subscription opens here only after the payment provider confirms it."}</p>{accountSession && <button type="button" onClick={signOutAccount}>Sign out</button>}</section>
+        </div>
+        <div className="dh-payment-rails"><span>DigitalHut sponsored payment rails</span><b>Provider confirmation required</b></div>
+        <div className="dh-tier-cards">{[
+          {id:"standard",price:"$12/month",tag:"",copy:"Longer saved history, core AI Director controls, category growth tracking",features:["Full video observatory","Interactive 3D model view","Podcast source moments","Core session controls"]},
+          {id:"premium",price:"$25/month",tag:"Most complete",copy:"Premium AI detail, stronger session memory, node progress visibility",features:["Full video observatory","Interactive 3D model view","Podcast source moments","Extended session memory"]},
+          {id:"pro",price:"$60/month",tag:"",copy:"Deep research, expanded backend controls, unlimited AI presentation power",features:["Full video observatory","Interactive 3D model view","Podcast source moments","Deep research access"]}
+        ].map((plan) => <article key={plan.id} className={plan.id === "premium" ? "featured" : ""}>{plan.tag && <em>{plan.tag}</em>}<h3>{plan.id[0].toUpperCase()+plan.id.slice(1)}</h3><strong>{plan.price}</strong><p>{plan.copy}</p><ul>{plan.features.map((feature) => <li key={feature}>+ {feature}</li>)}</ul><button type="button" onClick={() => {setSelectedPurchaseIds([`tier-${plan.id}`]); setEntryOpen(false); setPurchaseOpen(true)}}>Choose {plan.id[0].toUpperCase()+plan.id.slice(1)}</button></article>)}</div>
+        {!accountSession && <p className="dh-entry-small">Use Google or email in the familiar sign-in panel on the left, or choose a tier to open the signup and purchase combination. Paid access is never activated without a finalized provider receipt.</p>}
+      </>}
+    </div></section>}
   </main>
 }

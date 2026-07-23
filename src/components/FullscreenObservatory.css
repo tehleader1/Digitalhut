@@ -7,6 +7,18 @@ body,
     linear-gradient(135deg, #07111f, #0f172a 48%, #082f49) !important;
 }
 
+/* Full account and subscription workstation. */
+.dh-subscription-entry{padding:52px 7vw;background:rgba(1,7,15,.82)}
+.dh-subscription-screen{position:relative;width:min(1040px,92vw);max-width:none;max-height:84vh;overflow:auto;padding:24px;background:#07182a;border-color:#2b7592}
+.dh-subscription-close{position:absolute;right:18px;top:16px;border:1px solid #31516c;border-radius:8px;background:#0b1a2b;color:#d9f4ff;padding:8px 12px}
+.dh-subscription-lead{margin:-5px 0 18px;color:#9cb3c6}
+.dh-subscription-summary{display:grid;grid-template-columns:1.7fr 1fr;gap:12px;padding:12px;border:1px solid #247391;border-radius:10px;background:#092238}
+.dh-subscription-summary>section{padding:10px}.dh-subscription-summary span,.dh-payment-rails span{color:#53e5ff;text-transform:uppercase;letter-spacing:.12em;font-size:9px;font-weight:900}.dh-subscription-summary h3{margin:4px 0;color:#fff}.dh-subscription-summary p{margin:3px 0 10px;color:#aac0d1;font-size:11px;line-height:1.4}
+.dh-personal-fields{display:grid;grid-template-columns:1fr 1.25fr auto;gap:8px;align-items:end}.dh-personal-fields label{display:grid;gap:4px;color:#a7bed0;font-size:8px;text-transform:uppercase;font-weight:800}.dh-personal-fields input{min-width:0;padding:9px;border:1px solid #38566f;border-radius:6px;background:#071422;color:#fff}.dh-personal-fields button,.dh-subscription-summary button{padding:9px;border:1px solid #83be38;border-radius:6px;background:#263817;color:#efffc8;color:#efffc8}
+.dh-payment-rails{display:flex;justify-content:space-between;margin:12px 0;padding:10px;border:1px solid #274a64;border-radius:7px}.dh-payment-rails b{font-size:9px;color:#b8cbd8}
+.dh-tier-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.dh-tier-cards article{position:relative;display:flex;flex-direction:column;min-height:265px;padding:16px;border:1px solid #31526b;border-radius:8px;background:#091a2b}.dh-tier-cards article.featured{border-color:#4ec7ed;box-shadow:0 0 25px rgba(78,199,237,.12)}.dh-tier-cards em{position:absolute;right:12px;top:10px;color:#fff;font-size:8px;text-transform:uppercase}.dh-tier-cards h3{margin:0 0 5px;color:#fff}.dh-tier-cards strong{color:#fff}.dh-tier-cards p{color:#9eb2c5;font-size:10px;line-height:1.45}.dh-tier-cards ul{padding:0;list-style:none;color:#aeeeff;font-size:9px;line-height:1.8}.dh-tier-cards button{margin-top:auto;padding:10px;border:1px solid #39bce5;border-radius:6px;background:#0b2c43;color:#fff;font-weight:800}
+@media(max-width:800px){.dh-subscription-summary,.dh-tier-cards{grid-template-columns:1fr}.dh-personal-fields{grid-template-columns:1fr}.dh-subscription-screen{max-height:90vh}}
+
 /* Latest observatory reset: clean theme background, live transparent construction, and podcast feature interrupt. */
 body:has(.dh-youtube-story-renderer) .dh-youtube-story-renderer {
   position: relative;
