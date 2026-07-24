@@ -3,6 +3,7 @@ import {Link, useLocation, useParams} from "react-router-dom"
 import {digitalhutMasterListBridge, digitalhutSourceBridgePath} from "../lib/digitalhutMasterListBridge"
 import {seoBlogPosts, seoLaunchTargetsForPost, seoMetadataForProof, seoPlatformCadenceProof, seoRunnerProofPosts, seoSearchIntentRadarProof, seoUsefulnessLaneFor} from "../lib/seoContentEngine"
 import {seoSearchClaimForQuery} from "../lib/seoSearchClaimEngine"
+import {resolveWatchProofRoute} from "../lib/watchProofRouteIntegrity"
 import "./TrustPage.css"
 import "./BlogPage.css"
 
@@ -66,50 +67,74 @@ export default function WatchProofPage(){
   const {slug} = useParams()
   const location = useLocation()
   const posts = useMemo(() => allProofPosts(), [])
-  const post = useMemo(() => posts.find((item) => item.slug === slug) || posts[0], [posts, slug])
+  const routeState = useMemo(() => resolveWatchProofRoute(posts, slug), [posts, slug])
+  const post = routeState.post
   const rankParams = useMemo(() => new URLSearchParams(location.search), [location.search])
   const rankQuery = rankParams.get("dh_query") || ""
   const rankClaim = useMemo(() => {
-    return rankQuery ? seoSearchClaimForQuery(rankQuery, {category: post.category || "DigitalHut"}) : null
-  }, [post.category, rankQuery])
+    return rankQuery && post ? seoSearchClaimForQuery(rankQuery, {category: post.category || "DigitalHut"}) : null
+  }, [post, rankQuery])
   const rankNumber = rankParams.get("dh_rank")
   const globalRankNumber = rankParams.get("dh_global_rank")
   const laneId = rankParams.get("dh_lane")
-  const keywords = post.keywords || post.seo_keywords || []
-  const proofFocus = post.proofFocus || "video radar, GLB proof dock, timeline, source evidence, and backlink route"
-  const launch = seoLaunchTargetsForPost(post)
-  const usefulnessLane = seoUsefulnessLaneFor(post)
-  const categorySlug = String(post.category || "digitalhut").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
-  const observatoryUrl = `/?category=${encodeURIComponent(post.category || "Mainstream Streaming")}&episode=${encodeURIComponent(keywords[0] || post.title)}&proof=${encodeURIComponent(post.slug || slug || "")}`
+  const keywords = post?.keywords || post?.seo_keywords || []
+  const proofFocus = post?.proofFocus || "video radar, GLB proof dock, timeline, source evidence, and backlink route"
+  const launch = post ? seoLaunchTargetsForPost(post) : null
+  const usefulnessLane = post ? seoUsefulnessLaneFor(post) : null
+  const categorySlug = String(post?.category || "digitalhut").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
+  const observatoryUrl = post
+    ? `/?category=${encodeURIComponent(post.category || "Mainstream Streaming")}&episode=${encodeURIComponent(keywords[0] || post.title)}&proof=${encodeURIComponent(post.slug || slug || "")}`
+    : "/"
 
   useEffect(() => {
-    const metadata = seoMetadataForProof(post, "watch")
-    const title = rankClaim ? rankClaim.metadataTitle : metadata.title
-    const description = rankClaim ? rankClaim.metadataDescription : metadata.description
-    document.title = title
     let meta = document.querySelector('meta[name="description"]')
     if(!meta){
       meta = document.createElement("meta")
       meta.name = "description"
       document.head.appendChild(meta)
     }
-    meta.content = description
     let keywordMeta = document.querySelector('meta[name="keywords"]')
     if(!keywordMeta){
       keywordMeta = document.createElement("meta")
       keywordMeta.name = "keywords"
       document.head.appendChild(keywordMeta)
     }
-    keywordMeta.content = rankClaim ? [rankQuery, rankClaim.lane, ...(rankClaim.measurementSignals || [])].join(", ") : metadata.keywords.join(", ")
     let canonical = document.querySelector('link[rel="canonical"]')
     if(!canonical){
       canonical = document.createElement("link")
       canonical.rel = "canonical"
       document.head.appendChild(canonical)
     }
-    canonical.href = rankClaim
-      ? `https://www.digitalhut.app${location.pathname}${location.search}`
-      : `https://www.digitalhut.app/watch/${post.slug || slug}`
+
+    if(!post){
+      const robots = document.querySelector('meta[name="robots"]') || document.createElement("meta")
+      const robotsWasCreated = !robots.parentNode
+      const previousRobotsContent = robots.getAttribute("content")
+      if(robotsWasCreated){
+        robots.name = "robots"
+        document.head.appendChild(robots)
+      }
+      document.title = "Watch proof not found | DigitalHut"
+      meta.content = "This DigitalHut watch proof route does not match a published episode."
+      keywordMeta.content = ""
+      robots.content = "noindex,follow"
+      canonical.href = routeState.canonicalUrl
+      document.getElementById("dh-watch-proof-jsonld")?.remove()
+
+      return () => {
+        if(robotsWasCreated) robots.remove()
+        else if(previousRobotsContent === null) robots.removeAttribute("content")
+        else robots.content = previousRobotsContent
+      }
+    }
+
+    const metadata = seoMetadataForProof(post, "watch")
+    const title = rankClaim ? rankClaim.metadataTitle : metadata.title
+    const description = rankClaim ? rankClaim.metadataDescription : metadata.description
+    document.title = title
+    meta.content = description
+    keywordMeta.content = rankClaim ? [rankQuery, rankClaim.lane, ...(rankClaim.measurementSignals || [])].join(", ") : metadata.keywords.join(", ")
+    canonical.href = routeState.canonicalUrl
     upsertJsonLd("dh-watch-proof-jsonld", {
       "@context": "https://schema.org",
       "@type": "WebPage",
@@ -145,7 +170,32 @@ export default function WatchProofPage(){
         `https://www.digitalhut.app/category/${categorySlug}`
       ]
     })
-  }, [categorySlug, location.pathname, location.search, post, proofFocus, rankClaim, rankQuery, slug])
+  }, [categorySlug, post, proofFocus, rankClaim, rankQuery, routeState.canonicalUrl])
+
+  if(routeState.status === "not-found"){
+    return <main className="dh-trust-page dh-blog-page dh-watch-proof-page" data-route-state="not-found">
+      <header className="dh-trust-nav">
+        <Link to="/">DigitalHut</Link>
+        <nav>
+          <Link to="/blog">Blog</Link>
+          <Link to="/system-proof">System Proof</Link>
+          <Link to="/master-keyword-coverage">Keyword Map</Link>
+        </nav>
+      </header>
+
+      <section className="dh-watch-proof-hero" aria-labelledby="dh-watch-proof-not-found-title">
+        <div>
+          <span>Watch proof not found</span>
+          <h1 id="dh-watch-proof-not-found-title">This watch proof is not published</h1>
+          <p>DigitalHut could not find a published watch proof for <code>{slug}</code>. No other episode was substituted.</p>
+          <div className="dh-watch-proof-actions">
+            <Link to="/blog">Browse published proof articles</Link>
+            <Link to="/">Return to DigitalHut</Link>
+          </div>
+        </div>
+      </section>
+    </main>
+  }
 
   return <main className="dh-trust-page dh-blog-page dh-watch-proof-page">
     <header className="dh-trust-nav">
