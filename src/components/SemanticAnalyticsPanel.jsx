@@ -1,4 +1,5 @@
 import React, {useEffect, useMemo, useRef, useState} from "react"
+import ObservatoryQuickFeeds from "./ObservatoryQuickFeeds"
 import "./SemanticAnalyticsPanel.css"
 
 const palette = ["#50f2ff", "#8b7cff", "#ffca6a", "#ff6ea9", "#69f0ae", "#ff806b"]
@@ -80,6 +81,7 @@ export default function SemanticAnalyticsPanel({
   onSeek,
   embedUrl = "",
   controls = {},
+  quickFeeds = {},
 }){
   const [reproductionClock, setReproductionClock] = useState(0)
   const [videoFullscreen, setVideoFullscreen] = useState(false)
@@ -116,6 +118,12 @@ export default function SemanticAnalyticsPanel({
   }, [])
 
   useEffect(() => {
+    setReproductionClock(0)
+    setPlaybackNotice("")
+    lastTrackedRef.current = ""
+  }, [video.videoId])
+
+  useEffect(() => {
     const sync = () => setVideoFullscreen(document.fullscreenElement === iframeRef.current)
     document.addEventListener("fullscreenchange", sync)
     return () => document.removeEventListener("fullscreenchange", sync)
@@ -123,6 +131,7 @@ export default function SemanticAnalyticsPanel({
 
   useEffect(() => {
     const listen = (event) => {
+      if(event.source !== iframeRef.current?.contentWindow) return
       let hostname = ""
       try { hostname = new URL(event.origin).hostname } catch { return }
       if(!/youtube(?:-nocookie)?\.com$/i.test(hostname)) return
@@ -250,28 +259,33 @@ export default function SemanticAnalyticsPanel({
         <small>Subtle objects follow the active subject—not audience behavior.</small>
       </article>
 
-      <article className="dh-topic-readout">
-        <div className="dh-topic-kicker" key={`kicker-${reproductionCycle}`}><span>Now analyzing</span><code>{formatTime(seconds)}</code></div>
-        <h3 key={`title-${reproductionCycle}`}>{active.label}</h3>
-        <p key={`summary-${reproductionCycle}`}>{active.summary}</p>
-        <div className="dh-reproduction-read"><span>Reproduction frame</span><b key={`${reproductionSignal}-${reproductionClock}`}>{reproductionSignal}</b><code>LIVE {String(reproductionClock % 1000).padStart(3, "0")}</code></div>
-        <div className="dh-topic-progress replaying" key={`progress-${reproductionCycle}`}><i style={{width: `${Math.max(8, currentProgress)}%`}} /></div>
-        <dl key={`facts-${reproductionCycle}`}>
-          <div style={{"--fact-index":0}}><dt>Source</dt><dd>{basis}</dd></div>
-          <div style={{"--fact-index":1}}><dt>Channel</dt><dd>{seededFallback ? "Provider channel unavailable (fallback seed)" : clean(video.channelTitle || analysis?.channel, "Channel not returned")}</dd></div>
-          <div style={{"--fact-index":2}}><dt>Event</dt><dd><code>{playing ? "active video playback -> topic shift" : "active video paused -> context held"}</code></dd></div>
-          <div style={{"--fact-index":3}}><dt>Status</dt><dd>{truthfulStatus}</dd></div>
-        </dl>
-      </article>
+      <div className="dh-semantic-context">
+        <ObservatoryQuickFeeds {...quickFeeds} />
+        <div className="dh-semantic-context-details">
+          <article className="dh-topic-readout">
+            <div className="dh-topic-kicker" key={`kicker-${reproductionCycle}`}><span>Now analyzing</span><code>{formatTime(seconds)}</code></div>
+            <h3 key={`title-${reproductionCycle}`}>{active.label}</h3>
+            <p key={`summary-${reproductionCycle}`}>{active.summary}</p>
+            <div className="dh-reproduction-read"><span>Reproduction frame</span><b key={`${reproductionSignal}-${reproductionClock}`}>{reproductionSignal}</b><code>LIVE {String(reproductionClock % 1000).padStart(3, "0")}</code></div>
+            <div className="dh-topic-progress replaying" key={`progress-${reproductionCycle}`}><i style={{width: `${Math.max(8, currentProgress)}%`}} /></div>
+            <dl key={`facts-${reproductionCycle}`}>
+              <div style={{"--fact-index":0}}><dt>Source</dt><dd>{basis}</dd></div>
+              <div style={{"--fact-index":1}}><dt>Channel</dt><dd>{seededFallback ? "Provider channel unavailable (fallback seed)" : clean(video.channelTitle || analysis?.channel, "Channel not returned")}</dd></div>
+              <div style={{"--fact-index":2}}><dt>Event</dt><dd><code>{playing ? "active video playback -> topic shift" : "active video paused -> context held"}</code></dd></div>
+              <div style={{"--fact-index":3}}><dt>Status</dt><dd>{truthfulStatus}</dd></div>
+            </dl>
+          </article>
 
-      <article className="dh-topic-affinity" aria-label="Topic affinity visualization">
-        <div className="dh-affinity-title"><span>Topic affinity</span><b>Context preview</b></div>
-        <div className="dh-affinity-map">
-          {affinityNodes.map((node, index) => <span key={node.id} className={index === activeIndex ? "active" : ""} style={{"--x": `${18 + ((index * 29) % 68)}%`, "--y": `${20 + ((index * 37) % 62)}%`, "--size": `${42 + (index % 3) * 12}px`, "--node-color": node.color, "--node-index":index}} title={`${node.kind}: ${node.detail}${node.connectsTo.length ? `; linked to ${node.connectsTo.join(", ")}` : ""}`}><i /><b>{compact(node.label, 18)}</b><em>{compact(node.kind, 10)}</em></span>)}
+          <article className="dh-topic-affinity" aria-label="Topic affinity visualization">
+            <div className="dh-affinity-title"><span>Topic affinity</span><b>Context preview</b></div>
+            <div className="dh-affinity-map">
+              {affinityNodes.map((node, index) => <span key={node.id} className={index === activeIndex ? "active" : ""} style={{"--x": `${18 + ((index * 29) % 68)}%`, "--y": `${20 + ((index * 37) % 62)}%`, "--size": `${42 + (index % 3) * 12}px`, "--node-color": node.color, "--node-index":index}} title={`${node.kind}: ${node.detail}${node.connectsTo.length ? `; linked to ${node.connectsTo.join(", ")}` : ""}`}><i /><b>{compact(node.label, 18)}</b><em>{compact(node.kind, 10)}</em></span>)}
+            </div>
+            <div className="dh-affinity-evidence">{evidenceLinks.length ? evidenceLinks.map((item, index) => <a key={`${item.url}-${index}`} href={item.url} target="_blank" rel="noreferrer">{compact(item.label || `Evidence ${index + 1}`, 20)}</a>) : <span>Evidence links pending provider metadata</span>}</div>
+            <small>Metadata/content relationships only - not audience or geographic conclusions.</small>
+          </article>
         </div>
-        <div className="dh-affinity-evidence">{evidenceLinks.length ? evidenceLinks.map((item, index) => <a key={`${item.url}-${index}`} href={item.url} target="_blank" rel="noreferrer">{compact(item.label || `Evidence ${index + 1}`, 20)}</a>) : <span>Evidence links pending provider metadata</span>}</div>
-        <small>Metadata/content relationships only - not audience or geographic conclusions.</small>
-      </article>
+      </div>
       <aside className="dh-semantic-controls" aria-label="Video and analytics controls">
         <span>Side controls</span>
         <button type="button" className={playing ? "active" : ""} onClick={controls.onTogglePlay}>{playing ? "Pause Video" : "Play Video"}</button>

@@ -2689,10 +2689,12 @@ function youtubeStoryFor({query, category, feed, chapter, progress, streamAnalyt
   const searchPhrase = `${topic} ${category} 2026 visual experience`
   const encoded = encodeURIComponent(searchPhrase)
   const rawVideos = rotateFreshList(Array.isArray(youtubeSearch?.videos) ? youtubeSearch.videos : [], freshSeed, `${category}:${topic}:youtube-story`)
-  const playableVideos = rawVideos.filter(isPlayableYoutubeVideo)
-  const videos = playableVideos.length ? playableVideos : rawVideos.filter((video) => {
+  const seenVideoIds = new Set()
+  const videos = rawVideos.filter(isPlayableYoutubeVideo).filter((video) => {
     const videoId = youtubeVideoIdFor(video)
-    return videoId && !blockedYoutubeEmbedIds.has(videoId) && Boolean(video?.embedUrl || video?.videoId || video?.id)
+    if(!videoId || seenVideoIds.has(videoId)) return false
+    seenVideoIds.add(videoId)
+    return true
   })
   const selectedVideoIndex = videos.length ? ((Math.round(Number(videoIndex) || 0) % videos.length) + videos.length) % videos.length : 0
   const primaryVideo = videos[selectedVideoIndex]
@@ -3620,6 +3622,7 @@ export default function FullscreenObservatoryV2(){
   const [currentMarketInput, setCurrentMarketInput] = useState("NVDA")
   const [podcastFeatureOpen, setPodcastFeatureOpen] = useState(false)
   const [youtubeVideoIndex, setYoutubeVideoIndex] = useState(0)
+  const [committedQuickFeedQuery, setCommittedQuickFeedQuery] = useState("")
   const [youtubeSearch, setYoutubeSearch] = useState({status: "waiting", configured: false, provider: "YouTube Data API v3", videos: []})
   const [podcastClipIndex, setPodcastClipIndex] = useState(0)
   const [podcastSearch, setPodcastSearch] = useState({status: "waiting", configured: false, provider: "Apple Podcasts Search API", episodes: [], videos: []})
@@ -3710,7 +3713,8 @@ export default function FullscreenObservatoryV2(){
     year: "2026",
     audience: category === "Gamer" ? "Gamer" : category === "Real Estate" ? "Client" : category === "Researcher" ? "Researcher" : ""
   }).slice(0, 10)
-  const youtubeStory = youtubeStoryFor({query, category, feed: sceneFeed, chapter: presentationChapter, progress: liveAnalyticsProgress, streamAnalytics, liveLongTailKeywords, youtubeSearch, videoIndex: youtubeVideoIndex, freshSeed: freshnessSeed})
+  const quickFeedSourceQuery = compactTopic(committedQuickFeedQuery || category || "Mainstream Streaming")
+  const youtubeStory = youtubeStoryFor({query: quickFeedSourceQuery, category, feed: sceneFeed, chapter: presentationChapter, progress: liveAnalyticsProgress, streamAnalytics, liveLongTailKeywords, youtubeSearch, videoIndex: youtubeVideoIndex, freshSeed: freshnessSeed})
   const contentRadar = youtubeStory.contentRadar || {}
   const podcastClip = podcastClipForStory({podcastSearch, youtubeStory, contentRadar, category, index: podcastClipIndex, freshSeed: freshnessSeed})
   const observatoryAnalysis = observatoryAnalyzerFor({
@@ -4769,8 +4773,8 @@ export default function FullscreenObservatoryV2(){
   useEffect(() => {
     if(entryOpen) return undefined
     let cancelled = false
-    const term = compactTopic(`${sceneFeed.title || query || category} ${category} 2026 visual experience`)
-    const fallbackVideos = seededYoutubePanelVideosFor(category, term, 4, freshnessSeed)
+    const term = compactTopic(`${quickFeedSourceQuery} ${committedQuickFeedQuery ? category : "DigitalHut"} 2026 visual experience`)
+    const fallbackVideos = seededYoutubePanelVideosFor(category, term, 8, freshnessSeed)
     const quotaCooldownRemainingMs = youtubeQuotaCooldownRemaining()
     setYoutubeVideoIndex(0)
     if(quotaCooldownRemainingMs > 0){
@@ -4779,6 +4783,7 @@ export default function FullscreenObservatoryV2(){
         configured: true,
         provider: "DigitalHut seeded panel / YouTube quota protected",
         query: term,
+        queryUsed: quickFeedSourceQuery,
         videos: fallbackVideos,
         analytics: {retryAfterMs: quotaCooldownRemainingMs},
         quotaProtected: true,
@@ -4789,12 +4794,15 @@ export default function FullscreenObservatoryV2(){
         cancelled = true
       }
     }
-    setYoutubeSearch((current) => ({...current, status: "loading-youtube-api", query: term}))
-    fetchWithTimeout(`/api/youtube-search?query=${encodeURIComponent(term)}&category=${encodeURIComponent(category)}&limit=4`, {headers: {Accept: "application/json"}}, 9000)
+    setYoutubeSearch((current) => ({...current, status: "loading-youtube-api", query: term, queryUsed: quickFeedSourceQuery, error: ""}))
+    fetchWithTimeout(`/api/youtube-search?query=${encodeURIComponent(term)}&category=${encodeURIComponent(category)}&limit=8`, {headers: {Accept: "application/json"}}, 9000)
       .then(async (response) => {
         const payload = await response.json().catch(() => ({}))
         if(cancelled) return
-        const apiVideos = rotateFreshList(Array.isArray(payload.videos) ? payload.videos.filter(isPlayableYoutubeVideo) : [], freshnessSeed, `${category}:${term}:youtube-api`)
+        const rankedPayloadVideos = Array.isArray(payload.videos)
+          ? payload.videos.map((video, index) => ({...video, providerRank: index + 1}))
+          : []
+        const apiVideos = rankedPayloadVideos.filter(isPlayableYoutubeVideo)
         const quotaProtected = payload.status === "youtube-quota-cooldown" || payload.quotaProtected
         if(quotaProtected) rememberYoutubeQuotaCooldown(payload.retryAfterMs)
         setYoutubeSearch({
@@ -4802,6 +4810,7 @@ export default function FullscreenObservatoryV2(){
           configured: Boolean(payload.configured),
           provider: apiVideos.length ? (payload.provider || "YouTube Data API v3") : quotaProtected ? "DigitalHut seeded panel / YouTube quota protected" : "DigitalHut seeded YouTube panel",
           query: payload.query || term,
+          queryUsed: payload.queryUsed || payload.query || quickFeedSourceQuery,
           videos: apiVideos.length ? apiVideos : fallbackVideos,
           analytics: payload.analytics || {},
           quotaProtected,
@@ -4816,7 +4825,8 @@ export default function FullscreenObservatoryV2(){
           status: "youtube-prefilled-category-panels",
           provider: "DigitalHut seeded YouTube panel",
           query: term,
-          videos: seededYoutubePanelVideosFor(category, term, 4, freshnessSeed),
+          queryUsed: quickFeedSourceQuery,
+          videos: seededYoutubePanelVideosFor(category, term, 8, freshnessSeed),
           error: error?.message || "youtube-api-error",
           fetchedAt: new Date().toISOString()
         }))
@@ -4824,7 +4834,7 @@ export default function FullscreenObservatoryV2(){
     return () => {
       cancelled = true
     }
-  }, [entryOpen, category, sceneFeed.title, query, freshnessSeed])
+  }, [entryOpen, category, committedQuickFeedQuery, quickFeedSourceQuery, freshnessSeed])
 
   useEffect(() => {
     if(entryOpen) return undefined
@@ -5298,6 +5308,7 @@ export default function FullscreenObservatoryV2(){
     setDemoMode("")
     setAutoPresent(false)
     setPlaying(false)
+    setCommittedQuickFeedQuery("")
     setCategoryPanelOpen(false)
     setCategory(nextCategory)
     setTour(toursFor(nextCategory)[0].id)
@@ -5493,6 +5504,65 @@ export default function FullscreenObservatoryV2(){
     }
   }
 
+  function trackQuickFeedImpression({groupIndex = 0, groupCount = 0, items = [], query: sourceQuery = ""} = {}){
+    trackObservatoryPixel("youtube_quick_feed_impression", {
+      keywordHint: sourceQuery || quickFeedSourceQuery,
+      metadata: {
+        source: "semantic-quick-feeds",
+        group: groupIndex + 1,
+        groupCount,
+        groupSize: 3,
+        query: sourceQuery || quickFeedSourceQuery,
+        videoIds: items.map((item) => item.videoId),
+        truthLabels: items.map((item) => item.truthLabel),
+        providerReceiptCount: items.filter((item) => item.providerReceiptConfirmed).length,
+        conversion: false
+      }
+    })
+  }
+
+  function selectObservatoryQuickFeed(item, {groupIndex = 0, groupCount = 0, position = 0} = {}){
+    const targetVideoId = youtubeVideoIdFor(item)
+    const targetIndex = youtubeStory.videos.findIndex((video) => youtubeVideoIdFor(video) === targetVideoId)
+    if(!targetVideoId || targetIndex < 0) return
+
+    trackObservatoryPixel("youtube_quick_feed_select", {
+      keywordHint: item.queryUsed || quickFeedSourceQuery,
+      metadata: {
+        source: "semantic-quick-feeds",
+        videoId: targetVideoId,
+        videoTitle: item.title,
+        group: groupIndex + 1,
+        groupCount,
+        groupSize: 3,
+        position: position + 1,
+        query: item.queryUsed || quickFeedSourceQuery,
+        provider: item.provider || item.sourceBadge,
+        providerRank: item.providerRank || 0,
+        providerReceiptConfirmed: Boolean(item.providerReceiptConfirmed),
+        truthLabel: item.truthLabel,
+        autoplayChanged: false,
+        conversion: false
+      }
+    })
+    setYoutubeVideoIndex(targetIndex)
+    setPresentationProgress(0)
+    setYoutubeSeekAnchor(0)
+    setObservatoryBuildSeed(analyticsClock)
+    setContentAnalyzer((current) => ({
+      ...current,
+      status: "analyzing-content",
+      analysis: null,
+      query: item.title,
+      error: ""
+    }))
+    setDirectorStatus({
+      phase: "Quick Feed selected",
+      detail: item.title,
+      status: "The main video, Now Analyzing, and Topic Affinity are synchronizing. Playback state was not changed."
+    })
+  }
+
   async function refreshLiveRenderer(){
     setLoading(true)
     setModelOpen(true)
@@ -5627,6 +5697,7 @@ export default function FullscreenObservatoryV2(){
       keywordHint: targetCategory,
       metadata: {fromCategory: category, control: "category-dropdown"}
     })
+    setCommittedQuickFeedQuery("")
     setCategoryPanelOpen(false)
     const seed = rotateFreshList(seedFeeds(targetCategory), freshnessSeed, `${targetCategory}:dropdown-seed`)[0]
     const quickVideo = seededYoutubePanelVideosFor(targetCategory, seed?.query || `${targetCategory} DigitalHut video observatory`, 1, freshnessSeed)[0]
@@ -5802,6 +5873,7 @@ export default function FullscreenObservatoryV2(){
   async function runSearch(searchOverride = ""){
     const searchValue = String(typeof searchOverride === "string" && searchOverride ? searchOverride : query || "").trim()
     if(!searchValue) return
+    setCommittedQuickFeedQuery(searchValue)
     trackObservatoryPixel("search_run", {
       keywordHint: searchValue,
       metadata: {queryLength: searchValue.length, reason: searchOverride ? "intent-radar-search" : "observatory-command-search"}
@@ -6995,6 +7067,17 @@ export default function FullscreenObservatoryV2(){
               onNext: nextFeed,
               onGlb: glbPlayViewOpen ? minimizeGlbRenderer : openContainedModel,
               onPodcast: openPodcastFeatureInterrupt,
+            }}
+            quickFeeds={{
+              videos: youtubeSearch?.videos || [],
+              activeVideoId: youtubeVideoIdFor(youtubeStory.primaryVideo),
+              status: youtubeSearch?.status || "waiting",
+              provider: youtubeSearch?.provider || "",
+              fetchedAt: youtubeSearch?.fetchedAt || "",
+              query: youtubeSearch?.queryUsed || quickFeedSourceQuery,
+              error: youtubeSearch?.error || "",
+              onSelect: selectObservatoryQuickFeed,
+              onImpression: trackQuickFeedImpression,
             }}
           />
           <div className={`dh-digitalhut-presents ${analyticsStarted ? "is-building" : "is-waiting"}`} aria-label="DigitalHut Presents system state">
