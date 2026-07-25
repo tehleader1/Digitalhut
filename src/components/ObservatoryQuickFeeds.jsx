@@ -155,15 +155,11 @@ export default function ObservatoryQuickFeeds({
           </div>}
 
       <nav className="dh-quick-feed-group-controls" aria-label="Quick Feed groups">
-        <button type="button" onClick={() => moveGroup(-1)} disabled={loading || groupCount <= 1} aria-label="Show previous group of 3 Quick Feeds">
-          <span aria-hidden="true">‹</span>
-          <b>Previous 3</b>
+        <button type="button" onClick={() => moveGroup(1)} disabled={loading || groupCount <= 1} aria-label="Cycle to the next group of 3 Quick Feeds">
+          <span aria-hidden="true">&gt;</span>
+          <b>Next 3</b>
         </button>
         <output aria-live="polite" aria-label={`Quick Feed group ${groupCount ? groupIndex + 1 : 0} of ${groupCount}`}>{groupCount ? `${groupIndex + 1}/${groupCount}` : "0/0"}</output>
-        <button type="button" onClick={() => moveGroup(1)} disabled={loading || groupCount <= 1} aria-label="Show next group of 3 Quick Feeds">
-          <b>Next 3</b>
-          <span aria-hidden="true">›</span>
-        </button>
       </nav>
     </div>
 

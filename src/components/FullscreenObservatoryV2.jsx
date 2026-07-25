@@ -2308,7 +2308,16 @@ function trustedYoutubeEmbedUrl(video, category){
   return video.embedUrl || youtubeDirectEmbed(videoId)
 }
 
-const seededYoutubePanelIds = ["M7lc1UVf-VE", "aqz-KE-bpKQ", "YE7VzlLtp-4", "dQw4w9WgXcQ"]
+const seededYoutubePanelVideos = [
+  {videoId:"M7lc1UVf-VE", title:"YouTube Developers Live: Embedded Web Player Customization", channelTitle:"Google for Developers"},
+  {videoId:"aqz-KE-bpKQ", title:"Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film", channelTitle:"Blender"},
+  {videoId:"YE7VzlLtp-4", title:"Big Buck Bunny", channelTitle:"Blender"},
+  {videoId:"dQw4w9WgXcQ", title:"Rick Astley - Never Gonna Give You Up (Official Video) (4K Remaster)", channelTitle:"Rick Astley"},
+  {videoId:"jNQXAC9IVRw", title:"Me at the zoo", channelTitle:"jawed"},
+  {videoId:"LXb3EKWsInQ", title:"COSTA RICA IN 4K 60fps HDR (ULTRA HD)", channelTitle:"Jacob + Katie Schwarz"},
+  {videoId:"kJQP7kiw5Fk", title:"Luis Fonsi - Despacito ft. Daddy Yankee", channelTitle:"LuisFonsiVEVO"},
+  {videoId:"9bZkp7q19f0", title:"PSY - GANGNAM STYLE M/V", channelTitle:"officialpsy"},
+]
 
 const seededYoutubePanelTopics = {
   "DigitalHut Presentation": ["DigitalHut observatory AI analytics presentation", "live GLB video podcast renderer workflow", "dapp video analytics visual system", "AI observatory product demo"],
@@ -2332,21 +2341,22 @@ function seededYoutubePanelVideosFor(category, topic = "", limit = 4, freshSeed 
   const activeCategory = category || "Mainstream Streaming"
   const topicText = compactTopic(topic || activeCategory)
   const topicPool = seededYoutubePanelTopics[activeCategory] || seededYoutubePanelTopics["Mainstream Streaming"]
-  const titles = rotateFreshList([topicText, ...topicPool], freshSeed, `${activeCategory}:${topicText}:videos`)
+  const relatedTopics = rotateFreshList([topicText, ...topicPool], freshSeed, `${activeCategory}:${topicText}:videos`)
     .map((item) => compactTopic(item))
     .filter(Boolean)
     .filter((item, index, list) => list.findIndex((candidate) => candidate.toLowerCase() === item.toLowerCase()) === index)
-    .slice(0, limit)
-  const offset = freshOffsetFor(seededYoutubePanelIds.length, freshSeed || deterministicIndex(activeCategory, 100000), `${activeCategory}:${topicText}:youtube-id`)
-  return titles.map((title, index) => {
-    const videoId = seededYoutubePanelIds[(offset + index) % seededYoutubePanelIds.length]
+  const videos = rotateFreshList(seededYoutubePanelVideos, freshSeed || deterministicIndex(activeCategory, 100000), `${activeCategory}:${topicText}:youtube-id`)
+    .slice(0, Math.min(limit, seededYoutubePanelVideos.length))
+  return videos.map((video, index) => {
+    const relatedTopic = relatedTopics[index % Math.max(1, relatedTopics.length)] || topicText
+    const {videoId, title, channelTitle} = video
     return {
       id: `seeded-youtube-${activeCategory}-${index}-${videoId}`,
       videoId,
       embedUrl: youtubeDirectEmbed(videoId),
       title,
-      description: `${activeCategory} prefilled YouTube panel for DigitalHut Observatory content radar.`,
-      channelTitle: "DigitalHut seeded YouTube panel",
+      description: `DigitalHut curated fallback for ${activeCategory}. Live provider search is required before treating this source as related to "${relatedTopic}".`,
+      channelTitle,
       thumbnail: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
       thumbnails: {
         medium: {url: `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`},
@@ -2357,12 +2367,9 @@ function seededYoutubePanelVideosFor(category, topic = "", limit = 4, freshSeed 
       uploadStatus: "processed",
       liveBroadcastContent: "none",
       durationSeconds: 180,
-      viewCount: 26000 + deterministicIndex(`${activeCategory}:${title}`, 240000),
-      likeCount: 900 + deterministicIndex(`${title}:${activeCategory}`, 16000),
-      publishedAt: "2026-01-01T00:00:00.000Z",
-      apiStatus: "prefilled-youtube-panel",
-      contentFit: "quota-safe storyboard",
-      fitDetail: `${activeCategory} topic panel waiting for live YouTube API confirmation`
+      apiStatus: "curated-youtube-fallback",
+      contentFit: "DigitalHut curated fallback",
+      fitDetail: `${activeCategory} fallback source; live YouTube provider relevance is not confirmed`
     }
   })
 }
@@ -3622,7 +3629,7 @@ export default function FullscreenObservatoryV2(){
   const [directorPanelOpen, setDirectorPanelOpen] = useState(false)
   const [categoryPanelOpen, setCategoryPanelOpen] = useState(false)
   const [currentMarketOpen, setCurrentMarketOpen] = useState(false)
-  const [currentMarketRetracted, setCurrentMarketRetracted] = useState(false)
+  const [currentMarketRetracted, setCurrentMarketRetracted] = useState(true)
   const [currentMarketInput, setCurrentMarketInput] = useState("NVDA")
   const [podcastFeatureOpen, setPodcastFeatureOpen] = useState(false)
   const [youtubeVideoIndex, setYoutubeVideoIndex] = useState(0)
@@ -7235,7 +7242,7 @@ export default function FullscreenObservatoryV2(){
                 <span>{item.company}</span>
               </button>)}
             </div>}
-            {!currentMarketRetracted && <div className={`dh-market-option-pulse ${currentMarketActive ? "full" : "compact"}`} aria-label="Top 3 stock option pressure reads">
+            <div className={`dh-market-option-pulse ${currentMarketActive && !currentMarketRetracted ? "full" : "compact"}`} aria-label="Top 3 stock option pressure reads">
               {quickMarketOptionPicks.map((item, index) => <button key={item.id} type="button" className={`${item.direction} ${item.live ? "live" : "queued"}`} style={{"--option-order": index}} onClick={() => openMarketQuickPick(item)}>
                 <span>{item.direction}</span>
                 <b>{item.symbol}</b>
@@ -7243,7 +7250,7 @@ export default function FullscreenObservatoryV2(){
                 <em>{item.value}</em>
                 <small className="dh-market-quick-detail">{item.detail}</small>
               </button>)}
-            </div>}
+            </div>
             {!currentMarketRetracted && currentMarketActive && <div className="dh-market-view-body">
               {sceneFeed.market?.chartUrl && <iframe className="dh-market-chart-frame" title={`${activeCurrentMarketStock.symbol} TradingView chart`} src={sceneFeed.market.chartUrl} loading="lazy" />}
               <div className="dh-market-transcript-build" aria-label="Constructing market data transcript">
