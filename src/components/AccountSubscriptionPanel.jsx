@@ -1,16 +1,23 @@
-import React, {useEffect, useState} from "react"
+import React, {useCallback, useEffect, useState} from "react"
 import {Link} from "react-router-dom"
 import {supabase} from "../lib/supabaseClient"
+import {
+  ACCOUNT_RETURN_STATES,
+  clearResolvedAccountReturnFromHistory,
+  resolveAccountReturnContract,
+} from "../lib/accountReturnContract"
 import "./AccountSubscriptionPanel.css"
 
 function redirectUrl(){
-  if(typeof window === "undefined") return "https://www.digitalhut.app/"
-  const url = new URL(window.location.href)
-  url.searchParams.set("account_return", "1")
-  return url.toString()
+  if(typeof window === "undefined") return "https://www.digitalhut.app/auth/callback"
+  const allowedOrigins = new Set(["https://www.digitalhut.app", "https://digitalhut.app"])
+  const origin = allowedOrigins.has(window.location.origin)
+    ? window.location.origin
+    : "https://www.digitalhut.app"
+  return new URL("/auth/callback", origin).toString()
 }
 
-export default function AccountSubscriptionPanel({onSession, onOpenTiers, onOpenProfile}){
+export default function AccountSubscriptionPanel({onSession, onOpenTiers, onOpenProfile, onAccountReturn}){
   const [session, setSession] = useState(null)
   const [mode, setMode] = useState("signin")
   const [email, setEmail] = useState("")
@@ -21,6 +28,29 @@ export default function AccountSubscriptionPanel({onSession, onOpenTiers, onOpen
   const [status, setStatus] = useState("")
   const [busy, setBusy] = useState(false)
 
+  const handleAccountReturn = useCallback((nextSession) => {
+    const contract = resolveAccountReturnContract({
+      url: window.location.href,
+      sessionRecoveryComplete: true,
+      sessionConfirmed: Boolean(nextSession?.user),
+    })
+    if(!contract.recognized) return
+
+    if(contract.state === ACCOUNT_RETURN_STATES.CONFIRMED){
+      setStatus("Account confirmed. Your account and subscription options are open.")
+      onAccountReturn?.(contract.uiIntent)
+    }else if(contract.state === ACCOUNT_RETURN_STATES.CANCELED){
+      setStatus("Sign in was canceled. No account or subscription access was changed.")
+    }else if(contract.state === ACCOUNT_RETURN_STATES.EXPIRED){
+      setStatus("That confirmation link expired. Request a new email and try again.")
+    }else if(contract.state === ACCOUNT_RETURN_STATES.PROVIDER_DISABLED){
+      setStatus("Google sign in is not enabled yet. Email sign in remains available.")
+    }else if(contract.state === ACCOUNT_RETURN_STATES.MISSING_SESSION){
+      setStatus("The return link opened, but no confirmed session was found. Sign in again.")
+    }
+    clearResolvedAccountReturnFromHistory(window.history, contract)
+  }, [onAccountReturn])
+
   useEffect(() => {
     let active = true
     supabase.auth.getSession().then(({data}) => {
@@ -29,14 +59,16 @@ export default function AccountSubscriptionPanel({onSession, onOpenTiers, onOpen
       setSession(next)
       onSession?.(next)
       if(next?.user?.app_metadata?.provider === "email" && next.user.user_metadata?.password_created !== true) setNeedsPassword(true)
+      handleAccountReturn(next)
     })
-    const {data:{subscription}} = supabase.auth.onAuthStateChange((_event, next) => {
+    const {data:{subscription}} = supabase.auth.onAuthStateChange((event, next) => {
       setSession(next)
       onSession?.(next)
       if(next?.user?.app_metadata?.provider === "email" && next.user.user_metadata?.password_created !== true) setNeedsPassword(true)
+      if(event === "SIGNED_IN") handleAccountReturn(next)
     })
     return () => { active = false; subscription.unsubscribe() }
-  }, [onSession])
+  }, [handleAccountReturn, onSession])
 
   async function continueWithGoogle(){
     setBusy(true)

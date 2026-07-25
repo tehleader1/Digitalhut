@@ -1,5 +1,9 @@
 import React, {useEffect, useMemo, useRef, useState} from "react"
 import ObservatoryQuickFeeds from "./ObservatoryQuickFeeds"
+import {
+  createTopicAffinityReproduction,
+  topicAffinityFrameAt,
+} from "./topicAffinityReproductionModel"
 import "./SemanticAnalyticsPanel.css"
 
 const palette = ["#50f2ff", "#8b7cff", "#ffca6a", "#ff6ea9", "#69f0ae", "#ff806b"]
@@ -84,6 +88,8 @@ export default function SemanticAnalyticsPanel({
   quickFeeds = {},
 }){
   const [reproductionClock, setReproductionClock] = useState(0)
+  const [affinityElapsedMs, setAffinityElapsedMs] = useState(0)
+  const [reducedMotion, setReducedMotion] = useState(false)
   const [videoFullscreen, setVideoFullscreen] = useState(false)
   const [playbackNotice, setPlaybackNotice] = useState("")
   const iframeRef = useRef(null)
@@ -113,15 +119,30 @@ export default function SemanticAnalyticsPanel({
   const confidence = analyzerMode === "google-speech" ? 92 : analyzerMode === "provided-text" ? 84 : analysis ? 68 : 42
 
   useEffect(() => {
-    const timer = window.setInterval(() => setReproductionClock((current) => (current + 1) % 100000), 2600)
+    const timer = window.setInterval(() => setReproductionClock((current) => (current + 1) % 100000), 5200)
     return () => window.clearInterval(timer)
   }, [])
 
   useEffect(() => {
     setReproductionClock(0)
+    setAffinityElapsedMs(0)
     setPlaybackNotice("")
     lastTrackedRef.current = ""
   }, [video.videoId])
+
+  useEffect(() => {
+    const preference = window.matchMedia?.("(prefers-reduced-motion: reduce)")
+    const sync = () => setReducedMotion(Boolean(preference?.matches))
+    sync()
+    preference?.addEventListener?.("change", sync)
+    return () => preference?.removeEventListener?.("change", sync)
+  }, [])
+
+  useEffect(() => {
+    if(reducedMotion) return undefined
+    const timer = window.setInterval(() => setAffinityElapsedMs((current) => current + 250), 250)
+    return () => window.clearInterval(timer)
+  }, [reducedMotion])
 
   useEffect(() => {
     const sync = () => setVideoFullscreen(document.fullscreenElement === iframeRef.current)
@@ -206,25 +227,64 @@ export default function SemanticAnalyticsPanel({
   const entities = (Array.isArray(analysis?.entities) ? analysis.entities : [])
     .slice(0, 6)
   const particleLabels = entities.length ? entities : segments.map((segment) => segment.topic).slice(0, 6)
-  const affinityNodes = useMemo(() => {
-    const supplied = Array.isArray(analysis?.bubbleMap) ? analysis.bubbleMap : []
-    if(supplied.length) return supplied.slice(0, 7).map((node, index) => ({
-      id:node.id || `affinity-${index}`,
-      label:compact(node.label || node.value || segments[index % Math.max(1, segments.length)]?.topic, 24),
-      detail:compact(node.value || "Metadata relationship", 78),
-      kind:clean(node.kind, "context"),
-      connectsTo:Array.isArray(node.connectsTo) ? node.connectsTo.slice(0, 4) : [],
-      color:palette[index % palette.length]
+  const affinityModel = useMemo(() => createTopicAffinityReproduction({
+    activeVideo:{
+      videoId:video.videoId,
+      title:video.title,
+      channelTitle:video.channelTitle,
+      provider:video.provider,
+      sourceUrl:video.sourceUrl,
+      apiStatus:video.apiStatus,
+      curated:video.providerReceipt?.curated,
+      tags:[
+        ...entities,
+        ...(Array.isArray(analysis?.bubbleMap)
+          ? analysis.bubbleMap.map((node) => node?.label || node?.value)
+          : []),
+      ].filter(Boolean),
+    },
+    providerReceipt:video.providerReceipt,
+    category,
+    queryUsed:video.providerReceipt?.queryUsed,
+    event:{name:"topic_affinity_reproduction",state:playing ? "playing" : "paused"},
+  }, {reducedMotion}), [
+    analysis?.bubbleMap,
+    category,
+    entities,
+    playing,
+    reducedMotion,
+    video.apiStatus,
+    video.channelTitle,
+    video.provider,
+    video.providerReceipt,
+    video.sourceUrl,
+    video.title,
+    video.videoId,
+  ])
+  const affinityFrame = useMemo(
+    () => topicAffinityFrameAt(affinityModel, affinityElapsedMs),
+    [affinityElapsedMs, affinityModel],
+  )
+  const affinityPositions = useMemo(() => {
+    const nodes = affinityModel.graph.nodes || []
+    return new Map(nodes.map((node, index) => {
+      if(index === 0) return [node.key, {x:50,y:50}]
+      const orbitCount = Math.max(1, nodes.length - 1)
+      const angle = (-Math.PI / 2) + ((index - 1) / orbitCount) * Math.PI * 2
+      return [node.key, {
+        x:50 + Math.cos(angle) * 34,
+        y:50 + Math.sin(angle) * 31,
+      }]
     }))
-    return segments.slice(0, 6).map((segment, index) => ({
-      id:segment.id,
-      label:segment.topic,
-      detail:segment.summary,
-      kind:"timeline",
-      connectsTo:index < segments.length - 1 ? [segments[index + 1].id] : [],
-      color:segment.color
-    }))
-  }, [analysis?.bubbleMap, segments])
+  }, [affinityModel])
+  const affinityNodes = affinityFrame.visibleNodes.map((node, index) => ({
+    id:node.key,
+    label:compact(node.label, 24),
+    detail:node.ariaLabel,
+    kind:node.kind,
+    color:palette[index % palette.length],
+    position:affinityPositions.get(node.key) || {x:50,y:50},
+  }))
   const evidenceLinks = (Array.isArray(analysis?.backlinks) ? analysis.backlinks : [])
     .filter((item) => /^https?:\/\//i.test(String(item?.url || "")))
     .slice(0, 2)
@@ -277,12 +337,20 @@ export default function SemanticAnalyticsPanel({
           </article>
 
           <article className="dh-topic-affinity" aria-label="Topic affinity visualization">
-            <div className="dh-affinity-title"><span>Topic affinity</span><b>Context preview</b></div>
-            <div className="dh-affinity-map">
-              {affinityNodes.map((node, index) => <span key={node.id} className={index === activeIndex ? "active" : ""} style={{"--x": `${18 + ((index * 29) % 68)}%`, "--y": `${20 + ((index * 37) % 62)}%`, "--size": `${42 + (index % 3) * 12}px`, "--node-color": node.color, "--node-index":index}} title={`${node.kind}: ${node.detail}${node.connectsTo.length ? `; linked to ${node.connectsTo.join(", ")}` : ""}`}><i /><b>{compact(node.label, 18)}</b><em>{compact(node.kind, 10)}</em></span>)}
+            <div className="dh-affinity-title"><span>Topic affinity</span><b>{affinityFrame.label}</b></div>
+            <div className="dh-affinity-map" aria-label={affinityModel.graph.ariaLabel}>
+              <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                {affinityFrame.visibleEdges.map((edge) => {
+                  const from = affinityPositions.get(edge.from)
+                  const to = affinityPositions.get(edge.to)
+                  if(!from || !to) return null
+                  return <line key={edge.key} x1={from.x} y1={from.y} x2={to.x} y2={to.y} />
+                })}
+              </svg>
+              {affinityNodes.map((node, index) => <span key={node.id} className={node.id === affinityModel.graph.rootNodeKey ? "active" : ""} style={{"--x": `${node.position.x}%`, "--y": `${node.position.y}%`, "--size": `${42 + (index % 3) * 12}px`, "--node-color": node.color, "--node-index":index}} title={`${node.kind}: ${node.detail}`}><i /><b>{compact(node.label, 18)}</b><em>{compact(node.kind, 10)}</em></span>)}
             </div>
             <div className="dh-affinity-evidence">{evidenceLinks.length ? evidenceLinks.map((item, index) => <a key={`${item.url}-${index}`} href={item.url} target="_blank" rel="noreferrer">{compact(item.label || `Evidence ${index + 1}`, 20)}</a>) : <span>Evidence links pending provider metadata</span>}</div>
-            <small>Metadata/content relationships only - not audience or geographic conclusions.</small>
+            <small>{affinityModel.evidence.label}. Metadata/content relationships only - not audience or geographic conclusions.</small>
           </article>
         </div>
       </div>

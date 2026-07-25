@@ -128,3 +128,6 @@ body:has(.dh-semantic-suite) .dh-current-market-feed{display:block!important}
 @media(prefers-reduced-motion:reduce){
   .dh-semantic-suite::before,.dh-semantic-health i.live,.dh-affinity-map span i,.dh-reproduction-read::after,.dh-topic-kicker,.dh-topic-readout>h3,.dh-topic-readout>p,.dh-topic-progress.replaying i,.dh-topic-readout dl div,.dh-affinity-map::after,.dh-affinity-map span,.dh-timeline-flyway span{animation:none!important;transition:none!important}
 }
+.dh-affinity-map svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.dh-affinity-map svg line{stroke:color-mix(in srgb,var(--semantic-color) 58%,#29405c);stroke-width:.55;stroke-dasharray:2.5 1.8;vector-effect:non-scaling-stroke;animation:semantic-affinity-edge .65s ease-out both}
+@keyframes semantic-affinity-edge{from{opacity:0;stroke-dashoffset:18}to{opacity:1;stroke-dashoffset:0}}

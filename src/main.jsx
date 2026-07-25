@@ -59,6 +59,11 @@ ReactDOM.createRoot(
         />
 
         <Route
+          path="/auth/callback"
+          element={<HomePage />}
+        />
+
+        <Route
           path="/scanner"
           element={<ObservatoryScanner />}
         />

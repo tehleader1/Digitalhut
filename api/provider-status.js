@@ -1,4 +1,5 @@
 import crypto from "node:crypto"
+import {handleAiLayer} from "./_ai-layer.js"
 
 const providers = [
   ["sketchfab", ["SKETCHFAB_API_TOKEN", "SKETCHFAB_ACCESS_TOKEN", "VITE_SKETCHFAB_API_TOKEN", "VITE_SKETCHFAB_ACCESS_TOKEN"], "3d-model-search"],
@@ -122,6 +123,67 @@ function paypalReceiptSupabaseConfig(){
   return {url:url.replace(/\/+$/, ""), serviceKey}
 }
 
+function supabasePublicKey(){
+  return envValue("SUPABASE_ANON_KEY")
+    || envValue("VITE_SUPABASE_ANON_KEY")
+    || envValue("NEXT_PUBLIC_SUPABASE_ANON_KEY")
+    || envValue("SUPABASE_PUBLISHABLE_KEY")
+}
+
+async function authenticatedProviderUser(req){
+  const bearer = String(req.headers?.authorization || "").replace(/^Bearer\s+/i, "").trim()
+  if(!bearer) return null
+  const {url, serviceKey} = paypalReceiptSupabaseConfig()
+  const apiKey = supabasePublicKey() || serviceKey
+  if(!apiKey) return null
+  try {
+    const response = await fetch(`${url}/auth/v1/user`, {
+      headers:{apikey:apiKey, authorization:`Bearer ${bearer}`},
+      signal:AbortSignal.timeout(8000)
+    })
+    if(!response.ok) return null
+    const user = await response.json().catch(() => null)
+    return user?.id ? user : null
+  } catch { return null }
+}
+
+async function writePaypalEntitlement({userId, subscriptionId, tierId, planId, status, subscription}){
+  const {url, serviceKey} = paypalReceiptSupabaseConfig()
+  if(!serviceKey) return {recorded:false, reason:"supabase-server-entitlement-not-configured"}
+  const accessEndsAt = subscription?.billing_info?.next_billing_time || null
+  try {
+    const response = await fetch(`${url}/rest/v1/rpc/digitalhut_record_paypal_entitlement`, {
+      method:"POST",
+      headers:{
+        apikey:serviceKey,
+        authorization:`Bearer ${serviceKey}`,
+        "content-type":"application/json"
+      },
+      body:JSON.stringify({
+        p_user_id:userId,
+        p_tier_id:tierId,
+        p_subscription_id:subscriptionId,
+        p_plan_id:planId,
+        p_provider_status:status,
+        p_provider_receipt:{
+          provider:"paypal",
+          providerVerified:true,
+          subscriptionId,
+          planId,
+          status,
+          environment:paypalSettings().environment
+        },
+        p_access_ends_at:accessEndsAt
+      }),
+      signal:AbortSignal.timeout(8000)
+    })
+    const row = await response.json().catch(() => null)
+    return response.ok && row?.user_id === userId
+      ? {recorded:true, row}
+      : {recorded:false, reason:`supabase-entitlement-write-${response.status}`}
+  } catch { return {recorded:false, reason:"supabase-entitlement-write-request-failed"} }
+}
+
 async function recordPaypalReceipt({subscriptionId, tierId, planId, status, environment}){
   const {url, serviceKey} = paypalReceiptSupabaseConfig()
   if(!serviceKey) return {recorded:false, reason:"supabase-server-receipt-not-configured"}
@@ -167,7 +229,9 @@ async function recordPaypalReceipt({subscriptionId, tierId, planId, status, envi
   } catch { return {recorded:false, reason:"supabase-receipt-write-request-failed"} }
 }
 
-async function verifyPaypalSubscription(payload){
+async function verifyPaypalSubscription(req, payload){
+  const user = await authenticatedProviderUser(req)
+  if(!user) return {verified:false, reason:"sign-in-required"}
   const subscriptionId = String(payload?.subscriptionId || "").trim()
   const tierId = String(payload?.tierId || "").trim()
   if(!/^[A-Z0-9-]{8,160}$/i.test(subscriptionId) || !/^tier-(standard|premium|pro)$/.test(tierId)) return {verified:false, reason:"invalid-subscription-selection"}
@@ -194,14 +258,25 @@ async function verifyPaypalSubscription(payload){
       status,
       environment:token.settings.environment
     })
+    const entitlement = receipt.recorded
+      ? await writePaypalEntitlement({
+        userId:user.id,
+        subscriptionId:subscription.id || subscriptionId,
+        tierId,
+        planId:subscription.plan_id,
+        status,
+        subscription
+      })
+      : {recorded:false, reason:receipt.reason}
     return {
-      verified:receipt.recorded,
+      verified:receipt.recorded && entitlement.recorded,
       providerVerified:true,
       status,
       planMatches:true,
       receiptRecorded:receipt.recorded,
+      entitlementRecorded:entitlement.recorded,
       receiptDuplicate:receipt.duplicate === true,
-      reason:receipt.recorded ? "" : receipt.reason
+      reason:receipt.recorded && entitlement.recorded ? "" : entitlement.reason || receipt.reason
     }
   } catch { return {verified:false, reason:"paypal-subscription-read-request-failed"} }
 }
@@ -615,7 +690,89 @@ async function googleSearchConsoleStatus(req){
   }
 }
 
+function subscriptionReadModel(userId, row = null){
+  const checkedAtDate = new Date()
+  const checkedAt = checkedAtDate.toISOString()
+  const freshUntil = new Date(checkedAtDate.getTime() + 5 * 60 * 1000).toISOString()
+  const tierId = row?.tier_id || "tier-none"
+  const version = Math.max(1, Number(row?.receipt_version || 1))
+  const receiptSeed = row?.provider_subscription_id || `missing:${userId}`
+  const receiptId = `receipt-${crypto.createHash("sha256").update(receiptSeed).digest("hex").slice(0, 32)}`
+  const signatureId = `sig-${crypto.createHash("sha256").update(`${userId}:${receiptId}:${version}:${checkedAt}`).digest("hex").slice(0, 32)}`
+  const accessEnd = row?.access_ends_at && Date.parse(row.access_ends_at) > checkedAtDate.getTime()
+    ? new Date(row.access_ends_at).toISOString()
+    : null
+  return {
+    authority:"digitalhut-server-entitlement-read-model-v1",
+    signatureVerified:true,
+    signatureKeyId:"provider-status-service-v1",
+    signatureId,
+    userId,
+    tierId,
+    receiptId,
+    receiptTierId:tierId,
+    version,
+    receiptVersion:version,
+    checkedAt,
+    freshUntil,
+    state:row?.state || "missing",
+    accessEndsAt:accessEnd
+  }
+}
+
+async function subscriptionEntitlementStatus(req){
+  const user = await authenticatedProviderUser(req)
+  if(!user) return {ok:false, access:"sign-in-required", reason:"sign-in-required"}
+  const {url, serviceKey} = paypalReceiptSupabaseConfig()
+  if(!serviceKey) return {ok:false, access:"provider-error", reason:"supabase-server-entitlement-not-configured"}
+  const headers={apikey:serviceKey, authorization:`Bearer ${serviceKey}`}
+  try {
+    const query = new URLSearchParams({
+      select:"user_id,tier_id,provider_subscription_id,provider_plan_id,provider_status,state,receipt_version,verified_at,access_ends_at",
+      user_id:`eq.${user.id}`,
+      limit:"1"
+    })
+    const response = await fetch(`${url}/rest/v1/digitalhut_subscription_entitlements?${query}`, {
+      headers,
+      signal:AbortSignal.timeout(8000)
+    })
+    if(!response.ok) return {ok:false, access:"provider-error", reason:`entitlement-read-${response.status}`}
+    const rows = await response.json().catch(() => [])
+    let row = Array.isArray(rows) ? rows[0] : null
+    if(!row) return {ok:true, readModel:subscriptionReadModel(user.id)}
+
+    const token = await paypalAccessToken()
+    if(!token.ok) return {ok:false, access:"provider-error", reason:token.reason}
+    const providerResponse = await fetch(`${token.settings.apiBase}/v1/billing/subscriptions/${encodeURIComponent(row.provider_subscription_id)}`, {
+      headers:{Authorization:`Bearer ${token.accessToken}`},
+      signal:AbortSignal.timeout(8000)
+    })
+    const subscription = await providerResponse.json().catch(() => ({}))
+    const status = String(subscription.status || "").toUpperCase()
+    const planMatches = providerResponse.ok
+      && subscription.plan_id === row.provider_plan_id
+      && token.settings.plans[row.tier_id] === row.provider_plan_id
+    if(!planMatches) return {ok:false, access:"provider-error", reason:"paypal-entitlement-plan-mismatch"}
+    const refreshed = await writePaypalEntitlement({
+      userId:user.id,
+      subscriptionId:row.provider_subscription_id,
+      tierId:row.tier_id,
+      planId:row.provider_plan_id,
+      status,
+      subscription
+    })
+    if(!refreshed.recorded) return {ok:false, access:"provider-error", reason:refreshed.reason}
+    row = refreshed.row
+    return {ok:true, readModel:subscriptionReadModel(user.id, row)}
+  } catch { return {ok:false, access:"provider-error", reason:"entitlement-read-request-failed"} }
+}
+
 export default async function handler(req, res){
+  if(req.query?.scope === "ai"){
+    res.setHeader("Cache-Control", "no-store")
+    const result = await handleAiLayer(req)
+    return res.status(result.status).json(result.body)
+  }
   if(req.query?.scope === "paypal"){
     res.setHeader("Cache-Control", "no-store")
     if(req.method === "GET") return res.status(200).json(publicPaypalStatus())
@@ -627,8 +784,14 @@ export default async function handler(req, res){
     }
     const payload = requestPayload(req)
     if(payload.action === "validate-plan") return res.status(200).json(await validatePaypalPlan(payload))
-    if(payload.action === "verify-subscription") return res.status(200).json(await verifyPaypalSubscription(payload))
+    if(payload.action === "verify-subscription") return res.status(200).json(await verifyPaypalSubscription(req, payload))
     return res.status(400).json({verified:false, reason:"unsupported-paypal-action"})
+  }
+  if(req.query?.scope === "entitlement"){
+    res.setHeader("Cache-Control", "no-store")
+    if(req.method !== "GET") return res.status(405).json({ok:false, reason:"method-not-allowed"})
+    const status = await subscriptionEntitlementStatus(req)
+    return res.status(status.ok ? 200 : status.access === "sign-in-required" ? 401 : 503).json(status)
   }
   if(req.query?.scope === "ga4"){
     res.setHeader("Cache-Control", "no-store")
