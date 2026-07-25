@@ -91,7 +91,6 @@ export default function AiReactionLayer({
   })
   const [status, setStatus] = useState({curatedReady:true, sharedGeminiReady:false, sharedGeminiPolicy:{maxLiveReactions:3,durationMinutes:120,windows:3}, milliCredits:0, connections:[], creditPacks:[], paidAiPurchaseReady:false})
   const [reaction, setReaction] = useState(null)
-  const [working, setWorking] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [credential, setCredential] = useState("")
   const [project, setProject] = useState("")
@@ -101,6 +100,7 @@ export default function AiReactionLayer({
   const [reactionCycle, setReactionCycle] = useState(0)
   const [bubbleSlot, setBubbleSlot] = useState(0)
   const latestRequest = useRef(0)
+  const latestContext = useRef({evidence, sourceEvent, subject})
   const stableSessionId = useMemo(() => sessionId(), [])
   const selected = PROVIDERS.find((item) => item.id === profile) || PROVIDERS[0]
   const connected = status.connections?.find((item) => item.provider === profile && item.status === "active")
@@ -150,8 +150,13 @@ export default function AiReactionLayer({
   useEffect(() => {
     try { window.localStorage.setItem("digitalhut:ai-profile", profile) } catch {}
     setConnectionMessage("")
+    setReaction(null)
     setReactionCycle(0)
   }, [profile])
+
+  useEffect(() => {
+    latestContext.current = {evidence, sourceEvent, subject}
+  }, [evidence, sourceEvent, subject])
 
   useEffect(() => {
     if(!active || !eventKey) return undefined
@@ -176,23 +181,30 @@ export default function AiReactionLayer({
     if(!active || !eventKey) return undefined
     const requestId = ++latestRequest.current
     const requestEventId = `${eventKey}:${profile}:${reactionCycle}`
-    const requestSourceEvent = reactionCycle === 0 ? sourceEvent : "important_moment"
+    const currentContext = latestContext.current
+    const requestSourceEvent = reactionCycle === 0 ? currentContext.sourceEvent : "important_moment"
     const delay = reactionCycle === 0
-      ? 5200 + (eventKey.length * 613 % 6200)
+      ? 2800 + (eventKey.length * 307 % 2400)
       : 2400 + (safeSlot(requestEventId) * 600)
     const timer = window.setTimeout(async () => {
-      setWorking(true)
       const fallback = {
         ok:true,
         mode:"curated",
         provider:profile,
-        text:curatedText(profile, requestEventId, subject),
+        text:curatedText(profile, requestEventId, currentContext.subject),
         localFallback:true,
       }
+      if(requestId === latestRequest.current){
+        setReaction(fallback)
+        setBubbleSlot(safeSlot(`${requestEventId}:${fallback.text}`))
+      }
+      const controller = new AbortController()
+      const requestTimeout = window.setTimeout(() => controller.abort(), 5000)
       try {
         const response = await fetch(endpoint, {
           method:"POST",
           headers:headers(),
+          signal:controller.signal,
           body:JSON.stringify({
             scope:"ai",
             action:"react",
@@ -201,7 +213,10 @@ export default function AiReactionLayer({
             sourceEvent:requestSourceEvent,
             profile,
             liveMode:status.milliCredits > 0 ? "digitalhut-paid" : "automatic",
-            evidence:{...evidence, subject:safe(subject, evidence?.subject)}
+            evidence:{
+              ...currentContext.evidence,
+              subject:safe(currentContext.subject, currentContext.evidence?.subject)
+            }
           })
         })
         const payload = await response.json()
@@ -216,11 +231,11 @@ export default function AiReactionLayer({
           setBubbleSlot(safeSlot(`${requestEventId}:${fallback.text}`))
         }
       } finally {
-        if(requestId === latestRequest.current) setWorking(false)
+        window.clearTimeout(requestTimeout)
       }
     }, delay)
     return () => window.clearTimeout(timer)
-  }, [active, endpoint, eventKey, evidence, headers, profile, reactionCycle, sourceEvent, stableSessionId, status.milliCredits, subject])
+  }, [active, endpoint, eventKey, headers, profile, reactionCycle, stableSessionId, status.milliCredits])
 
   async function updateConnection(action){
     if(!signedIn){
@@ -301,9 +316,9 @@ export default function AiReactionLayer({
     {expanded && <div className="dh-ai-reaction-body">
       <div className="dh-ai-model-identity"><span className="dh-ai-wordmark">{selected.company}</span><div><b>{selected.name}</b><span>{selected.company} profile</span></div></div>
       <div className="dh-ai-reaction-sky" aria-label="Reserved AI reaction space">
-        <div className={`dh-ai-bubble slot-${bubbleSlot}`} role="status" aria-live="polite">
-          <span>{working ? "Reading the new DigitalHut moment..." : reaction?.text || "Watching for a meaningful video, analytics, podcast, market, or 3D subject change."}</span>
-          <small>{working ? "Reaction pending" : reaction ? modeLabel : "Curated system ready"}</small>
+        <div key={reaction ? `${profile}:${reactionCycle}:${reaction.text}` : `${profile}:waiting`} className={`dh-ai-bubble slot-${bubbleSlot}`} role="status" aria-live="polite">
+          <span>{reaction?.text || "Watching for a meaningful video, analytics, podcast, market, or 3D subject change."}</span>
+          <small>{reaction ? modeLabel : "Curated system ready"}</small>
         </div>
       </div>
       <div className="dh-ai-truth-strip">

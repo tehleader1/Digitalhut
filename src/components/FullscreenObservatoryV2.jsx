@@ -7130,7 +7130,7 @@ export default function FullscreenObservatoryV2(){
             accessToken={accountSession?.access_token || ""}
             signedIn={Boolean(accountSession?.user)}
             active={analyticsStarted}
-            eventKey={`${youtubeVideoIdFor(youtubeStory.primaryVideo) || sceneFeed.id}:${presentationChapter.id}:${contentAnalyzer?.analysis?.focus || category}`}
+            eventKey={`${youtubeVideoIdFor(youtubeStory.primaryVideo) || sceneFeed.id}:${presentationChapter.id}:${category}`}
             sourceEvent={presentationChapter.id === "podcast" ? "podcast_changed" : presentationChapter.id === "detail" ? "important_moment" : "subject_changed"}
             subject={contentAnalyzer?.analysis?.focus || youtubeStory.episodeName || sceneFeed.title}
             evidence={aiReactionEvidence}
