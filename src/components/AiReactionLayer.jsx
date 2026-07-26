@@ -3,11 +3,11 @@ import {createPortal} from "react-dom"
 import "./AiReactionLayer.css"
 
 const PROVIDERS = [
-  {id:"google-gemini", name:"Gemini", company:"Google", accent:"#7aa7ff"},
-  {id:"openai", name:"GPT / Codex", company:"OpenAI", accent:"#73e7c0"},
-  {id:"anthropic", name:"Claude", company:"Anthropic", accent:"#e6a777"},
-  {id:"microsoft-foundry", name:"Copilot / Foundry", company:"Microsoft", accent:"#7cc7ff"},
-  {id:"openclaw", name:"OpenClaw", company:"OpenClaw", accent:"#ff806b"},
+  {id:"google-gemini", name:"Gemini", company:"Google", accent:"#7aa7ff", logoSrc:"https://cdn.simpleicons.org/googlegemini", logoFallback:"G"},
+  {id:"openai", name:"GPT / Codex", company:"OpenAI", accent:"#73e7c0", logoSrc:"https://images.ctfassets.net/kftzwdyauwt9/3hUGLn3ypllZ0oa01qOYVq/28e8188e6f11b84c3e876569d492734f/Blossom_Light.svg?q=90&w=256", logoFallback:"OA"},
+  {id:"anthropic", name:"Claude", company:"Anthropic", accent:"#e6a777", logoSrc:"https://cdn.simpleicons.org/claude", logoFallback:"A"},
+  {id:"microsoft-foundry", name:"Copilot / Foundry", company:"Microsoft", accent:"#7cc7ff", logoSrc:"https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg", logoFallback:"MS", logoSurface:"light"},
+  {id:"openclaw", name:"OpenClaw", company:"OpenClaw", accent:"#ff806b", logoSrc:"https://upload.wikimedia.org/wikipedia/commons/3/36/Openclaw-logo-text-dark.svg", logoFallback:"OC", logoSurface:"light"},
 ]
 
 const LOCAL_CURATED = {
@@ -484,7 +484,19 @@ export default function AiReactionLayer({
         aria-live="polite"
         aria-hidden={!bubbleVisible}
       >
-        <span className="dh-ai-scene-avatar" aria-hidden="true">{selected.company.slice(0,2).toUpperCase()}</span>
+        <span className={`dh-ai-scene-avatar ${selected.logoSurface === "light" ? "surface-light" : ""}`} aria-hidden="true">
+          <span className="dh-ai-scene-avatar-fallback">{selected.logoFallback || selected.company.slice(0,2).toUpperCase()}</span>
+          <img
+            src={selected.logoSrc}
+            alt=""
+            loading="eager"
+            decoding="async"
+            referrerPolicy="no-referrer"
+            onError={(event) => {
+              event.currentTarget.hidden = true
+            }}
+          />
+        </span>
         <span className="dh-ai-scene-copy">
           <b>{selected.name}</b>
           <span>{reaction.text}</span>
