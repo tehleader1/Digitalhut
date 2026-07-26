@@ -206,18 +206,10 @@ body:has(.dh-semantic-suite) .dh-ai-model-identity,
 body:has(.dh-semantic-suite) .dh-ai-truth-strip{display:none}
 body:has(.dh-semantic-suite) .dh-ai-reaction-sky{height:38px;border-radius:8px}
 body:has(.dh-semantic-suite) .dh-ai-reaction-sky:after{display:none}
-body:has(.dh-semantic-suite) .dh-ai-bubble{
-  left:4%!important;
-  right:auto!important;
-  top:4px!important;
-  width:88%;
-  box-sizing:border-box;
-  padding:4px 7px;
-  border-radius:8px;
-}
-body:has(.dh-semantic-suite) .dh-ai-bubble:before{display:none}
-body:has(.dh-semantic-suite) .dh-ai-bubble span{overflow:hidden;font-size:8px;line-height:1.15;text-overflow:ellipsis;white-space:nowrap}
-body:has(.dh-semantic-suite) .dh-ai-bubble small{margin-top:2px;font-size:6px}
+body:has(.dh-semantic-suite) .dh-ai-reaction-beacon{inset:3px;padding:3px 7px;border-radius:7px;grid-template-columns:auto 1fr auto;gap:3px 6px}
+body:has(.dh-semantic-suite) .dh-ai-reaction-beacon i{grid-row:auto;width:7px;height:7px;box-shadow:none}
+body:has(.dh-semantic-suite) .dh-ai-reaction-beacon span{font-size:7px;line-height:1.1}
+body:has(.dh-semantic-suite) .dh-ai-reaction-beacon small{font-size:6px;white-space:nowrap}
 body:has(.dh-semantic-suite) .dh-ai-settings{
   position:fixed;
   left:50%;

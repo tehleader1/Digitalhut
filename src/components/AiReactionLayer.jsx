@@ -1,4 +1,5 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from "react"
+import {createPortal} from "react-dom"
 import "./AiReactionLayer.css"
 
 const PROVIDERS = [
@@ -76,6 +77,94 @@ function safeSlot(value){
   return seed % 6
 }
 
+const BUBBLE_AVOID_SELECTORS = [
+  ".dh-account-signin",
+  ".dh-password-finish",
+  ".dh-entry",
+  ".dh-semantic-video",
+  ".dh-youtube-frame",
+  ".dh-quick-feeds",
+  ".dh-current-market-feed",
+  ".dh-semantic-controls",
+  ".dh-mechanic-search",
+  ".dh-mechanic-controls",
+  ".dh-quick-rail",
+  ".dh-ai-reaction-layer",
+  ".dh-system-faq-panel",
+  "[role='dialog']",
+  "button",
+  "input",
+  "select",
+  "textarea",
+  "iframe",
+  "video",
+  "audio",
+]
+
+function seededRandom(value){
+  let seed = String(value || "digitalhut").split("").reduce((total, character) => ((total * 31) + character.charCodeAt(0)) >>> 0, 2166136261)
+  return () => {
+    seed = ((seed * 1664525) + 1013904223) >>> 0
+    return seed / 4294967296
+  }
+}
+
+function overlapArea(first, second){
+  const width = Math.max(0, Math.min(first.right, second.right) - Math.max(first.left, second.left))
+  const height = Math.max(0, Math.min(first.bottom, second.bottom) - Math.max(first.top, second.top))
+  return width * height
+}
+
+function safeBubblePosition(seedValue){
+  const viewportWidth = Math.max(320, document.documentElement.clientWidth || window.innerWidth || 320)
+  const viewportHeight = Math.max(480, document.documentElement.clientHeight || window.innerHeight || 480)
+  const margin = viewportWidth < 720 ? 12 : 20
+  const width = Math.min(viewportWidth - (margin * 2), viewportWidth < 720 ? 300 : 372)
+  const height = viewportWidth < 720 ? 118 : 132
+  const maxLeft = Math.max(margin, viewportWidth - width - margin)
+  const minTop = viewportWidth < 720 ? 70 : 82
+  const maxTop = Math.max(minTop, viewportHeight - height - margin)
+  const random = seededRandom(seedValue)
+  const anchors = [
+    [.08,.12],[.38,.08],[.7,.13],
+    [.05,.42],[.72,.43],
+    [.08,.72],[.39,.76],[.7,.7],
+    [.26,.28],[.56,.3],[.28,.58],[.58,.6],
+  ]
+  const candidates = anchors.map(([x,y]) => ({
+    left:margin + ((maxLeft - margin) * x),
+    top:minTop + ((maxTop - minTop) * y),
+  }))
+  for(let index = 0; index < 18; index += 1){
+    candidates.push({
+      left:margin + ((maxLeft - margin) * random()),
+      top:minTop + ((maxTop - minTop) * random()),
+    })
+  }
+  const protectedRects = Array.from(document.querySelectorAll(BUBBLE_AVOID_SELECTORS.join(",")))
+    .filter((element) => !element.closest(".dh-ai-scene-bubble"))
+    .map((element) => element.getBoundingClientRect())
+    .filter((rect) => rect.width > 0 && rect.height > 0 && rect.bottom > 0 && rect.right > 0 && rect.top < viewportHeight && rect.left < viewportWidth)
+  const ranked = candidates.map((candidate, index) => {
+    const rect = {
+      left:candidate.left,
+      top:candidate.top,
+      right:candidate.left + width,
+      bottom:candidate.top + height,
+    }
+    const collision = protectedRects.reduce((total, protectedRect) => total + overlapArea(rect, protectedRect), 0)
+    const rotationBias = (index - safeSlot(seedValue) + candidates.length) % candidates.length
+    return {...candidate, collision, rotationBias}
+  }).sort((first, second) => first.collision - second.collision || first.rotationBias - second.rotationBias)
+  const chosen = ranked[0] || {left:margin, top:minTop}
+  return {
+    left:Math.round(chosen.left),
+    top:Math.round(chosen.top),
+    width:Math.round(width),
+    tail:chosen.left > viewportWidth / 2 ? "right" : "left",
+  }
+}
+
 export default function AiReactionLayer({
   endpoint = "/api/provider-status?scope=ai",
   accessToken = "",
@@ -98,7 +187,8 @@ export default function AiReactionLayer({
   const [connectionMessage, setConnectionMessage] = useState("")
   const [expanded, setExpanded] = useState(true)
   const [reactionCycle, setReactionCycle] = useState(0)
-  const [bubbleSlot, setBubbleSlot] = useState(0)
+  const [bubbleVisible, setBubbleVisible] = useState(false)
+  const [bubblePosition, setBubblePosition] = useState({left:20, top:92, width:340, tail:"left"})
   const latestRequest = useRef(0)
   const latestContext = useRef({evidence, sourceEvent, subject})
   const stableSessionId = useMemo(() => sessionId(), [])
@@ -159,6 +249,29 @@ export default function AiReactionLayer({
   }, [evidence, sourceEvent, subject])
 
   useEffect(() => {
+    if(!active || !reaction?.text){
+      setBubbleVisible(false)
+      return undefined
+    }
+    const seed = `${eventKey}:${profile}:${reactionCycle}:${reaction.mode}:${reaction.text}`
+    let frame = window.requestAnimationFrame(() => {
+      setBubblePosition(safeBubblePosition(seed))
+      setBubbleVisible(true)
+    })
+    const relocate = () => {
+      window.cancelAnimationFrame(frame)
+      frame = window.requestAnimationFrame(() => setBubblePosition(safeBubblePosition(seed)))
+    }
+    const hideTimer = window.setTimeout(() => setBubbleVisible(false), 10500)
+    window.addEventListener("resize", relocate)
+    return () => {
+      window.cancelAnimationFrame(frame)
+      window.clearTimeout(hideTimer)
+      window.removeEventListener("resize", relocate)
+    }
+  }, [active, eventKey, profile, reaction?.mode, reaction?.text, reactionCycle])
+
+  useEffect(() => {
     if(!active || !eventKey) return undefined
     let timer = 0
     let cancelled = false
@@ -196,7 +309,6 @@ export default function AiReactionLayer({
       }
       if(requestId === latestRequest.current){
         setReaction(fallback)
-        setBubbleSlot(safeSlot(`${requestEventId}:${fallback.text}`))
       }
       const controller = new AbortController()
       const requestTimeout = window.setTimeout(() => controller.abort(), 5000)
@@ -223,12 +335,10 @@ export default function AiReactionLayer({
         if(requestId === latestRequest.current){
           const nextReaction = response.ok && payload?.ok ? payload : fallback
           setReaction(nextReaction)
-          setBubbleSlot(safeSlot(`${requestEventId}:${nextReaction.mode}:${nextReaction.text}`))
         }
       } catch {
         if(requestId === latestRequest.current){
           setReaction(fallback)
-          setBubbleSlot(safeSlot(`${requestEventId}:${fallback.text}`))
         }
       } finally {
         window.clearTimeout(requestTimeout)
@@ -316,8 +426,9 @@ export default function AiReactionLayer({
     {expanded && <div className="dh-ai-reaction-body">
       <div className="dh-ai-model-identity"><span className="dh-ai-wordmark">{selected.company}</span><div><b>{selected.name}</b><span>{selected.company} profile</span></div></div>
       <div className="dh-ai-reaction-sky" aria-label="Reserved AI reaction space">
-        <div key={reaction ? `${profile}:${reactionCycle}:${reaction.text}` : `${profile}:waiting`} className={`dh-ai-bubble slot-${bubbleSlot}`} role="status" aria-live="polite">
-          <span>{reaction?.text || "Watching for a meaningful video, analytics, podcast, market, or 3D subject change."}</span>
+        <div className={`dh-ai-reaction-beacon ${bubbleVisible ? "active" : ""}`}>
+          <i aria-hidden="true" />
+          <span>{bubbleVisible ? `${selected.name} reaction visible in the scene` : "Watching for the next meaningful scene change"}</span>
           <small>{reaction ? modeLabel : "Curated system ready"}</small>
         </div>
       </div>
@@ -359,5 +470,28 @@ export default function AiReactionLayer({
       </div>
       {connectionMessage && <p role="status">{connectionMessage}</p>}
     </section>}
+    {typeof document !== "undefined" && reaction?.text && createPortal(
+      <div
+        key={`${profile}:${reactionCycle}:${reaction.mode}:${reaction.text}`}
+        className={`dh-ai-scene-bubble tail-${bubblePosition.tail} ${bubbleVisible ? "visible" : ""}`}
+        style={{
+          "--ai-accent":selected.accent,
+          "--bubble-left":`${bubblePosition.left}px`,
+          "--bubble-top":`${bubblePosition.top}px`,
+          "--bubble-width":`${bubblePosition.width}px`,
+        }}
+        role="status"
+        aria-live="polite"
+        aria-hidden={!bubbleVisible}
+      >
+        <span className="dh-ai-scene-avatar" aria-hidden="true">{selected.company.slice(0,2).toUpperCase()}</span>
+        <span className="dh-ai-scene-copy">
+          <b>{selected.name}</b>
+          <span>{reaction.text}</span>
+          <small>{modeLabel}</small>
+        </span>
+      </div>,
+      document.body
+    )}
   </aside>
 }
