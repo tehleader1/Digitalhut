@@ -64,6 +64,75 @@ function paypalSettings(){
   }
 }
 
+const PAYPAL_BINDING_TTL_MS = 60 * 60 * 1000
+const paypalTierCodes = {
+  "tier-standard":"s",
+  "tier-premium":"m",
+  "tier-pro":"p"
+}
+const paypalTierIds = Object.fromEntries(Object.entries(paypalTierCodes).map(([tierId, code]) => [code, tierId]))
+
+function paypalBindingRootSecret(){
+  return envValue("DIGITALHUT_PAYPAL_BINDING_SECRET")
+    || envValue("PAYPAL_CLIENT_SECRET")
+    || envValue("SUPABASE_SERVICE_ROLE_KEY")
+    || envValue("DIGITALHUT_SUPABASE_SERVICE_ROLE_KEY")
+    || envValue("SUPABASE_SECRET_KEY")
+}
+
+function paypalBindingSigningKey(rootSecret){
+  return crypto.createHmac("sha256", rootSecret).update("digitalhut-paypal-subscription-binding-v1").digest()
+}
+
+function paypalBindingSignature(unsignedToken, rootSecret){
+  return crypto.createHmac("sha256", paypalBindingSigningKey(rootSecret))
+    .update(unsignedToken)
+    .digest()
+    .subarray(0, 24)
+    .toString("base64url")
+}
+
+export function mintPaypalSubscriptionBinding({userId, tierId, rootSecret, now = Date.now(), nonce = crypto.randomBytes(9).toString("base64url")}){
+  const normalizedUserId = String(userId || "").replaceAll("-", "").toLowerCase()
+  const tierCode = paypalTierCodes[tierId]
+  if(!/^[a-f0-9]{32}$/.test(normalizedUserId) || !tierCode || !rootSecret || !/^[A-Za-z0-9_-]{8,24}$/.test(nonce)) {
+    throw new Error("invalid-paypal-binding-input")
+  }
+  const expiresAtMs = now + PAYPAL_BINDING_TTL_MS
+  const unsignedToken = `dh1.${normalizedUserId}.${tierCode}.${Math.floor(expiresAtMs / 1000).toString(36)}.${nonce}`
+  return {
+    token:`${unsignedToken}.${paypalBindingSignature(unsignedToken, rootSecret)}`,
+    expiresAt:new Date(expiresAtMs).toISOString()
+  }
+}
+
+export function verifyPaypalSubscriptionBinding({token, userId, tierId, rootSecret, now = Date.now()}){
+  const parts = String(token || "").split(".")
+  if(parts.length !== 6 || parts[0] !== "dh1" || !rootSecret) return {valid:false, reason:"paypal-account-binding-missing"}
+  const [version, tokenUserId, tierCode, expiryBase36, nonce, suppliedSignature] = parts
+  const expectedTierId = paypalTierIds[tierCode]
+  const normalizedUserId = String(userId || "").replaceAll("-", "").toLowerCase()
+  if(!/^[a-f0-9]{32}$/.test(tokenUserId) || !/^[A-Za-z0-9_-]{8,24}$/.test(nonce) || !/^[a-z0-9]+$/.test(expiryBase36)) {
+    return {valid:false, reason:"paypal-account-binding-malformed"}
+  }
+  if(tokenUserId !== normalizedUserId) return {valid:false, reason:"paypal-account-binding-user-mismatch"}
+  if(!expectedTierId || expectedTierId !== tierId) return {valid:false, reason:"paypal-account-binding-tier-mismatch"}
+  const expiresAtMs = Number.parseInt(expiryBase36, 36) * 1000
+  if(!Number.isFinite(expiresAtMs) || expiresAtMs <= now) return {valid:false, reason:"paypal-account-binding-expired"}
+  const unsignedToken = `${version}.${tokenUserId}.${tierCode}.${expiryBase36}.${nonce}`
+  const expectedSignature = Buffer.from(paypalBindingSignature(unsignedToken, rootSecret))
+  const actualSignature = Buffer.from(suppliedSignature)
+  if(expectedSignature.length !== actualSignature.length || !crypto.timingSafeEqual(expectedSignature, actualSignature)) {
+    return {valid:false, reason:"paypal-account-binding-invalid"}
+  }
+  return {
+    valid:true,
+    tierId:expectedTierId,
+    expiresAt:new Date(expiresAtMs).toISOString(),
+    bindingHash:crypto.createHash("sha256").update(token).digest("hex")
+  }
+}
+
 function publicPaypalStatus(){
   const settings = paypalSettings()
   const plans = Object.fromEntries(Object.entries(settings.plans).filter(([, value]) => Boolean(value)))
@@ -147,7 +216,28 @@ async function authenticatedProviderUser(req){
   } catch { return null }
 }
 
-async function writePaypalEntitlement({userId, subscriptionId, tierId, planId, status, subscription}){
+async function createPaypalSubscriptionBinding(req, payload){
+  const user = await authenticatedProviderUser(req)
+  if(!user) return {ready:false, reason:"sign-in-required"}
+  const tierId = String(payload?.tierId || "").trim()
+  const settings = paypalSettings()
+  if(!paypalTierCodes[tierId] || !settings.plans[tierId]) return {ready:false, reason:"invalid-paypal-plan-selection"}
+  const rootSecret = paypalBindingRootSecret()
+  if(!settings.clientId || !settings.clientSecret || !rootSecret) return {ready:false, reason:"paypal-binding-not-configured"}
+  try {
+    const binding = mintPaypalSubscriptionBinding({userId:user.id, tierId, rootSecret})
+    return {
+      ready:true,
+      tierId,
+      customId:binding.token,
+      expiresAt:binding.expiresAt
+    }
+  } catch {
+    return {ready:false, reason:"paypal-binding-create-failed"}
+  }
+}
+
+async function writePaypalEntitlement({userId, subscriptionId, tierId, planId, status, subscription, bindingHash}){
   const {url, serviceKey} = paypalReceiptSupabaseConfig()
   if(!serviceKey) return {recorded:false, reason:"supabase-server-entitlement-not-configured"}
   const accessEndsAt = subscription?.billing_info?.next_billing_time || null
@@ -171,6 +261,8 @@ async function writePaypalEntitlement({userId, subscriptionId, tierId, planId, s
           subscriptionId,
           planId,
           status,
+          accountBindingVerified:true,
+          accountBindingHash:bindingHash,
           environment:paypalSettings().environment
         },
         p_access_ends_at:accessEndsAt
@@ -184,7 +276,7 @@ async function writePaypalEntitlement({userId, subscriptionId, tierId, planId, s
   } catch { return {recorded:false, reason:"supabase-entitlement-write-request-failed"} }
 }
 
-async function recordPaypalReceipt({subscriptionId, tierId, planId, status, environment}){
+async function recordPaypalReceipt({subscriptionId, tierId, planId, status, environment, bindingHash}){
   const {url, serviceKey} = paypalReceiptSupabaseConfig()
   if(!serviceKey) return {recorded:false, reason:"supabase-server-receipt-not-configured"}
   const receiptHash = crypto.createHash("sha256").update(subscriptionId).digest("hex")
@@ -202,6 +294,8 @@ async function recordPaypalReceipt({subscriptionId, tierId, planId, status, envi
       environment,
       subscriptionId,
       planId,
+      accountBindingVerified:true,
+      accountBindingHash:bindingHash,
       clientEventId,
       providerVerified:true,
       receiptType:"paypal-subscription-verification"
@@ -251,12 +345,27 @@ async function verifyPaypalSubscription(req, payload){
       planMatches,
       reason:!response.ok ? "paypal-subscription-read-failed" : !planMatches ? "plan-does-not-match-tier" : "subscription-not-active"
     }
+    const binding = verifyPaypalSubscriptionBinding({
+      token:subscription.custom_id,
+      userId:user.id,
+      tierId,
+      rootSecret:paypalBindingRootSecret()
+    })
+    if(!binding.valid) return {
+      verified:false,
+      providerVerified:true,
+      status,
+      planMatches:true,
+      accountBindingVerified:false,
+      reason:binding.reason
+    }
     const receipt = await recordPaypalReceipt({
       subscriptionId:subscription.id || subscriptionId,
       tierId,
       planId:subscription.plan_id,
       status,
-      environment:token.settings.environment
+      environment:token.settings.environment,
+      bindingHash:binding.bindingHash
     })
     const entitlement = receipt.recorded
       ? await writePaypalEntitlement({
@@ -265,12 +374,14 @@ async function verifyPaypalSubscription(req, payload){
         tierId,
         planId:subscription.plan_id,
         status,
-        subscription
+        subscription,
+        bindingHash:binding.bindingHash
       })
       : {recorded:false, reason:receipt.reason}
     return {
       verified:receipt.recorded && entitlement.recorded,
       providerVerified:true,
+      accountBindingVerified:true,
       status,
       planMatches:true,
       receiptRecorded:receipt.recorded,
@@ -698,14 +809,18 @@ function subscriptionReadModel(userId, row = null){
   const version = Math.max(1, Number(row?.receipt_version || 1))
   const receiptSeed = row?.provider_subscription_id || `missing:${userId}`
   const receiptId = `receipt-${crypto.createHash("sha256").update(receiptSeed).digest("hex").slice(0, 32)}`
-  const signatureId = `sig-${crypto.createHash("sha256").update(`${userId}:${receiptId}:${version}:${checkedAt}`).digest("hex").slice(0, 32)}`
+  const signingSecret = paypalBindingRootSecret()
+  const signaturePayload = `${userId}:${receiptId}:${version}:${checkedAt}`
+  const signatureId = signingSecret
+    ? `sig-${crypto.createHmac("sha256", paypalBindingSigningKey(signingSecret)).update(signaturePayload).digest("hex").slice(0, 32)}`
+    : ""
   const accessEnd = row?.access_ends_at && Date.parse(row.access_ends_at) > checkedAtDate.getTime()
     ? new Date(row.access_ends_at).toISOString()
     : null
   return {
     authority:"digitalhut-server-entitlement-read-model-v1",
-    signatureVerified:true,
-    signatureKeyId:"provider-status-service-v1",
+    signatureVerified:Boolean(signatureId),
+    signatureKeyId:signatureId ? "paypal-entitlement-hmac-v1" : "missing",
     signatureId,
     userId,
     tierId,
@@ -784,6 +899,10 @@ export default async function handler(req, res){
     }
     const payload = requestPayload(req)
     if(payload.action === "validate-plan") return res.status(200).json(await validatePaypalPlan(payload))
+    if(payload.action === "create-binding"){
+      const binding = await createPaypalSubscriptionBinding(req, payload)
+      return res.status(binding.ready ? 200 : binding.reason === "sign-in-required" ? 401 : 503).json(binding)
+    }
     if(payload.action === "verify-subscription") return res.status(200).json(await verifyPaypalSubscription(req, payload))
     return res.status(400).json({verified:false, reason:"unsupported-paypal-action"})
   }

@@ -3616,7 +3616,7 @@ export default function FullscreenObservatoryV2(){
   const [reviewDraft, setReviewDraft] = useState("")
   const [reviewNonce, setReviewNonce] = useState(0)
   const [purchaseOpen, setPurchaseOpen] = useState(false)
-  const [paypalCheckout, setPaypalCheckout] = useState({status:"idle", configured:false, environment:"", clientId:"", plans:{}, planStatus:"idle", planMessage:"", validatedPlanId:"", message:""})
+  const [paypalCheckout, setPaypalCheckout] = useState({status:"idle", configured:false, environment:"", clientId:"", plans:{}, planStatus:"idle", planMessage:"", validatedPlanId:"", bindingStatus:"idle", message:""})
   const [displayCollapsed, setDisplayCollapsed] = useState(false)
   const [selectedOptionPrint, setSelectedOptionPrint] = useState(null)
   const [selectedPurchaseIds, setSelectedPurchaseIds] = useState(["tier-premium"])
@@ -4519,7 +4519,7 @@ export default function FullscreenObservatoryV2(){
   useEffect(() => {
     if(!entryOpen) return undefined
     let cancelled = false
-    setPaypalCheckout((current) => ({...current, status:"loading", planStatus:"idle", planMessage:"", validatedPlanId:"", message:"Checking secure PayPal subscription availability."}))
+    setPaypalCheckout((current) => ({...current, status:"loading", planStatus:"idle", planMessage:"", validatedPlanId:"", bindingStatus:"idle", message:"Checking secure PayPal subscription availability."}))
     fetchWithTimeout("/api/provider-status?scope=paypal", {headers:{Accept:"application/json"}}, 10000)
       .then(async (response) => {
         const payload = await response.json().catch(() => ({}))
@@ -4533,6 +4533,7 @@ export default function FullscreenObservatoryV2(){
           planStatus:"idle",
           planMessage:"",
           validatedPlanId:"",
+          bindingStatus:"idle",
           message:response.ok && payload.subscriptionReady
             ? "Choose a plan, then continue with the official PayPal subscription control."
             : "PayPal needs its three active plan IDs before checkout can open."
@@ -4548,7 +4549,7 @@ export default function FullscreenObservatoryV2(){
     if(paypalCheckout.validatedPlanId === selectedPaypalPlanId || paypalPlanValidationRef.current === validationKey) return undefined
     let cancelled = false
     paypalPlanValidationRef.current = validationKey
-    setPaypalCheckout((current) => ({...current, planStatus:"checking", planMessage:"Confirming the selected PayPal plan."}))
+    setPaypalCheckout((current) => ({...current, planStatus:"checking", bindingStatus:"idle", planMessage:"Confirming the selected PayPal plan."}))
     fetchWithTimeout("/api/provider-status?scope=paypal", {
       method:"POST",
       headers:{"Content-Type":"application/json", Accept:"application/json"},
@@ -4572,12 +4573,12 @@ export default function FullscreenObservatoryV2(){
     host.replaceChildren()
     if(!accountSession?.access_token || !entryOpen || paypalCheckout.status !== "ready" || paypalCheckout.planStatus !== "active" || paypalCheckout.validatedPlanId !== selectedPaypalPlanId || !paypalCheckout.clientId || !selectedPaypalTier || !selectedPaypalPlanId) return undefined
     let cancelled = false
-    const renderButtons = () => {
+    const renderButtons = (customId) => {
       if(cancelled || !window.paypal?.Buttons || !paypalButtonHostRef.current) return
       paypalButtonHostRef.current.replaceChildren()
       const buttons = window.paypal.Buttons({
         style:{layout:"vertical", color:"gold", shape:"rect", label:"subscribe"},
-        createSubscription:(_data, actions) => actions.subscription.create({plan_id:selectedPaypalPlanId}),
+        createSubscription:(_data, actions) => actions.subscription.create({plan_id:selectedPaypalPlanId, custom_id:customId}),
         onApprove:async (data) => {
           setPaypalCheckout((current) => ({...current, status:"verifying", message:"PayPal approved the request. DigitalHut is verifying the active subscription."}))
           trackObservatoryPixel("paypal_subscription_client_confirmed", {category, keywordHint:selectedPaypalTier.title, metadata:{tierId:selectedPaypalTier.id, provisional:true}})
@@ -4604,21 +4605,45 @@ export default function FullscreenObservatoryV2(){
       })
       buttons.render(paypalButtonHostRef.current).catch(() => !cancelled && setPaypalCheckout((current) => ({...current, status:"error", message:"PayPal checkout could not render safely."})))
     }
-    if(window.paypal?.Buttons) renderButtons()
-    else {
+
+    const loadPaypalButtons = (customId) => {
+      if(window.paypal?.Buttons) {
+        renderButtons(customId)
+        return
+      }
       const scriptId = "digitalhut-paypal-subscriptions-sdk"
       const existing = document.getElementById(scriptId)
-      if(existing) existing.addEventListener("load", renderButtons, {once:true})
+      if(existing) existing.addEventListener("load", () => renderButtons(customId), {once:true})
       else {
         const script = document.createElement("script")
         script.id = scriptId
         script.async = true
         script.src = `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(paypalCheckout.clientId)}&vault=true&intent=subscription&components=buttons`
-        script.addEventListener("load", renderButtons, {once:true})
+        script.addEventListener("load", () => renderButtons(customId), {once:true})
         script.addEventListener("error", () => !cancelled && setPaypalCheckout((current) => ({...current, status:"error", message:"PayPal checkout could not load safely."})), {once:true})
         document.head.appendChild(script)
       }
     }
+
+    setPaypalCheckout((current) => ({...current, bindingStatus:"checking", message:"Binding this checkout to your signed-in DigitalHut account."}))
+    fetchWithTimeout("/api/provider-status?scope=paypal", {
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        Accept:"application/json",
+        Authorization:`Bearer ${accountSession.access_token}`
+      },
+      body:JSON.stringify({action:"create-binding", tierId:selectedPaypalTier.id})
+    }, 10000).then(async (response) => {
+      const payload = await response.json().catch(() => ({}))
+      if(cancelled) return
+      if(!response.ok || !payload.ready || !payload.customId) throw new Error("binding-unavailable")
+      setPaypalCheckout((current) => ({...current, bindingStatus:"ready", message:"Secure account binding ready. Continue with PayPal."}))
+      loadPaypalButtons(payload.customId)
+    }).catch(() => {
+      if(cancelled) return
+      setPaypalCheckout((current) => ({...current, bindingStatus:"error", status:"error", message:"PayPal could not bind this checkout to your signed-in account. No paid access was granted."}))
+    })
     return () => { cancelled = true }
   }, [accountSession?.access_token, entryOpen, paypalCheckout.status, paypalCheckout.clientId, paypalCheckout.planStatus, paypalCheckout.validatedPlanId, selectedPaypalTier?.id, selectedPaypalPlanId, category])
 

@@ -20,6 +20,7 @@
     "preserve:live": "node tools/preserve-digitalhut.mjs --base=https://www.digitalhut.app",
     "preserve:progression": "node tools/progression-runners.mjs",
     "verify:metrics": "node tools/verify-metric-contract.mjs",
+    "verify:paypal-binding": "node tools/verify-paypal-subscription-binding.mjs",
     "verify:firecuda": "node tools/verify-firecuda-health.mjs --required",
     "firecuda:map": "node tools/firecuda-map-interface.mjs",
     "seo:evidence": "node tools/rebuild-master-list-evidence.mjs",
