@@ -1,7 +1,7 @@
 {
   "receiptVersion": "RANK-GAP-ORCHESTRATION-001",
   "artifactType": "read-only evaluator descriptor",
-  "endpoint": "/api/gap-orchestration-status",
+  "endpoint": "/api/insight-map?scope=gap-orchestration",
   "gate": "HOLD",
   "conversionTruth": {
     "instrumentation": "PASS",

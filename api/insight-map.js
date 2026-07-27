@@ -1,4 +1,5 @@
 import {handleAudienceLive} from "./_audience-snapshot.js"
+import {evaluateGapOrchestration} from "../config/gap-orchestration.mjs"
 
 const providerChecks = [
   ["vercel", ["VERCEL", "VERCEL_ENV"], "deployment-runtime"],
@@ -1314,8 +1315,15 @@ async function pixelSummary(){
 }
 
 export default async function handler(req, res){
-  const audienceScope = String(req.query?.scope || "") === "audience-live"
-    || new URL(req.url || "/", "https://www.digitalhut.app").searchParams.get("scope") === "audience-live"
+  const requestedScope = String(req.query?.scope || "")
+    || new URL(req.url || "/", "https://www.digitalhut.app").searchParams.get("scope")
+    || ""
+  if(requestedScope === "gap-orchestration"){
+    res.setHeader("Cache-Control", "no-store")
+    if(req.method !== "GET") return res.status(405).json({error: "method_not_allowed"})
+    return res.status(200).json(evaluateGapOrchestration())
+  }
+  const audienceScope = requestedScope === "audience-live"
   if(audienceScope) return handleAudienceLive(req, res)
   if(req.method === "POST"){
     res.setHeader("Cache-Control", "no-store")

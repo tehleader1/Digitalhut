@@ -1,6 +1,9 @@
 import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { evaluateGapOrchestration } from "../config/gap-orchestration.mjs";
-import handler from "../api/gap-orchestration-status.js";
+import handler from "../api/insight-map.js";
 
 const receipt = evaluateGapOrchestration();
 const requiredDimensions = [
@@ -25,16 +28,16 @@ assert.equal(receipt.claimsPolicy.codeGuaranteesAudienceGrowth, false);
 assert.equal(receipt.externalEvidence.longtail.status, "internal_capacity_not_audience_or_rank");
 assert.deepEqual(receipt.orchestrationOrder.map((item) => item.flow), ["F1", "F2", "F3", "F4", "F5", "SCALE"]);
 assert.equal(receipt.gate, "HOLD");
-const invoke = (method) => {
+const invoke = async (method, scope = "gap-orchestration") => {
   const response = { statusCode: 0, headers: {}, body: null };
   const res = {
     setHeader: (key, value) => { response.headers[key] = value; },
     status: (code) => { response.statusCode = code; return res; },
     json: (body) => { response.body = body; return response; },
   };
-  return handler({ method }, res);
+  return handler({ method, query: { scope }, url: `/api/insight-map?scope=${scope}`, headers: {} }, res);
 };
-const get = invoke("GET");
+const get = await invoke("GET");
 assert.equal(get.statusCode, 200);
 assert.equal(get.body.conversionTruth.instrumentation, "PASS");
 assert.equal(get.body.baseline.paypalReceipts, 0);
@@ -42,8 +45,24 @@ assert.equal(get.body.baseline.durableEntitlements, 0);
 assert.equal(get.body.conversionTruth.verifiedConversions, 0);
 assert.equal(get.body.conversionTruth.businessVerification, "NOT_READY");
 assert.equal(get.body.baseline.unknownClassifications, 1182);
-const post = invoke("POST");
+const post = await invoke("POST");
 assert.equal(post.statusCode, 405);
 assert.equal(post.body.error, "method_not_allowed");
+assert.equal(get.headers["Cache-Control"], "no-store");
+
+const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const insightSource = fs.readFileSync(path.join(repoRoot, "api", "insight-map.js"), "utf8");
+const gapIndex = insightSource.indexOf('requestedScope === "gap-orchestration"');
+const audienceIndex = insightSource.indexOf('requestedScope === "audience-live"');
+const postIndex = insightSource.indexOf('if(req.method === "POST")', gapIndex);
+assert.ok(gapIndex > 0 && audienceIndex > gapIndex && postIndex > audienceIndex, "dispatcher order changed");
+assert.ok(insightSource.includes("if(audienceScope) return handleAudienceLive(req, res)"), "audience-live contract changed");
+assert.ok(insightSource.includes("const result = await saveSearchPixelEvent(req, payload)"), "default POST ingestion changed");
+assert.ok(insightSource.includes("return res.status(200).json(payload)"), "default/unknown GET response changed");
+
+const apiFiles = fs.readdirSync(path.join(repoRoot, "api"))
+  .filter((name) => name.endsWith(".js") && !name.startsWith("_"));
+assert.ok(apiFiles.length <= 12, `serverless function budget exceeded: ${apiFiles.length}`);
+assert.ok(!apiFiles.includes("gap-orchestration-status.js"), "standalone gap function still present");
 console.log(`PASS ${receipt.receiptVersion}: ${receipt.gaps.length} dimensioned gaps; conversion remains ${receipt.conversionTruth.verifiedConversions}.`);
 
