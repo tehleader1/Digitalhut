@@ -65,7 +65,10 @@ export default function AccountSubscriptionPanel({onSession, onOpenTiers, onOpen
       setSession(next)
       onSession?.(next)
       if(next?.user?.app_metadata?.provider === "email" && next.user.user_metadata?.password_created !== true) setNeedsPassword(true)
-      if(event === "SIGNED_IN") handleAccountReturn(next)
+      if(event === "SIGNED_IN") {
+        handleAccountReturn(next)
+        onOpenProfile?.()
+      }
     })
     return () => { active = false; subscription.unsubscribe() }
   }, [handleAccountReturn, onSession])

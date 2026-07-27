@@ -3562,8 +3562,13 @@ export default function FullscreenObservatoryV2(){
   const [tier, setTier] = useState("guest")
   const [username, setUsername] = useState(() => readStorage("digitalhut:username", ""))
   const [entryOpen, setEntryOpen] = useState(false)
+  const [accountView, setAccountView] = useState("profile")
   const [entryLoading, setEntryLoading] = useState(false)
   const [accountSession, setAccountSession] = useState(null)
+  const [profileAddress, setProfileAddress] = useState("")
+  const [preferredPayment, setPreferredPayment] = useState("PayPal")
+  const [profilePassword, setProfilePassword] = useState("")
+  const [profileStatus, setProfileStatus] = useState("")
   const [entitlementDecision, setEntitlementDecision] = useState(null)
   const [entitlementRefreshKey, setEntitlementRefreshKey] = useState(0)
   const [awake, setAwake] = useState(true)
@@ -3670,16 +3675,38 @@ export default function FullscreenObservatoryV2(){
     setAccountSession(nextSession || null)
     const nextEmail = nextSession?.user?.email || ""
     if(nextEmail){
-      const displayName = nextSession.user.user_metadata?.full_name || nextSession.user.user_metadata?.name || nextEmail.split("@")[0]
+      const displayName = nextSession.user.user_metadata?.display_name || nextSession.user.user_metadata?.full_name || nextSession.user.user_metadata?.name || nextEmail.split("@")[0]
       setUsername(displayName)
       window.localStorage.setItem("digitalhut:username", displayName)
+      setProfileAddress(nextSession.user.user_metadata?.address || "")
+      setPreferredPayment(nextSession.user.user_metadata?.preferred_payment || "PayPal")
     }
   }, [])
 
   const handleAccountReturn = useCallback((intent) => {
     if(!intent?.reopenAccount) return
+    setAccountView("profile")
     setEntryOpen(true)
   }, [])
+
+  async function saveProfile(){
+    if(!accountSession?.user) return
+    setProfileStatus("Saving profile...")
+    const metadata = {display_name:username.trim(), address:profileAddress.trim(), preferred_payment:preferredPayment}
+    const {error} = await supabase.auth.updateUser({data:metadata})
+    if(error){ setProfileStatus(error.message || "Profile could not be saved."); return }
+    window.localStorage.setItem("digitalhut:username", username.trim())
+    setProfileStatus("Profile saved.")
+  }
+
+  async function changeProfilePassword(){
+    if(profilePassword.length < 8){ setProfileStatus("Use at least 8 characters for the new password."); return }
+    setProfileStatus("Changing password...")
+    const {error} = await supabase.auth.updateUser({password:profilePassword})
+    if(error){ setProfileStatus(error.message || "Password could not be changed."); return }
+    setProfilePassword("")
+    setProfileStatus("Password changed.")
+  }
 
   useEffect(() => {
     let cancelled = false
@@ -4517,7 +4544,7 @@ export default function FullscreenObservatoryV2(){
   }, [])
 
   useEffect(() => {
-    if(!entryOpen) return undefined
+    if(!entryOpen || accountView !== "upgrade") return undefined
     let cancelled = false
     setPaypalCheckout((current) => ({...current, status:"loading", planStatus:"idle", planMessage:"", validatedPlanId:"", bindingStatus:"idle", message:"Checking secure PayPal subscription availability."}))
     fetchWithTimeout("/api/provider-status?scope=paypal", {headers:{Accept:"application/json"}}, 10000)
@@ -4541,10 +4568,10 @@ export default function FullscreenObservatoryV2(){
       })
       .catch(() => !cancelled && setPaypalCheckout((current) => ({...current, status:"unavailable", message:"PayPal subscriptions are temporarily unavailable."})))
     return () => { cancelled = true }
-  }, [entryOpen])
+  }, [entryOpen, accountView])
 
   useEffect(() => {
-    if(!entryOpen || paypalCheckout.status !== "ready" || !selectedPaypalTier || !selectedPaypalPlanId) return undefined
+    if(!entryOpen || accountView !== "upgrade" || paypalCheckout.status !== "ready" || !selectedPaypalTier || !selectedPaypalPlanId) return undefined
     const validationKey = `${selectedPaypalTier.id}:${selectedPaypalPlanId}`
     if(paypalCheckout.validatedPlanId === selectedPaypalPlanId || paypalPlanValidationRef.current === validationKey) return undefined
     let cancelled = false
@@ -4565,13 +4592,13 @@ export default function FullscreenObservatoryV2(){
       setPaypalCheckout((current) => ({...current, planStatus:"error", planMessage:"This PayPal plan is not active yet.", validatedPlanId:""}))
     })
     return () => { cancelled = true }
-  }, [entryOpen, paypalCheckout.status, paypalCheckout.validatedPlanId, selectedPaypalTier?.id, selectedPaypalPlanId])
+  }, [entryOpen, accountView, paypalCheckout.status, paypalCheckout.validatedPlanId, selectedPaypalTier?.id, selectedPaypalPlanId])
 
   useEffect(() => {
     const host = paypalButtonHostRef.current
     if(!host) return undefined
     host.replaceChildren()
-    if(!accountSession?.access_token || !entryOpen || paypalCheckout.status !== "ready" || paypalCheckout.planStatus !== "active" || paypalCheckout.validatedPlanId !== selectedPaypalPlanId || !paypalCheckout.clientId || !selectedPaypalTier || !selectedPaypalPlanId) return undefined
+    if(!accountSession?.access_token || !entryOpen || accountView !== "upgrade" || paypalCheckout.status !== "ready" || paypalCheckout.planStatus !== "active" || paypalCheckout.validatedPlanId !== selectedPaypalPlanId || !paypalCheckout.clientId || !selectedPaypalTier || !selectedPaypalPlanId) return undefined
     let cancelled = false
     const renderButtons = (customId) => {
       if(cancelled || !window.paypal?.Buttons || !paypalButtonHostRef.current) return
@@ -4645,7 +4672,7 @@ export default function FullscreenObservatoryV2(){
       setPaypalCheckout((current) => ({...current, bindingStatus:"error", status:"error", message:"PayPal could not bind this checkout to your signed-in account. No paid access was granted."}))
     })
     return () => { cancelled = true }
-  }, [accountSession?.access_token, entryOpen, paypalCheckout.status, paypalCheckout.clientId, paypalCheckout.planStatus, paypalCheckout.validatedPlanId, selectedPaypalTier?.id, selectedPaypalPlanId, category])
+  }, [accountSession?.access_token, entryOpen, accountView, paypalCheckout.status, paypalCheckout.clientId, paypalCheckout.planStatus, paypalCheckout.validatedPlanId, selectedPaypalTier?.id, selectedPaypalPlanId, category])
 
   useEffect(() => {
     if(typeof window === "undefined") return undefined
@@ -7064,7 +7091,7 @@ export default function FullscreenObservatoryV2(){
         </div>
         <div className="dh-account-cluster">
           <button className="dh-btn dh-backend-top" onClick={() => window.location.href = "/asset-lab"}>Backend</button>
-          <button className="dh-btn dh-account" onClick={() => setEntryOpen(true)}>{accountSession?.user?.email ? `${accountSession.user.email} / ${tier}` : `${username || "Sign in"} / ${tier}`}</button>
+          <button className="dh-btn dh-account" onClick={() => {setAccountView("profile"); setEntryOpen(true)}}>{accountSession?.user?.email ? `${username || accountSession.user.email} / ${tier}` : `${username || "Sign in"} / ${tier}`}</button>
         </div>
       </div>
 
@@ -7116,7 +7143,7 @@ export default function FullscreenObservatoryV2(){
         <div className="dh-state-badges"><span>{category}</span><span>{mode}</span><span>{sceneFeed.apiStatus || "api"}</span><span>{activeTour.icon}</span></div>
       </div>
 
-      <AccountSubscriptionPanel onSession={handleAccountSession} onAccountReturn={handleAccountReturn} onOpenTiers={() => setEntryOpen(true)} onOpenProfile={() => setEntryOpen(true)} />
+      <AccountSubscriptionPanel onSession={handleAccountSession} onAccountReturn={handleAccountReturn} onOpenTiers={() => {setAccountView("upgrade"); setEntryOpen(true)}} onOpenProfile={() => {setAccountView("profile"); setEntryOpen(true)}} />
       <SocialPressureDrawer />
 
       <div id="digitalhut-entertainment" className="dh-media dh-movie-controls" style={{opacity: awake || autoPresent ? 1 : 0.42}}>
@@ -8445,7 +8472,24 @@ export default function FullscreenObservatoryV2(){
     {entryOpen && <section className="dh-entry dh-subscription-entry"><div className="dh-entry-panel dh-subscription-screen">
       <button className="dh-subscription-close" type="button" onClick={() => setEntryOpen(false)}>Close</button>
       {entryLoading ? <><div className="dh-logo">DigitalHut</div><div className="dh-load"><span /></div><p>Loading your account system</p></> : <>
-        <p className="dh-eyebrow">DigitalHut account and access</p><h2 className="dh-welcome">Choose how you explore.</h2><p className="dh-subscription-lead">One observatory, with more saved context and research depth at each level.</p>
+        <p className="dh-eyebrow">DigitalHut account</p><h2 className="dh-welcome">{accountView === "profile" ? "Your profile." : "Choose how you explore."}</h2><p className="dh-subscription-lead">{accountView === "profile" ? "Manage your account, subscription, and saved preferences." : "One observatory, with more saved context and research depth at each level."}</p>
+        {accountView === "profile" && <div className="dh-profile-window">
+          <section><span>Name</span><h3>{username || "DigitalHut member"}</h3><small>{accountSession?.user?.email || "Sign in to manage your full profile"}</small></section>
+          <section><span>Current subscription</span><h3>{paid ? `${tier[0].toUpperCase()}${tier.slice(1)}` : "Guest"}</h3><small>{visibleStructuredNodes.length} current system nodes</small></section>
+          {accountSession && <div className="dh-profile-details">
+            <label>Name<input value={username} onChange={(event) => setUsername(event.target.value)} /></label>
+            <label>Email<input value={accountSession.user.email || ""} readOnly /></label>
+            <label>Address<input value={profileAddress} onChange={(event) => setProfileAddress(event.target.value)} autoComplete="street-address" placeholder="Optional billing address" /></label>
+            <label>Preferred payment<select value={preferredPayment} onChange={(event) => setPreferredPayment(event.target.value)}><option>PayPal</option><option>Connected wallet</option></select></label>
+            <button type="button" onClick={saveProfile}>Save profile</button>
+            <label>New password<input type="password" value={profilePassword} onChange={(event) => setProfilePassword(event.target.value)} minLength="8" autoComplete="new-password" placeholder="8+ characters" /></label>
+            <button type="button" onClick={changeProfilePassword}>Change password</button>
+            <button type="button" onClick={() => setAccountView("upgrade")}>View or upgrade subscription</button>
+            <button type="button" onClick={signOutAccount}>Sign out</button>
+            <p role="status">{profileStatus}</p>
+          </div>}
+        </div>}
+        {accountView === "upgrade" && <>
         <div className="dh-subscription-summary">
           <section><span>My DigitalHut Account</span><h3>Personal details</h3><p>Keep these details with your service account and payment receipt.</p><div className="dh-personal-fields"><label>Account holder<input value={username} onChange={(event) => setUsername(event.target.value)} placeholder="Display name" /></label><label>Email address<input value={accountSession?.user?.email || "Sign in from the left account panel"} readOnly /></label><button type="button" onClick={() => {window.localStorage.setItem("digitalhut:displayName", username); if(accountSession) supabase.auth.updateUser({data:{display_name:username}}).catch(() => null)}}>Save account details</button></div></section>
           <section><span>Current subscription</span><h3>{paid ? `${tier[0].toUpperCase()}${tier.slice(1)} active` : "No active subscription"}</h3><p>{entitlementDecision?.threePlan?.message || "Choose a service below to start. A subscription opens here only after the payment provider and entitlement server confirm it."}</p>{accountSession && <button type="button" onClick={signOutAccount}>Sign out</button>}</section>
@@ -8467,6 +8511,7 @@ export default function FullscreenObservatoryV2(){
           {paypalCheckout.status === "error" && <button type="button" onClick={() => setPaypalCheckout((current) => ({...current, status:"ready"}))}>Retry PayPal checkout</button>}
         </section>
         {!accountSession && <p className="dh-entry-small">Use Google or email in the familiar sign-in panel on the left, or choose a tier to open the signup and purchase combination. Paid access is never activated without a finalized provider receipt.</p>}
+        </>}
       </>}
     </div></section>}
   </main>
