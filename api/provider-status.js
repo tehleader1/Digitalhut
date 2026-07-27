@@ -1,7 +1,3 @@
-Exit code: 0
-Wall time: 0.7 seconds
-Total output lines: 944
-Output:
 import crypto from "node:crypto"
 import {handleAiLayer} from "./_ai-layer.js"
 
