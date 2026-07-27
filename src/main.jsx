@@ -13,6 +13,7 @@ import {
 
 import {installDigitalHutSearchPixel} from "./lib/digitalhutSearchPixel"
 import {applySystemPerformanceProfile, forceFirecudaMaxProfile, getSystemPerformanceProfile} from "./lib/systemPerformanceProfile"
+import {retireLegacyServiceWorkers} from "./lib/retireLegacyServiceWorkers"
 import HomePage from "./pages/HomePage"
 import DefensiveGuardian from "./components/DefensiveGuardian"
 
@@ -38,6 +39,7 @@ const SourceBridgePage = React.lazy(() => import("./pages/SourceBridgePage"))
 const ObservatoryScanner = React.lazy(() => import("./components/ObservatoryScanner"))
 
 installDigitalHutSearchPixel()
+retireLegacyServiceWorkers()
 forceFirecudaMaxProfile()
 applySystemPerformanceProfile(getSystemPerformanceProfile())
 
@@ -154,3 +156,4 @@ ReactDOM.createRoot(
   </WalletProvider>
 
 )
+
