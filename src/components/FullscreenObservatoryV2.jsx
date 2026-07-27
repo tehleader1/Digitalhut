@@ -264,7 +264,7 @@ function attachRendererModel(item, category, term, index){
       sourceEmbedUrl: item.embedUrl || "",
       renderPriority: 34,
       apiStatus: item.apiStatus || "storage-glb-needs-verification",
-     …4 tokens truncated…ote || `Owner-library result for ${term || category}.`} This storage GLB is held behind verification so a broken Supabase/Vercel object cannot block live API results.`
+      note: `${item.note || `Owner-library result for ${term || category}.`} This storage GLB is held behind verification so a broken Supabase/Vercel object cannot block live API results.`
     }
   }
   if(isDirectRenderableModel(item.modelUrl) && isEnvironmentFeed(item)){
@@ -998,7 +998,7 @@ const featuredFeeds = {
   "Mobility": [
     ["Road conditions and route context", "Public road, traffic, construction, weather, and route-awareness feed for drivers and passengers.", "live road traffic construction weather vehicle environment"],
     ["Airport and air travel status", "Public airport delay, visibility, diversion, terminal, and traveler-assistance context without acting as flight instrumentation.", "airport delay visibility diversion public travel feed"],
-    ["Marine and harbor travel watch", "Public harbor, boating, coastal weather, …4 tokens truncated…na information presented as an environment read.", "marine harbor coastal weather travel environment"],
+    ["Marine and harbor travel watch", "Public harbor, boating, coastal weather, access, and marina information presented as an environment read.", "marine harbor coastal weather travel environment"],
     ["Rail and transit movement", "Public rail, station, delay, construction, and regional transit information with a related environment model.", "rail station transit delay public feed"]
   ],
   "Real Estate": [
@@ -1467,7 +1467,7 @@ function modelDataReadout({feed, category, stage}){
       `Category is ${category}, stage is ${stage.label}.`,
       `Source status is ${provider}.`,
       `Session context: ${session}`,
-      `Visible note: ${feed.note || "no ext…4 tokens truncated… yet"}`,
+      `Visible note: ${feed.note || "no extra note attached yet"}`,
       modelLink ? "A verified environment model or viewer link is attached to this record." : "The provider did not expose a direct environment GLB yet, so I am rendering the environment read from the scene data."
     ]
   }
@@ -2193,7 +2193,7 @@ function structuredIntelMapFor({story, category, feed, meaning, backlinkRadar, g
       {id: "ranking", x: 43, y: 14, code: "rank.grid", label: "Ranking Grid", value: rankSignals.label, detail: rankSignals.topCount ? `Build ${rankSignals.topCount} slots and track ${rankSignals.focusRank ? `slot #${rankSignals.focusRank}` : "the active slot"}.` : "Waiting for a top-list phrase.", tone: "ai", fill: rankSignals.topCount ? 90 : 48},
       {id: "brand", x: 76, y: 18, code: "brand.entity", label: `${brandName} Entity`, value: detectedBrand ? "detected" : "inferred", detail: detectedBrand ? `${brandName} appears in the video/search language.` : "Brand is not explicit; using topic tokens.", tone: "glb", fill: detectedBrand ? 86 : 58},
       {id: "specs", x: 82, y: 64, code: "spec.matrix", label: "Spec Matrix", value: "VRAM / power / heat", detail: "Specs are categories to watch for; exact values require the video/source to state them.", tone: "source", fill: 82},
-      {id: "fit", x: 48, y: 81, code: "viewer.fit", label: "Viewer Fit", val…4 tokens truncated…ator", detail: "Map checks whether the card is for FPS gaming, 3D work, streaming, or budget value.", tone: "podcast", fill: Math.max(42, Math.round((progress || 0) * .8))},
+      {id: "fit", x: 48, y: 81, code: "viewer.fit", label: "Viewer Fit", value: "gamer / creator", detail: "Map checks whether the card is for FPS gaming, 3D work, streaming, or budget value.", tone: "podcast", fill: Math.max(42, Math.round((progress || 0) * .8))},
       {id: "proof", x: 16, y: 67, code: "proof.wall", label: "Proof Wall", value: "no fake specs", detail: "Only title/channel/counts are confirmed. Model names and benchmarks stay pending until sourced.", tone: "source", fill: 76}
     ]
     bars = [
@@ -2857,7 +2857,7 @@ function contentBacklinkRadarFor({story, category, feed, glbDock, liveLongTailKe
   const lanes = [
     {id: "video", label: "Video Renderer", status: story?.primaryVideo?.title || `${topic} clip context`, strength: Math.max(48, Math.min(100, pulse + 16)), detail: story?.primaryVideo?.channelTitle || "YouTube source scan"},
     {id: "podcast", label: "Podcast Renderer", status: `important moment: ${keyword}`, strength: Math.max(42, Math.min(100, pulse + 8)), detail: "voice insert, chapter summary, ad reset memory"},
-    {id: "glb", label: "3D Renderer", status: glbDock?.[0]?.feed?.title || feed?.title || "GLB subject scan", strength: Math.max(50, Math.min(100, pulse + 12)), detail: modelSource ? "model source attached" : "mo…4 tokens truncated…h lane"},
+    {id: "glb", label: "3D Renderer", status: glbDock?.[0]?.feed?.title || feed?.title || "GLB subject scan", strength: Math.max(50, Math.min(100, pulse + 12)), detail: modelSource ? "model source attached" : "model source search lane"},
     {id: "seo", label: "Backlink Engine", status: keyword, strength: Math.max(45, Math.min(100, pulse + 5)), detail: "website, backlink, long-tail lane"}
   ]
   const links = [
@@ -3605,7 +3605,7 @@ export default function FullscreenObservatoryV2(){
   const [presentationFileNote, setPresentationFileNote] = useState("")
   const [presentationEdits, setPresentationEdits] = useState([])
   const [presentationSpeed, setPresentationSpeed] = useState(1)
-  const [presentati…4 tokens truncated…resentationProgress] = useState(0)
+  const [presentationProgress, setPresentationProgress] = useState(0)
   const [analyticsClock, setAnalyticsClock] = useState(0)
   const [observatoryBuildSeed, setObservatoryBuildSeed] = useState(0)
   const [youtubeSeekAnchor, setYoutubeSeekAnchor] = useState(0)
@@ -4192,7 +4192,8 @@ export default function FullscreenObservatoryV2(){
       x: 87,
       y: 36,
       label: "Website / Backlinks",
-      value: sourcePreviewHos…4 tokens truncated… sourcePreview?.signal || `${backlinkRadar.links.length} source lanes`,
+      value: sourcePreviewHost,
+      detail: sourcePreview?.signal || `${backlinkRadar.links.length} source lanes`,
       fill: sourcePreviewLive ? 96 : Math.max(34, Math.min(86, backlinkRadar.links.length * 16)),
       tone: "source",
       url: sourcePreview?.url || youtubeStory.searchUrl
@@ -4882,7 +4883,7 @@ export default function FullscreenObservatoryV2(){
       setStageIndex((current) => (current + 1) % stages.length)
     }, stageDelay)
     return () => window.clearInterval(timer)
-  }, [guided, entryOpen, stageDelay, modelOpen, sceneVisualKey, visualReadyKe…4 tokens truncated…le])
+  }, [guided, entryOpen, stageDelay, modelOpen, sceneVisualKey, visualReadyKey, sceneFeed.title])
 
   useEffect(() => {
     if(!guided || stage.kind !== "stats") return
@@ -5718,7 +5719,8 @@ export default function FullscreenObservatoryV2(){
     if(item?.category && item.category !== category) {
       setCategory(item.category)
       setTour(toursFor(item.category)[0].id)
- …4 tokens truncated…y(item.query || item.title)
+    }
+    setQuery(item.query || item.title)
     setStageIndex(0)
     setPresentationProgress(0)
     setYoutubeSeekAnchor(0)
@@ -6536,7 +6538,7 @@ export default function FullscreenObservatoryV2(){
       setLiveStageOpen(true)
       setModelOpen(true)
       playSessionSound(category, "bridge")
-      …4 tokens truncated…ssage("ai", `Live GLB stage is ready for ${sceneFeed.title}.`, "Live stage")
+      recordDirectorMessage("ai", `Live GLB stage is ready for ${sceneFeed.title}.`, "Live stage")
       speak(`Live GLB stage is ready for ${sceneFeed.title}. Speak your host line, add a contest prompt, then post the live model.`)
       return
     }
@@ -7184,7 +7186,8 @@ export default function FullscreenObservatoryV2(){
           {documentaryTimeline.map((item) => <button key={item.id} type="button" className={presentationChapter.id === item.id ? "active" : ""} onClick={() => scrubPresentation(item.at)}>{item.label}</button>)}
         </div>
         <p className="dh-movie-caption">{presentationChapter.media}: {presentationCaption}</p>
-        <section className={`dh-youtube-story-renderer meaning-${liveMeaning.id} matrix-${matrixConstruction.mode} visual-${matrixConstruction.visualFamily} ${presentationChapter.id === "podcast" ? "podcast-pulse" : ""} ${podcastFeatureOpen ? "podcast-feature-open" : ""} ${glbPlayViewOpen ? "glb-feature-open" : ""} ${analyticsStarted ? "is-constructing" : "is-awaiting-build"} ${adResetWindow ? "ad-cycle-reset" : ""}`} style={{"--signal-beat": youtubeSignalField.beat, "--stream-pace": streamAnalytics.pace, "--scene-tempo": sceneMotionTempo, "--scene-light": sceneLightPulse, "--stat-resolve": `${Math.round(statResolveRatio * 100)}%`, "--motion-progress": `${Math.round(liveAnalyticsProgress)}%`, "--construction-progress": `${Math.round(observatoryConstructionProgress)}%`, "--scene-shift": sceneShiftIndex, "--analytics-clock": analyticsClock, "--story-hero-image": `url("${storyHeroImage}")`, "--story-hero-shift": storyHeroIndex, "--story-hero-opacity": analyticsStarted ? String(.2 + sceneLightPulse * .2…6 tokens truncated… <header>
+        <section className={`dh-youtube-story-renderer meaning-${liveMeaning.id} matrix-${matrixConstruction.mode} visual-${matrixConstruction.visualFamily} ${presentationChapter.id === "podcast" ? "podcast-pulse" : ""} ${podcastFeatureOpen ? "podcast-feature-open" : ""} ${glbPlayViewOpen ? "glb-feature-open" : ""} ${analyticsStarted ? "is-constructing" : "is-awaiting-build"} ${adResetWindow ? "ad-cycle-reset" : ""}`} style={{"--signal-beat": youtubeSignalField.beat, "--stream-pace": streamAnalytics.pace, "--scene-tempo": sceneMotionTempo, "--scene-light": sceneLightPulse, "--stat-resolve": `${Math.round(statResolveRatio * 100)}%`, "--motion-progress": `${Math.round(liveAnalyticsProgress)}%`, "--construction-progress": `${Math.round(observatoryConstructionProgress)}%`, "--scene-shift": sceneShiftIndex, "--analytics-clock": analyticsClock, "--story-hero-image": `url("${storyHeroImage}")`, "--story-hero-shift": storyHeroIndex, "--story-hero-opacity": analyticsStarted ? String(.2 + sceneLightPulse * .28) : ".12"}}>
+          <header>
             <div>
               <span>DigitalHut Observatory Experience</span>
               <b>{youtubeStory.episodeName}</b>
@@ -7702,7 +7705,7 @@ export default function FullscreenObservatoryV2(){
                   </article>
                 )}
                 {visibleCommandLinks.length > 0 && <div className="dh-command-link-stack" aria-label="Live website and backlink links">
-                  {visibleCommandLinks.ma…4 tokens truncated…=> <a key={`command-link-${link.id}-${index}`} href={link.url} target="_blank" rel="noreferrer" style={{"--link-order": index}}>
+                  {visibleCommandLinks.map((link, index) => <a key={`command-link-${link.id}-${index}`} href={link.url} target="_blank" rel="noreferrer" style={{"--link-order": index}}>
                     <span>{link.label}</span>
                     <b>{link.title}</b>
                     <small>{link.signal}</small>
@@ -8245,7 +8248,7 @@ export default function FullscreenObservatoryV2(){
             </div>
           </div>
         </section>
-        <section className={`dh-main-live-analyzer ${presentationChapter.id === "podcast" ? "guest-moment" : ""}`} style={{"--stream-pace": streamAnalytics.…4 tokens truncated…progress": `${Math.round(liveAnalyticsProgress)}%`}}>
+        <section className={`dh-main-live-analyzer ${presentationChapter.id === "podcast" ? "guest-moment" : ""}`} style={{"--stream-pace": streamAnalytics.pace, "--motion-progress": `${Math.round(liveAnalyticsProgress)}%`}}>
           <header>
             <span>Live Video / GLB / Podcast Analytics</span>
             <b>{observatoryAnalysis.phase}</b>
