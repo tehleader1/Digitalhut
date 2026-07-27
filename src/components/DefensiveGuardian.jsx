@@ -218,7 +218,7 @@ export default function DefensiveGuardian({children}){
 
   return <>
     {children}
-    <button className={`dh-guardian-mini level-${level}`} type="button" onClick={openGuardian}>
+    <button className={`dh-guardian-mini level-${level}`} type="button" aria-label="Open DigitalHut Defensive AI Guardian" onClick={openGuardian}>
       <img src={guardianImage} alt="" />
       <span><b>Defensive AI Guardian</b><small>{message}</small></span>
     </button>
