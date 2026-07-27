@@ -1,0 +1,21 @@
+{
+  "receiptVersion": "RANK-GAP-ORCHESTRATION-001",
+  "artifactType": "read-only evaluator descriptor",
+  "endpoint": "/api/gap-orchestration-status",
+  "gate": "HOLD",
+  "conversionTruth": {
+    "instrumentation": "PASS",
+    "verifiedConversions": 0,
+    "businessVerification": "NOT_READY"
+  },
+  "orchestrationOrder": ["F1", "F2", "F3", "F4", "F5", "SCALE"],
+  "warnings": [
+    "Browser IDs are pseudonymous and are not people.",
+    "Platform audience ratios are mismatched proxies and cannot set capacity or conversion claims.",
+    "The 200,572,944 longtail universe is internal variation capacity, not audience, ranking or traffic.",
+    "Infrastructure scale follows funnel and reliability gates."
+  ],
+  "rollbackProductionSha": "80411fb944de2d33530c558f9577448bd0c5ab22"
+}
+
+

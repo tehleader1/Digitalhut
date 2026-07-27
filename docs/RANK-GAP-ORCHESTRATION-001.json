@@ -1,0 +1,28 @@
+{
+  "rank_id": "RANK-GAP-ORCHESTRATION-001",
+  "flow": "F1-F5 + deferred SCALE",
+  "problem": "Platform and funnel gaps were visual-only and not available as dimensioned backend orchestration evidence.",
+  "base_sha": "80411fb944de2d33530c558f9577448bd0c5ab22",
+  "candidate_sha": "PENDING_IMMUTABLE_COMMIT",
+  "branch": "rank/scale-control-001-local",
+  "owned_files": [
+    "config/gap-orchestration.mjs",
+    "api/gap-orchestration-status.js",
+    "tools/verify-gap-orchestration.mjs",
+    "public/gap-orchestration-status.json",
+    "docs/RANK-GAP-ORCHESTRATION-001.json"
+  ],
+  "reasoning": "Expose fixed receipt gaps without blending providers, audience proxies, conversions or capacity claims.",
+  "intended_mechanism": "Pure evaluator, read-only GET endpoint, static discovery artifact and scoped verifier.",
+  "tests": ["node tools/verify-gap-orchestration.mjs", "one serialized clean npm build"],
+  "build_receipt": "PENDING",
+  "preview_receipt": "NOT_REQUESTED",
+  "db_provider_dependencies": "Read-only fixed receipt; no migration, purchase, provider mutation or synthetic conversion.",
+  "collision_status": "Additive-only; PWA files excluded; existing scale evidence file not owned or staged.",
+  "rollback": "Remove five additive files and return to production SHA 80411fb944de2d33530c558f9577448bd0c5ab22.",
+  "evidence_level": "fixed baseline plus separately dated public/provider evidence",
+  "conversion_status": "instrumentation PASS; verified conversions 0; business verification NOT_READY",
+  "gate": "HOLD",
+  "blockers": ["PayPal receipts 0", "durable entitlements 0", "verified conversions 0", "continuity candidate remains independently HOLD"]
+}
+
