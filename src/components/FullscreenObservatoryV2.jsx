@@ -1,7 +1,3 @@
-Exit code: 0
-Wall time: 1.1 seconds
-Total output lines: 8535
-Output:
 import React, {useCallback, useEffect, useMemo, useRef, useState} from "react"
 import {ConnectButton} from "../wallet"
 import {useAccount, useSendTransaction, useWaitForTransactionReceipt} from "wagmi"
