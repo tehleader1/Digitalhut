@@ -1,6 +1,6 @@
 Exit code: 0
-Wall time: 1.3 seconds
-Total output lines: 8523
+Wall time: 1.1 seconds
+Total output lines: 8535
 Output:
 import React, {useCallback, useEffect, useMemo, useRef, useState} from "react"
 import {ConnectButton} from "../wallet"
@@ -268,7 +268,7 @@ function attachRendererModel(item, category, term, index){
       sourceEmbedUrl: item.embedUrl || "",
       renderPriority: 34,
       apiStatus: item.apiStatus || "storage-glb-needs-verification",
-     …121140 tokens truncated…ose</button></div>
+     …121288 tokens truncated…ose</button></div>
         <a className="dh-big-share-link" href={liveModelLink} target="_blank" rel="noreferrer">{viralShareTitle(sceneFeed)}<span>{liveModelLink}</span><small>Featured on digitalhut.app</small></a>
         <div className="dh-live-metrics">
           <span>10:00 live</span><b>{liveMetricsFor(category).views.toLocaleString()} views</b><b>{liveMetricsFor(category).likes.toLocaleString()} likes</b><b>{liveMetricsFor(category).comments.toLocaleString()} comments</b>
