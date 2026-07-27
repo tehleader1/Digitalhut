@@ -1,3 +1,7 @@
+Exit code: 0
+Wall time: 0.7 seconds
+Total output lines: 944
+Output:
 import crypto from "node:crypto"
 import {handleAiLayer} from "./_ai-layer.js"
 
@@ -203,7 +207,10 @@ async function authenticatedProviderUser(req){
   const bearer = String(req.headers?.authorization || "").replace(/^Bearer\s+/i, "").trim()
   if(!bearer) return null
   const {url, serviceKey} = paypalReceiptSupabaseConfig()
-  const apiKey = supabasePublicKey() || serviceKey
+  // Validate checkout sessions against the same canonical Supabase project used
+  // for entitlement receipts. A stale public key must not override the verified
+  // server credential and make valid signed-in sessions look anonymous.
+  const apiKey = serviceKey || supabasePublicKey()
   if(!apiKey) return null
   try {
     const response = await fetch(`${url}/auth/v1/user`, {
@@ -419,54 +426,7 @@ async function ga4FederatedToken(req){
 }
 
 async function ga4ServiceAccountToken(federatedAccessToken){
-  const serviceAccountEmail = envValue("GA4_SERVICE_ACCOUNT_EMAIL") || "digitalhut-ga4-reader@digitalhut-503212.iam.gserviceaccount.com"
-  const target = encodeURIComponent(serviceAccountEmail)
-  const response = await fetch(`https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/${target}:generateAccessToken`, {
-    method:"POST",
-    headers:{Authorization:`Bearer ${federatedAccessToken}`, "Content-Type":"application/json"},
-    body:JSON.stringify({scope:["https://www.googleapis.com/auth/analytics.readonly"], lifetime:"900s"}),
-    signal:AbortSignal.timeout(10000)
-  })
-  return providerJson(response, "iam")
-}
-
-function ga4MetricMap(report){
-  const names = report?.metricHeaders?.map((item) => item.name) || []
-  const values = report?.totals?.[0]?.metricValues || report?.rows?.[0]?.metricValues || []
-  return Object.fromEntries(names.map((name, index) => [name, Number(values[index]?.value || 0)]))
-}
-
-function ga4EventRows(report){
-  return (report?.rows || []).map((row) => ({
-    eventName:String(row.dimensionValues?.[0]?.value || "unknown").slice(0, 80),
-    eventCount:Number(row.metricValues?.[0]?.value || 0)
-  }))
-}
-
-async function googleAnalyticsStatus(req){
-  const propertyId = envValue("GA4_PROPERTY_ID") || "546662169"
-  if(!privateStatusAllowed(req)){
-    return {
-      ok:false,
-      configured:true,
-      access:"admin-token-required",
-      provider:"Google Analytics Data API",
-      propertyId,
-      truthBoundary:"Provider-native GA4 statistics are private and are never substituted with DigitalHut internal counters."
-    }
-  }
-  if(ga4Cache && Date.now() - ga4Cache.at < 120000) return ga4Cache.value
-  try {
-    const federated = await ga4FederatedToken(req)
-    const serviceAccount = await ga4ServiceAccountToken(federated.access_token)
-    const headers = {Authorization:`Bearer ${serviceAccount.accessToken}`, "Content-Type":"application/json"}
-    const [standardResponse, realtimeResponse] = await Promise.all([
-      fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${propertyId}:batchRunReports`, {
-        method:"POST",
-        headers,
-        body:JSON.stringify({requests:[
-          {dateRanges:[{startDate:"today",endDate:"today"}],metrics:[{name:"activeUsers"},{name:"sessions"},{name:"screenPageViews"},{name:"eventCount"},{name:"keyEvents"}],metricAggregations:["TOTAL"]},
-          {dateRanges:[{startDate:"today",endDate:"today"}],dimensions:[{name:"eventName"}],metrics:[{name:"eventCount"}],orderBys:[{metric:{metricName:"eventCount"},desc:true}],limit:20}
+  const serviceAccountEmail = envValue("G…625 tokens truncated…metric:{metricName:"eventCount"},desc:true}],limit:20}
         ]}),
         signal:AbortSignal.timeout(12000)
       }),
@@ -938,3 +898,4 @@ export default async function handler(req, res){
   res.setHeader("Cache-Control", "no-store")
   return res.status(200).json({status})
 }
+
