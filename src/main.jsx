@@ -11,6 +11,7 @@ import {
   WalletProvider
 } from "./wallet"
 
+import { Analytics } from "@vercel/analytics/react"
 import {installDigitalHutSearchPixel} from "./lib/digitalhutSearchPixel"
 import {applySystemPerformanceProfile, forceFirecudaMaxProfile, getSystemPerformanceProfile} from "./lib/systemPerformanceProfile"
 import HomePage from "./pages/HomePage"
@@ -51,6 +52,7 @@ ReactDOM.createRoot(
 
       <DefensiveGuardian>
       <React.Suspense fallback={<div style={{minHeight:"100vh",display:"grid",placeItems:"center",background:"#020617",color:"#e0f2fe",fontFamily:"Arial,sans-serif"}}>Loading DigitalHut view</div>}>
+      <Analytics />
       <Routes>
 
         <Route
